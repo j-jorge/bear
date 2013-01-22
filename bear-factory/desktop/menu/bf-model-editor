@@ -1,0 +1,5 @@
+?package(bear-factory):needs="X11" section="Games/Tools" \
+  title="Bear Factory — Model Editor" \
+  command="bf-model-editor" \
+  hints="Model editor for the Bear Engine." \
+  icon="bear-factory.xpm"

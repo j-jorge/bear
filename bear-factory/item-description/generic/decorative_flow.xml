@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::decorative_flow" category="decoration" box_color="#387F8A" url="http://www.gamned.org/wiki/index.php/decorative_flow">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+    <class>bear::item_with_decoration</class>
+    <class>bear::item_with_activable_sides</class>
+  </inherit>
+  <description>A rectangle in which some decorative sprites move linearly to
+  simulate a flow.</description>
+  <fields>
+    <field type="real" name="decorative_flow.max_speed.x">
+      <description>The maximum speed of flow on x axis.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_flow.max_speed.y">
+      <description>The maximum speed of flow on y axis.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_flow.min_speed.x">
+      <description>The minimum speed of flow on x axis.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="decorative_flow.min_speed.y">
+      <description>The minimum speed of flow on y axis.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="decorative_flow.items_per_second">
+      <description>The number of items per second in average.</description>
+      <default_value>1</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

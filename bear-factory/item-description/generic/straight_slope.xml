@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::straight_slope" category="block" box_color="#FFCD12" url="http://www.gamned.org/wiki/index.php/straight_slope">
+  <inherit>
+    <class>bear::base_ground</class>
+  </inherit>
+  <description>A piece of ground intended to be used next some slopes. This items works like a slope. That is, the other item is aligned only if the X-coordinate of his center of mass is in the range covered by the current item.</description>
+  <fields>
+    <field type="boolean" name="straight_slope.top_side_is_active">
+      <description>Tell if the top side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="straight_slope.bottom_side_is_active">
+      <description>Tell if the bottom side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="real" name="straight_slope.margin">
+      <description>The tolerance between the position of the other item and the
+        current item for alignments. Positive value means that the margin is
+        outside the block.</description>
+      <default_value>5</default_value>
+    </field>
+  </fields>
+</item>

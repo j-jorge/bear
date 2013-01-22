@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::toggle" category="toggle" box_color="#009296" url="http://www.gamned.org/wiki/index.php/toggle">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>A simple toggle that can be used to carry a boolean state.</description>
+</item>

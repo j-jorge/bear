@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_rotation_creator" category="control/movement" box_color="#CAFF00" fixable="false" url="http://www.gamned.org/wiki/index.php/forced_rotation_creator">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::forced_movement_tag</class>
+    <class>bear::forced_movement_creator_with_reference</class>
+  </inherit>
+  <description>This class creates a forced movement of type "forced_rotation", applies it to itself then die.</description>
+  <fields>
+    <field type="real" name="forced_rotation_creator.duration">
+      <description>The total time needed to go from start_angle to end_angle.
+      </description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="forced_rotation_creator.start_angle">
+      <description>The initial angle.</description>
+      <default_value>-3.1415</default_value>
+    </field>
+    <field type="real" name="forced_rotation_creator.end_angle">
+      <description>The final angle.</description>
+      <default_value>3.1415</default_value>
+    </field>
+    <field type="real" name="forced_rotation_creator.radius">
+      <description>The distance of the moving item from the center of the
+        rotation.
+      </description>
+      <default_value>auto</default_value>
+    </field>
+    <field type="u_integer" name="forced_rotation_creator.loops">
+      <description>Do the rotation this number of times.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="boolean" name="forced_rotation_creator.loop_back">
+      <description>Tell to play the rotation backward when the end is reached.
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="string" name="forced_rotation_creator.apply_angle">
+      <description>Tell how the angle of the rotation is applied to the rotating
+        item.
+      </description>
+      <set>
+        <element value="add"/>
+        <element value="force"/>
+        <element value="force_delta"/>
+        <element value="force_remaining"/>
+        <element value="keep"/>
+      </set>
+      <default_value>keep</default_value>
+    </field>
+    <field type="real" name="forced_rotation_creator.acceleration_time">
+      <description>The duration of the acceleration and deceleration.</description>
+      <default_value>half of the total duration</default_value>
+    </field>
+  </fields>
+</item>

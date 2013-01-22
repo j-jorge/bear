@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::applied_boolean_expression" category="expression" box_color="#BFEFFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This class gives a boolean expression to a boolean
+    expression receiver, then die.</description>
+  <fields>
+    <field type="item_reference" name="applied_expression.receiver"
+           required="true" list="true">
+      <description>The items to which the condition is applied.</description>
+      <set>
+        <element value="bear::with_boolean_expression_assignment"/>
+      </set>
+    </field>
+    <field type="item_reference" name="applied_expression.expression"
+           required="true">
+      <description>The boolean expression to apply.</description>
+      <set>
+        <element value="bear::with_boolean_expression_creation"/>
+      </set>
+    </field>
+  </fields>
+</item>

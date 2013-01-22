@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::repeated_forced_movement" category="control/movement" box_color="#F9FF7A" fixable="false" url="http://www.gamned.org/wiki/index.php/repeated_forced_movement">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::forced_movement_repeater</class>
+  </inherit>
+  <description>This class applies a forced movement to an item and its clone,
+  then it dies.</description>
+</item>

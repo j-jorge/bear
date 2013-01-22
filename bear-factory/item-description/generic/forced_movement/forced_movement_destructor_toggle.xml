@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_movement_destructor_toggle" category="control/movement" box_color="#F9FF7A" url="http://www.gamned.org/wiki/index.php/forced_movement_destructor_toggle">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <description>This class removes the forced movement to an item when activated.</description>
+  <fields>
+    <field type="item_reference" name="forced_movement_destructor_toggle.actor" list="true">
+      <description>The item to move.</description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

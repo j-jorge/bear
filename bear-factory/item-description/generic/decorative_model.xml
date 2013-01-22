@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::decorative_model" category="decoration" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/decorative_model">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::model</class>
+  </inherit>
+  <description>A decorative model.</description>
+  <fields>
+    <field type="string" name="decorative_model.model_file" required="true">
+      <description>The path to the model to load.</description>
+    </field>
+    <field type="string" name="decorative_model.initial_action" required="true">
+      <description>The initial action.</description>
+    </field>
+  </fields>
+</item>

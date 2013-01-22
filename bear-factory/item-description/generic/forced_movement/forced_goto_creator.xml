@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_goto_creator" category="control/movement" box_color="#CAFF00" fixable="false" url="http://www.gamned.org/wiki/index.php/forced_goto_creator">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::forced_movement_tag</class>
+  </inherit>
+  <description>This class creates a forced movement of type "forced_goto", applies it to itself then die.</description>
+  <fields>
+    <field type="real" name="forced_goto_creator.duration">
+      <description>The total time to reach the target.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="forced_goto_creator.acceleration_time">
+      <description>The duration of the acceleration and deceleration.</description>
+      <default_value>half of the total duration</default_value>
+    </field>
+    <field type="real" name="forced_goto_creator.length.x">
+      <description>The length of the movement on the X-axis.</description>
+    </field>
+    <field type="real" name="forced_goto_creator.length.y">
+      <description>The length of the movement on the Y-axis.</description>
+    </field>
+  </fields>
+</item>

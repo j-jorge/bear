@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::camera" category="control/camera" fixable="false" box_color="#343C66" url="http://www.gamned.org/wiki/index.php/camera">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_text_interface</class>
+  </inherit>
+  <description>A simple camera.</description>
+  <fields>
+    <field type="real" name="camera.valid_min.x">
+      <description>The minimum valid X-position of the camera.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="camera.valid_max.x">
+      <description>The maximum valid X-position of the camera.</description>
+      <default_value>The width of the level</default_value>
+    </field>
+    <field type="real" name="camera.valid_min.y">
+      <description>The minimum valid Y-position of the camera.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="camera.valid_max.y">
+      <description>The maximum valid Y-position of the camera.</description>
+      <default_value>The height of the level</default_value>
+    </field>
+    <field type="real" name="camera.max_move_length">
+      <description>The maximum movement of the camera.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="camera.max_zoom_length">
+      <description>The maximum change of the size.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="boolean" name="camera.active">
+      <description>Indicates if the camera start in active mode.</description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="real" name="camera.size.min_width">
+      <description>The minimum width of the camera.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="camera.size.max_width">
+      <description>The maximum width of the camera.</description>
+      <default_value>The width of the level.</default_value>
+    </field>
+    <field type="real" name="camera.size.min_height">
+      <description>The minimum height of the camera.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="camera.size.max_height">
+      <description>The maximum height of the camera.</description>
+      <default_value>The height of the level.</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+</item>

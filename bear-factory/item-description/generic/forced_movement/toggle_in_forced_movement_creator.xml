@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::toggle_in_forced_movement_creator" category="control/movement" box_color="#CAFF00" fixable="false" url="http://www.gamned.org/wiki/index.php/toggle_in_forced_movement_creator">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::forced_movement_tag</class>
+  </inherit>
+  <description>
+    This class creates a forced movement of type "toggle_in_forced_movement",
+    applies it to itself then die.
+  </description>
+
+  <fields>
+
+    <field type="boolean"
+           name="toggle_in_forced_movement_creator.use_toggle_duration">
+      <description>
+        Tell if the duration of the movement is the delay of the
+        toggle.
+      </description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="item_reference" name="toggle_in_forced_movement_creator.toggle"
+           required="true">
+      <set>
+        <element value="bear::with_toggle"/>
+      </set>
+      <description>The item to follow.</description>
+    </field>
+
+  </fields>
+</item>

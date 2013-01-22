@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::base_ground" category="-abstract-" box_color="#302CE0" url="http://www.gamned.org/wiki/index.php/base_ground">
+  <inherit>
+    <class>bear::basic_renderable_item</class>
+    <class>bear::item_with_friction</class>
+    <class>bear::item_with_z_shift</class>
+    <class>bear::item_with_decoration</class>
+    <class>bear::item_with_restricted_z_collision</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>The base class for the grounds, ceiling and walls.</description>
+  <fields>
+    <field type="string" name="base_ground.top_left_contact_mode">
+
+      <description>Tells how the contact is set on the collisions on the top
+      left corner.</description>
+
+      <set>
+        <element value="full_contact"/>
+        <element value="range_contact"/>
+      </set>
+
+      <default_value>no_contact</default_value>
+    </field>
+
+    <field type="string" name="base_ground.top_right_contact_mode">
+
+      <description>Tells how the contact is set on the collisions on the top
+      right corner.</description>
+
+      <set>
+        <element value="full_contact"/>
+        <element value="range_contact"/>
+      </set>
+
+      <default_value>no_contact</default_value>
+    </field>
+
+    <field type="string" name="base_ground.bottom_left_contact_mode">
+
+      <description>Tells how the contact is set on the collisions on the bottom
+      left corner.</description>
+
+      <set>
+        <element value="full_contact"/>
+        <element value="range_contact"/>
+      </set>
+
+      <default_value>no_contact</default_value>
+    </field>
+
+    <field type="string" name="base_ground.bottom_right_contact_mode">
+
+      <description>Tells how the contact is set on the collisions on the bottom
+      right corner.</description>
+
+      <set>
+        <element value="full_contact"/>
+        <element value="range_contact"/>
+      </set>
+
+      <default_value>no_contact</default_value>
+    </field>
+
+    <field type="boolean" name="base_ground.top_sets_contact">
+      <description>Tell if a collision on the top side sets the contact flag of
+      the colliding item.</description>
+      <default_value>true</default_value>
+    </field>
+
+    <field type="boolean" name="base_ground.bottom_sets_contact">
+      <description>Tell if a collision on the bottom side sets the contact flag
+      of the colliding item.</description>
+      <default_value>true</default_value>
+    </field>
+
+    <field type="boolean" name="base_ground.left_sets_contact">
+      <description>Tell if a collision on the left side sets the contact flag of
+      the colliding item.</description>
+      <default_value>true</default_value>
+    </field>
+
+    <field type="boolean" name="base_ground.right_sets_contact">
+      <description>Tell if a collision on the right side sets the contact flag
+      of the colliding item.</description>
+      <default_value>true</default_value>
+    </field>
+
+    <field type="boolean" name="base_ground.middle_sets_contact">
+      <description>Tell if a collision on the middle side sets the contact flag
+      of the colliding item.</description>
+      <default_value>true</default_value>
+    </field>
+
+  </fields>
+</item>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::delayed_kill_item" category="time" fixable="false" box_color="#A928A9" url="http://www.gamned.org/wiki/index.php/delayed_kill_item">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item that kills some items after a given
+    duration.</description>
+  <fields>
+    <field type="item_reference"
+	   name="delayed_kill_item.killing_items" list="true">
+      <description>The list of the items to kill.</description>
+    </field>
+    <field type="real" name="delayed_kill_item.duration">
+      <description>The duration before killing items.</description>
+      <default_value>0</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.global">true</new_default_value>
+</item>

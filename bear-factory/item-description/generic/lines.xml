@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::lines" category="decoration" box_color="#BE41D1" url="http://www.gamned.org/wiki/index.php/lines" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+  </inherit>
+  <description>This item creates several instances of bear::line to
+    draw a line between items.</description>
+  <fields>
+    <field type="item_reference" name="lines.ends" list="true">
+      <description>The ends of the segments of the line.</description>
+      <default_value>none</default_value>
+    </field>
+    <field type="real" name="lines.width">
+      <description>The width of the line.</description>
+      <default_value>1</default_value>
+    </field>
+  </fields>
+</item>

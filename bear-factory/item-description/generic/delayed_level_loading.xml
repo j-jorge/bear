@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::delayed_level_loading" category="level loading" box_color="#86F2A0" url="http://www.gamned.org/wiki/index.php/delayed_level_loading">
+  <inherit>
+    <class>bear::item_with_input_listener</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This item starts a level after a given delay or when the user presses a key.</description>
+  <fields>
+    <field type="real" name="delayed_level_loading.delay">
+      <description>Minimum number of seconds of delay before starting the level.
+      </description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="delayed_level_loading.fade_duration">
+      <description>The duration of the fading effect before starting the level.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="boolean" name="delayed_level_loading.load_on_input">
+      <description>Tell if the level must starts before the end of the delay if
+                   the user presses a key.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="string" name="delayed_level_loading.level" required="true">
+      <description>The path of the level to start, or the name of a game
+        variable containing this path.
+      </description>
+    </field>
+    <field type="string" name="delayed_level_loading.transition_layer_name">
+      <description>The name of the transition layer receiving the fade effect.</description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>

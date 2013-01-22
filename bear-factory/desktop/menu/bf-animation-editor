@@ -1,0 +1,5 @@
+?package(bear-factory):needs="X11" section="Games/Tools" \
+  title="Bear Factory — Animation Editor" \
+  command="bf-animation-editor" \
+  hints="Animation editor for the Bear Engine." \
+  icon="bear-factory.xpm"

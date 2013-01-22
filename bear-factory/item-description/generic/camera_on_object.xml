@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::camera_on_object" category="control/camera" fixable="false" box_color="#822CC2" url="http://www.gamned.org/wiki/index.php/camera_on_object">
+  <inherit>
+    <class>bear::camera</class>
+  </inherit>
+  <description>A camera shared among some objects.</description>
+  <fields>
+    <field type="item_reference" name="camera_on_object.items" list="true">
+      <description>The items on which the camera is focused.</description>
+      <default_value>none</default_value>
+    </field>
+    <field type="boolean" name="camera_on_object.fit_items">
+      <description>Indicates if the camera must adjust its size to contain all
+	items.</description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

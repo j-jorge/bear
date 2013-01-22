@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::boolean_constant_creator" category="boolean expression" box_color="#69DAFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_boolean_expression_creation</class>
+  </inherit>
+  <description>This class is a boolean constant. This item is a parameter for other items. He kills himself at the end of his build() method.</description>
+  <fields>
+    <field type="boolean" name="boolean_constant_creator.value" required="true">
+      <description>The operand of the expression.</description>
+    </field>
+  </fields>
+</item>

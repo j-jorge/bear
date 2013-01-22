@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::level_popper_toggle" category="level loading" box_color="#9B975F" url="http://www.gamned.org/wiki/index.php/level_popper_toggle">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This item starts a level when activated.</description>
+  <fields>
+    <field type="real" name="level_popper_toggle.fade_duration">
+      <description>
+	The duration of the fading effect before starting the level.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="string" name="level_popper_toggle.transition_layer_name">
+      <description>
+	The name of the transition layer receiving the fade effect.
+      </description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_stay_around_creator" category="control/movement" box_color="#CAFF00" fixable="false" url="http://www.gamned.org/wiki/index.php/forced_stay_around_creator">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::forced_movement_tag</class>
+    <class>bear::forced_movement_creator_with_reference</class>
+  </inherit>
+  <description>This class creates a forced movement of type "forced_stay_around", applies it to itself then die.</description>
+  <fields>
+    <field type="real" name="forced_stay_around_creator.duration">
+      <description>The total time of the movement.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="forced_stay_around_creator.max_angle">
+      <description>The maximum angle of the direction.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="boolean" name="forced_stay_around_creator.apply_angle">
+      <description>Tell (true) if we apply the angle of the movement to the
+        item.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="real" name="forced_stay_around_creator.speed">
+      <description>The constant speed of the movement.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="forced_stay_around_creator.max_distance">
+      <description>The maximum allowed distance to the reference item.</description>
+      <default_value>infinity</default_value>
+    </field>
+  </fields>
+</item>

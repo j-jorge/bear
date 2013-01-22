@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::check_item_instance_creator" category="expression" box_color="#69DAFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_boolean_expression_creation</class>
+  </inherit>
+  <description>
+    This class is a boolean expression checking if an item
+    is a given item instance. This item is a parameter for an
+    applied_boolean_expression. He kills himself at the
+    end of his build() method.
+  </description>
+  <fields>
+
+    <field type="item_reference"
+           name="check_item_instance_creator.instance"
+           required="true"
+           list="true">
+      <description>
+        The condition is validated if the checked item is one of those.
+      </description>
+    </field>
+
+    <field type="item_reference"
+           name="check_item_instance_creator.collision_data"
+           required="true">
+      <description>The item for which we observe the collisions.</description>
+      <set>
+        <element value="bear::with_trigger"/>
+      </set>
+    </field>
+
+  </fields>
+</item>

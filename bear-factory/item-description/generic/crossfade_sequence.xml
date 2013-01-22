@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::crossfade_sequence" category="entity" box_color="#BE47AF" url="http://www.gamned.org/wiki/index.php/crossfade_sequence">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item to display a sequence of items with successive fadings.</description>
+  <fields>
+    <field type="real" name="crossfade_sequence.duration_sequence" list="true" required="true">
+      <description>The durations between items of the sequence.</description>
+    </field>
+    <field type="item_reference" name="crossfade_sequence.item_sequence" list="true" required="true">
+      <description>The list of the items to display.</description>
+    </field>
+    <field type="real" name="crossfade_sequence.fadeout_duration">
+      <description>The durations of the fadings.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="boolean" name="crossfade_sequence.fadein_for_first_item">
+      <description>True if there is a fade in for the first item.</description>
+      <default_value>True</default_value>
+    </field>
+    <field type="boolean" name="crossfade_sequence.fadeout_for_last_item">
+      <description>True if there is a fade out for last item.</description>
+      <default_value>True</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+</item>

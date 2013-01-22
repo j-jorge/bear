@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.gamned.org/bear/schema/0.5"
+           xmlns="http://www.gamned.org/bear/schema/0.5"
+           elementFormDefault="qualified">
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="inherit"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="description"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="fields"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="new_default_value"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="remove_field"/>
+      </xs:sequence>
+      <xs:attribute name="class" type="xs:string" use="required"/>
+      <xs:attribute name="category" type="xs:string" use="required"/>
+      <xs:attribute name="box_color" type="xs:string"/>
+      <xs:attribute name="fixable" type="xs:boolean" default="true"/>
+      <xs:attribute name="url" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="description" type="xs:string"/>
+  
+  <xs:element name="inherit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="class"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="fields">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="field">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" ref="description"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="set" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="interval" />
+        <xs:element name="default_value" minOccurs="0" maxOccurs="1" type="xs:string" />
+	<xs:element minOccurs="0" maxOccurs="unbounded" ref="after" />
+      </xs:sequence>
+
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="animation"/>
+            <xs:enumeration value="boolean"/>
+            <xs:enumeration value="font"/>
+            <xs:enumeration value="integer"/>
+            <xs:enumeration value="item_reference"/>
+            <xs:enumeration value="real"/>
+            <xs:enumeration value="sample"/>
+            <xs:enumeration value="sprite"/>
+            <xs:enumeration value="string"/>
+            <xs:enumeration value="u_integer"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:ID" use="required"/>
+      <xs:attribute name="required" type="xs:boolean" default="false"/>
+      <xs:attribute name="list" type="xs:boolean" default="false"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="after">
+    <xs:complexType>
+      <xs:attribute name="field" type="xs:IDREF" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="set">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="element">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="interval">
+    <xs:complexType>
+      <xs:attribute name="from" type="xs:decimal" use="required"/>
+      <xs:attribute name="to" type="xs:decimal" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="new_default_value">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="remove_field" type="xs:string"/>
+
+</xs:schema>
+

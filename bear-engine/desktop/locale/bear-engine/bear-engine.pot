@@ -1,0 +1,352 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-14 17:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1288
+msgid "'\n"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1251
+msgid "--game-var-assignment: not a character."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1267
+msgid "--set-game-var-bool: not a boolean"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1257
+msgid "--set-game-var-int: not an integer"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1272
+msgid "--set-game-var-real: not a real number"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1262
+msgid "--set-game-var-uint: not an unsigned integer"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1287
+msgid "Bad argument value: '"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1422
+msgid ""
+"Change the delimiter used in --set-game-var-<type> to separate the name and "
+"the value of the variable."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1364
+msgid "Engine's options:"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1389
+msgid "Path to a library containing items for the game."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1385
+msgid "Path to the directory containing the data of the game."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1437
+msgid "Print the version of the engine and exit."
+msgstr ""
+
+#: ../../../running_bear/code/running_bear.cpp:53
+msgid "Print this help screen and exit."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1382
+msgid "Run the game in a window."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1381
+msgid "Run the game in fullscreen mode."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1409
+msgid "Set the value of a boolean game variable."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1405
+msgid "Set the value of a non negative integer game variable."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1413
+msgid "Set the value of a real number game variable."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1417
+msgid "Set the value of a string game variable."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1401
+msgid "Set the value of an integer game variable."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1428
+msgid "Set the value of the destination to which game statistics are sent."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1433
+msgid "Tell to do a rendering of the scene for each progress of the game."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1396
+msgid ""
+"The delay to apply to the network messages in term of game iterations. "
+"Default is 1."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1378
+msgid "The height of the screen."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1372
+msgid "The margin around the camera in which we check for activity."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1367
+msgid "The name of the game."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1392
+msgid "The path of the first level to run."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1375
+msgid "The width of the screen."
+msgstr ""
+
+msgid "backspace"
+msgstr ""
+
+msgid "break"
+msgstr ""
+
+#: ../../../core/src/input/code/joystick.cpp:119
+msgid "button"
+msgstr ""
+
+msgid "capslock"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1424
+msgid "character"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "down"
+msgstr ""
+
+msgid "down left"
+msgstr ""
+
+msgid "down right"
+msgstr ""
+
+msgid "end"
+msgstr ""
+
+#: ../../../running_bear/code/running_bear.cpp:123
+msgid "engine_options"
+msgstr ""
+
+msgid "escape"
+msgstr ""
+
+msgid "home"
+msgstr ""
+
+msgid "insert"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1373
+#: ../../../core/src/engine/code/game_local_client.cpp:1376
+#: ../../../core/src/engine/code/game_local_client.cpp:1379
+msgid "integer"
+msgstr ""
+
+msgid "invalid mouse code"
+msgstr ""
+
+#: ../../../core/src/input/code/joystick_button.cpp:111
+msgid "joystick"
+msgstr ""
+
+msgid "keypad *"
+msgstr ""
+
+msgid "keypad +"
+msgstr ""
+
+msgid "keypad -"
+msgstr ""
+
+msgid "keypad ."
+msgstr ""
+
+msgid "keypad /"
+msgstr ""
+
+msgid "keypad 0"
+msgstr ""
+
+msgid "keypad 1"
+msgstr ""
+
+msgid "keypad 2"
+msgstr ""
+
+msgid "keypad 3"
+msgstr ""
+
+msgid "keypad 4"
+msgstr ""
+
+msgid "keypad 5"
+msgstr ""
+
+msgid "keypad 6"
+msgstr ""
+
+msgid "keypad 7"
+msgstr ""
+
+msgid "keypad 8"
+msgstr ""
+
+msgid "keypad 9"
+msgstr ""
+
+msgid "keypad ="
+msgstr ""
+
+msgid "keypad enter"
+msgstr ""
+
+msgid "left"
+msgstr ""
+
+msgid "left alt"
+msgstr ""
+
+msgid "left click"
+msgstr ""
+
+msgid "left control"
+msgstr ""
+
+msgid "left shift"
+msgstr ""
+
+msgid "left super"
+msgstr ""
+
+msgid "menu"
+msgstr ""
+
+msgid "middle click"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1402
+#: ../../../core/src/engine/code/game_local_client.cpp:1406
+#: ../../../core/src/engine/code/game_local_client.cpp:1410
+#: ../../../core/src/engine/code/game_local_client.cpp:1414
+#: ../../../core/src/engine/code/game_local_client.cpp:1418
+msgid "name=value"
+msgstr ""
+
+msgid "new line"
+msgstr ""
+
+msgid "numlock"
+msgstr ""
+
+msgid "page down"
+msgstr ""
+
+msgid "page up"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1386
+#: ../../../core/src/engine/code/game_local_client.cpp:1390
+msgid "path"
+msgstr ""
+
+msgid "pause"
+msgstr ""
+
+msgid "print screen"
+msgstr ""
+
+msgid "right"
+msgstr ""
+
+msgid "right alt"
+msgstr ""
+
+msgid "right click"
+msgstr ""
+
+msgid "right control"
+msgstr ""
+
+msgid "right shift"
+msgstr ""
+
+msgid "right super"
+msgstr ""
+
+msgid "scrolllock"
+msgstr ""
+
+msgid "space"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1368
+#: ../../../core/src/engine/code/game_local_client.cpp:1393
+msgid "string"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "tab"
+msgstr ""
+
+msgid "up"
+msgstr ""
+
+msgid "up left"
+msgstr ""
+
+msgid "up right"
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1398
+msgid "value"
+msgstr ""
+
+msgid "wheel down"
+msgstr ""
+
+msgid "wheel up"
+msgstr ""

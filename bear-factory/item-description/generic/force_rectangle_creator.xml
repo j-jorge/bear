@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::force_rectangle_creator" category="control" fixable="false" box_color="#C0C0C0" url="http://www.gamned.org/wiki/index.php/force_rectangle_creator">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This class adds a universe::force_rectangle in the world then dies.</description>
+  <fields>
+    <field type="real" name="force_rectangle_creator.force.x">
+      <description>The force on the x axis in the rectangle.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="force_rectangle_creator.force.y">
+      <description>The force on the y axis in the rectangle.</description>
+      <default_value>0</default_value>
+    </field>
+  </fields>
+</item>

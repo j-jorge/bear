@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::item_with_friction" category="-abstract-" url="http://www.gamned.org/wiki/index.php/item_with_friction">
+  <fields>
+    <field type="real" name="item_with_friction.top_friction">
+      <description>Friction applied to the items aligned on the top.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="item_with_friction.bottom_friction">
+      <description>Friction applied to the items aligned on the bottom.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="item_with_friction.left_friction">
+      <description>Friction applied to the items aligned on the left.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="item_with_friction.right_friction">
+      <description>Friction applied to the items aligned on the right.</description>
+      <default_value>1</default_value>
+    </field>
+  </fields>
+</item>

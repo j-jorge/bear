@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::timer" category="time" box_color="#1FBF73" url="http://www.gamned.org/wiki/index.php/timer">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <description>A simple timer.</description>
+  <fields>
+    <field type="boolean" name="timer.countdown">
+      <description>Tell if the timer is a countdown.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="timer.loop">
+      <description>Tell if the timer loops when the countdown is
+        over.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="timer.reset_when_reactivated">
+      <description>Indicate if the values of the timer are initialized each
+	time it is activated.</description>
+      <default_value>true</default_value>
+    </field>
+    <field type="real" name="timer.time">
+      <description>The initial time, in seconds.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="item_reference" name="timer.toggle">
+      <description>A toggle toggled when the countdown is over.</description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+  <new_default_value name="base_item.global">true</new_default_value>
+</item>

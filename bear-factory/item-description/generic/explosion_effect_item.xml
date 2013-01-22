@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::explosion_effect_item" category="decoration" box_color="#387F8A" url="http://www.gamned.org/wiki/index.php/explosion_effect_item">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item that create dust decorative items and throws splinter decorative items.</description>
+  <fields>
+    <field type="animation" name="explosion_effect_item.dust_animations" list="true">
+      <description>List of animations for dust items.</description>
+      <default_value>empty list</default_value>
+    </field>
+    <field type="animation" name="explosion_effect_item.splinter_animations" list="true">
+      <description>List of animations for splinter items.</description>
+      <default_value>empty list</default_value>
+    </field>
+    <field type="real" name="explosion_effect_item.force">
+      <description>Force given at created splinter items.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="u_integer" name="explosion_effect_item.dust_count">
+      <description>Number of dust items to create.</description>
+      <default_value>100</default_value>
+    </field>
+    <field type="u_integer" name="explosion_effect_item.splinter_count">
+      <description>Number of splinter items to create.</description>
+      <default_value>10</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_movement_applicator" category="-abstract-" box_color="#F9FF7A" fixable="false">
+  <description>This class can give a forced movement to an item.</description>
+  <fields>
+    <field type="boolean" name="forced_movement_applicator.auto_remove">
+      <description>Tell if the movement removes himself from the moving item
+      when finished.</description>
+      <default_value>false</default_value>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+    <field type="boolean" name="forced_movement_applicator.auto_angle">
+      <description>Tell if the angle of the moving item is updated according to
+      its angular speed.</description>
+      <default_value>false</default_value>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+    <field type="item_reference" name="forced_movement_applicator.actor"
+           list="true">
+      <description>The item to move.</description>
+    </field>
+
+    <field type="item_reference" name="forced_movement_applicator.movement"
+           required="true">
+      <description>An item which have a movement applied to
+        him.</description>
+      <set>
+        <element value="bear::forced_movement_tag"/>
+      </set>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+    <field type="real" name="forced_movement_applicator.actor.ratio.x">
+      <description>
+      The ratio of width to compute actor's position (0 for left side, 0.5 for
+      middle, 1 for right side).
+      </description>
+      <default_value>0.5</default_value>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+    <field type="real" name="forced_movement_applicator.actor.ratio.y">
+      <description>
+      The ratio of height to compute actor's position (0 for bottom side, 0.5
+      for middle, 1 for top side).
+      </description>
+      <default_value>0.5</default_value>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+    <field type="real" name="forced_movement_applicator.actor.gap.x">
+      <description>The x-gap to applied on actors.</description>
+      <default_value>0</default_value>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+    <field type="real" name="forced_movement_applicator.actor.gap.y">
+      <description>The y-gap to applied on actors.</description>
+      <default_value>0</default_value>
+      <after field="forced_movement_applicator.movement"/>
+    </field>
+
+  </fields>
+</item>

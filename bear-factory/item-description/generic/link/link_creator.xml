@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::link_creator" category="link" box_color="#6DFFFF" fixable="false" url="http://www.gamned.org/wiki/index.php/link_creator">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This class creates an link between two items then die.</description>
+  <fields>
+    <field type="real" name="link_creator.strength">
+      <description>The strength of the link.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="link_creator.length.minimal">
+      <description>The minimal length of the link.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="link_creator.length.maximal">
+      <description>The maximal length of the link.</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="item_reference" name="link_creator.first_item" required="true">
+      <description>The item at the first end of the link.</description>
+    </field>
+    <field type="item_reference" name="link_creator.second_item" required="true">
+      <description>The item at the second end of the link.</description>
+    </field>
+  </fields>
+</item>

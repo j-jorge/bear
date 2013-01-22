@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::item_with_text" category="-abstract-" url="http://www.gamned.org/wiki/index.php/item_with_text">
+  <fields>
+
+    <field type="string" name="item_with_text.text">
+      <description>The text in the item.</description>
+      <default_value>none</default_value>
+    </field>
+
+    <field type="font" name="item_with_text.font">
+      <description>The font to use to display the text.</description>
+      <default_value>none</default_value>
+    </field>
+
+    <field type="boolean" name="item_with_text.text_inside">
+      <description>Tell if the text is displayed only inside the bounds of the item.</description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="boolean" name="item_with_text.stretched_text">
+      <description>Tell if the text is stretched to match the bounds of the item.</description>
+      <default_value>false</default_value>
+    </field>
+
+ <field type="boolean" name="item_with_text.scale_to_fit">
+      <description>Tell if the text is scaled to match the bounds of the item. This option is disabled if stretched_text is true.</description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="string" name="item_with_text.horizontal_align">
+      <description>
+        How the text is aligned horizontally in the item.
+      </description>
+      <set>
+        <element value="align_left"/>
+        <element value="align_center"/>
+        <element value="align_right"/>
+      </set>
+      <default_value>align_left</default_value>
+    </field>
+
+    <field type="string" name="item_with_text.vertical_align">
+      <description>
+        How the text is aligned vertically in the item.
+      </description>
+      <set>
+        <element value="align_top"/>
+        <element value="align_middle"/>
+        <element value="align_bottom"/>
+      </set>
+      <default_value>align_top</default_value>
+    </field>
+
+  </fields>
+</item>

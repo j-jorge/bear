@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::item_with_activable_sides" category="-abstract-" url="http://www.gamned.org/wiki/index.php/item_with_activable_sides">
+  <fields>
+    <field type="boolean" name="item_with_activable_sides.top_side_is_active">
+      <description>Tell if the top side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="item_with_activable_sides.bottom_side_is_active">
+      <description>Tell if the bottom side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="item_with_activable_sides.left_side_is_active">
+      <description>Tell if the left side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="item_with_activable_sides.right_side_is_active">
+      <description>Tell if the right side is active.</description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

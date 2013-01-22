@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::rolling_credits" category="credits" box_color="#59D48F" url="http://www.gamned.org/wiki/index.php/rolling_credits">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This items displays rolling credits, ie. a list of
+  members of the software team. This list is taken from a custom
+  file.</description>
+  <fields>
+    <field type="string" name="rolling_credits.credits" required="true">
+      <description>The path to the credits file.</description>
+    </field>
+    <field type="real" name="rolling_credits.movement_duration">
+      <description>The duration in seconds of the movement of the
+      lines.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="rolling_credits.fading_duration">
+      <description>The duration in seconds of the fading effect when a
+      line appears or disappears.</description>
+      <default_value>movement_duration/4</default_value>
+    </field>
+  </fields>
+</item>

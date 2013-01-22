@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::killer" category="toggle/action" box_color="#A6E485" url="http://www.gamned.org/wiki/index.php/killer">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_toggle</class>
+  </inherit>
+  <description>An item that kills other items.</description>
+  <fields>
+    <field type="item_reference" name="killer.items" list="true">
+      <description>The list of the items to kill.</description>
+    </field>
+    <field type="boolean" name="killer.kill_activator">
+      <description>Tell if the activator must be killed too.</description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.global">true</new_default_value>
+</item>

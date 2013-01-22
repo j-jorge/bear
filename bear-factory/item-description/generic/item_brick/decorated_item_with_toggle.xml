@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::decorated_item_with_toggle" category="-abstract-" url="http://www.gamned.org/wiki/index.php/decorated_item_with_toggle">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <fields>
+    <field type="animation" name="decorated_item_with_toggle.visual_on">
+      <description>The animation played when the item is on.</description>
+      <default_value>none</default_value>
+    </field>
+    <field type="animation" name="decorated_item_with_toggle.visual_off">
+      <description>The animation played when the item is off.</description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>

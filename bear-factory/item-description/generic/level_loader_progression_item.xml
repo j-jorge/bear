@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::level_loader_progression_item" category="level loading" box_color="#FE2B7A" url="http://www.gamned.org/wiki/index.php/level_loader_progression_item">
+  <inherit>
+    <class>bear::level_loader_item</class>
+    <class>bear::basic_renderable_item</class>
+  </inherit>
+  <description>An item that fills a bar while loading a level.</description>
+  <fields>
+    <field type="sprite" name="level_loader_progression_item.sprite" required="true">
+      <description>The sprite that grows while the level is loaded.</description>
+    </field>
+  </fields>
+</item>

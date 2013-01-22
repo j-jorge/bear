@@ -1,0 +1,19 @@
+[Desktop Entry]
+Version=1.0
+
+Type=Application
+MimeType=application/x-bear-animation
+
+Name=Bear Factory — Animation Editor
+
+Comment=Animation editor for the Bear Engine
+Comment[en]=Animation editor for the Bear Engine
+Comment[fr]=Éditeur d'animation pour le moteur « Bear »
+
+TryExec=bf-animation-editor
+Exec=bf-animation-editor %f
+Terminal=false
+Icon=bear-factory
+
+StartupNotify=true
+Categories=Utility;

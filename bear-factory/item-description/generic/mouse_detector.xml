@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::mouse_detector" category="trigger.ui" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/mouse_detector" fixable="true">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_input_listener</class>
+  </inherit>
+  <fields>
+    <field type="boolean" name="mouse_detector.right_button">
+      <description>Indicates if the toggle must be activated on right press.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="mouse_detector.left_button">
+      <description>Indicates if the toggle must be activated on left press.</description>
+      <default_value>true</default_value>
+    </field>
+    <field type="boolean" name="mouse_detector.middle_button">
+      <description>Indicates if the toggle must be activated on middle press.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="mouse_detector.wheel_up">
+      <description>Indicates if the toggle must be activated on wheel up.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="mouse_detector.wheel_down">
+      <description>Indicates if the toggle must be activated on wheel down.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="item_reference" name="mouse_detector.toggle">
+      <description>The toggle to activate.</description>
+      <set>
+        <element value="bear::with_toggle"/>
+      </set>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+  <description>An object that activates a toggle according to the mouse.</description>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+</item>

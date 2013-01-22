@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::decorative_effect" category="decoration" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/decorative_effect">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item existing only for a decoration purpose.</description>
+  <fields>
+    <field type="boolean" name="decorative_effect.same_lifespan">
+      <description>Tell if item must be killed with the effect.</description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="boolean" name="decorative_effect.restore_at_end">
+      <description>Tell if the aspect of item must be restored at the end of the
+        effect.</description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="boolean" name="decorative_effect.loop_back">
+      <description>Indicates if the effect has a loop back.</description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="item_reference" name="decorative_effect.item" required="true">
+      <description> The item to modify.</description>
+    </field>
+
+    <field type="real" name="decorative_effect.duration">
+      <description>The total duration of the effect.</description>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.size_factor.init">
+      <description>Initial factor applied to the size.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.size_factor.end">
+      <description>Final factor applied to the size.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.opacity_factor.init">
+      <description>Initial factor applied to the opacity.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.opacity_factor.end">
+      <description>Final factor applied to the opacity.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.angle_offset.init">
+      <description>Initial offset applied to the angle.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.angle_offset.end">
+      <description>Final offset applied to the angle.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="color" name="decorative_effect.color.init">
+      <description>
+        Initial color.
+      </description>
+      <default_value>color: opacity=1, red=1, green=1, blue=1</default_value>
+    </field>
+    
+    <field type="color" name="decorative_effect.color.end">
+      <description>
+        Final color.
+      </description>
+      <default_value>color: opacity=1, red=1, green=1, blue=1</default_value>
+    </field>
+    
+    <field type="real" name="decorative_effect.intensity_factor.red.init">
+      <description>Initial factor applied to the intensity of the red component.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.intensity_factor.red.end">
+      <description>Final factor applied to the intensity of the red component.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.intensity_factor.green.init">
+      <description>Initial factor applied to the intensity of the green component.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.intensity_factor.green.end">
+      <description>Final factor applied to the intensity of the green component.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.intensity_factor.blue.init">
+      <description>Initial factor applied to the intensity of the blue component.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="decorative_effect.intensity_factor.blue.end">
+      <description>Final factor applied to the intensity of the blue component.</description>
+      <default_value>1</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

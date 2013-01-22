@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::block" category="block" box_color="#302CE0" url="http://www.gamned.org/wiki/index.php/block">
+  <inherit>
+    <class>bear::base_ground</class>
+    <class>bear::item_with_activable_sides</class>
+  </inherit>
+  <description>A classic block, to be used for walls, grounds, ceilings or
+    anything.</description>
+  <fields>
+    <field type="u_integer" name="block.collision_threshold">
+      <description>A threshold for the collisions in the corners of the item, to
+        choose if the other item is aligned on the collided side or the nearest
+        adjacent one.</description>
+      <default_value>10</default_value>
+    </field>
+
+  </fields>
+</item>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::continuous_link_visual" category="decoration/link" box_color="#40852F" url="http://www.gamned.org/wiki/index.php/continuous_link_visual">
+  <inherit>
+    <class>bear::base_link_visual</class>
+    <class>bear::item_with_decoration</class>
+    <class>bear::basic_renderable_item</class>
+  </inherit>
+
+  <fields>
+
+    <field type="real" name="continuous_link_visual.line_width">
+      <description>
+        The width of the line displayed when no sprite has been assigned to the
+        item.
+      </description>
+      <default_value>1</default_value>
+    </field>
+
+  </fields>
+
+</item>

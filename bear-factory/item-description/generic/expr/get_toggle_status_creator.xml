@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::get_toggle_status_creator" category="toggle/expression" box_color="#69DAFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_boolean_expression_creation</class>
+  </inherit>
+  <description>This class is a boolean expression returning the state of a toggle. This item is a parameter for the items of type applied_boolean_expression. He kills himself at the end of his build() method.</description>
+  <fields>
+    <field type="item_reference" name="get_toggle_status_creator.toggle" required="true">
+      <description>The toggle from which we take the status.</description>
+      <set>
+        <element value="bear::with_toggle"/>
+      </set>
+    </field>
+  </fields>
+</item>

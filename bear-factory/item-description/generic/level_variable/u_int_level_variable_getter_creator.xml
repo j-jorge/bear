@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::u_int_level_variable_getter_creator" category="level_variable/expression" box_color="#69DAFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_linear_expression_creation</class>
+  </inherit>
+  <fields>
+    <field type="string" name="u_int_level_variable_getter_creator.name" required="true">
+      <description>The name of the variable to get.</description>
+    </field>
+    <field type="u_integer" name="u_int_level_variable_getter_creator.default_value">
+      <description>The default value of the variable.</description>
+      <default_value>0</default_value>
+    </field>
+  </fields>
+</item>

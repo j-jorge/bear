@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::decorative_rectangle" category="decoration" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/decorative_rectangle">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+  </inherit>
+  <description>An item representing a decorative rectangle.</description>
+  <fields>
+    <field type="color" name="decorative_rectangle.fill_color">
+      <description>
+        The fill color.
+      </description>
+      <default_value>color: opacity=0, red=1, green=1, blue=1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.fill_intensity.red">
+      <description>
+        The intensity of the red channel for fill color.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.fill_intensity.green">
+      <description>
+        The intensity of the green channel for fill color.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.fill_intensity.blue">
+      <description>
+        The intensity of the blue channel for fill color.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.fill_opacity">
+      <description>
+        The opacity applied for fill color.
+      </description>
+      <default_value>0</default_value>
+    </field>  
+    <field type="color" name="decorative_rectangle.border_color">
+      <description>
+        The border color.
+      </description>
+      <default_value>color: opacity=0, red=1, green=1, blue=1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.border_intensity.red">
+      <description>
+        The intensity of the red channel for border color.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.border_intensity.green">
+      <description>
+        The intensity of the green channel for border color.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.border_intensity.blue">
+      <description>
+        The intensity of the blue channel for border color.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="decorative_rectangle.border_opacity">
+      <description>
+        The opacity applied for border color.
+      </description>
+      <default_value>0</default_value>
+    </field>      
+    <field type="real" name="decorative_rectangle.border_size">
+      <description>
+        The size of the border.
+      </description>
+      <default_value>1</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::script_director" category="script" box_color="#BA7EFF" url="http://www.gamned.org/wiki/index.php/script_director">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <description>An item that plays a script.</description>
+  <fields>
+    <field type="item_reference" name="script_director.actors" list="true">
+      <description>The list of actors.</description>
+      <set>
+        <element value="bear::add_script_actor"/>
+      </set>
+    </field>
+    <field type="string" name="script_director.script" required="true">
+      <description>The path to the script to play.</description>
+    </field>
+    <field type="real" name="script_director.scale">
+      <description>The scale of the time when the script is accelerated.</description>
+	<interval from="0"/>
+      <default_value>2</default_value>
+    </field>
+    <field type="boolean" name="script_director.can_be_accelerated">
+      <description>Indicates if the script can be accelerated.</description>
+      <default_value>false</default_value>
+    </field>	
+  </fields>
+  <new_default_value name="base_item.global">true</new_default_value>
+</item>

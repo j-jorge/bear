@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::world_parameters" category="control" fixable="false" box_color="#C0C0C0" url="http://www.gamned.org/wiki/index.php/world_parameters">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This class defines the parameters of the world then dies.</description>
+  <fields>
+    <field type="real" name="world_parameters.gravity.x">
+      <description>The x value of the gravity.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="world_parameters.gravity.y">
+      <description>The y value of the gravity.</description>
+      <default_value>-9.81</default_value>
+    </field>
+    <field type="real" name="world_parameters.speed_epsilon.x">
+      <description>The value under which the absolute value of the speed is considered to be equal to
+        zero on the x axis.</description>
+      <default_value>0.01</default_value>
+    </field>
+    <field type="real" name="world_parameters.speed_epsilon.y">
+      <description>The value under which the absolute value of the speed is considered to be equal to
+        zero on the y axis.</description>
+      <default_value>0.01</default_value>
+    </field>
+    <field type="real" name="world_parameters.angular_speed_epsilon">
+      <description>The value under which the absolute value of the angular speed is considered to be equal to zero.</description>
+      <default_value>0.01</default_value>
+    </field>
+    <field type="real" name="world_parameters.unit">
+      <description>The number of units of the world in a meter.</description>
+      <default_value>3000</default_value>
+    </field>
+    <field type="real" name="world_parameters.default_friction">
+      <description>Default friction applied to the items.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="world_parameters.default_density">
+      <description>Default density of the world.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="string" name="world_parameters.default_environment">
+      <description>Default environment of the world.</description>
+      <set>
+        <element value="air_environment"/>
+        <element value="fire_environment"/>
+        <element value="ice_environment"/>
+        <element value="water_environment"/>
+      </set>
+      <default_value>"air_environment"</default_value>
+    </field>
+  </fields>
+</item>

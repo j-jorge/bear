@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::base_link_visual" category="-abstract-" fixable="false" url="http://www.gamned.org/wiki/index.php/base_link_visual">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>Base class to display a link between two items.</description>
+  <fields>
+    <field type="item_reference" name="base_link_visual.start_item">
+      <description>
+        The item to use as reference for the start extremity.
+      </description>
+      <default_value>none</default_value>
+    </field>
+    <field type="item_reference" name="base_link_visual.end_item">
+      <description>
+        The item to use as reference for the end extremity.
+      </description>
+      <default_value>none</default_value>
+    </field>
+    <field type="string" name="base_link_visual.start_origin.x">
+      <description>
+        The x position of the start extremity in the reference item.
+      </description>
+      <set>
+        <element value="left"/>
+        <element value="right"/>
+        <element value="middle"/>
+      </set>
+      <default_value>middle</default_value>
+    </field>
+    <field type="string" name="base_link_visual.start_origin.y">
+      <description>
+        The y position of the start extremity in the reference item.
+      </description>
+      <set>
+        <element value="top"/>
+        <element value="bottom"/>
+        <element value="middle"/>
+      </set>
+      <default_value>middle</default_value>
+    </field>
+    <field type="string" name="base_link_visual.end_origin.x">
+      <description>
+        The x position of the end extremity in the reference item.
+      </description>
+      <set>
+        <element value="left"/>
+        <element value="right"/>
+        <element value="middle"/>
+      </set>
+      <default_value>middle</default_value>
+    </field>
+    <field type="string" name="base_link_visual.end_origin.y">
+      <description>
+        The y position of the end extremity in the reference item.
+      </description>
+      <set>
+        <element value="top"/>
+        <element value="bottom"/>
+        <element value="middle"/>
+      </set>
+      <default_value>middle</default_value>
+    </field>
+    <field type="real" name="base_link_visual.start_delta.x">
+      <description>
+        Delta to apply on the x-position of the start extremity.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_link_visual.start_delta.y">
+      <description>
+        Delta to apply on the y-position of the start extremity.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_link_visual.end_delta.x">
+      <description>
+        Delta to apply on the x-position of the end extremity.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_link_visual.end_delta.y">
+      <description>
+        Delta to apply on the y-position of the end extremity.
+      </description>
+      <default_value>0</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

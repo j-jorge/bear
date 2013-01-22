@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::mouse_over_manager" category="trigger" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/mouse_over_manager" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_input_listener</class>
+  </inherit>
+  <fields>
+    <field type="item_reference" name="mouse_over_manager.items" list="true">
+      <description>The items to scan.</description>
+      <default_value>none</default_value>
+    </field>
+
+    <field type="animation" name="mouse_over_manager.animation_on">
+      <description>The animation when the mouse is inside the item.</description>
+      <default_value>none</default_value>
+    </field>
+
+    <field type="animation" name="mouse_over_manager.animation_off">
+      <description>The animation when the mouse is outside the item.</description>
+      <default_value>none</default_value>
+    </field>
+
+    <field type="sample" name="mouse_over_manager.sample">
+      <description>The sample to play when the mouse is on a item.</description>
+      <default_value>none</default_value>
+    </field>
+
+  </fields>
+  <description>An object that place an animation according to the mouse.</description>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.global">true</new_default_value>
+</item>

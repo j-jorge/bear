@@ -1,0 +1,353 @@
+# French translations for PACKAGE package
+# Traductions françaises du paquet PACKAGE.
+# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Julien Jorge <julien.jorge@gamned.org>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-14 17:47+0200\n"
+"PO-Revision-Date: 2012-04-14 17:48+0100\n"
+"Last-Translator: Julien Jorge <julien.jorge@gamned.org>\n"
+"Language-Team: French\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1288
+msgid "'\n"
+msgstr " »\n"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1251
+msgid "--game-var-assignment: not a character."
+msgstr "--game-var-assignment : n'est pas un caractère."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1267
+msgid "--set-game-var-bool: not a boolean"
+msgstr "--set-game-var-bool : n'est pas un booléen"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1257
+msgid "--set-game-var-int: not an integer"
+msgstr "--set-game-var-int : n'est pas un entier"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1272
+msgid "--set-game-var-real: not a real number"
+msgstr "--set-game-var-real : n'est pas un nombre réel"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1262
+msgid "--set-game-var-uint: not an unsigned integer"
+msgstr "--set-game-var-uint : n'est pas un entier non négatif."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1287
+msgid "Bad argument value: '"
+msgstr "Valeur de paramètre incorrecte : «"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1422
+msgid "Change the delimiter used in --set-game-var-<type> to separate the name and the value of the variable."
+msgstr "Change le délimiteur utilisé par --set-game-var-<type> pour séparer le nom et la valeur de la variable."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1364
+msgid "Engine's options:"
+msgstr "Options du moteur :"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1389
+msgid "Path to a library containing items for the game."
+msgstr "Chemin vers une bibliothèque contenant les objets du jeu."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1385
+msgid "Path to the directory containing the data of the game."
+msgstr "Chemin vers un dossier contenant les données du jeu."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1437
+msgid "Print the version of the engine and exit."
+msgstr "Affiche la version du moteur sans lancer le jeu."
+
+#: ../../../running_bear/code/running_bear.cpp:53
+msgid "Print this help screen and exit."
+msgstr "Affiche cet écran d'aide sans lancer le jeu."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1382
+msgid "Run the game in a window."
+msgstr "Exécute le jeu dans une fenêtre."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1381
+msgid "Run the game in fullscreen mode."
+msgstr "Exécute le jeu en plein écran."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1409
+msgid "Set the value of a boolean game variable."
+msgstr "Affecte une valeur à une variable de jeu booléenne."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1405
+msgid "Set the value of a non negative integer game variable."
+msgstr "Affecte une valeur à une variable de jeu de type entier non négatif."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1413
+msgid "Set the value of a real number game variable."
+msgstr "Affecte une valeur à une variable de jeu de type nombre réel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1417
+msgid "Set the value of a string game variable."
+msgstr "Affecte une valeur à une variable de jeu de type chaîne de caractères."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1401
+msgid "Set the value of an integer game variable."
+msgstr "Affecte une valeur à une variable de jeu de type entier."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1428
+msgid "Set the value of the destination to which game statistics are sent."
+msgstr "Définit la valeur de la destination à laquelle les statistiques de jeu sont envoyées."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1433
+msgid "Tell to do a rendering of the scene for each progress of the game."
+msgstr "Indique de faire un affichage de la scène pour chaque itération du jeu."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1396
+msgid "The delay to apply to the network messages in term of game iterations. Default is 1."
+msgstr "Le délai à appliquer au messages du réseau en terme d'itérations de jeu. La valeur par défaut est 1."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1378
+msgid "The height of the screen."
+msgstr "La hauteur de l'écran."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1372
+msgid "The margin around the camera in which we check for activity."
+msgstr "La distance dans laquelle les objets sont considérés autour de la caméra."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1367
+msgid "The name of the game."
+msgstr "Le nom du jeu."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1392
+msgid "The path of the first level to run."
+msgstr "Le chemin du premier niveau à lancer."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1375
+msgid "The width of the screen."
+msgstr "La largeur de l'écran."
+
+msgid "backspace"
+msgstr "effacement"
+
+msgid "break"
+msgstr "pause"
+
+#: ../../../core/src/input/code/joystick.cpp:119
+msgid "button"
+msgstr "bouton"
+
+msgid "capslock"
+msgstr "Vérouillage majuscule"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1424
+msgid "character"
+msgstr "caractère"
+
+msgid "delete"
+msgstr "supprimer"
+
+msgid "down"
+msgstr "bas"
+
+msgid "down left"
+msgstr "bas-gauche"
+
+msgid "down right"
+msgstr "bas-droite"
+
+msgid "end"
+msgstr "fin"
+
+#: ../../../running_bear/code/running_bear.cpp:123
+msgid "engine_options"
+msgstr "options_du_moteur"
+
+msgid "escape"
+msgstr "échapement"
+
+msgid "home"
+msgstr "début"
+
+msgid "insert"
+msgstr "insertion"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1373
+#: ../../../core/src/engine/code/game_local_client.cpp:1376
+#: ../../../core/src/engine/code/game_local_client.cpp:1379
+msgid "integer"
+msgstr "entier"
+
+msgid "invalid mouse code"
+msgstr "code invalide pour la souris"
+
+#: ../../../core/src/input/code/joystick_button.cpp:111
+msgid "joystick"
+msgstr "manette"
+
+msgid "keypad *"
+msgstr "* du pavé numérique"
+
+msgid "keypad +"
+msgstr "+ du pavé numérique"
+
+msgid "keypad -"
+msgstr "- du pavé numérique"
+
+msgid "keypad ."
+msgstr ". du pavé numérique"
+
+msgid "keypad /"
+msgstr "/ du pavé numérique"
+
+msgid "keypad 0"
+msgstr "0 du pavé numérique"
+
+msgid "keypad 1"
+msgstr "1 du pavé numérique"
+
+msgid "keypad 2"
+msgstr "2 du pavé numérique"
+
+msgid "keypad 3"
+msgstr "3 du pavé numérique"
+
+msgid "keypad 4"
+msgstr "4 du pavé numérique"
+
+msgid "keypad 5"
+msgstr "5 du pavé numérique"
+
+msgid "keypad 6"
+msgstr "6 du pavé numérique"
+
+msgid "keypad 7"
+msgstr "7 du pavé numérique"
+
+msgid "keypad 8"
+msgstr "8 du pavé numérique"
+
+msgid "keypad 9"
+msgstr "9 du pavé numérique"
+
+msgid "keypad ="
+msgstr "= du pavé numérique"
+
+msgid "keypad enter"
+msgstr "entrée du pavé numérique"
+
+msgid "left"
+msgstr "gauche"
+
+msgid "left alt"
+msgstr "alt à gauche"
+
+msgid "left click"
+msgstr "clic gauche"
+
+msgid "left control"
+msgstr "contrôle à gauche"
+
+msgid "left shift"
+msgstr "majuscule à gauche"
+
+msgid "left super"
+msgstr "fenêtre à gauche"
+
+msgid "menu"
+msgstr "menu"
+
+msgid "middle click"
+msgstr "clic central"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1402
+#: ../../../core/src/engine/code/game_local_client.cpp:1406
+#: ../../../core/src/engine/code/game_local_client.cpp:1410
+#: ../../../core/src/engine/code/game_local_client.cpp:1414
+#: ../../../core/src/engine/code/game_local_client.cpp:1418
+msgid "name=value"
+msgstr "nom=valeur"
+
+msgid "new line"
+msgstr "entrée"
+
+msgid "numlock"
+msgstr "Vérouillage du pavé numérique"
+
+msgid "page down"
+msgstr "page suivante"
+
+msgid "page up"
+msgstr "page précédente"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1386
+#: ../../../core/src/engine/code/game_local_client.cpp:1390
+msgid "path"
+msgstr "chemin"
+
+msgid "pause"
+msgstr "pause"
+
+msgid "print screen"
+msgstr "Impr écran"
+
+msgid "right"
+msgstr "droite"
+
+msgid "right alt"
+msgstr "tabulation droite"
+
+msgid "right click"
+msgstr "clic droit"
+
+msgid "right control"
+msgstr "contrôle à gauche"
+
+msgid "right shift"
+msgstr "majuscule à gauche"
+
+msgid "right super"
+msgstr "fenêtre à gauche"
+
+msgid "scrolllock"
+msgstr "arrêt défilement"
+
+msgid "space"
+msgstr "espace"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1368
+#: ../../../core/src/engine/code/game_local_client.cpp:1393
+msgid "string"
+msgstr "chaîne de caractères"
+
+msgid "system"
+msgstr "système"
+
+msgid "tab"
+msgstr "tabulation"
+
+msgid "up"
+msgstr "haut"
+
+msgid "up left"
+msgstr "haut-gauche"
+
+msgid "up right"
+msgstr "haut-droit"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1398
+#| msgid "name=value"
+msgid "value"
+msgstr "valeur"
+
+msgid "wheel down"
+msgstr "molette en bas"
+
+msgid "wheel up"
+msgstr "molette en haut"
+
+#~ msgid "Undefined"
+#~ msgstr "Non défini."

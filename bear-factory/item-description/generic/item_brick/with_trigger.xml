@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::with_trigger" category="-abstract-" url="http://www.gamned.org/wiki/index.php/with_trigger">
+  <inherit>
+    <class>bear::with_boolean_expression_assignment</class>
+  </inherit>
+</item>

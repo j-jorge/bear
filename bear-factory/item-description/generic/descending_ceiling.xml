@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::descending_ceiling" category="block" box_color="#FFCD12" url="http://www.gamned.org/wiki/index.php/descending_ceiling">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+    <class>bear::item_with_decoration</class>
+    <class>bear::item_with_restricted_z_collision</class>
+  </inherit>
+  <description>A ceiling that is not horizontal.</description>
+  <fields>
+    <field type="real" name="descending_ceiling.steepness" required="true">
+      <description>The distance on the Y-coordinate between the left edge and
+        the right edge. Cannot be equal to zero.</description>
+    </field>
+    <field type="boolean" name="descending_ceiling.opposite_side_is_active">
+      <description>Tell if the top side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="descending_ceiling.left_side_is_active">
+      <description>Tell if the left side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="descending_ceiling.right_side_is_active">
+      <description>Tell if the right side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="descending_ceiling.apply_angle">
+      <description>Tell if the angle of the slope is applied to the colliding
+        items.</description>
+      <default_value>true</default_value>
+    </field>
+  </fields>
+</item>

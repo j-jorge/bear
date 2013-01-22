@@ -1,0 +1,5 @@
+?package(bear-factory):needs="X11" section="Games/Tools" \
+  title="Bear Factory — Level Editor" \
+  command="bf-level-editor" \
+  hints="Level editor for the Bear Engine." \
+  icon="bear-factory.xpm"

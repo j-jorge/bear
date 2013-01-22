@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::linear_movement_sequence_loop" category="control/movement" box_color="#BE41D1" url="http://www.gamned.org/wiki/index.php/linear_movement_sequence_loop">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>A linear_movement_sequence_loop is an item that creates some items and sets their movement as a linear movement.</description>
+  <fields>
+    <field type="real" name="linear_movement_sequence_loop.duration">
+      <description>The duration of the movement, in seconds.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="linear_movement_sequence_loop.positions" list="true" required="true">
+      <description>
+        The list of item positions according to the movement duration.
+      </description>
+    </field>
+    <field type="item_reference" name="linear_movement_sequence_loop.item" required="true">
+      <description>
+        The item to be copied.
+      </description>
+    </field>
+    <field type="real" name="linear_movement_sequence_loop.length.x"> 
+       <description>The length of the movement on the X-axis.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="linear_movement_sequence_loop.length.y">
+      <description>The length of the movement on the Y-axis.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="boolean" name="linear_movement_sequence_loop.auto_angle">
+      <description>Tell if the angle of moving items are updated according to their angular speed.</description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

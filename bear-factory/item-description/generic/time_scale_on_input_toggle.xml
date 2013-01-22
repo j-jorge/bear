@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::time_scale_on_input_toggle" category="time" box_color="#9B975F" url="http://www.gamned.org/wiki/index.php/time_scale_on_input_toggle">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This toggle changes the time scale if an input is pressed when
+  it is turned on.</description>
+  <fields>
+    <field type="item_reference" name="time_scale_on_input_toggle.time_scale"
+           required="true">
+      <description>The items to use to scale the time.</description>
+      <set>
+        <element value="bear::time_scale"/>
+      </set>
+    </field>
+  </fields>
+</item>

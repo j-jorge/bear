@@ -1,0 +1,4692 @@
+# French translations for Bear Factory.
+# Copyright (C) 2008 Julien Jorge <julien.jorge@gamned.org>
+# This file is distributed under the Creative Commons by-sa licence version 3.0.
+# Julien Jorge <julien.jorge@gamned.org>, 2008.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Bear Factory 0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-14 17:49+0200\n"
+"PO-Revision-Date: 2012-04-14 17:50+0100\n"
+"Last-Translator: Julien Jorge <julien.jorge@gamned.org>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1312
+#, c-format
+msgid ""
+"\n"
+"%.2f Mb in %d images."
+msgstr ""
+"\n"
+"%.2f Mo dans %d images."
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2370
+#, c-format
+msgid ""
+"\n"
+"%s"
+msgstr ""
+"\n"
+"%s"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2375
+#, fuzzy, c-format
+#| msgid "%s: %s"
+msgid ""
+"\n"
+"%s: %s"
+msgstr "%s : %s"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1291
+#, fuzzy, c-format
+#| msgid "Layer %d has %d items.\n"
+msgid " has %d items.\n"
+msgstr "Le calque %d contient %d objets.\n"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1284
+#, c-format
+msgid "%d layers:\n"
+msgstr "%d calques:\n"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2358
+#, fuzzy, c-format
+#| msgid "%s: %s"
+msgid "%s:"
+msgstr "%s : %s"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:383
+#, c-format
+msgid "%s: %s"
+msgstr "%s : %s"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:332
+#, fuzzy, c-format
+#| msgid "%s: %s"
+msgid "%s: %s\n"
+msgstr "%s : %s"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:376
+#, c-format
+msgid "%s: no description available"
+msgstr "%s : aucune description disponible"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:295
+#: ../../../level-editor/src/bf/code/main_frame.cpp:312
+#: ../../../model-editor/src/bf/code/main_frame.cpp:222
+msgid "&About"
+msgstr "À &propos"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:555
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:680
+msgid "&Align"
+msgstr "&Aligner"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:195
+msgid "&Animation"
+msgstr "&Animation"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1095
+msgid "&Backward"
+msgstr "En &arrière"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:542
+msgid "&Bottom"
+msgstr "&Bas"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:705
+msgid "&Bright background"
+msgstr "&Arrière plan clair"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:617
+msgid "&Bright background\tB"
+msgstr "&Arrière plan clair\tB"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:250
+msgid "&Change all durations..."
+msgstr "&Changer toutes les durées…"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:492
+#: ../../../model-editor/src/bf/code/model_frame.cpp:486
+msgid "&Close"
+msgstr "&Fermer"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:220
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:655
+#: ../../../model-editor/src/bf/code/model_frame.cpp:574
+msgid "&Compile"
+msgstr "&Compiler"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:270
+msgid "&Compile\tF9"
+msgstr "C&ompiler\tF9"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:272
+#: ../../../level-editor/src/bf/code/main_frame.cpp:267
+#: ../../../model-editor/src/bf/code/main_frame.cpp:199
+msgid "&Configuration..."
+msgstr "&Configuration..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:597
+msgid "&Configure on the selection\tAlt+G"
+msgstr "&Configurer sur la sélection\tAlt+G"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:600
+msgid "&Configure...\tCtrl+Shift+G"
+msgstr "&Configurer...\tCtrl+Shift+G"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:515
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:663
+#: ../../../model-editor/src/bf/code/model_frame.cpp:508
+#: ../../../model-editor/src/bf/code/model_frame.cpp:579
+msgid "&Copy"
+msgstr "&Copier"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:519
+#: ../../../model-editor/src/bf/code/model_frame.cpp:512
+msgid "&Delete\tDEL"
+msgstr "&Supprimer\tDEL"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:518
+msgid "&Delete snapshot\tCTRL+DEL"
+msgstr "&Supprimer le repère temporel\tCTRL+DEL"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:196
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:453
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:455
+#: ../../../model-editor/src/bf/code/model_frame.cpp:457
+#: ../../../model-editor/src/bf/code/model_frame.cpp:458
+msgid "&Edit"
+msgstr "&Édition"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:277
+#: ../../../level-editor/src/bf/code/main_frame.cpp:274
+#: ../../../model-editor/src/bf/code/main_frame.cpp:204
+msgid "&Exit"
+msgstr "&Quitter"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1099
+msgid "&Forward"
+msgstr "&Vers l'avant"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:622
+msgid "&Global view\tV"
+msgstr "&Vue globale\tV"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:609
+msgid "&Graphic\tG"
+msgstr "&Graphisme\tG"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:536
+#, fuzzy
+#| msgid "&Graphic\tG"
+msgid "&Graphic\tg"
+msgstr "&Graphisme\tG"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:696
+#: ../../../model-editor/src/bf/code/model_frame.cpp:594
+msgid "&Graphism"
+msgstr "&Graphisme"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:197
+#: ../../../level-editor/src/bf/code/main_frame.cpp:227
+#: ../../../model-editor/src/bf/code/main_frame.cpp:173
+msgid "&Help"
+msgstr "Ai&de"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:545
+msgid "&Horizontal center"
+msgstr "Centre &horizontal"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:690
+msgid "&Identifiers"
+msgstr "&Identifiants"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:291
+msgid "&Item classes"
+msgstr "Classes d'&objet"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:611
+msgid "&Item identifiers\tI"
+msgstr "&Identifiants des objets\tI"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:288
+msgid "&Layer list"
+msgstr "&Liste des calques"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:533
+msgid "&Left"
+msgstr "&Gauche"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:225
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:449
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:450
+msgid "&Level"
+msgstr "&Niveau"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:687
+msgid "&Magnetism"
+msgstr "&Magnétisme"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:591
+msgid "&Magnetism\tCtrl+M"
+msgstr "&Magnetisme\tCtrl+M"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:172
+#: ../../../model-editor/src/bf/code/model_frame.cpp:453
+#: ../../../model-editor/src/bf/code/model_frame.cpp:454
+msgid "&Model"
+msgstr "&Modèle"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:211
+#: ../../../level-editor/src/bf/code/main_frame.cpp:241
+msgid "&New"
+msgstr "&Nouveau"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:516
+msgid "&New snapshot\tCTRL+INS"
+msgstr "&Nouveau repère temporel\tCTRL+INS"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:264
+#: ../../../level-editor/src/bf/code/main_frame.cpp:260
+#: ../../../model-editor/src/bf/code/main_frame.cpp:195
+msgid "&New..."
+msgstr "&Nouveau..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:678
+msgid "&Offset"
+msgstr "&Décalage"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:560
+msgid "&Offset..."
+msgstr "&Décalage…"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:290
+#: ../../../level-editor/src/bf/code/main_frame.cpp:307
+#: ../../../model-editor/src/bf/code/main_frame.cpp:217
+msgid "&Online documentation"
+msgstr "&Documentation en ligne"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:213
+#: ../../../level-editor/src/bf/code/main_frame.cpp:243
+msgid "&Open"
+msgstr "&Ouvrir"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:265
+#: ../../../level-editor/src/bf/code/main_frame.cpp:261
+#: ../../../model-editor/src/bf/code/main_frame.cpp:196
+msgid "&Open..."
+msgstr "&Ouvrir..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:665
+#: ../../../model-editor/src/bf/code/model_frame.cpp:581
+msgid "&Paste"
+msgstr "Co&ller"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:488
+msgid "&Properties"
+msgstr "&Propriétés"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:672
+#: ../../../model-editor/src/bf/code/model_frame.cpp:587
+msgid "&Redo"
+msgstr "&Refaire"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:509
+#: ../../../model-editor/src/bf/code/model_frame.cpp:502
+msgid "&Redo\tCTRL+Y"
+msgstr "&Rétablir\tCtrl+Y"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:60
+msgid "&Refresh"
+msgstr "&Rafraîchir"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:699
+msgid "&Relationship"
+msgstr "&Relations"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:614
+msgid "&Relationship\tR"
+msgstr "&Relations\tR"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:536
+msgid "&Right"
+msgstr "&Droit"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:269
+#, fuzzy
+#| msgid "&Configuration..."
+msgid "&Run configuration..."
+msgstr "&Configuration..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:657
+#, fuzzy
+msgid "&Run level"
+msgstr "Niveau"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:484
+#, fuzzy
+#| msgid "C&ompile the level\tF9"
+msgid "&Run this level\tF11"
+msgstr "C&ompiler le niveau\tF9"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:216
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:266
+#: ../../../level-editor/src/bf/code/main_frame.cpp:246
+#: ../../../level-editor/src/bf/code/main_frame.cpp:262
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:472
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:652
+#: ../../../model-editor/src/bf/code/model_frame.cpp:475
+#: ../../../model-editor/src/bf/code/model_frame.cpp:571
+msgid "&Save"
+msgstr "&Enregistrer"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:197
+msgid "&Save all"
+msgstr "&Tout enregistrer"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:523
+msgid "&Select all\tCTRL+A"
+msgstr "Tout &sélectionner\tCtrl+A"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:226
+msgid "&Tab"
+msgstr "&Onglets"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:597
+msgid "&Text"
+msgstr "&Texte"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:538
+msgid "&Text\tg"
+msgstr "&Texte\tg"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:539
+msgid "&Top"
+msgstr "&Haut"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:670
+#: ../../../model-editor/src/bf/code/model_frame.cpp:585
+msgid "&Undo"
+msgstr "&Annuler"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:507
+#: ../../../model-editor/src/bf/code/model_frame.cpp:500
+msgid "&Undo\tCTRL+Z"
+msgstr "&Annuler\tCtrl+Z"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:274
+#: ../../../level-editor/src/bf/code/main_frame.cpp:271
+#: ../../../model-editor/src/bf/code/main_frame.cpp:201
+msgid "&Update image pool"
+msgstr "&Mettre à jour les images"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:549
+msgid "&Vertical center"
+msgstr "Centre &vertical"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:458
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:459
+#: ../../../model-editor/src/bf/code/model_frame.cpp:461
+#: ../../../model-editor/src/bf/code/model_frame.cpp:462
+msgid "&View"
+msgstr "&Vue"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:588
+msgid "&Visible\tCtrl+G"
+msgstr "&Visible\tCtrl+G"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:693
+#: ../../../model-editor/src/bf/code/model_frame.cpp:591
+msgid "&Wireframe"
+msgstr "&Fil de fer"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:607
+#: ../../../model-editor/src/bf/code/model_frame.cpp:533
+msgid "&Wireframe\tW"
+msgstr "&Fil de fer\tW"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:638
+#: ../../../model-editor/src/bf/code/model_frame.cpp:557
+msgid "&Zoom"
+msgstr "&Zoom"
+
+#: ../../../bear-editor/src/bf/code/bool_edit.cpp:39
+msgid "'True' if checked"
+msgstr "« Vrai » si coché"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2333
+#, c-format
+msgid "(%.2f, %.2f)"
+msgstr "(%.2f ; %.2f)"
+
+# Class description
+# ../../../item-description/generic/hidden_block.xml
+msgid "A block that changes its opacity when an oject collides."
+msgstr ""
+
+# Class description
+# ../../../item-description/generic/expr/timer_value.xml
+#, fuzzy
+#| msgid "A linear expression that returns the value of a timer."
+msgid "A boolean expression that returns the value of a level variable"
+msgstr "Une expression linéaire qui s'évalue comme la valeur d'un chrono."
+
+# Class description
+# ../../../item-description/generic/expr/timer_value.xml
+#, fuzzy
+#| msgid "A linear expression that returns the value of a timer."
+msgid "A boolean expression that returns true if any input is pressed."
+msgstr "Une expression linéaire qui s'évalue comme la valeur d'un chrono."
+
+# Class description
+# ../../../item-description/generic/camera_on_object.xml
+msgid "A camera shared among some objects."
+msgstr "Une caméra partagée par un ensemble d'objets."
+
+# Class description
+# ../../../item-description/generic/descending_ceiling.xml
+msgid "A ceiling that is not horizontal."
+msgstr "Un plafond en pente."
+
+# Class description
+# ../../../item-description/generic/forced_movement/applied_forced_movement.xml
+#, fuzzy
+#| msgid "This class applies a forced movement to an item then die."
+msgid "A class for forced movement with item reference."
+msgstr "Cette classe applique un mouvement forcé à un objet puis meurt."
+
+# Class description
+# ../../../item-description/generic/block.xml
+msgid "A classic block, to be used for walls, grounds, ceilings or anything."
+msgstr "Un bloc classique, pouvant être utilisé pour les murs, les sols, les plafonds ou n'importe quoi."
+
+# Class description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid "A decorative chain linking two items. The chain falls when the items are far from each other horizontally but stay straight when they are aligned vertically."
+msgstr "Une décoration en forme de chaîne reliant deux objets. La chaîne tombe quand les objets sont loin l'un de l'autre horizontalement mais reste droite quand il sont alignés verticalement."
+
+# Class description
+# ../../../item-description/generic/slope.xml
+msgid "A ground that is not horizontal."
+msgstr "Un sol en pente."
+
+# Class description
+# ../../../item-description/generic/expr/timer_value.xml
+msgid "A linear expression that returns the value of a timer."
+msgstr "Une expression linéaire qui s'évalue comme la valeur d'un chrono."
+
+# Class description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "A linear_movement_sequence_loop is an item that creates some items and sets their movement as a linear movement."
+msgstr "Un objet qui crée un groupe d'objet et leur applique un mouvement forcé linéaire."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid "A list of toggles to which the status of this toggle is transmitted."
+msgstr ""
+
+# Class description
+# ../../../item-description/generic/straight_slope.xml
+msgid "A piece of ground intended to be used next some slopes. This items works like a slope. That is, the other item is aligned only if the X-coordinate of his center of mass is in the range covered by the current item."
+msgstr "Un morceau de sol prévu pour être utilisé au contact des pentes. Ces objet se comporte comme une pente, c'est-à-dire que les objets en collision ne sont alignés que si leur centre horizontal est dans l'intervalle couvert par cet objet."
+
+# Class description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "A rectangle in which some decorative sprites move linearly to simulate a flow."
+msgstr "Un rectangle dans lequel quelques images décoratives défilent pour simuler un flux."
+
+# Class description
+# ../../../item-description/generic/timer.xml
+#, fuzzy
+#| msgid "A simple timer."
+msgid "A simple bridge."
+msgstr "Un chrono des plus simples."
+
+# Class description
+# ../../../item-description/generic/camera.xml
+msgid "A simple camera."
+msgstr "Une caméra des plus simples."
+
+# Class description
+# ../../../item-description/generic/timer.xml
+msgid "A simple timer."
+msgstr "Un chrono des plus simples."
+
+#, fuzzy
+#| msgid "A toggle that changes the current camera."
+msgid "A simple toggle that can be used to carry a boolean state."
+msgstr "Un toggle qui change la caméra active."
+
+msgid "A sound in the level."
+msgstr "Un son dans le niveau."
+
+# Field description
+# ../../../item-description/generic/block.xml
+msgid "A threshold for the collisions in the corners of the item, to choose if the other item is aligned on the collided side or the nearest adjacent one."
+msgstr "Un seuil de tolérance appliqué aux collisions se produisant dans les coins de l'objet, pour décider si l'autre objet est aligné contre la face touchée ou contre la plus proche face adjacente."
+
+msgid "A toggle that changes the current camera."
+msgstr "Un toggle qui change la caméra active."
+
+# Class description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of a boolean game variable."
+msgstr "Un toggle qui affecte une valeur à une variable de jeu de type booléen."
+
+# Class description
+# ../../../item-description/generic/game_variable/real_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of a real game variable."
+msgstr "Un toggle qui affecte une valeur à une variable de jeu de type réel."
+
+# Class description
+# ../../../item-description/generic/game_variable/string_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of a string game variable."
+msgstr "Un toggle qui affecte une valeur à une variable de jeu de type chaîne de caractères."
+
+# Class description
+# ../../../item-description/generic/game_variable/int_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of an integer game variable."
+msgstr "Un toggle qui affecte une valeur à une variable de jeu de type entier."
+
+# Class description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of an unsigned int game variable."
+msgstr "Un toggle qui affecte une valeur à une variable de jeu de type entier non signé."
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "A toggle toggled when the countdown is over."
+msgstr "Un toggle qui à activer quand le compte à rebours est terminé."
+
+#: ../../../animation-editor/src/bf/code/about_dialog.cpp:43
+#: ../../../level-editor/src/bf/code/about_dialog.cpp:43
+#: ../../../model-editor/src/bf/code/about_dialog.cpp:43
+msgid "About"
+msgstr "À propos"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:394
+msgid "Action is not allowed"
+msgstr "L'action n'est pas autorisée."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:363
+#, fuzzy
+#| msgid "Action is not allowed"
+msgid "Action not allowed"
+msgstr "L'action n'est pas autorisée."
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:43
+msgid "Action properties"
+msgstr "Propriétés de l'action"
+
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:95
+msgid "Actions"
+msgstr "Actions"
+
+#: ../../../model-editor/src/bf/history/code/action_add_action.cpp:81
+msgid "Add action"
+msgstr "Ajouter une action"
+
+#: ../../../level-editor/src/bf/history/code/action_add_item.cpp:85
+msgid "Add item "
+msgstr "Ajouter un objet"
+
+#: ../../../level-editor/src/bf/history/code/action_add_layer.cpp:80
+msgid "Add layer"
+msgstr "Ajouter un calque"
+
+#: ../../../model-editor/src/bf/history/code/action_add_mark.cpp:84
+msgid "Add mark"
+msgstr "Ajouter une marque"
+
+#: ../../../model-editor/src/bf/history/code/action_add_snapshot.cpp:84
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1378
+msgid "Add snapshot"
+msgstr "Ajouter un repère temporel."
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:84
+msgid "Add to previous duration."
+msgstr "Ajouter à la durée précédente."
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:119
+msgid "Add to selection"
+msgstr "Ajouter à la sélection"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:638
+#: ../../../model-editor/src/bf/code/model_frame.cpp:557
+msgid "Adjust the zoom ratio."
+msgstr "Ajuster le ratio du zoom."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:680
+msgid "Align"
+msgstr "Aligner"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:543
+msgid "Align the bottom edge of the items."
+msgstr "Aligner le bas des objets."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:546
+msgid "Align the center of the items on the X-axis."
+msgstr "Aligner le centre horizontal des objets."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:550
+msgid "Align the center of the items on the Y-axis."
+msgstr "Aligner le centre vertical des objets."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:534
+msgid "Align the left edge of the items."
+msgstr "Aligner le côté gauche des objets."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:537
+msgid "Align the right edge of the items."
+msgstr "Aligner le côté droit des objets."
+
+#: ../../../level-editor/src/bf/history/code/action_align_selection_top.cpp:60
+#: ../../../level-editor/src/bf/history/code/action_align_selection_center_x.cpp:60
+#: ../../../level-editor/src/bf/history/code/action_align_selection_center_y.cpp:60
+#: ../../../level-editor/src/bf/history/code/action_align_selection_right.cpp:60
+#: ../../../level-editor/src/bf/history/code/action_align_selection_bottom.cpp:57
+#: ../../../level-editor/src/bf/history/code/action_align_selection_left.cpp:57
+msgid "Align the selected items"
+msgstr "Aligner les objets sélectionnés."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:555
+msgid "Align the selected items."
+msgstr "Aligner les objets sélectionnés."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:540
+msgid "Align the top edge of the items."
+msgstr "Aligner le haut des objets."
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "An extra margin above the slope, where the collisions will also be detected."
+msgstr "Une marge au dessus de la pente, dans laquelle les collisions seront aussi détectées."
+
+# Class description
+# ../../../item-description/generic/decorative_item.xml
+msgid "An item existing only for a decoration purpose."
+msgstr "Une décoration et rien d'autre."
+
+# Class description
+# ../../../item-description/generic/script/script_director.xml
+msgid "An item that adds an actor in a script_director."
+msgstr "Un objet qui ajoute un acteur dans un script_director."
+
+# Class description
+# ../../../item-description/generic/item_creator.xml
+#, fuzzy
+#| msgid "An item that creates some items when it is activated."
+msgid "An item that create dust decorative items and throws splinter decorative items."
+msgstr "Un objet qui crée des objets quand il est activé."
+
+# Class description
+# ../../../item-description/generic/item_creator.xml
+msgid "An item that creates some items when it is activated."
+msgstr "Un objet qui crée des objets quand il est activé."
+
+# Class description
+# ../../../item-description/generic/level_loader_progression_item.xml
+msgid "An item that fills a bar while loading a level."
+msgstr "Un objet qui remplit une barre pendant le chargement d'un niveau."
+
+#, fuzzy
+#| msgid "An item that kills other items."
+msgid "An item that kills any colliding item."
+msgstr "Un objet qui tue d'autres objets."
+
+msgid "An item that kills other items."
+msgstr "Un objet qui tue d'autres objets."
+
+msgid "An item that kills some items after a given duration."
+msgstr "Un objet qui tue d'autres objets après une durée donnée."
+
+# Class description
+# ../../../item-description/generic/script/script_director.xml
+msgid "An item that plays a script."
+msgstr "Un objet exécutant un script."
+
+#, fuzzy
+#| msgid "An item that kills other items."
+msgid "An item that reflects collised items."
+msgstr "Un objet qui tue d'autres objets."
+
+# Class description
+# ../../../item-description/generic/link/link_remover.xml
+msgid "An item that removes all the links on the colliding items."
+msgstr "Un objet qui supprime tous les liens appliqués aux objets en collision avec lui."
+
+# Class description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter_suicide.xml
+msgid "An item that sets the value of a boolean game variable and kills himself."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type booléen et qui se suicide ensuite."
+
+# Class description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter.xml
+msgid "An item that sets the value of a boolean game variable."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type booléen."
+
+# Class description
+# ../../../item-description/generic/game_variable/real_game_variable_setter_suicide.xml
+msgid "An item that sets the value of a real game variable and kills himself."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type réel et qui se suicide ensuite."
+
+# Class description
+# ../../../item-description/generic/game_variable/real_game_variable_setter.xml
+msgid "An item that sets the value of a real game variable."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type réel."
+
+# Class description
+# ../../../item-description/generic/game_variable/string_game_variable_setter_suicide.xml
+msgid "An item that sets the value of a string game variable and kills himself."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type chaîne de caractères et qui se suicide ensuite."
+
+# Class description
+# ../../../item-description/generic/game_variable/string_game_variable_setter.xml
+msgid "An item that sets the value of a string game variable."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type chaîne de caractères."
+
+# Class description
+# ../../../item-description/generic/game_variable/int_game_variable_setter_suicide.xml
+msgid "An item that sets the value of an integer game variable and kills himself."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type entier et qui se suicide ensuite."
+
+# Class description
+# ../../../item-description/generic/game_variable/int_game_variable_setter.xml
+msgid "An item that sets the value of an integer game variable."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type entier."
+
+# Class description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter_suicide.xml
+msgid "An item that sets the value of an unsigned int game variable and kills himself."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type entier non signé et qui se suicide ensuite."
+
+# Class description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter.xml
+msgid "An item that sets the value of an unsigned int game variable."
+msgstr "Un objet qui affecte une valeur à une variable de jeu de type entier non signé."
+
+# Class description
+# ../../../item-description/generic/camera_shaker.xml
+msgid "An item that shakes the camera."
+msgstr "Un objet qui secoue la caméra."
+
+# Class description
+# ../../../item-description/generic/path_tracer.xml
+msgid "An item to create a path_trace on the colliding items under a given condition."
+msgstr "Un objet créant un path_trace sous certaines conditions sur les objets qui entrent en collision avec lui."
+
+#, fuzzy
+#| msgid "The item to move."
+msgid "An item to debug a model."
+msgstr "L'objet à déplacer."
+
+# Class description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "An item to display a sequence of items with successive fadings."
+msgstr "Un objet affichant une séquence d'objets en fondus enchaînés."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_movement_toggle.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/applied_forced_movement.xml
+msgid "An item which have a movement applied to him."
+msgstr "Un objet auquel est appliqué un mouvement forcé."
+
+msgid "Angle applied to the item."
+msgstr "Angle de la rotation appliquée à l'item."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:361
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:194
+msgid "Angle:"
+msgstr "Angle :"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:213
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:449
+msgid "Animation"
+msgstr "Animation"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:130
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:397
+msgid "Animation files (*.anim)|*.anim"
+msgstr "Fichiers d'animation (*.anim)|*.anim"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:533
+msgid "Animation is not saved."
+msgstr "L'animation n'est pas enregistrée."
+
+#: ../../../bear-editor/src/bf/code/animation_file_edit.cpp:158
+msgid "Animation:"
+msgstr "Animation :"
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:88
+msgid "Application mode"
+msgstr "Mode d'application"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:561
+msgid "Apply an offset to the selection."
+msgstr "Appliquer un décalage à la sélection."
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:135
+msgid "Apply angle to animation"
+msgstr "Appliquer l'angle à l'animation."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:195
+msgid "Apply filter to all layers"
+msgstr "Appliquer le filtre à tous les calques."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:190
+msgid "Apply filter to the selected layer"
+msgstr "Appliquer le filtre au calque sélectionné."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "Apply the system angle of the item to the visual (and ignore the value of visual_angle)."
+msgstr "Appliquer au visuel l'angle du système propre de l'objet (et ignorer la valeur de visual_angle)."
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:120
+#, fuzzy
+#| msgid "Alignments"
+msgid "Arguments"
+msgstr "Alignements."
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:160
+msgid "Auto size"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/error_check_model_dialog.cpp:45
+msgid "Bad action"
+msgstr "Action invalide."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:407
+msgid "Bad identifier"
+msgstr "Identifiant incorrect"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:182
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:191
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:203
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:213
+msgid "Bad name"
+msgstr "Nom invalide"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:220
+msgid "Bad sound"
+msgstr "Son invalide."
+
+# Class description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Base class to display a link between two items."
+msgstr "Classe de base pour afficher un lien entre deux objets."
+
+#: ../../../animation-editor/src/bf/code/about_dialog.cpp:57
+#: ../../../level-editor/src/bf/code/about_dialog.cpp:57
+#: ../../../model-editor/src/bf/code/about_dialog.cpp:57
+msgid "Bear Factory"
+msgstr "Bear Factory"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:236
+msgid "Blue:"
+msgstr "Bleu :"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:440
+msgid "Boolean value"
+msgstr "Valeur booléenne"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:147
+#, fuzzy
+#| msgid "Modify the bounding box"
+msgid "Bounding box"
+msgstr "Modifier la boîte englobante"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:706
+msgid "Bright background"
+msgstr "Arrière plan clair"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:564
+msgid "C&hange layer..."
+msgstr "C&hanger de calque…"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:676
+msgid "C&lone"
+msgstr "C&loner"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:557
+msgid "C&lone..."
+msgstr "C&loner…"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:481
+msgid "C&ompile the level\tF9"
+msgstr "C&ompiler le niveau\tF9"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:484
+msgid "C&ompile the model\tF9"
+msgstr "Compile le modèle\tF9"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:167
+msgid "Can't open the animation file."
+msgstr "Impossible d'ouvrir le fichier d'animation."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:362
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:973
+msgid "Can't open the level file."
+msgstr "Impossible d'ouvrir le fichier de niveau."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:370
+#: ../../../model-editor/src/bf/code/model_frame.cpp:755
+msgid "Can't open the model file."
+msgstr "Impossible d'ouvrir le fichier de modèle."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:393
+msgid "Can't set the same identifier to several items."
+msgstr "Impossible de donner le même identifiant à plusieurs objets."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:362
+#, fuzzy
+#| msgid "Can't set the same identifier to several items."
+msgid "Cannot remove the identifier of a prioritized item."
+msgstr "Impossible de donner le même identifiant à plusieurs objets."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1455
+msgid "Cannot run the game"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:128
+msgid "Cause"
+msgstr ""
+
+#: ../../../level-editor/src/bf/history/code/action_set_priority.cpp:87
+#, c-format
+msgid "Change the compilation priority of %s (%s)"
+msgstr ""
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:251
+msgid "Change the duration of all frames at once."
+msgstr "Changer les durées de toutes les frames en une seule fois."
+
+#: ../../../level-editor/src/bf/history/code/action_move_in_other_layer.cpp:69
+#: ../../../level-editor/src/bf/history/code/action_move_up.cpp:67
+#: ../../../level-editor/src/bf/history/code/action_move_down.cpp:67
+msgid "Change the layer of the selection"
+msgstr "Change le calque contenant la sélection"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:916
+#: ../../../model-editor/src/bf/code/model_frame.cpp:717
+msgid "Check completed."
+msgstr "Vérification terminée."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:478
+msgid "Check the &validty of the level\tF8"
+msgstr "Vérifier la &validité du niveau\tF8"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:481
+msgid "Check the &validty of the model\tF8"
+msgstr "Vérifier la &validité du modèle\tF8"
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_trigger.xml
+msgid "Check the condition at each collision."
+msgstr "Vérifier la condition à chaque collision."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_trigger.xml
+msgid "Check the condition at each iteration."
+msgstr "Vérifier la condition à chaque itération."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:482
+msgid "Check the validity of the model."
+msgstr "Vérifier la &validité du modèle."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:479
+msgid "Check validity of the level."
+msgstr "Vérification de la validité du niveau."
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:110
+msgid "Choice"
+msgstr "Choix"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:129
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:245
+#: ../../../model-editor/src/bf/code/model_frame.cpp:264
+#: ../../../bear-editor/src/bf/impl/base_file_edit.tpp:108
+#: ../../../bear-editor/src/bf/code/animation_file_edit.cpp:188
+msgid "Choose a file"
+msgstr "Choisir un fichier"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:460
+msgid "Choose a level"
+msgstr "Choisir un niveau"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:311
+msgid "Choose a model"
+msgstr "Choisir un modèle"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:241
+msgid "Choose a music"
+msgstr "Choisir une musique"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:893
+msgid "Choose a sound"
+msgstr "Choisir un son"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:155
+msgid "Choose a sound file"
+msgstr "Choisir un fichier de son"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:396
+msgid "Choose an animation"
+msgstr "Choisir une animation"
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:327
+#: ../../../bear-editor/src/bf/code/image_selection_dialog.cpp:45
+msgid "Choose an image"
+msgstr "Choisir une image"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:85
+msgid "Class"
+msgstr "Classe"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:192
+msgid "Class name"
+msgstr "Nom de la classe"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:527
+msgid "Clear the selection."
+msgstr "Enlève la sélection."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:315
+msgid "Click to change the class of the selected items. The value of the  fields will be conserved for the ones existing also in the new class."
+msgstr "Cliquez pour changer la classe des objets sélectionnés. Les valeurs des champs seront conservées pour ceux existant aussi dans la nouvelle classe."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:130
+#, fuzzy
+#| msgid "Select an item class"
+msgid "Click to select the class"
+msgstr "Sélectionner une classe d'objet"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:676
+msgid "Clone"
+msgstr "Cloner"
+
+#: ../../../level-editor/src/bf/history/code/action_clone_selection.cpp:89
+msgid "Clone selected items"
+msgstr "Cloner les objets sélectionnés."
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:42
+msgid "Clone selection"
+msgstr "Cloner la sélection"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:557
+msgid "Clone the selection."
+msgstr "Clone la sélection."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:274
+#: ../../../model-editor/src/bf/code/main_frame.cpp:204
+msgid "Close everything and exit."
+msgstr "Tout fermer et quitter."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:492
+msgid "Close the level."
+msgstr "Fermer le niveau."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:486
+msgid "Close the model."
+msgstr "Clone le modèle."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:277
+msgid "Close the window."
+msgstr "Ferme la fenêtre."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:369
+msgid "Collision function:"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:223
+msgid "Color"
+msgstr "Couleur"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:947
+#, c-format
+msgid "Compilation done in %.2f s."
+msgstr "Compilation effectuée en %.2f s."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:331
+#: ../../../model-editor/src/bf/code/model_frame.cpp:741
+msgid "Compilation done."
+msgstr "Compilation terminée."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:220
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:655
+#: ../../../model-editor/src/bf/code/model_frame.cpp:574
+msgid "Compile"
+msgstr "Compiler"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:270
+msgid "Compile the animation."
+msgstr "Compile l'animation."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:482
+msgid "Compile the level."
+msgstr "Compile le niveau."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:484
+msgid "Compile the model."
+msgstr "Compile le modèle."
+
+#: ../../../bear-editor/src/bf/code/animation_file_edit.cpp:189
+msgid "Compiled animation (*.canim)|*.canim"
+msgstr "Animation compilée (*.canim)|*.canim"
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:40
+msgid "Configuration"
+msgstr "Configuration"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:598
+msgid "Configuration of the grid on the selection."
+msgstr "Configure la grille sur la sélection."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:601
+msgid "Configuration of the grid."
+msgstr "Configuration de la grille."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:270
+msgid "Configure how the levels are executed."
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:268
+#: ../../../model-editor/src/bf/code/main_frame.cpp:200
+msgid "Configure the paths and programs."
+msgstr "Configure les chemins et les programmes."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:273
+msgid "Configure the paths of the datas."
+msgstr "Configure les chemins des données."
+
+#: ../../../bear-editor/src/bf/code/any_animation_edit.cpp:172
+msgid "Content type"
+msgstr "Type du contenu"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:663
+#: ../../../model-editor/src/bf/code/model_frame.cpp:579
+msgid "Copy"
+msgstr "Copier"
+
+#: ../../../level-editor/src/bf/history/code/action_copy_selection.cpp:98
+msgid "Copy selected items"
+msgstr "Copier les objets sélectionnés"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:515
+#: ../../../model-editor/src/bf/code/model_frame.cpp:508
+msgid "Copy the selection to the clipboard."
+msgstr "Copier la sélection dans le presse-papier."
+
+#: ../../../level-editor/src/bf/code/level_runner.cpp:94
+#, fuzzy
+#| msgid "Z-coordinate of the item in the layer."
+msgid "Could not add the items in the layer."
+msgstr "Position de l'objet dans la profondeur du calque."
+
+#: ../../../level-editor/src/bf/code/level_runner.cpp:83
+#, fuzzy
+#| msgid "A sound in the level."
+msgid "Could not run the level."
+msgstr "Un son dans le niveau."
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:134
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:144
+msgid "Count:"
+msgstr "Nombre :"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:264
+msgid "Create a new animation."
+msgstr "Crée une nouvelle animation."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:571
+#, fuzzy
+#| msgid "Create a new level."
+msgid "Create a new layer from image."
+msgstr "Crée un nouveau niveau."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:260
+msgid "Create a new level."
+msgstr "Crée un nouveau niveau."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:195
+msgid "Create a new model."
+msgstr "Crée un nouveau modèle."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:49
+msgid "Create layer from image"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:513
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:661
+#: ../../../model-editor/src/bf/code/model_frame.cpp:506
+#: ../../../model-editor/src/bf/code/model_frame.cpp:577
+msgid "Cu&t"
+msgstr "Cou&per"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:661
+#: ../../../model-editor/src/bf/code/model_frame.cpp:577
+msgid "Cut"
+msgstr "Couper"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:297
+msgid "Date:"
+msgstr "Date :"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:251
+#, fuzzy
+#| msgid "Decrease the zoom ratio."
+msgid "Decrease the priority"
+msgstr "Réduit le ratio de zoom."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:633
+#: ../../../model-editor/src/bf/code/model_frame.cpp:549
+msgid "Decrease the zoom ratio."
+msgstr "Réduit le ratio de zoom."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "Default density of the world."
+msgstr "Densité par défaut du monde."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "Default environment of the world."
+msgstr "Type d'environnement par défaut du monde."
+
+msgid "Default friction applied to the items."
+msgstr "Friction appliquée par défaut aux objets."
+
+#: ../../../level-editor/src/bf/history/code/action_delete_selection.cpp:54
+msgid "Delete selected items"
+msgstr "Supprime les objets sélectionnés"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:134
+msgid "Delete selected layer"
+msgstr "Supprime le calque sélectionné"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:519
+msgid "Delete snasphot."
+msgstr "Supprimer le repère temporel."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:519
+#: ../../../model-editor/src/bf/code/model_frame.cpp:512
+msgid "Delete the selection."
+msgstr "Supprime les objets sélectionnés."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the x-position of the end extremity."
+msgstr "Décalage à appliquer sur la position horizontale de l'extrémité de fin."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the x-position of the start extremity."
+msgstr "Décalage à appliquer sur la position horizontale de l'extrémité de début."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the y-position of the end extremity."
+msgstr "Décalage à appliquer sur la position verticale de l'extrémité de fin."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the y-position of the start extremity."
+msgstr "Décalage à appliquer sur la position verticale de l'extrémité de début."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:357
+msgid "Depth:"
+msgstr "Profondeur :"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:138
+msgid "Description:"
+msgstr "Description :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:623
+msgid "Display a global view of the level."
+msgstr "Affiche une vue globale du niveau."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:607
+msgid "Display items in wireframe mode."
+msgstr "Affiche les objets en mode fil de fer."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:313
+#: ../../../model-editor/src/bf/code/main_frame.cpp:223
+msgid "Display some informations about the data."
+msgstr "Affiche des informations à propos des données."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:296
+msgid "Display some informations about the program."
+msgstr "Affiche des informations à propos du programme."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:534
+msgid "Display the bounding box and the marks."
+msgstr "Affiche la boîte englobante et les marques"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:292
+msgid "Display the classes of items."
+msgstr "Affiche les classes d'objets."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:612
+msgid "Display the id of the items."
+msgstr "Affiche l'identifiant des objets."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:288
+msgid "Display the list of layers."
+msgstr "Affiche la liste des calques."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:538
+#, fuzzy
+#| msgid "Display the id of the items."
+msgid "Display the name of the marks."
+msgstr "Affiche l'identifiant des objets."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:295
+msgid "Display the properties of an item."
+msgstr "Affiche les propriétés d'un objet."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:615
+msgid "Display the relationship among the items."
+msgstr "Affiche les relations entre les objets."
+
+msgid "Display the same sprite than the given item."
+msgstr "Affiche la même chose que l'objet indiqué."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:609
+msgid "Display the sprites of the items."
+msgstr "Affiche les sprites des objets."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:536
+#, fuzzy
+#| msgid "Display the sprites of the items."
+msgid "Display the sprites of the marks."
+msgstr "Affiche les sprites des objets."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "Do the rotation this number of times."
+msgstr "Effectue la rotation ce nombre de fois."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:190
+msgid "Duration"
+msgstr "Durée"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:167
+#: ../../../bear-editor/src/bf/code/frame_edit.cpp:87
+msgid "Duration:"
+msgstr "Durée :"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:133
+msgid "Edit"
+msgstr "Édition"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:454
+#: ../../../model-editor/src/bf/code/model_frame.cpp:457
+msgid "Edit options."
+msgstr "Option d'édition."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:149
+msgid "Edit the properties of the selected layer"
+msgstr "Éditer les propriétés du calque sélectionné"
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:160
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:193
+msgid "Enter an argument for the program"
+msgstr ""
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:167
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:348
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:362
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:973
+#: ../../../model-editor/src/bf/code/model_frame.cpp:370
+#: ../../../model-editor/src/bf/code/model_frame.cpp:755
+msgid "Error"
+msgstr "Erreur"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:473
+msgid "Error in level loading."
+msgstr "Erreur au chargement du niveau."
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:129
+msgid "Error message"
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/ambient_sound.xml
+msgid "Fade out during this duration, in seconds, after the time limit of the toggle."
+msgstr "Faire un fondu en sortie pendant cette durée, en secondes, après la limite de temps du toggle."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:231
+msgid "File prefix:"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:185
+msgid "Filter:"
+msgstr "Filtre :"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:105
+#, fuzzy
+#| msgid "Filter:"
+msgid "Filters"
+msgstr "Filtre :"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:269
+msgid "First index:"
+msgstr "Indice de début :"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:302
+msgid "Fixed"
+msgstr "Fixe"
+
+msgid "Flip horizontally the sprites of the item when rendering."
+msgstr "Inverse horizontalement les images de l'objet lors de l'affichage."
+
+msgid "Flip vertically the sprites of the item when rendering."
+msgstr "Inverse verticalement les images de l'objet lors de l'affichage."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:455
+msgid "Font"
+msgstr "Police"
+
+#: ../../../bear-editor/src/bf/code/font_file_edit.cpp:39
+msgid "Font files (*.fnt)|*.fnt"
+msgstr "Fichiers de police|*.fnt"
+
+# Field description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid "Force given at created splinter items."
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/frame_edit.cpp:42
+msgid "Frame"
+msgstr "Frame"
+
+msgid "Friction applied to the items aligned on the bottom."
+msgstr "Frottement appliqué aux objets en contact par le bas."
+
+msgid "Friction applied to the items aligned on the left."
+msgstr "Frottement appliqué aux objets en contact par la gauche."
+
+msgid "Friction applied to the items aligned on the right."
+msgstr "Frottement appliqué aux objets en contact par la droite."
+
+msgid "Friction applied to the items aligned on the top."
+msgstr "Frottement appliqué aux objets en contact par le haut."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:304
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:797
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:859
+msgid "Function:"
+msgstr "Fonction :"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:429
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:442
+msgid "Gap:"
+msgstr "Décalage :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:697
+#: ../../../model-editor/src/bf/code/model_frame.cpp:595
+msgid "Graphism"
+msgstr "Graphisme"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:229
+msgid "Green:"
+msgstr "Vert :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:604
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:684
+msgid "Gri&d"
+msgstr "Gri&lle"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:685
+msgid "Grid"
+msgstr "Grille"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:45
+msgid "Grid parameters"
+msgstr "Paramètres de la grille"
+
+#: ../../../level-editor/src/bf/history/action_group.hpp:51
+#: ../../../model-editor/src/bf/history/code/action_group.cpp:38
+msgid "Group of actions"
+msgstr "Groupe d'actions"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:179
+msgid "Height"
+msgstr "Hauteur"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:166
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:349
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:415
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:210
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:184
+msgid "Height:"
+msgstr "Hauteur :"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:132
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:421
+#, fuzzy
+#| msgid "&Horizontal center"
+msgid "Horizontal alignment policy:"
+msgstr "Centre &horizontal"
+
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:96
+msgid "Horizontal:"
+msgstr "Horizontal :"
+
+# Field description
+# ../../../item-description/generic/link/chain_link_visual.xml
+#, fuzzy
+#| msgid "How far the chain falls, at most."
+msgid "How far the bridge falls, at most."
+msgstr "Jusqu'où la chaîne tombe, au maximum."
+
+# Field description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid "How far the chain falls, at most."
+msgstr "Jusqu'où la chaîne tombe, au maximum."
+
+# Field description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid "How many links in the chain (not including the ends of the chain)."
+msgstr "Le nombre de maillons composant la chaîne (sans compter son début et sa fin)."
+
+msgid "How many times the sequence will be done."
+msgstr "Combien de fois la séquence sera faite."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:327
+msgid "Id:"
+msgstr "Id :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:691
+msgid "Identifiers"
+msgstr "Identifiants"
+
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:230
+msgid "Image:"
+msgstr "Image :"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:320
+#, c-format
+msgid "In item '%s' at (%f, %f):\n"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:301
+#, fuzzy, c-format
+#| msgid "%d layers:\n"
+msgid "In layer '%s':\n"
+msgstr "%d calques:\n"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:246
+#, fuzzy
+#| msgid "Increase the zoom ratio."
+msgid "Increase the priority"
+msgstr "Augmente le ratio de zoom."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:630
+#: ../../../model-editor/src/bf/code/model_frame.cpp:546
+msgid "Increase the zoom ratio."
+msgstr "Augmente le ratio de zoom."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:179
+msgid "Index of the new layer:"
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "Indicate if the values of the timer are initialized each time it is activated."
+msgstr "Indique que les valeurs du chrono sont réinitialisées à chaque fois qu'il est activé."
+
+msgid "Indicates if the camera must adjust its size to contain all items."
+msgstr "Indique si la caméra doit ajuster sa taille pour contenir tous les objets."
+
+msgid "Indicates if the camera start in active mode."
+msgstr "Indique si la caméra est initialement la caméra active du niveau."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_z_shift.xml
+msgid "Indicates if the item forces the z-position of the colliding items, even if they are on the right side."
+msgstr "Indique que l'objet force la position sur l'axe z des objets en collision, même s'ils sont du bon côté."
+
+#, fuzzy
+#| msgid "Indicates if the camera start in active mode."
+msgid "Indicates if the number of links is dynamically computed."
+msgstr "Indique si la caméra est initialement la caméra active du niveau."
+
+#, fuzzy
+#| msgid "Indicates if the camera start in active mode."
+msgid "Indicates if the script can be accelerated."
+msgstr "Indique si la caméra est initialement la caméra active du niveau."
+
+#, fuzzy
+#| msgid "Indicates if the camera start in active mode."
+msgid "Indicates if the shaker checks camera intersection."
+msgstr "Indique si la caméra est initialement la caméra active du niveau."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:237
+#, fuzzy
+#| msgid "Resize item"
+msgid "Insert item"
+msgstr "Redimensionner l'objet"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:428
+msgid "Integer"
+msgstr "Entier"
+
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:167
+msgid "Invalid value"
+msgstr "Valeur non valide"
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:83
+msgid "Inverse selection"
+msgstr "Inverse la sélection"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:802
+msgid "Item"
+msgstr "Objet"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:294
+msgid "Item &properties"
+msgstr "&Propriétés d'objet"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:406
+#, fuzzy
+msgid "Item box"
+msgstr "Objets"
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:194
+#, fuzzy
+#| msgid "Item classes"
+msgid "Item class"
+msgstr "Classes d'objets"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:171
+msgid "Item classes"
+msgstr "Classes d'objets"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:704
+#, fuzzy
+#| msgid "Item &properties"
+msgid "Item reference"
+msgstr "&Propriétés d'objet"
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:50
+msgid "Items choice"
+msgstr "Choix d'objets"
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:328
+msgid "JPEG images|*.jpg|PNG images|*.png"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:277
+msgid "Last index:"
+msgstr "Dernier indice :"
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:130
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:177
+msgid "Layer"
+msgstr "Calque"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1290
+#, fuzzy
+#| msgid "Layer"
+msgid "Layer "
+msgstr "Calque"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:46
+#, fuzzy
+#| msgid "Mark properties"
+msgid "Layer properties"
+msgstr "Propriétés de la marque"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:79
+msgid "Layers"
+msgstr "Calques"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:153
+msgid "Level"
+msgstr "Niveau"
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:48
+#, fuzzy
+#| msgid "Level properties"
+msgid "Level errors"
+msgstr "Propriétés de niveau"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:461
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:246
+msgid "Level files (*.lvl)|*.lvl"
+msgstr "Fichiers de niveau (*.lvl)|*.lvl"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1216
+#, fuzzy
+#| msgid "Level is not saved."
+msgid "Level is not compiled."
+msgstr "Le niveau n'est pas enregistré."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:604
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1201
+msgid "Level is not saved."
+msgstr "Le niveau n'est pas enregistré."
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:48
+msgid "Level overview"
+msgstr "Aperçu du niveau"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:48
+msgid "Level properties"
+msgstr "Propriétés de niveau"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1314
+msgid "Level statistics"
+msgstr "Statistiques de niveau"
+
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:186
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:208
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:231
+msgid "List of '"
+msgstr "Liste de «"
+
+#, fuzzy
+#| msgid "The animation of the item."
+msgid "List of animations for dust items."
+msgstr "L'animation de l'objet."
+
+#, fuzzy
+#| msgid "The animation of the item."
+msgid "List of animations for splinter items."
+msgstr "L'animation de l'objet."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:805
+msgid "List of items"
+msgstr "Liste d'objets"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:222
+msgid "Loading images..."
+msgstr "Chargement des images…"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:214
+msgid "Loading item class files..."
+msgstr "Chargement des fichiers de classe d'objet…"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:233
+msgid "Loading levels..."
+msgstr "Chargement des niveaux…"
+
+#: ../../../bear-editor/src/bf/code/splash_screen.cpp:86
+msgid "Loading..."
+msgstr "Chargement…"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:199
+msgid "Loop_back"
+msgstr "Boucler à l'envers"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:253
+msgid "Loops"
+msgstr "Boucles"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:131
+msgid "Loops:"
+msgstr "Boucles :"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:157
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:688
+msgid "Magnetism"
+msgstr "Magnétisme"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:145
+#, fuzzy
+#| msgid "Mark:"
+msgid "Mark"
+msgstr "Marque :"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:158
+msgid "Mark animation"
+msgstr "Animation de la marque"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:150
+msgid "Mark name"
+msgstr "Nom de la marque"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:44
+msgid "Mark properties"
+msgstr "Propriétés de la marque"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:324
+msgid "Mark:"
+msgstr "Marque :"
+
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:98
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:320
+msgid "Marks"
+msgstr "Marque"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:156
+#, fuzzy
+#| msgid "Can't open the level file."
+msgid "Match level size."
+msgstr "Impossible d'ouvrir le fichier de niveau."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:235
+msgid "Maximum side size:"
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_restricted_z_collision.xml
+msgid "Maximum z-position of the other item to be aligned."
+msgstr "Position maximum que doit avoir l'autre objet sur l'axe Z pour pouvoir être aligné."
+
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+msgid "Minimum number of seconds of delay before starting the level."
+msgstr "Durée minimum, en secondes, avant de démarrer le niveau."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_restricted_z_collision.xml
+msgid "Minimum z-position of the other item to be aligned."
+msgstr "Position minimum que doit avoir l'autre objet sur l'axe Z pour pouvoir être aligné."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:312
+#: ../../../model-editor/src/bf/code/model_frame.cpp:265
+msgid "Model files (*.mdl)|*.mdl"
+msgstr "Fichiers de modèles (*.mdl)|*.mdl"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:394
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1019
+msgid "Model is not saved."
+msgstr "Le modèle n'est pas enregistré."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1520
+msgid "Modify the bounding box"
+msgstr "Modifier la boîte englobante"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_position_and_size.cpp:47
+msgid "Move and resize"
+msgstr "Déplacer et redimensionner"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_position.cpp:47
+msgid "Move item"
+msgstr "Déplacer l'objet"
+
+#: ../../../level-editor/src/bf/history/code/action_move_layer_backward.cpp:62
+#, c-format
+msgid "Move layer %d backward"
+msgstr "Déplacer le calque %d vers le fond"
+
+#: ../../../level-editor/src/bf/history/code/action_move_layer_forward.cpp:62
+#, c-format
+msgid "Move layer %d forward"
+msgstr "Déplacer le calque %d vers l'avant"
+
+#: ../../../level-editor/src/bf/history/code/action_move_selection.cpp:59
+msgid "Move selected items"
+msgstr "Déplacer les objets sélectionnés"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:139
+msgid "Move selected layer backward"
+msgstr "Déplacer le calque sélectionné vers le fond"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:144
+msgid "Move selected layer forward"
+msgstr "Déplacer le calque sélectionné vers l'avant"
+
+#: ../../../model-editor/src/bf/history/code/action_move_snapshot.cpp:75
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1380
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:712
+msgid "Move snapshot"
+msgstr "Déplacer le repère temporel"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:565
+msgid "Move the selection in an other layer."
+msgstr "Déplace la sélection dans un autre calque."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1096
+msgid "Move the selection one layer backward."
+msgstr "Déplace la sélection un calque en arrière."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1100
+msgid "Move the selection one layer forward."
+msgstr "Déplace la sélection un calque en avant."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:513
+#: ../../../model-editor/src/bf/code/model_frame.cpp:506
+msgid "Move the selection to the clipboard."
+msgstr "Déplace la sélection dans le presse-papier"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:275
+msgid "Multiple selection"
+msgstr "Sélection multiple"
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:85
+msgid "Multiply previous duration."
+msgstr "Multiplier la durée précédente."
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:242
+msgid "Music files (*.ogg)|*.ogg|All files (*.*)|*"
+msgstr "Fichiers de musique (*.ogg)|*.ogg|Tous les fichiers (*.*)|*"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:186
+msgid "Music:"
+msgstr "Musique :"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:200
+#, fuzzy
+#| msgid "Name:"
+msgid "Name"
+msgstr "Nom :"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:205
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:163
+msgid "Name:"
+msgstr "Nom :"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:211
+#: ../../../level-editor/src/bf/code/main_frame.cpp:241
+msgid "New"
+msgstr "Nouveau"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:129
+msgid "New layer"
+msgstr "Nouveau calque"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:570
+msgid "New layer from image..."
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:109
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:329
+msgid "New level"
+msgstr "Nouveau niveau"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:85
+#: ../../../model-editor/src/bf/code/model_frame.cpp:330
+msgid "New model"
+msgstr "Nouveau modèle"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:516
+msgid "New snapshot."
+msgstr "Nouveau repère temporel."
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:172
+msgid "Next action:"
+msgstr "Action suivante :"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:224
+msgid "No description available"
+msgstr "Aucune description disponible"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:635
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:718
+#: ../../../model-editor/src/bf/code/model_frame.cpp:551
+#: ../../../model-editor/src/bf/code/model_frame.cpp:610
+msgid "No zoom"
+msgstr "Aucun zoom"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1030
+#: ../../../model-editor/src/bf/code/model_frame.cpp:986
+msgid "Nothing to redo\tCTRL+Y"
+msgstr "Rien à refaire\tCTRL+Y"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1021
+#: ../../../model-editor/src/bf/code/model_frame.cpp:977
+msgid "Nothing to undo\tCTRL+Z"
+msgstr "Rien à annuler\tCTRL+Z"
+
+#, fuzzy
+#| msgid "The list of the items to create."
+msgid "Number of dust items to create."
+msgstr "La liste des objets à créer."
+
+#, fuzzy
+#| msgid "The list of the items to create."
+msgid "Number of splinter items to create."
+msgstr "La liste des objets à créer."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:260
+msgid "Number:"
+msgstr "Nombre :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:702
+msgid "O&verview"
+msgstr "Aperçu du ni&veau"
+
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:42
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:94
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:127
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:678
+msgid "Offset"
+msgstr "Décalage"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:137
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:147
+msgid "Offset:"
+msgstr "Décalage :"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:239
+msgid "Opacity:"
+msgstr "Opacité :"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:214
+#: ../../../level-editor/src/bf/code/main_frame.cpp:244
+msgid "Open"
+msgstr "Ouvrir"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:265
+msgid "Open an existing animation."
+msgstr "Ouvre une animation existante."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:261
+msgid "Open an existing level."
+msgstr "Ouvre un niveau existant."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:196
+msgid "Open an existing model."
+msgstr "Ouvre un modèle existant."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:291
+#: ../../../level-editor/src/bf/code/main_frame.cpp:308
+#: ../../../model-editor/src/bf/code/main_frame.cpp:218
+msgid "Open the online documentation in your web browser."
+msgstr "Ouvre la documentation en ligne dans votre navigateur web."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:604
+msgid "Options of the grid."
+msgstr "Options de la grille."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:449
+msgid "Options of the level."
+msgstr "Options du niveau."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:453
+msgid "Options of the model."
+msgstr "Options du modèle."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:458
+#: ../../../model-editor/src/bf/code/model_frame.cpp:461
+msgid "Options of the view."
+msgstr "Options de la vue."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:224
+msgid "Output directory:"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:703
+msgid "Overview"
+msgstr "Aperçu du niveau"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:517
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:666
+#: ../../../model-editor/src/bf/code/model_frame.cpp:510
+#: ../../../model-editor/src/bf/code/model_frame.cpp:582
+msgid "Paste"
+msgstr "Coller"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:517
+#: ../../../model-editor/src/bf/code/model_frame.cpp:510
+msgid "Paste data from the clipboard."
+msgstr "Colle les données du presse-papier."
+
+#: ../../../level-editor/src/bf/history/code/action_paste_from_clipboard.cpp:97
+msgid "Paste from clipboard"
+msgstr "Coller depuis le presse-papier."
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:114
+msgid "Path to data directory of the game"
+msgstr "Chemin vers le répertoire de données du jeu"
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:98
+msgid "Path to the item class files"
+msgstr "Chemin vers les fichiers de description des objets"
+
+#: ../../../bear-editor/src/bf/code/image_selection_dialog.cpp:77
+msgid "Pattern:"
+msgstr "Motif :"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:137
+msgid "Pause the animation when the mark is hidden"
+msgstr "Mettre l'animation en pause lorsque la marque est masquée"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:148
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:242
+msgid "Play globally"
+msgstr "Jouer globalement"
+
+msgid "Position of the bottom edge of the item."
+msgstr "Position du côté bas de l'objet."
+
+msgid "Position of the left edge of the item."
+msgstr "Position du côté gauche de l'objet."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:106
+msgid "Priority"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:103
+msgid "Program"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:89
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:160
+msgid "Properties"
+msgstr "Propriétés"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:488
+msgid "Properties of the level."
+msgstr "Propriétés du niveau."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:152
+msgid "Property"
+msgstr "Propriété"
+
+# Field description
+# ../../../item-description/generic/level_loader_item.xml
+msgid "Ratio of the game's time window to spend in the loading of the level."
+msgstr "Pourcentage de l'intervalle de temps de progression passé dans le chargement du niveau."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:434
+msgid "Real number"
+msgstr "Nombre réel"
+
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:191
+msgid "Rectangle in image source"
+msgstr "Rectangle dans l'image source"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:226
+msgid "Red:"
+msgstr "Rouge :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:672
+#: ../../../model-editor/src/bf/code/model_frame.cpp:587
+msgid "Redo"
+msgstr "Refaire"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1027
+#: ../../../model-editor/src/bf/code/model_frame.cpp:983
+#, c-format
+msgid "Redo \"%s\"\tCTRL+Y"
+msgstr "&Rétablir « %s »\tCtrl+Y"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:509
+#: ../../../model-editor/src/bf/code/model_frame.cpp:502
+msgid "Redo the last undone operation."
+msgstr "Restore la dernière opération annulée."
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:60
+msgid "Refresh"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:700
+msgid "Relationship"
+msgstr "Relation"
+
+#: ../../../animation-editor/src/bf/code/about_dialog.cpp:68
+#, c-format
+msgid "Release %d.%d.%d, Animation editor"
+msgstr "Version %d.%d.%d, éditeur d'animations"
+
+#: ../../../level-editor/src/bf/code/about_dialog.cpp:68
+#, c-format
+msgid "Release %d.%d.%d, Level editor"
+msgstr "Version %d.%d.%d, éditeur de niveaux"
+
+#: ../../../model-editor/src/bf/code/about_dialog.cpp:68
+#, c-format
+msgid "Release %d.%d.%d, Model editor"
+msgstr "Version %d.%d.%d, éditeur de modèles"
+
+#: ../../../level-editor/src/bf/history/code/action_remove_item.cpp:110
+#, c-format
+msgid "Remove %s"
+msgstr "Supprimer %s"
+
+#: ../../../model-editor/src/bf/history/code/action_remove_action.cpp:82
+msgid "Remove action"
+msgstr "Supprimer l'action"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_id.cpp:97
+msgid "Remove item identifier"
+msgstr "Supprimer l'identifiant de l'objet."
+
+#: ../../../level-editor/src/bf/history/code/action_remove_layer.cpp:83
+msgid "Remove layer"
+msgstr "Supprimer le calque"
+
+#: ../../../model-editor/src/bf/history/code/action_remove_mark.cpp:111
+msgid "Remove mark"
+msgstr "Supprimer la marque"
+
+#: ../../../model-editor/src/bf/history/code/action_remove_snapshot.cpp:86
+msgid "Remove snapshot"
+msgstr "Supprimer le repère temporel"
+
+#: ../../../level-editor/src/bf/history/code/action_deprioritize.cpp:82
+#, c-format
+msgid "Remove the compilation priority of %s (%s)"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:206
+msgid "Remove the selected filter from all layers"
+msgstr "Supprimer les filtres sélectionnés dans tous les calques"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:200
+msgid "Remove the selected filter from the current layer"
+msgstr "Supprimer le filtre sélectionné du calque actif."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:241
+#, fuzzy
+#| msgid "Delete selected items"
+msgid "Remove the selected item"
+msgstr "Supprime les objets sélectionnés"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:635
+#: ../../../model-editor/src/bf/code/model_frame.cpp:551
+msgid "Remove the zoom ratio."
+msgstr "Annule le zoom."
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:83
+msgid "Replace previous duration."
+msgstr "Remplacer la durée précédente."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:113
+#, fuzzy
+#| msgid "Replace previous duration."
+msgid "Replace previous layer at this index."
+msgstr "Remplacer la durée précédente."
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_size.cpp:53
+msgid "Resize item"
+msgstr "Redimensionner l'objet"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1495
+#, fuzzy
+#| msgid "Resize item"
+msgid "Resize mark"
+msgstr "Redimensionner l'objet"
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:221
+msgid "Result"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:44
+#, fuzzy
+#| msgid "Configuration"
+msgid "Run configuration"
+msgstr "Configuration"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:657
+#, fuzzy
+#| msgid "A sound in the level."
+msgid "Run the level"
+msgstr "Un son dans le niveau."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:484
+#, fuzzy
+#| msgid "A sound in the level."
+msgid "Run this level."
+msgstr "Un son dans le niveau."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:490
+msgid "S&tatistics"
+msgstr "S&tatistiques"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:217
+#: ../../../level-editor/src/bf/code/main_frame.cpp:247
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:653
+#: ../../../model-editor/src/bf/code/model_frame.cpp:572
+msgid "Save"
+msgstr "Enregistrer"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:267
+#: ../../../level-editor/src/bf/code/main_frame.cpp:263
+msgid "Save &as..."
+msgstr "Enregistrer &sous..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:474
+#: ../../../model-editor/src/bf/code/model_frame.cpp:477
+msgid "Save &as...\tCTRL+SHIFT+S"
+msgstr "Enregistrer &sous...\tCtrl+Shift+S"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:265
+msgid "Save a&ll"
+msgstr "&Tout enregistrer"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:265
+msgid "Save all levels."
+msgstr "Enregistre tous les niveaux."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:197
+msgid "Save all models."
+msgstr "Enregistre tous les modèles."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:268
+msgid "Save the animation under a new name."
+msgstr "Enregistre l'animation sous un nouveau nom."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:266
+msgid "Save the animation."
+msgstr "Enregistrer l'animation."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:264
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:475
+msgid "Save the current level under a new name."
+msgstr "Enregistre le niveau courant sous un nouveau nom."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:262
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:472
+msgid "Save the current level."
+msgstr "Enregistre le niveau courant."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:478
+msgid "Save the current model under a new name."
+msgstr "Enregistre le modèle actif sous un nouveau nom."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:475
+msgid "Save the current model."
+msgstr "Enregistre le modèle actif."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:275
+#: ../../../level-editor/src/bf/code/main_frame.cpp:272
+#: ../../../model-editor/src/bf/code/main_frame.cpp:202
+msgid "Scan the directory of images for new images."
+msgstr "Parcourir le dossier d'images pour de nouvelles images."
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:143
+msgid "Search:"
+msgstr "Rechercher :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:526
+msgid "Select &none\tCTRL+SHIFT+A"
+msgstr "Enlever la &sélection\tCtrl+Shift+A"
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:82
+msgid "Select all"
+msgstr "Tout &sélectionner"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:524
+msgid "Select all items in the current layer."
+msgstr "Sélectionne tous les objets du calque actif."
+
+#: ../../../bear-editor/src/bf/code/item_class_selection_dialog.cpp:45
+msgid "Select an item class"
+msgstr "Sélectionner une classe d'objet"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_action.cpp:131
+msgid "Set action properties"
+msgstr "Définir les propriétés de l'action"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_snapshot_alignment.cpp:105
+msgid "Set bounding box alignment in snapshot"
+msgstr "Définir l'alignement de la boîte englobante dans le repère temporel"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_snapshot_size.cpp:85
+msgid "Set bounding box size in snapshot"
+msgstr "Définir la taille de la boîte englobante dans le repère temporel"
+
+#: ../../../model-editor/src/bf/history/code/action_set_placement_function.cpp:84
+#, fuzzy
+#| msgid "Set function"
+msgid "Set collision function"
+msgstr "Indiquer la fonction"
+
+#: ../../../model-editor/src/bf/history/code/action_set_angle_easing.cpp:86
+#: ../../../model-editor/src/bf/history/code/action_set_height_easing.cpp:86
+#: ../../../model-editor/src/bf/history/code/action_set_y_easing.cpp:86
+#: ../../../model-editor/src/bf/history/code/action_set_x_easing.cpp:86
+#: ../../../model-editor/src/bf/history/code/action_set_width_easing.cpp:86
+#, fuzzy
+#| msgid "Set function"
+msgid "Set easing function"
+msgstr "Indiquer la fonction"
+
+#: ../../../level-editor/src/bf/history/impl/action_set_item_field.tpp:119
+msgid "Set field "
+msgstr "Indiquer le champ"
+
+#: ../../../level-editor/src/bf/history/impl/action_set_item_field.tpp:129
+msgid "Set field value"
+msgstr "Affecter une valeur au champ"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_function.cpp:78
+msgid "Set function called in a snapshot"
+msgstr "Indiquer la fonction appelée lors du snapshot"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_fixed_attribute.cpp:87
+msgid "Set item 'fixed' attribute"
+msgstr "Donner une valeur à l'attribut « fixe » de l'objet"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_bottom.cpp:74
+msgid "Set item bottom position"
+msgstr "Changer la position du côté bas de l'objet"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_class.cpp:90
+msgid "Set item class"
+msgstr "Définir la classe de l'objet"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_class.cpp:80
+#, c-format
+msgid "Set item class to %s"
+msgstr "Définir la classe de l'objet comme %s"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_id.cpp:110
+msgid "Set item identifier"
+msgstr "Définir l'identifiant de l'objet"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_id.cpp:101
+#, c-format
+msgid "Set item identifier to %s"
+msgstr "Définir l'identifiant de l'objet commet %s"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_left.cpp:74
+msgid "Set item's left position"
+msgstr "Indiquer la position du côté gauche de l'objet"
+
+#: ../../../level-editor/src/bf/history/code/action_resize_layer.cpp:95
+#, fuzzy
+#| msgid "Set layer size and class"
+msgid "Set layer size, name and class"
+msgstr "Définir la taille et la classe du calque"
+
+#: ../../../level-editor/src/bf/history/code/action_resize_level.cpp:79
+msgid "Set level's size, music and name"
+msgstr "Définir la taille du niveau, sa musique et son nom"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_mark.cpp:95
+msgid "Set mark label and animation"
+msgstr "Définir l'étiquette de la marque et son animation"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_placement.cpp:107
+msgid "Set mark placement"
+msgstr "Définir la position de la marque"
+
+#: ../../../model-editor/src/bf/history/code/action_set_placement_size.cpp:89
+#, fuzzy
+#| msgid "Set mark placement"
+msgid "Set mark size"
+msgstr "Définir la position de la marque"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:797
+#, fuzzy
+#| msgid "Set mark label and animation"
+msgid "Set mark's collision function"
+msgstr "Définir l'étiquette de la marque et son animation"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:859
+#, fuzzy
+#| msgid "Set snapshot sound"
+msgid "Set snapshot function"
+msgstr "Définir le son du repère temporel"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_snapshot_sound.cpp:86
+msgid "Set snapshot sound"
+msgstr "Définir le son du repère temporel"
+
+#: ../../../level-editor/src/bf/history/code/action_prioritize.cpp:77
+#, c-format
+msgid "Set the compilation priority of %s (%s)"
+msgstr ""
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_fixed_attribute.cpp:76
+msgid "Set the item as fixed"
+msgstr "Définir l'objet comme étant fixe."
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_fixed_attribute.cpp:78
+msgid "Set the item as not fixed"
+msgstr "Définir l'objet comme étant non fixe."
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:182
+msgid "Size"
+msgstr "Taille"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:158
+msgid "Size and placement"
+msgstr "Taille et position"
+
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:101
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:144
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:293
+msgid "Snapshot"
+msgstr "Repère temporel"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1369
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:144
+msgid "Snapshot at this date"
+msgstr "Repère temporel à cette date"
+
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:43
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:113
+msgid "Snapshot's date"
+msgstr "Date du repère temporel."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:602
+msgid "Some levels are not saved. Do you want to save them now?"
+msgstr "Certains niveaux ne sont pas enregistrés. Voulez-vous les enregistrer maintenant ?"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:392
+msgid "Some models are not saved. Do you want to save them now?"
+msgstr "Certains modèles ne sont pas enregistrés. Voulez-vous les enregistrer maintenant ?"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:178
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:146
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:385
+msgid "Sound"
+msgstr "Son"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:180
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:118
+msgid "Sound file:"
+msgstr "Fichier son :"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:895
+msgid "Sound files (*.ogg;*.wav)|*.wav;*.ogg"
+msgstr "Fichiers de son|*.wav;*.ogg|Tous les fichiers|*"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:146
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:156
+msgid "Sound files|*.ogg;*.wav|All files|*"
+msgstr "Fichiers son|*.wav;*.ogg|Tous les fichiers|*"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:458
+msgid "Sound sample"
+msgstr "Son"
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:163
+msgid "Source image"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:189
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:446
+msgid "Sprite"
+msgstr "Sprite"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:490
+msgid "Statistics about the level."
+msgstr "Statistiques à propos du niveau."
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:143
+msgid "Step"
+msgstr "Pas"
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid "Tell (true) if we apply the angle as is or (false) if the angle is added to the angle of the item."
+msgstr "Indique (vrai) si l'angle est appliqué tel quel ou (faux) s'il est ajouté à l'angle de l'objet."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+msgid "Tell (true) if we apply the angle of the movement to the item."
+msgstr "Indique (vrai) si l'angle du mouvement est appliqué à l'objet."
+
+msgid "Tell how the angle of the rotation is applied to the rotating item."
+msgstr "Indique comment l'angle de la rotation est appliqué à l'objet en rotation."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if a collision on the bottom side sets the contact flag of the colliding item."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if a collision on the left side sets the contact flag of the colliding item."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if a collision on the middle side sets the contact flag of the colliding item."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if a collision on the right side sets the contact flag of the colliding item."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if a collision on the top side sets the contact flag of the colliding item."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+msgid "Tell if the activator must be killed too."
+msgstr "Indique que l'activateur doit être aussi tué."
+
+#, fuzzy
+#| msgid "Tell how the angle of the rotation is applied to the rotating item."
+msgid "Tell if the angle of moving items are updated according to their angular speed."
+msgstr "Indique comment l'angle de la rotation est appliqué à l'objet en rotation."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if the angle of the moving item is updated according to its angular speed."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+msgid "Tell if the angle of the slope is applied to the colliding items."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+msgid "Tell if the bottom side is active."
+msgstr "Indique si le côté bas est actif."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+#, fuzzy
+#| msgid "The duration in seconds of the movement of the lines."
+msgid "Tell if the duration of the movement is the delay of the toggle."
+msgstr "La durée, en secondes, du mouvement des lignes."
+
+# Field description
+# ../../../item-description/generic/expr/timer_value.xml
+msgid "Tell if the initial value of the timer is returned. The current value will be returned otherwise."
+msgstr "Indique si la valeur initiale du chronomètre est retournée. Autrement, la valeur actuelle sera retournée."
+
+msgid "Tell if the item can move other items."
+msgstr "Indique que l'objet peut déplacer d'autres objets."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is a phantom. The item will never be aligned by a wall or anything."
+msgstr "Indique que l'objet est un fantôme. Il ne sera jamais aligné par un mur ou quoi que ce soit."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is artificial. The physics will not be applied to it."
+msgstr "Indique que l'objet est artificiel. La physique n'aura aucun effet sur lui."
+
+msgid "Tell if the item is fixed on x-coordinate."
+msgstr "Indique que l'objet est immobile horizontalement."
+
+msgid "Tell if the item is fixed on y-coordinate."
+msgstr "Indique que l'objet est immobile verticalement"
+
+msgid "Tell if the item is fixed on z-coordinate."
+msgstr "Indique que l'objet est immobile dans la profondeur de l'affichage."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is global. The item will progress even if he is not near a player."
+msgstr "Indique que l'objet est global. Ça progression sera faite même s'il n'est pas à proximité d'un joueur."
+
+msgid "Tell if the item kills himself when he has a contact."
+msgstr "Indique que l'objet se tue lui-même quand il a un contact."
+
+msgid "Tell if the item kills himself when he leaves the active region."
+msgstr "Indique que l'objet se tue lui-même quant il quitte la région active."
+
+msgid "Tell if the item kills himself when its animation is finished."
+msgstr "Indique si l'objet se tue lorsque son animation est terminée."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "Tell if the item must be automatically flipped horizontally (if its horizontal speed is less than zero)."
+msgstr "Indique que l'objet doit être automatiquement inversé horizontalement (si sa vitesse horizontale est inférieure à zéro)."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "Tell if the item must be automatically flipped vertically (if its vertical speed is greater than zero)."
+msgstr "Indique que l'objet doit être automatiquement inversé verticalement (si sa vitesse verticale est supérieure à zéro)."
+
+msgid "Tell if the left side is active."
+msgstr "Indique si le côté gauche est actif."
+
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+msgid "Tell if the level must starts before the end of the delay if the user presses a key."
+msgstr "Indique que le niveau doit commencer avant la fin du délai si l'utilisateur appuie sur une touche."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_movement_toggle.xml
+msgid "Tell if the movement has to be applied to the activator of the toggle too."
+msgstr "Indique que le mouvement doit aussi être appliqué à l'activateur du toggle."
+
+msgid "Tell if the movement removes himself from the moving item when finished."
+msgstr "Indique que le mouvement se retire de lui même de l'objet en mouvement quand il est terminé."
+
+msgid "Tell if the right side is active."
+msgstr "Indique si le côté droit est actif."
+
+#, fuzzy
+#| msgid "Tell if the angle of the slope is applied to the colliding items."
+msgid "Tell if the system angle of the item is not modified by the collisions."
+msgstr "Indique que l'angle de la pente est appliqué aux objets en collision."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "Tell if the text is displayed only inside the bounds of the item."
+msgstr "Indique que le texte doit être affiché seulement dans la boîte englobante de l'objet."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "Tell if the text is stretched to match the bounds of the item."
+msgstr "Indique que le texte doit être étiré pour remplir la boîte englobante de l'objet."
+
+msgid "Tell if the timer is a countdown."
+msgstr "Indique que le chronomètre est un compte-àdrebours."
+
+msgid "Tell if the timer loops when the countdown is over."
+msgstr "Indique que le chronomètre boucle quand le compte-à-rebours est terminé."
+
+msgid "Tell if the top side is active."
+msgstr "Indique si le côté haut est actif."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "Tell to play the rotation backward when the end is reached."
+msgstr "Indique d'effectuer la rotation à l'envers lorsque la fin est atteinte."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:598
+msgid "Text"
+msgstr ""
+
+msgid "The acceleration of the item."
+msgstr "L'accélération de l'objet."
+
+msgid "The angle applied to the item."
+msgstr "L'angle appliqué à l'objet."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The angle applied to the sprites of the item when rendering."
+msgstr "L'angle appliqué aux images de l'objet lors de l'affichage."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:531
+msgid "The animation is not saved. Do you want to save it now?"
+msgstr "L'animation n'est pas enregistrée. Voulez-vous l'enregistrer maintenant ?"
+
+msgid "The animation of the item."
+msgstr "L'animation de l'objet."
+
+msgid "The animation played when the item is off."
+msgstr "L'animation jouée lorsque l'objet est désactivé."
+
+msgid "The animation played when the item is on."
+msgstr "L'animation jouée lorsque l'objet est activé."
+
+# Field description
+# ../../../item-description/generic/trigger.xml
+msgid "The behaviour of the trigger. \"one_way\" means that the toggles are turned on if the condition is true, not changed otherwise. \"switch\" means that the state of the toggles changes each time the condition is true. \"condition\" means that the state of the toggles matches the value of the condition."
+msgstr "Le comportement de l'activateur. \"one_way\" signifie que les activables sont activés si la condition est vrai et restent inchangés autrement. \"switch\" signifie que l'état des activables change à chaque fois que la condition est vraie. \"condition\" signifie que l'état des activables correspond à la valeur de la condition."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+#, fuzzy
+#| msgid "The intensity of the blue component of the color of the traces."
+msgid "The blue component of the color of the border."
+msgstr "L'intensité de la composante bleue de la couleur des traces."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+#, fuzzy
+#| msgid "The intensity of the blue component of the color of the traces."
+msgid "The blue component of the color of the inside."
+msgstr "L'intensité de la composante bleue de la couleur des traces."
+
+# Field description
+# ../../../item-description/generic/expr/applied_boolean_expression.xml
+msgid "The boolean expression to apply."
+msgstr "L'expression booléenne à appliquer."
+
+msgid "The camera to activate."
+msgstr "La caméra à activer."
+
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:199
+#, fuzzy
+#| msgid "Tell if the item can move other items."
+msgid "The class of the items containing the sprites:"
+msgstr "Indique que l'objet peut déplacer d'autres objets."
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "The coefficient for tangent friction."
+msgstr "Le coefficient de frottement tangent."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+#, fuzzy
+#| msgid "The duration in seconds of the movement of the lines."
+msgid "The condition is validated if the item inherits one of these classes."
+msgstr "La durée, en secondes, du mouvement des lignes."
+
+msgid "The constant speed of the movement."
+msgstr "La vitesse du mouvement."
+
+msgid "The default value of the variable."
+msgstr "La valeur par défaut de la variable."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid "The delay, in seconds, before turning the item off automatically."
+msgstr "Le délai, en secondes, avant de désactiver automatiquement l'objet."
+
+msgid "The density in the rectangle."
+msgstr "La densité dans le rectangle."
+
+msgid "The density of the item."
+msgstr "La densité de l'objet."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The distance of the moving item from the center of the rotation."
+msgstr "La distance de l'objet en mouvement par rapport au centre de la rotation."
+
+msgid "The distance on the Y-coordinate between the left edge and the right edge. Cannot be equal to zero."
+msgstr "L'écart vertical entre le côté gauche et le côté droit. Ne peut être égal à zéro."
+
+msgid "The distance to keep on the X axis."
+msgstr "La distance horizontal à maintenir."
+
+msgid "The distance to keep on the Y axis."
+msgstr "La distance verticale à maintenir."
+
+msgid "The duration before killing items."
+msgstr "Le délai d'attente avant de tuer les objets."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+msgid "The duration in seconds of the fading effect when a line appears or disappears."
+msgstr "La durée du fondu, en secondes, lorsqu'une ligne apparaît ou disparaît."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+msgid "The duration in seconds of the movement of the lines."
+msgstr "La durée, en secondes, du mouvement des lignes."
+
+#, fuzzy
+#| msgid "The durations of the fadings."
+msgid "The duration of opacity changing."
+msgstr "Les durées des fondus."
+
+msgid "The duration of the acceleration and deceleration."
+msgstr "La durée de l'accélération et de la décélération."
+
+msgid "The duration of the fade out when the item is dead."
+msgstr "La durée du fondu appliqué quand l'objet est mort."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid "The duration of the fading effect before starting the level."
+msgstr "La durée de l'effet de fondu appliqué avant de démarrer le niveau."
+
+msgid "The duration of the movement, in seconds."
+msgstr "La durée du mouvement, en secondes."
+
+msgid "The duration of the smooth activation."
+msgstr "La durée de l'activation douce."
+
+msgid "The duration of the smooth deactivation."
+msgstr "La durée de la désactivation douce."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "The durations between items of the sequence."
+msgstr "Les durées entre les objets de la séquence."
+
+msgid "The durations of the fadings."
+msgstr "Les durées des fondus."
+
+msgid "The elasticity of the item."
+msgstr "L'élasticité de l'objet."
+
+msgid "The ends of the segments of the line."
+msgstr "Les extrémités des segments de la ligne."
+
+#, fuzzy
+#| msgid "The opacity applied to the sprites of the item when rendering."
+msgid "The factor applied to the real type to get the game time."
+msgstr "L'opacité appliquée aux images de l'objet lors de l'affichage."
+
+#, fuzzy
+#| msgid "The duration of the movement, in seconds."
+msgid "The factor of movement applied at angular speed."
+msgstr "La durée du mouvement, en secondes."
+
+# Field description
+# ../../../item-description/generic/camera_on_object.xml
+#: ../../../level-editor/src/bf/code/new_layer_from_image_dialog.cpp:207
+#, fuzzy
+#| msgid "The items on which the camera is focused."
+msgid "The field in which the sprite is set:"
+msgstr "Les objets sur lesquels la caméra est braquée."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The final angle."
+msgstr "L'angle final."
+
+# Field description
+# ../../../item-description/generic/force_rectangle_creator.xml
+msgid "The force on the x axis in the rectangle."
+msgstr "La force horizontale appliquée dans le rectangle."
+
+# Field description
+# ../../../item-description/generic/force_rectangle_creator.xml
+msgid "The force on the y axis in the rectangle."
+msgstr "La force verticale appliquée dans le rectangle."
+
+msgid "The force to give to shake the camera."
+msgstr "La force à donner pour secouer la caméra."
+
+msgid "The friction in the rectangle."
+msgstr "La friction appliquée dans le rectangle."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+#, fuzzy
+#| msgid "The intensity of the green component of the color of the traces."
+msgid "The green component of the color of the border."
+msgstr "L'intensité de la composante verte de la couleur des traces."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+#, fuzzy
+#| msgid "The intensity of the green component of the color of the traces."
+msgid "The green component of the color of the inside."
+msgstr "L'intensité de la composante verte de la couleur des traces."
+
+msgid "The hardness of the item."
+msgstr "La dureté de l'objet."
+
+msgid "The height of the item."
+msgstr "La hauteur de l'objet."
+
+msgid "The height to give to the camera."
+msgstr "La hauteur à donner à la caméra."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The initial angle."
+msgstr "L'angle initial."
+
+#, fuzzy
+#| msgid "The initial vertical speed of the item."
+msgid "The initial angular speed of the item."
+msgstr "La vitesse verticale initiale de l'objet."
+
+msgid "The initial horizontal speed of the item."
+msgstr "La vitesse horizontale initiale de l'objet."
+
+msgid "The initial state of the item."
+msgstr "L'état initial de l'objet."
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "The initial time, in seconds."
+msgstr "Le temps initial, en secondes."
+
+msgid "The initial vertical speed of the item."
+msgstr "La vitesse verticale initiale de l'objet."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The intensity of the blue channel applied to the sprites of the item when rendering."
+msgstr "L'intensité de la composante bleue des images de l'objet lors de l'affichage."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The intensity of the blue component of the color of the traces."
+msgstr "L'intensité de la composante bleue de la couleur des traces."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The intensity of the green channel applied to the sprites of the item when rendering."
+msgstr "L'intensité de la composante verte des images de l'objet lors de l'affichage."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The intensity of the green component of the color of the traces."
+msgstr "L'intensité de la composante verte de la couleur des traces."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The intensity of the red channel applied to the sprites of the item when rendering."
+msgstr "L'intensité de la composante rouge des images de l'objet lors de l'affichage."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The intensity of the red component of the color of the traces."
+msgstr "L'intensité de la composante rouge de la couleur des traces."
+
+msgid "The item at the first end of the link."
+msgstr "L'objet à une extrémité du lien."
+
+msgid "The item at the second end of the link."
+msgstr "L'objet à l'autre extrémité du lien."
+
+# Field description
+# ../../../item-description/generic/expr/check_item_class_creator.xml
+msgid "The item for which we observe the collisions."
+msgstr "L'objet pour lequel on observe les collisions."
+
+#, fuzzy
+#| msgid "The item to move."
+msgid "The item reference to use."
+msgstr "L'objet à déplacer."
+
+msgid "The item to be copied."
+msgstr "L'objet à copier."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_tracking_creator.xml
+msgid "The item to follow."
+msgstr "L'objet à suivre."
+
+msgid "The item to move."
+msgstr "L'objet à déplacer."
+
+msgid "The item to use as reference for the end extremity."
+msgstr "L'objet à utiliser comme référence pour l'extrémité finale."
+
+#, fuzzy
+#| msgid "The item to use as reference for the end extremity."
+msgid "The item to use as reference for the left extremity."
+msgstr "L'objet à utiliser comme référence pour l'extrémité finale."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+#, fuzzy
+#| msgid "The item to use as reference for the start extremity."
+msgid "The item to use as reference for the right extremity."
+msgstr "L'objet utilisé comme référence pour l'extrémité de départ."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The item to use as reference for the start extremity."
+msgstr "L'objet utilisé comme référence pour l'extrémité de départ."
+
+# Field description
+# ../../../item-description/generic/camera_on_object.xml
+msgid "The items on which the camera is focused."
+msgstr "Les objets sur lesquels la caméra est braquée."
+
+# Field description
+# ../../../item-description/generic/clone_toggle.xml
+msgid "The items to clone. The original items will be deleted when the level will be loaded."
+msgstr "Les objets à cloner. Les objets originaux seront détruits lorsque le niveau sera chargé."
+
+#, fuzzy
+#| msgid "The force to give to shake the camera."
+msgid "The items to use to scale the time."
+msgstr "La force à donner pour secouer la caméra."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/applied_linear_expression.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/applied_boolean_expression.xml
+msgid "The items to which the condition is applied."
+msgstr "Les objets auxquels la condition est appliquée."
+
+msgid "The left operand of the expression."
+msgstr "L'opérande gauche de l'expression."
+
+msgid "The length of the movement on the X-axis."
+msgstr "La longueur horizontale du mouvement."
+
+msgid "The length of the movement on the Y-axis."
+msgstr "La longueur verticale du mouvement."
+
+# Field description
+# ../../../item-description/generic/expr/applied_linear_expression.xml
+msgid "The linear expression to apply."
+msgstr "L'expression linéaire à appliquer."
+
+msgid "The list of actors."
+msgstr "La liste des acteurs."
+
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "The list of item positions according to the movement duration."
+msgstr "La liste des positions des objets selon la durée du mouvement."
+
+msgid "The list of the items to create."
+msgstr "La liste des objets à créer."
+
+msgid "The list of the items to display."
+msgstr "La liste des objets à afficher."
+
+msgid "The list of the items to kill."
+msgstr "La liste des objets à tuer."
+
+msgid "The mass of the item."
+msgstr "La masse de l'objet."
+
+msgid "The maximal length of the link."
+msgstr "La longueur maximale du lien."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid "The maximum allowed distance to the reference item."
+msgstr "La distance maximum autorisée par rapport à l'objet de référence."
+
+msgid "The maximum angle of the direction."
+msgstr "L'angle maximal de la direction."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum change of the size."
+msgstr "Le plus grand changement lors d'un changement de taille."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+#, fuzzy
+#| msgid "The maximum movement of the camera."
+msgid "The maximum height of the camera."
+msgstr "Le mouvement maximum de la caméra."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum movement of the camera."
+msgstr "Le mouvement maximum de la caméra."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The maximum speed of flow on x axis."
+msgstr "La vitesse maximum du flux sur l'axe des abscisses."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The maximum speed of flow on y axis."
+msgstr "La vitesse maximum du flux sur l'axe des ordonnées."
+
+msgid "The maximum speed of the movement."
+msgstr "La vitesse maximum du mouvement."
+
+msgid "The maximum valid X-position of the camera."
+msgstr "La plus grande position horizontale autorisée pour la caméra."
+
+msgid "The maximum valid Y-position of the camera."
+msgstr "La plus grande position verticale autorisée pour la caméra."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+#, fuzzy
+#| msgid "The maximum movement of the camera."
+msgid "The maximum width of the camera."
+msgstr "Le mouvement maximum de la caméra."
+
+msgid "The minimal length of the link."
+msgstr "La longueur minimale du lien."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+#, fuzzy
+#| msgid "The maximum movement of the camera."
+msgid "The minimum height of the camera."
+msgstr "Le mouvement maximum de la caméra."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The minimum speed of flow on x axis."
+msgstr "La vitesse minimum du flux sur l'axe des abscisses."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The minimum speed of flow on y axis."
+msgstr "La vitesse minimum du flux sur l'axe des ordonnées."
+
+msgid "The minimum valid X-position of the camera."
+msgstr "La plus petite position horizontale autorisée pour la caméra."
+
+msgid "The minimum valid Y-position of the camera."
+msgstr "La plus petite position verticale autorisée pour la caméra."
+
+#, fuzzy
+#| msgid "The minimum valid X-position of the camera."
+msgid "The minimum width of the camera."
+msgstr "La plus petite position horizontale autorisée pour la caméra."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_sequence_creator.xml
+msgid "The movements of the sequence, must be non-empty."
+msgstr "Les mouvements de la séquence (doit être non vide)."
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:182
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:202
+msgid "The name field is empty."
+msgstr "Le nom du champ est vide."
+
+# Field description
+# ../../../item-description/generic/link/link_remover.xml
+msgid "The name of a sound to play when removing the links."
+msgstr "Le nom d'un son à jouer lorsque le lien est retiré."
+
+msgid "The name of the actor."
+msgstr "Le nom de l'acteur."
+
+msgid "The name of the item (must be unique)."
+msgstr "Le nom de l'objet (doit être unique)."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid "The name of the transition layer receiving the fade effect."
+msgstr "Le nom du calque de transition qui recevra l'effet de fondu."
+
+msgid "The name of the variable to get."
+msgstr "Le nom de la variable à lire."
+
+msgid "The name of the variable to set."
+msgstr "Le nom de la variable à définir."
+
+# Field description
+# ../../../item-description/generic/script/add_script_actor.xml
+msgid "The new actor."
+msgstr "Le nouvel acteur."
+
+#: ../../../model-editor/src/bf/code/error_check_model_dialog.cpp:90
+msgid "The next action does not exist."
+msgstr "L'action suivante n'existe pas."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+#, fuzzy
+#| msgid "The number of units of the world in a meter."
+msgid "The number of branches in the star."
+msgstr "Le nombre d'unités du monde dans un mètre réel."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The number of items per second in average."
+msgstr "Le nombre d'objets par seconde, en moyenne."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "The number of units of the world in a meter."
+msgstr "Le nombre d'unités du monde dans un mètre réel."
+
+msgid "The opacity applied to the sprites of the item when rendering."
+msgstr "L'opacité appliquée aux images de l'objet lors de l'affichage."
+
+#, fuzzy
+#| msgid "The opacity of the color of the traces."
+msgid "The opacity of the border."
+msgstr "L'opacité de la couleur de la trace."
+
+msgid "The opacity of the color of the traces."
+msgstr "L'opacité de la couleur de la trace."
+
+#, fuzzy
+#| msgid "The elasticity of the item."
+msgid "The opacity of the inside."
+msgstr "L'élasticité de l'objet."
+
+#, fuzzy
+#| msgid "The opacity of the color of the traces."
+msgid "The opacity when an item collides."
+msgstr "L'opacité de la couleur de la trace."
+
+#, fuzzy
+#| msgid "The opacity of the color of the traces."
+msgid "The opacity when no item collides."
+msgstr "L'opacité de la couleur de la trace."
+
+msgid "The operand of the expression."
+msgstr "L'opérande de l'expression."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_item.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid "The path of the level to start, or the name of a game variable containing this path."
+msgstr "Le chemin du niveau à lancer, ou le nom d'une variable de jeu qui contient son chemin."
+
+msgid "The path to the credits file."
+msgstr "Le chemin vers le fichier des crédits."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "The path to the font file to use to display the text."
+msgstr "Le chemin du fichier de police à utiliser pour afficher le texte."
+
+#, fuzzy
+#| msgid "The path to the script to play."
+msgid "The path to the model to load."
+msgstr "Le chemin du script à exécuter."
+
+msgid "The path to the script to play."
+msgstr "Le chemin du script à exécuter."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+msgid "The ratio of height to compute actor's position (0 for bottom side, 0.5 for middle, 1 for top side)."
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid "The ratio of height to use (0 for bottom side, 0.5 for middle, 1 for top side)."
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The ratio of the inner vertices relatively to the outer ones."
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+msgid "The ratio of width to compute actor's position (0 for left side, 0.5 for middle, 1 for right side)."
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid "The ratio of width to use (0 for left side, 0.5 for middle, 1 for right side)."
+msgstr ""
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+#, fuzzy
+#| msgid "The intensity of the red component of the color of the traces."
+msgid "The red component of the color of the border."
+msgstr "L'intensité de la composante rouge de la couleur des traces."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+#, fuzzy
+#| msgid "The intensity of the red component of the color of the traces."
+msgid "The red component of the color of the inside."
+msgstr "L'intensité de la composante rouge de la couleur des traces."
+
+msgid "The relative distance at which the other item is shifted on the Z axis."
+msgstr "La distance relative d'alignement de l'autre objet dans la profondeur du calque."
+
+msgid "The right operand of the expression."
+msgstr "L'opérande de droite de l'expression."
+
+#, fuzzy
+#| msgid "The animation played when the item is on."
+msgid "The sample to play when the toggle is on."
+msgstr "L'animation jouée lorsque l'objet est activé."
+
+#, fuzzy
+#| msgid "The duration of the fade out when the item is dead."
+msgid "The scale of the time when the script is accelerated."
+msgstr "La durée du fondu appliqué quand l'objet est mort."
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:219
+msgid "The sound is incorrect."
+msgstr "Le son est incorrect."
+
+msgid "The speed of the movement on the X axis."
+msgstr "La vitesse horizontale du mouvement."
+
+msgid "The speed of the movement on the Y axis."
+msgstr "La vitesse verticale du mouvement."
+
+msgid "The sprite of the item."
+msgstr "L'image de l'objet."
+
+# Field description
+# ../../../item-description/generic/level_loader_progression_item.xml
+msgid "The sprite that grows while the level is loaded."
+msgstr "Le sprite qui grandit pendant le chargement du niveau."
+
+msgid "The strength of the link."
+msgstr "La force du lien."
+
+msgid "The text in the item."
+msgstr "Le texte de l'objet."
+
+msgid "The timer to use for the evaluation."
+msgstr "Le chronomètre à utiliser pour l'évaluation."
+
+# Field description
+# ../../../item-description/generic/expr/get_toggle_status_creator.xml
+msgid "The toggle from which we take the status."
+msgstr "L'objet activable duquel on récupère l'état."
+
+# Field description
+# ../../../item-description/generic/trigger.xml
+msgid "The toggles controlled by this trigger."
+msgstr "Les objets contrôlés par cet activateur."
+
+# Field description
+# ../../../item-description/generic/expr/get_toggle_status_creator.xml
+msgid "The toggles to which we transmit the status."
+msgstr "Les objets activables auxquels l'état est transmis."
+
+# Field description
+# ../../../item-description/generic/straight_slope.xml
+msgid "The tolerance between the position of the other item and the current item for alignments. Positive value means that the margin is outside the block."
+msgstr "La tolérance entre la position de l'autre objet et l'objet actuel pour les alignements. Une valeur positive signifie que la marge est dirigée vers l'extérieur du bloc."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The total time needed to go from start_angle to end_angle."
+msgstr "Le temps total nécessaire pour aller de l'angle de départ à celui de fin."
+
+msgid "The total time of the movement."
+msgstr "Le temps total du mouvement."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_join_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+msgid "The total time to reach the target."
+msgstr "Le temps total nécessaire pour atteindre la cible."
+
+msgid "The type of the environment in the zone."
+msgstr "Le type de l'environnement dans la zone."
+
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:166
+msgid "The value is not of type "
+msgstr "La valeur n'est pas du type "
+
+msgid "The value of the variable to set."
+msgstr "La valeur à affecter à la variable."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+#, fuzzy
+#| msgid ""
+#| "The value under which the absolute value of the speed is considered to be "
+#| "equal to zero on the x axis."
+msgid "The value under which the absolute value of the angular speed is considered to be equal to zero."
+msgstr "La valeur en dessous de laquelle la vitesse, en valeur absolue, est considérée comme nulle sur l'axe des abscisses."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "The value under which the absolute value of the speed is considered to be equal to zero on the x axis."
+msgstr "La valeur en dessous de laquelle la vitesse, en valeur absolue, est considérée comme nulle sur l'axe des abscisses."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "The value under which the absolute value of the speed is considered to be equal to zero on the y axis."
+msgstr "La valeur en dessous de laquelle la vitesse, en valeur absolue, est considérée comme nulle sur l'axe des ordonnées."
+
+#, fuzzy
+#| msgid "The opacity of the color of the traces."
+msgid "The width of the border of the star."
+msgstr "L'opacité de la couleur de la trace."
+
+msgid "The width of the item."
+msgstr "La largeur de l'objet."
+
+msgid "The width of the line."
+msgstr "La largeur de la ligne."
+
+msgid "The width to give to the camera."
+msgstr "La largeur à donner à la caméra."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The x position of the end extremity in the reference item."
+msgstr "La position horizontale de l'extrémité de fin dans l'objet de référence."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The x position of the start extremity in the reference item."
+msgstr "La position horizontale de l'extrémité de départ dans l'objet de référence."
+
+msgid "The x value of the gravity."
+msgstr "La valeur horizontale de la gravité."
+
+#, fuzzy
+#| msgid "The list of actors."
+msgid "The x-gap to applied on actors."
+msgstr "La liste des acteurs."
+
+# Field description
+# ../../../item-description/generic/ambient_sound.xml
+#, fuzzy
+#| msgid "The sample to play."
+msgid "The x-gap to applied."
+msgstr "Le son à jouer."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The y position of the end extremity in the reference item."
+msgstr "La position verticale de l'extrémité de fin dans l'objet de référence."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The y position of the start extremity in the reference item."
+msgstr "La position verticale de l'extrémité de départ dans l'objet de référence."
+
+msgid "The y value of the gravity."
+msgstr "La valeur verticale de la gravité."
+
+#, fuzzy
+#| msgid "The list of actors."
+msgid "The y-gap to applied on actors."
+msgstr "La liste des acteurs."
+
+# Field description
+# ../../../item-description/generic/ambient_sound.xml
+#, fuzzy
+#| msgid "The sample to play."
+msgid "The y-gap to applied."
+msgstr "Le son à jouer."
+
+#: ../../../level-editor/src/bf/code/level_runner.cpp:102
+msgid "There were some errors when checking the level."
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:212
+msgid "This action already exists."
+msgstr "Cette action existe déjà."
+
+# Class description
+# ../../../item-description/generic/density_rectangle_creator.xml
+msgid "This class adds a universe::density_rectangle in the world then dies."
+msgstr "Cette classe ajoute un objet universe::density_rectangle dans le monde puis meurt."
+
+# Class description
+# ../../../item-description/generic/environment_rectangle_creator.xml
+msgid "This class adds a universe::environment_rectangle in the world then dies."
+msgstr "Cette classe ajoute un objet universe::environment_rectangle dans le monde puis meurt."
+
+# Class description
+# ../../../item-description/generic/force_rectangle_creator.xml
+msgid "This class adds a universe::force_rectangle in the world then dies."
+msgstr "Cette classe ajoute un objet universe::force_rectangle dans le monde puis meurt."
+
+# Class description
+# ../../../item-description/generic/friction_rectangle_creator.xml
+msgid "This class adds a universe::friction_rectangle in the world then dies."
+msgstr "Cette classe ajoute un objet universe::friction_rectangle dans le monde puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/applied_forced_movement.xml
+msgid "This class applies a forced movement to an item then die."
+msgstr "Cette classe applique un mouvement forcé à un objet puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_movement_toggle.xml
+msgid "This class applies a forced movement to an item when activated."
+msgstr "Cette classe applique un mouvement forcé à un objet quand elle est activée."
+
+# Class description
+# ../../../item-description/generic/forced_movement/applied_forced_movement.xml
+#, fuzzy
+#| msgid "This class applies a forced movement to an item then die."
+msgid "This class can give a forced movement to an item."
+msgstr "Cette classe applique un mouvement forcé à un objet puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+msgid "This class creates a forced movement of type \"forced_aiming\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_aiming\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+msgid "This class creates a forced movement of type \"forced_goto\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_goto\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_join_creator.xml
+msgid "This class creates a forced movement of type \"forced_join\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_join\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "This class creates a forced movement of type \"forced_rotation\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_rotation\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_sequence_creator.xml
+msgid "This class creates a forced movement of type \"forced_sequence\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_sequence\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid "This class creates a forced movement of type \"forced_stay_around\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_stay_around\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_tracking_creator.xml
+msgid "This class creates a forced movement of type \"forced_tracking\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_tracking\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid "This class creates a forced movement of type \"forced_translation\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_translation\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+#, fuzzy
+#| msgid ""
+#| "This class creates a forced movement of type \"forced_goto\", applies it "
+#| "to itself then die."
+msgid "This class creates a forced movement of type \"toggle_in_forced_movement\", applies it to itself then die."
+msgstr "Cette classe crée un mouvement forcé de type \"forced_goto\", se l'applique à elle-même puis meurt."
+
+# Class description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "This class creates an link between two items then die."
+msgstr "Cette classe crée un lien entre deux objets puis meurt."
+
+# Class description
+# ../../../item-description/generic/world_parameters.xml
+msgid "This class defines the parameters of the world then dies."
+msgstr "Cette classe définit les paramètres du monde puis meurt."
+
+# Class description
+# ../../../item-description/generic/expr/applied_boolean_expression.xml
+msgid "This class gives a boolean expression to a boolean expression receiver, then die."
+msgstr "Cette classe donne une expression booléenne à un objet pouvant en recevoir (boolean_expression_receiver), puis meurt."
+
+# Class description
+# ../../../item-description/generic/expr/applied_linear_expression.xml
+msgid "This class gives a linear expression to a linear expression receiver, then die."
+msgstr "Cette classe donne une expression linéaire à un objet pouvant en recevoir (linear_expression_receiver), puis meurt."
+
+# Class description
+# ../../../item-description/generic/expr/boolean_constant_creator.xml
+msgid "This class is a boolean constant. This item is a parameter for other items. He kills himself at the end of his build() method."
+msgstr "Une constante booléenne. Cet objet est un paramètre pour d'autres objets. Il se tue à la fin de son initialisation."
+
+# Class description
+# ../../../item-description/generic/expr/check_item_class_creator.xml
+msgid "This class is a boolean expression checking if an item is an instance of a given class. This item is a parameter for the items of type applied_boolean_expression. He kills himself at the end of his build() method."
+msgstr "Une expression booléenne vérifiant qu'un objet est une instance d'une classe donnée. Cet objet est un paramètre pour l'objet « applied_boolean_expression ». Il se tue à la fin de son initialisation."
+
+# Class description
+# ../../../item-description/generic/expr/logical_not_creator.xml
+msgid "This class is a boolean expression returning the negation of an other boolean expression. This item is a parameter for other items. He kills himself at the end of his build() method."
+msgstr "Une expression booléenne retournant la négation d'une autre expression booléenne. Cet objet est un paramètre pour l'objet « applied_boolean_expression ». Il se tue à la fin de son initialisation."
+
+# Class description
+# ../../../item-description/generic/expr/get_toggle_status_creator.xml
+msgid "This class is a boolean expression returning the state of a toggle. This item is a parameter for the items of type applied_boolean_expression. He kills himself at the end of his build() method."
+msgstr "Une expression booléenne retournant l'état d'un objet activable. Cet objet est un paramètre pour l'objet « applied_boolean_expression ». Il se tue à la fin de son initialisation."
+
+# Class description
+# ../../../item-description/generic/expr/boolean_constant_creator.xml
+#, fuzzy
+#| msgid ""
+#| "This class is a boolean constant. This item is a parameter for other "
+#| "items. He kills himself at the end of his build() method."
+msgid "This class is a linear constant. This item is a parameter for other items. He kills himself at the end of his build() method."
+msgstr "Une constante booléenne. Cet objet est un paramètre pour d'autres objets. Il se tue à la fin de son initialisation."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_movement_toggle.xml
+#, fuzzy
+#| msgid "This class applies a forced movement to an item when activated."
+msgid "This class removes the forced movement to an item when activated."
+msgstr "Cette classe applique un mouvement forcé à un objet quand elle est activée."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1367
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:142
+msgid "This date is already used. The snapshot at this date is going to be removed."
+msgstr "Cette date est déjà utilisée. Le précédent repère temporel à cette date va être supprimé."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:406
+msgid "This identifier is already in use."
+msgstr "Cet identifiant est déjà utilisé."
+
+msgid "This item changes the size of the camera."
+msgstr "Cet objet change la taille de la caméra."
+
+# Class description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid "This item clones an other item when activated."
+msgstr "Cet objet clone un autre objet lorsqu'il est activé."
+
+# Class description
+# ../../../item-description/generic/lines.xml
+msgid "This item creates several instances of bear::line to draw a line between items."
+msgstr "Cet objet crée plusieurs instances de « bear::line » pour dessiner une ligne entre des objets."
+
+# Class description
+# ../../../item-description/generic/line.xml
+msgid "This item displays a line between several items."
+msgstr "Cette objet affiche une ligne entre des objets."
+
+# Class description
+# ../../../item-description/generic/level_loader_item.xml
+#, fuzzy
+#| msgid "This item loads a level."
+msgid "This item displays a star."
+msgstr "Cet objet charge un niveau."
+
+# Class description
+# ../../../item-description/generic/level_loader_item.xml
+msgid "This item loads a level."
+msgstr "Cet objet charge un niveau."
+
+# Class description
+# ../../../item-description/generic/delayed_level_loading.xml
+msgid "This item starts a level after a given delay or when the user presses a key."
+msgstr "Cet objet charge un niveau après un délai donné ou lorsque l'utilisateur appuie sur une touche."
+
+# Class description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid "This item starts a level when activated."
+msgstr "Cet objet charge un niveau lorsqu'il est activé."
+
+# Class description
+# ../../../item-description/generic/rolling_credits.xml
+msgid "This items displays rolling credits, ie. a list of members of the software team. This list is taken from a custom file."
+msgstr "Cet objet affiche un générique défilant, c'est à dire une liste des membres de l'équipe. Cette liste est obtenue depuis un fichier donné."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1215
+#, fuzzy
+#| msgid "This level has changes that are not saved. Save now?"
+msgid "This level has changes that are not compiled. Compile now?"
+msgstr "Ce niveau a des modifications non enregistrées. Enregistrer maintenant ?"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1200
+msgid "This level has changes that are not saved. Save now?"
+msgstr "Ce niveau a des modifications non enregistrées. Enregistrer maintenant ?"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1018
+msgid "This model has changes that are not saved. Save now?"
+msgstr "Ce modèle a des modifications non enregistrées. Voulez-vous l'enregistrer maintenant ?"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:191
+msgid "This name is already used."
+msgstr "Ce nom est déjà utilisé."
+
+#, fuzzy
+#| msgid "This item changes the size of the camera."
+msgid "This toggle changes the scale of the time when turned on."
+msgstr "Cet objet change la taille de la caméra."
+
+# Class description
+# ../../../item-description/generic/time_scale_on_input_toggle.xml
+msgid "This toggle changes the time scale if an input is pressed when it is turned on."
+msgstr ""
+
+# Class description
+# ../../../item-description/generic/toggle_group.xml
+msgid "This toggle transmits its status to a group of other toggles."
+msgstr "Cet objet activable transmet son état à un groupe d'autres objets activables."
+
+#: ../../../bear-editor/src/bf/code/animation_view_ctrl.cpp:124
+msgid "Time factor:"
+msgstr "Facteur de temps :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:592
+msgid "Toggle the magnetism of the grid."
+msgstr "Active/désactive le magnétisme de la grille."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:589
+msgid "Toggle the visibility of the grid."
+msgstr "Affiche/masque la grille."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "True if there is a fade in for the first item."
+msgstr "Vrai si le premier objet apparaît en fondu."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "True if there is a fade out for last item."
+msgstr "Vrai si le dernier objet disparaît en fondu."
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:133
+msgid "Type a pattern to filter the classes in the tree. For example: typing \"b*r\" will display the classes whose name contains the letter b followed by the letter r, possibly with letters between."
+msgstr "Écrire un motif pour filtrer les classes dans l'arbre. Par exemple : écrire \"b*r\" affichera les classes dont le nom contient la lettre b suivie par la lettre r, éventuellement avec d'autres lettres entre les deux."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:178
+msgid "Type the name of the only classes you want to see in the editor"
+msgstr "Le nom des seules classes que vous voulez voir dans l'éditeur."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:670
+#: ../../../model-editor/src/bf/code/model_frame.cpp:585
+msgid "Undo"
+msgstr "Annuler"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1018
+#: ../../../model-editor/src/bf/code/model_frame.cpp:974
+#, c-format
+msgid "Undo \"%s\"\tCTRL+Z"
+msgstr "&Annuler « %s »\tCtrl+Z"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:507
+#: ../../../model-editor/src/bf/code/model_frame.cpp:500
+msgid "Undo the last operation."
+msgstr "Annule la dernière action."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:431
+msgid "Unsigned integer"
+msgstr "Entier positif"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:65
+#, fuzzy
+msgid "Update &height"
+msgstr "Hauteur"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:62
+msgid "Update &width"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:66
+#, fuzzy
+msgid "Update height"
+msgstr "Hauteur"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:63
+#, fuzzy
+msgid "Update width"
+msgstr "largeur=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:618
+msgid "Use a bright background."
+msgstr "Utiliser un arrière plan clair."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:153
+msgid "Value"
+msgstr "Valeur"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:142
+msgid "Vertical"
+msgstr "Vertical"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:434
+msgid "Vertical alignment policy:"
+msgstr ""
+
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:98
+msgid "Vertical:"
+msgstr "Vertical :"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:200
+msgid "Visible"
+msgstr "Visible"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:135
+msgid "Volume:"
+msgstr "Volume :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:927
+msgid "Wait..."
+msgstr "Patience…"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:176
+msgid "Width"
+msgstr "Largeur"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:161
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:345
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:410
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:206
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:180
+msgid "Width:"
+msgstr "Largeur :"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:694
+#: ../../../model-editor/src/bf/code/model_frame.cpp:592
+msgid "Wireframe"
+msgstr "Fil de fer"
+
+msgid "X-distance between the left edge of the sprite and the left edge of the item."
+msgstr "Distance horizontale entre le sprite et l'objet."
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:129
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:145
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:332
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:195
+msgid "X:"
+msgstr "X :"
+
+msgid "Y-distance between the top edge of the sprite and the top edge of the item."
+msgstr "Distance verticale entre le sprite et l'objet."
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:133
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:149
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:336
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:199
+msgid "Y:"
+msgstr "Y :"
+
+msgid "Z-coordinate of the item in the layer."
+msgstr "Position de l'objet dans la profondeur du calque."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:612
+msgid "Zoom &fit"
+msgstr "&Zoom automatique"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:714
+#: ../../../model-editor/src/bf/code/model_frame.cpp:606
+msgid "Zoom &in"
+msgstr "&Agrandir"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:716
+#: ../../../model-editor/src/bf/code/model_frame.cpp:608
+msgid "Zoom &out"
+msgstr "&Réduire"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:554
+#: ../../../model-editor/src/bf/code/model_frame.cpp:612
+msgid "Zoom fit"
+msgstr "Zoom automatique"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:714
+#: ../../../model-editor/src/bf/code/model_frame.cpp:606
+msgid "Zoom in"
+msgstr "Agrandir"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:632
+#: ../../../model-editor/src/bf/code/model_frame.cpp:548
+msgid "Zoom less\tCtrl+Wheel down"
+msgstr "Réduire\tCtrl+Wheel down"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:629
+#: ../../../model-editor/src/bf/code/model_frame.cpp:545
+msgid "Zoom more\tCtrl+Wheel up"
+msgstr "Agrandir\tCtrl+Wheel up"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:716
+#: ../../../model-editor/src/bf/code/model_frame.cpp:608
+msgid "Zoom out"
+msgstr "Réduire"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:108
+msgid "activated"
+msgstr "activé"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:109
+msgid "animation file:"
+msgstr "fichier d'animation:"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:98
+msgid "animation:"
+msgstr "animation :"
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:165
+msgid "back:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:164
+msgid "back:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:166
+msgid "back:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/error_check_model_dialog.cpp:76
+msgid "bad actions"
+msgstr "actions incorrectes"
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:168
+msgid "bounce:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:167
+msgid "bounce:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:169
+msgid "bounce:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:171
+msgid "circ:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:170
+msgid "circ:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:172
+msgid "circ:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:174
+msgid "cubic:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:173
+msgid "cubic:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:175
+msgid "cubic:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:177
+#, fuzzy
+msgid "elastic:in"
+msgstr "Dernier indice :"
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:176
+msgid "elastic:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:178
+msgid "elastic:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:180
+msgid "expo:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:179
+msgid "expo:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:181
+msgid "expo:out"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:43
+msgid "false"
+msgstr "faux"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:167
+#, fuzzy
+msgid "flip"
+msgstr "Inversion horizontale"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2299
+#, c-format
+msgid "height=%d"
+msgstr "hauteur=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2321
+#, c-format
+msgid "id = '%s'"
+msgstr "id = « %s »"
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:183
+msgid "linear:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:182
+msgid "linear:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:184
+msgid "linear:out"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:164
+#, fuzzy
+msgid "mirror"
+msgstr "Erreur"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:110
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:208
+msgid "no layer"
+msgstr "pas de calque"
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:186
+msgid "none:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:185
+msgid "none:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:187
+msgid "none:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:189
+msgid "quad:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:188
+msgid "quad:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:190
+msgid "quad:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:192
+msgid "quart:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:191
+msgid "quart:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:193
+msgid "quart:out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:195
+msgid "quint:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:194
+msgid "quint:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:196
+msgid "quint:out"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:139
+msgid "sample:"
+msgstr "son :"
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:198
+msgid "sine:in"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:197
+msgid "sine:in_out"
+msgstr ""
+
+#: ../../../model-editor/src/bf/code/easing_combo_popup.cpp:199
+msgid "sine:out"
+msgstr ""
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:76
+msgid "sprite:"
+msgstr "image :"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:770
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:773
+msgid "string"
+msgstr "chaîne de caractères"
+
+#: ../../../bear-editor/src/bf/code/stream_conv.cpp:70
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:41
+msgid "true"
+msgstr "vrai"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2297
+#, c-format
+msgid "width=%d"
+msgstr "largeur=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2293
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2306
+#, c-format
+msgid "x=%d"
+msgstr "x=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2295
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:2308
+#, c-format
+msgid "y=%d"
+msgstr "y=%d"
+
+#~ msgid "Bad level"
+#~ msgstr "Niveau incorrect"
+
+#~ msgid "Flip"
+#~ msgstr "Inversion verticale"
+
+#~ msgid "Layer size"
+#~ msgstr "Taille de calque"
+
+#~ msgid "Mirror"
+#~ msgstr "Miroir"
+
+#~ msgid "The center of the rotation."
+#~ msgstr "Le centre de la rotation."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+#~ msgid "The item around which we stay."
+#~ msgstr "L'objet autour duquel on reste."
+# Field description
+# ../../../item-description/generic/expr/check_item_class_creator.xml
+#~ msgid "The name of the class that validates the condition."
+#~ msgstr "Le nom de la classe qui valide la condition."
+#~ msgid "The target to reach."
+#~ msgstr "La cible à atteindre."
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Creating a new level."
+#~ msgstr "Crée un nouveau niveau."
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Creating a new model."
+#~ msgstr "Crée un nouveau niveau."
+
+#, fuzzy
+#~ msgid " Path to the directory containing XML item class files\n"
+#~ msgstr "Chemin vers les fichiers de description des objets"
+
+#, fuzzy
+#~ msgid " Path to the directory containing the data of the game\n"
+#~ msgstr "Chemin vers le répertoire de données du jeu"
+
+#, fuzzy
+#~ msgid " Size of the level frame\n"
+#~ msgstr "Réouvre le fichier de niveau."
+
+#, fuzzy
+#~ msgid " Size of the model frame\n"
+#~ msgstr "Taille à l'écran"
+
+#, fuzzy
+#~ msgid " equal to infinity"
+#~ msgstr "infini"
+
+#, fuzzy
+#~ msgid " value='"
+#~ msgstr "Valeur"
+
+#~ msgid "\"\tCTRL+Y"
+#~ msgstr "\"\tCTRL+Y"
+
+#~ msgid "\"\tCTRL+Z"
+#~ msgstr "\"\tCTRL+Z"
+
+#, fuzzy
+#~ msgid "\" duration=\""
+#~ msgstr "Durée"
+
+#, fuzzy
+#~ msgid "\" height=\""
+#~ msgstr "hauteur=%d"
+
+#~ msgid "&Revert to saved"
+#~ msgstr "&Restaurer la dernière sauvegarde"
+
+#, fuzzy
+#~ msgid "' and will not be saved."
+#~ msgstr "Le niveau n'est pas enregistré."
+
+#, fuzzy
+#~ msgid "' first_index='"
+#~ msgstr "Indice de début :"
+
+#, fuzzy
+#~ msgid "' height='"
+#~ msgstr "hauteur=%d"
+
+#, fuzzy
+#~ msgid "' last_index='"
+#~ msgstr "Dernier indice :"
+
+#, fuzzy
+#~ msgid "' loop_back='"
+#~ msgstr "Boucler à l'envers"
+
+#, fuzzy
+#~ msgid "' width='"
+#~ msgstr "largeur=%d"
+
+#, fuzzy
+#~ msgid "'. The identifier '"
+#~ msgstr "Identifiant incorrect"
+
+#, fuzzy
+#~ msgid ", first_index="
+#~ msgstr "Indice de début :"
+
+#, fuzzy
+#~ msgid ", item "
+#~ msgstr "objet"
+
+#, fuzzy
+#~ msgid ", last_index="
+#~ msgstr "Dernier indice :"
+
+#, fuzzy
+#~ msgid ", loop_back"
+#~ msgstr "Boucler à l'envers"
+
+#, fuzzy
+#~ msgid ", loops="
+#~ msgstr "Boucles"
+
+#, fuzzy
+#~ msgid ", mirror"
+#~ msgstr "Erreur"
+
+#, fuzzy
+#~ msgid "..."
+#~ msgstr "&Nouveau..."
+
+#, fuzzy
+#~ msgid ".spritepos"
+#~ msgstr "sprite : "
+
+#, fuzzy
+#~ msgid ": "
+#~ msgstr "Id :"
+
+#, fuzzy
+#~ msgid ": Can't open file."
+#~ msgstr "Impossible d'ouvrir le fichier de niveau."
+
+#, fuzzy
+#~ msgid "</animation>\n"
+#~ msgstr "animation : "
+
+#, fuzzy
+#~ msgid "<animation loops='"
+#~ msgstr "animation : "
+
+#, fuzzy
+#~ msgid "<animation_file path='"
+#~ msgstr "animation : "
+
+#, fuzzy
+#~ msgid "<class>"
+#~ msgstr "Classe"
+
+#, fuzzy
+#~ msgid "<sprite image='"
+#~ msgstr "sprite : "
+
+#~ msgid "Appearance"
+#~ msgstr "Apparence"
+
+#, fuzzy
+#~ msgid "Can't load XML file."
+#~ msgstr "Impossible d'ouvrir le fichier de niveau."
+
+#, fuzzy
+#~ msgid "Cannot load the XML file '"
+#~ msgstr "Impossible d'ouvrir le fichier de niveau."
+
+#, fuzzy
+#~ msgid "Class '"
+#~ msgstr "Classe"
+
+#, fuzzy
+#~ msgid "Compiling "
+#~ msgstr "Compilation terminée."
+
+#~ msgid "Duration: "
+#~ msgstr "Durée :"
+
+#, fuzzy
+#~ msgid "Field '"
+#~ msgstr "Fixe"
+
+#~ msgid "Flip Y"
+#~ msgstr "Inversion verticale"
+
+#~ msgid "Function :"
+#~ msgstr "Fonction :"
+
+#~ msgid "Height: "
+#~ msgstr "Hauteur :"
+
+#, fuzzy
+#~ msgid "Invalid field type."
+#~ msgstr "Valeur non valide"
+
+#, fuzzy
+#~ msgid "Invalid level."
+#~ msgstr "Valeur non valide"
+
+#, fuzzy
+#~ msgid "Invalid model."
+#~ msgstr "Valeur non valide"
+
+#, fuzzy
+#~ msgid "Invalid value '"
+#~ msgstr "Valeur non valide"
+
+#, fuzzy
+#~ msgid "Path to the directory where we save the images."
+#~ msgstr "Chemin vers le répertoire de données du jeu"
+
+#~ msgid "Redo \""
+#~ msgstr "Refaire \""
+
+#~ msgid "Set snapshot alignment"
+#~ msgstr "Définir l'alignement de la boîte englobante dans le repère temporel"
+
+#~ msgid "Start playing the sample after this duration."
+#~ msgstr "Commencer la lecture après cette durée."
+
+#~ msgid "Stop playing when the sample has been playing this duration."
+#~ msgstr "Stopper la lecture après cette durée de lecture."
+
+#~ msgid "Tell if the sample can be heard from anywhere."
+#~ msgstr "Indique si le son est audible de n'importe où."
+
+#~ msgid ""
+#~ "The animation of the decorative item generated when the kicker is "
+#~ "activated for the first time."
+#~ msgstr ""
+#~ "L'animation de l'objet décoratif généré lorsque le kicker est activé pour "
+#~ "la première fois."
+
+#~ msgid "The considered items for the centering."
+#~ msgstr "Les objets utilisés pour calculer le centrage."
+
+#, fuzzy
+#~ msgid "The field is not in the switch."
+#~ msgstr "La valeur n'est pas du type "
+
+#, fuzzy
+#~ msgid "The identifier '"
+#~ msgstr "Identifiant incorrect"
+
+#, fuzzy
+#~ msgid "The item at the end of the link."
+#~ msgstr "L'objet au premier bout de l'élastique."
+
+#, fuzzy
+#~ msgid "The item copied between extremities."
+#~ msgstr "L'objet au premier bout de l'élastique."
+
+#~ msgid "The offensive force."
+#~ msgstr "La force offensive."
+
+#~ msgid ""
+#~ "The relative x-position of the decorative item generated when the kicker "
+#~ "is activated for the first time."
+#~ msgstr ""
+#~ "La position relative horizontale de l'objet décoratif généré lorsque le "
+#~ "kicker est activé pour la première fois."
+
+#~ msgid ""
+#~ "The relative y-position of the decorative item generated when the kicker "
+#~ "is activated for the first time."
+#~ msgstr ""
+#~ "La position relative verticale de l'objet décoratif généré lorsque le "
+#~ "kicker est activé pour la première fois."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_centering_creator.xml
+#~ msgid ""
+#~ "This class creates a forced movement of type \"forced_centering\", "
+#~ "applies it to itself then die."
+#~ msgstr ""
+#~ "Cette classe crée un mouvement forcé de type \"forced_centering\", se "
+#~ "l'applique à elle-même puis meurt."
+#~ msgid "Transparency:"
+#~ msgstr "Transparence :"
+#~ msgid "Undo \""
+#~ msgstr "Annuler « "
+#, fuzzy
+#~ msgid "Width: "
+#~ msgstr "Largeur :"
+
+#~ msgid "X-coordinate of the top-left corner of the item."
+#~ msgstr "Position horizontale du coin haut gauche de l'objet."
+
+#, fuzzy
+#~ msgid "X: "
+#~ msgstr "X :"
+
+#~ msgid "Y value of the force applied to a colliding item on the extremity."
+#~ msgstr ""
+#~ "Valeur de la force verticale appliquée à un objet en collision à "
+#~ "l'extrêmité."
+
+#~ msgid "Y value of the force applied to a colliding item."
+#~ msgstr "Valeur de la force verticale appliquée à un objet en collision."
+
+#, fuzzy
+#~ msgid "Y-coordinate of the picture in the level."
+#~ msgstr "Position de l'objet dans la profondeur du calque."
+
+#~ msgid "Y-coordinate of the top-left corner of the item."
+#~ msgstr "Position verticale du coin haut gauche de l'objet."
+
+#, fuzzy
+#~ msgid "Y: "
+#~ msgstr "Y :"
+
+#~ msgid "Zoom &100"
+#~ msgstr "&Pas de zoom"
+
+#, fuzzy
+#~ msgid "action"
+#~ msgstr "Durée"
+
+#, fuzzy
+#~ msgid "angle"
+#~ msgstr "Valeur"
+
+#~ msgid "animation"
+#~ msgstr "animation"
+
+#, fuzzy
+#~ msgid "animation_file"
+#~ msgstr "animation : "
+
+#, fuzzy
+#~ msgid "auto_next"
+#~ msgstr "automatique"
+
+#, fuzzy
+#~ msgid "bool"
+#~ msgstr "booléen"
+
+#, fuzzy
+#~ msgid "class"
+#~ msgstr "Classe"
+
+#, fuzzy
+#~ msgid "class="
+#~ msgstr "Classe"
+
+#, fuzzy
+#~ msgid "class_name"
+#~ msgstr "Nom de la classe"
+
+#, fuzzy
+#~ msgid "clip_height"
+#~ msgstr "hauteur=%d"
+
+#, fuzzy
+#~ msgid "clip_width='"
+#~ msgstr "largeur=%d"
+
+#, fuzzy
+#~ msgid "content_animation"
+#~ msgstr "animation : "
+
+#, fuzzy
+#~ msgid "date"
+#~ msgstr "Coller"
+
+#, fuzzy
+#~ msgid "duration"
+#~ msgstr "Durée"
+
+#, fuzzy
+#~ msgid "environment of the zone."
+#~ msgstr "Le volume du son."
+
+#, fuzzy
+#~ msgid "false'"
+#~ msgstr "faux"
+
+#, fuzzy
+#~ msgid "false' "
+#~ msgstr "faux"
+
+#, fuzzy
+#~ msgid "field"
+#~ msgstr "Fixe"
+
+#, fuzzy
+#~ msgid "file"
+#~ msgstr "faux"
+
+#, fuzzy
+#~ msgid "first_index"
+#~ msgstr "Indice de début :"
+
+#, fuzzy
+#~ msgid "fixable"
+#~ msgstr "faux"
+
+#, fuzzy
+#~ msgid "fixed"
+#~ msgstr "Fixe"
+
+#, fuzzy
+#~ msgid "frame"
+#~ msgstr "faux"
+
+#, fuzzy
+#~ msgid "function"
+#~ msgstr "Durée"
+
+#~ msgid "id='"
+#~ msgstr "id = « "
+
+#, fuzzy
+#~ msgid "image"
+#~ msgstr "Image :"
+
+#, fuzzy
+#~ msgid "interval"
+#~ msgstr "entier"
+
+#~ msgid "item"
+#~ msgstr "objet"
+
+#~ msgid "layer"
+#~ msgstr "calque"
+
+#, fuzzy
+#~ msgid "layer "
+#~ msgstr "Calques"
+
+#, fuzzy
+#~ msgid "loop_back"
+#~ msgstr "Boucler à l'envers"
+
+#, fuzzy
+#~ msgid "loops"
+#~ msgstr "Boucles"
+
+#, fuzzy
+#~ msgid "music"
+#~ msgstr "Musique :"
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "Caméra"
+
+#, fuzzy
+#~ msgid "properties_frame"
+#~ msgstr "Propriétés"
+
+#, fuzzy
+#~ msgid "range type is not valid."
+#~ msgstr "Le niveau n'est pas enregistré."
+
+#~ msgid "real"
+#~ msgstr "réel"
+
+#, fuzzy
+#~ msgid "set"
+#~ msgstr "Décalage"
+
+#, fuzzy
+#~ msgid "stdin"
+#~ msgstr "chaîne de caractères"
+
+#, fuzzy
+#~ msgid "to"
+#~ msgstr "automatique"
+
+#, fuzzy
+#~ msgid "true'"
+#~ msgstr "vrai"
+
+#, fuzzy
+#~ msgid "true' "
+#~ msgstr "vrai"
+
+#, fuzzy
+#~ msgid "u_integer"
+#~ msgstr "entier"
+
+#, fuzzy
+#~ msgid "usage:\n"
+#~ msgstr "Image :"
+
+#, fuzzy
+#~ msgid "value"
+#~ msgstr "Valeur"
+
+#, fuzzy
+#~ msgid "width"
+#~ msgstr "Largeur"
+
+#, fuzzy
+#~ msgid "width='"
+#~ msgstr "largeur=%d"

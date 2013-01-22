@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::time_scale" category="time" box_color="#D662A0" url="http://www.gamned.org/wiki/index.php/time_scale">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This toggle changes the scale of the time when turned on.</description>
+  <fields>
+    <field type="real" name="time_scale.scale">
+      <description>The factor applied to the real type to get the game time.</description>
+      <interval from="0"/>
+      <default_value>2</default_value>
+    </field>
+  </fields>
+</item>

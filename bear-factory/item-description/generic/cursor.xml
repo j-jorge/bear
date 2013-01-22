@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::cursor" category="decoration" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/cursor" fixable="false">
+  <inherit>
+    <class>bear::decorative_item</class>
+    <class>bear::item_with_input_listener</class>
+  </inherit>
+  <fields>
+    <field type="real" name="cursor.visible_duration">
+      <description>
+        The duration before hide the cursor.
+      </description>
+      <default_value>infinity</default_value>
+    </field>
+  </fields>
+  <description>A simple decorative cursor.</description>
+  <new_default_value name="base_item.global">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+</item>

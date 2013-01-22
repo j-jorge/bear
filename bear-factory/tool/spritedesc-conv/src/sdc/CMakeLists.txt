@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 2.6)
+project(spritedesc-conv)
+
+include_directories(.)
+
+#-------------------------------------------------------------------------------
+set( SDC_SOURCE_FILES
+  code/application.cpp
+  code/main.cpp
+  code/parser.cpp
+  code/spritedesc.cpp
+
+  node_parser/code/node_parser.cpp
+  node_parser/code/node_parser_file.cpp
+  node_parser/code/node_parser_layer_to_sprite.cpp
+  node_parser/code/node_parser_sprite_declaration.cpp
+  node_parser/code/node_parser_sprite_description_base.cpp
+  node_parser/code/node_parser_sprite_sheet.cpp
+  node_parser/code/node_parser_xcf_entry.cpp
+  )
+
+add_executable(
+  spritedesc-conv
+  ${SDC_SOURCE_FILES}
+  )
+target_link_libraries(
+  spritedesc-conv
+  ${CLAW_APPLICATION_LIBRARIES}
+  )

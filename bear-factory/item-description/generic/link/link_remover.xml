@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::link_remover" category="link" box_color="#7DFFFF" url="http://www.gamned.org/wiki/index.php/link_remover">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+    <class>bear::item_with_decoration</class>
+  </inherit>
+  <description>An item that removes all the links on the colliding items.</description>
+  <fields>
+    <field type="string" name="link_remover.sound">
+      <description>The name of a sound to play when removing the links.</description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>

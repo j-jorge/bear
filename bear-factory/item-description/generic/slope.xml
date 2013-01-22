@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::slope" category="block" box_color="#FFCD12" url="http://www.gamned.org/wiki/index.php/slope">
+  <inherit>
+    <class>bear::base_ground</class>
+  </inherit>
+  <description>A ground that is not horizontal.</description>
+  <fields>
+    <field type="real" name="slope.steepness" required="true">
+      <description>The distance on the Y-coordinate between the left edge and
+        the right edge. Cannot be equal to zero.</description>
+    </field>
+    <field type="real" name="slope.control_point.left.x">
+      <description>The X-coordinate of the left control point.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="slope.control_point.left.y">
+      <description>The Y-coordinate of the left control point.</description>
+      <default_value>0</default_value>
+   </field>
+   <field type="real" name="slope.control_point.right.x">
+      <description>The X-coordinate of the right control point.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="slope.control_point.right.y">
+      <description>The Y-coordinate of the right control point.</description>
+      <default_value>0</default_value>
+   </field>
+    <field type="real" name="slope.margin">
+      <description>An extra margin above the slope, where the
+	collisions will also be detected.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="slope.tangent_friction">
+      <description>The coefficient for tangent friction.</description>
+      <default_value>0.8</default_value>
+    </field>
+    <field type="boolean" name="slope.opposite_side_is_active">
+      <description>Tell if the bottom side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="slope.left_side_is_active">
+      <description>Tell if the left side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="slope.right_side_is_active">
+      <description>Tell if the right side is active.</description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="slope.apply_angle">
+      <description>Tell if the angle of the slope is applied to the colliding
+        items.</description>
+      <default_value>true</default_value>
+    </field>
+  </fields>
+</item>

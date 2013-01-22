@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::friction_rectangle_creator" category="control" fixable="false" box_color="#C0C0C0" url="http://www.gamned.org/wiki/index.php/friction_rectangle_creator">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This class adds a universe::friction_rectangle in the world then dies.</description>
+  <fields>
+    <field type="real" name="friction_rectangle_creator.friction">
+      <description>The friction in the rectangle.</description>
+      <default_value>1</default_value>
+    </field>
+  </fields>
+</item>

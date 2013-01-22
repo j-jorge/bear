@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::bool_level_variable_getter_creator" category="level_variable/expression" box_color="#69DAFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_boolean_expression_creation</class>
+  </inherit>
+  <description>A boolean expression that returns the value of a level
+    variable</description>
+  <fields>
+    <field type="string" name="bool_level_variable_getter_creator.name" required="true">
+      <description>The name of the variable to get.</description>
+    </field>
+    <field type="boolean" name="bool_level_variable_getter_creator.default_value">
+      <description>The default value of the variable.</description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

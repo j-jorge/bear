@@ -1,0 +1,20 @@
+[Desktop Entry]
+Version=1.0
+
+Type=Application
+MimeType=application/x-bear-level
+
+Name=Bear Factory — Level Editor
+
+Comment=Level editor for the Bear Engine
+Comment[en]=Level editor for the Bear Engine
+Comment[fr]=Éditeur de niveau pour le moteur « Bear »
+
+TryExec=bf-level-editor
+Exec=bf-level-editor %f
+Terminal=false
+Icon=bear-factory
+
+StartupNotify=true
+Categories=Utility;
+

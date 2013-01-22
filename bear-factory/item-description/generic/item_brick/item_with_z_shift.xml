@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::item_with_z_shift" category="-abstract-" url="http://www.gamned.org/wiki/index.php/item_with_z_shift">
+  <fields>
+    <field type="integer" name="item_with_z_shift.z_shift">
+      <description>
+        The relative distance at which the other item is shifted on the Z axis.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="boolean" name="item_with_z_shift.force_z_position">
+      <description>
+        Indicates if the item forces the z-position of the colliding items,
+	even if they are on the right side.
+      </description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

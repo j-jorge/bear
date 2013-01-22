@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::path_tracer" category="trigger" box_color="#4A5C6C" url="http://www.gamned.org/wiki/index.php/path_tracer">
+  <inherit>
+    <class>bear::item_with_trigger</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item to create a path_trace on the colliding items
+  under a given condition.</description>
+  <fields>
+    <field type="real" name="path_tracer.maximal_length">
+      <description>The maximal length of the trace (in seconds).</description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="path_tracer.fill_color.red">
+      <description>The intensity of the red component of the color of
+	the traces.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="path_tracer.fill_color.green">
+      <description>The intensity of the green component of the color of
+	the traces.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="path_tracer.fill_color.blue">
+      <description>The intensity of the blue component of the color of
+	the traces.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="path_tracer.fill_color.opacity">
+      <description>The opacity of the color of the traces.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="path_tracer.fade_out_speed">
+      <description>The duration of the fade out when the item is
+	dead.</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="path_tracer.tail_ratio">
+      <description>
+        The ratio of the size of the end of the trace relatively to its head.
+      </description>
+      <default_value>1</default_value>
+    </field>
+
+  </fields>
+</item>

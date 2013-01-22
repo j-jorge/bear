@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::decorative_item" category="decoration" box_color="#F54AF8" url="http://www.gamned.org/wiki/index.php/decorative_item">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+    <class>bear::item_with_decoration</class>
+    <class>bear::item_with_text</class>
+  </inherit>
+
+  <description>An item existing only for a decoration purpose.</description>
+
+  <fields>
+    <field type="boolean" name="decorative_item.kill_when_leaving">
+      <description>
+        Tells if the item kills himself when he leaves the active region.
+      </description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="boolean" name="decorative_item.kill_when_finished">
+      <description>
+        Tells if the item kills himself when its animation is finished.
+      </description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="boolean" name="decorative_item.kill_on_contact">
+      <description>
+        Tells if the item kills himself when he has a contact.
+      </description>
+      <default_value>false</default_value>
+    </field>
+
+    <field type="real" name="decorative_item.shadow.x">
+      <description>
+        The offset of the shadow of the item on the x-axis.
+      </description>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="decorative_item.shadow.y">
+      <description>
+        The offset of the shadow of the item on the y-axis.
+      </description>
+      <default_value>0</default_value>
+    </field>
+
+  </fields>
+
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::camera_toggle" category="control/camera" box_color="#F091BD" url="http://www.gamned.org/wiki/index.php/camera_toggle">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <description>A toggle that changes the current camera.</description>
+  <fields>
+    <field type="real" name="camera_toggle.starting_transition_duration">
+      <description>The duration of the smooth activation.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="camera_toggle.ending_transition_duration">
+      <description>The duration of the smooth deactivation.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="item_reference" name="camera_toggle.camera" required="true">
+      <description>The camera to activate.</description>
+      <set>
+        <element value="bear::camera"/>
+      </set>
+    </field>
+  </fields>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+</item>

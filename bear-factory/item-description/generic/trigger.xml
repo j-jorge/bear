@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::trigger" category="trigger" box_color="#4A5C6C" url="http://www.gamned.org/wiki/index.php/trigger">
+  <inherit>
+    <class>bear::item_with_trigger</class>
+    <class>bear::item_with_text_interface</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <fields>
+    <field type="string" name="trigger.mode">
+      <description>The behaviour of the trigger. "one_way" means that the toggles
+        are turned on if the condition is true, not changed otherwise. "switch"
+        means that the state of the toggles changes each time the condition is
+        true. "condition" means that the state of the toggles matches the value
+        of the condition.</description>
+      <set>
+        <element value="one_way"/>
+        <element value="switch"/>
+        <element value="condition"/>
+      </set>
+      <default_value>one_way</default_value>
+    </field>
+    <field type="item_reference" name="trigger.toggle" list="true">
+      <description>The toggles controlled by this trigger.</description>
+      <set>
+        <element value="bear::with_toggle"/>
+      </set>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

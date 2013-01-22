@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::base_item" category="-abstract-" url="http://www.gamned.org/wiki/index.php/base_item">
+  <fields>
+    <field type="boolean" name="base_item.artificial">
+      <description>
+        Tell if the item is artificial. The physics will not be applied to it.
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="base_item.can_move_items">
+      <description>
+        Tell if the item can move other items.
+      </description>
+      <default_value>true</default_value>
+    </field>
+    <field type="boolean" name="base_item.global">
+      <description>
+        Tell if the item is global. The item will progress even if he is not
+        near a player.
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="base_item.phantom">
+      <description>
+        Tell if the item is a phantom. The item will never be aligned by a wall
+        or anything.
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="real" name="base_item.position.left">
+      <description>
+        Position of the left edge of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.position.bottom">
+      <description>
+        Position of the bottom edge of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="integer" name="base_item.position.depth">
+      <description>
+        Z-coordinate of the item in the layer.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.size.height">
+      <description>
+        The height of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.size.width">
+      <description>
+        The width of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.mass">
+      <description>
+        The mass of the item.
+      </description>
+      <default_value>infinity</default_value>
+    </field>
+    <field type="real" name="base_item.density">
+      <description>
+        The density of the item.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="base_item.elasticity">
+      <description>
+        The elasticity of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.hardness">
+      <description>
+        The hardness of the item.
+      </description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="base_item.system_angle">
+      <description>
+        Angle applied to the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="boolean" name="base_item.fixed.x">
+      <description>
+        Tell if the item is fixed on x-coordinate.
+      </description>
+      <default_value>false</default_value>
+      <after field="base_item.position.left"/>
+      <after field="base_item.size.width"/>
+    </field>
+    <field type="boolean" name="base_item.fixed.y">
+      <description>
+       Tell if the item is fixed on y-coordinate.
+      </description>
+      <default_value>false</default_value>
+      <after field="base_item.position.bottom"/>
+      <after field="base_item.size.height"/>
+    </field>
+    <field type="boolean" name="base_item.fixed.z">
+      <description>
+        Tell if the item is fixed on z-coordinate.
+      </description>
+      <default_value>true</default_value>
+      <after field="base_item.position.depth"/>
+    </field>
+    <field type="real" name="base_item.speed.x">
+      <description>
+        The initial horizontal speed of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.speed.y">
+      <description>
+        The initial vertical speed of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="base_item.angular_speed">
+      <description>
+        The initial angular speed of the item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="boolean" name="base_item.free_system">
+      <description>
+        Tell if the system angle of the item is not modified by the collisions.
+      </description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

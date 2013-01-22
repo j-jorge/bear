@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::basic_renderable_item" category="-abstract-" url="http://www.gamned.org/wiki/index.php/basic_renderable_item">
+  <fields>
+    <field type="integer" name="basic_renderable_item.gap.x">
+      <description>
+        X-distance between the left edge of the sprite and the left edge of the
+        item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="integer" name="basic_renderable_item.gap.y">
+      <description>
+        Y-distance between the top edge of the sprite and the top edge of the
+        item.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="boolean" name="basic_renderable_item.use_system_angle_as_visual_angle">
+      <description>
+        Apply the system angle of the item to the visual (and ignore the value
+        of visual_angle).
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="real" name="basic_renderable_item.auto_angular_speed_factor">
+      <description>
+        The factor of movement applied at angular speed.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="basic_renderable_item.angle">
+      <description>
+        The angle applied to the sprites of the item when rendering.
+      </description>
+      <default_value>0</default_value>
+    </field>
+    <field type="color" name="basic_renderable_item.color">
+      <description>
+        The color applied to the sprites of the item when rendering.
+      </description>
+      <default_value>color: opacity=1, red=1, green=1, blue=1</default_value>
+    </field>
+    <field type="boolean" name="basic_renderable_item.flip">
+      <description>
+        Flip vertically the sprites of the item when rendering.
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="basic_renderable_item.mirror">
+      <description>
+        Flip horizontally the sprites of the item when rendering.
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="basic_renderable_item.auto_flip">
+      <description>
+        Tell if the item must be automatically flipped vertically (if its
+        vertical speed is greater than zero).
+      </description>
+      <default_value>false</default_value>
+    </field>
+    <field type="boolean" name="basic_renderable_item.auto_mirror">
+      <description>
+        Tell if the item must be automatically flipped horizontally (if its
+        horizontal speed is less than zero).
+      </description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

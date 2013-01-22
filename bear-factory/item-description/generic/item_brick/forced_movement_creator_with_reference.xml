@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_movement_creator_with_reference" category="-abstract-" box_color="#CAFF00" fixable="false">
+  <description>A class for forced movement with item reference.</description>
+  <fields>
+    <field type="real" name="forced_movement_creator_with_reference.target.ratio.x">
+      <description>The ratio of width to use (0 for left side, 0.5 for middle, 1 for right side).</description>
+      <default_value>0.5</default_value>
+    </field>
+    <field type="real" name="forced_movement_creator_with_reference.target.ratio.y">
+      <description>The ratio of height to use (0 for bottom side, 0.5 for middle, 1 for top side).</description>
+      <default_value>0.5</default_value>
+    </field>
+    <field type="real" name="forced_movement_creator_with_reference.target.gap.x">
+      <description>The x-gap to applied.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="forced_movement_creator_with_reference.target.gap.y">
+      <description>The y-gap to applied.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="item_reference" name="forced_movement_creator_with_reference.target" required="true">
+      <description>The item reference to use.</description>
+      <after field="forced_movement_creator_with_reference.target.ratio.x"/>
+      <after field="forced_movement_creator_with_reference.target.ratio.y"/>
+      <after field="forced_movement_creator_with_reference.target.gap.x"/>
+      <after field="forced_movement_creator_with_reference.target.gap.y"/>
+    </field>
+  </fields>
+</item>

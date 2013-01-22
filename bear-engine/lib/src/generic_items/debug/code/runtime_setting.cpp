@@ -1,0 +1,13 @@
+/*
+  Copyright (C) 2012 Stuffomatic Ltd. <contact@stuff-o-matic.com>
+
+  All rights reserved.
+*/
+/**
+ * \file
+ * \brief Required declarations for the runtime settings.
+ * \author Julien Jorge
+ */
+#include "generic_items/debug/runtime_setting.hpp"
+
+bear::setting_map bear::g_global_settings;

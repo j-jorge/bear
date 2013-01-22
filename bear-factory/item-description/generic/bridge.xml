@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::bridge" category="block" box_color="#FFCD12" url="http://www.gamned.org/wiki/index.php/bridge">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_z_shift</class>
+    <class>bear::item_with_friction</class>
+    <class>bear::item_with_restricted_z_collision</class>
+    <class>bear::item_with_decoration</class>
+    <class>bear::basic_renderable_item</class>
+  </inherit>
+  <description>A simple bridge.</description>
+  <fields>
+    <field type="real" name="bridge.max_fall">
+      <description>How far the bridge falls, at most.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="item_reference" name="bridge.left_item" required="true">
+      <description>
+        The item to use as reference for the left extremity.
+      </description>
+      <default_value>none</default_value>
+    </field>
+    <field type="item_reference" name="bridge.right_item" required="true">
+      <description>
+        The item to use as reference for the right extremity.
+      </description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>

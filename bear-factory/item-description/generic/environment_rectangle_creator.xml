@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::environment_rectangle_creator" category="control" fixable="false" box_color="#C0C0C0" url="http://www.gamned.org/wiki/index.php/environment_rectangle_creator">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This class adds a universe::environment_rectangle in the world then dies.</description>
+  <fields>
+    <field type="string" name="environment_rectangle_creator.environment">
+      <description>The type of the environment in the zone.</description>
+      <set>
+        <element value="air_environment"/>
+        <element value="fire_environment"/>
+        <element value="ice_environment"/>
+        <element value="water_environment"/>
+      </set>
+      <default_value>"air_environment"</default_value>
+    </field>
+  </fields>
+</item>

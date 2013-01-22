@@ -1,0 +1,277 @@
+<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+<!-- Process this file with docbook-to-man to generate an nroff manual
+     page: `docbook-to-man manpage.sgml > manpage.1'.  You may view
+     the manual page with: `docbook-to-man manpage.sgml | nroff -man |
+     less'.  A typical entry in a Makefile or Makefile.am is:
+
+manpage.1: manpage.sgml
+	docbook-to-man $< > $@
+
+    
+	The docbook-to-man binary is found in the docbook-to-man package.
+	Please remember that if you create the nroff version in one of the
+	debian/rules file targets (such as build), you will need to include
+	docbook-to-man in your Build-Depends control field.
+
+  -->
+
+  <!-- Fill in your name for FIRSTNAME and SURNAME. -->
+  <!ENTITY dhfirstname "<firstname>Julien</firstname>">
+  <!ENTITY dhsurname   "<surname>Jorge</surname>">
+  <!-- Please adjust the date whenever revising the manpage. -->
+  <!ENTITY dhdate      "<date>august 21, 2009</date>">
+  <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
+       allowed: see man(7), man(1). -->
+  <!ENTITY dhsection   "<manvolnum>6</manvolnum>">
+  <!ENTITY dhemail     "<email>julien.jorge@gamned.org</email>">
+  <!ENTITY dhusername  "Julien Jorge">
+  <!ENTITY dhucpackage "<refentrytitle>RUNNING-BEAR</refentrytitle>">
+  <!ENTITY dhpackage   "running-bear">
+
+  <!ENTITY debian      "<productname>Debian</productname>">
+  <!ENTITY gnu         "<acronym>GNU</acronym>">
+  <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
+]>
+
+<refentry>
+  <refentryinfo>
+    <address>
+      &dhemail;
+    </address>
+    <author>
+      &dhfirstname;
+      &dhsurname;
+    </author>
+    <copyright>
+      <year>2008</year>
+      <year>2009</year>
+      <year>2010</year>
+      <holder>&dhusername;</holder>
+    </copyright>
+    &dhdate;
+  </refentryinfo>
+  <refmeta>
+    &dhucpackage;
+
+    &dhsection;
+  </refmeta>
+  <refnamediv>
+    <refname>&dhpackage;</refname>
+
+    <refpurpose>The launcher for games made with the Bear Engine.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>&dhpackage; </command>
+
+      <arg choice="plain" rep="repeat"><option>--data-path=<replaceable>path</replaceable></option></arg>
+      <arg choice="plain" rep="repeat"><option>--item-library=<replaceable>path</replaceable></option></arg>
+      <arg choice="plain"><option>--start-level=<replaceable>path</replaceable></option></arg>
+      <arg><option>-h</option></arg>
+      <arg><option>--log-concise</option></arg>
+      <arg><option>--log-file=<replaceable>file</replaceable></option></arg>
+      <arg><option>--log-level=<replaceable>string</replaceable></option></arg>
+      <arg><option>--log-uniq</option></arg>
+      <arg><option>-v</option></arg>
+      <arg><option>--active-area=<replaceable>integer</replaceable></option></arg>
+      <group>
+        <arg choice="plain"><option>--fullscreen</option></arg>
+        <arg choice="plain"><option>--windowed</option></arg>
+      </group>
+      <arg><option>--game-name=<replaceable>string</replaceable></option></arg>
+      <arg><option>--game-var-assignment=<replaceable>character</replaceable></option></arg>
+      <arg><option>--screen-height=<replaceable>integer</replaceable></option></arg>
+      <arg><option>--screen-width=<replaceable>integer</replaceable></option></arg>
+      <arg rep="repeat"><option>--set-game-var-bool=<replaceable>name=value</replaceable></option></arg>
+      <arg rep="repeat"><option>--set-game-var-int=<replaceable>name=value</replaceable></option></arg>
+      <arg rep="repeat"><option>--set-game-var-real=<replaceable>name=value</replaceable></option></arg>
+      <arg rep="repeat"><option>--set-game-var-string=<replaceable>name=value</replaceable></option></arg>
+      <arg rep="repeat"><option>--set-game-var-uint=<replaceable>name=value</replaceable></option></arg>
+      <arg choice="plain"><option>--stats-destination=<replaceable>url</replaceable></option></arg>
+   </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para>This program is a launcher for games made with the Bear
+          Engine.</para>
+  </refsect1>
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <para>The following options can be passed to the program:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term><option>--active-area=<replaceable>integer</replaceable></option></term>
+        <listitem>
+          <para>The margin around the camera in which we check for activity.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--data-path=<replaceable>path</replaceable></option></term>
+        <listitem>
+          <para>Path to the directory containing the data of the game. When a
+                file is required during the game, the paths are explored from
+                the last one on the command line toward the first one.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--fullscreen</option></term>
+        <listitem>
+          <para>Run the game in fullscreen mode.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--game-name=<replaceable>string</replaceable></option></term>
+        <listitem>
+          <para>The name of the game.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--game-var-assignment=<replaceable>character</replaceable></option></term>
+        <listitem>
+          <para>Change the delimiter used in --set-game-var-"type" to separate
+                the name and the value of the variable.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>-h, --help</option></term>
+        <listitem>
+          <para>Show summary of options.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--item-library=<replaceable>path</replaceable></option></term>
+        <listitem>
+          <para>Path to a library containing items for the game.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--log-concise</option></term>
+        <listitem>
+          <para>Do not display log messages that have recently been displayed.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--log-file=<replaceable>file</replaceable></option></term>
+        <listitem>
+          <para>Write log output in "file".</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--log-level=<replaceable>string</replaceable></option></term>
+        <listitem>
+          <para>Output log messages up to a given level, among "error",
+                "warning" and "verbose".</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--log-uniq</option></term>
+        <listitem>
+          <para>Do not display the same log message successively.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--screen-height=<replaceable>integer</replaceable></option></term>
+        <listitem>
+          <para>The height of the screen</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--screen-width=<replaceable>integer</replaceable></option></term>
+        <listitem>
+          <para>The width of the screen.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--set-game-var-bool=<replaceable>name=value</replaceable></option></term>
+        <listitem>
+          <para>Set the value of a boolean game variable.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--set-game-var-int=<replaceable>name=value</replaceable></option></term>
+        <listitem>
+          <para>Set the value of an integer game variable.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--set-game-var-real=<replaceable>name=value</replaceable></option></term>
+        <listitem>
+          <para>Set the value of a real number game variable.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--set-game-var-string=<replaceable>name=value</replaceable></option></term>
+        <listitem>
+          <para>Set the value of a string game variable.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--set-game-var-uint=<replaceable>name=value</replaceable></option></term>
+        <listitem>
+          <para>Set the value of a non negative integer game variable.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--start-level=<replaceable>string</replaceable></option></term>
+        <listitem>
+          <para>The path to the first level to run, relatively to the data paths.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--stats-destination=<replaceable>url</replaceable></option></term>
+        <listitem>
+          <para>Set the value of the destination to which game statistics are sent.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>-v, --version</option></term>
+        <listitem>
+          <para>Print the version of the engine and exit.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>--windowed</option></term>
+        <listitem>
+          <para>Run the game in a window.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+
+    <para>This manual page was written by &dhusername; &dhemail;. Permission is
+      granted to copy, distribute and/or modify this document under
+      the terms of the &gnu; General Public License, Version 2 any 
+	  later version published by the Free Software Foundation.
+    </para>
+    <para>
+      On Debian systems, the complete text of the GNU General Public
+      License can be found in /usr/share/common-licenses/GPL.
+    </para>
+
+  </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:nil
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->
+
+

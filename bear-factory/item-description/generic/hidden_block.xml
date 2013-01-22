@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::hidden_block" category="block" box_color="#302CE0" url="http://www.gamned.org/wiki/index.php/hidden_block">
+  <inherit>
+    <class>bear::block</class>
+  </inherit>
+  <description>A block that changes its opacity when an oject collides.</description>
+  <fields>
+    <field type="real" name="hidden_block.opacity.passive">
+      <description>The opacity when no item collides.</description>
+      <default_value>0</default_value>
+    </field>
+    <field type="real" name="hidden_block.opacity.active">
+      <description>The opacity when an item collides.</description>
+      <default_value>1</default_value>
+    </field>
+    <field type="real" name="hidden_block.transition_duration">
+      <description>The duration of opacity changing.</description>
+      <default_value>0.25</default_value>
+    </field>
+  </fields>
+</item>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::change_camera_size" category="control/camera" box_color="#F3599B" url="http://www.gamned.org/wiki/index.php/change_camera_size">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This item changes the size of the camera.</description>
+  <fields>
+    <field type="real" name="change_camera_size.wanted_width">
+      <description>The width to give to the camera.</description>
+      <default_value>320</default_value>
+    </field>
+    <field type="real" name="change_camera_size.wanted_height">
+      <description>The height to give to the camera.</description>
+      <default_value>240</default_value>
+    </field>
+  </fields>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+  <new_default_value name="base_item.artificial">true</new_default_value>
+</item>

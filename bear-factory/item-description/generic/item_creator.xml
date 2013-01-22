@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::item_creator" category="toggle" box_color="#009296" url="http://www.gamned.org/wiki/index.php/item_creator">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item that creates some items when it is activated.</description>
+  <fields>
+    <field type="item_reference" name="item_creator.items" list="true" required="true">
+      <description>
+        The list of the items to create.
+      </description>
+    </field>
+  </fields>
+</item>

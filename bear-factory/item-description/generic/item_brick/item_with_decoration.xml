@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::item_with_decoration" category="-abstract-" url="http://www.gamned.org/wiki/index.php/item_with_decoration">
+  <fields>
+    <field type="sprite" name="item_with_decoration.sprite">
+      <description>The sprite of the item.</description>
+      <default_value>none</default_value>
+    </field>
+    <field type="animation" name="item_with_decoration.animation">
+      <description>The animation of the item.</description>
+      <default_value>none</default_value>
+    </field>
+    <field type="item_reference" name="item_with_decoration.item_to_mimic">
+      <description>Display the same sprite than the given item.</description>
+      <default_value>none</default_value>
+    </field>
+    <field type="boolean" name="item_with_decoration.extend_on_bounding_box">
+      <description>Indicates if the decoration must be extended on the bounding box. No effect with item_to_mimic option.</description>
+      <default_value>false</default_value>
+    </field>
+  </fields>
+</item>

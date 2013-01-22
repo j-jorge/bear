@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::star" category="decoration" box_color="#BE41D1" url="http://www.gamned.org/wiki/index.php/star">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::basic_renderable_item</class>
+  </inherit>
+  <description>This item displays a star.</description>
+  <fields>
+    <field type="u_integer" name="star.branches">
+      <description>The number of branches in the star.</description>
+      <interval from="3"/>
+      <default_value>5</default_value>
+    </field>
+
+    <field type="real" name="star.ratio">
+      <description>The ratio of the inner vertices relatively to the outer
+        ones.</description>
+      <interval from="0" to="1"/>
+      <default_value>0.5</default_value>
+    </field>
+    
+    <field type="real" name="star.border_width">
+      <description>The width of the border of the star.</description>
+      <interval from="0"/>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="star.border_color.red">
+      <description>The red component of the color of the border.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="star.border_color.green">
+      <description>The green component of the color of the border.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="star.border_color.blue">
+      <description>The blue component of the color of the border.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="star.border_color.opacity">
+      <description>The opacity of the border.</description>
+      <interval from="0" to="1"/>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="real" name="star.fill_color.red">
+      <description>The red component of the color of the inside.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="star.fill_color.green">
+      <description>The green component of the color of the inside.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="star.fill_color.blue">
+      <description>The blue component of the color of the inside.</description>
+      <interval from="0" to="1"/>
+      <default_value>0</default_value>
+    </field>
+
+    <field type="real" name="star.fill_color.opacity">
+      <description>The opacity of the inside.</description>
+      <interval from="0" to="1"/>
+      <default_value>1</default_value>
+    </field>
+
+  </fields>
+
+  <new_default_value name="base_item.artificial">true</new_default_value>
+  <new_default_value name="base_item.phantom">true</new_default_value>
+  <new_default_value name="base_item.can_move_items">false</new_default_value>
+</item>

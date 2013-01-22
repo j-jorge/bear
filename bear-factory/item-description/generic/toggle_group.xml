@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::toggle_group" category="toggle" box_color="#009296" url="http://www.gamned.org/wiki/index.php/toggle_group">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This toggle transmits its status to a group of other toggles.</description>
+  <fields>
+    <field type="item_reference" name="toggle_group.toggles" list="true">
+      <description>
+       The toggles to which we transmit the status.
+      </description>
+      <set>
+        <element value="bear::with_toggle"/>
+      </set>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>

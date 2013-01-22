@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.gamned.org/bear/schema/0.5"
+           xmlns="http://www.gamned.org/bear/schema/0.5"
+           elementFormDefault="qualified">
+  <xs:element name="animation">
+     <xs:complexType>
+        <xs:sequence>
+           <xs:element name="frame" minOccurs="0" maxOccurs="unbounded">
+             <xs:complexType>
+               <xs:sequence>
+                 <xs:element name="sprite">
+                   <xs:complexType>
+                     <xs:attribute name="image" type="xs:string"/>
+                     <xs:attribute name="x" type="xs:nonNegativeInteger"/>
+                     <xs:attribute name="y" type="xs:nonNegativeInteger"/>
+                     <xs:attribute name="clip_width" type="xs:nonNegativeInteger"/>
+                     <xs:attribute name="clip_height" type="xs:nonNegativeInteger"/>
+                     <xs:attribute name="width" type="xs:nonNegativeInteger"/>
+                     <xs:attribute name="height" type="xs:nonNegativeInteger"/>
+                     <xs:attribute name="mirror" type="xs:boolean"/>
+                     <xs:attribute name="flip" type="xs:boolean"/>
+                     <xs:attribute name="angle" type="xs:double"/>
+                     <xs:attribute name="opacity" type="xs:double"/>
+                     <xs:attribute name="red_intensity" type="xs:double"/>
+                     <xs:attribute name="green_intensity" type="xs:double"/>
+                     <xs:attribute name="blue_intensity" type="xs:double"/>
+                   </xs:complexType>
+                 </xs:element><!-- sprite -->
+               </xs:sequence>
+             </xs:complexType>
+          </xs:element><!-- frame -->
+        </xs:sequence>
+
+        <xs:attribute name="loops" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="first_index" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="last_index" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="loop_back" type="xs:boolean"/>
+        <xs:attribute name="width" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="height" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="mirror" type="xs:boolean"/>
+        <xs:attribute name="flip" type="xs:boolean"/>
+        <xs:attribute name="angle" type="xs:double"/>
+        <xs:attribute name="opacity" type="xs:double"/>
+        <xs:attribute name="red_intensity" type="xs:double"/>
+        <xs:attribute name="green_intensity" type="xs:double"/>
+        <xs:attribute name="blue_intensity" type="xs:double"/>
+     </xs:complexType>
+  </xs:element><!-- animation -->
+</xs:schema>
+

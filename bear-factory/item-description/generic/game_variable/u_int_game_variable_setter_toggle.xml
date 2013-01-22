@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::u_int_game_variable_setter_toggle" category="game_variable" fixable="false" box_color="#F09A30" url="http://www.gamned.org/wiki/index.php/u_int_game_variable_setter_toggle">
+  <inherit>
+    <class>bear::u_int_game_variable_setter</class>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <description>A toggle that sets the value of an unsigned int game variable.</description>
+</item>

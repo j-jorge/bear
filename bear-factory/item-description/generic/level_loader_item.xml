@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::level_loader_item" category="level loading" box_color="#9B975F" url="http://www.gamned.org/wiki/index.php/level_loader_item">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This item loads a level.</description>
+  <fields>
+    <field type="real" name="level_loader_item.ratio">
+      <description>Ratio of the game's time window to spend in the loading of
+        the level.</description>
+      <interval from="0" to="1"/>
+      <default_value>0.5</default_value>
+    </field>
+    <field type="string" name="level_loader_item.level" required="true">
+      <description>The path of the level to start, or the name of a game
+        variable containing this path.
+      </description>
+    </field>
+  </fields>
+</item>

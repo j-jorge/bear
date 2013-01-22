@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::messageable_item" category="-abstract-" url="http://www.gamned.org/wiki/index.php/messageable_item">
+  <fields>
+    <field type="string" name="messageable_item.name" required="true">
+      <description>The name of the item (must be unique).</description>
+    </field>
+  </fields>
+</item>

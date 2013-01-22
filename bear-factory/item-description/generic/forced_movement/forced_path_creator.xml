@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::forced_path_creator" category="control/movement" box_color="#CAFF00" fixable="false" url="http://www.gamned.org/wiki/index.php/forced_path_creator">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::forced_movement_tag</class>
+  </inherit>
+
+  <description>
+    This class creates a forced movement that joins several items in a sequence,
+    applies it to itself then die.
+  </description>
+
+  <fields>
+
+    <field type="u_integer" name="forced_path_creator.loops">
+      <description>How many times the path will be done.</description>
+      <default_value>infinity</default_value>
+    </field>
+
+    <field type="real" name="forced_path_creator.speed">
+      <description>The speed of the moving item</description>
+      <default_value>1</default_value>
+    </field>
+
+    <field type="item_reference" name="forced_path_creator.path" list="true"
+           required="true">
+      <description>
+        The items to reach in the path, must be non empty.
+      </description>
+      <after field="forced_path_creator.speed"/>
+    </field>
+
+  </fields>
+</item>

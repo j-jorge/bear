@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::string_game_variable_setter" category="game_variable" fixable="false" box_color="#AD7441" url="http://www.gamned.org/wiki/index.php/string_game_variable_setter">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>An item that sets the value of a string game variable.</description>
+  <fields>
+    <field type="string" name="string_game_variable_setter.name" required="true">
+      <description>The name of the variable to set.</description>
+    </field>
+    <field type="string" name="string_game_variable_setter.value">
+      <description>The value of the variable to set.</description>
+    </field>
+  </fields>
+</item>
