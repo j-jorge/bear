@@ -12,6 +12,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <cstdio>
 
 #include "parser.hpp"
 #include "spritedesc.hpp"
@@ -54,7 +55,8 @@ bool sdc::application::sprite_height_comp::operator()
  * \param argv Program arguments.
  */
 sdc::application::application( int& argc, char** &argv )
-  : claw::application(argc, argv), m_quit(false), m_generate_spritepos(true)
+  : claw::application(argc, argv), m_quit(false), m_generate_spritepos(true),
+    m_gimp_console( "gimp-console" )
 {
   check_arguments( argc, argv );
 } // application::application()
@@ -190,12 +192,36 @@ void sdc::application::read_layer_description( std::istream& is )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Executes gimp-console on a given Scheme script.
+ * \param script The script to pass to gimp.
+ */
+void sdc::application::execute_gimp_scheme_process( std::string script ) const
+{
+  const std::string command( m_gimp_console + " --batch -" );
+  FILE* process = popen( command.c_str(), "w" );
+
+  if ( process == NULL )
+    {
+      std::cerr << "Failed to execute gimp console: '" << command << "'"
+                << std::endl;
+      return;
+    }
+
+  fputs( script.c_str(), process );
+
+  pclose( process );
+} // application::execute_gimp_scheme_process()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Generate a sprite sheets.
  * \param desc The sprite sheet to generate.
  */
 void sdc::application::generate_output( const spritedesc& desc ) const
 {
-  generate_scm( std::cout, desc );
+  std::ostringstream oss;
+  generate_scm( oss, desc );
+  execute_gimp_scheme_process( oss.str() );
 
   if ( m_generate_spritepos )
     {

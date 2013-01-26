@@ -91,6 +91,8 @@ namespace sdc
     void process_file( const std::string& name );
     void read_layer_description( std::istream& is );
 
+    void execute_gimp_scheme_process( std::string script ) const;
+
     void generate_output( const spritedesc& desc ) const;
     void generate_spritepos( std::ostream& os, const spritedesc& desc ) const;
 

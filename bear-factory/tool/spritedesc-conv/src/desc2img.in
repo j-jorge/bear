@@ -45,11 +45,9 @@ then
 fi
 
 (
-    (
-        get_xcf_names "$DESC_FILE" \
-            | while read XCF_FILE
-            do
-              generate_xcf_info "$XCF_FILE"
-            done
-    ) | "$SPRITEDESC_CONV" $@ "$DESC_FILE"
-) | gimp-console -b -
+    get_xcf_names "$DESC_FILE" \
+        | while read XCF_FILE
+    do
+        generate_xcf_info "$XCF_FILE"
+    done
+) | "$SPRITEDESC_CONV" $@ "$DESC_FILE"
