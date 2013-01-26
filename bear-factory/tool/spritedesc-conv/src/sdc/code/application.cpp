@@ -57,7 +57,7 @@ bool sdc::application::sprite_height_comp::operator()
  */
 sdc::application::application( int& argc, char** &argv )
   : claw::application(argc, argv), m_quit(false), m_generate_spritepos(true),
-    m_gimp_console( "gimp-console" )
+    m_gimp_console_program( "gimp-console" ), m_xcfinfo_program( "xcfinfo" )
 {
   check_arguments( argc, argv );
 } // application::application()
@@ -71,10 +71,7 @@ int sdc::application::run()
   int result = 0;
 
   if (!m_quit)
-    {
-      read_layer_description(std::cin);
-      process_file(m_input_file);
-    }
+    process_file(m_input_file);
 
   return result;
 } // application::run()
@@ -103,6 +100,8 @@ void sdc::application::check_arguments( int& argc, char** &argv )
   m_arguments.add
     ( "-g", "--gimp-console",
       "The path to the gimp-console executable.", true );
+  m_arguments.add
+    ( "-x", "--xcfinfo", "The path to the xcfinfo executable.", true );
   m_arguments.add_long
     ( "--no-spritepos", "Tells to not generate the spritepos file.", true );
 
@@ -115,7 +114,7 @@ void sdc::application::check_arguments( int& argc, char** &argv )
     }
 
   if ( m_arguments.has_value("--gimp-console") )
-    m_gimp_console = m_arguments.get_string("--gimp-console");
+    m_gimp_console_program = m_arguments.get_string("--gimp-console");
 
   if ( m_arguments.has_value("--scheme-directory") )
     m_scheme_directory = m_arguments.get_all_of_string("--scheme-directory");
@@ -135,7 +134,7 @@ void sdc::application::process_file( const std::string& name )
 {
   const boost::filesystem::path file_path( name, boost::filesystem::native );
   const boost::filesystem::path file_directory( file_path.parent_path() );
-  xcf_map xcf( file_directory.string() );
+  xcf_map xcf( file_directory.string(), m_xcfinfo_program );
 
   parser p;
   std::list<spritedesc> desc;
@@ -154,54 +153,12 @@ void sdc::application::process_file( const std::string& name )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Read the description of the layers in the xcf files.
- * \param is The stream from which we read the description.
- */
-void sdc::application::read_layer_description( std::istream& is )
-{
-  std::string xcf_name;
-
-  if ( std::getline( is, xcf_name ) )
-    {
-      xcf_info xcf;
-      std::size_t layers_count;
-
-      if ( (is >> xcf.width >> xcf.height >> layers_count) )
-        {
-          for ( std::size_t i=0; i!=layers_count; ++i )
-            {
-              layer_info layer;
-              layer.index = i;
-
-              if ( is >> layer.box.width >> layer.box.height
-                   >> layer.box.position.x >> layer.box.position.y )
-                {
-                  std::string layer_name;
-
-                  if ( std::getline( is, layer_name ) )
-                    {
-                      claw::text::trim(layer_name);
-                      xcf.layers[layer_name] = layer;
-                    }
-                }
-            }
-
-          if ( is )
-            {
-              read_layer_description(is);
-            }
-        }
-    }
-} // application::read_layer_description()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Executes gimp-console on a given Scheme script.
  * \param script The script to pass to gimp.
  */
 void sdc::application::execute_gimp_scheme_process( std::string script ) const
 {
-  const std::string command( m_gimp_console + " --batch -" );
+  const std::string command( m_gimp_console_program + " --batch -" );
   FILE* process = popen( command.c_str(), "w" );
 
   if ( process == NULL )

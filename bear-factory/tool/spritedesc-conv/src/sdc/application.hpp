@@ -19,31 +19,6 @@ namespace sdc
 {
   /**
    * \brief The main class.
-   *
-   * The program takes a single parameter, which is the .spritedesc file. It
-   * reads the description of the xcf files used in the .spritedesc file from
-   * stdin and expects the following format:
-   *
-   * xcf_file_name
-   * image_width image_height layer_count
-   * layer_width layer_height layer_x layer_y layer_name
-   *
-   * Where the last line is repeated layer_count times. The description of the
-   * xcf files must be repeated for each xcf file used in the .spritedesc
-   * file.
-   *
-   * The program produces to results: it writes a Scheme script on stdout that
-   * describes how to produce a png file from the xcf files according to the
-   * .spritedesc file and it writes a .spritepos file describing the sprites
-   * in the png file.
-   * 
-   * The resulting script uses functions from "common.scm" but does not load
-   * it. Ensure that you load with a line like
-   *
-   *   (load "common.scm")
-   *
-   * when executing the result.
-   *
    * \author Julien Jorge
    */
   class application:
@@ -87,7 +62,6 @@ namespace sdc
     void check_arguments( int& argc, char** &argv );
 
     void process_file( const std::string& name );
-    void read_layer_description( std::istream& is );
 
     void execute_gimp_scheme_process( std::string script ) const;
 
@@ -124,7 +98,10 @@ namespace sdc
     path_list_type m_scheme_directory;
 
     /** \brief The path to gimp-console executable. */
-    std::string m_gimp_console;
+    std::string m_gimp_console_program;
+
+    /** \brief The path to xcfinfo executable. */
+    std::string m_xcfinfo_program;
 
   }; // class application
 } // namespace sdc
