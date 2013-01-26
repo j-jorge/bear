@@ -77,6 +77,7 @@ namespace sdc
     }; // class sprite_height_comp
 
     typedef claw::math::rectangle<std::size_t> rectangle_type;
+    typedef std::list<std::string> path_list_type;
 
   public:
     application( int& argc, char** &argv );
@@ -93,6 +94,8 @@ namespace sdc
     void generate_output( const spritedesc& desc ) const;
     void generate_spritepos( std::ostream& os, const spritedesc& desc ) const;
 
+    std::string get_scheme_path( std::string filename ) const;
+    
     void generate_scm
     ( std::ostream& os, const spritedesc& desc ) const;
 
@@ -113,6 +116,15 @@ namespace sdc
 
     /** \brief The sprite description file. */
     std::string m_input_file;
+
+    /** \brief Tells to generate the spritepos file. */
+    bool m_generate_spritepos;
+
+    /** \brief The directories where the scheme scripts are searched. */
+    path_list_type m_scheme_directory;
+
+    /** \brief The path to gimp-console executable. */
+    std::string m_gimp_console;
 
     /** \brief The description of the xcf files. */
     xcf_map m_xcf;

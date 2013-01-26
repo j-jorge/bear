@@ -26,4 +26,6 @@ add_executable(
 target_link_libraries(
   spritedesc-conv
   ${CLAW_APPLICATION_LIBRARIES}
+  ${Boost_FILESYSTEM_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
   )

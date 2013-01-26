@@ -7,36 +7,6 @@ then
     SPRITEDESC_CONV="$(pwd)/$(echo $0 | sed 's:[^/]\+$:spritedesc-conv:')"
 fi
 
-# Search a file named common.scm recursively up to the root of the filesystem.
-# param 1: The relative path where the file is searched.
-# param 2: How many times we can go in the parent folders
-#
-# If the file is not in $1 then it is searched in ../$1.
-#
-search_common_scm() {
-
-    RELATIVE_PATH="$1"
-    CANDIDATE="$RELATIVE_PATH/common.scm"
-    SLASH_COUNT="$2"
-
-    if [ -f "$CANDIDATE" ]
-    then
-        echo $CANDIDATE
-    elif [ $SLASH_COUNT -gt 0 ]
-    then
-        search_common_scm "../$RELATIVE_PATH" $(expr $SLASH_COUNT - 1 )
-    else
-        echo "Cannot find common.scm" 1>&2
-        exit 1
-    fi
-} # search_common_scm()
-
-# Search a file named common.scm recursively up to the root of the filesystem.
-path_to_common_scm() {
-
-    search_common_scm "." $(pwd | tr -d -c '/' | wc -c)
-} # path_to_common_scm()
-
 # Generate the informations about an xcf file in the format expected by
 # spritedesc-conv.
 # param 1 The name of the xcf file to read
@@ -75,8 +45,6 @@ then
 fi
 
 (
-    echo "(load \"$(path_to_common_scm)\")"
-
     (
         get_xcf_names "$DESC_FILE" \
             | while read XCF_FILE
@@ -84,6 +52,4 @@ fi
               generate_xcf_info "$XCF_FILE"
             done
     ) | "$SPRITEDESC_CONV" $@ "$DESC_FILE"
-
-    echo "(gimp-quit 1)"
 ) | gimp-console -b -
