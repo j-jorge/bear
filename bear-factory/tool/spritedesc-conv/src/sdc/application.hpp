@@ -11,8 +11,6 @@
 #ifndef __SDC_APPLICATION_HPP__
 #define __SDC_APPLICATION_HPP__
 
-#include "xcf_map.hpp"
-
 #include "spritedesc.hpp"
 
 #include <claw/application.hpp>
@@ -127,9 +125,6 @@ namespace sdc
 
     /** \brief The path to gimp-console executable. */
     std::string m_gimp_console;
-
-    /** \brief The description of the xcf files. */
-    xcf_map m_xcf;
 
   }; // class application
 } // namespace sdc

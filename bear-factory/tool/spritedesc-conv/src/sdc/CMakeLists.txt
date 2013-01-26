@@ -9,6 +9,7 @@ set( SDC_SOURCE_FILES
   code/main.cpp
   code/parser.cpp
   code/spritedesc.cpp
+  code/xcf_map.cpp
 
   node_parser/code/node_parser.cpp
   node_parser/code/node_parser_file.cpp

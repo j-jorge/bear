@@ -17,6 +17,7 @@
 #include "parser.hpp"
 #include "spritedesc.hpp"
 #include "xcf_info.hpp"
+#include "xcf_map.hpp"
 
 #include <claw/string_algorithm.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -132,10 +133,14 @@ void sdc::application::check_arguments( int& argc, char** &argv )
  */
 void sdc::application::process_file( const std::string& name )
 {
+  const boost::filesystem::path file_path( name, boost::filesystem::native );
+  const boost::filesystem::path file_directory( file_path.parent_path() );
+  xcf_map xcf( file_directory.string() );
+
   parser p;
   std::list<spritedesc> desc;
 
-  if ( !p.run( m_xcf, desc, name ) )
+  if ( !p.run( xcf, desc, name ) )
     std::cerr << "Failed to process file '" << name << "'" << std::endl;
 
   for ( std::list<spritedesc>::iterator it=desc.begin(); it!=desc.end(); ++it )
@@ -183,7 +188,6 @@ void sdc::application::read_layer_description( std::istream& is )
 
           if ( is )
             {
-              m_xcf[ xcf_name ] = xcf;
               read_layer_description(is);
             }
         }

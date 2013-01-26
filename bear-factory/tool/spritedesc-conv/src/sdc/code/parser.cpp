@@ -26,7 +26,7 @@
  * \param path The path of the file to read.
  */
 bool sdc::parser::run
-( const xcf_map& xcf, std::list<spritedesc>& desc, const std::string& path )
+( xcf_map& xcf, std::list<spritedesc>& desc, const std::string& path )
 {
   std::stringstream file_data;
 
@@ -56,7 +56,7 @@ bool sdc::parser::run
  * \param file_size Size of the \a file_data buffer.
  */
 bool sdc::parser::run
-( const xcf_map& xcf, std::list<spritedesc>& desc, const char* file_data,
+( xcf_map& xcf, std::list<spritedesc>& desc, const char* file_data,
   unsigned int file_size )
 {
   bool ok;
@@ -85,7 +85,7 @@ bool sdc::parser::run
  * \param node The root of the tree to compile.
  */
 void sdc::parser::scan_tree
-( const xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const
+( xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const
 {
   node_parser_file file;
 

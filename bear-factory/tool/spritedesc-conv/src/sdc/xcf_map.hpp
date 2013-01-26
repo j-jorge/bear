@@ -18,11 +18,34 @@
 
 namespace sdc
 {
-  class xcf_info;
+  /**
+   * \brief The xcf_map class stores the informations of the xcf files.
+   * \author Julien Jorge
+   */
+  class xcf_map
+  {
+  private:
+    /** \brief The map associating the name of the xcf with their
+        descriptions. */
+    typedef std::map<std::string, xcf_info> name_to_info_type;
 
-  /** \brief The map associating the name of the xcf with their
-      descriptions. */
-  typedef std::map<std::string, xcf_info> xcf_map;
+  public:
+    explicit xcf_map( std::string xcf_directory );
+
+    void load( std::string name );
+
+    bool has_info( std::string name ) const;
+    xcf_info get_info( std::string name ) const;
+
+  private:
+    /** \brief The map associating the name of the xcf with their
+        descriptions. */
+    name_to_info_type m_xcf_info;
+
+    /** \brief The directory where the xcf files are taken. */
+    std::string m_xcf_directory;
+
+  }; // class xcf_map
 
 } // namespace sdc
 

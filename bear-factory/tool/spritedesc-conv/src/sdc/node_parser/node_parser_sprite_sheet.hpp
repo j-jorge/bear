@@ -12,11 +12,11 @@
 #define __SDC_NODE_PARSER_SPRITE_SHEET_HPP__
 
 #include "node_parser/node_parser.hpp"
-#include "xcf_map.hpp"
 
 namespace sdc
 {
   class spritedesc;
+  class xcf_map;
 
   /**
    * \brief Compile the node of the "sprite_sheet" rule.
@@ -27,7 +27,7 @@ namespace sdc
   {
   public:
     void parse_node
-      ( const xcf_map& xcf, spritedesc& desc, const tree_node& node ) const;
+      ( xcf_map& xcf, spritedesc& desc, const tree_node& node ) const;
 
   private:
     void parse_name( spritedesc& desc, const tree_node& node ) const;
