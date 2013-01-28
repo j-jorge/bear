@@ -12,6 +12,7 @@
 
 #include "bf/gui_level.hpp"
 #include "bf/history/action_move_selection.hpp"
+#include "bf/history/action_rotate_selection.hpp"
 #include "bf/history/level_action.hpp"
 
 #include <claw/assert.hpp>
@@ -162,6 +163,46 @@ bool bf::level_history::do_action( action_move_selection* action )
         }
 
       m_last_selection_move_date = wxDateTime::GetTimeNow();
+      return true;
+    }
+  else
+    {
+      delete action;
+      return false;
+    }
+} // level_history::do_action()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Do the action of rotating the current selection in the level.
+ * \param action The action to do.
+ */
+bool bf::level_history::do_action( action_rotate_selection* action )
+{
+  if ( !action->is_identity(*m_level) )
+    {
+      clear_future();
+      action->execute( *m_level );
+
+      const bool same_selection =
+        m_last_selection_rotate_items.same_group_than(m_level->get_selection());
+
+      // merge if the elapsed time since the last rotate is lower than 2 seconds
+      if ( (m_last_selection_rotate != NULL)
+           && (wxDateTime::GetTimeNow() - m_last_selection_rotate_date < 2)
+           && same_selection )
+        {
+          m_last_selection_rotate->move(*action);
+          delete action;
+        }
+      else
+        {
+          m_last_selection_rotate = action;
+          m_last_selection_rotate_items = m_level->get_selection();
+          push_action(action);
+        }
+
+      m_last_selection_rotate_date = wxDateTime::GetTimeNow();
       return true;
     }
   else

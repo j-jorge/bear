@@ -60,6 +60,26 @@ bool bear::path_tracer::set_real_field( const std::string& name, double value )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set a field of type \c color.
+ * \param name The name of the field.
+ * \param value The new value of the field.
+ * \return false if the field "name" is unknow, true otherwise.
+ */
+bool bear::path_tracer::set_color_field
+( const std::string& name, visual::color value )
+{
+  bool ok = true;
+  
+  if (name == "path_tracer.fill_color")
+    m_fill_color = value;
+  else
+    ok = super::set_color_field(name, value);
+
+  return ok;
+} // path_tracer::set_color_field()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Do one step in the progression of the item.
  * \param elapsed_time Elapsed time since the last call.
  */

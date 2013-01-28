@@ -19,6 +19,7 @@
 namespace bf
 {
   class action_move_selection;
+  class action_rotate_selection;
   class gui_level;
   class level_action;
 
@@ -41,6 +42,7 @@ namespace bf
 
     bool do_action( level_action* action );
     bool do_action( action_move_selection* action );
+    bool do_action( action_rotate_selection* action );
 
     wxString get_undo_description() const;
     wxString get_redo_description() const;
@@ -87,6 +89,16 @@ namespace bf
 
     /** \brief The selection moved by m_last_selection_move. */
     item_selection m_last_selection_move_items;
+    
+    /** \brief The last action of rotating the selection, 
+        used to merge successive little moves. */
+    action_rotate_selection* m_last_selection_rotate;
+
+    /** \brief The date of the last rotation of the selection. */
+    time_t m_last_selection_rotate_date;
+
+    /** \brief The selection rotated by m_last_selection_rotate. */
+    item_selection m_last_selection_rotate_items;
 
   }; // class level_history
 } // namespace bf
