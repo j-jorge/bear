@@ -145,6 +145,7 @@ namespace bf
 
     void do_action( level_action* action );
     void do_action( action_move_selection* action );
+    void do_action( action_rotate_selection* action );
 
     bool add_item( const std::string& class_name, wxCoord x, wxCoord y );
     bool add_item( const std::string& class_name );
@@ -292,6 +293,7 @@ namespace bf
 
     void copy_selection(bool add = false);
     void move_selection();
+    void rotate_selection( bool clockwise );
 
     int update_coordinate_magnetism
     ( unsigned int item_position, unsigned int size_item,

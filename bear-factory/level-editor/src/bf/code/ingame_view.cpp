@@ -33,6 +33,7 @@
 #include "bf/history/action_set_item_position_and_size.hpp"
 #include "bf/history/action_move_down.hpp"
 #include "bf/history/action_move_up.hpp"
+#include "bf/history/action_rotate_selection.hpp"
 
 #include <claw/assert.hpp>
 #include <wx/dcbuffer.h>
@@ -562,6 +563,20 @@ void bf::ingame_view::do_action( action_move_selection* action )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Do the action of rotating the current selection.
+ * \param action The action to do.
+ */
+void bf::ingame_view::do_action( action_rotate_selection* action )
+{
+  CLAW_PRECOND( action != NULL );
+  apply_action(action);
+
+  if ( ! get_active_layer().check_item_position() )
+    show_item_position_error(this);
+} // ingame_view::do_action()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Add an item to the current layer.
  * \param class_name The name of the class to instanciate.
  * \param x The x coordinate of the item in the view.
@@ -718,6 +733,7 @@ bool bf::ingame_view::has_selection() const
   return get_level().has_selection();
 } // ingame_view::has_selection()
 
+/*----------------------------------------------------------------------------*/
 /**
  * \brief Set the selection to nothing.
  */
@@ -2398,6 +2414,17 @@ void bf::ingame_view::move_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Rotate the selected items.
+ * \param clockwise Indicates if the rotation the clockwise.
+ */
+void bf::ingame_view::rotate_selection( bool clockwise )
+{
+  do_action
+    ( new action_rotate_selection( get_level(), clockwise ) );
+} // ingame_view::rotate_selection()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Calculate the gap between the grid and the selected item.
  * \param item_position The coordinate of the selected item.
  * \param size_item The size of the selected item.
@@ -3303,6 +3330,8 @@ void bf::ingame_view::on_mouse_wheel_rotation(wxMouseEvent& event)
             m_parent.update_zoom();
           }
       }
+    else if ( event.AltDown() )
+      rotate_selection(true);
     else
       set_view_position
         ( m_view.x, 
@@ -3318,6 +3347,8 @@ void bf::ingame_view::on_mouse_wheel_rotation(wxMouseEvent& event)
         set_zoom( get_zoom() + 5, point );
         m_parent.update_zoom();
       }
+    else if ( event.AltDown() )
+      rotate_selection(false);
     else
       set_view_position
         ( m_view.x, 

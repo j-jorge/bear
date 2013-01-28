@@ -16,7 +16,7 @@
 namespace bf
 {
   /**
-   * \brief The action of deleting the selected items.
+   * \brief The action of moving the selected items.
    * \author Julien Jorge
    */
   class action_move_selection:

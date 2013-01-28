@@ -66,6 +66,7 @@ set( BF_LE_SOURCE_FILES
   history/code/action_remove_layer.cpp
   history/code/action_resize_layer.cpp
   history/code/action_resize_level.cpp
+  history/code/action_rotate_selection.cpp
   history/code/action_set_item_bottom.cpp
   history/code/action_set_item_class.cpp
   history/code/action_set_item_fixed_attribute.cpp
