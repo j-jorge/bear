@@ -44,11 +44,7 @@ namespace sdc
     void process_files();
     spritedesc_collection process_file( std::string name ) const;
 
-    void generate_makefile( std::list<spritedesc> desc ) const;
-    void generate_makefile
-    ( std::ostream& output, std::list<spritedesc> desc ) const;
-
-    std::string make_image_name( const std::string& name ) const;
+    std::string get_self_command() const;
 
   private:
     /** \brief Tells if we should quit immediatly. */
@@ -56,6 +52,9 @@ namespace sdc
 
     /** \brief The sprite description file. */
     std::vector<std::string> m_input_file;
+
+    /** \brief The images to generate from the input files. */
+    std::list<std::string> m_target;
 
     /** \brief Tells to generate the spritepos file. */
     bool m_generate_spritepos;

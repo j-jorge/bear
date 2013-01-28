@@ -13,6 +13,7 @@
 #define __SDC_IMAGE_GENERATOR_HPP__
 
 #include "spritedesc.hpp"
+#include "working_directory.hpp"
 
 namespace sdc
 {
@@ -51,19 +52,6 @@ namespace sdc
     /** \brief The structure that describes the rectangles when placing the
         sprites. */
     typedef claw::math::rectangle<std::size_t> rectangle_type;
-
-    /**
-     * \brief The paths to the directories where the files are searched and
-     *        generated.
-     */
-    struct working_directory
-    {
-      /** \brief The directory where the xcf files are searched. */
-      std::string xcf_directory;
-
-      /** \brief The directory where the output is written. */
-      std::string output_directory;
-    }; // struct working_directory
 
   public:
     typedef std::list<spritedesc> spritedesc_collection;

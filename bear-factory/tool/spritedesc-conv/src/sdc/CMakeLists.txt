@@ -11,9 +11,11 @@ set( SDC_SOURCE_FILES
   code/application.cpp
   code/image_generator.cpp
   code/main.cpp
+  code/makefile_generator.cpp
   code/parser.cpp
   code/spritedesc.cpp
   code/xcf_map.cpp
+  code/working_directory.cpp
 
   node_parser/code/node_parser.cpp
   node_parser/code/node_parser_file.cpp

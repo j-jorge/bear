@@ -14,6 +14,7 @@
 #include <iostream>
 
 #include "image_generator.hpp"
+#include "makefile_generator.hpp"
 #include "parser.hpp"
 #include "xcf_map.hpp"
 
@@ -80,11 +81,22 @@ void sdc::application::check_arguments( int& argc, char** &argv )
       "The name of the makefile to generate. "
       "If this argement is set, the images are not generated.", true );
   m_arguments.add
+    ( "-t", "--target",
+      "The name of the sprite sheet to generate from the input file.", true );
+  m_arguments.add
     ( "-x", "--xcfinfo", "The path to the xcfinfo executable.", true );
   m_arguments.add_long
     ( "--no-spritepos", "Tells to not generate the spritepos file.", true );
+  m_arguments.add_long
+    ( "--version", "Prints the version of the software..", true );
 
   m_arguments.parse( argc, argv );
+
+  if ( m_arguments.get_bool("--version") )
+    {
+      std::cout << "Version 0.0.0" << std::endl;
+      m_quit = true;
+    }
 
   if ( m_arguments.get_bool("--help") || (argc == 0) )
     {
@@ -105,6 +117,9 @@ void sdc::application::check_arguments( int& argc, char** &argv )
 
   for ( int argi=0; argi!=argc; ++argi )
     m_input_file.push_back( argv[argi] );
+
+  if ( m_arguments.has_value( "--target" ) )
+    m_target = m_arguments.get_all_of_string( "--target" );
 } // application::check_arguments()
 
 /*----------------------------------------------------------------------------*/
@@ -126,8 +141,8 @@ void sdc::application::process_files()
     }
   else
     {
-      //makefile_generator g( m_makefile );
-      //g.run( content );
+      makefile_generator g( m_makefile, get_self_command() );
+      g.run( content );
     }
 } // application::process_files()
 
@@ -144,104 +159,44 @@ sdc::application::process_file( std::string name ) const
   xcf_map xcf( file_directory.string(), m_xcfinfo_program );
 
   parser p;
-  std::list<spritedesc> desc;
+  spritedesc_collection desc;
 
   if ( !p.run( xcf, desc, name ) )
     std::cerr << "Failed to process file '" << name << "'" << std::endl;
 
-  return desc;
+  spritedesc_collection result;
+
+  if ( m_target.empty() )
+    result = desc;
+  else
+    for ( spritedesc_collection::const_iterator it = desc.begin();
+          it != desc.end(); ++it )
+      if ( std::find( m_target.begin(), m_target.end(), it->output_name )
+           != m_target.end() )
+        result.push_back( *it );
+
+  return result;
 } // application::process_file()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Generates a makefile that calls the program to generate the images.
- * \param desc The descriptions of the images.
+ * \brief Get the command to pass to the makefile generator to execute this
+ *        program.
  */
-void sdc::application::generate_makefile( std::list<spritedesc> desc ) const
+std::string sdc::application::get_self_command() const
 {
-  std::ostream* output;
-  bool output_to_file(false);
+  std::ostringstream result;
 
-  if ( m_makefile == "-" )
-    output = &std::cout;
-  else
-    {
-      output = new std::ofstream( m_makefile.c_str() );
-      output_to_file = true;
-    }
-
-  std::vector<std::string> dependencies;
-
-  if ( output_to_file )
-    dependencies.push_back( m_makefile );
-
-  // dependencies.insert( dependencies.end(), get_all_output_files( desc ) );
-
-  *output << "all: " << boost::algorithm::join( dependencies, " " )
-          << '\n';
-  generate_makefile( *output, desc );
-
-  if ( output_to_file )
-    delete output;
-} // application::generate_makefile()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Generates a makefile that calls the program to generate the images.
- * \param output The stream in which the rules are writen.
- * \param desc The descriptions of the images.
- */
-void sdc::application::generate_makefile
-( std::ostream& output, std::list<spritedesc> desc ) const
-{
-  std::vector<std::string> output_files;
-  std::vector<std::string> xcf_files;
-
-  for ( std::list<spritedesc>::const_iterator it=desc.begin(); it!=desc.end();
-        ++it )
-    {
-      output_files.push_back( it->output_name );
-
-      for ( spritedesc::id_to_file_map::const_iterator xcf_it = it->xcf.begin();
-            xcf_it != it->xcf.end(); ++xcf_it )
-        xcf_files.push_back( xcf_it->second );
-    }
-
-  if ( output_files.empty() )
-    return;
-
-  output << make_image_name( output_files[0] );
-
-  for ( std::size_t i=1; i!=output_files.size(); ++i )
-    output << ' ' << make_image_name( output_files[i] );
-
-  output << ": ";
-
-  if ( !xcf_files.empty() )
-    output << boost::algorithm::join( xcf_files, " " );
-
-  output /* << ' ' << m_input_file */ << "\n";
-  output << "\t" << m_arguments.get_program_name() << ' '
+  result << m_arguments.get_program_name() << ' '
          << "--gimp-console=" << m_gimp_console_program << ' '
          << "--xcfinfo=" << m_xcfinfo_program;
 
   if ( !m_generate_spritepos )
-    output << " --no-spritepos";
+    result << " --no-spritepos";
 
   for ( path_list_type::const_iterator it = m_scheme_directory.begin();
         it != m_scheme_directory.end(); ++it )
-    output << " --scheme-directory=" << *it;
+    result << " --scheme-directory=" << *it;
 
-  output /* << ' ' << m_input_file */ << std::endl;
-} // application::generate_makefile()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Gets the name of the image file generated for the spritesheet with a
- *        given name.
- * \param name The name of the spritesheet.
- */
-std::string sdc::application::make_image_name( const std::string& name ) const
-{
-  return name + ".png";
-} // application::make_image_name()
+  return result.str();
+} // application::get_self_command()

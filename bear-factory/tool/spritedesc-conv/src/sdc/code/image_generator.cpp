@@ -14,12 +14,12 @@
 #include <iostream>
 #include <cstdio>
 
-#include "parser.hpp"
-#include "spritedesc.hpp"
-#include "xcf_info.hpp"
-#include "xcf_map.hpp"
+#include <limits>
 
-#include <claw/string_algorithm.hpp>
+//#include "xcf_info.hpp"
+//#include "xcf_map.hpp"
+
+//#include <claw/string_algorithm.hpp>
 #include <boost/filesystem/convenience.hpp>
 
 /*----------------------------------------------------------------------------*/
@@ -94,13 +94,7 @@ void sdc::image_generator::run( file_to_spritedesc_map file )
 void sdc::image_generator::process_spritedesc
 ( std::string source, spritedesc_collection desc ) const
 {
-  const boost::filesystem::path source_path
-    ( source, boost::filesystem::native );
-  const boost::filesystem::path source_directory( source_path.parent_path() );
-
-  working_directory dir;
-  dir.xcf_directory = source_directory.string();
-  dir.output_directory = source_directory.string();
+  const working_directory dir( source );
 
   for ( spritedesc_collection::iterator it=desc.begin(); it!=desc.end(); ++it )
     {
@@ -151,7 +145,7 @@ void sdc::image_generator::generate_output
   if ( m_generate_spritepos )
     {
       const std::string filename
-        ( dir.output_directory + '/' + desc.output_name + ".spritepos" );
+        ( dir.get_output_spritepos_path( desc.output_name ) );
 
       std::ofstream f( filename.c_str() );
       generate_spritepos( f, desc );
@@ -218,7 +212,7 @@ void sdc::image_generator::generate_scm
   for ( spritedesc::id_to_file_map::const_iterator it = desc.xcf.begin();
         it != desc.xcf.end(); ++it )
     {
-      const std::string xcf_path( dir.xcf_directory + '/' + it->second );
+      const std::string xcf_path( dir.get_xcf_path( it->second ) );
 
       os << "(" << make_image_varname( it->first )
          << " (car (gimp-file-load 1 \"" << xcf_path << "\" \"" << xcf_path
@@ -235,7 +229,7 @@ void sdc::image_generator::generate_scm
     generate_scm( os, *it, desc.output_name );
 
   os << "(save-frames \""
-     << (dir.output_directory + '/' + desc.output_name) << ".png\" "
+     << dir.get_output_image_path(desc.output_name) << "\" "
      << make_image_varname(desc.output_name) << ")\n";
 
   os << ")\n";
