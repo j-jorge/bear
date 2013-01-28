@@ -10,6 +10,8 @@
  */
 #include "node_parser/node_parser_sprite_description_base.hpp"
 
+#include "xcf_map.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Parse a node describing the ratio of the size of a sprite according to
@@ -86,13 +88,9 @@ void sdc::node_parser_sprite_description_base::get_xcf_from_id
     {
       const std::string xcf_name = it->second;
 
-      // find the info about the xcf
-      const xcf_map::const_iterator it_xcf = xcf.find( xcf_name );
-
-      if ( it_xcf == xcf.end() )
-        std::cerr << "Unknown xcf file '" << xcf_name
-                  << "'" << std::endl;
+      if ( !xcf.has_info( xcf_name ) )
+        std::cerr << "Unknown xcf file '" << xcf_name << "'" << std::endl;
       else
-        info = it_xcf->second;
+        info = xcf.get_info( xcf_name );
     }
 } // node_parser_sprite_description_base::get_xcf_from_id()

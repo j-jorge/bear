@@ -12,12 +12,16 @@
 
 #include <fstream>
 #include <iostream>
+#include <cstdio>
 
 #include "parser.hpp"
 #include "spritedesc.hpp"
 #include "xcf_info.hpp"
+#include "xcf_map.hpp"
 
 #include <claw/string_algorithm.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -53,7 +57,8 @@ bool sdc::application::sprite_height_comp::operator()
  * \param argv Program arguments.
  */
 sdc::application::application( int& argc, char** &argv )
-  : claw::application(argc, argv), m_quit(false)
+  : claw::application(argc, argv), m_quit(false), m_generate_spritepos(true),
+    m_gimp_console_program( "gimp-console" ), m_xcfinfo_program( "xcfinfo" )
 {
   check_arguments( argc, argv );
 } // application::application()
@@ -67,10 +72,7 @@ int sdc::application::run()
   int result = 0;
 
   if (!m_quit)
-    {
-      read_layer_description(std::cin);
-      process_file(m_input_file);
-    }
+    process_file(m_input_file);
 
   return result;
 } // application::run()
@@ -93,16 +95,42 @@ void sdc::application::help() const
 void sdc::application::check_arguments( int& argc, char** &argv )
 {
   m_arguments.add( "-h", "--help", "Print this message and exit.", true );
+  m_arguments.add
+    ( "-s", "--scheme-directory",
+      "A directory where the utility Scheme scripts can be found.", true );
+  m_arguments.add
+    ( "-g", "--gimp-console",
+      "The path to the gimp-console executable.", true );
+  m_arguments.add
+    ( "-m", "--makefile",
+      "The name of the makefile to generate. "
+      "If this argement is set, the images are not generated.", true );
+  m_arguments.add
+    ( "-x", "--xcfinfo", "The path to the xcfinfo executable.", true );
+  m_arguments.add_long
+    ( "--no-spritepos", "Tells to not generate the spritepos file.", true );
 
   m_arguments.parse( argc, argv );
 
-  if ( m_arguments.get_bool("-h") || (argc != 1) )
+  if ( m_arguments.get_bool("--help") || (argc != 1) )
     {
       help();
       m_quit = true;
     }
 
-  m_input_file = argv[0];
+  if ( m_arguments.has_value("--gimp-console") )
+    m_gimp_console_program = m_arguments.get_string("--gimp-console");
+
+  if ( m_arguments.has_value("--makefile") )
+    m_makefile = m_arguments.get_string("--makefile");
+
+  if ( m_arguments.has_value("--scheme-directory") )
+    m_scheme_directory = m_arguments.get_all_of_string("--scheme-directory");
+
+  m_generate_spritepos = !m_arguments.get_bool("--no-spritepos");
+
+  if ( argc > 0 )
+    m_input_file = argv[0];
 } // application::check_arguments()
 
 /*----------------------------------------------------------------------------*/
@@ -112,12 +140,112 @@ void sdc::application::check_arguments( int& argc, char** &argv )
  */
 void sdc::application::process_file( const std::string& name )
 {
+  const boost::filesystem::path file_path( name, boost::filesystem::native );
+  const boost::filesystem::path file_directory( file_path.parent_path() );
+  xcf_map xcf( file_directory.string(), m_xcfinfo_program );
+
   parser p;
   std::list<spritedesc> desc;
 
-  if ( !p.run( m_xcf, desc, name ) )
+  if ( !p.run( xcf, desc, name ) )
     std::cerr << "Failed to process file '" << name << "'" << std::endl;
 
+  if ( m_makefile.empty() )
+    generate_images( desc );
+  else
+    generate_makefile( desc );
+} // application::process_file()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Generates a makefile that calls the program to generate the images.
+ * \param desc The descriptions of the images.
+ */
+void sdc::application::generate_makefile( std::list<spritedesc> desc ) const
+{
+  std::ostream* output;
+  bool output_to_file(false);
+
+  if ( m_makefile == "-" )
+    output = &std::cout;
+  else
+    {
+      output = new std::ofstream( m_makefile.c_str() );
+      output_to_file = true;
+    }
+
+  std::vector<std::string> dependencies;
+
+  if ( output_to_file )
+    dependencies.push_back( m_makefile );
+
+  // dependencies.insert( dependencies.end(), get_all_output_files( desc ) );
+
+  *output << "all: " << boost::algorithm::join( dependencies, " " )
+          << '\n';
+  generate_makefile( *output, desc );
+
+  if ( output_to_file )
+    delete output;
+} // application::generate_makefile()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Generates a makefile that calls the program to generate the images.
+ * \param output The stream in which the rules are writen.
+ * \param desc The descriptions of the images.
+ */
+void sdc::application::generate_makefile
+( std::ostream& output, std::list<spritedesc> desc ) const
+{
+  std::vector<std::string> output_files;
+  std::vector<std::string> xcf_files;
+
+  for ( std::list<spritedesc>::const_iterator it=desc.begin(); it!=desc.end();
+        ++it )
+    {
+      output_files.push_back( it->output_name );
+
+      for ( spritedesc::id_to_file_map::const_iterator xcf_it = it->xcf.begin();
+            xcf_it != it->xcf.end(); ++xcf_it )
+        xcf_files.push_back( xcf_it->second );
+    }
+
+  if ( output_files.empty() )
+    return;
+
+  output << make_image_name( output_files[0] );
+
+  for ( std::size_t i=1; i!=output_files.size(); ++i )
+    output << ' ' << make_image_name( output_files[i] );
+
+  output << ": ";
+
+  if ( !xcf_files.empty() )
+    output << boost::algorithm::join( xcf_files, " " );
+
+  output << ' ' << m_input_file << "\n";
+  output << "\t" << m_arguments.get_program_name() << ' '
+         << "--gimp-console=" << m_gimp_console_program << ' '
+         << "--xcfinfo=" << m_xcfinfo_program;
+
+  if ( !m_generate_spritepos )
+    output << " --no-spritepos";
+
+  for ( path_list_type::const_iterator it = m_scheme_directory.begin();
+        it != m_scheme_directory.end(); ++it )
+    output << " --scheme-directory=" << *it;
+
+  output << ' ' << m_input_file << std::endl;
+} // application::generate_makefile()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Generates the images described by the given spritedesc.
+ * \param desc The descriptions of the images to generate.
+ */
+void sdc::application::generate_images( std::list<spritedesc> desc ) const
+{
   for ( std::list<spritedesc>::iterator it=desc.begin(); it!=desc.end(); ++it )
     {
       std::clog << "Processing " << it->output_name << std::endl;
@@ -125,50 +253,29 @@ void sdc::application::process_file( const std::string& name )
       set_sprite_position( *it );
       generate_output( *it );
     }
-} // application::process_file()
+} // application::generate_images()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Read the description of the layers in the xcf files.
- * \param is The stream from which we read the description.
+ * \brief Executes gimp-console on a given Scheme script.
+ * \param script The script to pass to gimp.
  */
-void sdc::application::read_layer_description( std::istream& is )
+void sdc::application::execute_gimp_scheme_process( std::string script ) const
 {
-  std::string xcf_name;
+  const std::string command( m_gimp_console_program + " --batch -" );
+  FILE* process = popen( command.c_str(), "w" );
 
-  if ( std::getline( is, xcf_name ) )
+  if ( process == NULL )
     {
-      xcf_info xcf;
-      std::size_t layers_count;
-
-      if ( (is >> xcf.width >> xcf.height >> layers_count) )
-        {
-          for ( std::size_t i=0; i!=layers_count; ++i )
-            {
-              layer_info layer;
-              layer.index = i;
-
-              if ( is >> layer.box.width >> layer.box.height
-                   >> layer.box.position.x >> layer.box.position.y )
-                {
-                  std::string layer_name;
-
-                  if ( std::getline( is, layer_name ) )
-                    {
-                      claw::text::trim(layer_name);
-                      xcf.layers[layer_name] = layer;
-                    }
-                }
-            }
-
-          if ( is )
-            {
-              m_xcf[ xcf_name ] = xcf;
-              read_layer_description(is);
-            }
-        }
+      std::cerr << "Failed to execute gimp console: '" << command << "'"
+                << std::endl;
+      return;
     }
-} // application::read_layer_description()
+
+  fputs( script.c_str(), process );
+
+  pclose( process );
+} // application::execute_gimp_scheme_process()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -177,11 +284,15 @@ void sdc::application::read_layer_description( std::istream& is )
  */
 void sdc::application::generate_output( const spritedesc& desc ) const
 {
-  generate_scm( std::cout, desc );
+  std::ostringstream oss;
+  generate_scm( oss, desc );
+  execute_gimp_scheme_process( oss.str() );
 
-  std::ofstream f( (desc.output_name + ".spritepos").c_str() );
-
-  generate_spritepos( f, desc );
+  if ( m_generate_spritepos )
+    {
+      std::ofstream f( (desc.output_name + ".spritepos").c_str() );
+      generate_spritepos( f, desc );
+    }
 } // application::generate_output()
 
 /*----------------------------------------------------------------------------*/
@@ -205,6 +316,38 @@ void sdc::application::generate_spritepos
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the full path of a Scheme file.
+ *
+ * The file is searched in m_scheme_directory and the first match is returned.
+ *
+ * \param filename The name of the file to search.
+ * \return The path to the first file found with the paths of m_scheme_directory
+ *         or filename if the file was not found.
+ */
+std::string sdc::application::get_scheme_path( std::string filename ) const
+{
+  path_list_type candidates( m_scheme_directory );
+
+#ifdef BEAR_SDC_DEFAULT_SCHEME_PATH
+  candidates.push_back( BEAR_SDC_DEFAULT_SCHEME_PATH );
+#endif
+
+  for ( path_list_type::const_iterator it=candidates.begin();
+        it!=candidates.end();
+        ++it )
+    {
+      boost::filesystem::path p( *it, boost::filesystem::native );
+      p /= filename;
+
+      if ( boost::filesystem::exists( p ) )
+        return p.string();
+    }
+
+  return filename;
+} // application::get_scheme_path()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Generate the Scheme script that builds the sprites of a given
  *        spritedesc.
  * \param os The stream in which the script is generated.
@@ -213,6 +356,8 @@ void sdc::application::generate_spritepos
 void sdc::application::generate_scm
 ( std::ostream& os, const spritedesc& desc ) const
 {
+  os << "(load \"" << get_scheme_path( "common.scm" ) << "\")\n";
+
   os << "(let ( ";
 
   for ( spritedesc::id_to_file_map::const_iterator it = desc.xcf.begin();
@@ -230,10 +375,12 @@ void sdc::application::generate_scm
         it != desc.sprite_end(); ++it )
     generate_scm( os, *it, desc.output_name );
 
-  os << "(save-frames \"" << desc.output_name << ".png\" "
+  os << "(save-frames \"" << make_image_name(desc.output_name) << "\" "
      << make_image_varname(desc.output_name) << ")\n";
 
   os << ")\n";
+
+  os << "(gimp-quit 1)";
 } // application::generate_scm()
 
 /*----------------------------------------------------------------------------*/
@@ -267,6 +414,17 @@ void sdc::application::generate_scm
 
   os << "))\n";
 } // application::generate_scm()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the name of the image file generated for the spritesheet with a
+ *        given name.
+ * \param name The name of the spritesheet.
+ */
+std::string sdc::application::make_image_name( const std::string& name ) const
+{
+  return name + ".png";
+} // application::make_image_name()
 
 /*----------------------------------------------------------------------------*/
 /**

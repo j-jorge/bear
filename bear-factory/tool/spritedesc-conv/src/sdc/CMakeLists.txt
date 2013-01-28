@@ -9,6 +9,7 @@ set( SDC_SOURCE_FILES
   code/main.cpp
   code/parser.cpp
   code/spritedesc.cpp
+  code/xcf_map.cpp
 
   node_parser/code/node_parser.cpp
   node_parser/code/node_parser_file.cpp
@@ -26,4 +27,12 @@ add_executable(
 target_link_libraries(
   spritedesc-conv
   ${CLAW_APPLICATION_LIBRARIES}
+  ${Boost_FILESYSTEM_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
   )
+
+install( FILES spritedesc-conv
+  DESTINATION ${BEAR_FACTORY_INSTALL_EXECUTABLE_DIR}
+  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+  GROUP_READ GROUP_EXECUTE
+  WORLD_READ WORLD_EXECUTE )

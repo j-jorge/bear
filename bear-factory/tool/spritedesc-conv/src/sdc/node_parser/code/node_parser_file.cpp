@@ -22,7 +22,7 @@
  * \param node Node to parse.
  */
 void sdc::node_parser_file::parse_node
-( const xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const
+( xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const
 {
   if ( node.value.id() == grammar::id_sprite_sheet )
     process_sprite_sheet( xcf, desc, node );
@@ -39,7 +39,7 @@ void sdc::node_parser_file::parse_node
  * \param node Node to parse.
  */
 void sdc::node_parser_file::process_sprite_sheet
-( const xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const
+( xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const
 {
   node_parser_sprite_sheet parser;
   spritedesc result;

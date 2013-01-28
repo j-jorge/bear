@@ -14,10 +14,11 @@
 #include "node_parser/node_parser.hpp"
 
 #include "spritedesc.hpp"
-#include "xcf_map.hpp"
 
 namespace sdc
 {
+  class xcf_map;
+
   /**
    * \brief Compile the node of the "file" rule.
    * \author Julien Jorge
@@ -27,13 +28,11 @@ namespace sdc
   {
   public:
     void parse_node
-    ( const xcf_map& xcf, std::list<spritedesc>& desc,
-      const tree_node& node ) const;
+    ( xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const;
 
   private:
     void process_sprite_sheet
-    ( const xcf_map& xcf, std::list<spritedesc>& desc,
-      const tree_node& node ) const;
+    ( xcf_map& xcf, std::list<spritedesc>& desc, const tree_node& node ) const;
 
   }; // class node_parser_file
 } // namespace sdc
