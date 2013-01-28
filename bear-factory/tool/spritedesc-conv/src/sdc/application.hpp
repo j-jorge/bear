@@ -63,6 +63,11 @@ namespace sdc
 
     void process_file( const std::string& name );
 
+    void generate_makefile( std::list<spritedesc> desc ) const;
+    void generate_makefile
+    ( std::ostream& output, std::list<spritedesc> desc ) const;
+    void generate_images( std::list<spritedesc> desc ) const;
+
     void execute_gimp_scheme_process( std::string script ) const;
 
     void generate_output( const spritedesc& desc ) const;
@@ -77,6 +82,7 @@ namespace sdc
     ( std::ostream& os, const spritedesc::sprite& s,
       const std::string& target_id ) const;
 
+    std::string make_image_name( const std::string& name ) const;
     std::string make_image_varname( const std::string& id ) const;
 
     void set_sprite_position( spritedesc& desc ) const;
@@ -102,6 +108,9 @@ namespace sdc
 
     /** \brief The path to xcfinfo executable. */
     std::string m_xcfinfo_program;
+
+    /** \brief The name of the makefile to generate, if any. */
+    std::string m_makefile;
 
   }; // class application
 } // namespace sdc
