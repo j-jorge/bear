@@ -4,8 +4,12 @@ project(spritedesc-conv)
 include_directories(.)
 
 #-------------------------------------------------------------------------------
+set( SDC_EXECUTABLE_NAME spritedesc-conv )
+
+#-------------------------------------------------------------------------------
 set( SDC_SOURCE_FILES
   code/application.cpp
+  code/image_generator.cpp
   code/main.cpp
   code/parser.cpp
   code/spritedesc.cpp
@@ -21,17 +25,18 @@ set( SDC_SOURCE_FILES
   )
 
 add_executable(
-  spritedesc-conv
+  ${SDC_EXECUTABLE_NAME}
   ${SDC_SOURCE_FILES}
   )
 target_link_libraries(
-  spritedesc-conv
+  ${SDC_EXECUTABLE_NAME}
   ${CLAW_APPLICATION_LIBRARIES}
   ${Boost_FILESYSTEM_LIBRARY}
   ${Boost_SYSTEM_LIBRARY}
   )
 
-install( FILES spritedesc-conv
+install(
+  FILES ${SDC_EXECUTABLE_NAME}
   DESTINATION ${BEAR_FACTORY_INSTALL_EXECUTABLE_DIR}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
   GROUP_READ GROUP_EXECUTE
