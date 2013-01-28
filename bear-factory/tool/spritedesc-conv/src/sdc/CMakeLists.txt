@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 2.6)
-project(spritedesc-conv)
-
 include_directories(.)
 
 #-------------------------------------------------------------------------------
-set( SDC_EXECUTABLE_NAME spritedesc-conv )
+set( SDC_EXECUTABLE_NAME pack-my-sprites )
 
 #-------------------------------------------------------------------------------
 set( SDC_SOURCE_FILES
@@ -30,6 +27,16 @@ add_executable(
   ${SDC_EXECUTABLE_NAME}
   ${SDC_SOURCE_FILES}
   )
+
+if( SDC_DEFAULT_SCHEME_PATH )
+  set_target_properties(
+    ${SDC_EXECUTABLE_NAME}
+    PROPERTIES
+    COMPILE_DEFINITIONS
+    "SDC_DEFAULT_SCHEME_PATH=${SDC_DEFAULT_SCHEME_PATH}"
+    )
+endif()
+
 target_link_libraries(
   ${SDC_EXECUTABLE_NAME}
   ${CLAW_APPLICATION_LIBRARIES}
@@ -38,8 +45,9 @@ target_link_libraries(
   )
 
 install(
-  FILES ${SDC_EXECUTABLE_NAME}
-  DESTINATION ${BEAR_FACTORY_INSTALL_EXECUTABLE_DIR}
+  TARGETS ${SDC_EXECUTABLE_NAME}
+  DESTINATION ${SDC_INSTALL_EXECUTABLE_DIR}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
   GROUP_READ GROUP_EXECUTE
-  WORLD_READ WORLD_EXECUTE )
+  WORLD_READ WORLD_EXECUTE
+  )

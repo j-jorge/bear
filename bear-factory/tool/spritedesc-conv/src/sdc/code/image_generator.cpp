@@ -16,10 +16,6 @@
 
 #include <limits>
 
-//#include "xcf_info.hpp"
-//#include "xcf_map.hpp"
-
-//#include <claw/string_algorithm.hpp>
 #include <boost/filesystem/convenience.hpp>
 
 /*----------------------------------------------------------------------------*/

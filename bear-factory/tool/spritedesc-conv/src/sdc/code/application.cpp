@@ -16,6 +16,7 @@
 #include "image_generator.hpp"
 #include "makefile_generator.hpp"
 #include "parser.hpp"
+#include "version.hpp"
 #include "xcf_map.hpp"
 
 #include <boost/filesystem/convenience.hpp>
@@ -42,8 +43,8 @@ int sdc::application::run()
 {
   if (!m_quit)
     {
-#ifdef BEAR_SDC_DEFAULT_SCHEME_PATH
-      m_scheme_directory.push_back( BEAR_SDC_DEFAULT_SCHEME_PATH );
+#ifdef SDC_DEFAULT_SCHEME_PATH
+      m_scheme_directory.push_back( SDC_TO_STR( SDC_DEFAULT_SCHEME_PATH ) );
 #endif
 
       process_files();
@@ -88,17 +89,17 @@ void sdc::application::check_arguments( int& argc, char** &argv )
   m_arguments.add_long
     ( "--no-spritepos", "Tells to not generate the spritepos file.", true );
   m_arguments.add_long
-    ( "--version", "Prints the version of the software..", true );
+    ( "--version", "Prints the version of the software.", true );
 
   m_arguments.parse( argc, argv );
 
   if ( m_arguments.get_bool("--version") )
     {
-      std::cout << "Version 0.0.0" << std::endl;
+      std::cout << SDC_VERSION_STRING << std::endl;
       m_quit = true;
     }
 
-  if ( m_arguments.get_bool("--help") || (argc == 0) )
+  if ( !m_quit && (m_arguments.get_bool("--help") || (argc == 0)) )
     {
       help();
       m_quit = true;
