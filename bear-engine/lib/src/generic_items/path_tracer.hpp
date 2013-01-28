@@ -46,6 +46,8 @@ namespace bear
     path_tracer();
 
     bool set_real_field( const std::string& name, double value );
+    bool set_color_field
+      ( const std::string& name, visual::color value );
 
     void progress( universe::time_type elapsed_time );
 
