@@ -15,6 +15,8 @@
 
 #include <claw/application.hpp>
 
+#include <vector>
+
 namespace sdc
 {
   /**
@@ -25,31 +27,9 @@ namespace sdc
     public claw::application
   {
   private:
-    /**
-     * \brief This function object is used to compare the sprites by decreasing
-     *        order of their areas.
-     */
-    class sprite_area_comp
-    {
-    public:
-      bool operator()
-      ( const spritedesc::sprite& a, const spritedesc::sprite& b ) const;
+    typedef std::list<spritedesc> spritedesc_collection;
+    typedef std::map<std::string, spritedesc_collection> file_to_spritedesc_map;
 
-    }; // class sprite_area_comp
-
-    /**
-     * \brief This function object is used to compare the sprites by decreasing
-     *        order of their heights.
-     */
-    class sprite_height_comp
-    {
-    public:
-      bool operator()
-      ( const spritedesc::sprite& a, const spritedesc::sprite& b ) const;
-
-    }; // class sprite_height_comp
-
-    typedef claw::math::rectangle<std::size_t> rectangle_type;
     typedef std::list<std::string> path_list_type;
 
   public:
@@ -61,41 +41,20 @@ namespace sdc
     void help() const;
     void check_arguments( int& argc, char** &argv );
 
-    void process_file( const std::string& name );
+    void process_files();
+    spritedesc_collection process_file( std::string name ) const;
 
-    void generate_makefile( std::list<spritedesc> desc ) const;
-    void generate_makefile
-    ( std::ostream& output, std::list<spritedesc> desc ) const;
-    void generate_images( std::list<spritedesc> desc ) const;
-
-    void execute_gimp_scheme_process( std::string script ) const;
-
-    void generate_output( const spritedesc& desc ) const;
-    void generate_spritepos( std::ostream& os, const spritedesc& desc ) const;
-
-    std::string get_scheme_path( std::string filename ) const;
-    
-    void generate_scm
-    ( std::ostream& os, const spritedesc& desc ) const;
-
-    void generate_scm
-    ( std::ostream& os, const spritedesc::sprite& s,
-      const std::string& target_id ) const;
-
-    std::string make_image_name( const std::string& name ) const;
-    std::string make_image_varname( const std::string& id ) const;
-
-    void set_sprite_position( spritedesc& desc ) const;
-    bool find_place_for
-    ( std::list<rectangle_type>& empty_places, spritedesc::sprite& s,
-      std::size_t m ) const;
+    std::string get_self_command() const;
 
   private:
     /** \brief Tells if we should quit immediatly. */
     bool m_quit;
 
     /** \brief The sprite description file. */
-    std::string m_input_file;
+    std::vector<std::string> m_input_file;
+
+    /** \brief The images to generate from the input files. */
+    std::list<std::string> m_target;
 
     /** \brief Tells to generate the spritepos file. */
     bool m_generate_spritepos;

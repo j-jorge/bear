@@ -78,7 +78,8 @@ sdc::xcf_info sdc::xcf_map::get_info( std::string name ) const
  */
 std::string sdc::xcf_map::execute_xcfinfo_process( std::string filename ) const
 {
-  const std::string command( m_xcfinfo_program + " \"" + filename + '"' );
+  const std::string command
+    ( m_xcfinfo_program + " \"" + m_xcf_directory + '/' + filename + '"' );
   FILE* process = popen( command.c_str(), "r" );
 
   if ( process == NULL )
