@@ -240,7 +240,8 @@ void bf::main_frame::create_controls()
   bar->Realize();
 
   // class tree
-  m_tree_frame = new wxFrame( this, wxID_ANY, _("Select an item class") );
+  m_tree_frame = 
+    new wxFrame( this, ID_SELECT_CLASS_DIALOG, _("Select an item class") );
   m_tree_ctrl = 
     new class_tree_ctrl 
     (m_windows_layout->get_item_class_pool(), m_tree_frame, ID_TREE_FRAME);
@@ -251,7 +252,7 @@ void bf::main_frame::create_controls()
   m_tree_frame->SetSizer(sizer);
 
   m_tree_frame->Connect
-    ( ID_TREE_FRAME, wxEVT_CLOSE_WINDOW,
+    ( ID_SELECT_CLASS_DIALOG, wxEVT_CLOSE_WINDOW,
       wxCloseEventHandler(main_frame::on_close_class_tree) );
 } // main_frame::create_controls()
 

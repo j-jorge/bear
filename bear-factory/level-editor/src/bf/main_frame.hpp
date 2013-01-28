@@ -46,7 +46,8 @@ namespace bf
         ID_RUN_CONFIGURATION,
         ID_CLASS_LIST,
         ID_NEW_ITEM,
-        ID_TREE_FRAME
+        ID_TREE_FRAME,
+        ID_SELECT_CLASS_DIALOG
       }; // enum control_id
 
   public:
