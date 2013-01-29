@@ -16,6 +16,8 @@
 
 #include <limits>
 
+#include <claw/logger.hpp>
+
 #include <boost/filesystem/convenience.hpp>
 
 /*----------------------------------------------------------------------------*/
@@ -76,7 +78,8 @@ void sdc::image_generator::run( file_to_spritedesc_map file )
   for ( file_to_spritedesc_map::const_iterator it=file.begin();
         it!=file.end(); ++it )
     {
-      std::clog << "Generating from file '" << it->first << "'" << std::endl;
+      claw::logger << claw::log_verbose
+                   << "Generating from file '" << it->first << "'" << std::endl;
       process_spritedesc( it->first, it->second );
     }
 } // image_generator::run()
@@ -94,8 +97,9 @@ void sdc::image_generator::process_spritedesc
 
   for ( spritedesc_collection::iterator it=desc.begin(); it!=desc.end(); ++it )
     {
-      std::clog << "Processing sprite sheet '" << it->output_name << "'"
-                << std::endl;
+      claw::logger << claw::log_verbose
+                   << "Processing sprite sheet '" << it->output_name << "'"
+                   << std::endl;
 
       set_sprite_position( *it );
       generate_output( dir, *it );

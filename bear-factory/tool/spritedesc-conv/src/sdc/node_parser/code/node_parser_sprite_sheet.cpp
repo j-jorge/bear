@@ -180,7 +180,7 @@ void sdc::node_parser_sprite_sheet::check_xcf_usage
 
   for ( spritedesc::id_to_file_map::const_iterator it = xcf_files.begin();
         it != xcf_files.end(); ++it )
-    std::clog << "warning: XCF file '" << it->second << "' identified as '"
+    std::cerr << "warning: XCF file '" << it->second << "' identified as '"
               << it->first << "' is never used in sprite sheet '"
               << desc.output_name << "'." << std::endl;
 } // node_parser_sprite_sheet::check_xcf_usage()
