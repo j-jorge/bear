@@ -80,7 +80,7 @@ void sdc::application::check_arguments( int& argc, char** &argv )
   m_arguments.add
     ( "-m", "--makefile",
       "The name of the makefile to generate. "
-      "If this argement is set, the images are not generated.", true );
+      "If this argument is set, the images are not generated.", true );
   m_arguments.add
     ( "-t", "--target",
       "The name of the sprite sheet to generate from the input file.", true );

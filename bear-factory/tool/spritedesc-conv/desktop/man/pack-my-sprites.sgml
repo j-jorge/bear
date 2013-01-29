@@ -1,0 +1,428 @@
+<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+<!-- Process this file with docbook-to-man to generate an nroff manual
+     page: `docbook-to-man manpage.sgml > manpage.1'.  You may view
+     the manual page with: `docbook-to-man manpage.sgml | nroff -man |
+     less'.  A typical entry in a Makefile or Makefile.am is:
+
+manpage.1: manpage.sgml
+	docbook-to-man $< > $@
+
+    
+	The docbook-to-man binary is found in the docbook-to-man package.
+	Please remember that if you create the nroff version in one of the
+	debian/rules file targets (such as build), you will need to include
+	docbook-to-man in your Build-Depends control field.
+
+  -->
+
+  <!-- Fill in your name for FIRSTNAME and SURNAME. -->
+  <!ENTITY dhfirstname "<firstname>Julien</firstname>">
+  <!ENTITY dhsurname   "<surname>Jorge</surname>">
+  <!-- Please adjust the date whenever revising the manpage. -->
+  <!ENTITY dhdate      "<date>january 29, 2013</date>">
+  <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
+       allowed: see man(7), man(1). -->
+  <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
+  <!ENTITY dhemail     "<email>julien.jorge@stuff-o-matic.com</email>">
+  <!ENTITY dhusername  "Julien Jorge">
+  <!ENTITY dhucpackage "<refentrytitle>PACK-MY-SPRITES</refentrytitle>">
+  <!ENTITY dhpackage   "pack-my-sprites">
+
+  <!ENTITY gnu         "<acronym>GNU</acronym>">
+  <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
+]>
+<refentry>
+  <refentryinfo>
+    <address>&dhemail;</address>
+    <author>&dhfirstname; &dhsurname;</author>
+    <copyright>
+      <year>2013</year>
+      <holder>&dhusername;</holder>
+    </copyright>
+    &dhdate;
+  </refentryinfo>
+  <refmeta>
+    &dhucpackage;
+
+    &dhsection;</refmeta>
+  <refnamediv>
+    <refname>&dhpackage;</refname>
+
+    <refpurpose>Generates sprite sheets from XCF images.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>&dhpackage;</command>
+
+      <arg><option>-g=<replaceable>file</replaceable></option></arg>
+      <arg><option>-h</option></arg>
+      <arg><option>--log-concise</option></arg>
+      <arg><option>--log-file=<replaceable>file</replaceable></option></arg>
+      <arg><option>--log-level=<replaceable>string</replaceable></option></arg>
+      <arg><option>--log-uniq</option></arg>
+      <arg><option>-m=<replaceable>file</replaceable></option></arg>
+      <arg rep="repeat"><option>-s=<replaceable>directory</replaceable></option></arg>
+      <arg rep="repeat"><option>-t=<replaceable>string</replaceable></option></arg>
+      <arg><option>-x=<replaceable>file</replaceable></option></arg>
+      <arg><option>--no-spritepos</option></arg>
+      <arg><option>--version</option></arg>
+   </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para><command>&dhpackage;</command> is a program that generates sprite sheets from a collection of images made with Gimp.</para>
+
+    <para>The purpose of the software is to reduce the time required to integrate graphic updates into the final product. In order to achieve this goal, <command>&dhpackage;</command> automates the generation of the sprites and help its integration in the build process of the product.</para>
+
+    <para>The default behavior of the program is to parse an input text
+      file to generate some sprite sheets and the localization of
+      their sprites. The input file must describe each sprite with a
+      unique name, the layers to show and their final size in the
+      sprite sheet. The output is a PNG file containing each sprite
+      and a text file associating the position and the size of each
+      sprite with its name. See <xref linkend="sect-spritedesc"/> for details
+      about the syntax of the input file.</para>
+
+    <para>When invoked with the <option>--no-spritepos</option> argument, only
+      the PNG file is generated.</para>
+
+    <para>When invoked with the <option>--makefile</option> argument, the
+      program generates a makefile whose rules build the sprite
+      sheets, with dependencies on the XCF files and the input text
+      file.  No sprite sheet will be generated when using this
+      option.</para>
+
+    <para>The software relies upon the
+      <citerefentry>
+        <refentrytitle>gimp-console</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </citerefentry> and
+      <citerefentry>
+        <refentrytitle>xcfinfo</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </citerefentry> programs for the generation of the sprite sheets.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <para>The following options can be passed to the program:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term><option>-g=<replaceable>file</replaceable></option>, <option>--gimp-console=<replaceable>file</replaceable></option></term>
+        <listitem>
+          <para>The path to the <command>gimp-console</command> program. The
+            default is to run <command>gimp-console</command> and let
+            the shell find it in the user's PATH.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-h, --help</option></term>
+        <listitem>
+          <para>Shows a summary of options.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>--log-concise</option></term>
+        <listitem>
+          <para>Enables a logger that does not output messages that have been
+            recently output.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>--log-file=<replaceable>file</replaceable></option></term>
+        <listitem>
+          <para>Redirects log output to <replaceable>file</replaceable>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>--log-level=<replaceable>string</replaceable></option></term>
+        <listitem>
+          <para>Controls the level up to which the log messages are
+            displayed, among
+            <replaceable>error</replaceable>,
+            <replaceable>warning</replaceable> and
+            <replaceable>verbose</replaceable>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>--log-uniq</option></term>
+        <listitem>
+          <para>Tells to use a logger that does not output successively the same
+            message.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-m=<replaceable>file</replaceable></option>, <option>--makefile=<replaceable>file</replaceable></option></term>
+        <listitem>
+          <para>The name of the makefile to generate. If this argument
+            is set, the images are not
+            generated. If <replaceable>file</replaceable> is - then
+            the makefile is generated on the standard output.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>--no-spritepos</option></term>
+        <listitem>
+          <para>Disables the generation of the files describing the
+            position and the size of the sprites in the sprite sheet.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-s=<replaceable>directory</replaceable></option>, <option>--scheme-directory=<replaceable>directory</replaceable></option></term>
+        <listitem>
+          <para>The directories where are searched the Scheme scripts used
+            in the scripts passed to Gimp. The default value is
+            install_prefix/share/&dhpackage;/script.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-t=<replaceable>string</replaceable></option>, <option>--target=<replaceable>string</replaceable></option></term>
+        <listitem>
+          <para>The names of the sprite sheets to generate. If the input
+            files contains multiple sprite sheets, this arguments help
+            selecting the ones to process.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-v, --version</option></term>
+        <listitem>
+          <para>Print the version of the program and exit.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-x=<replaceable>file</replaceable></option>, <option>--xcfinfo=<replaceable>file</replaceable></option></term>
+        <listitem>
+          <para>The path to the <command>xcfinfo</command> program. The
+            default is to run <command>xcfinfo</command> and let
+            the shell find it in the user's PATH.</para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+
+  </refsect1>
+
+  <refsect1 id="sect-spritedesc">
+    <title>INPUT FORMAT</title>
+    <para>The input files can contain one or several sprite
+      sheets. Each one begins with
+      the <emphasis>sprite_sheet</emphasis> keyword, followed by the
+      name of the sprite sheet and the
+      maximum size of the output image, according to the following
+      syntax:</para>
+
+    <programlisting>sprite_sheet "name" width x height [margin M] [order "O"]</programlisting>
+
+    <para>The <quote>margin M</quote> optional argument allows to
+    define the spacing between the sprites in the output. The default
+    value is 1.</para>
+
+    <para>The <quote>order "O"</quote> optional argument allows to
+      force a given heuristic for the placement of the sprites in the
+      output. The default value is "area", which considers the sprites
+      in decreasing order of their area. Other possible values are
+      "height" to select the sprites by decreasing order of their
+      height or "none" to consider the sprites in their declaration
+      order.</para>
+
+    <para>Following the header is a list of XCF files used to build
+      the sprites:</para>
+
+    <programlisting>image_name_1 "file_name_1"
+      image_name_2 "file_name_2"
+      &hellip;</programlisting>
+
+    <para>Then come the sprites, defined by a name, a size, a source
+      image, a selection of layers and an optional mask:</para>
+
+    <programlisting>"name" reference_box * scale_factor with image_name
+      layer_selection_1
+      layer_selection_2
+      &hellip;
+      [mask "layer_name"]
+      ;</programlisting>
+
+    <para>The reference box can be the name of a layer from the source
+    image, or one of the following special values:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>autosize</term>
+        <listitem><para>The box is the smallest one
+            that contains all the selected layers.</para></listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term>image_size</term>
+        <listitem><para>The box is the one of the
+              canvas in the input image.</para></listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>The scale factor is a positive value that determine the size
+      of the sprite in the output. For example, a value of 0.5 will
+      produce a sprite half the size of the reference box.</para>
+
+    <para>The layer selection has different formats:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term><quote>layer_name</quote></term>
+        <listitem><para>Selects the layer with the given name in the
+            source image.</para></listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term>glob <quote>pattern</quote></term>
+        <listitem><para>Selects all layers whose name match the given
+            pattern. The pattern can contain the special following
+            special charaters</para>
+
+          <variablelist>
+            <varlistentry>
+              <term>*</term>
+              <listitem><para>Matches any sequence of symbols, empty
+                  sequences included.</para></listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>.</term>
+              <listitem><para>Matches a single symbol.</para></listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>?</term>
+              <listitem><para>Matches zero or one symbol.</para></listitem>
+            </varlistentry>
+
+          </variablelist>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>exclude <quote>layer_name</quote></term>
+        <listitem><para>Forces the layer with the given name in the
+            source image to not be selected. This is useful to remove
+            a layer from a glob expression.</para></listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>exclude glob <quote>pattern</quote></term>
+        <listitem><para>Forces the layers whose names matche the given
+            pattern to not be selected.</para></listitem>
+      </varlistentry>
+      
+    </variablelist>
+
+    <para>The optional mask command tells to use the layer with the
+      given name as a mask in the resulting sprite. The white parts of
+      the layer will be opaque in the resulting sprite, while the
+      black parts will be fully transparent. Intermediate grey values
+      will be partially transparent.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>EXAMPLE</title>
+
+    <para>Here is an example of input file:</para>
+
+    <programlisting>
+      /* Comments are written like this.*/
+      sprite_sheet "letters-1" 1024 x 1024 margin 1 order "height"
+
+      logo "logo.xcf.bz2"
+
+      /*
+      This entry produces a sprite with all layers whose name start
+      with "andy" followed by a space. The resulting sprite is the
+      part of the image bounded by the layer named "andy color" and
+      reduced to a quarter of its size.
+      */
+      "andy's" "andy color" * 0.25 with logo
+      &nbsp; glob "andy *"
+      ;
+
+      /*
+      This entry produces a sprite by merging two given layers. The
+      resulting sprite is cropped to the bounds of the merged
+      layers and reduced to one third of its size.
+      */
+      "wave" autosize * 0.3 with logo
+      &nbsp; "wave"
+      &nbsp; "wave border"
+      ;
+
+      /*
+      This entry produces a sprite by merging all layers whose name
+      start with "letters", and cropping the result to the bounds
+      of the layer named "par_K_". This layer is also used as a
+      mask in the resulting sprite.
+      */
+      "par_K_" "par_K_" * 0.3 with logo
+      &nbsp; glob "letters*"
+      &nbsp; mask "par_K_"
+      ;
+
+      /* End of file */</programlisting>
+
+    <para>The processing of this file will produce two outputs: an
+    image named <filename>letters-1.png</filename> and a text file
+    named <filename>letters-1.spritepos</filename>. The latter
+    contains the following localization of the sprites in the
+    image:</para>
+
+    <programlisting>wave: 0 0 1002 186
+      andy's: 0 187 268 168
+      par_K_: 269 187 120 118</programlisting>
+
+  </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+
+    <para>
+      <citerefentry>
+        <refentrytitle>gimp-console</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </citerefentry>,
+      <citerefentry>
+        <refentrytitle>xcfinfo</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </citerefentry></para>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+
+    <para>This manual page was written by &dhusername; &dhemail;. Permission is
+      granted to copy, distribute and/or modify this document under
+      the terms of the &gnu; General Public License, Version 2, published by the Free Software Foundation.</para>
+
+    <para>On Debian systems, the complete text of the GNU General Public
+      License can be found in /usr/share/common-licenses/GPL.</para>
+
+  </refsect1>
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+End:
+-->
+
+
