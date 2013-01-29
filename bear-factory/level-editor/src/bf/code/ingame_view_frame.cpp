@@ -45,6 +45,7 @@
 #include "bf/history/action_remove_layer.hpp"
 #include "bf/history/action_resize_level.hpp"
 #include "bf/history/action_set_item_bottom.hpp"
+#include "bf/history/action_set_item_field.hpp"
 #include "bf/history/action_set_item_left.hpp"
 
 #include "bf/icon/compile.xpm"
@@ -81,6 +82,7 @@
 #include <wx/filename.h>
 #include <wx/toolbar.h>
 #include <wx/artprov.h>
+#include <wx/utils.h> 
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -450,6 +452,7 @@ void bf::ingame_view_frame::create_menu()
   wxMenuBar* bar = new wxMenuBar();
   m_moving_layer_menu = new wxMenu();
   m_moving_layer_popup_menu = new wxMenu(); 
+  m_reference_item_field_popup_menu = new wxMenu();
   m_layer_menu = new wxMenu();
   m_layer_popup_menu = new wxMenu();
 
@@ -470,6 +473,10 @@ void bf::ingame_view_frame::create_menu()
     ( wxID_ANY, _("&Layer"), create_layer_menu(m_layer_popup_menu), 
       _("Layer selection.") );
   bar->Append( create_layer_menu(m_layer_menu), _("&Layer") );
+
+  m_popup_menu.Append
+    ( wxID_ANY, _("&Reference item fields"), 
+      m_reference_item_field_popup_menu, _("Reference item fields.") );
 
   SetMenuBar(bar);
 } // ingame_view_frame::create_menu()
@@ -671,6 +678,15 @@ wxMenu* bf::ingame_view_frame::create_view_menu() const
 
   return result;
 } // ingame_view_frame::create_view_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Create the reference_item_field menu.
+ */
+wxMenu* bf::ingame_view_frame::create_reference_item_field_menu()
+{
+  return m_reference_item_field_popup_menu;
+} // ingame_view_frame::create_reference_item_field_menu()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1240,6 +1256,212 @@ void bf::ingame_view_frame::update_layer_menu
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Add an entry in reference_item_field menu.
+ * \param field The field to set.
+ * \param id_item The identifiant of the item to set.
+ * \param item_to_selection Indicates if we set item in a selection's field. 
+ */
+void bf::ingame_view_frame::add_entry_reference_item_field_menu
+( const std::string& field, const std::string& id_item, bool item_to_selection )
+{
+  int id;
+
+  if ( item_to_selection )
+    id = m_reference_item_field_popup_menu->Append
+      ( wxID_ANY, std_to_wx_string
+        ("Set " + id_item + " in selection." + field) )->GetId();
+  else
+    id = m_reference_item_field_popup_menu->Append
+      ( wxID_ANY, std_to_wx_string
+        ("Set selection in " + id_item + "." + field) )->GetId();
+
+  if ( item_to_selection )
+    Connect
+      ( id, wxEVT_COMMAND_MENU_SELECTED,
+        wxCommandEventHandler(ingame_view_frame::on_set_item_to_selection) );
+  else
+    Connect
+      ( id, wxEVT_COMMAND_MENU_SELECTED,
+        wxCommandEventHandler(ingame_view_frame::on_set_selection_to_item) );
+
+  m_reference_item_field_popup_fields[ id ] = field;
+} // ingame_view_frame::add_entry_reference_item_field_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Add an entry of list in reference_item_field menu.
+ * \param field The field to set.
+ * \param id_item The identifiant of the item to set.
+ * \param item_to_selection Indicates if we set item in a selection's field.  
+ * \param add Indicates that we must add selection in list.
+ */
+void bf::ingame_view_frame::add_entry_reference_item_list_field_menu
+( const std::string& field, const std::string& id_item, 
+  bool item_to_selection, bool add )
+{
+  int id;
+  std::string operation("Set ");
+  if ( add )
+    operation = "Add ";
+
+  if ( item_to_selection )
+    id = m_reference_item_field_popup_menu->Append
+      ( wxID_ANY, 
+        std_to_wx_string
+        (operation + id_item + " in list selection." + field) )->GetId();
+  else
+    id = m_reference_item_field_popup_menu->Append
+      ( wxID_ANY, 
+        std_to_wx_string
+        ( operation + "selection in list " + id_item + "." + field) )->GetId();
+  
+  if ( add )
+    {
+      if ( item_to_selection )
+        Connect
+          ( id, wxEVT_COMMAND_MENU_SELECTED,
+            wxCommandEventHandler
+            (ingame_view_frame::on_add_list_item_to_selection) );
+      else
+        Connect
+          ( id, wxEVT_COMMAND_MENU_SELECTED,
+            wxCommandEventHandler
+            (ingame_view_frame::on_add_list_selection_to_item) );
+    }
+  else if ( item_to_selection )
+    Connect
+      ( id, wxEVT_COMMAND_MENU_SELECTED,
+        wxCommandEventHandler
+        (ingame_view_frame::on_set_list_item_to_selection) );
+  else
+    Connect
+      ( id, wxEVT_COMMAND_MENU_SELECTED,
+        wxCommandEventHandler
+        (ingame_view_frame::on_set_list_selection_to_item) );
+
+  m_reference_item_field_popup_fields[ id ] = field;
+} // ingame_view_frame::add_entry_reference_item_field_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Clear reference_item_field menu.
+ */
+void bf::ingame_view_frame::clear_reference_item_field_menu()
+{
+  while ( m_reference_item_field_popup_menu->GetMenuItemCount() > 0 )
+    {
+      int id = 
+        m_reference_item_field_popup_menu->GetMenuItems().front()->GetId();
+      Disconnect(id);
+      m_reference_item_field_popup_menu->Delete(id);
+    }
+  
+  m_reference_item_field_popup_fields.clear();
+} // ingame_view_frame::clear_reference_item_field_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Add entry in reference_item_field menu to set item in selection's 
+ field.
+ */
+void bf::ingame_view_frame::add_entry_item_to_selection()
+{
+  if ( m_reference_item_field_instance != NULL )
+    if ( ! m_reference_item_field_instance->get_id().empty() )
+      {
+        std::set<std::string> item_reference_fields;
+        std::set<std::string> item_reference_list_fields;
+        
+        const item_selection& selection = 
+          m_ingame_view->get_level().get_selection();
+        item_selection::const_iterator it;
+        
+        for ( it=selection.begin(); it!=selection.end(); ++it )
+          (*it)->get_item_reference_field_names
+            ( item_reference_fields, item_reference_list_fields );
+        
+        std::set<std::string>::const_iterator it_field;
+        for ( it_field = item_reference_fields.begin();
+              it_field != item_reference_fields.end(); ++it_field )
+          add_entry_reference_item_field_menu
+            (*it_field, m_reference_item_field_instance->get_id(), true );
+        
+        for ( it_field = item_reference_list_fields.begin();
+              it_field != item_reference_list_fields.end(); ++it_field )
+          add_entry_reference_item_list_field_menu
+            (*it_field, m_reference_item_field_instance->get_id(), 
+             true, false);
+                
+        for ( it_field = item_reference_list_fields.begin();
+              it_field != item_reference_list_fields.end(); ++it_field )
+          add_entry_reference_item_list_field_menu
+            (*it_field, m_reference_item_field_instance->get_id(), 
+             true, true);
+      }
+} // ingame_view_frame::add_entry_item_to_selection()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Add entry in reference_item_field menu to set selection in item's 
+ field.
+ */
+void bf::ingame_view_frame::add_entry_selection_to_item()
+{
+  if ( m_reference_item_field_instance != NULL )
+    {
+      const item_selection& selection = 
+        m_ingame_view->get_level().get_selection();
+      item_selection selection_with_id;
+      item_selection::const_iterator it;
+          
+      for ( it=selection.begin(); it!=selection.end(); ++it )
+        if ( ! (*it)->get_id().empty() )
+          selection_with_id.insert(*it);
+
+      if ( ! selection_with_id.empty() )
+        {
+          std::set<std::string> item_reference_fields;
+          std::set<std::string> item_reference_list_fields;
+          
+          m_reference_item_field_instance->get_item_reference_field_names
+              ( item_reference_fields, item_reference_list_fields );
+          
+          std::set<std::string>::const_iterator it_field;
+          for ( it_field = item_reference_fields.begin();
+                it_field != item_reference_fields.end(); ++it_field )
+            add_entry_reference_item_field_menu
+              (*it_field, m_reference_item_field_instance->get_id(), false );
+
+          for ( it_field = item_reference_list_fields.begin();
+                it_field != item_reference_list_fields.end(); ++it_field )
+            add_entry_reference_item_list_field_menu
+              (*it_field, m_reference_item_field_instance->get_id(), 
+               false, false);
+
+          for ( it_field = item_reference_list_fields.begin();
+                it_field != item_reference_list_fields.end(); ++it_field )
+            add_entry_reference_item_list_field_menu
+              (*it_field, m_reference_item_field_instance->get_id(), 
+               false, true);
+        }
+    }
+} // ingame_view_frame::add_entry_selection_to_item()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief A reference_item_field menu is opened.
+ */
+void bf::ingame_view_frame::update_reference_item_field_menu()
+{
+  clear_reference_item_field_menu();
+
+  add_entry_item_to_selection();
+  m_reference_item_field_popup_menu->AppendSeparator();
+  add_entry_selection_to_item();
+} // update_reference_item_field_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Associate a new position to some coordinates in order to build a list
  *        of positions where the distance between two adjacent coordinates stay
  *        equal in the whole list.
@@ -1402,6 +1624,23 @@ void bf::ingame_view_frame::on_context_menu(wxContextMenuEvent& event)
 {
   update_menu( m_popup_menu );
   update_menu( *GetMenuBar() );
+
+  if ( m_ingame_view->has_selection() )
+    {
+      wxPoint point; 
+
+      if (  event.GetPosition() == wxDefaultPosition ) 
+        point = m_ingame_view->compute_mouse_position( event.GetPosition() );
+      else
+        point = 
+          m_ingame_view->compute_mouse_position
+          ( ScreenToClient( event.GetPosition() ) );
+      m_reference_item_field_instance = 
+        m_ingame_view->pick_first_item( point );
+
+      if ( m_reference_item_field_instance != NULL )
+        update_reference_item_field_menu();
+    }
 
   if ( event.GetPosition() == wxDefaultPosition )
     PopupMenu( &m_popup_menu, event.GetPosition() );
@@ -2089,6 +2328,188 @@ void bf::ingame_view_frame::on_select_layer( wxCommandEvent& event )
   if ( found )
     m_ingame_view->set_active_index(it->second);
 } // ingame_view_frame::on_select_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the action that consists on set a reference item.
+ * \param event The event.
+ */
+void bf::ingame_view_frame::on_set_item_to_selection( wxCommandEvent& event )
+{
+  std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
+
+  const item_selection& selection = 
+    m_ingame_view->get_level().get_selection();
+  
+  item_selection::const_iterator it;
+  type_field field( field_name, type_field::item_reference_field_type );
+  
+  bf::item_reference_type value;
+  value.set_value(m_reference_item_field_instance->get_id());
+  action_group* g = 
+    new action_group( std_to_wx_string("Set " + field_name + " field"));
+  
+  for ( it = selection.begin(); it != selection.end(); ++it )
+    if ( (*it)->get_class().has_field
+         ( field_name, type_field::item_reference_field_type ) )
+      g->add_action
+        ( new action_set_item_field<bf::item_reference_type>
+          ( *it, field_name, value ) );
+  
+  m_ingame_view->do_action(g);
+} // ingame_view_frame::on_set_item_to_selection()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the action that consists on set a reference item list.
+ * \param event The event.
+ */
+void bf::ingame_view_frame::on_set_list_item_to_selection
+  ( wxCommandEvent& event )
+{
+  std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
+
+  const item_selection& selection = m_ingame_view->get_level().get_selection();
+  
+  item_selection::const_iterator it;
+  type_field field( field_name, type_field::item_reference_field_type );
+  field.set_is_list(true);
+            
+  bf::item_reference_type value;
+  value.set_value(m_reference_item_field_instance->get_id());
+  std::list<bf::item_reference_type> values;
+  values.push_back(value);
+
+  action_group* g = 
+    new action_group( std_to_wx_string("Set " + field_name + " field"));
+  
+  for ( it = selection.begin(); it != selection.end(); ++it )
+    if ( (*it)->get_class().has_field
+         ( field_name, type_field::item_reference_field_type ) )
+      g->add_action
+        ( new action_set_item_field
+          < std::list<bf::item_reference_type> >( *it, field_name, values ) );
+  
+  m_ingame_view->do_action(g);
+} // ingame_view_frame::on_set_list_item_to_selection()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the action that consists on add a reference item list.
+ * \param event The event.
+ */
+void bf::ingame_view_frame::on_add_list_item_to_selection
+( wxCommandEvent& event )
+{
+  std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
+
+  const item_selection& selection = m_ingame_view->get_level().get_selection();
+  item_selection::const_iterator it;
+  
+  action_group* g = 
+    new action_group( std_to_wx_string("Add " + field_name + " field"));
+
+  for ( it = selection.begin(); it != selection.end(); ++it )
+    if ( (*it)->get_class().has_field
+         ( field_name, type_field::item_reference_field_type ) )
+      {
+        bf::item_reference_type value;
+        value.set_value(m_reference_item_field_instance->get_id());
+        std::list<bf::item_reference_type> values;
+        (*it)->get_value(field_name, values);
+        values.push_back(value);
+                                  
+        g->add_action
+          ( new action_set_item_field
+            < std::list<bf::item_reference_type> >(*it, field_name, values ) );
+      }
+  
+  m_ingame_view->do_action(g);
+} // ingame_view_frame::on_add_list_item_to_selection()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the action that consists on set a reference item.
+ * \param event The event.
+ */
+void bf::ingame_view_frame::on_set_selection_to_item( wxCommandEvent& event )
+{  
+  std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
+
+  const item_selection& selection = 
+    m_ingame_view->get_level().get_selection();
+  item_selection selection_with_id;
+  item_selection::const_iterator it;
+  
+  for ( it = selection.begin(); it != selection.end(); ++it )
+    if ( ! (*it)->get_id().empty() )
+      selection_with_id.insert(*it);
+  
+  bf::item_reference_type value;
+  value.set_value( (*(selection_with_id.begin()))->get_id() );
+  
+  m_ingame_view->do_action
+    ( new action_set_item_field<bf::item_reference_type>
+      ( m_reference_item_field_instance, field_name, value ) );
+} // ingame_view_frame::on_set_selection_to_item()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the action that consists on set a reference item list.
+ * \param event The event.
+ */
+void bf::ingame_view_frame::on_set_list_selection_to_item
+( wxCommandEvent& event )
+{
+  std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
+
+  const item_selection& selection = 
+    m_ingame_view->get_level().get_selection();
+  item_selection::const_iterator it;
+  
+  std::list< bf::item_reference_type> values;
+  for ( it = selection.begin(); it != selection.end(); ++it )
+    if ( ! (*it)->get_id().empty() )
+      {
+        bf::item_reference_type value;
+        value.set_value( (*it)->get_id() );
+        values.push_back( value );
+      }
+
+  m_ingame_view->do_action
+    ( new action_set_item_field< std::list< bf::item_reference_type > >
+      ( m_reference_item_field_instance, field_name, values ) );
+} // ingame_view_frame::on_set_list_selection_to_item()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the action that consists on add a reference item list.
+ * \param event The event.
+ */
+void bf::ingame_view_frame::on_add_list_selection_to_item
+( wxCommandEvent& event )
+{
+  std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
+
+  const item_selection& selection = 
+    m_ingame_view->get_level().get_selection();
+  item_selection::const_iterator it;
+
+  std::list< bf::item_reference_type> values;
+  m_reference_item_field_instance->get_value(field_name, values);
+  
+  for ( it = selection.begin(); it != selection.end(); ++it )
+    if ( ! (*it)->get_id().empty() )
+      {
+        bf::item_reference_type value;
+        value.set_value( (*it)->get_id() );
+        values.push_back( value );
+      }
+
+  m_ingame_view->do_action
+    ( new action_set_item_field< std::list< bf::item_reference_type > >
+      ( m_reference_item_field_instance, field_name, values ) );
+} // ingame_view_frame::on_add_list_selection_to_item()
 
 /*----------------------------------------------------------------------------*/
 /**

@@ -162,6 +162,9 @@ namespace bf
     void delete_value( const type_field& f );
 
     bool has_a_reference_to( const std::string& id ) const;
+    void get_item_reference_field_names
+      ( std::set<std::string> & item_reference_fields, 
+        std::set<std::string> & item_reference_list_fields ) const;
 
     bool get_fixed() const;
     void set_fixed( bool b );
