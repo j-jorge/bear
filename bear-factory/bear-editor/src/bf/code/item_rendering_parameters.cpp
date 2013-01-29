@@ -219,7 +219,7 @@ int bf::item_rendering_parameters::get_pos_z() const
  */
 double bf::item_rendering_parameters::get_width() const
 {
-  if ( m_width == 0 && ! m_extend_on_bounding_box )
+  if ( m_width == 0 )
     return m_sprite->width();
   else
     return m_width;
@@ -231,7 +231,7 @@ double bf::item_rendering_parameters::get_width() const
  */
 double bf::item_rendering_parameters::get_height() const
 {
-  if ( m_height == 0 && ! m_extend_on_bounding_box )
+  if ( m_height == 0 )
     return m_sprite->height();
   else
     return m_height;
