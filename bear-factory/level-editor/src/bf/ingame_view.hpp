@@ -20,6 +20,7 @@
 
 #include <wx/wx.h>
 #include <wx/dnd.h>
+#include <wx/event.h>
 
 namespace bf
 {
@@ -178,6 +179,9 @@ namespace bf
 
     void show_item_position_error(wxWindow* win);
 
+    wxPoint compute_mouse_position(const wxPoint& point) const;
+    item_instance* pick_first_item( const wxPoint& pos );
+
   private:
     void render_layers
     ( wxDC& dc, wxGraphicsContext& gc ) const;
@@ -276,7 +280,6 @@ namespace bf
 
     bool exist_selected_item( const wxPoint& pos );
     item_instance* first_selected_item( const wxPoint& pos );
-    item_instance* pick_first_item( const wxPoint& pos );
     void pick_item( const wxPoint& pos, std::set<bf::item_instance*>& items );
     void pick_item( std::list<item_instance*>& item, const wxRect& box );
     void toggle_selection( item_instance* item );
@@ -328,7 +331,6 @@ namespace bf
     void on_size(wxSizeEvent& event);
     void on_focused(wxFocusEvent& event);
     void on_paint(wxPaintEvent& event);
-    wxPoint compute_mouse_position(wxMouseEvent& event) const;
     wxPoint compute_local_view_position() const;
     wxPoint compute_global_view_position(wxPoint view_position) const;
     void on_mouse_left_down(wxMouseEvent& event);

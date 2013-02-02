@@ -332,6 +332,34 @@ bool bf::item_instance::has_a_reference_to( const std::string& id ) const
   return false;
 } // item_instance::has_a_reference_to()
 
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get names of reference item fields.
+ * \param item_reference_fields List of item_reference fields (out).
+ * \param item_reference_list_fields List of item_reference list fields (out).
+ */
+void bf::item_instance::get_item_reference_field_names
+( std::set<std::string> & item_reference_fields, 
+  std::set<std::string> & item_reference_list_fields ) const
+{
+  std::list<std::string> all_fields;
+  get_class().get_field_names_in_hierarchy( all_fields );
+
+  std::list<std::string>::const_iterator it;
+  for ( it = all_fields.begin(); it != all_fields.end(); ++it )
+    {
+      type_field field = get_class().get_field(*it);
+      if ( field.get_field_type() == type_field::item_reference_field_type )
+        {
+          if ( field.is_list() )
+            item_reference_list_fields.insert( field.get_name() );
+          else
+            item_reference_fields.insert( field.get_name() );
+        }
+    }
+} // item_instance::get_item_reference_field_names()
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Tell if the item is fixed.

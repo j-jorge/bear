@@ -18,6 +18,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <list>
 
 #include "bf/accelerator_table.hpp"
 #include "bf/item_event.hpp"
@@ -129,6 +130,7 @@ namespace bf
     wxMenu* create_edit_menu(wxMenu* moving_layer_menu);
     wxMenu* create_view_menu() const;
     wxMenu* create_layer_menu(wxMenu* layer_menu);
+    wxMenu* create_reference_item_field_menu();
 
     void create_toolbar();
 
@@ -158,9 +160,20 @@ namespace bf
     void update_moving_layer_menu
     ( wxMenu* moving_layer_menu, 
       std::map<int, unsigned int>& moving_layer_index);
+    
+    void add_entry_reference_item_field_menu
+    ( const std::string& field, const std::string& id_item, 
+      bool item_to_selection );
+    void add_entry_reference_item_list_field_menu
+    ( const std::string& field, const std::string& id_item, 
+      bool item_to_selection, bool add );
+    void clear_reference_item_field_menu();
+    void add_entry_item_to_selection();
+    void add_entry_selection_to_item();
+    void update_reference_item_field_menu();
+    
     void update_layer_menu
     (wxMenu* layer_menu, std::map<int, unsigned int>& layer_index);
-
     std::map<double, double> arrange( const std::set<double>& s ) const;
 
     void on_size(wxSizeEvent& event);
@@ -211,6 +224,12 @@ namespace bf
     void on_move_in_layer_down(wxCommandEvent& event);
     void on_move_in_other_layer(wxCommandEvent& event);
     void on_select_layer(wxCommandEvent& event);
+    void on_set_selection_to_item( wxCommandEvent& event );
+    void on_set_list_selection_to_item( wxCommandEvent& event );
+    void on_add_list_selection_to_item( wxCommandEvent& event );
+    void on_set_item_to_selection( wxCommandEvent& event );
+    void on_set_list_item_to_selection( wxCommandEvent& event );
+    void on_add_list_item_to_selection( wxCommandEvent& event );
 
     void on_move_selection_up(wxCommandEvent& event);
     void on_move_selection_down(wxCommandEvent& event);
@@ -287,11 +306,20 @@ namespace bf
     /** \brief A map associated wxID with moving layer index in popup menu. */
     std::map<int, unsigned int> m_moving_layer_popup_index;
 
+    /** \brief A map associated wxID with field name in popup menu. */
+    std::map<int, std::string> m_reference_item_field_popup_fields;
+
+    /** \brief The last selected item instance for reference item field. */
+    item_instance* m_reference_item_field_instance;
+
     /** \brief The layer menu for selection movement. */
     wxMenu* m_moving_layer_menu;
 
     /** \brief The layer popup menu for selection movement. */
     wxMenu* m_moving_layer_popup_menu;
+
+    /** \brief The popup menu for reference item field. */
+    wxMenu* m_reference_item_field_popup_menu;
 
     /** \brief A map associated wxID with layer index in menu bar. */
     std::map<int, unsigned int> m_layer_index;

@@ -967,6 +967,65 @@ void bf::ingame_view::show_item_position_error(wxWindow* win)
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Compute the position of the mouse.
+ * \param point The point where the mouse event has occured .
+ */
+wxPoint bf::ingame_view::compute_mouse_position(const wxPoint& point) const
+{ 
+  if ( empty() )
+    return wxPoint(0, 0);
+  else
+    {
+      wxPoint pos_view = compute_local_view_position();
+
+      return wxPoint
+        ( unzoom(pos_view.x + point.x),
+          unzoom(pos_view.y + GetSize().y - point.y) );
+    }
+} // ingame_view::compute_mouse_position()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Pick the first item found near a given point.
+ * \param pos The position of the point.
+ */
+bf::item_instance* bf::ingame_view::pick_first_item( const wxPoint& pos )
+{
+  item_instance* result=NULL;
+  std::list<item_instance*> instances;
+  layer::item_iterator it;
+  wxCoord min_max_dist = std::numeric_limits<wxCoord>::max();
+
+  if ( !empty() )
+    {
+      layer& the_layer( m_history.get_level().get_active_layer() );
+
+      for (it=the_layer.item_begin();
+           it!=the_layer.item_end(); ++it)
+        {
+          wxRect box = get_bounding_box( *it );
+
+          if ( box.Contains(pos) )
+            {
+              const wxCoord dist =
+                std::max
+                ( std::max( pos.x - box.GetLeft(), box.GetRight() - pos.x),
+                  std::max( pos.y - box.GetTop(), box.GetBottom() - pos.y) );
+
+              if ( dist < min_max_dist )
+                {
+                  result = &(*it);
+                  min_max_dist = dist;
+                }
+            }
+        }
+    }
+
+  return result;
+} // ingame_view::pick_first_item()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Render all layers.
  * \param dc The device context for the drawings.
  * \param gc The graphics context for the drawings.
@@ -2104,46 +2163,6 @@ bf::item_instance* bf::ingame_view::first_selected_item( const wxPoint& pos )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Pick the first item found near a given point.
- * \param pos The position of the point.
- */
-bf::item_instance* bf::ingame_view::pick_first_item( const wxPoint& pos )
-{
-  item_instance* result=NULL;
-  std::list<item_instance*> instances;
-  layer::item_iterator it;
-  wxCoord min_max_dist = std::numeric_limits<wxCoord>::max();
-
-  if ( !empty() )
-    {
-      layer& the_layer( m_history.get_level().get_active_layer() );
-
-      for (it=the_layer.item_begin();
-           it!=the_layer.item_end(); ++it)
-        {
-          wxRect box = get_bounding_box( *it );
-
-          if ( box.Contains(pos) )
-            {
-              const wxCoord dist =
-                std::max
-                ( std::max( pos.x - box.GetLeft(), box.GetRight() - pos.x),
-                  std::max( pos.y - box.GetTop(), box.GetBottom() - pos.y) );
-
-              if ( dist < min_max_dist )
-                {
-                  result = &(*it);
-                  min_max_dist = dist;
-                }
-            }
-        }
-    }
-
-  return result;
-} // ingame_view::pick_first_item()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Pick items found near a given point.
  * \param pos The position of the point.
  * \param items The selected items.
@@ -3100,31 +3119,12 @@ wxPoint bf::ingame_view::compute_global_view_position
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Compute the position of the mouse.
- * \param event The mouse event that occured.
- */
-wxPoint bf::ingame_view::compute_mouse_position(wxMouseEvent& event) const
-{ 
-  if ( empty() )
-    return wxPoint(0, 0);
-  else
-    {
-      wxPoint pos_view = compute_local_view_position();
-
-      return wxPoint
-        ( unzoom(pos_view.x + event.GetX()),
-          unzoom(pos_view.y + GetSize().y - event.GetY()) );
-    }
-} // ingame_view::compute_mouse_position()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief The user start a click in the frame.
  * \param event The mouse event that occured.
  */
 void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
 {
-  wxPoint point = compute_mouse_position( event );
+  wxPoint point = compute_mouse_position( event.GetPosition() );
 
   m_drag_info = new drag_info();
   m_drag_info->mouse_origin = point;
@@ -3184,7 +3184,7 @@ void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
  */
 void bf::ingame_view::on_mouse_move(wxMouseEvent& event)
 {
-  wxPoint point = compute_mouse_position( event );
+  wxPoint point = compute_mouse_position( event.GetPosition() );
 
   if ( event.LeftIsDown() )
     if ( m_drag_info != NULL )
@@ -3228,7 +3228,7 @@ void bf::ingame_view::on_mouse_move(wxMouseEvent& event)
  */
 void bf::ingame_view::on_mouse_left_up(wxMouseEvent& event)
 {
-  wxPoint point = compute_mouse_position( event );
+  wxPoint point = compute_mouse_position( event.GetPosition() );
 
   if ( m_drag_info == NULL )
     event.Skip();
@@ -3259,7 +3259,7 @@ void bf::ingame_view::on_mouse_left_up(wxMouseEvent& event)
  */
 void bf::ingame_view::on_mouse_left_double_click(wxMouseEvent& event)
 {
-  wxPoint point = compute_mouse_position( event );
+  wxPoint point = compute_mouse_position( event.GetPosition() );
 
   item_instance* item = first_selected_item(point);
 
@@ -3283,7 +3283,7 @@ void bf::ingame_view::on_mouse_left_double_click(wxMouseEvent& event)
  */
 void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
 { 
-  wxPoint point = compute_mouse_position( event );
+  wxPoint point = compute_mouse_position( event.GetPosition() );
 
   if ( event.ControlDown() )
     {
@@ -3313,7 +3313,7 @@ void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
 void bf::ingame_view::on_mouse_wheel_rotation(wxMouseEvent& event)
 {
   int rotation = event.GetWheelRotation();
-  wxPoint point = compute_mouse_position( event );
+  wxPoint point = compute_mouse_position( event.GetPosition() );
 
   if ( rotation < 0 )
     if ( event.ShiftDown() )
