@@ -84,7 +84,7 @@ bear::visual::screen::sub_system bear::visual::screen::get_sub_system()
 bear::visual::screen::screen
 ( const claw::math::coordinate_2d<unsigned int>& size,
   const std::string& title, bool full )
-  : m_mode(SCREEN_IDLE), m_render_opaque_box(false), m_dumb_rendering(true)
+  : m_mode(SCREEN_IDLE), m_render_opaque_box(false), m_dumb_rendering(false)
 {
   switch( s_sub_system )
     {

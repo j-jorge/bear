@@ -24,8 +24,8 @@ namespace bear
   namespace engine
   {
     /**
-     * \brief This class loads and store informations from a game description
-     *        file.
+     * \brief This class stores some information about the initialization of the
+     *        game.
      * \author Julien Jorge
      */
     class ENGINE_EXPORT game_description
@@ -39,6 +39,7 @@ namespace bear
       const std::string& start_level() const;
       const std::string& game_name() const;
       const claw::math::coordinate_2d<unsigned int>& screen_size() const;
+      bool dumb_rendering() const;
       double active_area_margin() const;
       const string_list& resources_path() const;
       const string_list& libraries() const;
@@ -46,6 +47,7 @@ namespace bear
       void set_game_name( const std::string& value );
       void set_screen_width( unsigned int value );
       void set_screen_height( unsigned int value );
+      void set_dumb_rendering( bool v );
       void set_active_area_margin( unsigned int value );
       void add_resources_path( const string_list& value );
       void add_item_library( const string_list& value );
@@ -69,6 +71,9 @@ namespace bear
 
       /** \brief The game libraries to link to. */
       string_list m_libraries;
+
+      /** \brief Tells if we use dumb rendering by default. */
+      bool m_use_dumb_rendering;
 
     }; // class game_description
   } // namespace engine

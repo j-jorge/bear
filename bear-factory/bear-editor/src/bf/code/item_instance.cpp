@@ -120,7 +120,8 @@ bf::item_instance::item_instance( item_class const* c )
  */
 bf::item_instance::item_instance( const item_instance& that )
   : m_class(that.m_class), m_fixed( that.get_fixed() ),
-    m_id(that.get_id()), m_rendering_parameters(*this)
+    m_id(that.get_id()),
+    m_rendering_parameters(*this)
 {
   assign(that);
 } // item_instance::item_instance()

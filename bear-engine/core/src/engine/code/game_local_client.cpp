@@ -81,6 +81,8 @@ bear::engine::game_local_client::game_local_client( int& argc, char** &argv )
           m_screen = new visual::screen
             ( m_game_description.screen_size(),
               m_game_description.game_name(), m_fullscreen );
+
+          set_dumb_rendering( m_game_description.dumb_rendering() );
         }
       catch(...)
         {
@@ -198,7 +200,10 @@ void bear::engine::game_local_client::set_translator
  */
 void bear::engine::game_local_client::set_dumb_rendering( bool b )
 {
-  m_screen->set_dumb_rendering(b);
+  if ( m_screen == NULL )
+    m_game_description.set_dumb_rendering( b );
+  else
+    m_screen->set_dumb_rendering(b);
 } // game_local_client::set_dumb_rendering()
 
 /*----------------------------------------------------------------------------*/
@@ -207,7 +212,10 @@ void bear::engine::game_local_client::set_dumb_rendering( bool b )
  */
 bool bear::engine::game_local_client::get_dumb_rendering() const
 {
-  return m_screen->get_dumb_rendering();
+  if ( m_screen == NULL )
+    return m_game_description.dumb_rendering();
+  else
+    return m_screen->get_dumb_rendering();
 } // game_local_client::get_dumb_rendering()
 
 /*----------------------------------------------------------------------------*/
@@ -1248,6 +1256,10 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
     }
 
   m_fullscreen = arg.get_bool("--fullscreen") && !arg.get_bool("--windowed");
+  
+  m_game_description.set_dumb_rendering
+    ( arg.get_bool( "--dumb-rendering" )
+      && !arg.get_bool( "--no-dumb-rendering" ) );
 
   if ( arg.has_value("--screen-height") )
     {
@@ -1429,6 +1441,12 @@ claw::arguments_table bear::engine::game_local_client::get_arguments_table()
     ( "--data-path",
       bear_gettext("Path to the directory containing the data of the game."),
       false, bear_gettext("path") );
+  arg.add_long
+    ( "--dumb-rendering",
+      bear_gettext("Tells to use the dumbest rendering procedure."), true );
+  arg.add_long
+    ( "--no-dumb-rendering",
+      bear_gettext("Tells not to use the dumbest rendering procedure."), true );
   arg.add_long
     ( "--item-library",
       bear_gettext("Path to a library containing items for the game."), false,

@@ -23,7 +23,7 @@
  */
 bear::engine::game_description::game_description()
   : m_game_name("Anonymous game"), m_screen_size(640, 480),
-    m_active_area_margin(500)
+    m_active_area_margin(500), m_use_dumb_rendering(false)
 {
 
 } // game_description()
@@ -55,6 +55,15 @@ bear::engine::game_description::screen_size() const
 {
   return m_screen_size;
 } // game_description::screen_size()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if we use dumb rendering by default.
+ */
+bool bear::engine::game_description::dumb_rendering() const
+{
+  return m_use_dumb_rendering;
+} // game_description::dumb_rendering()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -114,6 +123,16 @@ void bear::engine::game_description::set_screen_height( unsigned int value )
 {
   m_screen_size.y = value;
 } // game_description::set_screen_height()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells to use the dumb rendering procedure.
+ * \param v Tells to use it or not.
+ */
+void bear::engine::game_description::set_dumb_rendering( bool v )
+{
+  m_use_dumb_rendering = v;
+} // game_description::set_dumb_rendering()
 
 /*----------------------------------------------------------------------------*/
 /**

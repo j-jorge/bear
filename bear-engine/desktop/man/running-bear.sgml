@@ -76,9 +76,15 @@ manpage.1: manpage.sgml
       <arg><option>-v</option></arg>
       <arg><option>--active-area=<replaceable>integer</replaceable></option></arg>
       <group>
+        <arg choice="plain"><option>--dumb-rendering</option></arg>
+        <arg choice="plain"><option>--no-dumb-rendering</option></arg>
+      </group>
+
+      <group>
         <arg choice="plain"><option>--fullscreen</option></arg>
         <arg choice="plain"><option>--windowed</option></arg>
       </group>
+
       <arg><option>--game-name=<replaceable>string</replaceable></option></arg>
       <arg><option>--game-var-assignment=<replaceable>character</replaceable></option></arg>
       <arg><option>--screen-height=<replaceable>integer</replaceable></option></arg>
@@ -117,6 +123,14 @@ manpage.1: manpage.sgml
                 the last one on the command line toward the first one.</para>
         </listitem>
       </varlistentry>
+
+      <varlistentry>
+        <term><option>--dumb-rendering</option>, <option>--no-dumb-rendering</option></term>
+        <listitem>
+          <para>Enables or disables the use of the dumbest rendering procedure.</para>
+        </listitem>
+      </varlistentry>
+
       <varlistentry>
         <term><option>--fullscreen</option></term>
         <listitem>
@@ -260,17 +274,6 @@ manpage.1: manpage.sgml
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
-sgml-omittag:t
-sgml-shorttag:t
-sgml-minimize-attributes:nil
-sgml-always-quote-attributes:t
-sgml-indent-step:2
-sgml-indent-data:t
-sgml-parent-document:nil
-sgml-default-dtd-file:nil
-sgml-exposed-tags:nil
-sgml-local-catalogs:nil
-sgml-local-ecat-files:nil
 End:
 -->
 
