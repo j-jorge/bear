@@ -105,7 +105,7 @@ bf::compilation_context::compute_opaque_rectangle( const sprite& s )
     return rectangle(0, 0, 0, 0);
 
   const std::pair<wxBitmap, wxPoint> source = m_image_cache.get_image(s);
-  const wxImage image( source.first.ConvertToImage().Mirror(false) );
+  wxImage image( source.first.ConvertToImage().Mirror(false) );
 
   ler_problem pb;
   ler_base_problem::rectangle r
@@ -115,11 +115,14 @@ bf::compilation_context::compute_opaque_rectangle( const sprite& s )
   
   pb.set_bounding_rectangle(r);
 
-  if ( image.HasAlpha() )
-    for ( unsigned int i = 0; i < s.get_clip_width(); ++i )
-      for ( unsigned int j = 0; j < s.get_clip_height(); ++j )
-	if ( image.GetAlpha(i, j) != 255 )
-	  pb.add_forbidden_point( ler_base_problem::point(i, j) );
+  if ( !image.HasAlpha() && image.HasMask() )
+    image.InitAlpha();
+
+  if ( !image.HasAlpha() )
+    for ( unsigned int j = 0; j != s.get_clip_height(); ++j )
+      for ( unsigned int i = 0; i != s.get_clip_width(); ++i )
+        if ( image.GetAlpha(i, j) != 255 )
+          pb.add_forbidden_point( ler_base_problem::point(i, j) );
 
   ler_solver solver(pb);
   solver.resolve();
