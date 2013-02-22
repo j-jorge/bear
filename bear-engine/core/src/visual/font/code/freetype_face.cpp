@@ -128,7 +128,8 @@ void bear::visual::freetype_face::load_char( charset::char_type c ) const
   if ( c == m_loaded_char )
     return;
 
-  const FT_Error error = FT_Load_Char( m_face, c, FT_LOAD_RENDER );
+  const FT_Error error =
+    FT_Load_Char( m_face, (unsigned char)c, FT_LOAD_RENDER );
 
   if ( error )
     {
