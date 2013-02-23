@@ -83,6 +83,8 @@ namespace bear
 
         int eval() const;
 
+        void print_formatted( std::ostream& os, bool top, bool right ) const;
+
       public:
         /** \brief The rectangle where the balloon would be. */
         const universe::rectangle_type rect;
