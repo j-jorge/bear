@@ -443,6 +443,10 @@ void bf::animation_edit::on_copy( wxCommandEvent& WXUNUSED(event) )
           animation_frame& f = anim.add_frame();
           f = anim.get_frame(index);
           set_value(anim);
+
+          m_frame_list->Select(index, false);
+          m_frame_list->Select(m_frame_list->GetItemCount() - 1);
+          m_frame_list->Focus(m_frame_list->GetItemCount() - 1);
         }
     }
 } // animation_edit::on_copy()
