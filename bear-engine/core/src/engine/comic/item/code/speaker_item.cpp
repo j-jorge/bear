@@ -10,8 +10,6 @@
  */
 #include "engine/comic/item/speaker_item.hpp"
 
-#include <libintl.h>
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.

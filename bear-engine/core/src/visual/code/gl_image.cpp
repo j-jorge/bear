@@ -132,10 +132,8 @@ void bear::visual::gl_image::create_texture()
   m_size.y = v;
 
   glGenTextures(1, &m_texture_id);
-  claw::logger << claw::log_verbose << "Image id is " << m_texture_id
-               << std::endl;
-
   glBindTexture(GL_TEXTURE_2D, m_texture_id);
+
   VISUAL_GL_ERROR_THROW();
 
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, GL_RGBA,

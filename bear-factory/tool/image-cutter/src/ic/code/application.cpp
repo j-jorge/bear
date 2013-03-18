@@ -432,19 +432,21 @@ void ptb::ic::application::factorize
 {
   CLAW_PRECOND( n != 0 );
 
-  unsigned int v = 1;
+  const unsigned int bound( ( n >= max ) ? max : n );
 
-  for ( ; n!=0; v*=2, n/=2 )
-    if ( n % 2 )
-      {
-        if ( v <= max )
-          vals.push_back(v);
-        else
-          {
-            vals.push_back(v/2);
-            factorize(v/2, vals, max);
-          }
-      }
+  unsigned int v;
+  for ( v=1; (v < bound) && /* overflow */ (v != 0); v *= 2 ) { }
+
+  if ( v > bound )
+    v /= 2;
+
+  if ( n - v < 32 )
+    vals.push_back( n );
+  else
+    {
+      vals.push_back( v );
+      factorize( n - v, vals, max );
+    }
 } // application::factorize()
 
 /*----------------------------------------------------------------------------*/

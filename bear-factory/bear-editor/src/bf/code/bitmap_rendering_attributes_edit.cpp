@@ -59,7 +59,7 @@ bool bf::bitmap_rendering_attributes_edit::validate()
     att.flip( trinary_logic::boolean_random );
 
   m_color_ctrl->validate();
-  std::cout << m_color_ctrl->get_value().get_red_intensity()<< std::endl;
+
   att.set_color( m_color_ctrl->get_value() );
   att.set_angle( m_angle_spin->GetValue() );
 

@@ -13,6 +13,12 @@
 #include "engine/comic/item/speaker_item.hpp"
 #include "universe/zone.hpp"
 
+/**
+ * Define this macro to disable the placement of the balloons. The balloons can
+ * then overlap and be offscreen.
+ */
+// #define BALLOON_PLACEMENT_DISABLED
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -131,6 +137,25 @@ int bear::engine::balloon_placement::candidate::eval() const
 {
   return m_score - m_conflicts_count - (int)(m_covered_area * 100 + 0.5);
 } // balloon_placement::candidate::eval()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Prints the candidate details in a stream.
+ * \param os The stream in which we write.
+ */
+void bear::engine::balloon_placement::candidate::print_formatted
+( std::ostream& os, bool top, bool right ) const
+{
+  os << "Candidate left=" << rect.left() << " right=" << rect.right()
+     << " bottom=" << rect.bottom() << " top=" << rect.top() << '\n'
+     << "placed "
+     << (top ? "top" : "bottom") << '-' << (right ? "right" : "left") << '\n'
+     << "Evaluated at " << eval() << " with\n"
+     << "score:\t" << m_score << '\n'
+     << "conflicts:\t" << m_conflicts_count << '\n'
+     << "covered area:\t" << (int)(m_covered_area * 100 + 0.5)
+     << std::endl;
+} // balloon_placement::candidate::print_formatted()
 
 
 
@@ -267,10 +292,14 @@ void bear::engine::balloon_placement::create_candidates
         create_candidate_visible(*it, result);
       else
         {
+#ifdef BALLOON_PLACEMENT_DISABLED
+            create_candidate_visible(*it, result);
+#else
           if ( it->item.get_persistent_balloon() )
             create_candidate_not_visible(*it, result);
           else
             create_candidate_visible(*it, result);
+#endif
         }
 
       if ( result.empty() )
@@ -281,7 +310,10 @@ void bear::engine::balloon_placement::create_candidates
                 it->box.top_left() + it->get_balloon_size() ),
               *it, -1000 ) );
 
+#ifndef BALLOON_PLACEMENT_DISABLED
       check_conflicts(result, c);
+#endif
+
       c.push_back(result);
     }
 } // balloon_placement::create_candidates()
@@ -349,6 +381,7 @@ void bear::engine::balloon_placement::new_candidate
 
   if ( c.visible )
     {
+#ifndef BALLOON_PLACEMENT_DISABLED
       if ( m_view.includes(r) )
         score += 10;
       else if ( c.item.get_persistent_balloon() )
@@ -360,6 +393,7 @@ void bear::engine::balloon_placement::new_candidate
           score = -1;
           covered_area = 1.0 - m_view.intersection(r).area() / r.area();
         }
+#endif
     }
   else if ( !m_view.intersects(r) )
     score = -1;
@@ -391,18 +425,27 @@ void bear::engine::balloon_placement::create_candidate_visible
   const int score_top =
     c.item.get_balloon().is_on_top() ? 1 : on_finished_preference;
 
+  const int top_factor( 2 );
+#ifdef BALLOON_PLACEMENT_DISABLED
+  const int right_factor( 10 );
+#else
+  const int right_factor( 2 );
+#endif
+  const int left_factor( 2 );
+
   new_candidate
-    ( c, result,  c.box.right(), c.box.top(), score_right + score_top );
+    ( c, result,  c.box.right(), c.box.top(),
+      top_factor * right_factor * (score_right + score_top) );
   new_candidate
     ( c, result,  c.box.left() - c.get_balloon_size().x, c.box.top(),
-      score_left + score_top );
+      top_factor * left_factor * (score_left + score_top) );
   new_candidate
     ( c, result,  c.box.right(), c.box.bottom() - c.get_balloon_size().y,
-      score_right + score_bottom );
+      right_factor * (score_right + score_bottom) );
   new_candidate
     ( c, result,  c.box.left() - c.get_balloon_size().x,
       c.box.bottom() - c.get_balloon_size().y,
-      score_left + score_bottom );
+      left_factor * (score_left + score_bottom) );
 } // balloon_placement::create_candidate_visible()
 
 /*----------------------------------------------------------------------------*/

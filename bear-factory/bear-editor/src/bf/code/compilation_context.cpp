@@ -124,10 +124,13 @@ bf::compilation_context::compute_opaque_rectangle( const sprite& s )
     image.InitAlpha();
 
   if ( image.HasAlpha() )
-    for ( unsigned int j = 0; j != s.get_clip_height(); ++j )
+    {
+      // ler_problem expects the points to be inserted column per column.
       for ( unsigned int i = 0; i != s.get_clip_width(); ++i )
-        if ( image.GetAlpha(i, j) != 255 )
-          pb.add_forbidden_point( ler_base_problem::point(i, j) );
+        for ( unsigned int j = 0; j != s.get_clip_height(); ++j )
+          if ( image.GetAlpha(i, j) != 255 )
+            pb.add_forbidden_point( ler_base_problem::point(i, j) );
+    }
 
   ler_solver solver(pb);
   solver.resolve();
