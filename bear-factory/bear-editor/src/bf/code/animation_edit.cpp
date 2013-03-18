@@ -371,6 +371,7 @@ void bf::animation_edit::on_up( wxCommandEvent& WXUNUSED(event) )
             anim.move_backward(index);
             set_value(anim);
             
+            m_frame_list->Select(index,false);
             m_frame_list->Select(index-1);
             m_frame_list->Focus(index-1);
           }
@@ -395,6 +396,7 @@ void bf::animation_edit::on_down( wxCommandEvent& WXUNUSED(event) )
             anim.move_forward(index);
             set_value(anim);
             
+            m_frame_list->Select(index,false);
             m_frame_list->Select(index+1);
             m_frame_list->Focus(index+1);
           }
