@@ -24,6 +24,7 @@ namespace bear
   namespace visual
   {
     class sprite;
+    class shader_program;
 
     /**
      * \brief Base class for all screen implementation.
@@ -55,6 +56,8 @@ namespace bear
       virtual void draw_polygon
       ( const color_type& color,
         const std::vector<position_type>& p ) = 0;
+
+      virtual void set_shader( const shader_program& p ) = 0;
 
       virtual void shot( claw::graphic::image& img ) const = 0;
 

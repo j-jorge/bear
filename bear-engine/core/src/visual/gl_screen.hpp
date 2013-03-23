@@ -14,7 +14,7 @@
 #include "visual/base_screen.hpp"
 
 #include <SDL/SDL.h>
-#include <GL/gl.h>
+#include "visual/gl.hpp"
 
 namespace bear
 {
@@ -60,6 +60,8 @@ namespace bear
       void draw_polygon
       ( const color_type& color,
         const std::vector<position_type>& p );
+
+      void set_shader( const shader_program& p );
 
       void shot( claw::graphic::image& img ) const;
 

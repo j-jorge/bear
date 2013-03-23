@@ -13,7 +13,7 @@
 #include <claw/exception.hpp>
 #include <sstream>
 
-#include <GL/gl.h>
+#include "visual/gl.hpp"
 #include <GL/glext.h>
 
 /*----------------------------------------------------------------------------*/

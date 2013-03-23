@@ -168,5 +168,5 @@ const bear::visual::base_image* bear::visual::image::get_impl() const
 {
   CLAW_PRECOND( is_valid() );
 
-  return (**m_impl);
+  return &(**m_impl);
 } // image::get_impl()

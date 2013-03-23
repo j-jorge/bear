@@ -13,7 +13,7 @@
 
 #include "visual/base_image.hpp"
 
-#include <GL/gl.h>
+#include "visual/gl.hpp"
 
 namespace bear
 {

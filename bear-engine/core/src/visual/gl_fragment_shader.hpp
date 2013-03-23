@@ -11,10 +11,9 @@
 #ifndef __VISUAL_GL_FRAGMENT_SHADER_HPP__
 #define __VISUAL_GL_FRAGMENT_SHADER_HPP__
 
-#define GL_GLEXT_PROTOTYPES 1
-#include <GL/gl.h>
-
 #include <iostream>
+
+#include "visual/gl.hpp"
 #include "visual/class_export.hpp"
 
 namespace bear

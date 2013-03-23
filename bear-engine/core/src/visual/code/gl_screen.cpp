@@ -12,13 +12,15 @@
 
 #include "visual/gl_error.hpp"
 #include "visual/gl_image.hpp"
+#include "visual/gl_shader_program.hpp"
+#include "visual/shader_program.hpp"
 #include "visual/sprite.hpp"
 
 #include <claw/exception.hpp>
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
 
-#include <GL/glext.h>
+#include "visual/gl.hpp"
 
 #include <limits>
 #include <list>
@@ -379,7 +381,21 @@ void bear::visual::gl_screen::draw_polygon
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Do a gl_screen shot.
+ * \brief Sets the shader program to apply for the next render commands.
+ * \param p The program to apply.
+ */
+void bear::visual::gl_screen::set_shader( const shader_program& p )
+{
+  if ( !p.is_valid() )
+    return;
+
+  glUseProgram
+    ( static_cast<const gl_shader_program*>(p.get_impl())->program_id() );
+} // gl_screen::set_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Do a screen shot.
  * \param img The image in which we save the content of the gl_screen.
  */
 void bear::visual::gl_screen::shot( claw::graphic::image& img ) const
