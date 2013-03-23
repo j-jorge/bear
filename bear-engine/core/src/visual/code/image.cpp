@@ -168,6 +168,5 @@ const bear::visual::base_image* bear::visual::image::get_impl() const
 {
   CLAW_PRECOND( is_valid() );
 
-  // workaround to get the address of the instance of base_image.
-  return (*m_impl).operator->();
+  return (**m_impl);
 } // image::get_impl()

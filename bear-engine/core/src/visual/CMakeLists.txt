@@ -13,6 +13,8 @@ set( VISUAL_SOURCE_FILES
   code/gl_error.cpp
   code/gl_image.cpp
   code/gl_screen.cpp
+  code/gl_fragment_shader.cpp
+  code/gl_shader_program.cpp
   code/image.cpp
   code/image_manager.cpp
   code/placed_sprite.cpp
@@ -26,6 +28,7 @@ set( VISUAL_SOURCE_FILES
   code/scene_writing.cpp
   code/screen.cpp
   code/sequence_effect.cpp
+  code/shader_program.cpp
   code/sprite.cpp
   code/sprite_sequence.cpp
   code/star.cpp

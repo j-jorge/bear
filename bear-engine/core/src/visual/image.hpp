@@ -11,7 +11,6 @@
 #ifndef __VISUAL_IMAGE_HPP__
 #define __VISUAL_IMAGE_HPP__
 
-#include <GL/gl.h>
 #include <string>
 
 #include <claw/pixel.hpp>

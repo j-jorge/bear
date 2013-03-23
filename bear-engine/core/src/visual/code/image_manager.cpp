@@ -24,6 +24,7 @@
 void bear::visual::image_manager::clear()
 {
   m_images.clear();
+  m_shader_program.clear();
 } // image_manager::clear()
 
 /*---------------------------------------------------------------------------*/
@@ -35,7 +36,7 @@ void bear::visual::image_manager::clear()
  * \post get_image(name) is the image in file_name.
  */
 void bear::visual::image_manager::load_image
-( const std::string& name, std::istream& file )
+( std::string name, std::istream& file )
 {
   CLAW_PRECOND( !exists(name) );
 
@@ -68,7 +69,7 @@ void bear::visual::image_manager::clear_images()
  * images whithout losing references to them.
  */
 void bear::visual::image_manager::restore_image
-( const std::string& name, std::istream& file )
+( std::string name, std::istream& file )
 {
   CLAW_PRECOND( exists(name) );
 
@@ -82,8 +83,8 @@ void bear::visual::image_manager::restore_image
  * \param name The name of the image to get.
  * \pre There is an image called "name".
  */
-const bear::visual::image& bear::visual::image_manager::get_image
-(const std::string& name) const
+bear::visual::image
+bear::visual::image_manager::get_image( std::string name ) const
 {
   CLAW_PRECOND( exists(name) );
 
@@ -108,7 +109,93 @@ void bear::visual::image_manager::get_image_names
  * \brief Tell if an image exists.
  * \param name The name of the image to find.
  */
-bool bear::visual::image_manager::exists( const std::string& name ) const
+bool bear::visual::image_manager::exists( std::string name ) const
 {
   return m_images.find(name) != m_images.end();
 } // image_manager::exists()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Creates a shader program.
+ * \param name The name of the program.
+ * \param file A stream containing the fragment shader code.
+ * \pre name is not used by another shader.
+ * \post get_fragment_shader(name) is the fragment_shader load from \a file
+ */
+void bear::visual::image_manager::load_shader_program
+( std::string name, std::istream& file )
+{
+  CLAW_PRECOND( !has_shader_program(name) );
+
+  m_shader_program[ name ] = shader_program( file );
+} // image_manager::load_shader_program()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Clear all shader programs.
+ *
+ * The programs are not deleted.
+ */
+void bear::visual::image_manager::clear_shader_programs()
+{
+  std::map<std::string, shader_program>::iterator it;
+
+  for (it=m_shader_program.begin(); it!=m_shader_program.end(); ++it)
+    it->second.clear();
+} // image_manager::clear_shader_programs()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Restores a shader program.
+ * \param name The name of the loaded program.
+ * \param file A stream containing the shader code.
+ * \pre There is a shader program called \a name.
+ *
+ * This method is useful when the screen goes dirty, to re-initialize the
+ * shaders whithout losing references to them.
+ */
+void bear::visual::image_manager::restore_shader_program
+( std::string name, std::istream& file )
+{
+  CLAW_PRECOND( has_shader_program(name) );
+
+  m_images[ name ].restore( file );
+} // image_manager::restore_shader_program()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Gets an existing shader program.
+ * \param name The name of the program to get.
+ * \pre There is an image called "name".
+ */
+bear::visual::shader_program
+bear::visual::image_manager::get_shader_program( std::string name ) const
+{
+  CLAW_PRECOND( has_shader_program(name) );
+
+  return m_shader_program.find( name )->second;
+} // image_manager::get_shader_program()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Gets the names of the shader programs.
+ * \param names (out) The names of the programs.
+ */
+void bear::visual::image_manager::get_shader_program_names
+( std::vector<std::string>& names ) const
+{
+  names.resize( m_shader_program.size() );
+  std::transform
+    ( m_shader_program.begin(), m_shader_program.end(), names.begin(),
+      claw::const_first<std::string, shader_program>() );
+} // image_manager::get_shader_program_names()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Tells if there is a shader program with a given name.
+ * \param name The name of the program to find.
+ */
+bool bear::visual::image_manager::has_shader_program( std::string name ) const
+{
+  return m_images.find(name) != m_images.end();
+} // image_manager::has_shader_program()

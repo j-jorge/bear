@@ -179,7 +179,7 @@ void bear::visual::scene_sprite::update_side_box
   s.combine( get_rendering_attributes() );
   const double a = s.get_angle();
 
-  claw::math::coordinate_2d<GLdouble> result(pos);
+  claw::math::coordinate_2d<double> result(pos);
   result.rotate(center, a);
 
   if ( result.x < left_bottom.x )

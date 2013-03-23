@@ -41,8 +41,8 @@ namespace bear
       void load_animation( const std::string& file_name );
       void load_font( const std::string& file_name );
 
-      const visual::image& get_image( const std::string& name );
-      const visual::image& get_existing_image( const std::string& name ) const;
+      visual::image get_image( const std::string& name );
+      visual::image get_existing_image( const std::string& name ) const;
 
       const model_actor& get_model( const std::string& name );
       const model_actor& get_existing_model( const std::string& name ) const;

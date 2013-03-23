@@ -192,7 +192,7 @@ void bear::engine::level_globals::load_font( const std::string& file_name )
  * \param name The name of the image to get.
  * \pre There is an image named \a name.
  */
-const bear::visual::image&
+bear::visual::image
 bear::engine::level_globals::get_image( const std::string& name )
 {
   if ( !image_exists(name) )
@@ -210,7 +210,7 @@ bear::engine::level_globals::get_image( const std::string& name )
  *        or in the shared resources.
  * \pre There is an image named \a name.
  */
-const bear::visual::image&
+bear::visual::image
 bear::engine::level_globals::get_existing_image( const std::string& name ) const
 {
   CLAW_PRECOND( image_exists( name ) );
