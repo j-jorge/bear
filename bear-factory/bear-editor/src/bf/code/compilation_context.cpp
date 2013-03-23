@@ -48,6 +48,11 @@ bf::compilation_context::get_opaque_rectangle
       m_opaque_rectangle.insert
       ( std::make_pair( key, compute_opaque_rectangle(key) ) ).first;
 
+  std::cout << image_name << " : " 
+            << it->second.left() << ' ' << it->second.top() << ' '
+            << it->second.width() << ' ' << it->second.height()
+            << std::endl;
+
   return it->second;
 } // compilation_context::get_opaque_rectangle()
 

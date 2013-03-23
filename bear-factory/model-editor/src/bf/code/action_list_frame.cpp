@@ -19,6 +19,8 @@
 #include "bf/history/action_remove_action.hpp"
 #include "bf/history/action_modify_action.hpp"
 
+#include <vector>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -40,12 +42,9 @@ bf::action_list_frame::action_list_frame( wxWindow* parent )
  */
 void bf::action_list_frame::set_model_frame( model_frame* f )
 {
-  if ( f != m_model_frame )
-    {
-      m_model_frame = f;
-      fill();
-      update_controls();
-    }
+  m_model_frame = f;
+  fill();
+  update_controls();
 } // action_list_frame::set_model_frame()
 
 /*----------------------------------------------------------------------------*/
@@ -157,15 +156,27 @@ void bf::action_list_frame::fill()
   else
     {
       const gui_model& mdl = m_model_frame->get_model();
-      wxArrayString arr;
+      std::vector<std::string> arr;
       model::const_action_iterator it;
       const model::const_action_iterator end_it = mdl.action_end();
 
-      for ( it = mdl.action_begin(); it != end_it; ++it)
-        arr.Add( std_to_wx_string( it->get_name() ) );
+      for ( it = mdl.action_begin(); it != end_it; ++it )
+        arr.push_back( it->get_name() );
 
-      arr.Sort();
-      m_action_list->Set(arr);
+      std::sort( arr.begin(), arr.end() );
+
+      std::size_t i;
+
+      for ( i=0;
+            ( i != arr.size() ) && (i != m_action_list->GetCount());
+            ++i )
+        m_action_list->SetString( i, std_to_wx_string( arr[i] ) );
+
+      for ( ; i!=arr.size(); ++i )
+        m_action_list->Append( std_to_wx_string( arr[i] ) );
+
+      while ( i != m_action_list->GetCount() )
+        m_action_list->Delete( i );
 
       if ( mdl.has_active_action() )
         select_action(mdl.get_active_action().get_name());

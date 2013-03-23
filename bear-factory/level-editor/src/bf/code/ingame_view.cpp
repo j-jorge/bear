@@ -543,7 +543,7 @@ void bf::ingame_view::do_action( level_action* action )
   CLAW_PRECOND( action != NULL );
   apply_action(action);
 
-  if ( ! get_active_layer().check_item_position() )
+  if ( !empty() && !get_active_layer().check_item_position() )
     show_item_position_error(this);
 } // ingame_view::do_action()
 

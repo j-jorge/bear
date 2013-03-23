@@ -371,6 +371,7 @@ void bf::animation_edit::on_up( wxCommandEvent& WXUNUSED(event) )
             anim.move_backward(index);
             set_value(anim);
             
+            m_frame_list->Select(index,false);
             m_frame_list->Select(index-1);
             m_frame_list->Focus(index-1);
           }
@@ -395,6 +396,7 @@ void bf::animation_edit::on_down( wxCommandEvent& WXUNUSED(event) )
             anim.move_forward(index);
             set_value(anim);
             
+            m_frame_list->Select(index,false);
             m_frame_list->Select(index+1);
             m_frame_list->Focus(index+1);
           }
@@ -441,6 +443,10 @@ void bf::animation_edit::on_copy( wxCommandEvent& WXUNUSED(event) )
           animation_frame& f = anim.add_frame();
           f = anim.get_frame(index);
           set_value(anim);
+
+          m_frame_list->Select(index, false);
+          m_frame_list->Select(m_frame_list->GetItemCount() - 1);
+          m_frame_list->Focus(m_frame_list->GetItemCount() - 1);
         }
     }
 } // animation_edit::on_copy()

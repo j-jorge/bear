@@ -112,6 +112,7 @@ void bf::main_frame::load_model( const wxString& path )
 void bf::main_frame::set_active_model( model_frame* m )
 {
   m_model_properties->set_model_frame( m );
+
   if ( m_windows_layout->get_current_model_frame() == NULL )
     turn_model_entries(false);
 } // main_frame::make_title()
