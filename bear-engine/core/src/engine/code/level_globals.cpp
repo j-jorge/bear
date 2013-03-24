@@ -188,6 +188,29 @@ void bear::engine::level_globals::load_font( const std::string& file_name )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Loads a shader program.
+ * \param file_name The name of the file to load the shader from.
+ */
+void bear::engine::level_globals::load_shader( const std::string& file_name )
+{
+  if ( !shader_exists(file_name) )
+    {
+      claw::logger << claw::log_verbose << "loading shader '" << file_name
+                   << "'." << std::endl;
+
+      std::stringstream f;
+      resource_pool::get_instance().get_file(file_name, f);
+
+      if (f)
+        m_image_manager.load_shader_program(file_name, f);
+      else
+        claw::logger << claw::log_error << "can not open file '" << file_name
+                     << "'." << std::endl;
+    }
+} // level_globals::load_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Gets an image.
  * \param name The name of the image to get.
  * \pre There is an image named \a name.
@@ -326,6 +349,42 @@ bear::engine::level_globals::get_existing_font
   else
     return m_shared_resources->get_existing_font( name, size );
 } // level_globals::get_existing_font()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a shader.
+ * \param name The name of the shader to get.
+ * \pre There is a shader named \a name.
+ */
+bear::visual::shader_program
+bear::engine::level_globals::get_shader( const std::string& name )
+{
+  if ( !shader_exists(name) )
+    {
+      warn_missing_ressource( name );
+      load_shader(name);
+    }
+
+  return get_existing_shader( name );
+} // level_globals::get_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a shader with a given name. The shader must exist in this
+ *        instance or in the shared resources.
+ * \pre There is an shader named \a name.
+ */
+bear::visual::shader_program
+bear::engine::level_globals::get_existing_shader
+( const std::string& name ) const
+{
+  CLAW_PRECOND( shader_exists( name ) );
+
+  if ( m_image_manager.has_shader_program( name ) )
+    return m_image_manager.get_shader_program( name );
+  else
+    return m_shared_resources->get_existing_shader( name );
+} // level_globals::get_existing_shader()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -740,6 +799,21 @@ bool bear::engine::level_globals::font_exists( const std::string& name ) const
   else
     return false;
 } // level_globals::font_exists()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tell if there is a shader with a given name.
+ * \param name The name of the shader to check.
+ */
+bool bear::engine::level_globals::shader_exists( const std::string& name ) const
+{
+  if ( m_image_manager.has_shader_program(name) )
+    return true;
+  else if ( m_shared_resources != NULL )
+    return m_shared_resources->shader_exists( name );
+  else
+    return false;
+} // level_globals::shader_exists()
 
 /*----------------------------------------------------------------------------*/
 /**

@@ -40,6 +40,7 @@ namespace bear
       void load_model( const std::string& file_name );
       void load_animation( const std::string& file_name );
       void load_font( const std::string& file_name );
+      void load_shader( const std::string& file_name );
 
       visual::image get_image( const std::string& name );
       visual::image get_existing_image( const std::string& name ) const;
@@ -54,6 +55,10 @@ namespace bear
       visual::font get_font( const std::string& name, double size );
       visual::font get_existing_font
         ( const std::string& name, double size ) const;
+
+      visual::shader_program get_shader( const std::string& name );
+      visual::shader_program get_existing_shader
+        ( const std::string& name ) const;
 
       std::string get_spritepos_path( const std::string& image_name ) const;
       visual::sprite auto_sprite
@@ -94,6 +99,7 @@ namespace bear
       bool model_exists( const std::string& name ) const;
       bool animation_exists( const std::string& name ) const;
       bool font_exists( const std::string& name ) const;
+      bool shader_exists( const std::string& name ) const;
 
       void register_item( communication::messageable& item );
       void release_item( communication::messageable& item );
