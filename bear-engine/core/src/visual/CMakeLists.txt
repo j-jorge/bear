@@ -24,6 +24,8 @@ set( VISUAL_SOURCE_FILES
   code/scene_line.cpp
   code/scene_polygon.cpp
   code/scene_rectangle.cpp
+  code/scene_shader_pop.cpp
+  code/scene_shader_push.cpp
   code/scene_star.cpp
   code/scene_writing.cpp
   code/screen.cpp

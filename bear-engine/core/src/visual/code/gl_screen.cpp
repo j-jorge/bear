@@ -217,6 +217,9 @@ void bear::visual::gl_screen::begin_render()
 {
   VISUAL_GL_ERROR_THROW();
 
+  while ( !m_shader.empty() )
+    pop_shader();
+
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   m_z_position = 0;
 
@@ -384,14 +387,48 @@ void bear::visual::gl_screen::draw_polygon
  * \brief Sets the shader program to apply for the next render commands.
  * \param p The program to apply.
  */
-void bear::visual::gl_screen::set_shader( const shader_program& p )
+void bear::visual::gl_screen::push_shader( const shader_program& p )
 {
-  if ( !p.is_valid() )
-    return;
+  m_shader.push_back( p );
 
-  glUseProgram
-    ( static_cast<const gl_shader_program*>(p.get_impl())->program_id() );
-} // gl_screen::set_shader()
+  if ( p.is_valid() )
+    {
+        const gl_shader_program* const s
+          ( static_cast<const gl_shader_program*>(p.get_impl()) );
+
+        glUseProgram( s->program_id() );
+    }
+} // gl_screen::push_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Removes the last shader program passed to push_shader.
+ */
+void bear::visual::gl_screen::pop_shader()
+{
+  if ( m_shader.empty() )
+    {
+      claw::logger << claw::log_warning << "There is no shader to pop."
+                   << std::endl;
+      return;
+    }
+
+  m_shader.pop_back();
+
+  typedef std::vector<shader_program>::const_reverse_iterator iterator_type;
+  bool valid_found(false);
+
+  for ( iterator_type it = m_shader.rbegin();
+        !valid_found && (it != m_shader.rend()); ++it )
+    if ( it->is_valid() )
+      {
+        const gl_shader_program* const p
+          ( static_cast<const gl_shader_program*>(it->get_impl() ) );
+
+        glUseProgram( p->program_id() );
+        valid_found = true;
+      }
+} // gl_screen::pop_shader()
 
 /*----------------------------------------------------------------------------*/
 /**

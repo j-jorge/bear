@@ -12,6 +12,7 @@
 #define __VISUAL_GL_SCREEN_HPP__
 
 #include "visual/base_screen.hpp"
+#include "visual/shader_program.hpp"
 
 #include <SDL/SDL.h>
 #include "visual/gl.hpp"
@@ -61,7 +62,8 @@ namespace bear
       ( const color_type& color,
         const std::vector<position_type>& p );
 
-      void set_shader( const shader_program& p );
+      void push_shader( const shader_program& p );
+      void pop_shader();
 
       void shot( claw::graphic::image& img ) const;
 
@@ -114,6 +116,9 @@ namespace bear
 
       /** \brief The real size of the window. */
       screen_size_type m_window_size;
+
+      /** \brief The shaders to apply to the next rendering commands. */
+      std::vector<shader_program> m_shader;
 
     }; // class gl_screen
   } // namespace visual

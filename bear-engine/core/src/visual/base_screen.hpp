@@ -57,7 +57,8 @@ namespace bear
       ( const color_type& color,
         const std::vector<position_type>& p ) = 0;
 
-      virtual void set_shader( const shader_program& p ) = 0;
+      virtual void push_shader( const shader_program& p ) = 0;
+      virtual void pop_shader() = 0;
 
       virtual void shot( claw::graphic::image& img ) const = 0;
 
