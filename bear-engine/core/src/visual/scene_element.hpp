@@ -76,6 +76,8 @@ namespace bear
       const bitmap_rendering_attributes& get_rendering_attributes() const;
       bitmap_rendering_attributes& get_rendering_attributes();
 
+      bool always_displayed() const;
+
     private:
       /** \brief The real visual. */
       base_scene_element* m_elem;

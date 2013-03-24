@@ -302,3 +302,12 @@ bear::visual::scene_element::get_rendering_attributes()
 {
   return m_elem->get_rendering_attributes();
 } // scene_element::get_rendering_attributes()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the element must always be displayed.
+ */
+bool bear::visual::scene_element::always_displayed() const
+{
+  return m_elem->always_displayed();
+} // scene_element::always_displayed()

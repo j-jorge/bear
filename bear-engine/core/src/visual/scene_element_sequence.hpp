@@ -49,6 +49,8 @@ namespace bear
 
       void render( base_screen& scr ) const;
 
+      bool always_displayed() const;
+
     private:
       /** \brief The element_sequence. */
       sequence_type m_element;

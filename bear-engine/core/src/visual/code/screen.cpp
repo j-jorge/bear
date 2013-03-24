@@ -225,7 +225,7 @@ void bear::visual::screen::render( const scene_element& e )
 {
   CLAW_PRECOND(m_mode == SCREEN_RENDER);
 
-  if ( e.get_bounding_box().empty() )
+  if ( !e.always_displayed() && e.get_bounding_box().empty() )
     return;
 
   if ( e.has_shadow() )
@@ -321,7 +321,7 @@ void bear::visual::screen::render_opaque_box( const scene_element& e ) const
  */
 void bear::visual::screen::render_element( const scene_element& e ) const
 {
-  if ( e.get_bounding_box().empty() )
+  if ( !e.always_displayed() && e.get_bounding_box().empty() )
     return;
 
   e.render(*m_impl);
@@ -351,8 +351,13 @@ void bear::visual::screen::render_elements()
       // Elements are ordered from the background to the foreground. We split
       // the screen in reverse order so we won't display hidden elements.
       for ( ; !m_scene_element.empty(); m_scene_element.pop_back() )
-        if ( intersects_any(m_scene_element.back().get_bounding_box(), boxes) )
-          split(m_scene_element.back(), final_elements, boxes);
+        {
+          const scene_element& e( m_scene_element.back() );
+
+          if ( e.always_displayed()
+               || intersects_any( e.get_bounding_box(), boxes ) )
+            split( e, final_elements, boxes );
+        }
 
       // split() push the elements at the end of the list, so they are now
       // ordered from the foreground to the background

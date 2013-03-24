@@ -69,6 +69,8 @@ namespace bear
       const bitmap_rendering_attributes& get_rendering_attributes() const;
       bitmap_rendering_attributes& get_rendering_attributes();
 
+      virtual bool always_displayed() const;
+
     private:
       /** \brief The position of the element on the screen. */
       position_type m_position;

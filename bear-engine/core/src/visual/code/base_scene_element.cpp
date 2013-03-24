@@ -223,3 +223,12 @@ bear::visual::base_scene_element::get_rendering_attributes()
 {
   return m_rendering_attributes;
 } // base_scene_element::get_rendering_attributes()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the element must always be displayed.
+ */
+bool bear::visual::base_scene_element::always_displayed() const
+{
+  return false;
+} // base_scene_element::always_displayed()

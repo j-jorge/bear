@@ -40,6 +40,8 @@ namespace bear
 
       void render( base_screen& scr ) const;
 
+      bool always_displayed() const;
+
     private:
       /** \brief The shader to use when rendering the next elements. */
       const shader_program m_shader;

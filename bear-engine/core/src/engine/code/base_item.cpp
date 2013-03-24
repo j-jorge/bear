@@ -318,9 +318,10 @@ bear::engine::base_item::insert_visual( std::list<scene_visual>& visuals ) const
       for ( ; !v.empty() ; v.pop_front() )
         {
 #ifndef NDEBUG
-          const visual::rectangle_type r
-            ( v.front().scene_element.get_bounding_box() );
-          if ( (r.width() == 0) || (r.height() == 0) )
+          const visual::scene_element& elem( v.front().scene_element );
+
+          if ( !elem.always_displayed()
+               && elem.get_bounding_box().empty() )
             claw::logger << claw::log_warning
                          << "Empty visual::scene_element is inserted in a "
                          << "visual::scene_element_sequence by '"

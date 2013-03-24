@@ -178,3 +178,18 @@ void bear::visual::scene_element_sequence::render( base_screen& scr ) const
       e.render(scr);
     }
 } // scene_element_sequence::render()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the element must always be displayed.
+ */
+bool bear::visual::scene_element_sequence::always_displayed() const
+{
+  sequence_type::const_iterator it;
+
+  for ( it=m_element.begin(); it!=m_element.end(); ++it )
+    if ( it->always_displayed() )
+      return true;
+
+  return false;
+} // scene_element_sequence::always_displayed()

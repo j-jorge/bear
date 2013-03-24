@@ -40,6 +40,8 @@ namespace bear
 
       void render( base_screen& scr ) const;
 
+      bool always_displayed() const;
+
     }; // class scene_shader_pop
   } // namespace visual
 } // namespace bear

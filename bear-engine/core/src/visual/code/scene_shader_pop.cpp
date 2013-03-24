@@ -13,8 +13,6 @@
 #include "visual/base_screen.hpp"
 #include "visual/scene_element.hpp"
 
-#include <limits>
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -51,10 +49,7 @@ bear::visual::scene_shader_pop::get_opaque_box() const
 bear::visual::rectangle_type
 bear::visual::scene_shader_pop::get_bounding_box() const
 {
-  const coordinate_type infinity
-    ( std::numeric_limits<coordinate_type>::infinity() );
-
-  return rectangle_type( -infinity, -infinity, infinity, infinity );
+  return rectangle_type(0, 0, 0, 0);
 } // scene_shader_pop::get_bounding_box()
 
 /*----------------------------------------------------------------------------*/
@@ -78,3 +73,12 @@ void bear::visual::scene_shader_pop::render( base_screen& scr ) const
 {
   scr.pop_shader();
 } // scene_shader_pop::render()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the element must always be displayed.
+ */
+bool bear::visual::scene_shader_pop::always_displayed() const
+{
+  return true;
+} // scene_shader_pop::always_displayed()
