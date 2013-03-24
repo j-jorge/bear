@@ -32,6 +32,25 @@ namespace bear
       /** \brief The type used to represent the size of a screen. */
       typedef claw::math::coordinate_2d<unsigned int> screen_size_type;
 
+      /**
+       * \brief The visitor that sets the variables of a shader program.
+       */
+      class uniform_setter
+      {
+      public:
+        explicit uniform_setter( GLuint program );
+
+        void operator()( std::string name, int value ) const;
+        void operator()( std::string name, double value ) const;
+        void operator()( std::string name, bool value ) const;
+
+      private:
+        /** \brief The identifier of the shader program in which the variables
+            are set. */
+        const GLuint m_program;
+
+      }; // class uniform_setter
+
     public:
       static void initialize();
       static void release();
@@ -93,6 +112,8 @@ namespace bear
       bool is_closed();
 
       void update_z_position();
+
+      void use_program( const shader_program& p ) const;
 
     private:
       /** \brief The width and height of the screen. */

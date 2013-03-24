@@ -91,3 +91,13 @@ bear::visual::shader_program::get_impl() const
 
   return &(**m_impl);
 } // shader_program::get_impl()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the values of th variables of the program.
+ */
+bear::visual::shader_program::input_variable_map
+bear::visual::shader_program::get_variables() const
+{
+  return m_input_variable;
+} // shader_program::get_variables()

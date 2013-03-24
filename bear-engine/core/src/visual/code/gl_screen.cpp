@@ -25,6 +25,65 @@
 #include <limits>
 #include <list>
 
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Creates a new setter for a given program.
+ * \param program The identifier of the shader program in which the variables
+ *        are set.
+ */
+bear::visual::gl_screen::uniform_setter::uniform_setter( GLuint program )
+  : m_program( program )
+{
+
+} // gl_screen::uniform_setter::uniform_setter()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the value of an integer uniform.
+ * \param name The name of the uniform.
+ * \param value The value to assign to the uniform.
+ */
+void
+bear::visual::gl_screen::uniform_setter::operator()
+( std::string name, int value ) const
+{
+  glUniform1i( glGetUniformLocation( m_program, name.c_str() ), value);
+  VISUAL_GL_ERROR_THROW();
+} // gl_screen::uniform_setter::operator()()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the value of a float uniform.
+ * \param name The name of the uniform.
+ * \param value The value to assign to the uniform.
+ */
+void
+bear::visual::gl_screen::uniform_setter::operator()
+( std::string name, double value ) const
+{
+  glUniform1f( glGetUniformLocation( m_program, name.c_str() ), value);
+  VISUAL_GL_ERROR_THROW();
+} // gl_screen::uniform_setter::operator()()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the value of a boolean uniform.
+ * \param name The name of the uniform.
+ * \param value The value to assign to the uniform.
+ */
+void
+bear::visual::gl_screen::uniform_setter::operator()
+( std::string name, bool value ) const
+{
+  glUniform1i( glGetUniformLocation( m_program, name.c_str() ), value);
+  VISUAL_GL_ERROR_THROW();
+} // gl_screen::uniform_setter::operator()()
+
+
+
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Global initializations common to all gl_screens. Must be called at the
@@ -392,12 +451,7 @@ void bear::visual::gl_screen::push_shader( const shader_program& p )
   m_shader.push_back( p );
 
   if ( p.is_valid() )
-    {
-      const gl_shader_program* const s
-        ( static_cast<const gl_shader_program*>(p.get_impl()) );
-
-      glUseProgram( s->program_id() );
-    }
+    use_program( p );
 } // gl_screen::push_shader()
 
 /*----------------------------------------------------------------------------*/
@@ -422,10 +476,7 @@ void bear::visual::gl_screen::pop_shader()
         !valid_found && (it != m_shader.rend()); ++it )
     if ( it->is_valid() )
       {
-        const gl_shader_program* const p
-          ( static_cast<const gl_shader_program*>(it->get_impl() ) );
-
-        glUseProgram( p->program_id() );
+        use_program( *it );
         valid_found = true;
       }
 
@@ -833,3 +884,21 @@ void bear::visual::gl_screen::update_z_position()
 {
   m_z_position += std::numeric_limits<GLdouble>::epsilon();
 } // gl_screen::update_z_position()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Enables a given shader.
+ * \param p The shader to enable.
+ */
+void bear::visual::gl_screen::use_program( const shader_program& p ) const
+{
+  const gl_shader_program* const s
+    ( static_cast<const gl_shader_program*>(p.get_impl()) );
+
+  glUseProgram( s->program_id() );
+  VISUAL_GL_ERROR_THROW();
+
+  shader_program::variable_visitor_type visitor;
+  shader_program::input_variable_map vars( p.get_variables() );
+  visitor.run( vars, uniform_setter( s->program_id() ) );
+} // gl_screen::use_program()
