@@ -393,10 +393,10 @@ void bear::visual::gl_screen::push_shader( const shader_program& p )
 
   if ( p.is_valid() )
     {
-        const gl_shader_program* const s
-          ( static_cast<const gl_shader_program*>(p.get_impl()) );
+      const gl_shader_program* const s
+        ( static_cast<const gl_shader_program*>(p.get_impl()) );
 
-        glUseProgram( s->program_id() );
+      glUseProgram( s->program_id() );
     }
 } // gl_screen::push_shader()
 
@@ -428,6 +428,9 @@ void bear::visual::gl_screen::pop_shader()
         glUseProgram( p->program_id() );
         valid_found = true;
       }
+
+  if ( !valid_found )
+    glUseProgram( 0 );
 } // gl_screen::pop_shader()
 
 /*----------------------------------------------------------------------------*/

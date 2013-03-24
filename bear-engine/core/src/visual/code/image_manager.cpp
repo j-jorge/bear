@@ -197,5 +197,5 @@ void bear::visual::image_manager::get_shader_program_names
  */
 bool bear::visual::image_manager::has_shader_program( std::string name ) const
 {
-  return m_images.find(name) != m_images.end();
+  return m_shader_program.find(name) != m_shader_program.end();
 } // image_manager::has_shader_program()

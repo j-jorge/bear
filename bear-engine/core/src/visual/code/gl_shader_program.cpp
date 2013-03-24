@@ -73,7 +73,7 @@ void bear::visual::gl_shader_program::log_errors( std::string step ) const
   GLint buffer_size;
   glGetProgramiv( m_program_id, GL_INFO_LOG_LENGTH, &buffer_size );
 
-  if ( buffer_size == 0 )
+  if ( buffer_size <= 1 )
     return;
 
   char* buffer = new char[ buffer_size ];

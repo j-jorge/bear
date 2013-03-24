@@ -61,7 +61,7 @@ void bear::visual::gl_fragment_shader::log_errors() const
   GLint buffer_size;
   glGetShaderiv( m_fragment_shader, GL_INFO_LOG_LENGTH, &buffer_size );
 
-  if ( buffer_size == 0 )
+  if ( buffer_size <= 1 )
     return;
 
   char* buffer = new char[ buffer_size ];
