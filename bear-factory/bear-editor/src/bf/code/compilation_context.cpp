@@ -48,11 +48,6 @@ bf::compilation_context::get_opaque_rectangle
       m_opaque_rectangle.insert
       ( std::make_pair( key, compute_opaque_rectangle(key) ) ).first;
 
-  std::cout << image_name << " : " 
-            << it->second.left() << ' ' << it->second.top() << ' '
-            << it->second.width() << ' ' << it->second.height()
-            << std::endl;
-
   return it->second;
 } // compilation_context::get_opaque_rectangle()
 
@@ -106,7 +101,8 @@ void bf::compilation_context::clear_compiled_identifiers()
 bf::compilation_context::rectangle
 bf::compilation_context::compute_opaque_rectangle( const sprite& s )
 {
-  if ( m_optimization_level < 1 )
+  if ( (m_optimization_level < 1)
+       || (s.get_clip_width() == 0) || (s.get_clip_height() == 0) )
     return rectangle(0, 0, 0, 0);
 
   const std::pair<wxBitmap, wxPoint> source = m_image_cache.get_image(s);
