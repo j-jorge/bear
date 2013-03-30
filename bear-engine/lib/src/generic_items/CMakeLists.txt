@@ -131,6 +131,8 @@ set( GENERIC_ITEM_SOURCE_FILES
   script/code/add_script_actor.cpp
   script/code/script_director.cpp
 
+  shader/code/shader_variable.cpp
+
   system/code/system_fullscreen_toggle.cpp
   system/code/system_music_toggle.cpp
   system/code/system_sound_toggle.cpp

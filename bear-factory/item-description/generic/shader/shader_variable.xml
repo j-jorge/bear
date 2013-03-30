@@ -2,31 +2,32 @@
 <item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::shader_variable" category="shader" box_color="#AF0A86" url="http://www.gamned.org/wiki/index.php/shader_variable">
   <inherit>
     <class>bear::base_item</class>
-    <class>bear::item_with_toggle</class>
   </inherit>
-  <description>A shader applied to all the elements in a layer.</description>
+  <description>
+    A variable in a shader program and how its value is updated.
+  </description>
 
   <fields>
     <field type="string" name="shader_variable.name" required="true">
       <description>The name of the variable in the shader.</description>
     </field>
 
-    <field type="easing" name="shader_variable.easing" >
+    <field type="easing" name="shader_variable.tweener.easing" >
       <description>The easing function.</description>
       <default_value>none:in_out</default_value>
     </field>
 
-    <field type="real" name="shader_variable.start">
+    <field type="real" name="shader_variable.tweener.origin">
       <description>The initial value.</description>
       <default_value>0</default_value>
     </field>
 
-    <field type="real" name="shader_variable.end">
+    <field type="real" name="shader_variable.tweener.target">
       <description>The final value.</description>
       <default_value>1</default_value>
     </field>
 
-    <field type="real" name="shader_variable.duration">
+    <field type="real" name="shader_variable.tweener.duration">
       <description>The duration of the interpolation.</description>
       <default_value>1</default_value>
     </field>

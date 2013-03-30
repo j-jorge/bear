@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::shader" category="shader" box_color="#AF0A86" url="http://www.gamned.org/wiki/index.php/shader">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::item_with_toggle</class>
+  </inherit>
+  <description>A shader program and its variables.</description>
+
+  <fields>
+    <field type="string" name="shader.file" required="true">
+      <description>The path to the shader program.</description>
+    </field>
+
+    <field type="item_reference" name="shader.variables" list="true">
+
+      <description>
+        The shader variables and how they are updated during the program.
+      </description>
+
+      <set>
+        <element value="bear::shader_variable"/>
+      </set>
+    </field>
+
+  </fields>
+
+</item>

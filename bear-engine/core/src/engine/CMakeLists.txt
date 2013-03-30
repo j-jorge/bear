@@ -69,6 +69,7 @@ set( ENGINE_SOURCE_FILES
   item_brick/loader/code/forced_movement_applicator_loader.cpp
   item_brick/loader/code/forced_movement_loader.cpp
   item_brick/loader/code/forced_movement_repeater_loader.cpp
+  item_brick/loader/code/single_tweener_loader.cpp
   item_brick/loader/code/z_shift_loader.cpp
 
   layer/code/base_debugging_layer.cpp
