@@ -518,6 +518,8 @@ void bf::item_instance::sort_fields( std::list<std::string>& fields ) const
   copy_field_names( m_font, all_fields );
   copy_field_names( m_sample, all_fields );
   copy_field_names( m_color, all_fields );
+  copy_field_names( m_easing, all_fields );
+
   copy_field_names( m_int_list, all_fields );
   copy_field_names( m_u_int_list, all_fields );
   copy_field_names( m_real_list, all_fields );
@@ -529,6 +531,7 @@ void bf::item_instance::sort_fields( std::list<std::string>& fields ) const
   copy_field_names( m_font_list, all_fields );
   copy_field_names( m_sample_list, all_fields );
   copy_field_names( m_color_list, all_fields );
+  copy_field_names( m_easing_list, all_fields );
 
   while ( !all_fields.empty() )
     {
@@ -751,6 +754,9 @@ bf::item_instance::get_code_value( const type_field& field ) const
     case type_field::color_field_type:
       result = bear::level_code_value::field_color;
       break;
+    case type_field::easing_field_type:
+      result = bear::level_code_value::field_easing;
+      break;
     
     default:
       {
@@ -788,26 +794,39 @@ void bf::item_instance::copy_fields_from_no_invalid_values
 {
   m_int = that.m_int;
   m_int_list = that.m_int_list;
+
   m_u_int = that.m_u_int;
   m_u_int_list = that.m_u_int_list;
+
   m_real = that.m_real;
   m_real_list = that.m_real_list;
+
   m_bool = that.m_bool;
   m_bool_list = that.m_bool_list;
+
   m_string = that.m_string;
   m_string_list = that.m_string_list;
+
   m_sprite = that.m_sprite;
   m_sprite_list = that.m_sprite_list;
+
   m_animation = that.m_animation;
   m_animation_list = that.m_animation_list;
+
   m_item_reference = that.m_item_reference;
   m_item_reference_list = that.m_item_reference_list;
+
   m_font = that.m_font;
   m_font_list = that.m_font_list;
+
   m_sample = that.m_sample;
   m_sample_list = that.m_sample_list;
+
   m_color = that.m_color;
   m_color_list = that.m_color_list;
+
+  m_easing = that.m_easing;
+  m_easing_list = that.m_easing_list;
 } // item_instance::copy_fields_from_no_invalid_values()
 
 /*----------------------------------------------------------------------------*/
@@ -836,6 +855,8 @@ void bf::item_instance::remove_invalid_values()
     ( m_sample, m_sample_list, type_field::sample_field_type );
   remove_invalid_values
     ( m_color, m_color_list, type_field::color_field_type );
+  remove_invalid_values
+    ( m_easing, m_easing_list, type_field::easing_field_type );
 } // item_instance::set_class()
 
 /*----------------------------------------------------------------------------*/

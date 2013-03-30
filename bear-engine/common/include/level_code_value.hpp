@@ -74,6 +74,9 @@ namespace bear
     /** \brief Dynamic field of type color. */
     static const value_type field_color     = 100;
 
+    /** \brief Dynamic field of type easing. */
+    static const value_type field_easing    = 101;
+
   }; // class level_code_value
 } // namespace bear
 
