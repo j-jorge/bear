@@ -53,6 +53,8 @@ R bf::call_by_field_type<F, R>::operator()( const type_field& f, A1& a1 ) const
         return do_call< std::list<sample> >(a1);
       case type_field::color_field_type:
         return do_call< std::list<color> >(a1);
+      case type_field::easing_field_type:
+        return do_call< std::list<easing_type> >(a1);
       }
   else
     switch ( f.get_field_type() )
@@ -79,6 +81,8 @@ R bf::call_by_field_type<F, R>::operator()( const type_field& f, A1& a1 ) const
         return do_call<sample>(a1);
       case type_field::color_field_type:
         return do_call<color>(a1);
+      case type_field::easing_field_type:
+        return do_call<easing_type>(a1);
       }
 } // call_by_type::operator()()
 
@@ -119,6 +123,8 @@ R bf::call_by_field_type<F, R>::operator()
         return do_call< std::list<sample> >(a1, a2);
       case type_field::color_field_type:
         return do_call< std::list<color> >(a1, a2);
+      case type_field::easing_field_type:
+        return do_call< std::list<easing_type> >(a1, a2);
       
       default:
         {
@@ -151,6 +157,8 @@ R bf::call_by_field_type<F, R>::operator()
         return do_call<sample>(a1, a2);
       case type_field::color_field_type:
         return do_call<color>(a1, a2);
+      case type_field::easing_field_type:
+        return do_call<easing_type>(a1, a2);
       
       default:
         {

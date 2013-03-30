@@ -63,6 +63,7 @@ namespace bf
   SPECIALISE_FIELD_TYPE( font, font );
   SPECIALISE_FIELD_TYPE( sample, sample ); 
   SPECIALISE_FIELD_TYPE( color, color );
+  SPECIALISE_FIELD_TYPE( easing_type, easing );
 } // namespace bf
 
 

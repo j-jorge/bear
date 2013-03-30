@@ -262,6 +262,8 @@ void bf::item_class_xml_parser::read_field_type
     field = add_color_field( name, node->GetChildren() );
   else if ( val == wxT("sample") )
     field = add_sample_field( name, node->GetChildren() );
+  else if ( val == wxT("easing") )
+    field = add_easing_field( name, node->GetChildren() );
   else
     throw xml::bad_value( wx_to_std_string(val) );
 
@@ -416,6 +418,19 @@ bf::type_field* bf::item_class_xml_parser::add_sample_field
   return create_field<int, false, false>
     (name, type_field::sample_field_type, node);
 } // item_class_xml_parser::add_sample_field()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a field of type "easing" to the item.
+ * \param name The name of the field.
+ * \param node The node to explore.
+ */
+bf::type_field* bf::item_class_xml_parser::add_easing_field
+( const std::string& name, const wxXmlNode* node ) const
+{
+  return create_field<int, false, false>
+    (name, type_field::easing_field_type, node);
+} // item_class_xml_parser::add_easing_field()
 
 /*----------------------------------------------------------------------------*/
 /**

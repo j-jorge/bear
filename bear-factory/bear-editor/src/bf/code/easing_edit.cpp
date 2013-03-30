@@ -36,7 +36,15 @@ bf::easing_edit::easing_edit
  */
 bool bf::easing_edit::validate()
 {
-  return value_from_string( GetValue() );
+  bear::easing e;
+  e.from_string( wx_to_std_string( GetPopupControl()->GetStringValue() ) );
+
+  easing_type v;
+  v.set_value( e );
+
+  set_value( v );
+
+  return true;
 } // easing_edit::validate()
 
 /*----------------------------------------------------------------------------*/
@@ -46,5 +54,4 @@ bool bf::easing_edit::validate()
 void bf::easing_edit::value_updated()
 {
   SetValue( value_to_string() );
-  validate();
 } // easing_edit::value_updated()

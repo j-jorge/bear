@@ -74,6 +74,9 @@ namespace bf
     type_field*
     add_sample_field( const std::string& name, const wxXmlNode* node ) const;
 
+    type_field* add_easing_field
+    ( const std::string& name, const wxXmlNode* node ) const;
+
     std::string read_after( const wxXmlNode* node ) const;
 
     void read_set( const wxXmlNode* node, std::list<std::string>& set ) const;
