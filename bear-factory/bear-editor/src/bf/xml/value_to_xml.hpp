@@ -13,6 +13,7 @@
 
 #include "bf/any_animation.hpp"
 #include "bf/color.hpp"
+#include "bf/custom_type.hpp"
 #include "bf/font.hpp"
 #include "bf/sample.hpp"
 #include "bf/libeditor_export.hpp"
@@ -133,8 +134,20 @@ namespace bf
     class BEAR_EDITOR_EXPORT value_to_xml<color>
     {
     public:
-      static void write( std::ostream& os, const color& s );
+      static void write( std::ostream& os, const color& f );
     }; // class value_to_xml [color]
+
+    /**
+     * \brief A class to convert a value into an XML representation.
+     *        Specialisation for the bf::easing_type class.
+     * \author Julien Jorge
+     */
+    template<>
+    class BEAR_EDITOR_EXPORT value_to_xml<easing_type>
+    {
+    public:
+      static void write( std::ostream& os, const easing_type& f );
+    }; // class value_to_xml [easing_type]
 
   } // namespace xml
 } // namespace bf

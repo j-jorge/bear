@@ -12,7 +12,8 @@
 #define __BF_CUSTOM_TYPE__
 
 #include <string>
-#include "color.hpp"
+
+#include "easing.hpp"
 
 namespace bf
 {
@@ -60,13 +61,24 @@ namespace bf
   /** \brief Boolean type. */
   typedef custom_type<bool> bool_type;
 
+  /** \brief Easing functions. */
+  class easing_type:
+    public custom_type<bear::easing>
+  {
+  public:
+    void compile( compiled_file& f ) const;
+
+    bool operator==( const easing_type& that ) const;
+    bool operator!=( const easing_type& that ) const;
+  }; // class easing_type
+
   /** \brief Base type for the files. */
   class base_file_type:
     public custom_type<std::string>
   {
   public:
     void compile( compiled_file& f ) const;
-  };
+  }; // class base_file_type
 
   /**
    * \brief Type of a reference on an item.
@@ -79,12 +91,14 @@ namespace bf
   public:
     bool operator==( const item_reference_type& that ) const;
     bool operator!=( const item_reference_type& that ) const;
-  };
+  }; // class item_reference_type
 
 } // namespace bf
 
 template<typename Type>
-std::ostream& operator<<( std::ostream& is, const bf::custom_type<Type>& v );
+std::ostream& operator<<( std::ostream& os, const bf::custom_type<Type>& v );
+
+std::ostream& operator<<( std::ostream& os, const bf::easing_type& v );
 
 #include "impl/custom_type.tpp"
 

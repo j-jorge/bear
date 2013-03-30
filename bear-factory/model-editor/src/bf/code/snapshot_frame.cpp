@@ -11,7 +11,7 @@
 #include "bf/snapshot_frame.hpp"
 
 #include "bf/accordion.hpp"
-#include "bf/easing_combo_popup.hpp"
+#include "bf/easing_combo.hpp"
 #include "bf/gui_model.hpp"
 #include "bf/mark.hpp"
 #include "bf/model_frame.hpp"
@@ -450,15 +450,7 @@ wxSizer* bf::snapshot_frame::create_item_box_sizer( wxWindow* parent )
 wxComboCtrl*
 bf::snapshot_frame::create_easing_combo( wxWindow* parent )
 {
-  wxComboCtrl* result =
-    new wxComboCtrl
-    ( parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize,
-      wxCB_READONLY );
-  result->SetPopupControl( new easing_combo_popup() );
-
-  result->SetPopupMinWidth( 300 );
-
-  return result;
+  return bf::create_easing_combo( parent );
 } // snapshot_frame::create_easing_combo()
 
 /*----------------------------------------------------------------------------*/

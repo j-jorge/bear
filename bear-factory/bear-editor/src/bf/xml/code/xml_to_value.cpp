@@ -368,3 +368,31 @@ void bf::xml::xml_to_value<bf::color>::operator()
 
   v.set_intensity(red, green, blue);
 } // xml_to_value::operator()() [color]
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Read the value from a xml value node.
+ * \param v (out) The easing function we have read.
+ * \param node The node from which we read the value.
+ */
+void bf::xml::xml_to_value<bf::easing_type>::operator()
+  ( easing_type& v, const wxXmlNode* node ) const
+{
+  CLAW_PRECOND( node != NULL );
+  
+  bear::easing e;
+
+  e.set_function
+    ( bear::easing::function::from_string
+      ( xml::reader_tool::read_string_opt
+        ( node, wxT("function"),
+          bear::easing::function::to_string( e.get_function() ) ) ) );
+  
+  e.set_direction
+    ( bear::easing::direction::from_string
+      ( xml::reader_tool::read_string_opt
+        ( node, wxT("direction"),
+          bear::easing::direction::to_string( e.get_direction() ) ) ) );
+  
+  v.set_value( e );
+} // xml_to_value::operator()() [easing_type]

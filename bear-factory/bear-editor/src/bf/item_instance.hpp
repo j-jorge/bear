@@ -240,6 +240,7 @@ namespace bf
     FIELD_TYPE( font, font );
     FIELD_TYPE( sample, sample );
     FIELD_TYPE( color, color );
+    FIELD_TYPE( easing_type, easing );
 
   }; // class item_instance
 } // namespace bf

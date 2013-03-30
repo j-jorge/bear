@@ -13,6 +13,7 @@
 
 #include "bf/any_animation.hpp"
 #include "bf/color.hpp"
+#include "bf/custom_type.hpp"
 #include "bf/font.hpp"
 #include "bf/sample.hpp"
 #include "bf/libeditor_export.hpp"
@@ -143,6 +144,19 @@ namespace bf
       void operator()( color& v, const wxXmlNode* node ) const;
 
     }; // class xml_to_value [color]
+
+    /**
+     * \brief A class to convert an XML node into real data. Specialisation for
+     *        the bf::easing_type class.
+     */
+    template<>
+    class BEAR_EDITOR_EXPORT xml_to_value<easing_type>
+    {
+    public:
+      void operator()( easing_type& v, const wxXmlNode* node ) const;
+
+    }; // class xml_to_value [easing_type]
+
   } // namespace xml
 } // namespace bf
 

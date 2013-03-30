@@ -177,14 +177,23 @@ namespace bear
     { }
 
     /**
-     * \brief Check if this easing is the same than an other one.
+     * \brief Check if this easing is the same than another one.
      * \param that The instance to compare to.
      */
     bool operator==( const easing& that ) const
     {
       return
         (m_function == that.m_function) && (m_direction == that.m_direction);
-    }
+    } // operator==()
+
+    /**
+     * \brief Check if this easing isnot the same than another one.
+     * \param that The instance to compare to.
+     */
+    bool operator!=( const easing& that ) const
+    {
+      return !(*this == that );
+    } // operator!=()
 
     /** \brief Get the function of this easing. */
     function::function_type get_function() const { return m_function; }

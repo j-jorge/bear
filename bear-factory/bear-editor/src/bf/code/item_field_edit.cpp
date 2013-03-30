@@ -13,6 +13,7 @@
 #include "bf/bool_edit.hpp"
 #include "bf/color_edit.hpp"
 #include "bf/custom_type.hpp"
+#include "bf/easing_edit.hpp"
 #include "bf/free_edit.hpp"
 #include "bf/item_class_pool.hpp"
 #include "bf/item_reference_edit.hpp"
@@ -442,6 +443,9 @@ void bf::item_field_edit::create_field_editor( const std::string& name )
       break;    
     case type_field::color_field_type:
       show_property_dialog<color_edit>(f, _("Color"));
+      break;
+    case type_field::easing_field_type:
+      show_property_dialog<easing_edit>(f, _("Easing function"));
       break;
     }
 } // item_field_edit::create_field_editor()

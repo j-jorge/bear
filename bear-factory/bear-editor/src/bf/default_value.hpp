@@ -41,6 +41,18 @@ namespace bf
 
   /**
    * \brief Default values for the types used in a level file. Specialisation
+   *        for easing_type.
+   * \author Julien Jorge
+   */
+  template<>
+  class BEAR_EDITOR_EXPORT default_value<easing_type>
+  {
+  public:
+    static easing_type get() { return easing_type(); }
+  }; // class default_value [easing_type]
+
+  /**
+   * \brief Default values for the types used in a level file. Specialisation
    *        others custom types.
    * \author Julien Jorge
    */

@@ -39,7 +39,8 @@ namespace bf
         item_reference_field_type,
         font_field_type,
         sample_field_type,
-        color_field_type
+        color_field_type,
+        easing_field_type
       }; // enum field_type
 
     /** \brief The type of the range of valid values. */

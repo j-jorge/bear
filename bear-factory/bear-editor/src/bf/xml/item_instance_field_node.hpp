@@ -42,37 +42,6 @@ namespace bf
       ( const item_instance& item, const type_field& f,
         std::ostream& os ) const;
 
-      void save_sprite
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_animation
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_font
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_color
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_sample
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_sprite_list
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_animation_list
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_font_list
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_color_list
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-      void save_sample_list
-      ( std::ostream& os, const std::string& field_name,
-        const item_instance& item ) const;
-
       template<typename Type>
       void load_value
       ( item_instance& item, const std::string& field_name,
@@ -83,10 +52,20 @@ namespace bf
       ( item_instance& item, const std::string& field_name,
         const wxXmlNode* node ) const;
 
+      template<typename T>
+      void save_value
+      ( std::ostream& os, const std::string& field_name,
+        const item_instance& item ) const;
+
       template<typename Type>
       void save_value
       ( std::ostream& os, const std::string& field_name,
         const item_instance& item, const std::string& node_name ) const;
+
+      template<typename T>
+      void save_value_list
+      ( std::ostream& os, const std::string& field_name,
+        const item_instance& item ) const;
 
       template<typename Type>
       void save_value_list

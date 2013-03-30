@@ -33,6 +33,9 @@ set( BF_E_SOURCE_FILES
   code/compiled_file.cpp
   code/config_frame.cpp
   code/custom_type.cpp
+  code/easing_combo.cpp
+  code/easing_combo_popup.cpp
+  code/easing_edit.cpp
   code/font.cpp
   code/font_edit.cpp
   code/frame_edit.cpp

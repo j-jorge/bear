@@ -13,7 +13,6 @@ set( BF_ME_SOURCE_FILES
   code/action_player.cpp
   code/action_properties_frame.cpp
   code/configuration.cpp
-  code/easing_combo_popup.cpp
   code/error_check_model_dialog.cpp
   code/gui_model.cpp
   code/model_editor.cpp

@@ -171,3 +171,19 @@ void bf::xml::value_to_xml<bf::color>::write
      << "' blue_intensity='" << f.get_blue_intensity() 
      << "'/>\n";
 } // value_to_xml::write() [color]
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Write a XML representation of an easing function.
+ * \param os The stream in which we write.
+ * \param f The value to write.
+ */
+void bf::xml::value_to_xml<bf::easing_type>::write
+( std::ostream& os, const easing_type& f )
+{
+  os << "<easing function='"
+     << bear::easing::function::to_string( f.get_value().get_function() )
+     << "' direction='"
+     << bear::easing::direction::to_string( f.get_value().get_direction() )
+     << "'/>\n";
+} // value_to_xml::write() [easing_type]

@@ -634,6 +634,9 @@ void bf::item_instance::compile_field_single
     case type_field::color_field_type:
       m_color.find(field_name)->second.compile(f);
       break;
+    case type_field::easing_field_type:
+      m_easing.find(field_name)->second.compile(f);
+      break;
     }
 } // item_instance::compile_field_single()
 
@@ -695,6 +698,9 @@ void bf::item_instance::compile_field_list
       break;
     case type_field::color_field_type:
       compile_list( f, m_color_list.find(field_name)->second );
+      break;
+    case type_field::easing_field_type:
+      compile_list( f, m_easing_list.find(field_name)->second );
       break;
     }
 } // item_instance::compile_field_list()

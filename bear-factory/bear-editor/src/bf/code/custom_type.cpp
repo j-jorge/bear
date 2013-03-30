@@ -33,6 +33,41 @@ void bf::base_file_type::compile( compiled_file& cf ) const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Output the value in the compiled file.
+ * \param cf The file to write in.
+ */
+void bf::easing_type::compile( compiled_file& cf ) const
+{
+  bear::easing e(get_value());
+
+  cf << e.to_string();
+} // easing_type::compile()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Compare two easing_type.
+ * \param that The value to compare to.
+ */
+bool bf::easing_type::operator==( const easing_type& that) const
+{
+  return this->get_value() == that.get_value();
+} // easing_type::operator==()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Compare two easing_type.
+ * \param that The value to compare to.
+ */
+bool bf::easing_type::operator!=( const easing_type& that) const
+{
+  return this->get_value() != that.get_value();
+} // easing_type::operator!=()
+
+
+
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Compare two item_reference_type.
  * \param that The value to compare to.
  */
@@ -50,3 +85,18 @@ bool bf::item_reference_type::operator!=( const item_reference_type& that) const
 {
   return this->get_value() != that.get_value();
 } // item_reference_type::operator!=()
+
+
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Stream output operator.
+ * \param os The stream in which we write.
+ * \param v The value to write in the stream.
+ */
+std::ostream& operator<<( std::ostream& os, const bf::easing_type& v )
+{
+  return os << v.get_value().to_string();
+} // operator<<()
+

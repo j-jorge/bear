@@ -107,6 +107,9 @@ void bf::xml::item_instance_field_node::load_field
       case type_field::color_field_type:
         load_value_list<color>( item, f.get_name(), node );
         break;
+      case type_field::easing_field_type:
+        load_value_list<easing_type>( item, f.get_name(), node );
+        break;
       }
   else
     switch ( f.get_field_type() )
@@ -144,6 +147,9 @@ void bf::xml::item_instance_field_node::load_field
       case type_field::color_field_type:
         load_value<color>( item, f.get_name(), node );
         break;
+      case type_field::easing_field_type:
+        load_value<easing_type>( item, f.get_name(), node );
+        break;
       }
 } // item_instance_field_node::load_field()
 
@@ -176,23 +182,26 @@ void bf::xml::item_instance_field_node::save_field
         save_value_list<string_type>( os, f.get_name(), item, "string" );
         break;
       case type_field::sprite_field_type:
-        save_sprite_list( os, f.get_name(), item );
+        save_value_list<sprite>( os, f.get_name(), item );
         break;
       case type_field::animation_field_type:
-        save_animation_list( os, f.get_name(), item );
+        save_value_list<any_animation>( os, f.get_name(), item );
         break;
       case type_field::item_reference_field_type:
         save_value_list<item_reference_type>
           ( os, f.get_name(), item, "item_reference" );
         break;
       case type_field::font_field_type:
-        save_font_list( os, f.get_name(), item );
+        save_value_list<font>( os, f.get_name(), item );
         break;
       case type_field::sample_field_type:
-        save_sample_list( os, f.get_name(), item );
+        save_value_list<sample>( os, f.get_name(), item );
         break;
       case type_field::color_field_type:
-        save_color_list( os, f.get_name(), item );
+        save_value_list<color>( os, f.get_name(), item );
+        break;
+      case type_field::easing_field_type:
+        save_value_list<easing_type>( os, f.get_name(), item );
         break;
       }
   else
@@ -214,206 +223,29 @@ void bf::xml::item_instance_field_node::save_field
         save_value<string_type>( os, f.get_name(), item, "string" );
         break;
       case type_field::sprite_field_type:
-        save_sprite( os, f.get_name(), item );
+        save_value<sprite>( os, f.get_name(), item );
         break;
       case type_field::animation_field_type:
-        save_animation( os, f.get_name(), item );
+        save_value<any_animation>( os, f.get_name(), item );
         break;
       case type_field::item_reference_field_type:
         save_value<item_reference_type>
           ( os, f.get_name(), item, "item_reference" );
         break;
       case type_field::font_field_type:
-        save_font( os, f.get_name(), item );
+        save_value<font>( os, f.get_name(), item );
         break;
       case type_field::sample_field_type:
-        save_sample( os, f.get_name(), item );
+        save_value<sample>( os, f.get_name(), item );
         break;
       case type_field::color_field_type:
-        save_color( os, f.get_name(), item );
+        save_value<color>( os, f.get_name(), item );
+        break;
+      case type_field::easing_field_type:
+        save_value<easing_type>( os, f.get_name(), item );
         break;
       }
 } // item_instance_field_node::save_field()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'sprite'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_sprite
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  sprite spr;
-  item.get_value( field_name, spr );
-  xml::value_to_xml<sprite>::write(os, spr);
-} // item_instance_field_node::save_sprite()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'animation'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_animation
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  any_animation anim;
-  item.get_value( field_name, anim );
-  xml::value_to_xml<any_animation>::write(os, anim);
-} // item_instance_field_node::save_animation()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'font'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_font
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  font f;
-  item.get_value( field_name, f );
-  xml::value_to_xml<font>::write(os, f);
-} // item_instance_field_node::save_font()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'color'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_color
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  color f;
-  item.get_value( field_name, f );
-  xml::value_to_xml<color>::write(os, f);
-} // item_instance_field_node::save_color()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'sample'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_sample
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  sample s;
-  item.get_value( field_name, s );
-  xml::value_to_xml<sample>::write(os, s);
-} // item_instance_field_node::save_sample()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'list of sprite'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_sprite_list
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  std::list<sprite> spr;
-  std::list<sprite>::const_iterator it;
-
-  item.get_value( field_name, spr );
-
-  for (it=spr.begin(); it!=spr.end(); ++it)
-    xml::value_to_xml<sprite>::write(os, *it);
-} // item_instance_field_node::save_sprite_list()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'list of animation'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_animation_list
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  std::list<any_animation> anim;
-  std::list<any_animation>::const_iterator it;
-
-  item.get_value( field_name, anim );
-
-  for (it=anim.begin(); it!=anim.end(); ++it)
-    xml::value_to_xml<any_animation>::write(os, *it);
-} // item_instance_field_node::save_animation_list()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'list of font'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_font_list
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  std::list<font> f;
-  std::list<font>::const_iterator it;
-
-  item.get_value( field_name, f );
-
-  for (it=f.begin(); it!=f.end(); ++it)
-    xml::value_to_xml<font>::write(os, *it);
-} // item_instance_field_node::save_font_list()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'list of color'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_color_list
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  std::list<color> f;
-  std::list<color>::const_iterator it;
-
-  item.get_value( field_name, f );
-
-  for (it=f.begin(); it!=f.end(); ++it)
-    xml::value_to_xml<color>::write(os, *it);
-} // item_instance_field_node::save_color_list()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Save the value of a field of type 'list of sample'.
- * \param os The stream in which we save the value.
- * \param field_name The name of the field to save.
- * \param item The item in which we take the value.
- */
-void bf::xml::item_instance_field_node::save_sample_list
-( std::ostream& os, const std::string& field_name,
-  const item_instance& item ) const
-{
-  std::list<sample> s;
-  std::list<sample>::const_iterator it;
-
-  item.get_value( field_name, s );
-
-  for (it=s.begin(); it!=s.end(); ++it)
-    xml::value_to_xml<sample>::write(os, *it);
-} // item_instance_field_node::save_sample_list()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -474,6 +306,23 @@ void bf::xml::item_instance_field_node::load_value_list
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Save the value of a field of a special type.
+ * \param os The stream in which we save the value.
+ * \param field_name The name of the field to save.
+ * \param item The item in which we take the value.
+ */
+template<typename T>
+void bf::xml::item_instance_field_node::save_value
+( std::ostream& os, const std::string& field_name,
+  const item_instance& item ) const
+{
+  T v;
+  item.get_value( field_name, v );
+  xml::value_to_xml<T>::write(os, v);
+} // item_instance_field_node::save_value()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Save the value of a field of simple type.
  * \param os The stream in which we save the value.
  * \param field_name The name of the field to save.
@@ -489,6 +338,27 @@ void bf::xml::item_instance_field_node::save_value
   item.get_value( field_name, v );
   xml::value_to_xml<Type>::write( os, node_name, v );
 } // item_instance_field_node::save_value()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Save the value of a field of type list of values.
+ * \param os The stream in which we save the value.
+ * \param field_name The name of the field to save.
+ * \param item The item in which we take the value.
+ */
+template<typename T>
+void bf::xml::item_instance_field_node::save_value_list
+( std::ostream& os, const std::string& field_name,
+  const item_instance& item ) const
+{
+  std::list<T> s;
+  typename std::list<T>::const_iterator it;
+
+  item.get_value( field_name, s );
+
+  for (it=s.begin(); it!=s.end(); ++it)
+    xml::value_to_xml<T>::write(os, *it);
+} // item_instance_field_node::save_value_list()
 
 /*----------------------------------------------------------------------------*/
 /**
