@@ -26,6 +26,8 @@
 #include "engine/layer/layer_factory.hpp"
 #include "engine/loader/item_loader_map.hpp"
 
+#include "easing.hpp"
+
 #include <claw/exception.hpp>
 
 /*----------------------------------------------------------------------------*/
@@ -164,6 +166,7 @@ bool bear::engine::level_loader::one_step_item()
     case level_code_value::field_sample    : load_item_field_sample(); break;
     case level_code_value::field_font      : load_item_field_font(); break;
     case level_code_value::field_color     : load_item_field_color(); break;
+    case level_code_value::field_easing    : load_item_field_easing(); break;
     default:
       {
         validate_current_item();
@@ -351,6 +354,9 @@ void bear::engine::level_loader::load_item_field_list()
       break;
     case level_code_value::field_color:
       load_item_field_color_list();
+      break;
+    case level_code_value::field_easing:
+      load_item_field_easing_list();
       break;
     }
 } // level_loader::load_item_field_list()
@@ -549,6 +555,24 @@ void bear::engine::level_loader::load_item_field_color()
   m_file >> m_next_code;
 
   if ( !m_current_loader->set_field( field_name, f ) )
+    claw::logger << claw::log_warning << "field '" << field_name
+                 << "' of item '" << m_current_item->get_class_name()
+                 << "' has not been set." << std::endl;
+} // level_loader::load_item_field_color()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets a field of type easing to an item.
+ */
+void bear::engine::level_loader::load_item_field_easing()
+{
+  std::string field_name;
+
+  m_file >> field_name;
+  easing_function e( load_easing_data() );
+  m_file >> m_next_code;
+
+  if ( !m_current_loader->set_field( field_name, e ) )
     claw::logger << claw::log_warning << "field '" << field_name
                  << "' of item '" << m_current_item->get_class_name()
                  << "' has not been set." << std::endl;
@@ -795,6 +819,29 @@ void bear::engine::level_loader::load_item_field_color_list()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Sets a field of type easing to an item.
+ */
+void bear::engine::level_loader::load_item_field_easing_list()
+{
+  std::string field_name;
+  unsigned int n;
+
+  m_file >> field_name >> n;
+
+  std::vector<easing_function> val(n);
+
+  for (unsigned int i=0; i!=n; ++i)
+    val[i] = load_easing_data();
+
+  m_file >> m_next_code;
+
+  if ( !m_current_loader->set_field( field_name, val ) )
+    claw::logger << claw::log_warning << "field '" << field_name
+                 << "' has not been set." << std::endl;
+} // level_loader::load_item_field_easing_list()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Create an item using the create_* method exported by the item class.
  * \param name The name of the class to instanciate.
  */
@@ -918,6 +965,22 @@ bear::visual::color bear::engine::level_loader::load_color_data() const
 
   return result;
 } // level_loader::load_color_data()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Loads an easing function.
+ */
+bear::engine::easing_function
+bear::engine::level_loader::load_easing_data() const
+{
+  std::string s;
+  m_file >> s;
+
+  easing result;
+  result.from_string( s );
+
+  return result.to_claw_easing_function();
+} // level_loader::load_easing_data()
 
 /*----------------------------------------------------------------------------*/
 /**

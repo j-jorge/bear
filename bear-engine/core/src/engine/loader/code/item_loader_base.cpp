@@ -185,6 +185,19 @@ bool bear::engine::item_loader_base::set_field
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set a field of type \c easing function.
+ * \param name The name of the field.
+ * \param value The new value of the field.
+ * \return false if the field "name" is unknow, true otherwise.
+ */
+bool bear::engine::item_loader_base::set_field
+( const std::string& name, easing_function value )
+{
+  return false;
+} // item_loader_base::set_field()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Set a field of type \c list of unsigned integer.
  * \param name The name of the field.
  * \param value The new value of the field.
@@ -326,6 +339,19 @@ bool bear::engine::item_loader_base::set_field
  */
 bool bear::engine::item_loader_base::set_field
 ( const std::string& name, const std::vector<visual::color>& value )
+{
+  return false;
+} // item_loader_base::set_field()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set a field of type \c list of easing functions.
+ * \param name The name of the field.
+ * \param value The new value of the field.
+ * \return false if the field "name" is unknow, true otherwise.
+ */
+bool bear::engine::item_loader_base::set_field
+( const std::string& name, const std::vector<easing_function>& value )
 {
   return false;
 } // item_loader_base::set_field()

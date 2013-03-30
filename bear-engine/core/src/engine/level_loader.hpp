@@ -16,6 +16,8 @@
 #include "visual/color.hpp"
 #include "visual/font/font.hpp"
 
+#include "engine/easing.hpp"
+
 #include "engine/class_export.hpp"
 #include <vector>
 
@@ -76,6 +78,7 @@ namespace bear
       void load_item_field_sample();
       void load_item_field_font();
       void load_item_field_color();
+      void load_item_field_easing();
 
       void load_item_field_int_list();
       void load_item_field_u_int_list();
@@ -88,6 +91,7 @@ namespace bear
       void load_item_field_sample_list();
       void load_item_field_font_list();
       void load_item_field_color_list();
+      void load_item_field_easing_list();
 
       base_item* create_item_from_string( const std::string& name ) const;
       layer* create_layer_from_string
@@ -98,6 +102,7 @@ namespace bear
       audio::sample* load_sample_data() const;
       visual::font load_font_data() const;
       visual::color load_color_data() const;
+      easing_function load_easing_data() const;
 
       template<typename T>
       std::string load_list( std::vector<T>& v );

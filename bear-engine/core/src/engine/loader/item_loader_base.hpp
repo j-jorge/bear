@@ -21,6 +21,8 @@
 #include "visual/color.hpp"
 #include "visual/font/font.hpp"
 
+#include "engine/easing.hpp"
+
 namespace bear
 {
   namespace engine
@@ -55,6 +57,7 @@ namespace bear
       virtual bool set_field( const std::string& name, audio::sample* value );
       virtual bool set_field( const std::string& name, visual::font value );
       virtual bool set_field( const std::string& name, visual::color value );
+      virtual bool set_field( const std::string& name, easing_function value );
 
       virtual bool set_field
       ( const std::string& name, const std::vector<unsigned int>& value );
@@ -78,6 +81,8 @@ namespace bear
         ( const std::string& name, const std::vector<visual::font>& value );
       virtual bool set_field
         ( const std::string& name, const std::vector<visual::color>& value );
+      virtual bool set_field
+        ( const std::string& name, const std::vector<easing_function>& value );
 
     private:
       /** The name assigned to this loader. */
