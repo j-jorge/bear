@@ -19,7 +19,7 @@
  * \param size The size of the layer.
  */
 bear::engine::layer::layer( const universe::size_box_type& size )
-  : m_size( size )
+  : m_size( size ), m_tag("common")
 {
   CLAW_PRECOND( size.x != 0 );
   CLAW_PRECOND( size.y != 0 );
@@ -51,6 +51,25 @@ const bear::universe::size_box_type& bear::engine::layer::get_size() const
 {
   return m_size;
 } // layer::get_size()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set the tag of the layer.
+ * \param tag The new tag of the layer.
+ */
+void bear::engine::layer::set_tag(const std::string& tag)
+{
+  m_tag = tag;
+} // layer::set_tag()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Return the tag of the layer.
+ */
+std::string bear::engine::layer::get_tag() const
+{
+  return m_tag;
+} // layer::get_tag()
 
 /*----------------------------------------------------------------------------*/
 /**

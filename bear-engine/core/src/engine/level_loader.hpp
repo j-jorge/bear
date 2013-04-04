@@ -138,6 +138,15 @@ namespace bear
       /** \brief Index of the next item definition to read. */
       unsigned int m_referenced_index;
 
+      /** \brief The major version of the level. */
+      unsigned int m_maj;
+
+      /** \brief The major version of the level. */
+      unsigned int m_min; 
+
+      /** \brief The release version of the level. */
+      unsigned int m_rel;
+
     }; // class level_loader
   } // namespace engine
 } // namespace bear

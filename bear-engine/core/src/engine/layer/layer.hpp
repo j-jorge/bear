@@ -44,6 +44,8 @@ namespace bear
       virtual ~layer();
 
       const universe::size_box_type& get_size() const;
+      void set_tag(const std::string& tag);
+      std::string get_tag() const;
 
       virtual void start();
 
@@ -85,6 +87,8 @@ namespace bear
       /** \brief Always displayed items. */
       std::set<base_item*> m_always_displayed;
 
+      /** \brief The tag of the layer. */
+      std::string m_tag;
     }; // class layer
   } // namespace engine
 } // namespace bear

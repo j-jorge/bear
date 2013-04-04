@@ -42,14 +42,13 @@ bear::engine::level_loader::level_loader
 ( compiled_file& f, const std::string& path,
   const level_globals* shared_resources )
   : m_level(NULL), m_layer(NULL), m_file(f), m_current_item(NULL),
-    m_current_loader(NULL), m_items_count(0), m_item_index(0)
+    m_current_loader(NULL), m_items_count(0), m_item_index(0),
+    m_maj(0), m_min(0), m_rel(0)
 {
-  unsigned int maj(0), min(0), rel(0);
-
-  if ( !(m_file >> maj >> min >> rel) )
+  if ( !(m_file >> m_maj >> m_min >> m_rel) )
     throw claw::exception( "Can't read the version of the level file." );
 
-  if ( (maj != 0) || (min <= 4) )
+  if ( (m_maj != 0) || (m_min <= 4) )
     throw claw::exception( "This version of the level file is not supported." );
 
   unsigned int layers_count;
@@ -57,7 +56,7 @@ bear::engine::level_loader::level_loader
   universe::size_box_type level_size;
   std::string name("Anonymous");
 
-  if ( (maj == 0) && (min >= 5) )
+  if ( (m_maj == 0) && (m_min >= 5) )
     m_file >> name;
 
   m_file >> level_size.x >> level_size.y >> level_music >> m_items_count
@@ -206,12 +205,20 @@ void bear::engine::level_loader::load_layer()
 {
   claw::math::coordinate_2d<unsigned int> size;
   std::string class_name;
+  std::string tag;
 
-  m_file >> class_name >> size.x >> size.y >> m_next_code;
+  m_file >> class_name >> size.x >> size.y;
+
+  if ( (m_maj == 0) && (m_min >= 9) )
+    m_file >> tag;
+
+  m_file >> m_next_code;
   m_referenced_index = 0;
   m_referenced.clear();
 
   m_layer = create_layer_from_string( class_name, size );
+  if ( (m_maj == 0) && (m_min >= 9) )
+    m_layer->set_tag(tag);
   m_level->push_layer( m_layer );
 } // level_loader::load_layer()
 

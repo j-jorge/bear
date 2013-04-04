@@ -372,7 +372,7 @@ void bf::layer::check( layer_check_result& result ) const
  */
 void bf::layer::compile( compiled_file& f, compilation_context& c ) const
 {
-  f << m_layer_type << m_width << m_height;
+  f << m_layer_type << m_width << m_height << m_tag;
 
   std::map<std::string, unsigned int> id_to_int;
   std::list<item_instance*> referenced, not_referenced;
