@@ -41,6 +41,7 @@ namespace bf
     unsigned int get_layer_height() const;
     std::string get_layer_class_name() const;
     std::string get_layer_name() const;
+    std::string get_tag() const;
 
     void fill_from( const layer& lay );
 
@@ -69,6 +70,9 @@ namespace bf
 
     /** \brief The text control in which we configure the name of the layer. */
     wxTextCtrl* m_name;
+
+    /** \brief The text control in which we configure the tag of the layer. */
+    wxTextCtrl* m_tag;
 
     /** \brief Minimum width of the layer. */
     static const unsigned int s_min_width;

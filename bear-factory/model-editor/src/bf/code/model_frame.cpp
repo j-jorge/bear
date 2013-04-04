@@ -71,6 +71,7 @@ bf::model_frame::model_frame
     m_layout(layout), m_history(mdl),  m_model_file(model_file),
     m_changed(false), m_slider(NULL), m_new_button(NULL), m_delete_button(NULL),
     m_snapshot_copy_button(NULL), m_snapshot_paste_button(NULL),
+    m_next_change_button(NULL), m_previous_change_button(NULL),
     m_timer(this, ID_TIMER)
 {
   CLAW_PRECOND(mdl != NULL);
@@ -405,6 +406,14 @@ void bf::model_frame::create_member_controls()
     ( this, ID_PASTE_SNAPSHOT,
       wxArtProvider::GetBitmap(wxART_PASTE, wxART_MENU, wxSize(16, 16)) );
 
+  m_next_change_button = new wxBitmapButton
+    ( this, ID_NEXT_CHANGE,
+      wxArtProvider::GetBitmap(wxART_GO_FORWARD, wxART_MENU, wxSize(16, 16)) );
+
+  m_previous_change_button = new wxBitmapButton
+    ( this, ID_PREVIOUS_CHANGE,
+      wxArtProvider::GetBitmap(wxART_GO_BACK, wxART_MENU, wxSize(16, 16)) );
+
   m_play_button = new wxBitmapButton
     (this, ID_PLAY_STOP, wxBitmap(player_play_xpm));
 
@@ -430,6 +439,8 @@ void bf::model_frame::create_sizer_controls()
   h_sizer->Add( m_delete_button );
   h_sizer->Add( m_snapshot_copy_button );
   h_sizer->Add( m_snapshot_paste_button );
+  h_sizer->Add( m_previous_change_button );
+  h_sizer->Add( m_next_change_button );
 
   v_sizer->Add( m_model_view, 1, wxEXPAND );
   v_sizer->Add( h_sizer, 0, wxEXPAND );
@@ -798,6 +809,8 @@ void bf::model_frame::update_button() const
   m_delete_button->Enable(can_delete_snapshot());
   m_snapshot_copy_button->Enable(can_copy_snapshot());
   m_snapshot_paste_button->Enable(can_paste_snapshot());
+  m_next_change_button->Enable(true);
+  m_previous_change_button->Enable(true);
 } // model_frame::update_button()
 
 /*----------------------------------------------------------------------------*/
@@ -1271,6 +1284,36 @@ void bf::model_frame::on_paste(wxCommandEvent& WXUNUSED(event))
 {
 
 } // model_frame::on_paste()
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Answer to a click on the menu "next change".
+ * \param event This event occured.
+ */
+void bf::model_frame::on_next_change(wxCommandEvent& WXUNUSED(event))
+{
+  if (m_history.get_model().has_active_action())
+    {
+      const action& a = m_history.get_model().get_active_action();
+
+      // TODO
+      // move the current tick
+      
+      fill();
+    }
+} // model_frame::on_next_change()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Answer to a click on the menu "previous change".
+ * \param event This event occured.
+ */
+void bf::model_frame::on_previous_change(wxCommandEvent& WXUNUSED(event))
+{
+  // TODO
+  // move the current tick
+} // model_frame::on_previous_change()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1787,6 +1830,10 @@ BEGIN_EVENT_TABLE(bf::model_frame, wxFrame)
               bf::model_frame::on_copy_snapshot )
   EVT_BUTTON( bf::model_frame::ID_PASTE_SNAPSHOT,
               bf::model_frame::on_paste_snapshot )
+  EVT_BUTTON( bf::model_frame::ID_NEXT_CHANGE,
+              bf::model_frame::on_next_change )
+  EVT_BUTTON( bf::model_frame::ID_PREVIOUS_CHANGE,
+              bf::model_frame::on_previous_change )
 
   EVT_SLIDER_VALUE_CHANGE( bf::model_frame::ID_SLIDER,
                            bf::model_frame::on_slider_change )

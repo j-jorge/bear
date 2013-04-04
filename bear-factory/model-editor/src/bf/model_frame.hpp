@@ -48,6 +48,8 @@ namespace bf
         ID_DELETE_SNAPSHOT,
         ID_COPY_SNAPSHOT,
         ID_PASTE_SNAPSHOT,
+        ID_NEXT_CHANGE,
+        ID_PREVIOUS_CHANGE,
         ID_PLAY_STOP,
         ID_START,
         ID_TIMER,
@@ -169,6 +171,8 @@ namespace bf
     void on_delete_snapshot(wxCommandEvent& event);
     void on_copy_snapshot(wxCommandEvent& event);
     void on_paste_snapshot(wxCommandEvent& event);
+    void on_next_change(wxCommandEvent& event);
+    void on_previous_change(wxCommandEvent& event);
     void on_show_properties(wxCommandEvent& event);
     void on_slider_change(slider_event& event);
     void on_tick_move(tick_event& event);
@@ -214,6 +218,12 @@ namespace bf
 
     /** \brief The button to paste a snapshot at the current date. */
     wxBitmapButton* m_snapshot_paste_button;
+
+    /** \brief The button to go at the next change. */
+    wxBitmapButton* m_next_change_button;
+
+    /** \brief The button to go at the previous change. */
+    wxBitmapButton* m_previous_change_button;
 
     /** \brief The button to play the action. */
     wxBitmapButton* m_play_button;

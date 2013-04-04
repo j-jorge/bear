@@ -73,8 +73,17 @@ std::string bf::layer_properties_frame::get_layer_class_name() const
  */
 std::string bf::layer_properties_frame::get_layer_name() const
 {
-  return wx_to_std_string( m_name->GetValue() );;
+  return wx_to_std_string( m_name->GetValue() );
 } // layer_properties_frame::get_layer_name()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the tag of the layer.
+ */
+std::string bf::layer_properties_frame::get_tag() const
+{
+  return wx_to_std_string( m_tag->GetValue() );
+} // layer_properties_frame::get_tag()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -95,6 +104,7 @@ void bf::layer_properties_frame::fill_from( const layer& lay )
   m_height->Enable( !lay.fits_level() );
   m_width->Enable( !lay.fits_level() );
   m_name->SetValue( std_to_wx_string(lay.get_name()) );
+  m_tag->SetValue( std_to_wx_string(lay.get_tag()) );
 
   unsigned int i=0;
   bool found = false;
@@ -141,6 +151,7 @@ void bf::layer_properties_frame::create_member_controls()
   m_class_name = new wxChoice
     ( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, layer_names );
   m_name = new wxTextCtrl( this, wxID_ANY, wxT("") );
+  m_tag = new wxTextCtrl( this, wxID_ANY, wxT("") );
 
   m_width->SetRange( s_min_width, std::numeric_limits<int>::max() );
   m_height->SetRange( s_min_height, std::numeric_limits<int>::max() );
@@ -161,29 +172,35 @@ void bf::layer_properties_frame::create_sizer_controls()
     ( new wxStaticText(this, wxID_ANY, _("Height")), 1, wxEXPAND | wxALL, 5 );
   sizer->Add( m_height, 0 );
 
+  // Size
   wxSizer* s_sizer = new wxStaticBoxSizer( wxVERTICAL, this, _("Size") );
   s_sizer->Add( m_fit_level, 0 );
   s_sizer->Add( sizer, 0 );
-
   sizer = new wxBoxSizer( wxVERTICAL );
   sizer->Add(s_sizer, 0 );
 
+  // Class name
   s_sizer = new wxBoxSizer( wxHORIZONTAL );
-
   s_sizer->Add
     ( new wxStaticText(this, wxID_ANY, _("Class name")), 1, wxEXPAND );
   s_sizer->Add( m_class_name, 0, wxEXPAND );
-
   sizer->Add( s_sizer, 1, wxEXPAND | wxALL, 5 );
 
+  // Name
   s_sizer = new wxBoxSizer( wxHORIZONTAL );
-
   s_sizer->Add
     ( new wxStaticText(this, wxID_ANY, _("Name")), 1, wxEXPAND );
-  s_sizer->Add( m_name, 1, wxEXPAND );
-
+  s_sizer->Add( m_name, 1, wxEXPAND );  
+  sizer->Add( s_sizer, 1, wxEXPAND | wxALL, 5 );
+  
+  // Tag
+  s_sizer = new wxBoxSizer( wxHORIZONTAL );
+  s_sizer->Add
+    ( new wxStaticText(this, wxID_ANY, _("Tag")), 1, wxEXPAND );
+  s_sizer->Add( m_tag, 1, wxEXPAND );
   sizer->Add( s_sizer, 1, wxEXPAND | wxALL, 5 );
 
+  // Dialog
   sizer->Add( CreateStdDialogButtonSizer(wxOK | wxCANCEL), 0,
               wxALL | wxCENTER, 5 );
 

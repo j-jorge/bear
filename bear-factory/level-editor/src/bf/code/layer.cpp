@@ -31,7 +31,7 @@ bf::layer::layer
 ( const std::string& layer_type, const std::string& layer_name,
   bool fit_level, unsigned int width, unsigned int height )
   : m_fit_level(fit_level), m_width(width), m_height(height),
-    m_layer_type(layer_type), m_layer_name(layer_name)
+    m_layer_type(layer_type), m_layer_name(layer_name), m_tag("common")
 {
   CLAW_PRECOND( width > 0 );
   CLAW_PRECOND( height > 0 );
@@ -111,6 +111,25 @@ void bf::layer::set_name( const std::string& name )
 {
   m_layer_name = name;
 } // layer::set_name()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set the tag of the layer.
+ * \param tag The new tag of the layer.
+ */
+void bf::layer::set_tag( const std::string& tag )
+{
+  m_tag = tag;
+} // layer::set_tag()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Return the tag of the layer.
+ */
+std::string bf::layer::get_tag() const
+{
+  return m_tag;
+} // layer::get_tag()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -567,8 +586,9 @@ void bf::layer::assign( const layer& that )
   m_fit_level = that.m_fit_level;
   m_width = that.m_width;
   m_height = that.m_height;
-  m_layer_type = that. m_layer_type;
-  m_layer_name = that. m_layer_name;
+  m_layer_type = that.m_layer_type;
+  m_layer_name = that.m_layer_name;
+  m_tag = that.m_tag;
 
   for ( filter_list::const_iterator it=that.m_filters.begin();
         it!=that.m_filters.end(); ++it )

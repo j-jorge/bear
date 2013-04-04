@@ -116,11 +116,13 @@ void bf::level_file_xml_reader::load_layer
   unsigned int width, height;
   wxString val;
   wxString name;
+  std::string tag;
 
   width = xml::reader_tool::read_uint(node, wxT("width"));
   height = xml::reader_tool::read_uint(node, wxT("height"));
   fit_level = ((width == lvl.get_width()) && (height == lvl.get_height()))
     || xml::reader_tool::read_bool_opt( node, wxT("fit_level"), false );
+  tag = xml::reader_tool::read_string_opt( node, wxT("tag"), "" );
 
   if ( !node->GetPropVal( wxT("class_name"), &val ) )
     throw xml::missing_property( "class_name" );
@@ -130,6 +132,9 @@ void bf::level_file_xml_reader::load_layer
   layer& lay =
     lvl.add_layer
     (wx_to_std_string(val), wx_to_std_string(name), fit_level, width, height );
+  
+  if ( ! tag.empty() )
+    lay.set_tag(tag);
 
   load_layer_content( pool, lay, node->GetChildren() );
 } // level_file_xml_reader::load_layer()

@@ -21,6 +21,7 @@
 #include <set>
 #include <list>
 #include <map>
+#include <string>
 
 namespace bf
 {
@@ -58,6 +59,9 @@ namespace bf
     void resize( unsigned int width, unsigned int height );
     void set_class_name( const std::string& class_name );
     void set_name( const std::string& name );
+
+    void set_tag( const std::string& tag );
+    std::string get_tag() const;
 
     void add_item( item_instance* item );
     void remove_item( item_instance* item );
@@ -145,6 +149,9 @@ namespace bf
 
     /** \brief The prioritized items. */
     item_list_type m_priority;
+
+    /** \brief The tag of the layer. */
+    std::string m_tag;
 
   }; // class layer
 } // namespace bf

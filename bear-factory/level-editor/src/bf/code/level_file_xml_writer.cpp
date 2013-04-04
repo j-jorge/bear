@@ -51,7 +51,8 @@ void bf::level_file_xml_writer::save_layer
      << xml::util::replace_special_characters( the_layer.get_name() )
      << "' width='"
      << the_layer.get_width() << "' height='" << the_layer.get_height()
-     << "' fit_level='" << the_layer.fits_level() << "'>\n\n";
+     << "' fit_level='" << the_layer.fits_level()
+     << "' tag='" << the_layer.get_tag() << "'>\n\n";
 
   save_items(os, the_layer);
   save_priority(os, the_layer);
