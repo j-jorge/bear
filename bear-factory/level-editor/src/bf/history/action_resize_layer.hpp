@@ -32,12 +32,13 @@ namespace bf
      * \param height The new height of the layer.
      * \param class_name The name of the class of the layer.
      * \param name The name of the layer.
+     * \param tag The tag of the layer.
      * \param lay The layer to resize.
      */
     action_resize_layer
     ( bool fit_level, unsigned int width, unsigned int height,
       const std::string& class_name, const std::string& name,
-      unsigned int lay );
+      const std::string& tag, unsigned int lay );
 
     /**
      * \remark Calling execute() two times will restore the initial size.
@@ -63,6 +64,9 @@ namespace bf
 
     /** \brief The name of the layer. */
     std::string m_name;
+
+    /** \brief The tag of the layer. */
+    std::string m_tag;
 
     /** \brief The layer to resize. */
     unsigned int m_layer;

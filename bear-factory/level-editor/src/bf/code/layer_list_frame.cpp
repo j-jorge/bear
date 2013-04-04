@@ -443,7 +443,8 @@ bf::level_action* bf::layer_list_frame::create_stretch_layer_action
 
   result->add_action
     ( new action_resize_layer
-      ( fit_level, w, h, lay.get_class_name(), lay.get_name(), index ) );
+      ( fit_level, w, h, lay.get_class_name(), 
+        lay.get_name(), lay.get_tag(), index ) );
 
   return result;
 } // layer_list_frame::create_stretch_layer_action()
@@ -496,7 +497,8 @@ void bf::layer_list_frame::on_new_layer( wxCommandEvent& WXUNUSED(event) )
           ( new layer
             ( dlg.get_layer_class_name(), dlg.get_layer_name(),
               dlg.get_layer_fits_level(),
-              dlg.get_layer_width(), dlg.get_layer_height() ),
+              dlg.get_layer_width(), dlg.get_layer_height(),
+              dlg.get_tag() ),
             m_level_view->get_level().layers_count() ) );
 
       fill();
@@ -533,7 +535,7 @@ void bf::layer_list_frame::on_show_properties( wxCommandEvent& WXUNUSED(event) )
             ( new action_resize_layer
               ( dlg.get_layer_fits_level(), dlg.get_layer_width(),
                 dlg.get_layer_height(), dlg.get_layer_class_name(),
-                dlg.get_layer_name(),
+                dlg.get_layer_name(), dlg.get_tag(),
                 m_level_view->get_level().get_active_layer_index() ) );
 
           m_level_view->Refresh();

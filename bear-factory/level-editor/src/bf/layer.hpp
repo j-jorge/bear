@@ -49,7 +49,8 @@ namespace bf
   public:
     explicit layer( const std::string& layer_type = "decoration_layer",
                     const std::string& layer_name = "", bool fit_level = true,
-                    unsigned int width = 1, unsigned int height = 1 );
+                    unsigned int width = 1, unsigned int height = 1,
+                    const std::string& tag = "");
     layer( const layer& that );
     ~layer();
 

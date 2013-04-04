@@ -26,12 +26,14 @@
  * \param fit_level Tell if the size of the layer is the size of the level.
  * \param width The width of the layer.
  * \param height The height of the layer.
+ * \param tag The tag of the layer.
  */
 bf::layer::layer
 ( const std::string& layer_type, const std::string& layer_name,
-  bool fit_level, unsigned int width, unsigned int height )
+  bool fit_level, unsigned int width, unsigned int height, 
+  const std::string& tag)
   : m_fit_level(fit_level), m_width(width), m_height(height),
-    m_layer_type(layer_type), m_layer_name(layer_name), m_tag("")
+    m_layer_type(layer_type), m_layer_name(layer_name), m_tag(tag)
 {
   CLAW_PRECOND( width > 0 );
   CLAW_PRECOND( height > 0 );
