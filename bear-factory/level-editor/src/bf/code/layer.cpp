@@ -31,7 +31,7 @@ bf::layer::layer
 ( const std::string& layer_type, const std::string& layer_name,
   bool fit_level, unsigned int width, unsigned int height )
   : m_fit_level(fit_level), m_width(width), m_height(height),
-    m_layer_type(layer_type), m_layer_name(layer_name), m_tag("common")
+    m_layer_type(layer_type), m_layer_name(layer_name), m_tag("")
 {
   CLAW_PRECOND( width > 0 );
   CLAW_PRECOND( height > 0 );

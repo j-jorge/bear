@@ -19,7 +19,7 @@
  * \param size The size of the layer.
  */
 bear::engine::layer::layer( const universe::size_box_type& size )
-  : m_size( size ), m_tag("common")
+  : m_size( size ), m_tag("")
 {
   CLAW_PRECOND( size.x != 0 );
   CLAW_PRECOND( size.y != 0 );
