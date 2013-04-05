@@ -71,6 +71,8 @@ namespace bear
       visual::scene_element
       element_to_screen_coordinates( const visual::scene_element& e ) const;
 
+      std::vector<layer*> get_layers_by_tag( std::string tag ) const;
+
       void shot( visual::screen& screen, claw::graphic::image& img ) const;
 
       void set_overview_activated( bool b );
