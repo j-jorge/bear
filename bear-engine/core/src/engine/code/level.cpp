@@ -97,7 +97,7 @@ void bear::engine::level::progress( universe::time_type elapsed_time )
         {
           region_type areas(active_regions);
           get_layer_region(i, areas);
-          m_layers[i]->progress( areas, elapsed_time );
+          m_layers[i]->update( areas, elapsed_time );
         }
 
       if ( m_ears != universe::item_handle(NULL) )

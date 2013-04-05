@@ -49,8 +49,8 @@ namespace bear
 
       virtual void start();
 
-      virtual void progress
-      ( const region_type& active_area, universe::time_type elapsed_time  ) = 0;
+      void update
+        ( const region_type& active_area, universe::time_type elapsed_time  );
 
       void get_visual
       ( std::list<scene_visual>& visuals,
@@ -67,7 +67,16 @@ namespace bear
       world& get_world();
       const world& get_world() const;
 
+      void set_visible( bool v );
+      bool is_visible() const;
+
+      void set_active( bool v );
+      bool is_active() const;
+
     private:
+      virtual void progress
+      ( const region_type& active_area, universe::time_type elapsed_time  ) = 0;
+
       virtual void do_add_item( base_item& item );
       virtual void do_remove_item( base_item& item );
       virtual void do_drop_item( base_item& item );
@@ -89,6 +98,13 @@ namespace bear
 
       /** \brief The tag of the layer. */
       std::string m_tag;
+
+      /** \brief Tells if the layer is visible. */
+      bool m_visible;
+
+      /** \brief Tells if the layer is active. */
+      bool m_active;
+
     }; // class layer
   } // namespace engine
 } // namespace bear

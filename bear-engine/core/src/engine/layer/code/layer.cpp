@@ -19,7 +19,7 @@
  * \param size The size of the layer.
  */
 bear::engine::layer::layer( const universe::size_box_type& size )
-  : m_size( size ), m_tag("")
+  : m_size( size ), m_visible( true ), m_active( true )
 {
   CLAW_PRECOND( size.x != 0 );
   CLAW_PRECOND( size.y != 0 );
@@ -73,6 +73,21 @@ std::string bear::engine::layer::get_tag() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Updates a region in the layer.
+ * \param active_area The region to update.
+ * \param elapsed_time The elapsed time since the last call.
+ */
+void bear::engine::layer::update
+( const region_type& active_area, universe::time_type elapsed_time  )
+{
+  if ( !is_active() )
+    return;
+
+  progress( active_area, elapsed_time );
+} // layer::update()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the sprites of the items in the visible area.
  * \param visuals (out) The sprites in the visible area, and their positions.
  * \param visible_area The visible part of the layer.
@@ -81,6 +96,9 @@ void bear::engine::layer::get_visual
 ( std::list<scene_visual>& visuals,
   const universe::rectangle_type& visible_area ) const
 {
+  if ( !is_visible() )
+    return;
+
   std::set<base_item*>::const_iterator it;
 
   for ( it=m_always_displayed.begin(); it!=m_always_displayed.end(); ++it )
@@ -171,6 +189,44 @@ bool bear::engine::layer::has_world() const
 {
   return do_get_world() != NULL;
 } // layer::has_world()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Changes the visibility of the layer.
+ * \param v The new visibility.
+ */
+void bear::engine::layer::set_visible( bool v )
+{
+  m_visible = v;
+} // layer::set_visible()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the layer is visible.
+ */
+bool bear::engine::layer::is_visible() const
+{
+  return m_visible;
+} // layer::is_visible()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets if the layer is active, i.e. the update function has an effect.
+ * \param v The new value of the active flag.
+ */
+void bear::engine::layer::set_active( bool v )
+{
+  m_active = v;
+} // layer::set_active()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the layer is active, i.e. the update function has an effect.
+ */
+bool bear::engine::layer::is_active() const
+{
+  return m_active;
+} // layer::is_active()
 
 /*----------------------------------------------------------------------------*/
 /**
