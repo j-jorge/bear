@@ -1295,11 +1295,9 @@ void bf::model_frame::on_next_change(wxCommandEvent& WXUNUSED(event))
 {
   if (m_history.get_model().has_active_action())
     {
-      const action& a = m_history.get_model().get_active_action();
+      m_slider->set_value
+        (m_model_view->get_duration_until_next() +  m_slider->get_value());
 
-      // TODO
-      // move the current tick
-      
       fill();
     }
 } // model_frame::on_next_change()
