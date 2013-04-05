@@ -82,13 +82,14 @@ namespace bf
 
     void show_item_position_error();
 
+    void diffuse_tag_visibility( int index );
+
     void on_new_layer(wxCommandEvent& event);
     void on_delete(wxCommandEvent& event);
 
     void on_show_properties(wxCommandEvent& event);
     void on_stretch_layer(wxCommandEvent& event);
     void on_toggle_layer(wxCommandEvent& event);
-    void toggle_tag_visibility( int index );
     void on_select_layer(wxCommandEvent& event);
 
     void on_move_up(wxCommandEvent& event);
