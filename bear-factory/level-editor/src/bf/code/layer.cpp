@@ -299,7 +299,7 @@ const std::string& bf::layer::get_name() const
  */
 std::string bf::layer::get_displayed_name() const
 {
-  return m_layer_name + " [" + m_layer_type + "]";
+  return "{" + m_tag + "} " + m_layer_name + " [" + m_layer_type + "]";
 } // layer::get_displayed_name()
 
 /*----------------------------------------------------------------------------*/

@@ -88,6 +88,7 @@ namespace bf
     void on_show_properties(wxCommandEvent& event);
     void on_stretch_layer(wxCommandEvent& event);
     void on_toggle_layer(wxCommandEvent& event);
+    void toggle_tag_visibility( int index );
     void on_select_layer(wxCommandEvent& event);
 
     void on_move_up(wxCommandEvent& event);

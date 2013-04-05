@@ -526,20 +526,25 @@ void bf::layer_list_frame::on_show_properties( wxCommandEvent& WXUNUSED(event) )
 
   if (index != wxNOT_FOUND)
     {
-      layer_properties_frame dlg(this);
-      dlg.fill_from( m_level_view->get_level().get_active_layer() );
-
-      if ( dlg.ShowModal() == wxID_OK )
+      if ( wxGetKeyState(WXK_SHIFT) )
+        toggle_tag_visibility(index);
+      else
         {
-          m_level_view->do_action
-            ( new action_resize_layer
-              ( dlg.get_layer_fits_level(), dlg.get_layer_width(),
-                dlg.get_layer_height(), dlg.get_layer_class_name(),
-                dlg.get_layer_name(), dlg.get_tag(),
-                m_level_view->get_level().get_active_layer_index() ) );
-
-          m_level_view->Refresh();
-          fill();
+          layer_properties_frame dlg(this);
+          dlg.fill_from( m_level_view->get_level().get_active_layer() );
+          
+          if ( dlg.ShowModal() == wxID_OK )
+            {
+              m_level_view->do_action
+                ( new action_resize_layer
+                  ( dlg.get_layer_fits_level(), dlg.get_layer_width(),
+                    dlg.get_layer_height(), dlg.get_layer_class_name(),
+                    dlg.get_layer_name(), dlg.get_tag(),
+                    m_level_view->get_level().get_active_layer_index() ) );
+              
+              m_level_view->Refresh();
+              fill();
+            }
         }
     }
 } // layer_list_frame::on_show_properties()
@@ -583,13 +588,40 @@ void bf::layer_list_frame::on_toggle_layer( wxCommandEvent& WXUNUSED(event) )
 {
   // I did not find any way to get the index of the changed item, so I update
   // all layers
-
   for (unsigned int i=0; i!=m_layer_list->GetCount(); ++i)
     m_level_view->get_level().set_layer_visibility
       ( i, m_layer_list->IsChecked(i) );
 
   m_level_view->Refresh();
 } // layer_list_frame::on_toggle_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adjust the visibility of all layer according a tag.
+ * \param index The selected item.
+ */
+void bf::layer_list_frame::toggle_tag_visibility( int index )
+{
+  if ( m_level_view != NULL )
+    {
+      std::string tag = m_level_view->get_level().get_layer(index).get_tag();
+      bool visible = ! m_layer_list->IsChecked(index);
+  
+      for (unsigned int i=0; i!=m_layer_list->GetCount(); ++i)
+        {
+          if ( m_level_view->get_level().get_layer(i).get_tag() == tag )
+            {
+              m_layer_list->Check(i,visible);
+              m_level_view->get_level().set_layer_visibility( i, visible );
+            }
+          else
+            m_level_view->get_level().set_layer_visibility
+              ( i, m_layer_list->IsChecked(i) );
+        }
+
+      m_level_view->Refresh();
+    }
+} // layer_list_frame::toggle_tag_visibility()
 
 /*----------------------------------------------------------------------------*/
 /**
