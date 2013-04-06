@@ -141,27 +141,6 @@ bear::visual::scene_element bear::engine::level::element_to_screen_coordinates
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Gets all the layers having a given tag.
- * \param tag The tag of the layers to return.
- * \return The layers having \a in their tags, ordered from the background to
- *         the foreground.
- */
-std::vector<bear::engine::layer*>
-bear::engine::level::get_layers_by_tag( std::string tag ) const
-{
-  std::vector<layer*> result;
-
-  for ( layer_vector::const_iterator it( m_layers.begin() );
-        it != m_layers.end();
-        ++it )
-    if ( (*it)->get_tag() == tag )
-      result.push_back(*it);
-
-  return result;
-} // level::get_layers_by_tag()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Create a big picture of the level.
  * \param screen The screen on which we do the captured drawings.
  * \param img The image in which we save the resulting capture.
@@ -343,6 +322,24 @@ void bear::engine::level::push_layer( gui_layer* the_layer )
   the_layer->pre_cache();
   the_layer->build();
 } // level::push_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets an iterator on the beginning of the sequence of layers.
+ */
+bear::engine::level::layer_iterator bear::engine::level::layer_begin()
+{
+  return m_layers.begin();
+} // level::layer_begin()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets an iterator on the end of the sequence of layers.
+ */
+bear::engine::level::layer_iterator bear::engine::level::layer_end()
+{
+  return m_layers.end();
+} // level::layer_end()
 
 /*----------------------------------------------------------------------------*/
 /**

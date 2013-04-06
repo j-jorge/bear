@@ -55,6 +55,13 @@ namespace bear
           claw::const_dereference<layer> >
         ::iterator_type const_layer_iterator;
 
+      /** \brief The type of the iterators on the layers of the level. */
+      typedef claw::wrapped_iterator
+        < layer,
+          layer_vector::iterator,
+          claw::dereference<layer> >
+        ::iterator_type layer_iterator;
+
     public:
       level
       ( const std::string& name, const std::string& filename,
@@ -70,8 +77,6 @@ namespace bear
       void render( visual::screen& screen ) const;
       visual::scene_element
       element_to_screen_coordinates( const visual::scene_element& e ) const;
-
-      std::vector<layer*> get_layers_by_tag( std::string tag ) const;
 
       void shot( visual::screen& screen, claw::graphic::image& img ) const;
 
@@ -91,6 +96,9 @@ namespace bear
 
       void push_layer( layer* the_layer );
       void push_layer( gui_layer* the_layer );
+
+      layer_iterator layer_begin();
+      layer_iterator layer_end();
 
       const_layer_iterator layer_begin() const;
       const_layer_iterator layer_end() const;
