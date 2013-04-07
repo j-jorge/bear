@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::layer_shader" category="layer_shader" box_color="#AF0A86" fixable="false" url="http://www.gamned.org/wiki/index.php/layer_shader">
+  <inherit>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>
+    This item applies a shader to all the items in its layer.
+  </description>
+
+  <fields>
+    <field type="string" name="layer_shader.shader" required="true">
+      <description>The path to the layer_shader program.</description>
+    </field>
+
+    <field type="string" name="layer_shader.kill_delay">
+      <description>The duration after which the shader is removed.</description>
+      <default_value>infinity</default_value>
+    </field>
+
+    <field type="item_reference" name="layer_shader.variables" list="true">
+
+      <description>
+        The shader variables and how they are updated during the program.
+      </description>
+
+      <set>
+        <element value="bear::layer_shader_variable"/>
+      </set>
+    </field>
+
+  </fields>
+
+</item>

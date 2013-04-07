@@ -14,7 +14,7 @@
 
 #include "concept/region.hpp"
 #include "engine/base_item.hpp"
-#include "universe/types.hpp"
+#include "visual/shader_program.hpp"
 
 #include <claw/math.hpp>
 #include <set>
@@ -73,6 +73,8 @@ namespace bear
       void set_active( bool v );
       bool is_active() const;
 
+      void set_shader( visual::shader_program s );
+
     private:
       virtual void progress
       ( const region_type& active_area, universe::time_type elapsed_time  ) = 0;
@@ -104,6 +106,9 @@ namespace bear
 
       /** \brief Tells if the layer is active. */
       bool m_active;
+
+      /** \brief The shader to apply to the items in this layer. */
+      visual::shader_program m_shader;
 
     }; // class layer
   } // namespace engine

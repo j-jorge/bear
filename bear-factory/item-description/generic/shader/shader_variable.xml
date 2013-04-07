@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::shader_variable" category="shader" box_color="#AF0A86" url="http://www.gamned.org/wiki/index.php/shader_variable">
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::shader_variable" category="shader" box_color="#AF0A86" fixable="false" url="http://www.gamned.org/wiki/index.php/shader_variable">
   <inherit>
     <class>bear::base_item</class>
   </inherit>

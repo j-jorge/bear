@@ -13,6 +13,9 @@
 #include <claw/logger.hpp>
 #include <claw/assert.hpp>
 
+#include "visual/scene_shader_pop.hpp"
+#include "visual/scene_shader_push.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -106,6 +109,12 @@ void bear::engine::layer::get_visual
       (*it)->insert_visual(visuals);
 
   do_get_visual(visuals, visible_area);
+
+  if ( m_shader.is_valid() )
+    {
+      visuals.push_front( visual::scene_shader_push( m_shader ) );
+      visuals.push_back( visual::scene_shader_pop() );
+    }
 } // layer::get_visual()
 
 /*----------------------------------------------------------------------------*/
@@ -192,6 +201,26 @@ bool bear::engine::layer::has_world() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Get the world.
+ */
+bear::engine::world& bear::engine::layer::get_world()
+{
+  CLAW_PRECOND( has_world() );
+  return *do_get_world();
+} // layer::get_world()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the world.
+ */
+const bear::engine::world& bear::engine::layer::get_world() const
+{
+  CLAW_PRECOND( has_world() );
+  return *do_get_world();
+} // layer::get_world()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Changes the visibility of the layer.
  * \param v The new visibility.
  */
@@ -230,23 +259,13 @@ bool bear::engine::layer::is_active() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the world.
+ * \brief Sets the shader to apply to the items in this layer.
+ * \param s The shader.
  */
-bear::engine::world& bear::engine::layer::get_world()
+void bear::engine::layer::set_shader( visual::shader_program s )
 {
-  CLAW_PRECOND( has_world() );
-  return *do_get_world();
-} // layer::get_world()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the world.
- */
-const bear::engine::world& bear::engine::layer::get_world() const
-{
-  CLAW_PRECOND( has_world() );
-  return *do_get_world();
-} // layer::get_world()
+  m_shader = s;
+} // layer::set_shader()
 
 /*----------------------------------------------------------------------------*/
 /**

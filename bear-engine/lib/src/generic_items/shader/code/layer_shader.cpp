@@ -11,6 +11,9 @@
 #include "generic_items/shader/layer_shader.hpp"
 
 #include "engine/item_brick/loader/single_tweener_loader.hpp"
+#include "engine/level_globals.hpp"
+#include "engine/layer/layer.hpp"
+
 #include "engine/export.hpp"
 
 /*----------------------------------------------------------------------------*/
@@ -112,6 +115,7 @@ BASE_ITEM_EXPORT( layer_shader, bear )
  * \brief Constructor.
  */
 bear::layer_shader::layer_shader()
+: m_kill_delay( std::numeric_limits<universe::time_type>::infinity() )
 {
   set_phantom(true);
   set_can_move_items(false);
@@ -150,7 +154,7 @@ void bear::layer_shader::progress( universe::time_type elapsed_time )
           m_shader.set_variable
             ( m_variables[i]->get_name(), m_variables[i]->get_value() );
 
-      //get_layer().set_shader( m_shader );
+      get_layer().set_shader( m_shader );
     }
 } // layer_shader::progress()
 
@@ -171,9 +175,7 @@ void bear::layer_shader::set_kill_delay( universe::time_type t )
  */
 void bear::layer_shader::set_shader_file( std::string n )
 {
-  std::stringstream s;
-
-  m_shader = visual::shader_program( s );
+  m_shader = get_level_globals().get_shader( n );
 } // layer_shader::set_shader_file()
 
 /*----------------------------------------------------------------------------*/
