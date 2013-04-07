@@ -72,6 +72,7 @@ bear::shader_variable::shader_variable()
 /*---------------------------------------------------------------------------*/
 /**
  * \brief Does one iteration in the progression of the item.
+ * \param elapsed_time The elapsed time since the last call.
  */
 void bear::shader_variable::progress( universe::time_type elapsed_time )
 {

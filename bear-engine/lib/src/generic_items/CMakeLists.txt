@@ -131,6 +131,7 @@ set( GENERIC_ITEM_SOURCE_FILES
   script/code/add_script_actor.cpp
   script/code/script_director.cpp
 
+  shader/code/layer_shader.cpp
   shader/code/shader_variable.cpp
 
   system/code/system_fullscreen_toggle.cpp

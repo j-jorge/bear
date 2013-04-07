@@ -73,6 +73,8 @@ namespace bear
       bool is_linked_to( const physical_item& item ) const;
       bool is_linked_to( const physical_item& item, std::size_t id ) const;
 
+      time_type get_age() const;
+
       virtual void get_dependent_items( std::list<physical_item*>& d ) const;
 
       virtual void time_step( time_type elapsed_time );
@@ -195,6 +197,9 @@ namespace bear
 
       /** \brief A structure used by the world for the progress of the item. */
       world_progress_structure m_world_progress_structure;
+
+      /** \brief The age of this item. */
+      time_type m_age;
 
     }; // class physical_item
   } // namespace universe

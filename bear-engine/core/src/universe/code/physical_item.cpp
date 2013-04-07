@@ -30,7 +30,7 @@
  * \brief Constructor.
  */
 bear::universe::physical_item::physical_item()
-  : m_owner(NULL), m_world_progress_structure(*this)
+  : m_owner(NULL), m_world_progress_structure(*this), m_age(0)
 {
 
 } // physical_item::physical_item()
@@ -42,7 +42,8 @@ bear::universe::physical_item::physical_item()
  * \remark Links are not copied.
  */
 bear::universe::physical_item::physical_item( const physical_item& that )
-  : physical_item_state(that), m_owner(NULL), m_world_progress_structure(*this)
+  : physical_item_state(that), m_owner(NULL), m_world_progress_structure(*this),
+    m_age(0) // new item, new age
 {
   set_forced_movement( that.m_forced_movement );
 } // physical_item::physical_item()
@@ -187,6 +188,15 @@ bool bear::universe::physical_item::is_linked_to
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the age of this item.
+ */
+bear::universe::time_type bear::universe::physical_item::get_age() const
+{
+  return m_age;
+} // physical_item::get_age()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the items concerned by a progress/move of this one.
  * \param d (out) A list to which are added such items.
  */
@@ -203,7 +213,7 @@ void bear::universe::physical_item::get_dependent_items
  */
 void bear::universe::physical_item::time_step( time_type elapsed_time )
 {
-  // nothing to do
+  m_age += elapsed_time;
 } // physical_item::time_step()
 
 /*----------------------------------------------------------------------------*/

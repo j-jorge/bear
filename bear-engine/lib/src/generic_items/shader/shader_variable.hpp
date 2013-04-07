@@ -5,16 +5,13 @@
 */
 /**
  * \file
- * \brief An item existing only for a decoration purpose.
- * \author Sebastien Angibaud
+ * \brief A variable in a shader program and how its value is updated.
+ * \author Julien Jorge
  */
 #ifndef __BEAR_SHADER_VARIABLE_HPP__
 #define __BEAR_SHADER_VARIABLE_HPP__
 
 #include "engine/base_item.hpp"
-#include "engine/item_brick/basic_renderable_item.hpp"
-#include "engine/item_brick/item_with_decoration.hpp"
-#include "engine/item_brick/item_with_text.hpp"
 
 #include "generic_items/class_export.hpp"
 
