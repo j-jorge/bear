@@ -2,6 +2,8 @@ set( DEBUG_TARGET_NAME bear_debug )
 
 #-------------------------------------------------------------------------------
 set( DEBUG_SOURCE_FILES
+  code/scoped_time_measure.cpp
+  code/timelog.cpp
   code/timing_log.cpp
 )
 

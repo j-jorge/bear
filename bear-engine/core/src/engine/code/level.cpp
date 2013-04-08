@@ -19,6 +19,8 @@
 #include "engine/variable/base_variable.hpp"
 #include "universe/const_item_handle.hpp"
 
+#include "debug/scoped_time_measure.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -87,6 +89,8 @@ void bear::engine::level::stop()
  */
 void bear::engine::level::progress( universe::time_type elapsed_time )
 {
+  BEAR_CREATE_SCOPED_TIMELOG( std::string("progress level") );
+
   if ( !is_paused() )
     {
       region_type active_regions;
@@ -118,6 +122,8 @@ void bear::engine::level::progress( universe::time_type elapsed_time )
  */
 void bear::engine::level::render( visual::screen& screen ) const
 {
+  BEAR_CREATE_SCOPED_TIMELOG( std::string("render level") );
+
   render_layers(screen);
   render_gui(screen);
 } // level::render()

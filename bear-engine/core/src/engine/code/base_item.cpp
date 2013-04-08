@@ -21,6 +21,8 @@
 
 #include "visual/scene_element_sequence.hpp"
 
+#include "debug/scoped_time_measure.hpp"
+
 /*----------------------------------------------------------------------------*/
 bear::engine::base_item::id_type bear::engine::base_item::s_next_id = 1;
 
@@ -307,6 +309,9 @@ void bear::engine::base_item::progress( universe::time_type elapsed_time )
 void
 bear::engine::base_item::insert_visual( std::list<scene_visual>& visuals ) const
 {
+  BEAR_CREATE_SCOPED_TIMELOG
+    ( std::string("insert_visual ") + get_class_name() );
+
   std::list<scene_visual> v;
   get_visual( v );
 
@@ -1071,6 +1076,8 @@ void bear::engine::base_item::collision( universe::collision_info& info )
  */
 void bear::engine::base_item::time_step( universe::time_type elapsed_time )
 {
+  BEAR_CREATE_SCOPED_TIMELOG( std::string("progress ") + get_class_name() );
+
   if (!m_dying)
     progress(elapsed_time);
 } // base_item::time_step()
