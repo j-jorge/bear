@@ -28,6 +28,13 @@
       </set>
     </field>
 
+    <field type="string" name="layer_shader.layer_tags" list="true">
+
+      <description>
+        The tags of the layers to which the shader must be applied.
+      </description>
+    </field>
+
   </fields>
 
 </item>

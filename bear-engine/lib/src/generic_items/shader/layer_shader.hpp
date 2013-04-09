@@ -28,6 +28,9 @@ namespace bear
    *  - \a shader: (string) \c The shader file,
    *  - \a variables: (list of shader_variable) \c The items that compute the
    *       values of the variables in the shader. (default = none:in_out),
+   *  - \a layers: (list of string) \c The tags of the layers to which the
+   *    shader must be applied (default is to apply to the layer containing the
+   *    item),
    *  - \a kill_delay: (real) Tells the item to kill itself after this number of
    *       seconds (default = infinity),
    *  - \a duration: (real) The duration of the tweener, in seconds
@@ -68,6 +71,8 @@ namespace bear
       bool set_field( const std::string& name, double value );
       bool set_field
       ( const std::string& name, const std::vector<engine::base_item*>& value );
+      bool set_field
+      ( const std::string& name, const std::vector<std::string>& value );
 
     private:
       /** \brief The instance loaded by this loader. */
@@ -87,6 +92,8 @@ namespace bear
 
     void add_variable( const shader_variable& v );
 
+    void add_layer_tag( std::string tag );
+
   protected:
     void populate_loader_map( engine::item_loader_map& m );
 
@@ -100,6 +107,9 @@ namespace bear
     /** \brief The items that compute the values of the variables in the
         shader. */
     std::vector<shader_variable_pointer> m_variables;
+
+    /** \brief The tags of the layers to which the shader must be applied. */
+    std::vector<std::string> m_layer_tags;
 
   }; // class layer_shader
 } // namespace bear

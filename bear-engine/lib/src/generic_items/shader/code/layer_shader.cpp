@@ -11,6 +11,7 @@
 #include "generic_items/shader/layer_shader.hpp"
 
 #include "engine/item_brick/loader/single_tweener_loader.hpp"
+#include "engine/level.hpp"
 #include "engine/level_globals.hpp"
 #include "engine/layer/layer.hpp"
 
@@ -105,6 +106,27 @@ bool bear::layer_shader::loader::set_field
   return result;
 } // layer_shader::loader::set_field()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets a field of type \c list of string.
+ * \param name The name of the field.
+ * \param value The new value of the field.
+ * \return false if the field "name" is unknow, true otherwise.
+ */
+bool bear::layer_shader::loader::set_field
+( const std::string& name, const std::vector<std::string>& value )
+{
+  bool result = true;
+
+  if ( name == "layer_tags" )
+    for ( std::size_t i(0); i != value.size(); ++i )
+      m_item.add_layer_tag( value[i] );
+  else
+    result = super::set_field(name, value);
+
+  return result;
+} // layer_shader::loader::set_field()
+
 
 
 
@@ -129,7 +151,8 @@ bear::layer_shader::layer_shader()
  * \param that The instance to copy from.
  */
 bear::layer_shader::layer_shader( const layer_shader& that )
-  : super( that ), m_shader( that.m_shader ), m_kill_delay( that.m_kill_delay )
+  : super( that ), m_shader( that.m_shader ), m_kill_delay( that.m_kill_delay ),
+    m_layer_tags( that.m_layer_tags )
 {
   for ( std::size_t i(0); i != that.m_variables.size(); ++i )
     if ( that.m_variables[i] != (shader_variable_pointer)NULL )
@@ -154,7 +177,20 @@ void bear::layer_shader::progress( universe::time_type elapsed_time )
           m_shader.set_variable
             ( m_variables[i]->get_name(), m_variables[i]->get_value() );
 
-      get_layer().set_shader( m_shader );
+      if ( m_layer_tags.empty() )
+        get_layer().set_shader( m_shader );
+      else
+        for ( engine::level::layer_iterator it( get_level().layer_begin() );
+              it != get_level().layer_end(); ++it )
+          {
+            const bool apply_shader
+              ( std::find
+                ( m_layer_tags.begin(), m_layer_tags.end(), it->get_tag() )
+                != m_layer_tags.end() );
+
+            if ( apply_shader )
+              it->set_shader( m_shader );
+          }
     }
 } // layer_shader::progress()
 
@@ -187,6 +223,16 @@ void bear::layer_shader::add_variable( const shader_variable& v )
 {
   m_variables.push_back( v.clone() );
 } // layer_shader::add_variable()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds the tag of the layers to which the shader must be applied.
+ * \param tag The tag to add.
+ */
+void bear::layer_shader::add_layer_tag( std::string tag )
+{
+  m_layer_tags.push_back( tag );
+} // layer_shader::add_layer_tag()
 
 /*----------------------------------------------------------------------------*/
 /**
