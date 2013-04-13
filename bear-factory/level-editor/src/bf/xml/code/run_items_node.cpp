@@ -39,8 +39,13 @@ void bf::xml::run_items_node::read
     if ( node->GetName() == wxT("item") )
       {
         const item_instance* item = item_node.read(pool, node);
-        config.append_item( *item );
-        delete item;
+
+        if ( item != NULL ) 
+          {
+            config.append_item( *item );
+            delete item;
+          }
+
         node = reader_tool::skip_comments(node->GetNext());
       }
 } // run_items_node::read()
