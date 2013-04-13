@@ -98,14 +98,14 @@ namespace bear
       virtual base_item* clone() const;
 
       void build_item();
+      bool is_built() const;
+
       void enters_layer();
+      void leaves_layer();
 
       item_loader_map get_loaders();
 
       virtual void pre_cache();
-      virtual void build();
-      virtual void on_enters_layer();
-      virtual void destroy();
       virtual void progress( universe::time_type elapsed_time );
 
       void insert_visual( std::list<scene_visual>& visuals ) const;
@@ -197,6 +197,11 @@ namespace bear
 
       virtual void collision
       ( base_item& that, universe::collision_info& info );
+
+      virtual void build();
+      virtual void on_enters_layer();
+      virtual void on_leaves_layer();
+      virtual void destroy();
 
       void to_string( std::string& str ) const;
 

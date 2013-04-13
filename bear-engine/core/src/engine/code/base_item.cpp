@@ -217,7 +217,7 @@ bear::engine::base_item* bear::engine::base_item::clone() const
  */
 void bear::engine::base_item::build_item()
 {
-  if ( (m_flags & item_flag_built) == item_flag_none )
+  if ( !is_built() )
     {
 #ifndef NDEBUG
       s_item_counter.count(*this);
@@ -226,6 +226,33 @@ void bear::engine::base_item::build_item()
       build();
     }
 } // base_item::build_item()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if build_item has been called on this item.
+ */
+bool bear::engine::base_item::is_built() const
+{
+  return (m_flags & item_flag_built) != item_flag_none;
+} // base_item::is_built()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Inform the item that it is in a layer now.
+ */
+void bear::engine::base_item::enters_layer()
+{
+  on_enters_layer();
+} // base_item::enters_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Informs the item that it has been be removed from its layer.
+ */
+void bear::engine::base_item::leaves_layer()
+{
+  on_leaves_layer();
+} // base_item::leaves_layer()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -242,15 +269,6 @@ bear::engine::item_loader_map bear::engine::base_item::get_loaders()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Inform the item that it is in a layer now.
- */
-void bear::engine::base_item::enters_layer()
-{
-  on_enters_layer();
-} // base_item::enters_layer()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Pre-cache the resources you need. This method is called automatically
  *        by the owner.
  */
@@ -258,35 +276,6 @@ void bear::engine::base_item::pre_cache()
 {
   // nothing to do
 } // base_item::pre_cache()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Build the item. This method is called automatically by the owner.
- */
-void bear::engine::base_item::build()
-{
-  // nothing to do
-} // base_item::build()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell the item it is in a layer now.
- */
-void bear::engine::base_item::on_enters_layer()
-{
-  // nothing to do
-} // base_item::on_enters_layer()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Destroy the item. This method is called automatically when the item
- *        is killed.
- * \pre The item has been added in a layer.
- */
-void bear::engine::base_item::destroy()
-{
-  // nothing to do
-} // base_item::destroy()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -948,8 +937,46 @@ void bear::engine::base_item::populate_loader_map( item_loader_map& m )
 void bear::engine::base_item::collision
 ( base_item& that, universe::collision_info& info )
 {
-
+  // nothing to do
 } // base_item::collision()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Build the item. This method is called automatically by the owner.
+ */
+void bear::engine::base_item::build()
+{
+  // nothing to do
+} // base_item::build()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells the item it is in a layer now.
+ */
+void bear::engine::base_item::on_enters_layer()
+{
+  // nothing to do
+} // base_item::on_enters_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells the item it has been removed from its layer.
+ */
+void bear::engine::base_item::on_leaves_layer()
+{
+  // nothing to do
+} // base_item::on_leaves_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Destroy the item. This method is called automatically when the item
+ *        is killed.
+ * \pre The item has been added in a layer.
+ */
+void bear::engine::base_item::destroy()
+{
+  // nothing to do
+} // base_item::destroy()
 
 /*----------------------------------------------------------------------------*/
 /**

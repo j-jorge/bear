@@ -132,8 +132,13 @@ void bear::engine::layer::add_item( base_item& item )
                << " '" << item.get_class_name() << "' in layer." << std::endl;
 
   item.set_environment(*this);
-  item.pre_cache();
-  item.build_item();
+
+  if ( !item.is_built() )
+    {
+      item.pre_cache();
+      item.build_item();
+    }
+
   item.enters_layer();
 
   if ( item.get_insert_as_static() )
@@ -155,6 +160,9 @@ void bear::engine::layer::remove_item( base_item& item )
   m_always_displayed.erase(&item);
 
   do_remove_item(item);
+
+  item.clear_environment();
+  item.leaves_layer();
 } // layer::remove_item()
 
 /*----------------------------------------------------------------------------*/
@@ -168,6 +176,8 @@ void bear::engine::layer::drop_item( base_item& item )
 
   do_drop_item(item);
   item.clear_environment();
+
+  item.leaves_layer();
 } // layer::drop_item()
 
 /*----------------------------------------------------------------------------*/
