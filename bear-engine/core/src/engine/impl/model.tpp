@@ -559,6 +559,19 @@ void bear::engine::model<Base>::to_string( std::string& str ) const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Removes the items of the mark from the layer when this item leaves its
+ *        layer.
+ */
+template<class Base>
+void bear::engine::model<Base>::on_leaves_layer()
+{
+  super::on_leaves_layer();
+
+  remove_all_mark_items_from_layer();
+} // model::on_leaves_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Do the progression up to a given snapshot.
  * \param initial_type The value of m_date before the call to progress.
  * \param elapsed_time Elapsed time since the last call.

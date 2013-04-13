@@ -102,6 +102,8 @@ namespace bear
 
       void to_string( std::string& str ) const;
 
+      void on_leaves_layer();
+
     private:
       void progress_to_snapshot
       ( universe::time_type initial_time, universe::time_type elapsed_time,
