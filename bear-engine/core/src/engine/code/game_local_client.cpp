@@ -1241,7 +1241,8 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
   if ( arg.has_value("--game-name") )
     m_game_description.set_game_name( arg.get_string("--game-name") );
 
-  m_stats.set_destination( arg.get_string("--stats-destination") );
+  if ( arg.has_value( "--stats-destination" ) )
+    m_stats.set_destination( arg.get_string("--stats-destination") );
 
   if ( arg.has_value("--tag") )
     m_stats.set_tag( arg.get_string("--tag") );
