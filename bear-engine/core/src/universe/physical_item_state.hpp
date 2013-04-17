@@ -196,6 +196,8 @@ namespace bear
       void set_width( size_type width );
       void set_height( size_type height );
 
+      void set_physical_state( const physical_item_state& s );
+
       virtual void to_string( std::string& str ) const;
 
     private:

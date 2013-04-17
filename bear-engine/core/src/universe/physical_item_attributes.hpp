@@ -65,7 +65,7 @@ namespace bear
       double m_hardness;
 
       /** \brief Current item's position. */
-      position_type m_position;
+      position_type m_bottom_left;
 
       /** \brief Item's size. */
       size_box_type m_size;
