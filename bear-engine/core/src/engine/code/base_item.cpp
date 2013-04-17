@@ -1105,6 +1105,8 @@ void bear::engine::base_item::time_step( universe::time_type elapsed_time )
 {
   BEAR_CREATE_SCOPED_TIMELOG( std::string("progress ") + get_class_name() );
 
+  super::time_step(elapsed_time);
+
   if (!m_dying)
     progress(elapsed_time);
 } // base_item::time_step()
