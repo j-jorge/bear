@@ -25,6 +25,8 @@
 #include <claw/functional.hpp>
 #include <claw/iterator.hpp>
 
+#include <boost/signals.hpp>
+
 namespace bear
 {
   namespace engine
@@ -74,6 +76,8 @@ namespace bear
       void stop();
 
       void progress( universe::time_type elapsed_time );
+      boost::signals::connection on_progress_done( boost::function<void ()> f );
+
       void render( visual::screen& screen ) const;
       visual::scene_element
       element_to_screen_coordinates( const visual::scene_element& e ) const;
@@ -194,6 +198,10 @@ namespace bear
 
       /** \brief The item to use to set the ears in the sound manager. */
       universe::item_handle m_ears;
+
+      /** \brief The signal emitted when the progress of the whole level is
+          done. */
+      boost::signal<void ()> m_progress_done_signal;
 
     }; // class level
   } // namespace engine

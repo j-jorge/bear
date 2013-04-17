@@ -113,7 +113,20 @@ void bear::engine::level::progress( universe::time_type elapsed_time )
     }
 
   m_gui.progress( elapsed_time );
+
+  m_progress_done_signal();
 } // level::progress()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a function to call when the progress of the level is over.
+ * \param f The function to call.
+ */
+boost::signals::connection
+bear::engine::level::on_progress_done( boost::function<void ()> f )
+{
+  return m_progress_done_signal.connect( f );
+} // bear::engine::level::on_progress_done()
 
 /*----------------------------------------------------------------------------*/
 /**
