@@ -86,7 +86,6 @@ void bear::engine::layer::update
   if ( !is_active() )
     return;
 
-  m_shader = visual::shader_program();
   progress( active_area, elapsed_time );
 } // layer::update()
 
