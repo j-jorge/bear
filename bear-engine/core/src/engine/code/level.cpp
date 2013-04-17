@@ -581,12 +581,10 @@ void bear::engine::level::render_layers
       add_region( r, view, get_camera_size() / 2 );
 
       universe::rectangle_type active( r.front() );
-      std::list<scene_visual> visuals;
-
       get_layer_area(i, active); // the active area scaled in the layer
 
+      std::list<scene_visual> visuals;
       m_layers[i]->get_visual( visuals, active );
-      visuals.sort( scene_visual::z_position_compare() );
 
       universe::rectangle_type area( view );
       get_layer_area(i, area);   // the camera scaled in the layer

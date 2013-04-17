@@ -110,6 +110,7 @@ void bear::engine::layer::get_visual
       (*it)->insert_visual(visuals);
 
   do_get_visual(visuals, visible_area);
+  visuals.sort( scene_visual::z_position_compare() );
 
   if ( m_shader.is_valid() )
     {
