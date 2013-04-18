@@ -20,6 +20,7 @@ set( ENGINE_SOURCE_FILES
   code/model_loader.cpp
   code/population.cpp
   code/resource_pool.cpp
+  code/shader_loader.cpp
   code/scene_visual.cpp
   code/sprite_loader.cpp
   code/spritepos.cpp

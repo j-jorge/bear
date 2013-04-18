@@ -13,6 +13,7 @@
 #include "engine/bitmap_font_loader.hpp"
 #include "engine/model_loader.hpp"
 #include "engine/resource_pool.hpp"
+#include "engine/shader_loader.hpp"
 #include "engine/sprite_loader.hpp"
 #include "engine/spritepos.hpp"
 
@@ -199,7 +200,7 @@ void bear::engine::level_globals::load_shader( const std::string& file_name )
                    << "'." << std::endl;
 
       std::stringstream f;
-      resource_pool::get_instance().get_file(file_name, f);
+      shader_loader::parse_shader_file( f, file_name );
 
       if (f)
         m_image_manager.load_shader_program(file_name, f);
