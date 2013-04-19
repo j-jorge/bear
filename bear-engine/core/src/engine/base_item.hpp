@@ -27,6 +27,7 @@
 #include "visual/animation.hpp"
 #include "visual/color.hpp"
 #include "visual/sprite.hpp"
+#include "visual/shader_program.hpp"
 #include "visual/font/font.hpp"
 
 namespace bear
@@ -175,6 +176,8 @@ namespace bear
       void set_z_fixed( bool fixed );
       bool is_z_fixed() const;
 
+      void set_shader( visual::shader_program s );
+
       void set_insert_as_static();
       bool get_insert_as_static() const;
 
@@ -238,6 +241,9 @@ namespace bear
 
       /** \brief The items to kill with this item. */
       life_chain_list m_life_chain;
+
+      /** \brief The shader to apply to this item. */
+      visual::shader_program m_shader;
 
       /** \brief Next item identifier. */
       static id_type s_next_id;

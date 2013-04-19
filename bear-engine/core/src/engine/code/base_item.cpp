@@ -20,6 +20,8 @@
 #include "universe/collision_info.hpp"
 
 #include "visual/scene_element_sequence.hpp"
+#include "visual/scene_shader_pop.hpp"
+#include "visual/scene_shader_push.hpp"
 
 #include "debug/scoped_time_measure.hpp"
 
@@ -332,6 +334,12 @@ bear::engine::base_item::insert_visual( std::list<scene_visual>& visuals ) const
     {
       visuals.push_back( v.front() );
       visuals.back().z_position = get_z_position();
+    }
+
+  if ( m_shader.is_valid() )
+    {
+      visuals.push_front( visual::scene_shader_push( m_shader ) );
+      visuals.push_back( visual::scene_shader_pop() );
     }
 } // base_item::insert_visual()
 
@@ -802,6 +810,16 @@ bool bear::engine::base_item::is_z_fixed() const
 {
   return m_flags & item_flag_z_fixed;
 } // base_item::is_z_fixed()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the shader program to apply when rendering this item.
+ * \param s The shader.
+ */
+void bear::engine::base_item::set_shader( visual::shader_program s )
+{
+  m_shader = s;
+} // set_shader()
 
 /*----------------------------------------------------------------------------*/
 /**
