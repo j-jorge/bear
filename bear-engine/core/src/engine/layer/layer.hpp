@@ -35,6 +35,20 @@ namespace bear
     class ENGINE_EXPORT layer:
       virtual public level_object
     {
+    private:
+      /** Tells what to do with an item once it has been built. */
+      enum post_create_action
+      {
+        /** \brief Add the item to the layer. */
+        add,
+
+        /** \brief Remove the item from the layer. */
+        remove,
+
+        /** \brief Drop the item from the layer. */
+        drop
+      }; // enum post_create_action
+
     public:
       /** \brief The type of the active area passed to the progress() method. */
       typedef concept::region<universe::rectangle_type> region_type;
@@ -90,6 +104,9 @@ namespace bear
       virtual world* do_get_world();
       virtual const world* do_get_world() const;
 
+      post_create_action mark_as_built( base_item& item );
+      bool is_currently_building( base_item& item ) const;
+
     protected:
       /** \brief Size of the layer. */
       const universe::size_box_type m_size;
@@ -109,6 +126,9 @@ namespace bear
 
       /** \brief The shader to apply to the items in this layer. */
       visual::shader_program m_shader;
+
+      /** \brief The items we are currently adding in the layer. */
+      std::map<base_item*, post_create_action> m_post_creation_action;
 
     }; // class layer
   } // namespace engine

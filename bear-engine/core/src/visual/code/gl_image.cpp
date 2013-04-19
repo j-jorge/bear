@@ -18,6 +18,8 @@
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
 
+#include "debug/scoped_time_measure.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructs an image of a given size.
@@ -93,6 +95,8 @@ void bear::visual::gl_image::draw
  ( const claw::graphic::image& data,
    claw::math::coordinate_2d<unsigned int> pos )
 {
+  BEAR_CREATE_SCOPED_TIMELOG( "draw image" );
+
   glBindTexture(GL_TEXTURE_2D, m_texture_id);
 
   const claw::graphic::rgba_pixel_8::component_type opaque =
@@ -102,18 +106,33 @@ void bear::visual::gl_image::draw
   claw::graphic::rgba_pixel_8* const pixels =
     new claw::graphic::rgba_pixel_8[ pixels_count ];
 
-  std::copy( data.begin(), data.end(), pixels );
+  {
+    BEAR_CREATE_SCOPED_TIMELOG( "std copy image" );
 
-  glTexSubImage2D
-    ( GL_TEXTURE_2D, 0, pos.x, pos.y, data.width(), data.height(), GL_RGBA,
-      GL_UNSIGNED_BYTE, pixels );
+    std::copy( data.begin(), data.end(), pixels );
+  }
+
+  {
+    BEAR_CREATE_SCOPED_TIMELOG( "glTexSubImage2D" );
+
+    glTexSubImage2D
+      ( GL_TEXTURE_2D, 0, pos.x, pos.y, data.width(), data.height(), GL_RGBA,
+        GL_UNSIGNED_BYTE, pixels );
+  }
   VISUAL_GL_ERROR_THROW();
 
-  for ( claw::graphic::rgba_pixel_8* p = pixels;
-        (p != pixels + pixels_count) && !m_has_transparency; ++p )
-    m_has_transparency = p->components.alpha != opaque;
+  {
+    BEAR_CREATE_SCOPED_TIMELOG( "check transparency" );
 
-  delete[] pixels;
+    for ( claw::graphic::rgba_pixel_8* p = pixels;
+          (p != pixels + pixels_count) && !m_has_transparency; ++p )
+      m_has_transparency = p->components.alpha != opaque;
+  }
+
+  {
+    BEAR_CREATE_SCOPED_TIMELOG( "delete" );
+    delete[] pixels;
+  }
 } // gl_image::draw()
 
 /*----------------------------------------------------------------------------*/

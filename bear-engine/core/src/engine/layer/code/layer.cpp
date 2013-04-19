@@ -132,6 +132,8 @@ void bear::engine::layer::add_item( base_item& item )
   claw::logger << claw::log_verbose << "Adding item #" << item.get_id()
                << " '" << item.get_class_name() << "' in layer." << std::endl;
 
+  m_post_creation_action[ &item ] = add;
+
   item.set_environment(*this);
 
   if ( !item.is_built() )
@@ -148,7 +150,18 @@ void bear::engine::layer::add_item( base_item& item )
       item.set_phantom(true);
     }
 
-  do_add_item(item);
+  switch ( mark_as_built( item ) )
+    {
+    case add:
+      do_add_item( item );
+      break;
+    case remove:
+      remove_item( item );
+      break;
+    case drop:
+      drop_item( item );
+      break;
+    }
 } // layer::add_item()
 
 /*----------------------------------------------------------------------------*/
@@ -158,12 +171,17 @@ void bear::engine::layer::add_item( base_item& item )
  */
 void bear::engine::layer::remove_item( base_item& item )
 {
-  m_always_displayed.erase(&item);
+  if ( is_currently_building( item ) )
+    m_post_creation_action[ &item ] = remove;
+  else
+    {
+      m_always_displayed.erase(&item);
 
-  do_remove_item(item);
+      do_remove_item(item);
 
-  item.clear_environment();
-  item.leaves_layer();
+      item.clear_environment();
+      item.leaves_layer();
+    }
 } // layer::remove_item()
 
 /*----------------------------------------------------------------------------*/
@@ -173,12 +191,17 @@ void bear::engine::layer::remove_item( base_item& item )
  */
 void bear::engine::layer::drop_item( base_item& item )
 {
-  m_always_displayed.erase(&item);
+  if ( is_currently_building( item ) )
+    m_post_creation_action[ &item ] = remove;
+  else
+    {
+      m_always_displayed.erase(&item);
 
-  do_drop_item(item);
-  item.clear_environment();
+      do_drop_item(item);
 
-  item.leaves_layer();
+      item.clear_environment();
+      item.leaves_layer();
+    }
 } // layer::drop_item()
 
 /*----------------------------------------------------------------------------*/
@@ -325,3 +348,32 @@ const bear::engine::world* bear::engine::layer::do_get_world() const
 {
   return NULL;
 } // layer::do_get_world()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Marks an item as built and returns the action that must be done after
+ *        the creation.
+ * \param item The item.
+ */
+bear::engine::layer::post_create_action
+bear::engine::layer::mark_as_built( base_item& item )
+{
+  std::map<base_item*, post_create_action>::iterator it
+    ( m_post_creation_action.find( &item ) );
+
+  const post_create_action result( it->second );
+
+  m_post_creation_action.erase( it );
+
+  return result;
+} // layer::mark_as_built()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tell if an item is currently being inserted in the layer.
+ * \param item The item.
+ */
+bool bear::engine::layer::is_currently_building( base_item& item ) const
+{
+  return m_post_creation_action.find( &item ) != m_post_creation_action.end();
+} // layer::is_currently_building()

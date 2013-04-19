@@ -16,6 +16,8 @@
 #include <claw/functional.hpp>
 #include <claw/png.hpp>
 
+#include "debug/scoped_time_measure.hpp"
+
 /*---------------------------------------------------------------------------*/
 /**
  * \brief Deletes all images.
@@ -39,6 +41,8 @@ void bear::visual::image_manager::load_image
 ( std::string name, std::istream& file )
 {
   CLAW_PRECOND( !exists(name) );
+
+  BEAR_CREATE_SCOPED_TIMELOG( "load image" );
 
   claw::graphic::png img(file);
   m_images[name] = image(img);
