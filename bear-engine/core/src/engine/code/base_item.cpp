@@ -819,7 +819,16 @@ bool bear::engine::base_item::is_z_fixed() const
 void bear::engine::base_item::set_shader( visual::shader_program s )
 {
   m_shader = s;
-} // set_shader()
+} // base_item::set_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Removes the shader program applied when rendering this item.
+ */
+void bear::engine::base_item::clear_shader()
+{
+  set_shader( visual::shader_program() );
+} // base_item::clear_shader()
 
 /*----------------------------------------------------------------------------*/
 /**

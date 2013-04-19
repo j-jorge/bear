@@ -177,6 +177,7 @@ namespace bear
       bool is_z_fixed() const;
 
       void set_shader( visual::shader_program s );
+      void clear_shader();
 
       void set_insert_as_static();
       bool get_insert_as_static() const;
