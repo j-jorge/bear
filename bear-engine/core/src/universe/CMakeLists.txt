@@ -52,6 +52,10 @@ set( UNIVERSE_SOURCE_FILES
   link/code/base_link.cpp
   link/code/chain_link.cpp
   link/code/link.cpp
+
+  shape/code/curved_box.cpp
+  shape/code/shape_base.cpp
+  shape/code/rectangle.cpp
 )
 
 add_library(
