@@ -261,15 +261,7 @@ void bear::universe::physical_item::collision( collision_info& info )
 bool
 bear::universe::physical_item::collides_with( const physical_item& that ) const
 {
-  if ( get_bounding_box().intersects( that.get_bounding_box() ) )
-    {
-      const rectangle_type inter =
-        get_bounding_box().intersection( that.get_bounding_box() );
-
-      return (inter.width() != 0) && (inter.height() != 0);
-    }
-  else
-    return false;
+  return get_shape().intersects( that.get_shape() );
 } // physical_item::collides_with()
 
 /*----------------------------------------------------------------------------*/
