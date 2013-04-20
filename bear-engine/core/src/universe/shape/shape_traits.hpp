@@ -8,8 +8,8 @@
  * \brief A traits class that helps to access remarkable points of shapes.
  * \author Julien Jorge
  */
-#ifndef __UNIVERSE_SHAPE_HPP__
-#define __UNIVERSE_SHAPE_HPP__
+#ifndef __UNIVERSE_SHAPE_TRAITS_HPP__
+#define __UNIVERSE_SHAPE_TRAITS_HPP__
 
 #include "universe/types.hpp"
 
@@ -113,4 +113,4 @@ namespace bear
 
 #include "universe/shape/impl/shape_traits.tpp"
 
-#endif // __UNIVERSE_SHAPE_HPP__
+#endif // __UNIVERSE_SHAPE_TRAITS_HPP__

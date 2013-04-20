@@ -23,15 +23,14 @@ namespace bear
      * \brief Important fields of the physical items.
      * \author Julien Jorge
      */
-    class UNIVERSE_EXPORT physical_item_state:
-      private physical_item_attributes
+    class UNIVERSE_EXPORT physical_item_state
     {
     public:
       physical_item_state();
       physical_item_state( const physical_item_state& that );
       virtual ~physical_item_state();
 
-      const size_box_type& get_size() const;
+      size_box_type get_size() const;
       size_type get_width() const;
       size_type get_height() const;
 
@@ -196,11 +195,17 @@ namespace bear
       void set_width( size_type width );
       void set_height( size_type height );
 
+      void set_shape( const shape& s );
+      shape get_shape() const;
+
       void set_physical_state( const physical_item_state& s );
 
       virtual void to_string( std::string& str ) const;
 
     private:
+      /** The attributes that define the physical state. */
+      physical_item_attributes m_attributes;
+
       /**
        * \brief Tell if the item is fixed or not.
        *

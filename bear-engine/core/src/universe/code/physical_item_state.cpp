@@ -9,7 +9,8 @@
  * \author Julien Jorge
  */
 #include "universe/physical_item_state.hpp"
-#include "universe/physical_item.hpp"
+
+#include "universe/shape/shape_traits.hpp"
 
 #include <sstream>
 #include <claw/logger.hpp>
@@ -33,7 +34,7 @@ bear::universe::physical_item_state::physical_item_state()
  */
 bear::universe::physical_item_state::physical_item_state
 ( const physical_item_state& that )
-  : physical_item_attributes(that), m_fixed(false)
+  : m_attributes(that.m_attributes), m_fixed(false)
 {
 
 } // physical_item_state::physical_item_state()
@@ -51,10 +52,10 @@ bear::universe::physical_item_state::~physical_item_state()
 /**
  * \brief Get the size of the item.
  */
-const bear::universe::size_box_type&
+bear::universe::size_box_type
 bear::universe::physical_item_state::get_size() const
 {
-  return m_size;
+  return shape_traits<shape>::get_size( m_attributes.m_shape );
 } // physical_item_state::get_size()
 
 /*----------------------------------------------------------------------------*/
@@ -63,7 +64,7 @@ bear::universe::physical_item_state::get_size() const
  */
 bear::universe::size_type bear::universe::physical_item_state::get_width() const
 {
-  return m_size.x;
+  return shape_traits<shape>::get_width( m_attributes.m_shape );
 } // physical_item_state::get_width()
 
 /*----------------------------------------------------------------------------*/
@@ -73,7 +74,7 @@ bear::universe::size_type bear::universe::physical_item_state::get_width() const
 bear::universe::size_type
 bear::universe::physical_item_state::get_height() const
 {
-  return m_size.y;
+  return shape_traits<shape>::get_height( m_attributes.m_shape );
 } // physical_item_state::get_height()
 
 /*----------------------------------------------------------------------------*/
@@ -84,7 +85,7 @@ bear::universe::physical_item_state::get_height() const
 void bear::universe::physical_item_state::set_bounding_box
 ( const bear::universe::rectangle_type& r )
 {
-  set_bottom_left(r.bottom_left());
+  set_bottom_left( r.bottom_left() );
   set_size( r.size() );
 } // physical_item_state::set_bounding_box()
 
@@ -95,7 +96,7 @@ void bear::universe::physical_item_state::set_bounding_box
 bear::universe::rectangle_type
 bear::universe::physical_item_state::get_bounding_box() const
 {
-  return rectangle_type(m_bottom_left, m_bottom_left + m_size);
+  return shape_traits<shape>::get_bounding_box( m_attributes.m_shape );
 } // physical_item_state::get_bounding_box()
 
 /*----------------------------------------------------------------------------*/
@@ -105,7 +106,7 @@ bear::universe::physical_item_state::get_bounding_box() const
 const bear::universe::force_type&
 bear::universe::physical_item_state::get_acceleration() const
 {
-  return m_acceleration;
+  return m_attributes.m_acceleration;
 } // physical_item_state::get_acceleration()
 
 /*----------------------------------------------------------------------------*/
@@ -116,11 +117,11 @@ void bear::universe::physical_item_state::set_acceleration(const force_type& a)
 {
   if (!m_fixed)
     {
-      if (m_x_fixed == 0)
-        m_acceleration.x = a.x;
+      if (m_attributes.m_x_fixed == 0)
+        m_attributes.m_acceleration.x = a.x;
 
-      if (m_y_fixed == 0)
-        m_acceleration.y = a.y;
+      if (m_attributes.m_y_fixed == 0)
+        m_attributes.m_acceleration.y = a.y;
     }
 } // physical_item_state::set_acceleration()
 
@@ -133,8 +134,9 @@ bear::universe::physical_item_state::get_force() const
 {
   const vector_type x_axis(get_x_axis());
 
-  return m_external_force + m_internal_force.x * x_axis
-    + m_internal_force.y * x_axis.get_orthonormal_anticlockwise();
+  return m_attributes.m_external_force
+    + m_attributes.m_internal_force.x * x_axis
+    + m_attributes.m_internal_force.y * x_axis.get_orthonormal_anticlockwise();
 } // physical_item_state::get_force()
 
 /*----------------------------------------------------------------------------*/
@@ -144,7 +146,7 @@ bear::universe::physical_item_state::get_force() const
 const bear::universe::force_type&
 bear::universe::physical_item_state::get_internal_force() const
 {
-  return m_internal_force;
+  return m_attributes.m_internal_force;
 } // physical_item_state::get_internal_force()
 
 /*----------------------------------------------------------------------------*/
@@ -154,7 +156,7 @@ bear::universe::physical_item_state::get_internal_force() const
 const bear::universe::force_type&
 bear::universe::physical_item_state::get_external_force() const
 {
-  return m_external_force;
+  return m_attributes.m_external_force;
 } // physical_item_state::get_external_force()
 
 /*----------------------------------------------------------------------------*/
@@ -167,11 +169,11 @@ void bear::universe::physical_item_state::add_internal_force
 {
   if (!m_fixed)
     {
-      if (m_x_fixed == 0)
-        m_internal_force.x += force.x;
+      if (m_attributes.m_x_fixed == 0)
+        m_attributes.m_internal_force.x += force.x;
 
-      if (m_y_fixed == 0)
-        m_internal_force.y += force.y;
+      if (m_attributes.m_y_fixed == 0)
+        m_attributes.m_internal_force.y += force.y;
     }
 } // physical_item_state::add_internal_force()
 
@@ -185,11 +187,11 @@ void bear::universe::physical_item_state::add_external_force
 {
   if (!m_fixed)
     {
-      if (m_x_fixed == 0)
-        m_external_force.x += force.x;
+      if (m_attributes.m_x_fixed == 0)
+        m_attributes.m_external_force.x += force.x;
 
-      if (m_y_fixed == 0)
-        m_external_force.y += force.y;
+      if (m_attributes.m_y_fixed == 0)
+        m_attributes.m_external_force.y += force.y;
     }
 } // physical_item_state::add_external_force()
 
@@ -202,11 +204,11 @@ void bear::universe::physical_item_state::set_external_force
 {
   if (!m_fixed)
     {
-      if (m_x_fixed == 0)
-        m_external_force.x = f.x;
+      if (m_attributes.m_x_fixed == 0)
+        m_attributes.m_external_force.x = f.x;
 
-      if (m_y_fixed == 0)
-        m_external_force.y = f.y;
+      if (m_attributes.m_y_fixed == 0)
+        m_attributes.m_external_force.y = f.y;
     }
 } // physical_item_state::set_external_force()
 
@@ -219,11 +221,11 @@ void bear::universe::physical_item_state::set_internal_force
 {
   if (!m_fixed)
     {
-      if (m_x_fixed == 0)
-        m_internal_force.x = f.x;
+      if (m_attributes.m_x_fixed == 0)
+        m_attributes.m_internal_force.x = f.x;
 
-      if (m_y_fixed == 0)
-        m_internal_force.y = f.y;
+      if (m_attributes.m_y_fixed == 0)
+        m_attributes.m_internal_force.y = f.y;
     }
 } // physical_item_state::set_internal_force()
 
@@ -233,7 +235,7 @@ void bear::universe::physical_item_state::set_internal_force
  */
 double bear::universe::physical_item_state::get_mass() const
 {
-  return m_mass;
+  return m_attributes.m_mass;
 } // physical_item_state::get_mass()
 
 /*----------------------------------------------------------------------------*/
@@ -242,7 +244,7 @@ double bear::universe::physical_item_state::get_mass() const
  */
 double bear::universe::physical_item_state::get_density() const
 {
-  return m_density;
+  return m_attributes.m_density;
 } // physical_item_state::get_density()
 
 /*----------------------------------------------------------------------------*/
@@ -252,7 +254,7 @@ double bear::universe::physical_item_state::get_density() const
 const bear::universe::speed_type&
 bear::universe::physical_item_state::get_speed() const
 {
-  return m_speed;
+  return m_attributes.m_speed;
 } // physical_item_state::get_speed()
 
 /*----------------------------------------------------------------------------*/
@@ -275,11 +277,11 @@ void bear::universe::physical_item_state::set_speed( double x, double y )
 {
   if (!m_fixed)
     {
-      if (m_x_fixed == 0)
-        m_speed.x = x;
+      if (m_attributes.m_x_fixed == 0)
+        m_attributes.m_speed.x = x;
 
-      if (m_y_fixed == 0)
-        m_speed.y = y;
+      if (m_attributes.m_y_fixed == 0)
+        m_attributes.m_speed.y = y;
     }
 } // physical_item_state::set_speed()
 
@@ -289,7 +291,7 @@ void bear::universe::physical_item_state::set_speed( double x, double y )
  */
 double bear::universe::physical_item_state::get_angular_speed() const
 {
-  return m_angular_speed;
+  return m_attributes.m_angular_speed;
 } // physical_item_state::get_angular_speed()
 
 /*----------------------------------------------------------------------------*/
@@ -299,7 +301,7 @@ double bear::universe::physical_item_state::get_angular_speed() const
  */
 void bear::universe::physical_item_state::set_angular_speed( double speed )
 {
-  m_angular_speed = speed;
+  m_attributes.m_angular_speed = speed;
 } // physical_item_state::set_angular_speed()
 
 /*----------------------------------------------------------------------------*/
@@ -309,7 +311,7 @@ void bear::universe::physical_item_state::set_angular_speed( double speed )
  */
 void bear::universe::physical_item_state::add_angular_speed( double speed )
 {
-  m_angular_speed += speed;
+  m_attributes.m_angular_speed += speed;
 } // physical_item_state::set_angular_speed()
 
 /*----------------------------------------------------------------------------*/
@@ -318,7 +320,7 @@ void bear::universe::physical_item_state::add_angular_speed( double speed )
  */
 double bear::universe::physical_item_state::get_friction() const
 {
-  return m_self_friction;
+  return m_attributes.m_self_friction;
 } // physical_item_state::get_friction();
 
 /*----------------------------------------------------------------------------*/
@@ -328,7 +330,7 @@ double bear::universe::physical_item_state::get_friction() const
  */
 void bear::universe::physical_item_state::set_friction( double f )
 {
-  m_self_friction = f;
+  m_attributes.m_self_friction = f;
 } // physical_item_state::set_friction()
 
 /*----------------------------------------------------------------------------*/
@@ -337,7 +339,7 @@ void bear::universe::physical_item_state::set_friction( double f )
  */
 double bear::universe::physical_item_state::get_contact_friction() const
 {
-  return m_contact_friction;
+  return m_attributes.m_contact_friction;
 } // physical_item_state::get_contact_friction();
 
 /*----------------------------------------------------------------------------*/
@@ -347,7 +349,7 @@ double bear::universe::physical_item_state::get_contact_friction() const
  */
 void bear::universe::physical_item_state::set_contact_friction( double f )
 {
-  m_contact_friction = f;
+  m_attributes.m_contact_friction = f;
 } // physical_item_state::set_contact_friction()
 
 /*----------------------------------------------------------------------------*/
@@ -356,7 +358,7 @@ void bear::universe::physical_item_state::set_contact_friction( double f )
  */
 double bear::universe::physical_item_state::get_elasticity() const
 {
-  return m_elasticity;
+  return m_attributes.m_elasticity;
 } // physical_item_state::get_elasticity();
 
 /*----------------------------------------------------------------------------*/
@@ -366,7 +368,7 @@ double bear::universe::physical_item_state::get_elasticity() const
  */
 void bear::universe::physical_item_state::set_elasticity( double e )
 {
-  m_elasticity = e;
+  m_attributes.m_elasticity = e;
 } // physical_item_state::set_elasticity()
 
 /*----------------------------------------------------------------------------*/
@@ -375,7 +377,7 @@ void bear::universe::physical_item_state::set_elasticity( double e )
  */
 double bear::universe::physical_item_state::get_hardness() const
 {
-  return m_hardness;
+  return m_attributes.m_hardness;
 } // physical_item_state::get_hardness();
 
 /*----------------------------------------------------------------------------*/
@@ -385,7 +387,7 @@ double bear::universe::physical_item_state::get_hardness() const
  */
 void bear::universe::physical_item_state::set_hardness( double h )
 {
-  m_hardness = h;
+  m_attributes.m_hardness = h;
 } // physical_item_state::set_hardness()
 
 /*----------------------------------------------------------------------------*/
@@ -394,7 +396,7 @@ void bear::universe::physical_item_state::set_hardness( double h )
  */
 double bear::universe::physical_item_state::get_system_angle() const
 {
-  return m_system_angle;
+  return m_attributes.m_system_angle;
 } // physical_item_state::get_system_angle();
 
 /*----------------------------------------------------------------------------*/
@@ -404,7 +406,7 @@ double bear::universe::physical_item_state::get_system_angle() const
  */
 void bear::universe::physical_item_state::set_system_angle( double a )
 {
-  m_system_angle = a;
+  m_attributes.m_system_angle = a;
 } // physical_item_state::set_system_angle()
 
 /*----------------------------------------------------------------------------*/
@@ -415,7 +417,7 @@ void bear::universe::physical_item_state::set_system_angle( double a )
 void bear::universe::physical_item_state::set_contact_angle( double a )
 {
   if ( !has_free_system() )
-    m_system_angle = a;
+    m_attributes.m_system_angle = a;
 } // physical_item_state::set_contact_angle()
 
 /*----------------------------------------------------------------------------*/
@@ -425,7 +427,7 @@ void bear::universe::physical_item_state::set_contact_angle( double a )
  */
 bool bear::universe::physical_item_state::has_free_system() const
 {
-  return m_free_system_angle;
+  return m_attributes.m_free_system_angle;
 } // physical_item_state::has_free_system();
 
 /*----------------------------------------------------------------------------*/
@@ -437,7 +439,7 @@ bool bear::universe::physical_item_state::has_free_system() const
  */
 void bear::universe::physical_item_state::set_free_system( bool b )
 {
-  m_free_system_angle = b;
+  m_attributes.m_free_system_angle = b;
 } // physical_item_state::set_free_system();
 
 /*----------------------------------------------------------------------------*/
@@ -447,7 +449,9 @@ void bear::universe::physical_item_state::set_free_system( bool b )
 bear::universe::vector_type
 bear::universe::physical_item_state::get_x_axis() const
 {
-  return vector_type( std::cos(m_system_angle), std::sin(m_system_angle) );
+  return vector_type
+    ( std::cos(m_attributes.m_system_angle),
+      std::sin(m_attributes.m_system_angle) );
 } // physical_item_state::get_x_axis()
 
 /*----------------------------------------------------------------------------*/
@@ -467,8 +471,8 @@ void bear::universe::physical_item_state::set_top( coordinate_type pos )
  */
 void bear::universe::physical_item_state::set_bottom( coordinate_type pos )
 {
-  if (!m_fixed && (m_y_fixed == 0))
-    m_bottom_left.y = pos;
+  if (!m_fixed && (m_attributes.m_y_fixed == 0))
+    shape_traits<shape>::set_bottom( m_attributes.m_shape, pos );
 } // physical_item_state::set_bottom()
 
 /*----------------------------------------------------------------------------*/
@@ -478,8 +482,8 @@ void bear::universe::physical_item_state::set_bottom( coordinate_type pos )
  */
 void bear::universe::physical_item_state::set_left( coordinate_type pos )
 {
-  if (!m_fixed && (m_x_fixed == 0))
-    m_bottom_left.x = pos;
+  if (!m_fixed && (m_attributes.m_x_fixed == 0))
+    shape_traits<shape>::set_left( m_attributes.m_shape, pos );
 } // physical_item_state::set_left()
 
 /*----------------------------------------------------------------------------*/
@@ -721,7 +725,7 @@ void bear::universe::physical_item_state::set_right_middle
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_left() const
 {
-  return m_bottom_left.x;
+  return shape_traits<shape>::get_left( m_attributes.m_shape );
 } // physical_item_state::get_left()
 
 /*----------------------------------------------------------------------------*/
@@ -731,7 +735,7 @@ bear::universe::physical_item_state::get_left() const
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_top() const
 {
-  return m_bottom_left.y + get_height();
+  return get_bottom() + get_height();
 } // physical_item_state::get_top()
 
 /*----------------------------------------------------------------------------*/
@@ -741,7 +745,7 @@ bear::universe::physical_item_state::get_top() const
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_right() const
 {
-  return m_bottom_left.x + get_width();
+  return get_left() + get_width();
 } // physical_item_state::get_right()
 
 /*----------------------------------------------------------------------------*/
@@ -751,7 +755,7 @@ bear::universe::physical_item_state::get_right() const
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_bottom() const
 {
-  return m_bottom_left.y;
+  return shape_traits<shape>::get_bottom( m_attributes.m_shape );
 } // physical_item_state::get_bottom()
 
 /*----------------------------------------------------------------------------*/
@@ -761,7 +765,7 @@ bear::universe::physical_item_state::get_bottom() const
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_horizontal_middle() const
 {
-  return m_bottom_left.x + get_width() / 2;
+  return get_left() + get_width() / 2;
 } // physical_item_state::get_horizontal_middle()
 
 /*----------------------------------------------------------------------------*/
@@ -771,7 +775,7 @@ bear::universe::physical_item_state::get_horizontal_middle() const
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_vertical_middle() const
 {
-  return m_bottom_left.y + get_height() / 2;
+  return get_bottom() + get_height() / 2;
 } // physical_item_state::get_vertical_middle()
 
 /*----------------------------------------------------------------------------*/
@@ -861,7 +865,7 @@ bear::universe::physical_item_state::get_right_middle() const
 bear::universe::position_type
 bear::universe::physical_item_state::get_center_of_mass() const
 {
-  return m_bottom_left + m_size / 2;
+  return get_bottom_left() + get_size() / 2;
 } // physical_item_state::get_center_of_mass()
 
 /*----------------------------------------------------------------------------*/
@@ -872,7 +876,7 @@ bear::universe::physical_item_state::get_center_of_mass() const
 void bear::universe::physical_item_state::set_center_of_mass
 ( const position_type& pos )
 {
-  set_bottom_left( pos - m_size / 2 );
+  set_bottom_left( pos - get_size() / 2 );
 } // physical_item_state::set_center_of_mass()
 
 /*----------------------------------------------------------------------------*/
@@ -915,7 +919,7 @@ bool bear::universe::physical_item_state::is_fixed() const
  */
 void bear::universe::physical_item_state::fix()
 {
-  m_acceleration = m_speed = speed_type(0, 0);
+  m_attributes.m_acceleration = m_attributes.m_speed = speed_type(0, 0);
   m_fixed = true;
 } // physical_item_state::fix()
 
@@ -935,7 +939,7 @@ void bear::universe::physical_item_state::remove_position_constraints()
  */
 void bear::universe::physical_item_state::remove_position_constraint_x()
 {
-  --m_x_fixed;
+  --m_attributes.m_x_fixed;
 } // physical_item_state::remove_position_constraint_x()
 
 /*----------------------------------------------------------------------------*/
@@ -944,7 +948,7 @@ void bear::universe::physical_item_state::remove_position_constraint_x()
  */
 void bear::universe::physical_item_state::remove_position_constraint_y()
 {
-  --m_y_fixed;
+  --m_attributes.m_y_fixed;
 } // physical_item_state::remove_position_constraint_y()
 
 /*----------------------------------------------------------------------------*/
@@ -963,7 +967,7 @@ void bear::universe::physical_item_state::add_position_constraints()
  */
 void bear::universe::physical_item_state::add_position_constraint_x()
 {
-  ++m_x_fixed;
+  ++m_attributes.m_x_fixed;
 } // physical_item_state::add_position_constraint_x()
 
 /*----------------------------------------------------------------------------*/
@@ -972,7 +976,7 @@ void bear::universe::physical_item_state::add_position_constraint_x()
  */
 void bear::universe::physical_item_state::add_position_constraint_y()
 {
-  ++m_y_fixed;
+  ++m_attributes.m_y_fixed;
 } // physical_item_state::add_position_constraint_y()
 
 /*----------------------------------------------------------------------------*/
@@ -981,7 +985,7 @@ void bear::universe::physical_item_state::add_position_constraint_y()
  */
 bool bear::universe::physical_item_state::can_move_items() const
 {
-  return m_can_move_items;
+  return m_attributes.m_can_move_items;
 } // physical_item_state::can_move_items()
 
 /*----------------------------------------------------------------------------*/
@@ -990,7 +994,7 @@ bool bear::universe::physical_item_state::can_move_items() const
  */
 void bear::universe::physical_item_state::set_can_move_items(bool value)
 {
-  m_can_move_items = value;
+  m_attributes.m_can_move_items = value;
 } // physical_item_state::set_can_move_items()
 
 /*----------------------------------------------------------------------------*/
@@ -1000,7 +1004,7 @@ void bear::universe::physical_item_state::set_can_move_items(bool value)
  */
 bool bear::universe::physical_item_state::is_global() const
 {
-  return m_global;
+  return m_attributes.m_global;
 } // physical_item_state::is_global()
 
 /*----------------------------------------------------------------------------*/
@@ -1013,7 +1017,7 @@ bool bear::universe::physical_item_state::is_global() const
  */
 void bear::universe::physical_item_state::set_global( bool global )
 {
-  m_global = global;
+  m_attributes.m_global = global;
 } // physical_item_state::set_global()
 
 /*----------------------------------------------------------------------------*/
@@ -1022,7 +1026,7 @@ void bear::universe::physical_item_state::set_global( bool global )
  */
 bool bear::universe::physical_item_state::has_left_contact() const
 {
-  return m_contact.has_left_contact();
+  return m_attributes.m_contact.has_left_contact();
 } // physical_item_state::has_left_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1032,7 +1036,7 @@ bool bear::universe::physical_item_state::has_left_contact() const
 bear::universe::contact_range
 bear::universe::physical_item_state::get_left_contact() const
 {
-  return m_contact.get_left_contact();
+  return m_attributes.m_contact.get_left_contact();
 } // physical_item_state::get_left_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1041,7 +1045,7 @@ bear::universe::physical_item_state::get_left_contact() const
  */
 bool bear::universe::physical_item_state::has_right_contact() const
 {
-  return m_contact.has_right_contact();
+  return m_attributes.m_contact.has_right_contact();
 } // physical_item_state::has_right_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1051,7 +1055,7 @@ bool bear::universe::physical_item_state::has_right_contact() const
 bear::universe::contact_range
 bear::universe::physical_item_state::get_right_contact() const
 {
-  return m_contact.get_right_contact();
+  return m_attributes.m_contact.get_right_contact();
 } // physical_item_state::get_right_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1060,7 +1064,7 @@ bear::universe::physical_item_state::get_right_contact() const
  */
 bool bear::universe::physical_item_state::has_top_contact() const
 {
-  return m_contact.has_top_contact();
+  return m_attributes.m_contact.has_top_contact();
 } // physical_item_state::has_top_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1070,7 +1074,7 @@ bool bear::universe::physical_item_state::has_top_contact() const
 bear::universe::contact_range
 bear::universe::physical_item_state::get_top_contact() const
 {
-  return m_contact.get_top_contact();
+  return m_attributes.m_contact.get_top_contact();
 } // physical_item_state::get_top_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1079,7 +1083,7 @@ bear::universe::physical_item_state::get_top_contact() const
  */
 bool bear::universe::physical_item_state::has_bottom_contact() const
 {
-  return m_contact.has_bottom_contact();
+  return m_attributes.m_contact.has_bottom_contact();
 } // physical_item_state::has_bottom_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1089,7 +1093,7 @@ bool bear::universe::physical_item_state::has_bottom_contact() const
 bear::universe::contact_range
 bear::universe::physical_item_state::get_bottom_contact() const
 {
-  return m_contact.get_bottom_contact();
+  return m_attributes.m_contact.get_bottom_contact();
 } // physical_item_state::get_bottom_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1098,7 +1102,7 @@ bear::universe::physical_item_state::get_bottom_contact() const
  */
 bool bear::universe::physical_item_state::has_middle_contact() const
 {
-  return m_contact.has_middle_contact();
+  return m_attributes.m_contact.has_middle_contact();
 } // physical_item_state::has_middle_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1107,7 +1111,7 @@ bool bear::universe::physical_item_state::has_middle_contact() const
  */
 bool bear::universe::physical_item_state::has_contact() const
 {
-  return m_contact.has_contact();
+  return m_attributes.m_contact.has_contact();
 } // physical_item_state::has_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1116,7 +1120,7 @@ bool bear::universe::physical_item_state::has_contact() const
  */
 bool bear::universe::physical_item_state::has_side_contact() const
 {
-  return m_contact.has_side_contact();
+  return m_attributes.m_contact.has_side_contact();
 } // physical_item_state::has_side_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1127,9 +1131,9 @@ bool bear::universe::physical_item_state::has_side_contact() const
 void bear::universe::physical_item_state::set_left_contact(bool contact)
 {
   if ( contact )
-    m_contact.set_left_contact( 0, 1 );
+    m_attributes.m_contact.set_left_contact( 0, 1 );
   else
-    m_contact.clear_left_contact();
+    m_attributes.m_contact.clear_left_contact();
 } // physical_item_state::set_left_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1145,7 +1149,7 @@ void bear::universe::physical_item_state::set_left_contact
 {
   CLAW_PRECOND( bottom <= top );
 
-  return m_contact.set_left_contact
+  return m_attributes.m_contact.set_left_contact
     ( std::max(0.0, (bottom - get_bottom()) / get_height()),
       std::min(1.0, (top - get_bottom()) / get_height()) );
 } // physical_item_state::set_left_contact()
@@ -1158,9 +1162,9 @@ void bear::universe::physical_item_state::set_left_contact
 void bear::universe::physical_item_state::set_right_contact(bool contact)
 {
   if ( contact )
-    m_contact.set_right_contact( 0, 1 );
+    m_attributes.m_contact.set_right_contact( 0, 1 );
   else
-    m_contact.clear_right_contact();
+    m_attributes.m_contact.clear_right_contact();
 } // physical_item_state::set_right_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1176,7 +1180,7 @@ void bear::universe::physical_item_state::set_right_contact
 {
   CLAW_PRECOND( bottom <= top );
 
-  return m_contact.set_right_contact
+  return m_attributes.m_contact.set_right_contact
     ( std::max(0.0, (bottom - get_bottom()) / get_height()),
       std::min(1.0, (top - get_bottom()) / get_height()) );
 } // physical_item_state::set_right_contact()
@@ -1189,9 +1193,9 @@ void bear::universe::physical_item_state::set_right_contact
 void bear::universe::physical_item_state::set_top_contact(bool contact)
 {
   if ( contact )
-    m_contact.set_top_contact( 0, 1 );
+    m_attributes.m_contact.set_top_contact( 0, 1 );
   else
-    m_contact.clear_top_contact();
+    m_attributes.m_contact.clear_top_contact();
 } // physical_item_state::set_top_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1207,7 +1211,7 @@ void bear::universe::physical_item_state::set_top_contact
 {
   CLAW_PRECOND( left <= right );
 
-  return m_contact.set_top_contact
+  return m_attributes.m_contact.set_top_contact
     ( std::max(0.0, (left - get_left()) / get_width()),
       std::min(1.0, (right - get_left()) / get_width()) );
 } // physical_item_state::set_top_contact()
@@ -1220,9 +1224,9 @@ void bear::universe::physical_item_state::set_top_contact
 void bear::universe::physical_item_state::set_bottom_contact(bool contact)
 {
   if ( contact )
-    m_contact.set_bottom_contact( 0, 1 );
+    m_attributes.m_contact.set_bottom_contact( 0, 1 );
   else
-    m_contact.clear_bottom_contact();
+    m_attributes.m_contact.clear_bottom_contact();
 } // physical_item_state::set_bottom_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1238,7 +1242,7 @@ void bear::universe::physical_item_state::set_bottom_contact
 {
   CLAW_PRECOND( left <= right );
 
-  return m_contact.set_bottom_contact
+  return m_attributes.m_contact.set_bottom_contact
     ( std::max(0.0, (left - get_left()) / get_width()),
       std::min(1.0, (right - get_left()) / get_width()) );
 } // physical_item_state::set_bottom_contact()
@@ -1250,7 +1254,7 @@ void bear::universe::physical_item_state::set_bottom_contact
  */
 void bear::universe::physical_item_state::set_middle_contact(bool contact)
 {
-  m_contact.set_middle_contact( contact );
+  m_attributes.m_contact.set_middle_contact( contact );
 } // physical_item_state::set_middle_contact()
 
 /*----------------------------------------------------------------------------*/
@@ -1259,8 +1263,8 @@ void bear::universe::physical_item_state::set_middle_contact(bool contact)
  */
 void bear::universe::physical_item_state::clear_contacts()
 {
-  m_contact.clear_contacts();
-  m_contact_friction = 1;
+  m_attributes.m_contact.clear_contacts();
+  m_attributes.m_contact_friction = 1;
 } // physical_item_state::clear_contacts()
 
 /*----------------------------------------------------------------------------*/
@@ -1270,7 +1274,7 @@ void bear::universe::physical_item_state::clear_contacts()
  */
 void bear::universe::physical_item_state::set_phantom( bool phantom )
 {
-  m_is_phantom = phantom;
+  m_attributes.m_is_phantom = phantom;
 } // physical_item_state::set_phantom()
 
 /*----------------------------------------------------------------------------*/
@@ -1279,7 +1283,7 @@ void bear::universe::physical_item_state::set_phantom( bool phantom )
  */
 bool bear::universe::physical_item_state::is_phantom() const
 {
-  return m_is_phantom;
+  return m_attributes.m_is_phantom;
 } // physical_item_state::is_phantom()
 
 /*----------------------------------------------------------------------------*/
@@ -1289,7 +1293,7 @@ bool bear::universe::physical_item_state::is_phantom() const
  */
 void bear::universe::physical_item_state::set_artificial( bool a )
 {
-  m_is_artificial = a;
+  m_attributes.m_is_artificial = a;
 } // physical_item_state::set_artificial()
 
 /*----------------------------------------------------------------------------*/
@@ -1298,7 +1302,7 @@ void bear::universe::physical_item_state::set_artificial( bool a )
  */
 bool bear::universe::physical_item_state::is_artificial() const
 {
-  return m_is_artificial;
+  return m_attributes.m_is_artificial;
 } // physical_item_state::is_artificial()
 
 /*----------------------------------------------------------------------------*/
@@ -1308,7 +1312,7 @@ bool bear::universe::physical_item_state::is_artificial() const
  */
 void bear::universe::physical_item_state::set_weak_collisions( bool w )
 {
-  m_weak_collisions = w;
+  m_attributes.m_weak_collisions = w;
 } // physical_item_state::set_weak_collisions()
 
 /*----------------------------------------------------------------------------*/
@@ -1318,7 +1322,7 @@ void bear::universe::physical_item_state::set_weak_collisions( bool w )
  */
 bool bear::universe::physical_item_state::has_weak_collisions() const
 {
-  return m_weak_collisions;
+  return m_attributes.m_weak_collisions;
 } // physical_item_state::has_weak_collisions()
 
 /*----------------------------------------------------------------------------*/
@@ -1328,7 +1332,8 @@ bool bear::universe::physical_item_state::has_weak_collisions() const
  */
 void bear::universe::physical_item_state::set_size( const size_box_type& size )
 {
-  m_size = size;
+  set_width( size.x );
+  set_height( size.y );
 } // physical_item_state::set_size()
 
 /*----------------------------------------------------------------------------*/
@@ -1350,8 +1355,8 @@ void bear::universe::physical_item_state::set_size
  */
 void bear::universe::physical_item_state::set_width( size_type width )
 {
-  if (!m_fixed && (m_x_fixed == 0))
-    m_size.x = width;
+  if (!m_fixed && (m_attributes.m_x_fixed == 0))
+    shape_traits<shape>::set_width( m_attributes.m_shape, width );
 } // physical_item_state::set_width()
 
 /*----------------------------------------------------------------------------*/
@@ -1361,9 +1366,46 @@ void bear::universe::physical_item_state::set_width( size_type width )
  */
 void bear::universe::physical_item_state::set_height( size_type height )
 {
-  if (!m_fixed && (m_y_fixed == 0))
-    m_size.y = height;
+  if (!m_fixed && (m_attributes.m_y_fixed == 0))
+    shape_traits<shape>::set_height( m_attributes.m_shape, height );
 } // physical_item_state::set_height()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the shape of the object.
+ * \param s The new shape.
+ */
+void bear::universe::physical_item_state::set_shape( const shape& s )
+{
+  const rectangle_type bounding_box( get_bounding_box() );
+
+  m_attributes.m_shape = s;
+
+  if ( m_fixed || (m_attributes.m_x_fixed != 0) )
+    {
+      shape_traits<shape>::set_left
+        ( m_attributes.m_shape, bounding_box.left() );
+      shape_traits<shape>::set_width
+        ( m_attributes.m_shape, bounding_box.width() );
+    }
+
+  if ( m_fixed || (m_attributes.m_y_fixed != 0) )
+    {
+      shape_traits<shape>::set_bottom
+        ( m_attributes.m_shape, bounding_box.bottom() );
+      shape_traits<shape>::set_height
+        ( m_attributes.m_shape, bounding_box.height() );
+    }
+} // physical_item_state::set_shape()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the shape of the object.
+ */
+bear::universe::shape bear::universe::physical_item_state::get_shape() const
+{
+  return m_attributes.m_shape;
+} // physical_item_state::get_shape()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1372,7 +1414,7 @@ void bear::universe::physical_item_state::set_height( size_type height )
  */
 void bear::universe::physical_item_state::set_mass( double m )
 {
-  m_mass = m;
+  m_attributes.m_mass = m;
 } // physical_item_state::set_mass()
 
 /*----------------------------------------------------------------------------*/
@@ -1382,7 +1424,7 @@ void bear::universe::physical_item_state::set_mass( double m )
  */
 void bear::universe::physical_item_state::set_density( double d )
 {
-  m_density = d;
+  m_attributes.m_density = d;
 } // physical_item_state::set_density()
 
 /*----------------------------------------------------------------------------*/
@@ -1396,33 +1438,10 @@ void bear::universe::physical_item_state::set_physical_state
   if ( is_fixed() )
     return;
 
-  set_mass( s.get_mass() );
-  set_density( s.get_density() );
-  set_angular_speed( s.get_angular_speed() );
-  set_speed( s.get_speed() );
-  set_acceleration( s.get_acceleration() );
-  set_internal_force( s.get_internal_force() );
-  set_external_force( s.get_external_force() );
-  set_friction( s.get_friction() );
-  set_contact_angle( s.get_contact_friction() );
-  set_elasticity( s.get_elasticity() );
-  set_hardness( s.get_hardness() );
-  set_bottom_left( s.get_bottom_left() );
-  set_size( s.get_size() );
-  set_system_angle( s.get_system_angle() );
-  set_free_system( s.has_free_system() );
-  set_can_move_items( s.can_move_items() );
-  
-  m_contact = s.m_contact;
+  m_attributes = s.m_attributes;
 
-  set_phantom( s.is_phantom() );
-  set_artificial( s.is_artificial() );
-  set_weak_collisions( s.has_weak_collisions() );
-  
-  m_x_fixed = s.m_x_fixed;
-  m_y_fixed = s.m_y_fixed;
-
-  set_global( s.is_global() );
+  m_attributes.m_x_fixed = s.m_attributes.m_x_fixed;
+  m_attributes.m_y_fixed = s.m_attributes.m_y_fixed;
 
   if ( s.is_fixed() )
     fix();
@@ -1438,21 +1457,25 @@ void bear::universe::physical_item_state::to_string( std::string& str ) const
   std::ostringstream oss;
 
   oss << "0x" << std::hex << this;
-  oss << "\nmass: " << m_mass;
-  oss << "\npos: " << m_bottom_left.x << ' ' << m_bottom_left.y;
-  oss << "\nsize: " << m_size.x << ' ' << m_size.y;
-  oss << "\nspeed: " << m_speed.x << ' ' << m_speed.y;
-  oss << "\naccel: " << m_acceleration.x << ' ' << m_acceleration.y;
-  oss << "\nangular speed: " << m_angular_speed;
-  oss << "\nforce (int.): " << m_internal_force.x << ' ' << m_internal_force.y;
-  oss << "\nforce (ext.): " << m_external_force.x << ' ' << m_external_force.y;
-  oss << "\nfriction: s=" << m_self_friction;
-  oss << " c=" << m_contact_friction;
-  oss << "\ndensity: " << m_density;
-  oss << "\nangle: " << m_system_angle;
-  oss << "\nfixed: " << m_fixed << ' ' << m_x_fixed << ' ' << m_y_fixed;
-  oss << "\nphantom/c.m.i./art./weak.: " << m_is_phantom << ' '
-      << m_can_move_items << ' ' << m_is_artificial << ' ' << m_weak_collisions;
+  oss << "\nmass: " << get_mass();
+  oss << "\npos: " << get_left() << ' ' << get_bottom();
+  oss << "\nsize: " << get_width() << ' ' << get_height();
+  oss << "\nspeed: " << get_speed().x << ' ' << get_speed().y;
+  oss << "\naccel: " << get_acceleration().x << ' ' << get_acceleration().y;
+  oss << "\nangular speed: " << get_angular_speed();
+  oss << "\nforce (int.): " << get_internal_force().x << ' '
+      << get_internal_force().y;
+  oss << "\nforce (ext.): " << get_external_force().x << ' '
+      << get_external_force().y;
+  oss << "\nfriction: s=" << get_friction();
+  oss << " c=" << get_contact_friction();
+  oss << "\ndensity: " << get_density();
+  oss << "\nangle: " << get_system_angle();
+  oss << "\nfixed: " << is_fixed() << ' ' << m_attributes.m_x_fixed << ' '
+      << m_attributes.m_y_fixed;
+  oss << "\nphantom/c.m.i./art./weak.: " << is_phantom() << ' '
+      << can_move_items() << ' ' << is_artificial() << ' '
+      << has_weak_collisions();
   oss << "\ncontact: { ";
 
   if ( has_left_contact() )

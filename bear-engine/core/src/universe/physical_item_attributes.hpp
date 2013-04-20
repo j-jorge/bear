@@ -12,7 +12,7 @@
 #define __UNIVERSE_PHYSICAL_ITEM_ATTRIBUTES_HPP__
 
 #include "universe/contact_info.hpp"
-#include "universe/types.hpp"
+#include "universe/shape/shape.hpp"
 
 #include "universe/class_export.hpp"
 
@@ -29,7 +29,6 @@ namespace bear
     public:
       physical_item_attributes();
 
-    protected:
       /** \brief Item's mass. */
       double m_mass;
 
@@ -64,11 +63,8 @@ namespace bear
       /** \brief Item hardness. */
       double m_hardness;
 
-      /** \brief Current item's position. */
-      position_type m_bottom_left;
-
-      /** \brief Item's size. */
-      size_box_type m_size;
+      /** \brief The shape of the item, defines its position and its size. */
+      shape m_shape;
 
       /** \brief Item's orientation. */
       double m_system_angle;
