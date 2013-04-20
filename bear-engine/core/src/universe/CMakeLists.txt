@@ -56,6 +56,7 @@ set( UNIVERSE_SOURCE_FILES
   shape/code/curved_box.cpp
   shape/code/shape_base.cpp
   shape/code/rectangle.cpp
+  shape/code/shape.cpp
 )
 
 add_library(
