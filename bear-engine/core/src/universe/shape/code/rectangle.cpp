@@ -11,6 +11,7 @@
 #include "universe/shape/rectangle.hpp"
 
 #include "universe/shape/curved_box.hpp"
+#include "universe/shape/shape_traits.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -28,10 +29,15 @@ bear::universe::rectangle* bear::universe::rectangle::clone() const
  */
 bool bear::universe::rectangle::intersects( const rectangle& that ) const
 {
-  if ( get_bounding_box().intersects( that.get_bounding_box() ) )
+  const rectangle_type this_bounding_box
+    ( shape_traits<rectangle>::get_bounding_box( *this ) );
+  const rectangle_type that_bounding_box
+    ( shape_traits<rectangle>::get_bounding_box( that ) );
+
+  if ( this_bounding_box.intersects( that_bounding_box ) )
     {
       const rectangle_type inter =
-        get_bounding_box().intersection( that.get_bounding_box() );
+        this_bounding_box.intersection( that_bounding_box );
 
       return (inter.width() != 0) && (inter.height() != 0);
     }
