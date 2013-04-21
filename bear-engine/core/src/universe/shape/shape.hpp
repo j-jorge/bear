@@ -49,6 +49,8 @@ namespace bear
       coordinate_type get_left() const;
       void set_left( coordinate_type pos );
 
+      shape_base* clone_impl() const;
+
     private:
       /** \brief The real shape behind this object. */
       shape_base* m_impl;

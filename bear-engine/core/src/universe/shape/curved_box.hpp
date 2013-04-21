@@ -40,7 +40,21 @@ namespace bear
       virtual bool intersects( const rectangle& that ) const;
       virtual bool intersects( const curved_box& that ) const;
 
+      coordinate_type get_steepness() const;
+      void set_steepness( coordinate_type s );
+
+      coordinate_type get_margin() const;
+      void set_margin( coordinate_type s );
+
+      vector_type get_left_control_point() const;
+      void set_left_control_point( const vector_type& p );
+
+      vector_type get_right_control_point() const;
+      void set_right_control_point( const vector_type& p );
+
       curve_type get_curve() const;
+
+      coordinate_type get_y_at_x( coordinate_type x ) const;
 
     private:
       virtual coordinate_type do_get_bottom() const;
@@ -56,8 +70,6 @@ namespace bear
       virtual void do_set_height( size_type s );
 
       virtual bool do_intersects( const shape_base& that ) const;
-
-      coordinate_type get_y_at_x( coordinate_type x ) const;
 
       bool check_intersection_above
         ( const position_type& bottom_left_position,

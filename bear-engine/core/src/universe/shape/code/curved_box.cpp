@@ -67,6 +67,85 @@ bool bear::universe::curved_box::intersects( const curved_box& that ) const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the steepness of the top of the shape.
+ */
+bear::universe::coordinate_type
+bear::universe::curved_box::get_steepness() const
+{
+  return m_steepness;
+} // curved_box::get_steepness()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the steepness of the top of the shape.
+ * \param s The new steepness of the shape.
+ */
+void bear::universe::curved_box::set_steepness( coordinate_type s )
+{
+  m_steepness = s;
+} // curved_box::set_steepness()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the margin above the shape.
+ */
+bear::universe::coordinate_type bear::universe::curved_box::get_margin() const
+{
+  return m_margin;
+} // curved_box::get_margin()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the margin above the shape.
+ * \param s The new margin.
+ */
+void bear::universe::curved_box::set_margin( coordinate_type s )
+{
+  m_margin = s;
+} // curved_box::set_margin()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the control point for the left side of the shape.
+ */
+bear::universe::vector_type
+bear::universe::curved_box::get_left_control_point() const
+{
+  return m_left_control_point;
+} // curved_box::get_left_control_point()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the control point for the left side of the shape.
+ * \param p The new control point.
+ */
+void bear::universe::curved_box::set_left_control_point( const vector_type& p )
+{
+  m_left_control_point = p;
+} // curved_box::set_left_control_point()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the control point for the right side of the shape.
+ */
+bear::universe::vector_type
+bear::universe::curved_box::get_right_control_point() const
+{
+  return m_right_control_point;
+} // curved_box::get_right_control_point()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the control point for the right side of the shape.
+ * \param p The new control point.
+ */
+void bear::universe::curved_box::set_right_control_point( const vector_type& p )
+{
+  m_right_control_point = p;
+} // curved_box::set_right_control_point()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Returns a description of the top of the shape.
  */
 bear::universe::curved_box::curve_type
@@ -96,6 +175,27 @@ bear::universe::curved_box::get_curve() const
   
   return result;
 } // curved_box::get_curve()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the Y-coordinate on the top according to a given X-coordinate.
+ * \param x The considered X-coordinate.
+ */
+bear::universe::coordinate_type 
+bear::universe::curved_box::get_y_at_x( coordinate_type x ) const
+{
+  coordinate_type result( shape_traits<curved_box>::get_bottom( *this ) );
+  
+  const curve_type c( get_curve() );
+  const std::vector<curve_type::section::resolved_point> p
+    ( c.get_section( c.begin() ).get_point_at_x
+      ( x - shape_traits<curved_box>::get_left( *this ) ) );
+
+  if ( p.size() > 0 )
+    result += p[0].get_position().y;
+
+  return result;
+} // curved_box::get_y_at_x()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -173,7 +273,7 @@ bear::universe::size_type bear::universe::curved_box::do_get_height() const
  */
 void bear::universe::curved_box::do_set_height( size_type s )
 {
-  m_size.y = std::max( m_margin, s - m_margin );
+  m_size.y = std::max( size_type(0), s - m_margin );
 } // curved_box::do_set_height()
 
 /*----------------------------------------------------------------------------*/
@@ -184,27 +284,6 @@ bool bear::universe::curved_box::do_intersects( const shape_base& that ) const
 {
   return that.intersects( *this );
 } // curved_box::do_intersects()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the Y-coordinate on the top according to a given X-coordinate.
- * \param x The considered X-coordinate.
- */
-bear::universe::coordinate_type 
-bear::universe::curved_box::get_y_at_x( coordinate_type x ) const
-{
-  coordinate_type result( shape_traits<curved_box>::get_bottom( *this ) );
-  
-  const curve_type c( get_curve() );
-  const std::vector<curve_type::section::resolved_point> p
-    ( c.get_section( c.begin() ).get_point_at_x
-      ( x - shape_traits<curved_box>::get_left( *this ) ) );
-
-  if ( p.size() > 0 )
-    result += p[0].get_position().y;
-
-  return result;
-} // curved_box::get_y_at_x()
 
 /*----------------------------------------------------------------------------*/
 /**

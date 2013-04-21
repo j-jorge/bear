@@ -172,3 +172,16 @@ void bear::universe::shape::set_left( coordinate_type pos )
   if ( m_impl != NULL )
     m_impl->set_left( pos );
 } // shape::set_left()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Instantiates a copy of the implementation of this shape. The caller
+ *        has the responsability to delete the returned instance.
+ */
+bear::universe::shape_base* bear::universe::shape::clone_impl() const
+{
+  if ( m_impl == NULL )
+    return NULL;
+  else
+    return m_impl->clone();
+} // shape::clone_impl()

@@ -14,10 +14,106 @@
 #include "universe/collision_info.hpp"
 #include "universe/collision_repair.hpp"
 
+#include "universe/shape/curved_box.hpp"
+
 #include "engine/layer/layer.hpp"
 #include "engine/world.hpp"
 
 BASE_ITEM_EXPORT( slope, bear )
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param item The item loaded by this loader.
+ */
+bear::slope::loader::loader( slope& item )
+: super( "slope" ), m_item( item )
+{
+
+} // slope::loader::loader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Instantiates a copy of this instance.
+ */
+bear::slope::loader* bear::slope::loader::clone() const
+{
+  return new loader( *this );
+} // slope::loader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set a field of type \c <real>.
+ * \param name The name of the field to set.
+ * \param value The new value of the field.
+ */
+bool bear::slope::loader::set_field( const std::string& name, double value )
+{
+  bool result = true;
+
+  if ( name == "slope.tangent_friction" )
+    m_item.m_tangent_friction = value;
+  else
+    {
+      // loads the fields that describe the shape
+      universe::curved_box* c = m_item.get_curved_box();
+
+      if ( c == NULL )
+        return false;
+
+      if ( name == "steepness" )
+        c->set_steepness( value );
+      else if ( name == "control_point.left.x" )
+        c->set_left_control_point
+          ( universe::vector_type( value, c->get_left_control_point().y ) );
+      else if ( name == "control_point.left.y" )
+        c->set_left_control_point
+          ( universe::vector_type( c->get_left_control_point().x, value ) );
+      else if ( name == "control_point.right.x" )
+        c->set_right_control_point
+          ( universe::vector_type( value, c->get_right_control_point().y ) );
+      else if ( name == "control_point.right.y" )
+        c->set_right_control_point
+          ( universe::vector_type( c->get_right_control_point().x, value ) );
+      else if ( name == "margin" )
+        c->set_margin( value );
+
+      m_item.set_shape( *c );
+      delete c;
+    }
+
+  if ( !result )
+    result = super::set_field(name, value);
+
+  return result;
+} // slope::loader::set_field()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set a field of type \c bool.
+ * \param name The name of the field to set.
+ * \param value The new value of the field.
+ */
+bool bear::slope::loader::set_field( const std::string& name, bool value )
+{
+  bool result = true;
+
+  if ( name == "opposite_side_is_active" )
+    m_item.m_opposite_side_is_active = value;
+  else if ( name == "left_side_is_active" )
+    m_item.m_left_side_is_active = value;
+  else if ( name == "right_side_is_active" )
+    m_item.m_right_side_is_active = value;
+  else if ( name == "apply_angle" )
+    m_item.m_apply_angle = value;
+  else
+    result = super::set_field(name, value);
+
+  return result;
+} // slope::loader::set_field()
+
+
+
 
 /*----------------------------------------------------------------------------*/
 const bear::universe::coordinate_type bear::slope::s_line_width = 10;
@@ -29,74 +125,12 @@ const bear::universe::coordinate_type bear::slope::s_line_width = 10;
 bear::slope::slope()
   : m_tangent_friction(0.8), m_opposite_side_is_active(false),
     m_left_side_is_active(false), m_right_side_is_active(false),
-    m_apply_angle(true), m_steepness(0), m_margin(0),
-    m_left_control_point(0,0), m_right_control_point(0,0)
+    m_apply_angle(true)
 {
+  set_shape( universe::curved_box() );
+
   set_weak_collisions(false);
 } // slope::slope()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Set a field of type \c <real>.
- * \param name The name of the field to set.
- * \param value The new value of the field.
- */
-bool bear::slope::set_real_field( const std::string& name, double value )
-{
-  bool result = true;
-
-  if ( name == "slope.steepness" )
-    m_steepness = value;
-  else if ( name == "slope.control_point.left.x" )
-    m_left_control_point.x = value;
-  else if ( name == "slope.control_point.left.y" )
-    m_left_control_point.y = value;
-  else if ( name == "slope.control_point.right.x" )
-    m_right_control_point.x = value;
-  else if ( name == "slope.control_point.right.y" )
-    m_right_control_point.y = value;
-  else if ( name == "slope.margin" )
-    m_margin = value;
-  else if ( name == "slope.tangent_friction" )
-    m_tangent_friction = value;
-  else
-    result = super::set_real_field(name, value);
-
-  return result;
-} // slope::set_real_field()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Set a field of type \c bool.
- * \param name The name of the field to set.
- * \param value The new value of the field.
- */
-bool bear::slope::set_bool_field( const std::string& name, bool value )
-{
-  bool result = true;
-
-  if ( name == "slope.opposite_side_is_active" )
-    m_opposite_side_is_active = value;
-  else if ( name == "slope.left_side_is_active" )
-    m_left_side_is_active = value;
-  else if ( name == "slope.right_side_is_active" )
-    m_right_side_is_active = value;
-  else if ( name == "slope.apply_angle" )
-    m_apply_angle = value;
-  else
-    result = super::set_bool_field(name, value);
-
-  return result;
-} // slope::set_bool_field()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if the item is correctly initialized.
- */
-bool bear::slope::is_valid() const
-{
-  return (m_steepness != 0) && super::is_valid();
-} // slope::is_valid()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -106,25 +140,6 @@ void bear::slope::build()
 {
   super::build();
 
-  set_height( get_height() + m_margin );
-
-  universe::position_type left(0,get_height() - m_margin);
-  universe::position_type right(get_width(),get_height() - m_margin);
-  if ( m_steepness > 0 )
-    left.y -= m_steepness;
-  else
-    right.y += m_steepness;
-
-  m_left_control_point += left;
-  m_right_control_point += right;
-  
-  m_curve.push_back
-    ( claw::math::curve<universe::position_type>::control_point
-      ( left, left, m_left_control_point ) );
-  m_curve.push_back
-    ( claw::math::curve<universe::position_type>::control_point
-      ( right, m_right_control_point, right ) );
-  
   init_default_contact_mode
     ( true, m_opposite_side_is_active, m_left_side_is_active,
       m_right_side_is_active );
@@ -132,29 +147,20 @@ void bear::slope::build()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the steepness of the slope.
- */
-bear::universe::coordinate_type bear::slope::get_steepness() const
-{
-  return m_steepness;
-} // slope::get_steepness()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the margin of the slope.
- */
-bear::universe::coordinate_type bear::slope::get_margin() const
-{
-  return m_margin;
-} // slope::get_margin()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Get the curve describing the slope.
  */
-const bear::slope::curve_type& bear::slope::get_curve() const
+bear::slope::curve_type bear::slope::get_curve() const
 {
-  return m_curve;
+  curve_type result;
+
+  const universe::curved_box* const c( get_curved_box() );
+
+  if ( c != NULL )
+    result = c->get_curve();
+
+  delete c;
+
+  return result;
 } // slope::get_curve()
 
 /*----------------------------------------------------------------------------*/
@@ -165,16 +171,41 @@ const bear::slope::curve_type& bear::slope::get_curve() const
 bear::universe::coordinate_type 
 bear::slope::get_y_at_x( universe::coordinate_type x ) const
 {
-  universe::coordinate_type result(get_bottom());
-  
-  const std::vector<curve_type::section::resolved_point> p
-    ( m_curve.get_section( m_curve.begin() ).get_point_at_x( x - get_left() ) );
+  const universe::curved_box* const c( get_curved_box() );
 
-  if ( p.size() > 0 )
-    result = get_bottom() + p[0].get_position().y;
+  const universe::coordinate_type result
+    ( (c == NULL) ? get_bottom() : c->get_y_at_x(x) );
+  delete c;
 
   return result;
 } // slope::get_y_at_x()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the steepness of the slope.
+ */
+bear::universe::coordinate_type bear::slope::get_steepness() const
+{
+  const universe::curved_box* const c( get_curved_box() );
+
+  const universe::coordinate_type result
+    ( (c == NULL) ? 0 : c->get_steepness() );
+  delete c;
+
+  return result;
+} // slope::get_steepness()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Add the loaders of this item class into a given loader map.
+ * \param m The map in which the loaders are inserted.
+ */
+void bear::slope::populate_loader_map( engine::item_loader_map& m )
+{
+  super::populate_loader_map(m);
+
+  m.insert( loader(*this) );
+} // slope::populate_loader_map()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -264,7 +295,7 @@ bool bear::slope::check_left_contact_as_slope
   bool result = false;
 
   // the slope goes from top right to bottom left
-  if ( m_steepness > 0 )
+  if ( get_steepness() > 0 )
     result = info.get_bottom_left_on_contact().y
       >= get_y_at_x( get_left() ) - s_line_width;
   
@@ -283,7 +314,7 @@ bool bear::slope::check_right_contact_as_slope
   bool result = false;
 
   // the slope goes from top left to bottom right
-  if ( m_steepness < 0 )
+  if ( get_steepness() < 0 )
     result = info.get_bottom_left_on_contact().y
       >= get_y_at_x( get_right() ) - s_line_width;
 
@@ -423,7 +454,7 @@ void bear::slope::apply_angle_to
     ( info.get_bottom_left_on_contact().x + that.get_width() / 2 );
   
   const curve_type::section::resolved_point p =
-    m_curve.get_point_at_x( pos_x - get_left() )[0];
+    get_curve().get_point_at_x( pos_x - get_left() )[0];
   bear::universe::position_type tangent
     ( p.get_section().get_tangent_at(p.get_date()) );
   
@@ -450,7 +481,7 @@ void bear::slope::apply_angle_to
       const universe::coordinate_type d =
         x_gravity_length - friction_length;
 
-      if ( m_steepness > 0 )
+      if ( get_steepness() > 0 )
         that.add_internal_force( universe::force_type(-d, 0) );
       else
         that.add_internal_force( universe::force_type(d, 0) );
@@ -463,3 +494,22 @@ void bear::slope::apply_angle_to
     (that, that.get_x_axis().get_orthonormal_anticlockwise());
 } // slope::apply_angle_to()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the curve describing the slope.
+ */
+bear::universe::curved_box* bear::slope::get_curved_box() const
+{
+  universe::shape_base* const s( get_shape().clone_impl() );
+
+  universe::curved_box* const c
+    ( dynamic_cast<universe::curved_box*>( s ) );
+
+  if ( c == NULL )
+    {
+      delete s;
+      return NULL;
+    }
+
+  return c;
+} // slope::get_curved_box()

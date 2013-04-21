@@ -14,6 +14,8 @@
 #include "generic_items/base_ground.hpp"
 #include "generic_items/class_export.hpp"
 
+#include "universe/shape/curved_box.hpp"
+
 #include "engine/export.hpp"
 
 #include <claw/curve.hpp>
@@ -64,24 +66,46 @@ namespace bear
     /** \brief The type of the curve describing the surface of the slope. */
     typedef claw::math::curve<universe::position_type> curve_type;
 
+  private:
+    /**
+     * \brief Loads the fields of a slope.
+     */
+    class loader:
+      public engine::item_loader_base
+    {
+    private:
+      /** \brief The type of the parent class. */
+      typedef engine::item_loader_base super;
+
+    public:
+      explicit loader( slope& item );
+
+      loader* clone() const;
+
+      bool set_field( const std::string& name, double value );
+      bool set_field( const std::string& name, bool value );
+
+    private:
+      /** \brief The item loaded by this instance. */
+      slope& m_item;
+
+    }; // class loader
+
+    friend class loader;
+
   public:
     slope();
 
-    bool set_real_field( const std::string& name, double value );
-    bool set_bool_field( const std::string& name, bool value );
-
-    bool is_valid() const;
-
     void build();
 
+    curve_type get_curve() const;
+
     universe::coordinate_type get_steepness() const;
-    universe::coordinate_type get_margin() const;
-
-    const curve_type& get_curve() const;
-
     universe::coordinate_type get_y_at_x( universe::coordinate_type x ) const;
 
   protected:
+    void populate_loader_map( engine::item_loader_map& m );
+
     void collision_as_slope
     ( engine::base_item& that, universe::collision_info& info );
 
@@ -107,6 +131,8 @@ namespace bear
     void apply_angle_to
     ( engine::base_item& that, const universe::collision_info& info ) const;
 
+    universe::curved_box* get_curved_box() const;
+
   private:
     /** \brief The coefficient for tangent friction. */
     double m_tangent_friction;
@@ -123,21 +149,6 @@ namespace bear
     /** \brief Tell if the angle of the slope is applied to the colliding
         items. */
     bool m_apply_angle;
-
-    /** \brief The steepness of the slope. */
-    double m_steepness;
-
-    /** \brief The margin of the ground. */
-    universe::coordinate_type m_margin;
-
-    /** \brief The vector of left control point. */
-    universe::vector_type m_left_control_point;
-    
-    /** \brief The vector of right control point. */
-    universe::vector_type m_right_control_point;
-    
-    /** \brief The bezier curve on the ground. */
-    curve_type m_curve;    
 
     /** \brief The width of the surface of the slope. */
     static const universe::coordinate_type s_line_width;
