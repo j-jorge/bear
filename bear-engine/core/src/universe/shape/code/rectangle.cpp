@@ -25,6 +25,17 @@ bear::universe::rectangle::rectangle()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Constructor from a universe::rectangle_type.
+ */
+bear::universe::rectangle::rectangle( const rectangle_type& that )
+  : m_bottom_left( that.bottom_left() ),
+    m_size( that.size() )
+{
+
+} // rectangle::rectangle()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Instantiates a copy of this instance.
  */
 bear::universe::rectangle* bear::universe::rectangle::clone() const

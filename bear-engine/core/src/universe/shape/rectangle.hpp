@@ -28,6 +28,7 @@ namespace bear
     {
     public:
       rectangle();
+      explicit rectangle( const rectangle_type& that );
 
       virtual rectangle* clone() const;
 

@@ -17,6 +17,7 @@
 #include "universe/force_rectangle.hpp"
 #include "universe/friction_rectangle.hpp"
 #include "universe/link/base_link.hpp"
+#include "universe/shape/rectangle.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -593,8 +594,10 @@ void bear::universe::world::pick_items_in_rectangle
   item_list::const_iterator it;
   list_active_items(candidates, region, filter);
 
+  const rectangle s( r );
+
   for ( it=candidates.begin(); it!=candidates.end(); ++it )
-    if ( (*it)->get_bounding_box().intersects(r) )
+    if ( (*it)->get_shape().intersects( s ) )
       items.push_back(*it);
 } // world::pick_items_in_rectangle()
 
