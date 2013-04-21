@@ -1406,8 +1406,7 @@ void bf::ingame_view::render_item_as_wireframe
   if ( get_level().item_is_main_selection(&item) )
     render_grip(dc, index);
 
-  if ( ( item.get_class().get_class_name() == "bear::slope" ) &&
-       ( index == get_active_index() ) )
+  if ( item.get_class().get_class_name() == "bear::slope" )
    render_slope_steepness(dc, gc, item, pos, size, index);
 } // ingame_view::render_item_as_wireframe()
 
