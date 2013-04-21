@@ -141,6 +141,7 @@ namespace bear
 
     /** \brief The width of the surface of the slope. */
     static const universe::coordinate_type s_line_width;
+
   }; // class slope
 } // namespace bear
 

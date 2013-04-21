@@ -27,6 +27,8 @@ namespace bear
       public shape_base
     {
     public:
+      rectangle();
+
       virtual rectangle* clone() const;
 
       virtual bool intersects( const rectangle& that ) const;

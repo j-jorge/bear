@@ -33,6 +33,7 @@ namespace bear
       virtual shape_base* clone() const = 0;
 
       bool intersects( const shape_base& that ) const;
+      bool bounding_box_intersects( const shape_base& that ) const;
 
       size_type get_width() const;
       void set_width( size_type width );

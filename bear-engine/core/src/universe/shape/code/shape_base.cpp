@@ -10,6 +10,8 @@
  */
 #include "universe/shape/shape_base.hpp"
 
+#include "universe/shape/shape_traits.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Destructor.
@@ -28,6 +30,31 @@ bool bear::universe::shape_base::intersects( const shape_base& that ) const
 {
   return do_intersects( that );
 } // shape_base::intersects()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the bounding box of this shape has an intersection with the
+ *        bounding box of another given shape.
+ * \param that The other shape.
+ */
+bool bear::universe::shape_base::bounding_box_intersects
+( const shape_base& that ) const
+{
+  const rectangle_type this_bounding_box
+    ( shape_traits<shape_base>::get_bounding_box( *this ) );
+  const rectangle_type that_bounding_box
+    ( shape_traits<shape_base>::get_bounding_box( that ) );
+
+  if ( this_bounding_box.intersects( that_bounding_box ) )
+    {
+      const rectangle_type inter =
+        this_bounding_box.intersection( that_bounding_box );
+
+      return (inter.width() != 0) && (inter.height() != 0);
+    }
+  else
+    return false;
+} // shape_base::bounding_box_intersects()
 
 /*----------------------------------------------------------------------------*/
 /**

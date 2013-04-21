@@ -15,6 +15,16 @@
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Constructor.
+ */
+bear::universe::rectangle::rectangle()
+  : m_bottom_left(0, 0), m_size(0, 0)
+{
+
+} // rectangle::rectangle()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Instantiates a copy of this instance.
  */
 bear::universe::rectangle* bear::universe::rectangle::clone() const
@@ -29,20 +39,7 @@ bear::universe::rectangle* bear::universe::rectangle::clone() const
  */
 bool bear::universe::rectangle::intersects( const rectangle& that ) const
 {
-  const rectangle_type this_bounding_box
-    ( shape_traits<rectangle>::get_bounding_box( *this ) );
-  const rectangle_type that_bounding_box
-    ( shape_traits<rectangle>::get_bounding_box( that ) );
-
-  if ( this_bounding_box.intersects( that_bounding_box ) )
-    {
-      const rectangle_type inter =
-        this_bounding_box.intersection( that_bounding_box );
-
-      return (inter.width() != 0) && (inter.height() != 0);
-    }
-  else
-    return false;
+  return bounding_box_intersects( that );
 } // rectangle::intersects()
 
 /*----------------------------------------------------------------------------*/
