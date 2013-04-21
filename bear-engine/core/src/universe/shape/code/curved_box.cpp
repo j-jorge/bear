@@ -159,10 +159,10 @@ bear::universe::curved_box::get_curve() const
   else
     top_right_anchor.y += m_steepness;
 
-  const position_type left_control_point =
-    m_left_control_point + top_left_anchor;
-  const position_type right_control_point =
-    m_right_control_point + top_right_anchor;
+  const position_type left_control_point
+    ( m_left_control_point + top_left_anchor );
+  const position_type right_control_point
+    ( m_right_control_point + top_right_anchor );
   
   curve_type result;
 

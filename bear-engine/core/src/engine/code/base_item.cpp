@@ -691,11 +691,12 @@ void bear::engine::base_item::kill()
   claw::logger << claw::log_verbose
                << "Killing id #" << m_id << std::endl;
 
-  CLAW_PRECOND( m_layer != NULL );
   CLAW_PRECOND( !get_insert_as_static() );
 
   if (!m_dying)
     {
+      CLAW_PRECOND( m_layer != NULL );
+
       m_dying = true;
       destroy();
       m_layer->remove_item(*this);
