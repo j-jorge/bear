@@ -15,6 +15,7 @@
 #include "universe/collision_repair.hpp"
 
 #include "universe/shape/curved_box.hpp"
+#include "universe/shape/shape_traits.hpp"
 
 #include "engine/layer/layer.hpp"
 #include "engine/world.hpp"
@@ -51,7 +52,7 @@ bool bear::slope::loader::set_field( const std::string& name, double value )
 {
   bool result = true;
 
-  if ( name == "slope.tangent_friction" )
+  if ( name == "tangent_friction" )
     m_item.m_tangent_friction = value;
   else
     {
@@ -77,6 +78,8 @@ bool bear::slope::loader::set_field( const std::string& name, double value )
           ( universe::vector_type( c->get_right_control_point().x, value ) );
       else if ( name == "margin" )
         c->set_margin( value );
+      else
+        result = false;
 
       m_item.set_shape( *c );
       delete c;
@@ -138,7 +141,21 @@ bear::slope::slope()
  */
 void bear::slope::build()
 {
+  // We remove the margin during the build of the parent classes to be sure that
+  // the automatic size is computed if no size has been provided for the slope.
+  universe::curved_box* const c( get_curved_box() );
+
+  universe::size_type previous_margin( c->get_margin() );
+  c->set_margin( 0 );
+  set_shape( *c );
+
   super::build();
+
+  universe::shape_traits<universe::curved_box>::set_size( *c, get_size() );
+  c->set_margin( previous_margin );
+  set_shape( *c );
+
+  delete c;
 
   init_default_contact_mode
     ( true, m_opposite_side_is_active, m_left_side_is_active,
