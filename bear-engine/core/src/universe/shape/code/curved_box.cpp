@@ -296,30 +296,24 @@ bool bear::universe::curved_box::check_intersection_above
 ( const position_type& bottom_left_position,
   const position_type& bottom_right_position ) const
 {
-  // The bottom of the other is above the top of our bounding box, so there is
-  // no intersection.
-  if ( bottom_left_position.y >= shape_traits<curved_box>::get_top( *this ) )
-    return false;
-
   // Check the horizontal center of the other
   const position_type middle_position
     ( ( bottom_left_position + bottom_right_position ) / 2 );
   
-  // The horizontal center of the other is on our left. If its right edge is not
-  // then there is an intersection.
+  coordinate_type x( middle_position.x );
+
+  // The horizontal center of the other is on our left. We apply the test as if
+  // it was on our left edge.
   if ( middle_position.x < shape_traits<curved_box>::get_left( *this ) )
-    return bottom_right_position.x
-      > shape_traits<curved_box>::get_left( *this );
+    x = shape_traits<curved_box>::get_left( *this );
 
-  // The horizontal center of the other is on our right. If its left edge is not
-  // then there is an intersection.
+  // The horizontal center of the other is on our left. We apply the test as if
+  // it was on our right edge.
   if ( middle_position.x > shape_traits<curved_box>::get_right( *this ) )
-    return bottom_left_position.x
-      < shape_traits<curved_box>::get_right( *this );
+    x = shape_traits<curved_box>::get_right( *this );
 
-  // Here the horizontal center is between our left and right edges. We check if
-  // the vertical position of the other is above or below the curve. In the
-  // latter case, there is an intersection.
+  // We check if the vertical position of the other is above or below the
+  // curve. In the latter case, there is an intersection.
   
-  return get_y_at_x( middle_position.x ) > middle_position.y;
+  return get_y_at_x( x ) + m_margin > middle_position.y;
 } // curved_box::check_intersection_above()
