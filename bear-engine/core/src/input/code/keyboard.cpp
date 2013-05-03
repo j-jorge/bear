@@ -197,11 +197,7 @@ std::string bear::input::keyboard::get_name_of( key_code k )
     case kc_break: return "break"; break;
     case kc_menu: return "menu"; break;
     default:
-      {
-        claw::logger << claw::log_warning << "Unknown key #" << k << '.'
-                     << std::endl;
-        return "Unknown key";
-      }
+      return "Unknown key";
     }
 } // keyboard::get_name_of()
 
