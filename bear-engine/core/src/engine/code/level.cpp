@@ -344,6 +344,45 @@ void bear::engine::level::push_layer( gui_layer* the_layer )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Moves a layer backward or forward.
+ * \param the_layer The layer to move.
+ * \param distance The distance and the direction in which the layer must be
+ *        moved.
+ * \pre the_layer is a layer of this level.
+ */
+void bear::engine::level::move_layer( const layer& the_layer, int distance )
+{
+  layer_vector::iterator it
+    ( std::find( m_layers.begin(), m_layers.end(), &the_layer ) );
+
+  CLAW_PRECOND( it != m_layers.end() );
+
+  if ( distance > 0 )
+    while ( (it != m_layers.end()) && (distance != 0) )
+      {
+        layer_vector::iterator next( it );
+        ++next;
+
+        std::swap( *it, *next );
+
+        it = next;
+        --distance;
+      }
+  else
+    while ( (it != m_layers.begin()) && (distance != 0) )
+      {
+        layer_vector::iterator prev( it );
+        --prev;
+
+        std::swap( *it, *prev );
+
+        it = prev;
+        ++distance;
+      }
+} // level::move_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Gets an iterator on the beginning of the sequence of layers.
  */
 bear::engine::level::layer_iterator bear::engine::level::layer_begin()

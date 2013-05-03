@@ -101,6 +101,8 @@ namespace bear
       void push_layer( layer* the_layer );
       void push_layer( gui_layer* the_layer );
 
+      void move_layer( const layer& the_layer, int distance );
+
       layer_iterator layer_begin();
       layer_iterator layer_end();
 
