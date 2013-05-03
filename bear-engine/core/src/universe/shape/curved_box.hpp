@@ -86,7 +86,7 @@ namespace bear
       coordinate_type m_steepness;
 
       /** \brief The margin of the top. */
-      coordinate_type m_margin;
+      coordinate_type m_top_margin;
 
       /** \brief The vector of left control point. */
       vector_type m_left_control_point;
@@ -94,6 +94,9 @@ namespace bear
       /** \brief The vector of right control point. */
       vector_type m_right_control_point;
     
+      /** \brief The width of the curve, uset to check the collisions. */
+      static coordinate_type s_line_width;
+
     }; // class curved_box
   } // namespace universe
 } // namespace bear

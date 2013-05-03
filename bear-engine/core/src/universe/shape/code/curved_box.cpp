@@ -14,11 +14,14 @@
 #include "universe/shape/shape_traits.hpp"
 
 /*----------------------------------------------------------------------------*/
+bear::universe::coordinate_type bear::universe::curved_box::s_line_width(10);
+
+/*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  */
 bear::universe::curved_box::curved_box()
-  : m_bottom_left(0, 0), m_size(0, 0), m_steepness(0), m_margin(0),
+  : m_bottom_left(0, 0), m_size(0, 0), m_steepness(0), m_top_margin(0),
     m_left_control_point(0, 0), m_right_control_point(0, 0)
 {
 
@@ -91,7 +94,7 @@ void bear::universe::curved_box::set_steepness( coordinate_type s )
  */
 bear::universe::coordinate_type bear::universe::curved_box::get_margin() const
 {
-  return m_margin;
+  return m_top_margin;
 } // curved_box::get_margin()
 
 /*----------------------------------------------------------------------------*/
@@ -101,7 +104,7 @@ bear::universe::coordinate_type bear::universe::curved_box::get_margin() const
  */
 void bear::universe::curved_box::set_margin( coordinate_type s )
 {
-  m_margin = s;
+  m_top_margin = s;
 } // curved_box::set_margin()
 
 /*----------------------------------------------------------------------------*/
@@ -151,8 +154,8 @@ void bear::universe::curved_box::set_right_control_point( const vector_type& p )
 bear::universe::curved_box::curve_type
 bear::universe::curved_box::get_curve() const
 {
-  position_type top_left_anchor( 0, get_height() - m_margin );
-  position_type top_right_anchor( get_width(), get_height() - m_margin );
+  position_type top_left_anchor( 0, get_height() - m_top_margin );
+  position_type top_right_anchor( get_width(), get_height() - m_top_margin );
 
   if ( m_steepness > 0 )
     top_left_anchor.y -= m_steepness;
@@ -262,7 +265,7 @@ void bear::universe::curved_box::do_set_width( size_type s )
  */
 bear::universe::size_type bear::universe::curved_box::do_get_height() const
 {
-  return m_size.y + m_margin;
+  return m_size.y + m_top_margin;
 } // curved_box::do_get_height()
 
 /*----------------------------------------------------------------------------*/
@@ -273,7 +276,7 @@ bear::universe::size_type bear::universe::curved_box::do_get_height() const
  */
 void bear::universe::curved_box::do_set_height( size_type s )
 {
-  m_size.y = std::max( size_type(0), s - m_margin );
+  m_size.y = std::max( size_type(0), s - m_top_margin );
 } // curved_box::do_set_height()
 
 /*----------------------------------------------------------------------------*/
@@ -287,7 +290,7 @@ bool bear::universe::curved_box::do_intersects( const shape_base& that ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tells if this an intersection regarding the bottom edge of another
+ * \brief Tells if there is an intersection regarding the bottom edge of another
  *        shape.
  * \param bottom_left_position The bottom left position of the other shape.
  * \param bottom_right_position The bottom right position of the other shape.
@@ -315,5 +318,5 @@ bool bear::universe::curved_box::check_intersection_above
   // We check if the vertical position of the other is above or below the
   // curve. In the latter case, there is an intersection.
   
-  return get_y_at_x( x ) + m_margin > middle_position.y;
+  return get_y_at_x( x ) + s_line_width > middle_position.y;
 } // curved_box::check_intersection_above()
