@@ -92,12 +92,11 @@ bool bear::engine::shader_loader::parse_include
           included_file = get_relative_file_name( file_name, included_file );
 
           if ( std::find( seen.begin(), seen.end(), included_file )
-               != seen.end() )
-            throw claw::exception
-              ( "Recursively included shader file '" + included_file + "'" );
-
-          load_include( output, included_file, seen );
-          return true;
+               == seen.end() )
+            {
+              load_include( output, included_file, seen );
+              return true;
+            }
         }
     }
 
