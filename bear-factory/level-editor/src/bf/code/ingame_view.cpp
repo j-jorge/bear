@@ -1407,7 +1407,10 @@ void bf::ingame_view::render_item_as_wireframe
     render_grip(dc, index);
 
   if ( item.get_class().get_class_name() == "bear::slope" )
-   render_slope_steepness(dc, gc, item, pos, size, index);
+    {
+      render_slope_curve_grip(dc, item, pos, size, index);
+      render_slope_steepness(dc, gc, item, pos, size, index);
+    }
 } // ingame_view::render_item_as_wireframe()
 
 /*----------------------------------------------------------------------------*/
@@ -1506,6 +1509,60 @@ void bf::ingame_view::render_item_bounding_box
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Render the grip on curve of the slope.
+ * \param dc The device context for the drawings.
+ * \param item The item to render.
+ * \param pos The position of the box.
+ * \param size The size of the box.
+ * \param index The index of the layer in which the item is rendered.
+ */
+void bf::ingame_view::render_slope_curve_grip
+( wxDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
+  unsigned int index ) const
+{
+  if ( index == get_active_index() )
+    {
+      dc.SetPen( get_display_pen(item, index) );
+      dc.SetBrush(*wxTRANSPARENT_BRUSH);
+
+      double steepness;
+      double left_x;
+      double left_y;
+      double right_x;
+      double right_y;
+      
+      compute_slope_parameters
+        (item, steepness, left_x, left_y, right_x, right_y);
+      
+      wxPoint p[2];
+
+      if ( steepness < 0 )
+        {
+          p[0] = wxPoint( pos.x,  pos.y );
+          p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
+        }
+      else
+        {
+          p[0] = wxPoint( pos.x,  pos.y + steepness);
+          p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
+        }
+
+      dc.DrawRectangle
+        ( p[0].x - s_grip_size / 2 + left_x, 
+          p[0].y - s_grip_size / 2 - left_y,
+          s_grip_size, s_grip_size );
+      dc.DrawLine(p[0].x + left_x, p[0].y - left_y, p[0].x, p[0].y);      
+      
+      dc.DrawRectangle
+        ( p[1].x - s_grip_size / 2 + right_x, 
+          p[1].y - s_grip_size / 2 - right_y,
+          s_grip_size, s_grip_size );
+      dc.DrawLine(p[1].x + right_x, p[1].y - right_y, p[1].x, p[1].y);   
+    }
+} // ingame_view::render_slope_curve_grip()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Render the steepness of the slope.
  * \param dc The device context for the drawings.
  * \param gc The graphics context for the drawings.
@@ -1519,15 +1576,62 @@ void bf::ingame_view::render_slope_steepness
   const item_instance& item, const wxPoint& pos, const wxSize& size,
   unsigned int index ) const
 {
-  gc.SetPen( get_display_pen(item, index) );
+  wxPen pen( wxColour( std_to_wx_string(item.get_class().get_color()) ), 
+             1, wxSOLID );
+  gc.SetPen( pen );
   gc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  double steepness(0);
-  double left_x(0);
-  double left_y(0);
-  double right_x(0);
-  double right_y(0);
   
+  double steepness;
+  double left_x;
+  double left_y;
+  double right_x;
+  double right_y;
+  
+  compute_slope_parameters(item, steepness, left_x, left_y, right_x, right_y);
+        
+  wxPoint p[2];
+  
+  if ( steepness < 0 )
+    {
+      p[0] = wxPoint( pos.x,  pos.y );
+      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
+    }
+  else
+    {
+      p[0] = wxPoint( pos.x,  pos.y + steepness);
+      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
+    }
+
+  wxGraphicsPath path = gc.CreatePath();
+  
+  path.MoveToPoint(p[0]);
+  path.AddCurveToPoint
+    ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
+      p[1].y - right_y, p[1].x, p[1].y );
+
+  gc.StrokePath(path);
+} // ingame_view::render_slope_steepness()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Compute slope parameters.
+ * \param item The item to render.
+ * \param steepness The steepness of the slope.
+ * \param left_x The value of control_point.left.x field
+ * \param left_y The value of control_point.left.y field
+ * \param right_x The value of control_point.right.x field
+ * \param right_y The value of control_point.right.y field
+ */
+void bf::ingame_view::compute_slope_parameters
+( const item_instance& item, double & steepness, double & left_x,
+  double & left_y, double & right_x, double & right_y ) const
+{
+  steepness = 0;
+  left_x = 0;
+  left_y = 0;
+  right_x = 0;
+  right_y = 0;
+
   if ( item.has_value( item.get_class().get_field("slope.steepness") ) )
     {
       real_type steepness_field;
@@ -1566,29 +1670,7 @@ void bf::ingame_view::render_slope_steepness
       item.get_value( "slope.control_point.right.y", right_y_field );
       right_y = zoom( wxCoord(right_y_field.get_value() ) );
     }
-      
-  wxPoint p[2];
-  
-  if ( steepness < 0 )
-    {
-      p[0] = wxPoint( pos.x,  pos.y );
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
-    }
-  else
-    {
-      p[0] = wxPoint( pos.x,  pos.y + steepness);
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
-    }
-  
-  wxGraphicsPath path = gc.CreatePath();
-  
-  path.MoveToPoint(p[0]);
-  path.AddCurveToPoint
-    ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
-      p[1].y - right_y, p[1].x, p[1].y );
-
-  gc.StrokePath(path);
-} // ingame_view::render_slope_steepness()
+} // ingame_view::compute_slope_parameters()
 
 /*----------------------------------------------------------------------------*/
 /**
