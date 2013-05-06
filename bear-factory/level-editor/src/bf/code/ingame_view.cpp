@@ -31,6 +31,7 @@
 #include "bf/history/action_move_selection.hpp"
 #include "bf/history/action_paste_items.hpp"
 #include "bf/history/action_set_item_position_and_size.hpp"
+#include "bf/history/action_set_slope_curve.hpp"
 #include "bf/history/action_move_down.hpp"
 #include "bf/history/action_move_up.hpp"
 #include "bf/history/action_rotate_selection.hpp"
@@ -1829,6 +1830,9 @@ void bf::ingame_view::render_drag
         break;
       case drag_info::drag_mode_size:
         render_drag_mode_size(dc,index);
+        break;      
+      case drag_info::drag_mode_slope:
+        render_drag_mode_slope(dc, gc, index);
         break;
       default:
         {
@@ -1918,6 +1922,83 @@ void bf::ingame_view::render_drag_mode_size
 
   dc.DrawPolygon(4, p);
 } // ingame_view::render_drag_mode_size()
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Render the result of the drag in a situation of changing slope curve.
+ * \param dc The device context for the drawings.
+ * \param gc The graphics context for the drawings.
+ * \param index The index of the layer.
+ */
+void bf::ingame_view::render_drag_mode_slope
+( wxDC& dc, wxGraphicsContext& gc, unsigned int index ) const
+{
+  wxPen pen
+    ( wxColour
+      ( std_to_wx_string(m_drag_info->picked_item->get_class().get_color()) ), 
+      1, wxSOLID );
+  gc.SetPen( pen );
+  gc.SetBrush(*wxTRANSPARENT_BRUSH);
+  
+  double steepness;
+  double left_x;
+  double left_y;
+  double right_x;
+  double right_y;
+  
+  compute_slope_parameters
+    (*m_drag_info->picked_item, steepness, left_x, left_y, right_x, right_y);
+  
+  wxPoint gap
+    ( m_drag_info->mouse_position.x - m_drag_info->mouse_origin.x,
+      m_drag_info->mouse_position.y - m_drag_info->mouse_origin.y );
+  wxPoint pos_view = compute_local_view_position();
+  wxPoint pos
+    ( zoom( (wxCoord)m_drag_info->picked_item->
+            get_rendering_parameters().get_left() ) - pos_view.x,
+      pos_view.y + GetSize().y 
+      - zoom((wxCoord)m_drag_info->picked_item->
+             get_rendering_parameters().get_bottom())
+      - zoom((wxCoord)m_drag_info->picked_item->
+             get_rendering_parameters().get_height()) );
+  const wxSize size
+    ( (int)m_drag_info->picked_item->get_rendering_parameters().get_width(),
+      (int)m_drag_info->picked_item->get_rendering_parameters().get_height() );
+
+  if ( m_drag_info->left_side )
+    {
+      left_x = gap.x;
+      left_y = gap.y;
+    }
+  else
+    {
+      right_x = gap.x;
+      right_y = gap.y;
+    }
+
+  wxPoint p[2];
+
+  if ( steepness < 0 )
+    {
+      p[0] = wxPoint( pos.x,  pos.y );
+      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
+    }
+  else
+    {
+      p[0] = wxPoint( pos.x,  pos.y + steepness);
+      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
+    }
+
+  wxGraphicsPath path = gc.CreatePath();
+  
+  path.MoveToPoint(p[0]);
+  path.AddCurveToPoint
+    ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
+      p[1].y - right_y, p[1].x, p[1].y );
+
+  gc.StrokePath(path);
+} // ingame_view::render_drag_mode_slope()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2910,6 +2991,107 @@ bool bf::ingame_view::set_drag_mode_size( const wxPoint& pos )
   return grip;
 } // ingame_view::set_drag_mode_size()
 
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Check if the user tries to change slope curve and set the drag mode 
+ * if it is the case.
+ * \param pos The position of the mouse in the layer.
+ * \pre m_drag_info->picked_item is the item on which the user clicked.
+ * \pre pos is in the bounding box of m_drag_info->picked_item.
+ */
+bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
+{
+  bool grip = true;
+
+  if(  has_selection() )
+    {
+      item_instance* item( get_level().get_main_selection() );
+
+      if ( item->get_class().get_class_name() == "bear::slope" )
+        {
+          const wxRect box = get_bounding_box( *item );
+
+          double steepness;
+          double left_x;
+          double left_y;
+          double right_x;
+          double right_y;
+          
+          compute_slope_parameters
+            (*item, steepness, left_x, left_y, right_x, right_y);
+
+          steepness = 
+            steepness < 0 ? - unzoom( - steepness ) : unzoom( steepness );
+          
+          left_x = left_x < 0 ? - unzoom( - left_x ) : unzoom( left_x );
+          left_y = left_y < 0 ? - unzoom( - left_y ) : unzoom( left_y );
+          right_x = right_x < 0 ? - unzoom( - right_x ) : unzoom( right_x );
+          right_y = right_y < 0 ? - unzoom( - right_y ) : unzoom( right_y );
+
+          wxPoint p[2];
+          
+          if ( steepness < 0 )
+            {
+              p[0] = wxPoint( box.GetLeft(),  box.GetBottom() );
+              p[1] = wxPoint( box.GetRight(), box.GetBottom() + steepness );
+            }
+          else
+            {
+              p[0] = wxPoint( box.GetLeft(),  box.GetBottom() - steepness);
+              p[1] = wxPoint( box.GetRight(), box.GetBottom() );
+            }
+          
+          const wxRect left_rect
+            ( p[0].x - s_grip_size / 2 + left_x, 
+              p[0].y - s_grip_size / 2 - left_y,
+              s_grip_size, s_grip_size );
+
+          const wxRect right_rect
+             ( p[1].x - s_grip_size / 2 + right_x, 
+               p[1].y - s_grip_size / 2 - right_y,
+              s_grip_size, s_grip_size );
+          
+          wxPoint mouse_pos;
+          std::cout << p[1].x - s_grip_size / 2 + right_x << " - "
+                    << p[1].y - s_grip_size / 2 - right_y << " ; "
+                    << pos.x << " - "
+                    << pos.y << " :" 
+                    << right_x << " - " << std::endl;
+
+          if ( left_rect.Contains(pos) )
+            {
+              m_drag_info->mouse_origin = wxPoint( p[0].x, p[0].y);
+              mouse_pos = wxPoint( p[0].x + left_x, p[0].y - left_y);
+              m_drag_info->left_side = true;
+            }
+          else if ( right_rect.Contains(pos) )
+            {
+              m_drag_info->mouse_origin = wxPoint( p[1].x, p[1].y);
+              mouse_pos = wxPoint( p[1].x + left_x, p[1].y - right_y);
+              m_drag_info->left_side = false;
+            }
+          else
+            grip = false;
+          
+          if ( grip )
+            {
+              m_drag_info->picked_item = item;
+              m_drag_info->drag_mode = drag_info::drag_mode_slope;
+              m_drag_info->mouse_position = mouse_pos;
+            }
+        }
+      else
+        grip = false;
+    }
+  else
+    grip = false;
+
+  std::cout << "grip=" << grip << std::endl;
+
+  return grip;
+} // ingame_view::set_drag_mode_slope()
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Get the size of the box when resizing an item.
@@ -3035,6 +3217,40 @@ void bf::ingame_view::apply_drag_mode_size()
       ( new action_set_item_position_and_size
         (m_drag_info->picked_item, box.x, box.y, box.width, box.height) );
 } // ingame_view::apply_drag_mode_size()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Apply the result of a drag in slope mode.
+ */
+void bf::ingame_view::apply_drag_mode_slope()
+{
+  CLAW_PRECOND( m_drag_info != NULL );
+  CLAW_PRECOND( m_drag_info->drag_mode == drag_info::drag_mode_slope );
+  CLAW_PRECOND( m_drag_info->picked_item != NULL );
+
+  wxPoint gap
+    ( m_drag_info->mouse_position.x - m_drag_info->mouse_origin.x,
+      m_drag_info->mouse_position.y - m_drag_info->mouse_origin.y );
+
+   double steepness;
+   double left_x;
+   double left_y;
+   double right_x;
+   double right_y;
+   
+   compute_slope_parameters
+     (*m_drag_info->picked_item, steepness, left_x, left_y, right_x, right_y);
+
+   if ( m_drag_info->left_side && ( gap.x != left_x || gap.y != left_y ) ) 
+     do_action
+       ( new action_set_slope_curve
+         (m_drag_info->picked_item, gap.x, gap.y, right_x, right_y) );
+   else if ( ! m_drag_info->left_side && 
+             ( gap.x != right_x || gap.y != right_y ) )
+     do_action
+       ( new action_set_slope_curve
+         (m_drag_info->picked_item, left_x, left_y, gap.x, gap.y) );
+} // ingame_view::apply_drag_mode_slope()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -3214,7 +3430,12 @@ void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
   bool grip = false;
 
   if ( !event.AltDown() && !event.ControlDown() )
-    grip = set_drag_mode_size( point );
+    {
+      grip = set_drag_mode_size( point );
+  
+      if ( ! grip )
+        grip = set_drag_mode_slope( point );
+    }
 
   if ( !grip )
     {
@@ -3326,6 +3547,8 @@ void bf::ingame_view::on_mouse_left_up(wxMouseEvent& event)
         apply_drag_mode_selection( event.ControlDown(), event.AltDown() );
       else if ( m_drag_info->drag_mode == drag_info::drag_mode_size )
         apply_drag_mode_size();
+      else if ( m_drag_info->drag_mode == drag_info::drag_mode_slope )
+        apply_drag_mode_slope();
 
       delete m_drag_info;
       m_drag_info = NULL;

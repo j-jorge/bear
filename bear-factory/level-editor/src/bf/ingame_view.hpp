@@ -50,7 +50,8 @@ namespace bf
           drag_mode_selection,
           drag_mode_move,
           drag_mode_size,
-          drag_mode_pick
+          drag_mode_pick,
+          drag_mode_slope          
         }; // enum drag_mode
 
     public:
@@ -77,6 +78,8 @@ namespace bf
       /** \brief Tell if the drag conterns the Y-axis. */
       bool y_active;
 
+      /** \brief Tell if the drag conterns the left side. */
+      bool left_side;
     }; // struct drag_info
 
     /** \brief A drop target for creating an item. The class of the item is
@@ -262,6 +265,8 @@ namespace bf
       const std::multimap<int, item_instance*>& z_order, 
       unsigned int index ) const;
     void render_drag_mode_size( wxDC& dc, unsigned int index ) const;
+    void render_drag_mode_slope
+    ( wxDC& dc, wxGraphicsContext& gc, unsigned int index ) const;
     void render_grid( wxDC& dc ) const;
     void render_grid_vertical_lines( wxDC& dc ) const;
     void render_grid_horizontal_lines( wxDC& dc ) const;
@@ -317,12 +322,14 @@ namespace bf
     void set_tooltip( item_instance* item );
 
     bool set_drag_mode_size( const wxPoint& pos );
+    bool set_drag_mode_slope( const wxPoint& pos );
     wxRect get_drag_mode_size_box() const;
 
     void apply_drag_mode_move( bool ctrl, bool shift, bool alt );
     void apply_drag_mode_pick( bool ctrl, bool alt );
     void apply_drag_mode_selection( bool ctrl, bool alt );
     void apply_drag_mode_size();
+    void apply_drag_mode_slope();
 
     wxCoord zoom( wxCoord v ) const;
     wxPoint zoom( wxPoint v ) const;

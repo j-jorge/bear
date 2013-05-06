@@ -76,6 +76,7 @@ set( BF_LE_SOURCE_FILES
   history/code/action_set_item_position_and_size.cpp
   history/code/action_set_item_size.cpp
   history/code/action_set_priority.cpp
+  history/code/action_set_slope_curve.cpp
   history/code/level_history.cpp
 
   item_filter/code/item_filter.cpp
