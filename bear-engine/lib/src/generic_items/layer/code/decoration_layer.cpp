@@ -115,7 +115,7 @@ void bear::decoration_layer::do_get_visual
   std::list<engine::base_item*>::const_iterator it;
 
   for (it=items.begin(); it!=items.end(); ++it)
-    (*it)->insert_visual( visuals );
+    visuals.push_back( (*it)->get_visual() );
 
   for(it=m_global_items.begin(); it!=m_global_items.end(); ++it)
     if ( visible_area.intersects( (*it)->get_bounding_box() ) )
@@ -124,7 +124,7 @@ void bear::decoration_layer::do_get_visual
           ( visible_area.intersection( (*it)->get_bounding_box() ) );
 
         if( (r.width() > 0) && (r.height() > 0) )
-          (*it)->insert_visual(visuals);
+          visuals.push_back( (*it)->get_visual() );
       }
 } // decoration_layer::do_get_visual()
 

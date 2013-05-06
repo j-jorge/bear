@@ -106,7 +106,7 @@ void bear::engine::layer::get_visual
 
   for ( it=m_always_displayed.begin(); it!=m_always_displayed.end(); ++it )
     if ( !visible_area.intersects( (*it)->get_bounding_box() ) )
-      (*it)->insert_visual(visuals);
+      visuals.push_back( (*it)->get_visual() );
 
   do_get_visual(visuals, visible_area);
   visuals.sort( scene_visual::z_position_compare() );

@@ -291,57 +291,48 @@ void bear::engine::base_item::progress( universe::time_type elapsed_time )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Insert the visual of the item at the end of a given list.
- * \param visuals The list in which the visual is added.
+ * \brief Gets the visual of the item.
  *
- * This method uses get_visual() to get the visuals and make a
+ * This method uses get_visual( std::list<>& ) to get the visuals and make a
  * visual::scene_element_sequence of them.
  */
-void
-bear::engine::base_item::insert_visual( std::list<scene_visual>& visuals ) const
+bear::engine::scene_visual bear::engine::base_item::get_visual() const
 {
   BEAR_CREATE_SCOPED_TIMELOG
     ( std::string("insert_visual ") + get_class_name() );
 
+  visual::scene_element_sequence result;
+
   std::list<scene_visual> v;
   get_visual( v );
 
-  if ( v.size() > 1 )
+  v.sort( scene_visual::z_position_compare() );
+
+  for ( ; !v.empty() ; v.pop_front() )
     {
-      v.sort( scene_visual::z_position_compare() );
-      visual::scene_element_sequence e;
-
-      for ( ; !v.empty() ; v.pop_front() )
-        {
 #ifndef NDEBUG
-          const visual::scene_element& elem( v.front().scene_element );
+      const visual::scene_element& elem( v.front().scene_element );
 
-          if ( !elem.always_displayed()
-               && elem.get_bounding_box().empty() )
-            claw::logger << claw::log_warning
-                         << "Empty visual::scene_element is inserted in a "
-                         << "visual::scene_element_sequence by '"
-                         << get_class_name() << "'. This should be avoided."
-                         << std::endl;
+      if ( !elem.always_displayed()
+           && elem.get_bounding_box().empty() )
+        claw::logger << claw::log_warning
+                     << "Empty visual::scene_element is inserted in a "
+                     << "visual::scene_element_sequence by '"
+                     << get_class_name() << "'. This should be avoided."
+                     << std::endl;
 #endif // NDEBUG
 
-          e.push_back(v.front().scene_element);
-        }
-
-      visuals.push_back( scene_visual(e, get_z_position()) );
-    }
-  else if (v.size() == 1)
-    {
-      visuals.push_back( v.front() );
-      visuals.back().z_position = get_z_position();
+      result.push_back( v.front().scene_element );
     }
 
   if ( m_shader.is_valid() )
     {
-      visuals.push_front( visual::scene_shader_push( m_shader ) );
-      visuals.push_back( visual::scene_shader_pop() );
+      result.push_front( visual::scene_shader_push( m_shader ) );
+      result.push_back( visual::scene_shader_pop() );
     }
-} // base_item::insert_visual()
+
+  return scene_visual( result, get_z_position() );
+} // base_item::get_visual()
 
 /*----------------------------------------------------------------------------*/
 /**
