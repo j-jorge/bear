@@ -109,7 +109,7 @@ namespace bear
       virtual void pre_cache();
       virtual void progress( universe::time_type elapsed_time );
 
-      void insert_visual( std::list<scene_visual>& visuals ) const;
+      scene_visual get_visual() const;
       virtual void get_visual( std::list<scene_visual>& visuals ) const;
 
       virtual bool set_u_integer_field

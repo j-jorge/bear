@@ -85,7 +85,7 @@ void bear::engine::world::get_visual
                      << "item is not a base_item. Not rendered: "
                      << **it << std::endl;
       else
-        i->insert_visual( visuals );
+        visuals.push_back( i->get_visual() );
     }
 } // world::get_visual()
 
