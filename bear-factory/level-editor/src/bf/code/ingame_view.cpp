@@ -3570,6 +3570,9 @@ void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
  */
 void bf::ingame_view::on_mouse_wheel_rotation(wxMouseEvent& event)
 {
+  if ( empty() )
+    return;
+
   int rotation = event.GetWheelRotation();
   wxPoint point = compute_mouse_position( event.GetPosition() );
 
