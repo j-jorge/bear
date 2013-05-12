@@ -116,6 +116,7 @@ void bf::level_history::redo()
 bool bf::level_history::do_action( level_action* action )
 {
   m_last_selection_move = NULL;
+  m_last_selection_rotate = NULL;
 
   if ( !action->is_identity(*m_level) )
     {
@@ -139,6 +140,8 @@ bool bf::level_history::do_action( level_action* action )
  */
 bool bf::level_history::do_action( action_move_selection* action )
 {
+  m_last_selection_rotate = NULL;
+
   if ( !action->is_identity(*m_level) )
     {
       clear_future();
@@ -179,6 +182,8 @@ bool bf::level_history::do_action( action_move_selection* action )
  */
 bool bf::level_history::do_action( action_rotate_selection* action )
 {
+  m_last_selection_move = NULL;
+
   if ( !action->is_identity(*m_level) )
     {
       clear_future();
