@@ -110,16 +110,16 @@ namespace bear
       void set_default_environment( const universe::environment_type e );
 
       void pick_items_by_position
-      ( item_list& items, const position_type& p,
+      ( item_list& items, position_type p,
         const item_picking_filter& filter = item_picking_filter() ) const;
       void pick_items_in_rectangle
-      ( item_list& items, const rectangle_type& r,
+      ( item_list& items, rectangle_type r,
         const item_picking_filter& filter = item_picking_filter() ) const;
       void pick_items_in_circle
-      ( item_list& items, const position_type& c, coordinate_type r,
+      ( item_list& items, position_type c, coordinate_type r,
         const item_picking_filter& filter = item_picking_filter() ) const;
       physical_item* pick_item_in_direction
-      ( const position_type& p, const vector_type& dir,
+      ( position_type p, vector_type dir,
         const item_picking_filter& filter = item_picking_filter() ) const;
 
     protected:

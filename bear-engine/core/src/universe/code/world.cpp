@@ -561,8 +561,7 @@ bear::universe::world::add_environment_rectangle
  * \param filter The conditions the selected items must satisfy.
  */
 void bear::universe::world::pick_items_by_position
-( item_list& items, const position_type& p,
-  const item_picking_filter& filter ) const
+( item_list& items, position_type p, const item_picking_filter& filter ) const
 {
   region_type region;
   region.push_front( rectangle_type(p.x - 1, p.y - 1, p.x + 1, p.y + 1) );
@@ -584,20 +583,23 @@ void bear::universe::world::pick_items_by_position
  * \param filter The conditions the selected items must satisfy.
  */
 void bear::universe::world::pick_items_in_rectangle
-( item_list& items, const rectangle_type& r,
-  const item_picking_filter& filter ) const
+( item_list& items, rectangle_type r, const item_picking_filter& filter ) const
 {
   region_type region;
   region.push_front(r);
 
   item_list candidates;
-  item_list::const_iterator it;
-  list_active_items(candidates, region, filter);
+  list_active_items( candidates, region, filter );
 
   const rectangle s( r );
 
-  for ( it=candidates.begin(); it!=candidates.end(); ++it )
-    if ( (*it)->get_shape().intersects( s ) )
+  // We keep the items that intersects s and the items that have no size but are
+  // placed inside r. Items having only one dimension set to zero will not be
+  // selected yet; it must be implemented one day.
+  for ( item_list::const_iterator it = candidates.begin();
+        it != candidates.end(); ++it )
+    if ( r.includes( (*it)->get_bottom_left() )
+         || (*it)->get_shape().intersects( s ) )
       items.push_back(*it);
 } // world::pick_items_in_rectangle()
 
@@ -610,7 +612,7 @@ void bear::universe::world::pick_items_in_rectangle
  * \param filter The conditions the selected items must satisfy.
  */
 void bear::universe::world::pick_items_in_circle
-( item_list& items, const position_type& c, coordinate_type r,
+( item_list& items, position_type c, coordinate_type r,
   const item_picking_filter& filter ) const
 {
   region_type region;
@@ -634,8 +636,7 @@ void bear::universe::world::pick_items_in_circle
  * \return The first item in the direction, or NULL.
  */
 bear::universe::physical_item* bear::universe::world::pick_item_in_direction
-( const position_type& p, const vector_type& dir,
-  const item_picking_filter& filter ) const
+( position_type p, vector_type dir, const item_picking_filter& filter ) const
 {
   region_type region;
   region.push_front( rectangle_type(p, p + dir) );
