@@ -107,6 +107,8 @@ namespace bear
       post_create_action mark_as_built( base_item& item );
       bool is_currently_building( base_item& item ) const;
 
+      void apply_post_update_changes();
+
     protected:
       /** \brief Size of the layer. */
       const universe::size_box_type m_size;
@@ -129,6 +131,12 @@ namespace bear
 
       /** \brief The items we are currently adding in the layer. */
       std::map<base_item*, post_create_action> m_post_creation_action;
+
+      /** \brief Tells if an update is ongoing. */
+      bool m_currently_updating;
+
+      /** \brief The items that must be removed at the end of the update. */
+      std::list<base_item*> m_post_update_removal;
 
     }; // class layer
   } // namespace engine

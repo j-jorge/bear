@@ -690,8 +690,8 @@ void bear::engine::base_item::kill()
 
       m_dying = true;
       destroy();
+
       m_layer->remove_item(*this);
-      m_world = NULL;
 
       for ( life_chain_list::iterator it = m_life_chain.begin();
             it != m_life_chain.end(); ++it )
@@ -723,6 +723,7 @@ void bear::engine::base_item::clear_environment()
   clear_level();
 
   m_layer = NULL;
+  m_world = NULL;
 } // base_item::clear_environment()
 
 /*----------------------------------------------------------------------------*/

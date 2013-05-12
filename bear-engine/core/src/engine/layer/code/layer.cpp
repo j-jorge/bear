@@ -22,7 +22,8 @@
  * \param size The size of the layer.
  */
 bear::engine::layer::layer( const universe::size_box_type& size )
-  : m_size( size ), m_visible( true ), m_active( true )
+  : m_size( size ), m_visible( true ), m_active( true ),
+    m_currently_updating( false )
 {
   CLAW_PRECOND( size.x != 0 );
   CLAW_PRECOND( size.y != 0 );
@@ -86,7 +87,12 @@ void bear::engine::layer::update
   if ( !is_active() )
     return;
 
+  m_currently_updating = true;
+
   progress( active_area, elapsed_time );
+
+  m_currently_updating = false;
+  apply_post_update_changes();
 } // layer::update()
 
 /*----------------------------------------------------------------------------*/
@@ -128,6 +134,7 @@ void bear::engine::layer::add_item( base_item& item )
 {
   CLAW_PRECOND( item.is_valid() );
   CLAW_PRECOND( !item.is_fixed() );
+  CLAW_PRECOND( !item.is_in_layer() );
 
   claw::logger << claw::log_verbose << "Adding item #" << item.get_id()
                << " '" << item.get_class_name() << "' in layer." << std::endl;
@@ -171,7 +178,9 @@ void bear::engine::layer::add_item( base_item& item )
  */
 void bear::engine::layer::remove_item( base_item& item )
 {
-  if ( is_currently_building( item ) )
+  if ( m_currently_updating )
+    m_post_update_removal.push_back( &item );
+  else if ( is_currently_building( item ) )
     m_post_creation_action[ &item ] = remove;
   else
     {
@@ -191,6 +200,12 @@ void bear::engine::layer::remove_item( base_item& item )
  */
 void bear::engine::layer::drop_item( base_item& item )
 {
+  CLAW_PRECOND( item.is_in_layer( *this ) );
+  CLAW_PRECOND( std::find
+                ( m_post_update_removal.begin(), m_post_update_removal.end(),
+                  &item )
+                == m_post_update_removal.end() );
+
   if ( is_currently_building( item ) )
     m_post_creation_action[ &item ] = remove;
   else
@@ -377,3 +392,19 @@ bool bear::engine::layer::is_currently_building( base_item& item ) const
 {
   return m_post_creation_action.find( &item ) != m_post_creation_action.end();
 } // layer::is_currently_building()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Applies the changes that have been postponed until the end of the
+ *        update.
+ */
+void bear::engine::layer::apply_post_update_changes()
+{
+  CLAW_PRECOND( !m_currently_updating );
+
+  for ( std::list<base_item*>::const_iterator it=m_post_update_removal.begin();
+        it != m_post_update_removal.end(); ++it )
+    remove_item( **it );
+
+  m_post_update_removal.clear();
+} // layer::apply_post_update_changes()
