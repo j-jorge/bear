@@ -2249,41 +2249,9 @@ const bf::layer& bf::ingame_view::current_layer()
  * \brief Test if there exists a selected item in a given position.
  * \param pos The position of the point.
  */
-bool bf::ingame_view::exist_selected_item( const wxPoint& pos )
+bool bf::ingame_view::exist_selected_item( const wxPoint& pos ) const
 {
-  bool result = false;
-
-  if ( !has_selection() )
-    result = false;
-  else
-    {
-      item_selection::const_iterator it;
-      const item_selection& selection( get_level().get_selection() );
-
-      for ( it=selection.begin(); (it!=selection.end()) && !result; ++it )
-        {
-          wxSize size( (int)(*it)->get_rendering_parameters().get_width(),
-                       (int)(*it)->get_rendering_parameters().get_height() );
-          wxPoint point( (int)(*it)->get_rendering_parameters().get_left(),
-                         (int)(*it)->get_rendering_parameters().get_bottom());
-
-          if ( (size.x == 0) || (size.y == 0) )
-            {
-              size.x = 2*s_point_size;
-              size.y = 2*s_point_size;
-              point.x -= s_point_size;
-              point.y -= s_point_size;
-            }
-
-          if ( ( point.x <= pos.x ) &&
-               ( point.x + size.x >= pos.x ) &&
-               ( point.y <= pos.y ) &&
-               ( point.y + size.y >= pos.y ) )
-            result = true;
-        }
-    }
-
-  return result;
+  return first_selected_item( pos ) != NULL;
 } // ingame_view::exist_selected_item()
 
 /*----------------------------------------------------------------------------*/
@@ -2291,7 +2259,8 @@ bool bf::ingame_view::exist_selected_item( const wxPoint& pos )
  * \brief Test if there exists a selected item in a given position.
  * \param pos The position of the point.
  */
-bf::item_instance* bf::ingame_view::first_selected_item( const wxPoint& pos )
+bf::item_instance*
+bf::ingame_view::first_selected_item( const wxPoint& pos ) const
 {
   item_instance* result = NULL;
 
@@ -2329,8 +2298,8 @@ bf::item_instance* bf::ingame_view::first_selected_item( const wxPoint& pos )
  * \param pos The position of the point.
  * \param items The selected items.
  */
-void bf::ingame_view::pick_item
-( const wxPoint& pos, std::set<bf::item_instance*>& items )
+void bf::ingame_view::select_item_at
+( const wxPoint& pos, std::set<item_instance*>& items )
 {
   items.clear();
 
@@ -2338,11 +2307,12 @@ void bf::ingame_view::pick_item
     {
       layer& the_layer( m_history.get_level().get_active_layer() );
 
-      std::set<bf::item_instance*> choice;
+      std::set<item_instance*> choice;
+
       for ( layer::item_iterator it=the_layer.item_begin();
             it!=the_layer.item_end(); ++it )
         {
-          wxRect box = get_bounding_box( *it );
+          const wxRect box( get_bounding_box( *it ) );
 
           if ( box.Contains(pos) )
             choice.insert(&(*it));
@@ -2355,7 +2325,7 @@ void bf::ingame_view::pick_item
             dlg.get_selection(items);
         }
     }
-} // ingame_view::pick_item()
+} // ingame_view::select_item_at()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2364,7 +2334,7 @@ void bf::ingame_view::pick_item
  * \param box The box where to pick the items.
  */
 void bf::ingame_view::pick_item
-( std::list<item_instance*>& item, const wxRect& box )
+( std::list<item_instance*>& item, const wxRect& box ) const
 {
   if ( !empty() )
     {
@@ -3433,7 +3403,7 @@ void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
       std::set<item_instance*> items;
 
       if ( event.AltDown() )
-        pick_item( point, items );
+        select_item_at( point, items );
       else if ( !exist_selected_item(point) || event.ControlDown() )
         {
           item_instance* item = pick_first_item( point );
@@ -3583,7 +3553,7 @@ void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
   if ( event.ControlDown() )
     {
       std::set<item_instance*> items;
-      pick_item( point, items );
+      select_item_at( point, items );
       add_selection( std::list<item_instance*>(items.begin(), items.end()) );
     }
   else if ( has_selection() )

@@ -289,10 +289,12 @@ namespace bf
 
     const layer& current_layer();
 
-    bool exist_selected_item( const wxPoint& pos );
-    item_instance* first_selected_item( const wxPoint& pos );
-    void pick_item( const wxPoint& pos, std::set<bf::item_instance*>& items );
-    void pick_item( std::list<item_instance*>& item, const wxRect& box );
+    bool exist_selected_item( const wxPoint& pos ) const;
+    item_instance* first_selected_item( const wxPoint& pos ) const;
+    void select_item_at
+    ( const wxPoint& pos, std::set<bf::item_instance*>& items );
+    void pick_item( std::list<item_instance*>& item, const wxRect& box ) const;
+
     void toggle_selection( item_instance* item );
     void add_selection( item_instance* item );
     void add_selection( const std::list<item_instance*>& item);
