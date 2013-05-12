@@ -49,6 +49,30 @@ bool bear::engine::item_with_restricted_z_collision<Base>::set_integer_field
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Sets the minimum z-position to be aligned.
+ * \param z The new bound.
+ */
+template<class Base>
+void bear::engine::item_with_restricted_z_collision<Base>::
+set_min_z_for_collision( int z )
+{
+  m_min_z = z;
+} // item_with_restricted_z_collision::set_min_z_for_collision()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the maximum z-position to be aligned.
+ * \param z The new bound.
+ */
+template<class Base>
+void bear::engine::item_with_restricted_z_collision<Base>::
+set_max_z_for_collision( int z )
+{
+  m_max_z = z;
+} // item_with_restricted_z_collision::set_max_z_for_collision()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Check if the other item satisfies the condition for the collision
  *        treatment to be applied.
  * \param that The item to check.

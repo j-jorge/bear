@@ -45,6 +45,9 @@ namespace bear
 
       bool set_integer_field( const std::string& name, int value );
 
+      void set_min_z_for_collision( int z );
+      void set_max_z_for_collision( int z );
+
     protected:
       bool satisfy_collision_condition( const base_item& that ) const;
 

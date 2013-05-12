@@ -33,6 +33,17 @@ double bear::engine::item_with_friction<Base>::get_left_friction() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Sets the left friction.
+ * \param f The new friction.
+ */
+template<class Base>
+void bear::engine::item_with_friction<Base>::set_left_friction( double f )
+{
+  m_left_friction = f;
+} // item_with_friction::set_left_friction()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the right friction.
  */
 template<class Base>
@@ -40,6 +51,17 @@ double bear::engine::item_with_friction<Base>::get_right_friction() const
 {
   return m_right_friction;
 } // item_with_friction::get_right_friction()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the right friction.
+ * \param f The new friction.
+ */
+template<class Base>
+void bear::engine::item_with_friction<Base>::set_right_friction( double f )
+{
+  m_right_friction = f;
+} // item_with_friction::set_right_friction()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -53,6 +75,17 @@ double bear::engine::item_with_friction<Base>::get_top_friction() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Sets the top friction.
+ * \param f The new friction.
+ */
+template<class Base>
+void bear::engine::item_with_friction<Base>::set_top_friction( double f )
+{
+  m_top_friction = f;
+} // item_with_friction::set_top_friction()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the bottom.
  */
 template<class Base>
@@ -60,6 +93,17 @@ double bear::engine::item_with_friction<Base>::get_bottom_friction() const
 {
   return m_bottom_friction;
 } // item_with_friction::get_bottom_friction()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the bottom friction.
+ * \param f The new friction.
+ */
+template<class Base>
+void bear::engine::item_with_friction<Base>::set_bottom_friction( double f )
+{
+  m_bottom_friction = f;
+} // item_with_friction::set_bottom_friction()
 
 /*----------------------------------------------------------------------------*/
 /**

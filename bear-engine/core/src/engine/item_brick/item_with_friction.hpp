@@ -48,11 +48,17 @@ namespace bear
 
       bool set_real_field( const std::string& name, double value );
 
-    protected:
       double get_left_friction() const;
+      void set_left_friction( double f );
+
       double get_right_friction() const;
+      void set_right_friction( double f );
+
       double get_top_friction() const;
+      void set_top_friction( double f );
+
       double get_bottom_friction() const;
+      void set_bottom_friction( double f );
 
     private:
     /** \brief The friction applied to the item colliding on the left. */

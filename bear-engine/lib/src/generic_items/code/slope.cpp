@@ -214,6 +214,24 @@ bear::universe::coordinate_type bear::slope::get_steepness() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Sets the steepness of the slope.
+ * \param s The new steepness.
+ */
+void bear::slope::set_steepness( universe::coordinate_type s )
+{
+  universe::curved_box* const c( get_curved_box() );
+
+  if ( c == NULL )
+    return;
+
+  c->set_steepness( s );
+
+  set_shape( *c );
+  delete c;
+} // slope::set_steepness()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Add the loaders of this item class into a given loader map.
  * \param m The map in which the loaders are inserted.
  */

@@ -101,6 +101,8 @@ namespace bear
     curve_type get_curve() const;
 
     universe::coordinate_type get_steepness() const;
+    void set_steepness( universe::coordinate_type s );
+
     universe::coordinate_type get_y_at_x( universe::coordinate_type x ) const;
 
   protected:
