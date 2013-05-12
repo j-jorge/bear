@@ -2462,11 +2462,9 @@ void bf::ingame_view::set_selection( const std::list<item_instance*>& item)
  * \param add Indicates if the items are added at the selection.
  */
 void bf::ingame_view::set_selection
-( const std::list<item_instance*>& item, item_instance* selected,
-  bool add )
+( const std::list<item_instance*>& item, item_instance* selected, bool add )
 {
-  CLAW_PRECOND( std::find( item.begin(), item.end(), selected ) !=
-                item.end() );
+  CLAW_PRECOND( std::find( item.begin(), item.end(), selected ) != item.end() );
 
   if ( !add )
     {
@@ -2528,8 +2526,7 @@ wxRect bf::ingame_view::get_bounding_box( const item_instance& item ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the box bounding the bounding box of an item and its sprite, if
- *        any.
+ * \brief Gets the box bounding box of an item and its sprite, if any.
  * \param item The item to bound.
  */
 wxRect bf::ingame_view::get_presence_box( const item_instance& item ) const
@@ -2557,12 +2554,6 @@ wxRect bf::ingame_view::get_presence_box( const item_instance& item ) const
   result.SetPosition( pos_min );
   result.width += pos_max.x - pos_min.x;
   result.height += pos_max.y - pos_min.y;
-
-  /*
-  result.SetPosition( result.GetPosition() + gap );
-  result.width += std::abs( gap.x );
-  result.height += std::abs( gap.y );
-  */
 
   return result;
 } // ingame_view::get_presence_box()
