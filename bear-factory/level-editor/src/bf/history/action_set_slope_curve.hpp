@@ -37,8 +37,30 @@ namespace bf
     ( item_instance* item, double left_x, double left_y, double right_x,
       double right_y );
 
-    wxString get_description() const;
+    /**
+     * \remark Calling execute() two times will restore the initial position.
+     */
+    void execute( gui_level& lvl );
+    void undo( gui_level& lvl );
 
+    bool is_identity( const gui_level& gui ) const;
+    wxString get_description() const;
+    
+  private:
+    /** \brief The item to modify. */
+    item_instance* m_item;
+
+    /** \brief The x-coordinate of the left point. */
+    double m_left_x;
+
+    /** \brief The y-coordinate of the left point. */
+    double m_left_y;
+
+    /** \brief The x-coordinate of the right point. */
+    double m_right_x;
+
+    /** \brief The y-coordinate of the right point. */
+    double m_right_y;
   }; // class action_set_slope_curve
 } // namespace bf
 

@@ -3005,31 +3005,26 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
           
           const wxRect left_rect
             ( p[0].x - s_grip_size / 2 + left_x, 
-              p[0].y - s_grip_size / 2 - left_y,
+              p[0].y - s_grip_size / 2 + left_y,
               s_grip_size, s_grip_size );
 
           const wxRect right_rect
              ( p[1].x - s_grip_size / 2 + right_x, 
-               p[1].y - s_grip_size / 2 - right_y,
+               p[1].y - s_grip_size / 2 + right_y,
               s_grip_size, s_grip_size );
           
           wxPoint mouse_pos;
-          std::cout << p[1].x - s_grip_size / 2 + right_x << " - "
-                    << p[1].y - s_grip_size / 2 - right_y << " ; "
-                    << pos.x << " - "
-                    << pos.y << " :" 
-                    << right_x << " - " << std::endl;
-
+          
           if ( left_rect.Contains(pos) )
             {
               m_drag_info->mouse_origin = wxPoint( p[0].x, p[0].y);
-              mouse_pos = wxPoint( p[0].x + left_x, p[0].y - left_y);
+              mouse_pos = wxPoint( p[0].x + left_x, p[0].y + left_y);
               m_drag_info->left_side = true;
             }
           else if ( right_rect.Contains(pos) )
             {
               m_drag_info->mouse_origin = wxPoint( p[1].x, p[1].y);
-              mouse_pos = wxPoint( p[1].x + left_x, p[1].y - right_y);
+              mouse_pos = wxPoint( p[1].x + right_x, p[1].y + right_y);
               m_drag_info->left_side = false;
             }
           else
@@ -3047,8 +3042,6 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
     }
   else
     grip = false;
-
-  std::cout << "grip=" << grip << std::endl;
 
   return grip;
 } // ingame_view::set_drag_mode_slope()
