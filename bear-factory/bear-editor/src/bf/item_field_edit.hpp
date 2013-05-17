@@ -187,7 +187,7 @@ namespace bf
     void refresh();
 
     bool add_item( item_instance* item );
-    bool add_items( const std::list<item_instance*>& items );
+    bool add_items( const std::vector<item_instance*>& items );
     bool remove_item( item_instance* item );
     bool clear();
     bool empty() const;

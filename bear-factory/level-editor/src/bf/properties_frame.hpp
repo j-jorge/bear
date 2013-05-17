@@ -17,7 +17,7 @@
 #include <wx/panel.h>
 #include <wx/stattext.h>
 #include <string>
-#include <list>
+#include <vector>
 
 namespace bf
 {
@@ -64,7 +64,7 @@ namespace bf
 
     void clear();
     void add_item( item_instance* item );
-    void add_items( const std::list<item_instance*>& items );
+    void add_items( const std::vector<item_instance*>& items );
     void remove_item( item_instance* item );
     void edit_field(const std::string& field_name);
 

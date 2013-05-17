@@ -16,6 +16,7 @@
 #include "bf/level_check_result.hpp"
 #include "bf/sprite_image_cache.hpp"
 #include "bf/sprite_with_position.hpp"
+#include "bf/types.hpp"
 #include "bf/history/level_history.hpp"
 
 #include <wx/wx.h>
@@ -183,7 +184,6 @@ namespace bf
     void show_item_position_error(wxWindow* win);
 
     wxPoint compute_mouse_position(const wxPoint& point) const;
-    item_instance* pick_first_item( const wxPoint& pos );
 
   private:
     void render_layers
@@ -289,22 +289,18 @@ namespace bf
 
     const layer& current_layer();
 
-    bool exist_selected_item( const wxPoint& pos ) const;
-    item_instance* first_selected_item( const wxPoint& pos ) const;
     void select_item_at
     ( const wxPoint& pos, std::set<bf::item_instance*>& items );
-    void pick_item( std::list<item_instance*>& item, const wxRect& box ) const;
 
     void toggle_selection( item_instance* item );
     void add_selection( item_instance* item );
-    void add_selection( const std::list<item_instance*>& item);
-    void set_selection( const std::list<item_instance*>& item);
+    void add_selection( const std::vector<item_instance*>& item);
+    void set_selection( const std::vector<item_instance*>& item);
     void set_selection
-    ( const std::list<item_instance*>& item, item_instance* selected,
+    ( const std::vector<item_instance*>& item, item_instance* selected,
       bool add = false);
     void set_selection( item_instance* item );
 
-    wxRect get_bounding_box( const item_instance& item ) const;
     wxRect get_presence_box( const item_instance& item ) const;
 
     void copy_selection(bool add = false);
@@ -401,9 +397,6 @@ namespace bf
 
     /** \brief The result of the last check on the level. */
     level_check_result m_check_result;
-
-    /** \brief The size of the shape diplayed for sizeless items. */
-    static const wxCoord s_point_size;
 
     /** \brief The size of grip in the corner of the selected item. */
     static const wxCoord s_grip_size;

@@ -481,3 +481,145 @@ bool bf::gui_level::check_item_position() const
 
   return result;  
 } // gui_level::check_item_position()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Pick the first item found near a given point.
+ * \param pos The position of the point.
+ */
+bf::item_instance*
+bf::gui_level::first_item( const position_type& pos ) const
+{
+  item_instance* result( NULL );
+  layer::item_iterator it;
+  coordinate_type min_max_dist( std::numeric_limits<coordinate_type>::max() );
+
+  if ( !empty() )
+    {
+      layer& the_layer( get_active_layer() );
+
+      for ( it = the_layer.item_begin(); it != the_layer.item_end(); ++it )
+        {
+          const rectangle_type box( get_visual_box( *it ) );
+
+          if ( box.includes(pos) )
+            {
+              const coordinate_type dist =
+                std::max
+                ( std::max( pos.x - box.left(), box.right() - pos.x),
+                  std::max( pos.y - box.top(), box.bottom() - pos.y) );
+
+              if ( dist < min_max_dist )
+                {
+                  result = &(*it);
+                  min_max_dist = dist;
+                }
+            }
+        }
+    }
+
+  return result;
+} // gui_level::pick_first_item()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the first item in the active selection that overlaps a given
+ *        position.
+ * \param pos The point to test.
+ */
+bf::item_instance* bf::gui_level::first_selected_item( position_type pos ) const
+{
+  if ( empty() )
+    return NULL;
+
+  item_selection::const_iterator it;
+  const item_selection& selection( get_selection() );
+
+  for ( it=selection.begin(); it!=selection.end(); ++it )
+    {
+      const rectangle_type box( get_visual_box( **it ) ); 
+
+      if ( box.includes( pos ) )
+        return *it;
+    }
+
+  return NULL;
+} // gui_level::first_selected_item()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Finds all the items of the active layer that overlaps a given point.
+ * \param pos The point.
+ */
+std::vector<bf::item_instance*>
+bf::gui_level::find_items_at( position_type pos ) const
+{
+  std::vector<item_instance*> result;
+
+  if ( !empty() )
+    {
+      const layer& the_layer( get_active_layer() );
+
+      for ( layer::item_iterator it = the_layer.item_begin();
+            it != the_layer.item_end(); ++it )
+        {
+          const rectangle_type box( get_visual_box( *it ) );
+
+          if ( box.includes( pos ) )
+            result.push_back( &(*it) );
+        }
+    }
+
+  return result;
+} // gui_level::find_items_at()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Finds all the items intersecting a given box.
+ * \param box The box where to pick the items.
+ */
+std::vector<bf::item_instance*>
+bf::gui_level::pick_items( rectangle_type box ) const
+{
+  std::vector<item_instance*> result;
+
+  if ( !empty() )
+    {
+      const layer& the_layer( get_active_layer() );
+
+      for ( layer::item_iterator it = the_layer.item_begin();
+            it != the_layer.item_end(); ++it)
+        if ( box.intersects( get_visual_box( *it ) ) )
+          result.push_back( &(*it) );
+    }
+
+  return result;
+} // gui_level::pick_items()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the visual box of an item.
+ * \param item The item to bound.
+ */
+bf::rectangle_type
+bf::gui_level::get_visual_box( const item_instance& item ) const
+{
+  double x( item.get_rendering_parameters().get_left() );
+  double y( item.get_rendering_parameters().get_bottom() );
+  double w( item.get_rendering_parameters().get_width() );
+  double h( item.get_rendering_parameters().get_height() );
+
+  if ( w == 0 )
+    {
+      x -= 10;
+      w = 20;
+    }
+
+  if ( h == 0 )
+    {
+      y -= 10;
+      h = 20;
+    }
+
+  return rectangle_type( x, y, x + w, y + h );
+} // gui_level::get_visual_box()

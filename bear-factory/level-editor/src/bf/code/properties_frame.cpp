@@ -101,7 +101,7 @@ void bf::properties_frame::add_item( item_instance* item )
  * \brief Add several items for which we want the properties.
  * \param items The item instances concerned by this window.
  */
-void bf::properties_frame::add_items( const std::list<item_instance*>& items )
+void bf::properties_frame::add_items( const std::vector<item_instance*>& items )
 {
   if ( !m_prop->add_items( items ) )
     return;

@@ -13,6 +13,7 @@
 
 #include "bf/item_selection.hpp"
 #include "bf/level.hpp"
+#include "bf/types.hpp"
 
 #include <vector>
 
@@ -89,6 +90,12 @@ namespace bf
     void move_forward( unsigned int layer_index );
 
     bool check_item_position() const;
+
+    item_instance* first_item( const position_type& pos ) const;
+    item_instance* first_selected_item( position_type pos ) const;
+    std::vector<item_instance*> find_items_at( position_type pos ) const;
+    std::vector<item_instance*> pick_items( rectangle_type pos ) const;
+    rectangle_type get_visual_box( const item_instance& item ) const;
 
   private:
     /** \brief The visibility of the layers. */

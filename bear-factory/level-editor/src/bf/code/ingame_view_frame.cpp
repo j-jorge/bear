@@ -27,6 +27,7 @@
 #include "bf/properties_frame.hpp"
 #include "bf/windows_layout.hpp"
 #include "bf/wx_facilities.hpp"
+#include "bf/wx_type_cast.hpp"
 
 #include "bf/history/action_add_layer.hpp"
 #include "bf/history/action_align_selection_bottom.hpp"
@@ -1636,7 +1637,7 @@ void bf::ingame_view_frame::on_context_menu(wxContextMenuEvent& event)
           m_ingame_view->compute_mouse_position
           ( ScreenToClient( event.GetPosition() ) );
       m_reference_item_field_instance = 
-        m_ingame_view->pick_first_item( point );
+        m_ingame_view->get_level().first_item( wx_to_position( point ) );
 
       if ( m_reference_item_field_instance != NULL )
         update_reference_item_field_menu();

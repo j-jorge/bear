@@ -183,11 +183,12 @@ bool bf::item_field_edit::add_item( item_instance* item )
  * \param items The item instances concerned by this window.
  * \return true if something has changed.
  */
-bool bf::item_field_edit::add_items( const std::list<item_instance*>& items )
+bool
+bf::item_field_edit::add_items( const std::vector<item_instance*>& items )
 {
   bool result = false;
 
-  for ( std::list<item_instance*>::const_iterator it=items.begin();
+  for ( std::vector<item_instance*>::const_iterator it=items.begin();
         it!=items.end(); ++it )
     {
       bool inserted = m_group.insert(*it).second;

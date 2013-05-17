@@ -23,6 +23,7 @@
 #include "bf/main_frame.hpp"
 #include "bf/windows_layout.hpp"
 #include "bf/wx_facilities.hpp"
+#include "bf/wx_type_cast.hpp"
 
 #include "bf/history/action_add_item.hpp"
 #include "bf/history/action_copy_selection.hpp"
@@ -43,7 +44,6 @@
 #include <limits>
 
 /*----------------------------------------------------------------------------*/
-const wxCoord bf::ingame_view::s_point_size = 10;
 const wxCoord bf::ingame_view::s_grip_size = 10;
 bf::level_clipboard bf::ingame_view::s_clipboard;
 
@@ -718,7 +718,7 @@ void bf::ingame_view::update_layout()
 
   if ( has_selection() )
     m_layout.get_properties_frame().add_items
-      ( std::list<item_instance*>
+      ( std::vector<item_instance*>
         ( get_level().get_selection().begin(),
           get_level().get_selection().end() ) );
 
@@ -751,10 +751,12 @@ void bf::ingame_view::clear_selection()
  */
 void bf::ingame_view::select_all()
 {
-  std::list<item_instance*> item;
-  pick_item( item,
-             wxRect(0, 0, get_level().get_width(), get_level().get_height()) );
-  set_selection( item );
+  const std::vector<item_instance*> items
+    ( get_level().pick_items
+      ( rectangle_type
+        ( 0.0, 00., get_level().get_width(), get_level().get_height() ) ) );
+
+  set_selection( std::vector<item_instance*>( items.begin(), items.end() ) );
 } // ingame_view::select_all()
 
 /*----------------------------------------------------------------------------*/
@@ -984,46 +986,6 @@ wxPoint bf::ingame_view::compute_mouse_position(const wxPoint& point) const
           unzoom(pos_view.y + GetSize().y - point.y) );
     }
 } // ingame_view::compute_mouse_position()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Pick the first item found near a given point.
- * \param pos The position of the point.
- */
-bf::item_instance* bf::ingame_view::pick_first_item( const wxPoint& pos )
-{
-  item_instance* result=NULL;
-  std::list<item_instance*> instances;
-  layer::item_iterator it;
-  wxCoord min_max_dist = std::numeric_limits<wxCoord>::max();
-
-  if ( !empty() )
-    {
-      layer& the_layer( m_history.get_level().get_active_layer() );
-
-      for (it=the_layer.item_begin();
-           it!=the_layer.item_end(); ++it)
-        {
-          wxRect box = get_bounding_box( *it );
-
-          if ( box.Contains(pos) )
-            {
-              const wxCoord dist =
-                std::max
-                ( std::max( pos.x - box.GetLeft(), box.GetRight() - pos.x),
-                  std::max( pos.y - box.GetTop(), box.GetBottom() - pos.y) );
-
-              if ( dist < min_max_dist )
-                {
-                  result = &(*it);
-                  min_max_dist = dist;
-                }
-            }
-        }
-    }
-
-  return result;
-} // ingame_view::pick_first_item()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1316,15 +1278,13 @@ void
 bf::ingame_view::render_item_id
 ( wxDC& dc, const item_instance& item, unsigned int index ) const
 {
-  const wxRect box( get_bounding_box(item) );
+  const rectangle_type box( get_level().get_visual_box(item) );
 
-  const wxSize size( zoom(box.width), zoom(box.height) );
+  const size_box_type size( zoom(box.width()), zoom(box.height()) );
 
   const wxPoint pos =
     get_position_in_layer
-    ( wxPoint( box.x + unzoom(size.x / 2),box.y), index, 0 );
-    //  ( zoom(box.x) + size.x / 2 - m_view.x,
-    //  m_view.y + GetSize().y - zoom(box.y) );
+    ( wxPoint( box.left() + unzoom(size.x / 2), box.top()), index, 0 );
 
   render_item_id(dc, item, pos);
 } // ingame_view::render_item_id()
@@ -1445,17 +1405,19 @@ void bf::ingame_view::render_item_as_point
   dc.SetPen( get_display_pen(item, index) );
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
 
-  dc.DrawCircle(pos.x, pos.y, s_point_size);
+  const rectangle_type r( get_level().get_visual_box( item ) );
+
+  dc.DrawCircle(pos.x, pos.y, r.width());
 
   wxPoint p[2];
 
-  p[0] = wxPoint( pos.x, pos.y - 2 * s_point_size );
-  p[1] = wxPoint( pos.x, pos.y + 2 * s_point_size );
+  p[0] = wxPoint( pos.x, pos.y - r.height() );
+  p[1] = wxPoint( pos.x, pos.y + r.height() );
 
   dc.DrawPolygon(2, p);
 
-  p[0] = wxPoint( pos.x - 2 * s_point_size, pos.y );
-  p[1] = wxPoint( pos.x + 2 * s_point_size, pos.y );
+  p[0] = wxPoint( pos.x - r.width(), pos.y );
+  p[1] = wxPoint( pos.x + r.width(), pos.y );
 
   dc.DrawPolygon(2, p);
 } // ingame_view::render_item_as_point()
@@ -1717,13 +1679,15 @@ void bf::ingame_view::render_non_valid_item_as_point
 {
   wxPoint p[2];
 
-  p[0] = wxPoint( pos.x - 2 * s_point_size, pos.y - 2 * s_point_size );
-  p[1] = wxPoint( pos.x + 2 * s_point_size, pos.y + 2 * s_point_size );
+  const rectangle_type r( get_level().get_visual_box( item ) );
+
+  p[0] = wxPoint( pos.x - r.width(), pos.y - r.height() );
+  p[1] = wxPoint( pos.x + r.width(), pos.y + r.height() );
 
   dc.DrawPolygon(2, p);
 
-  p[0] = wxPoint( pos.x - 2 * s_point_size, pos.y + 2 * s_point_size );
-  p[1] = wxPoint( pos.x + 2 * s_point_size, pos.y - 2 * s_point_size);
+  p[0] = wxPoint( pos.x - r.width(), pos.y + r.height() );
+  p[1] = wxPoint( pos.x + r.width(), pos.y - r.height() );
 
   dc.DrawPolygon(2, p);
 } // ingame_view::render_non_valid_item_as_point()
@@ -1764,7 +1728,8 @@ void bf::ingame_view::render_grip( wxDC& dc, unsigned int index ) const
   CLAW_PRECOND( has_selection() );
 
   const item_instance* main_selection( get_level().get_main_selection() );
-  wxRect b_box( get_bounding_box(*main_selection) );
+  wxRect b_box
+    ( rectangle_to_wx( get_level().get_visual_box(*main_selection) ) );
 
   b_box.SetPosition
     ( get_position_in_layer
@@ -2246,110 +2211,28 @@ const bf::layer& bf::ingame_view::current_layer()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Test if there exists a selected item in a given position.
- * \param pos The position of the point.
- */
-bool bf::ingame_view::exist_selected_item( const wxPoint& pos ) const
-{
-  return first_selected_item( pos ) != NULL;
-} // ingame_view::exist_selected_item()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Test if there exists a selected item in a given position.
- * \param pos The position of the point.
- */
-bf::item_instance*
-bf::ingame_view::first_selected_item( const wxPoint& pos ) const
-{
-  item_instance* result = NULL;
-
-  item_selection::const_iterator it;
-  const item_selection& selection( get_level().get_selection() );
-
-  for ( it=selection.begin(); (it!=selection.end()) && (result==NULL); ++it )
-    {
-      wxSize size( (int)(*it)->get_rendering_parameters().get_width(),
-                   (int)(*it)->get_rendering_parameters().get_height() );
-      wxPoint point( (int)(*it)->get_rendering_parameters().get_left(),
-                     (int)(*it)->get_rendering_parameters().get_bottom());
-
-      if ( (size.x == 0) || (size.y == 0) )
-        {
-          size.x = 2*s_point_size;
-          size.y = 2*s_point_size;
-          point.x -= s_point_size;
-          point.y -= s_point_size;
-        }
-
-      if ( ( point.x <= pos.x ) &&
-           ( point.x + size.x >= pos.x ) &&
-           ( point.y <= pos.y ) &&
-           ( point.y + size.y >= pos.y ) )
-        result = *it;
-    }
-
-  return result;
-} // ingame_view::first_selected_item()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Pick items found near a given point.
  * \param pos The position of the point.
- * \param items The selected items.
+ * \param result The selected items.
  */
 void bf::ingame_view::select_item_at
-( const wxPoint& pos, std::set<item_instance*>& items )
+( const wxPoint& pos, std::set<item_instance*>& result )
 {
-  items.clear();
+  result.clear();
 
-  if ( !empty() )
+  const std::vector<item_instance*> items
+    ( get_level().find_items_at( position_type( pos.x, pos.y ) ) );
+
+  if ( !items.empty() )
     {
-      layer& the_layer( m_history.get_level().get_active_layer() );
+      const std::set<item_instance*> candidates( items.begin(), items.end() );
 
-      std::set<item_instance*> choice;
+      item_choice_frame dlg( this, get_level().get_selection(), candidates );
 
-      for ( layer::item_iterator it=the_layer.item_begin();
-            it!=the_layer.item_end(); ++it )
-        {
-          const wxRect box( get_bounding_box( *it ) );
-
-          if ( box.Contains(pos) )
-            choice.insert(&(*it));
-        }
-
-      if ( !choice.empty() )
-        {
-          item_choice_frame dlg(this, get_level().get_selection(), choice);
-          if ( dlg.ShowModal() == wxID_OK )
-            dlg.get_selection(items);
-        }
+      if ( dlg.ShowModal() == wxID_OK )
+        dlg.get_selection(result);
     }
 } // ingame_view::select_item_at()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Pick all items intersecting a box
- * \param item (out) The items selected.
- * \param box The box where to pick the items.
- */
-void bf::ingame_view::pick_item
-( std::list<item_instance*>& item, const wxRect& box ) const
-{
-  if ( !empty() )
-    {
-      layer& the_layer( m_history.get_level().get_active_layer() );
-
-      for (layer::item_iterator it=the_layer.item_begin();
-           it!=the_layer.item_end(); ++it)
-        {
-          wxRect item_box = get_bounding_box( *it );
-
-          if ( box.Intersects(item_box) )
-            item.push_front( &(*it) );
-        }
-    }
-} // ingame_view::pick_item()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2396,11 +2279,11 @@ void bf::ingame_view::add_selection( item_instance* item )
  * \brief Add some items in the selection.
  * \param item The items to select.
  */
-void bf::ingame_view::add_selection( const std::list<item_instance*>& item )
+void bf::ingame_view::add_selection( const std::vector<item_instance*>& item )
 {
   if ( !item.empty() )
     {
-      std::list<item_instance*>::const_iterator it;
+      std::vector<item_instance*>::const_iterator it;
 
       for (it=item.begin(); it!=item.end(); ++it)
         get_level().add_to_selection(*it);
@@ -2416,7 +2299,7 @@ void bf::ingame_view::add_selection( const std::list<item_instance*>& item )
  * \brief Set the selected items.
  * \param item The items to select.
  */
-void bf::ingame_view::set_selection( const std::list<item_instance*>& item)
+void bf::ingame_view::set_selection( const std::vector<item_instance*>& item )
 {
   if ( item.empty() )
     clear_selection();
@@ -2432,7 +2315,7 @@ void bf::ingame_view::set_selection( const std::list<item_instance*>& item)
  * \param add Indicates if the items are added at the selection.
  */
 void bf::ingame_view::set_selection
-( const std::list<item_instance*>& item, item_instance* selected, bool add )
+( const std::vector<item_instance*>& item, item_instance* selected, bool add )
 {
   CLAW_PRECOND( std::find( item.begin(), item.end(), selected ) != item.end() );
 
@@ -2459,40 +2342,11 @@ void bf::ingame_view::set_selection( item_instance* item )
     clear_selection();
   else
     {
-      std::list<item_instance*> item_list;
-      item_list.push_front(item);
+      std::vector<item_instance*> item_list;
+      item_list.push_back(item);
       set_selection( item_list );
     }
 } // ingame_view::set_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the focus box of an item.
- * \param item The item to bound.
- */
-wxRect bf::ingame_view::get_bounding_box( const item_instance& item ) const
-{
-  wxRect result;
-
-  result.x = (int)item.get_rendering_parameters().get_left();
-  result.y = (int)item.get_rendering_parameters().get_bottom();
-  result.width = (int)item.get_rendering_parameters().get_width();
-  result.height = (int)item.get_rendering_parameters().get_height();
-
-  if ( result.width == 0 )
-    {
-      result.x -= s_point_size;
-      result.width = 2 * s_point_size;
-    }
-
-  if ( result.height == 0 )
-    {
-      result.y -= s_point_size;
-      result.height = 2 * s_point_size;
-    }
-
-  return result;
-} // ingame_view::get_bounding_box()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2501,7 +2355,7 @@ wxRect bf::ingame_view::get_bounding_box( const item_instance& item ) const
  */
 wxRect bf::ingame_view::get_presence_box( const item_instance& item ) const
 {
-  wxRect result = get_bounding_box(item);
+  wxRect result( rectangle_to_wx( get_level().get_visual_box(item) ) );
 
   wxPoint pos_gap( result.GetPosition() );
 
@@ -2771,7 +2625,7 @@ void bf::ingame_view::write_mouse_position(const wxPoint& point)
       m_parent.GetStatusBar()->SetStatusText
         ( wxString::Format( _("y=%d"), point.y), 2 );
 
-      item_instance* item = pick_first_item(point);
+      item_instance* item = get_level().first_item( wx_to_position( point ) );
       wxString class_str, id_str, dist_str;
 
       if ( item != NULL )
@@ -2859,7 +2713,8 @@ bool bf::ingame_view::set_drag_mode_size( const wxPoint& pos )
   if(  has_selection() )
     {
       item_instance* selection( get_level().get_main_selection() );
-      const wxRect box = get_bounding_box( *selection );
+      const wxRect box
+        ( rectangle_to_wx( get_level().get_visual_box( *selection ) ) );
       const wxSize s( s_grip_size, s_grip_size );
       wxPoint mouse_pos;
 
@@ -2971,7 +2826,8 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
 
       if ( item->get_class().get_class_name() == "bear::slope" )
         {
-          const wxRect box = get_bounding_box( *item );
+          const wxRect box
+            ( rectangle_to_wx( get_level().get_visual_box( *item ) ) );
 
           double steepness;
           double left_x;
@@ -3137,14 +2993,16 @@ void bf::ingame_view::apply_drag_mode_selection( bool ctrl, bool alt )
 {
   CLAW_PRECOND( m_drag_info->drag_mode == drag_info::drag_mode_selection );
 
-  std::list<item_instance*> item;
-  pick_item
-    ( item, wxRect(m_drag_info->mouse_origin, m_drag_info->mouse_position) );
+  const std::vector<item_instance*> items
+    ( get_level().pick_items
+      ( rectangle_type
+        ( m_drag_info->mouse_origin.x, m_drag_info->mouse_origin.y,
+          m_drag_info->mouse_position.x, m_drag_info->mouse_position.y ) ) );
 
   if ( ctrl || alt )
-    add_selection( item );
+    add_selection( items );
   else
-    set_selection(item);
+    set_selection( items );
 } // ingame_view::apply_drag_mode_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -3397,15 +3255,22 @@ void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
 
       if ( event.AltDown() )
         select_item_at( point, items );
-      else if ( !exist_selected_item(point) || event.ControlDown() )
-        {
-          item_instance* item = pick_first_item( point );
-
-          if (item != NULL)
-            items.insert(item);
-        }
       else
-	items.insert(first_selected_item(point));
+        {
+          item_instance* const first_selected_item =
+            get_level().first_selected_item( wx_to_position( point ) );
+
+          if ( (first_selected_item == NULL) || event.ControlDown() )
+            {
+              item_instance* const item
+                ( get_level().first_item( wx_to_position( point ) ) );
+
+              if (item != NULL)
+                items.insert(item);
+            }
+          else
+            items.insert( first_selected_item );
+        }
       
       if ( items.empty() )
         m_drag_info->drag_mode = drag_info::drag_mode_selection;
@@ -3519,7 +3384,8 @@ void bf::ingame_view::on_mouse_left_double_click(wxMouseEvent& event)
 {
   wxPoint point = compute_mouse_position( event.GetPosition() );
 
-  item_instance* item = first_selected_item(point);
+  item_instance* const item =
+    get_level().first_selected_item( position_type( point.x, point.y ) );
 
   if ( item != NULL )
     {
@@ -3547,7 +3413,7 @@ void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
     {
       std::set<item_instance*> items;
       select_item_at( point, items );
-      add_selection( std::list<item_instance*>(items.begin(), items.end()) );
+      add_selection( std::vector<item_instance*>(items.begin(), items.end()) );
     }
   else if ( has_selection() )
     {
