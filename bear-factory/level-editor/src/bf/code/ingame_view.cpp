@@ -1400,7 +1400,7 @@ void bf::ingame_view::render_item_as_point
 
   const rectangle_type r( get_level().get_visual_box( item ) );
 
-  dc.DrawCircle(pos.x, pos.y, r.width());
+  dc.DrawCircle(pos.x, pos.y, r.width() / 2);
 
   wxPoint p[2];
 
@@ -1722,14 +1722,12 @@ void bf::ingame_view::render_grip( wxDC& dc, unsigned int index ) const
   wxRect b_box
     ( rectangle_to_wx( get_level().get_visual_box(*main_selection) ) );
 
-  b_box.SetPosition
-    ( get_position_in_layer
-      ( wxPoint(b_box.GetLeft(), b_box.GetBottom()), index, 0));
+  b_box.SetPosition( get_position_in_layer( b_box.GetBottomLeft(), index, 0 ) );
 
   wxRect box
     ( b_box.GetLeft(), b_box.GetTop(),
-     zoom(b_box.GetWidth()),
-     zoom(b_box.GetHeight()) );
+      zoom(b_box.GetWidth()),
+      zoom(b_box.GetHeight()) );
 
   dc.SetPen(*wxRED_PEN);
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
@@ -2696,105 +2694,102 @@ void bf::ingame_view::set_tooltip( item_instance* item )
  */
 bool bf::ingame_view::set_drag_mode_size( const wxPoint& pos )
 {
+  if ( !has_selection() )
+    return false;
+
   bool grip = true;
 
-  if(  has_selection() )
+  item_instance* selection( get_level().get_main_selection() );
+  const wxRect box
+    ( rectangle_to_wx( get_level().get_visual_box( *selection ) ) );
+  const wxSize s( s_grip_size, s_grip_size );
+  wxPoint mouse_pos;
+
+  const wxRect top_left( box.GetTopLeft() - s, s );
+  const wxRect top_right( box.GetTopRight() - wxSize(0, s_grip_size), s );
+  const wxRect bottom_left
+    ( box.GetBottomLeft() - wxSize(s_grip_size, 0), s );
+  const wxRect bottom_right( box.GetBottomRight(), s );
+
+  if ( top_left.Contains(pos) )
     {
-      item_instance* selection( get_level().get_main_selection() );
-      const wxRect box
-        ( rectangle_to_wx( get_level().get_visual_box( *selection ) ) );
-      const wxSize s( s_grip_size, s_grip_size );
-      wxPoint mouse_pos;
+      m_drag_info->mouse_origin = box.GetBottomRight();
+      mouse_pos = box.GetTopLeft();
+    }
+  else if ( top_right.Contains(pos) )
+    {
+      m_drag_info->mouse_origin = box.GetBottomLeft();
+      mouse_pos = box.GetTopRight();
+    }
+  else if ( bottom_left.Contains(pos) )
+    {
+      m_drag_info->mouse_origin = box.GetTopRight();
+      mouse_pos = box.GetBottomLeft();
+    }
+  else if ( bottom_right.Contains(pos) )
+    {
+      m_drag_info->mouse_origin = box.GetTopLeft();
+      mouse_pos = box.GetBottomRight();
+    }
+  else if ( (selection->get_rendering_parameters().get_width() != 0)
+            && (selection->get_rendering_parameters().get_height() != 0) )
+    {
+      const wxCoord h
+        ((wxCoord)selection->get_rendering_parameters().get_height() / 2);
+      const wxCoord w
+        ((wxCoord)selection->get_rendering_parameters().get_width() / 2);
+      const wxRect middle_left
+        ( box.GetLeft() - s_grip_size,
+          box.GetTop() + h - s_grip_size / 2, s_grip_size, s_grip_size );
+      const wxRect middle_right
+        ( box.GetRight(), box.GetTop() + h - s_grip_size / 2,
+          s_grip_size, s_grip_size );
+      const wxRect middle_bottom
+        ( box.GetLeft() + w - s_grip_size / 2,
+          box.GetTop() - s_grip_size, s_grip_size, s_grip_size );
+      const wxRect middle_top
+        ( box.GetLeft() + w - s_grip_size / 2,
+          box.GetBottom(), s_grip_size, s_grip_size );
 
-      const wxRect top_left( box.GetTopLeft() - s, s );
-      const wxRect top_right( box.GetTopRight() - wxSize(0, s_grip_size), s );
-      const wxRect bottom_left
-        ( box.GetBottomLeft() - wxSize(s_grip_size, 0), s );
-      const wxRect bottom_right( box.GetBottomRight(), s );
-
-      if ( top_left.Contains(pos) )
-        {
-          m_drag_info->mouse_origin = box.GetBottomRight();
-          mouse_pos = box.GetTopLeft();
-        }
-      else if ( top_right.Contains(pos) )
-        {
-          m_drag_info->mouse_origin = box.GetBottomLeft();
-          mouse_pos = box.GetTopRight();
-        }
-      else if ( bottom_left.Contains(pos) )
+      if ( middle_left.Contains(pos) )
         {
           m_drag_info->mouse_origin = box.GetTopRight();
-          mouse_pos = box.GetBottomLeft();
+          mouse_pos = box.GetTopLeft();
+          m_drag_info->y_active = false;
         }
-      else if ( bottom_right.Contains(pos) )
+      else if ( middle_right.Contains(pos) )
+        {
+          m_drag_info->mouse_origin = box.GetTopLeft();
+          mouse_pos = box.GetTopRight();
+          m_drag_info->y_active = false;
+        }
+      else if ( middle_bottom.Contains(pos) )
+        {
+          m_drag_info->mouse_origin = box.GetBottomLeft();
+          mouse_pos = box.GetTopLeft();
+          m_drag_info->x_active = false;
+        }
+      else if ( middle_top.Contains(pos) )
         {
           m_drag_info->mouse_origin = box.GetTopLeft();
           mouse_pos = box.GetBottomRight();
-        }
-      else if ( (selection->get_rendering_parameters().get_width() != 0)
-                && (selection->get_rendering_parameters().get_height() != 0) )
-        {
-          const wxCoord h
-            ((wxCoord)selection->get_rendering_parameters().get_height() / 2);
-          const wxCoord w
-            ((wxCoord)selection->get_rendering_parameters().get_width() / 2);
-          const wxRect middle_left
-            ( box.GetLeft() - s_grip_size,
-              box.GetTop() + h - s_grip_size / 2, s_grip_size, s_grip_size );
-          const wxRect middle_right
-            ( box.GetRight(), box.GetTop() + h - s_grip_size / 2,
-              s_grip_size, s_grip_size );
-          const wxRect middle_bottom
-            ( box.GetLeft() + w - s_grip_size / 2,
-              box.GetTop() - s_grip_size, s_grip_size, s_grip_size );
-          const wxRect middle_top
-            ( box.GetLeft() + w - s_grip_size / 2,
-              box.GetBottom(), s_grip_size, s_grip_size );
-
-          if ( middle_left.Contains(pos) )
-            {
-              m_drag_info->mouse_origin = box.GetTopRight();
-              mouse_pos = box.GetTopLeft();
-              m_drag_info->y_active = false;
-            }
-          else if ( middle_right.Contains(pos) )
-            {
-              m_drag_info->mouse_origin = box.GetTopLeft();
-              mouse_pos = box.GetTopRight();
-              m_drag_info->y_active = false;
-            }
-          else if ( middle_bottom.Contains(pos) )
-            {
-              m_drag_info->mouse_origin = box.GetBottomLeft();
-              mouse_pos = box.GetTopLeft();
-              m_drag_info->x_active = false;
-            }
-          else if ( middle_top.Contains(pos) )
-            {
-              m_drag_info->mouse_origin = box.GetTopLeft();
-              mouse_pos = box.GetBottomRight();
-              m_drag_info->x_active = false;
-            }
-          else
-            grip = false;
+          m_drag_info->x_active = false;
         }
       else
         grip = false;
-
-      if ( grip )
-        {
-          m_drag_info->picked_item = selection;
-          m_drag_info->drag_mode = drag_info::drag_mode_size;
-          m_drag_info->mouse_position = mouse_pos;
-        }
     }
   else
     grip = false;
 
+  if ( grip )
+    {
+      m_drag_info->picked_item = selection;
+      m_drag_info->drag_mode = drag_info::drag_mode_size;
+      m_drag_info->mouse_position = mouse_pos;
+    }
+
   return grip;
 } // ingame_view::set_drag_mode_size()
-
 
 /*----------------------------------------------------------------------------*/
 /**

@@ -38,7 +38,7 @@ wxPoint bf::position_to_wx( position_type p )
  */
 bf::rectangle_type bf::wx_to_rectangle( wxRect r )
 {
-  return rectangle_type( r.x, r.y, r.x + r.GetWidth(), r.y + r.GetHeight() );
+  return rectangle_type( r.GetLeft(), r.GetBottom(), r.GetRight(), r.GetTop() );
 } // wx_to_rectangle()
 
 /*----------------------------------------------------------------------------*/
@@ -48,5 +48,5 @@ bf::rectangle_type bf::wx_to_rectangle( wxRect r )
  */
 wxRect bf::rectangle_to_wx( rectangle_type r )
 {
-  return wxRect( r.left(), r.top(), r.width(), r.height() );
+  return wxRect( r.left(), r.bottom(), r.width(), r.height() );
 } // rectangle_to_wx()
