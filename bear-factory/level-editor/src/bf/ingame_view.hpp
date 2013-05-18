@@ -186,12 +186,11 @@ namespace bf
     wxPoint compute_mouse_position(const wxPoint& point) const;
 
   private:
-    void render_layers
-    ( wxDC& dc, wxGraphicsContext& gc ) const;
+    void render_layers( wxGCDC& dc ) const;
 
     void render_items
-    ( wxDC& dc, wxGraphicsContext& gc, 
-      const std::multimap<int, item_instance*>& z_order, unsigned int i ) const;
+    ( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
+      unsigned int i ) const;
 
     void render_relationship
     ( wxDC& dc, const item_instance& item,
@@ -202,8 +201,8 @@ namespace bf
       unsigned int index) const;
 
     void render_item
-    ( wxDC& dc, wxGraphicsContext& gc, const item_instance& item, 
-      const wxPoint& pos, unsigned int index,
+    ( wxGCDC& dc, const item_instance& item, const wxPoint& pos,
+      unsigned int index,
       const std::multimap<int, item_instance*>& z_order ) const;
 
     void
@@ -212,11 +211,10 @@ namespace bf
       const std::multimap<int, item_instance*>& z_order,
       unsigned int index) const;
     void render_item_filled
-    ( wxGraphicsContext& gc, const item_instance& item,
+    ( wxGCDC& gc, const item_instance& item,
       unsigned int index ) const;
     void render_item_wireframe
-    ( wxDC& dc, wxGraphicsContext& gc, const item_instance& item, 
-      unsigned int index ) const;
+    ( wxGCDC& dc, const item_instance& item, unsigned int index ) const;
     void render_item_id
     ( wxDC& dc, const item_instance& item, unsigned int layer ) const;
 
@@ -224,8 +222,8 @@ namespace bf
     ( wxDC& dc, const item_instance& item, const wxPoint& pos,
       const std::multimap<int, item_instance*>& z_order) const;
     void render_item_as_wireframe
-    ( wxDC& dc, wxGraphicsContext& gc, 
-      const item_instance& item, const wxPoint& pos, unsigned int index ) const;
+    ( wxGCDC& dc, const item_instance& item, const wxPoint& pos,
+      unsigned int index ) const;
     void render_item_id
     ( wxDC& dc, const item_instance& item, const wxPoint& pos ) const;
 
@@ -239,7 +237,7 @@ namespace bf
     ( wxDC& dc, const item_instance& item, const wxPoint& pos,
       const wxSize& size, unsigned int index ) const;
     void render_slope_steepness
-    ( wxDC& dc, wxGraphicsContext& gc, const item_instance& item, 
+    ( wxGCDC& dc, const item_instance& item, 
       const wxPoint& pos, const wxSize& size, unsigned int index ) const;
     void render_slope_curve_grip
     ( wxDC& dc, const item_instance& item, 
@@ -256,17 +254,14 @@ namespace bf
       const wxPoint& pos, const wxSize& size ) const;
     void render_grip( wxDC& dc, unsigned int index ) const;
     void render_drag
-    ( wxDC& dc, wxGraphicsContext& gc, 
-      const std::multimap<int, item_instance*>& z_order, 
+    ( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order, 
       unsigned int index ) const;
     void render_drag_mode_selection( wxDC& dc, unsigned int index ) const;
     void render_drag_mode_move
-    ( wxDC& dc, wxGraphicsContext& gc, 
-      const std::multimap<int, item_instance*>& z_order, 
+    ( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order, 
       unsigned int index ) const;
     void render_drag_mode_size( wxDC& dc, unsigned int index ) const;
-    void render_drag_mode_slope
-    ( wxDC& dc, wxGraphicsContext& gc, unsigned int index ) const;
+    void render_drag_mode_slope( wxGCDC& dc, unsigned int index ) const;
     void render_grid( wxDC& dc ) const;
     void render_grid_vertical_lines( wxDC& dc ) const;
     void render_grid_horizontal_lines( wxDC& dc ) const;

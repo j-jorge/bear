@@ -920,9 +920,13 @@ void bf::ingame_view::get_structure_sprites
  */
 void bf::ingame_view::render()
 {
-  wxBufferedPaintDC dc( this );
-  // Create graphics context from it
-  wxGraphicsContext* gc = wxGraphicsContext::Create( dc );
+  wxBufferedPaintDC this_dc( this );
+
+  wxGraphicsContext* gc
+    ( wxGraphicsRenderer::GetDefaultRenderer()->CreateContext( this_dc ) );
+  
+  wxGCDC dc;
+  dc.SetGraphicsContext( gc );
 
   if( IsShown() )
     {
@@ -940,12 +944,9 @@ void bf::ingame_view::render()
 
       dc.Clear();
 
-      render_layers(dc,*gc);
+      render_layers(dc);
       render_grid(dc);
     }
-
-  if ( gc )
-    delete gc;
 } // ingame_view::render()
 
 /*----------------------------------------------------------------------------*/
@@ -991,9 +992,8 @@ wxPoint bf::ingame_view::compute_mouse_position(const wxPoint& point) const
 /**
  * \brief Render all layers.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  */
-void bf::ingame_view::render_layers( wxDC& dc, wxGraphicsContext& gc ) const
+void bf::ingame_view::render_layers( wxGCDC& dc ) const
 {
   for (unsigned int i=0; i!=m_history.get_level().layers_count(); ++i)
     if ( get_level().layer_is_visible(i) )
@@ -1017,10 +1017,10 @@ void bf::ingame_view::render_layers( wxDC& dc, wxGraphicsContext& gc ) const
                   (it->get_rendering_parameters().get_pos_z(), &(*it)) );
           }
 
-        render_items( dc, gc, z_order, i );
+        render_items( dc, z_order, i );
 
         if ( i == get_active_index() )
-          render_drag(dc, gc, z_order, i);
+          render_drag(dc, z_order, i);
       }
 } // ingame_view::render_layers()
 
@@ -1028,13 +1028,11 @@ void bf::ingame_view::render_layers( wxDC& dc, wxGraphicsContext& gc ) const
 /**
  * \brief Render a set of items.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param z_order The items.
  * \param i The index of the layer in which the items are.
  */
 void bf::ingame_view::render_items
-( wxDC& dc, wxGraphicsContext& gc, 
-  const std::multimap<int, item_instance*>& z_order,
+( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
   unsigned int i ) const
 {
   std::multimap<int, item_instance*>::const_iterator it;
@@ -1046,16 +1044,16 @@ void bf::ingame_view::render_items
         render_item_sprite(dc, *it->second, z_order,i);
       else
         {
-          render_item_filled(gc, *it->second, i);
+          render_item_filled(dc, *it->second, i);
           wireframe_forced.push_back(it->second);
         }
 
   if( m_wireframe_drawing || !m_graphic_drawing )
     for (it=z_order.begin(); it!=z_order.end(); ++it)
-      render_item_wireframe(dc, gc, *it->second, i );
+      render_item_wireframe(dc, *it->second, i );
   else
     for ( ; !wireframe_forced.empty(); wireframe_forced.pop_front() )
-      render_item_wireframe(dc, gc, *wireframe_forced.front(), i );
+      render_item_wireframe(dc, *wireframe_forced.front(), i );
 
   for (it=z_order.begin(); it!=z_order.end(); ++it)
     if ( m_check_result.contains(&get_level().get_layer(i), it->second) )
@@ -1156,21 +1154,19 @@ void bf::ingame_view::render_relationship
 /**
  * \brief Render an item on the screen at a given position.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param item The item to render.
  * \param pos The position of the item on the screen.
  * \param index The index of the layer in which the item is rendered.
  * \param z_order The items.
  */
 void bf::ingame_view::render_item
-( wxDC& dc, wxGraphicsContext& gc, 
-  const item_instance& item, const wxPoint& pos,
+( wxGCDC& dc, const item_instance& item, const wxPoint& pos,
   unsigned int index, const std::multimap<int, item_instance*>& z_order ) const
 {
   if ( has_visual(item, z_order) )
     render_item_as_sprite(dc, item, pos, z_order);
 
-  render_item_as_wireframe(dc, gc, item, pos, index);
+  render_item_as_wireframe(dc, item, pos, index);
 
   if ( m_display_id )
     {
@@ -1205,12 +1201,12 @@ void bf::ingame_view::render_item_sprite
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Draw a filled box on an item on the screen.
- * \param dc The device context for the drawings.
+ * \param gc The device context for the drawings.
  * \param item The item to render.
  * \param index The index of the layer in which the item is rendered.
  */
 void bf::ingame_view::render_item_filled
-( wxGraphicsContext& gc, const item_instance& item, unsigned int index ) const
+( wxGCDC& gc, const item_instance& item, unsigned int index ) const
 {
   wxPoint pos = 
     get_position_in_layer
@@ -1222,7 +1218,7 @@ void bf::ingame_view::render_item_filled
     ( zoom((wxCoord)item.get_rendering_parameters().get_width()),
       zoom((wxCoord)item.get_rendering_parameters().get_height()) );
 
-  wxPoint2DDouble p[4];
+  wxPoint p[4];
 
   p[0] = wxPoint( pos.x,  pos.y );
   p[1] = wxPoint( pos.x + size.x - 1, pos.y );
@@ -1250,13 +1246,11 @@ void bf::ingame_view::render_item_filled
 /**
  * \brief Render the box around an item on the screen.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param item The item to render.
  * \param index The index of the layer in which the item is rendered.
  */
 void bf::ingame_view::render_item_wireframe
-( wxDC& dc, wxGraphicsContext& gc, const item_instance& item, 
-  unsigned int index ) const
+( wxGCDC& dc, const item_instance& item, unsigned int index ) const
 {
   wxPoint pos = 
     get_position_in_layer
@@ -1264,7 +1258,7 @@ void bf::ingame_view::render_item_wireframe
               (wxCoord)item.get_rendering_parameters().get_bottom()), index,
     item.get_rendering_parameters().get_height() );
 
-  render_item_as_wireframe(dc, gc, item, pos, index);
+  render_item_as_wireframe(dc, item, pos, index);
 } // ingame_view::render_item_wireframe()
 
 /*----------------------------------------------------------------------------*/
@@ -1346,14 +1340,13 @@ void bf::ingame_view::render_item_as_sprite
 /**
  * \brief Render the box of an item on the screen at a given position.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param item The item to render.
  * \param pos The position of the item on the screen.
  * \param index The index of the layer in which the item is rendered.
  */
 void bf::ingame_view::render_item_as_wireframe
-( wxDC& dc, wxGraphicsContext& gc, 
-  const item_instance& item, const wxPoint& pos, unsigned int index ) const
+( wxGCDC& dc, const item_instance& item, const wxPoint& pos,
+  unsigned int index ) const
 {
   wxSize size
     ( zoom((wxCoord)item.get_rendering_parameters().get_width()),
@@ -1370,7 +1363,7 @@ void bf::ingame_view::render_item_as_wireframe
   if ( item.get_class().get_class_name() == "bear::slope" )
     {
       render_slope_curve_grip(dc, item, pos, size, index);
-      render_slope_steepness(dc, gc, item, pos, size, index);
+      render_slope_steepness(dc, item, pos, size, index);
     }
 } // ingame_view::render_item_as_wireframe()
 
@@ -1528,21 +1521,19 @@ void bf::ingame_view::render_slope_curve_grip
 /**
  * \brief Render the steepness of the slope.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param item The item to render.
  * \param pos The position of the box.
  * \param size The size of the box.
  * \param index The index of the layer in which the item is rendered.
  */
 void bf::ingame_view::render_slope_steepness
-( wxDC& dc, wxGraphicsContext& gc,
-  const item_instance& item, const wxPoint& pos, const wxSize& size,
+( wxGCDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
   unsigned int index ) const
 {
   wxPen pen( wxColour( std_to_wx_string(item.get_class().get_color()) ), 
              1, wxSOLID );
-  gc.SetPen( pen );
-  gc.SetBrush(*wxTRANSPARENT_BRUSH);
+  dc.SetPen( pen );
+  dc.SetBrush(*wxTRANSPARENT_BRUSH);
   
   double steepness;
   double left_x;
@@ -1565,14 +1556,14 @@ void bf::ingame_view::render_slope_steepness
       p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
     }
 
-  wxGraphicsPath path = gc.CreatePath();
+  wxGraphicsPath path = dc.GetGraphicsContext()->CreatePath();
   
   path.MoveToPoint(p[0]);
   path.AddCurveToPoint
     ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
       p[1].y - right_y, p[1].x, p[1].y );
 
-  gc.StrokePath(path);
+  dc.GetGraphicsContext()->StrokePath(path);
 } // ingame_view::render_slope_steepness()
 
 /*----------------------------------------------------------------------------*/
@@ -1776,13 +1767,12 @@ void bf::ingame_view::render_grip( wxDC& dc, unsigned int index ) const
 /**
  * \brief Render the result of the drag.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param z_order The items.
  * \param index The index of the layer.
  */
 void bf::ingame_view::render_drag
-( wxDC& dc, wxGraphicsContext& gc, 
-  const std::multimap<int, item_instance*>& z_order, unsigned int index ) const
+( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
+  unsigned int index ) const
 {
   if ( m_drag_info != NULL )
     switch(m_drag_info->drag_mode)
@@ -1791,13 +1781,13 @@ void bf::ingame_view::render_drag
         render_drag_mode_selection(dc,index);
         break;
       case drag_info::drag_mode_move:
-        render_drag_mode_move(dc, gc, z_order,index);
+        render_drag_mode_move(dc, z_order,index);
         break;
       case drag_info::drag_mode_size:
         render_drag_mode_size(dc,index);
         break;      
       case drag_info::drag_mode_slope:
-        render_drag_mode_slope(dc, gc, index);
+        render_drag_mode_slope(dc, index);
         break;
       default:
         {
@@ -1834,13 +1824,12 @@ void bf::ingame_view::render_drag_mode_selection
 /**
  * \brief Render the result of the drag in a situation of selection.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param z_order The item.
  * \param index The index of the layer.
  */
 void bf::ingame_view::render_drag_mode_move
-( wxDC& dc, wxGraphicsContext& gc, 
-  const std::multimap<int, item_instance*>& z_order, unsigned int index ) const
+( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
+  unsigned int index ) const
 {
   item_selection::const_iterator it;
   const item_selection& selection( get_level().get_selection() );
@@ -1855,7 +1844,7 @@ void bf::ingame_view::render_drag_mode_move
           - zoom((wxCoord)(*it)->get_rendering_parameters().get_bottom())
           - zoom((wxCoord)(*it)->get_rendering_parameters().get_height()) );
 
-      render_item(dc, gc, **it, pos, get_active_index(), z_order);
+      render_item(dc, **it, pos, get_active_index(), z_order);
     }
 } // ingame_view::render_drag_mode_move()
 
@@ -1893,18 +1882,17 @@ void bf::ingame_view::render_drag_mode_size
 /**
  * \brief Render the result of the drag in a situation of changing slope curve.
  * \param dc The device context for the drawings.
- * \param gc The graphics context for the drawings.
  * \param index The index of the layer.
  */
 void bf::ingame_view::render_drag_mode_slope
-( wxDC& dc, wxGraphicsContext& gc, unsigned int index ) const
+( wxGCDC& dc, unsigned int index ) const
 {
   wxPen pen
     ( wxColour
       ( std_to_wx_string(m_drag_info->picked_item->get_class().get_color()) ), 
       1, wxSOLID );
-  gc.SetPen( pen );
-  gc.SetBrush(*wxTRANSPARENT_BRUSH);
+  dc.SetPen( pen );
+  dc.SetBrush(*wxTRANSPARENT_BRUSH);
   
   double steepness;
   double left_x;
@@ -1955,14 +1943,14 @@ void bf::ingame_view::render_drag_mode_slope
       p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
     }
 
-  wxGraphicsPath path = gc.CreatePath();
+  wxGraphicsPath path = dc.GetGraphicsContext()->CreatePath();
   
   path.MoveToPoint(p[0]);
   path.AddCurveToPoint
     ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
       p[1].y - right_y, p[1].x, p[1].y );
 
-  gc.StrokePath(path);
+  dc.GetGraphicsContext()->StrokePath(path);
 } // ingame_view::render_drag_mode_slope()
 
 /*----------------------------------------------------------------------------*/
