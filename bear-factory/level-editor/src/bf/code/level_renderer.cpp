@@ -1059,7 +1059,7 @@ void bf::level_renderer::render_slope_steepness
 void bf::level_renderer::render_non_valid_item
 ( wxDC& dc, const item_instance& item, unsigned int index ) const
 {
-  wxPen pen( *wxRED );
+  wxPen pen( *wxRED, 2 );
 
   dc.SetPen( pen );
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
@@ -1596,22 +1596,32 @@ std::pair<wxBitmap, wxPoint> bf::level_renderer::get_item_or_mimic_visual
 wxPen bf::level_renderer::get_display_pen
 ( const item_instance& item, unsigned int index ) const
 {
-  wxPen result( wxColour( std_to_wx_string(item.get_class().get_color()) ) );
+  wxPen result;
 
-  if ( index != get_level().get_active_layer_index() )
-    result.SetStyle( wxLONG_DASH );
+  result.SetWidth( 1 );
 
   if ( get_level().item_is_selected(index, &item) )
     {
       if ( index == get_level().get_active_layer_index() )
         {
           if ( !get_level().item_is_main_selection(&item) )
-            result.SetStyle( wxSHORT_DASH );
+            result.SetWidth( 2 );
 
           result.SetColour(*wxRED);
         }
       else
         result.SetColour( wxT("#800000") );
+    }
+  else
+    {
+      const std::string active_tag( get_level().get_active_layer().get_tag() );
+      const std::string tag( get_level().get_layer( index ).get_tag() );
+
+      if ( tag == active_tag )
+        result.SetColour
+          ( wxColour( std_to_wx_string(item.get_class().get_color()) ) );
+      else
+        result.SetColour( wxT("#3b3b3b") );
     }
 
   return result;
