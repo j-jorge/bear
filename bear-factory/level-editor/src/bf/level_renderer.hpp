@@ -81,7 +81,12 @@ namespace bf
     ( wxGCDC& dc, wxRect part, level_check_result check_result,
       drag_info const* d );
 
-    wxCoord zoom( wxCoord v ) const;
+    template<typename T>
+    T zoom( T v ) const
+    {
+      return v * T(m_zoom) / T(100);
+    } // zoom()
+
     wxPoint zoom( wxPoint v ) const;
     wxSize zoom( wxSize v ) const;
     wxCoord unzoom( wxCoord v ) const;

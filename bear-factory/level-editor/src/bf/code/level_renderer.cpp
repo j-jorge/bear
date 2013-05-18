@@ -405,16 +405,6 @@ void bf::level_renderer::render
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the zoomed value of a coordinate.
- * \param v The value to transform.
- */
-wxCoord bf::level_renderer::zoom( wxCoord v ) const
-{
-  return v * (wxCoord)m_zoom / 100;
-} // level_renderer::zoom()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Get the zoomed value of a point.
  * \param v The value to transform.
  */
@@ -984,7 +974,7 @@ void bf::level_renderer::render_slope_curve_grip
 
   slope s;
   s.read_from( item );
-  s.scale( zoom( 1 ) );
+  s.scale( zoom( 1.0 ) );
       
   wxPoint p[2];
   
@@ -1034,8 +1024,8 @@ void bf::level_renderer::render_slope_steepness
   
   slope s;
   s.read_from( item );
-  s.scale( zoom( 1 ) );
-        
+  s.scale( zoom( 1.0 ) );
+
   wxPoint p[2];
   
   if ( s.steepness < 0 )
@@ -1356,7 +1346,7 @@ void bf::level_renderer::render_drag_mode_slope
 
   slope s;
   s.read_from( *m_drag_info->picked_item );
-  s.scale( zoom( 1 ) );
+  s.scale( zoom( 1.0 ) );
   
   if ( m_drag_info->left_side )
     {

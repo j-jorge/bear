@@ -182,6 +182,8 @@ namespace bf
     template<typename Action>
     void apply_action( Action* action );
 
+    double zoom( double v ) const;
+    unsigned int zoom( unsigned int v ) const;
     wxCoord zoom( wxCoord v ) const;
     wxPoint zoom( wxPoint v ) const;
     wxSize zoom( wxSize v ) const;

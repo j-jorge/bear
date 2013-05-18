@@ -1704,7 +1704,7 @@ void bf::ingame_view::apply_drag_mode_slope()
 
   slope s;
   s.read_from( *m_drag_info->picked_item );
-  s.scale( zoom( 1 ) );
+  s.scale( zoom( 1.0 ) );
 
   if ( m_drag_info->left_side )
     {
@@ -1720,6 +1720,26 @@ void bf::ingame_view::apply_drag_mode_slope()
         ( m_drag_info->picked_item,
           s.left_handle.x, s.left_handle.y, gap.x, gap.y ) );
 } // ingame_view::apply_drag_mode_slope()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the zoomed equivalent value of a value.
+ * \param v The value to transform.
+ */
+double bf::ingame_view::zoom( double v ) const
+{
+  return m_renderer.zoom( v );
+} // ingame_view::zoom()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the zoomed equivalent value of a value.
+ * \param v The value to transform.
+ */
+unsigned int bf::ingame_view::zoom( unsigned int v ) const
+{
+  return m_renderer.zoom( v );
+} // ingame_view::zoom()
 
 /*----------------------------------------------------------------------------*/
 /**
