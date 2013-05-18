@@ -1476,45 +1476,46 @@ void bf::ingame_view::render_slope_curve_grip
 ( wxDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
   unsigned int index ) const
 {
-  if ( index == get_active_index() )
+  if ( index != get_active_index() )
+    return;
+
+  if ( !get_level().item_is_main_selection( &item ) )
+    return;
+
+  dc.SetPen( get_display_pen(item, index) );
+  dc.SetBrush(*wxTRANSPARENT_BRUSH);
+
+  double steepness;
+  double left_x;
+  double left_y;
+  double right_x;
+  double right_y;
+      
+  compute_slope_parameters
+    (item, steepness, left_x, left_y, right_x, right_y);
+      
+  wxPoint p[2];
+  
+  if ( steepness < 0 )
     {
-      dc.SetPen( get_display_pen(item, index) );
-      dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-      double steepness;
-      double left_x;
-      double left_y;
-      double right_x;
-      double right_y;
-      
-      compute_slope_parameters
-        (item, steepness, left_x, left_y, right_x, right_y);
-      
-      wxPoint p[2];
-
-      if ( steepness < 0 )
-        {
-          p[0] = wxPoint( pos.x,  pos.y );
-          p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
-        }
-      else
-        {
-          p[0] = wxPoint( pos.x,  pos.y + steepness);
-          p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
-        }
-
-      dc.DrawRectangle
-        ( p[0].x - s_grip_size / 2 + left_x, 
-          p[0].y - s_grip_size / 2 - left_y,
-          s_grip_size, s_grip_size );
-      dc.DrawLine(p[0].x + left_x, p[0].y - left_y, p[0].x, p[0].y);      
-      
-      dc.DrawRectangle
-        ( p[1].x - s_grip_size / 2 + right_x, 
-          p[1].y - s_grip_size / 2 - right_y,
-          s_grip_size, s_grip_size );
-      dc.DrawLine(p[1].x + right_x, p[1].y - right_y, p[1].x, p[1].y);   
+      p[0] = wxPoint( pos.x,  pos.y );
+      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
     }
+  else
+    {
+      p[0] = wxPoint( pos.x,  pos.y + steepness);
+      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
+    }
+
+  render_grip_box
+    ( dc, p[0].x - s_grip_size / 2 + left_x, 
+      p[0].y - s_grip_size / 2 - left_y );
+  dc.DrawLine(p[0].x + left_x, p[0].y - left_y, p[0].x, p[0].y);      
+      
+  render_grip_box
+    ( dc, p[1].x - s_grip_size / 2 + right_x, 
+      p[1].y - s_grip_size / 2 - right_y );
+  dc.DrawLine(p[1].x + right_x, p[1].y - right_y, p[1].x, p[1].y);   
 } // ingame_view::render_slope_curve_grip()
 
 /*----------------------------------------------------------------------------*/
@@ -1732,34 +1733,45 @@ void bf::ingame_view::render_grip( wxDC& dc, unsigned int index ) const
   dc.SetPen(*wxRED_PEN);
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
 
-  dc.DrawRectangle
-    ( box.GetLeft() - s_grip_size, box.GetTop() - s_grip_size,
-      s_grip_size, s_grip_size );
-  dc.DrawRectangle
-    ( box.GetRight(), box.GetTop() - s_grip_size, s_grip_size, s_grip_size );
-  dc.DrawRectangle
-    ( box.GetRight(), box.GetBottom(), s_grip_size, s_grip_size );
-  dc.DrawRectangle
-    ( box.GetLeft() - s_grip_size, box.GetBottom(), s_grip_size, s_grip_size );
+  render_grip_box
+    ( dc, box.GetLeft() - s_grip_size, box.GetTop() - s_grip_size );
+  render_grip_box( dc, box.GetRight(), box.GetTop() - s_grip_size );
+  render_grip_box( dc, box.GetRight(), box.GetBottom() );
+  render_grip_box( dc, box.GetLeft() - s_grip_size, box.GetBottom() );
 
   if ( (main_selection->get_rendering_parameters().get_height() != 0)
        && (main_selection->get_rendering_parameters().get_width() != 0) )
     {
-      dc.DrawRectangle
-        ( box.GetLeft() - s_grip_size,
-          box.GetTop() + box.GetHeight() / 2 - s_grip_size / 2,
-          s_grip_size, s_grip_size );
-      dc.DrawRectangle
-        ( box.GetRight(), box.GetTop() + box.GetHeight() / 2 - s_grip_size / 2,
-          s_grip_size, s_grip_size );
-      dc.DrawRectangle
-        ( box.GetLeft() + box.GetWidth() / 2 - s_grip_size / 2,
-          box.GetTop() - s_grip_size, s_grip_size, s_grip_size );
-      dc.DrawRectangle
-        ( box.GetLeft() + box.GetWidth() / 2 - s_grip_size / 2,
-          box.GetBottom(), s_grip_size, s_grip_size );
+      render_grip_box
+        ( dc, box.GetLeft() - s_grip_size,
+          box.GetTop() + box.GetHeight() / 2 - s_grip_size / 2 );
+      render_grip_box
+        ( dc, box.GetRight(),
+          box.GetTop() + box.GetHeight() / 2 - s_grip_size / 2 );
+      render_grip_box
+        ( dc, box.GetLeft() + box.GetWidth() / 2 - s_grip_size / 2,
+          box.GetTop() - s_grip_size );
+      render_grip_box
+        ( dc, box.GetLeft() + box.GetWidth() / 2 - s_grip_size / 2,
+          box.GetBottom() );
     }
 } // ingame_view::render_grip()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Draws the image of an handle.
+ * \param dc The device context for the drawings.
+ * \param left The left position of the handle.
+ * \param top The top position of the handle.
+ */
+void bf::ingame_view::render_grip_box
+( wxDC& dc, wxCoord left, wxCoord top ) const
+{
+  dc.SetPen(*wxRED_PEN);
+  dc.SetBrush( wxBrush( wxColor( wxT("#800000") ) ) );
+
+  dc.DrawRectangle( left, top, s_grip_size, s_grip_size );
+} // ingame_view::render_grip_box()
 
 /*----------------------------------------------------------------------------*/
 /**

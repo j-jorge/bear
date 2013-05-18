@@ -252,7 +252,10 @@ namespace bf
     void render_non_valid_item_box
     ( wxDC& dc, const item_instance& item,
       const wxPoint& pos, const wxSize& size ) const;
+
     void render_grip( wxDC& dc, unsigned int index ) const;
+    void render_grip_box( wxDC& dc, wxCoord left, wxCoord top ) const;
+
     void render_drag
     ( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order, 
       unsigned int index ) const;
