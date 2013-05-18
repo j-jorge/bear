@@ -151,9 +151,6 @@ namespace bf
     void render_slope_curve_grip
     ( wxDC& dc, const item_instance& item, 
       const wxPoint& pos, const wxSize& size, unsigned int index ) const;
-    void compute_slope_parameters
-    ( const item_instance& item, double & steepness, double & left_x,
-      double & left_y, double & right_x, double & right_y ) const;
     void render_non_valid_item
     ( wxDC& dc, const item_instance& item, unsigned int index ) const;
     void render_non_valid_item_as_point
