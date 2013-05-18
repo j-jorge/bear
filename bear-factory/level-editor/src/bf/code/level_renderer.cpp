@@ -1017,8 +1017,7 @@ void bf::level_renderer::render_slope_steepness
 ( wxGCDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
   unsigned int index ) const
 {
-  wxPen pen( wxColour( std_to_wx_string(item.get_class().get_color()) ), 
-             1, wxSOLID );
+  wxPen pen( get_display_pen( item, index ) );
   dc.SetPen( pen );
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
   
