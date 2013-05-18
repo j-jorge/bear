@@ -11,6 +11,7 @@
 #include "bf/ingame_view.hpp"
 
 #include "bf/compilation_context.hpp"
+#include "bf/drag_info.hpp"
 #include "bf/gui_level.hpp"
 #include "bf/image_pool.hpp"
 #include "bf/ingame_view_frame.hpp"
@@ -46,27 +47,6 @@
 /*----------------------------------------------------------------------------*/
 const wxCoord bf::ingame_view::s_grip_size = 10;
 bf::level_clipboard bf::ingame_view::s_clipboard;
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Constructor.
- */
-bf::ingame_view::drag_info::drag_info()
-  : drag_mode(drag_mode_none), picked_item(NULL), x_active(true), y_active(true)
-{
-
-} // ingame_view::drag_info::drag_info()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the difference between the initial mouse position and the current
- *        mouse position.
- */
-wxSize bf::ingame_view::drag_info::delta() const
-{
-  return wxSize
-    ( mouse_position.x - mouse_origin.x, mouse_position.y - mouse_origin.y );
-} // ingame_view::drag_info::delta()
 
 
 

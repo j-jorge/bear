@@ -10,6 +10,7 @@ set( BF_LE_SOURCE_FILES
   code/about_dialog.cpp
   code/clone_selection_dialog.cpp
   code/configuration.cpp
+  code/drag_info.cpp
   code/error_check_level_dialog.cpp
   code/grid.cpp
   code/grid_properties_frame.cpp
