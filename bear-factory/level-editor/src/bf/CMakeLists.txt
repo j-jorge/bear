@@ -31,6 +31,7 @@ set( BF_LE_SOURCE_FILES
   code/level_file_xml_writer.cpp
   code/level_overview_frame.cpp
   code/level_properties_frame.cpp
+  code/level_renderer.cpp
   code/level_runner.cpp
   code/level_thumbnail_ctrl.cpp
   code/main.cpp
@@ -40,6 +41,7 @@ set( BF_LE_SOURCE_FILES
   code/properties_frame.cpp
   code/run_configuration.cpp
   code/run_configuration_frame.cpp
+  code/slope.cpp
   code/windows_layout.cpp
 
   history/code/action_add_item.cpp

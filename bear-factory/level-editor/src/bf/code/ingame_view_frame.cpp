@@ -908,8 +908,9 @@ void bf::ingame_view_frame::toggle_grid_visibility()
  */
 void bf::ingame_view_frame::toggle_grid_magnetism()
 {
-  m_ingame_view->get_grid().set_magnetism_active
-    ( !m_ingame_view->get_grid().get_magnetism_active() );
+  grid g( m_ingame_view->get_grid() );
+  g.set_magnetism_active( !g.get_magnetism_active() );
+  m_ingame_view->set_grid( g );
 } // ingame_view_frame::toggle_grid_magnetism()
 
 /*----------------------------------------------------------------------------*/

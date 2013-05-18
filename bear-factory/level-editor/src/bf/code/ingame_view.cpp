@@ -13,15 +13,14 @@
 #include "bf/compilation_context.hpp"
 #include "bf/drag_info.hpp"
 #include "bf/gui_level.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/ingame_view_frame.hpp"
 #include "bf/item_class_pool.hpp"
 #include "bf/item_choice_frame.hpp"
 #include "bf/properties_frame.hpp"
-#include "bf/layer.hpp"
 #include "bf/layer_list_frame.hpp"
 #include "bf/level_file_xml_writer.hpp"
 #include "bf/main_frame.hpp"
+#include "bf/slope.hpp"
 #include "bf/windows_layout.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/wx_type_cast.hpp"
@@ -29,7 +28,6 @@
 #include "bf/history/action_add_item.hpp"
 #include "bf/history/action_copy_selection.hpp"
 #include "bf/history/action_delete_selection.hpp"
-#include "bf/history/action_group.hpp"
 #include "bf/history/action_move_selection.hpp"
 #include "bf/history/action_paste_items.hpp"
 #include "bf/history/action_set_item_position_and_size.hpp"
@@ -38,14 +36,10 @@
 #include "bf/history/action_move_up.hpp"
 #include "bf/history/action_rotate_selection.hpp"
 
-#include <claw/assert.hpp>
 #include <wx/dcbuffer.h>
-#include <wx/clipbrd.h>
-
-#include <limits>
+#include <wx/defs.h>
 
 /*----------------------------------------------------------------------------*/
-const wxCoord bf::ingame_view::s_grip_size = 10;
 bf::level_clipboard bf::ingame_view::s_clipboard;
 
 
@@ -96,10 +90,7 @@ bool bf::ingame_view::item_drop_target::OnDropText
 bf::ingame_view::ingame_view
 ( ingame_view_frame& parent, gui_level* lvl, windows_layout& layout )
   : super( &parent, wxID_ANY ), m_parent(parent), m_layout(layout),
-    m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_wireframe_drawing(true),
-    m_graphic_drawing(true), m_display_grid(false), m_display_id(true),
-    m_display_relationship(true), m_bright_background(false),
-    m_image_cache(new sprite_image_cache), m_zoom(100)
+    m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_renderer( *lvl )
 {
   CLAW_PRECOND(lvl != NULL);
   SetDropTarget( new item_drop_target(*this) );
@@ -107,20 +98,11 @@ bf::ingame_view::ingame_view
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Destructor.
- */
-bf::ingame_view::~ingame_view()
-{
-  delete m_image_cache;
-} // ingame_view::~ingame_view()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Tell if the level contains a layer.
  */
 bool bf::ingame_view::empty() const
 {
-  return m_history.get_level().empty();
+  return get_level().empty();
 } // ingame_view::empty()
 
 /*----------------------------------------------------------------------------*/
@@ -152,11 +134,11 @@ const wxPoint& bf::ingame_view::get_view_position() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the size of the visible part of the layer.
+ * \brief Get the size of the visible part of the level.
  */
 wxSize bf::ingame_view::get_view_size() const
 {
-  return zoom( GetSize() );
+  return m_renderer.get_view_size();
 } // ingame_view::get_view_size()
 
 /*----------------------------------------------------------------------------*/
@@ -179,22 +161,9 @@ wxSize bf::ingame_view::get_layer_view_size() const
  * \param height The height of the item.
  */
 wxPoint bf::ingame_view::get_position_in_layer
-( wxPoint position, unsigned int index, wxCoord height) const
+( wxPoint position, unsigned int index, wxCoord height ) const
 {
-  CLAW_PRECOND( index < m_history.get_level().layers_count() );
-  
-  wxPoint pos_view
-    ( (double)m_view.x * 
-      (double)( get_level().get_layer(index).get_width() - get_view_size().x ) /
-      (double)( get_level().get_width() - get_view_size().x ),
-      (double)m_view.y * 
-      (double)( get_level().get_layer(index).get_height() -get_view_size().y ) /
-      (double)( get_level().get_height() - get_view_size().y ) );
-
-  return 
-    wxPoint( zoom((wxCoord)position.x) - pos_view.x,
-             pos_view.y + GetSize().y - zoom((wxCoord)position.y) 
-             - zoom((wxCoord)height) );
+  return m_renderer.get_position_in_layer( position, index, height );
 } // ingame_view::get_position_in_layer()
 
 /*----------------------------------------------------------------------------*/
@@ -211,21 +180,7 @@ void bf::ingame_view::set_view_position( wxCoord x, wxCoord y )
     {
       m_view.x = x;
       m_view.y = y;
-#if 0
-      if ( (unsigned int)unzoom(m_view.x + GetSize().x)
-           > get_active_layer().get_width() )
-        m_view.x = zoom(get_active_layer().get_width()) - GetSize().x;
 
-      if (m_view.x < 0)
-        m_view.x = 0;
-
-      if ((unsigned int)unzoom(m_view.y + GetSize().y)
-          > get_active_layer().get_height())
-        m_view.y = zoom(get_active_layer().get_height()) - GetSize().y;
-
-      if (m_view.y < 0)
-        m_view.y = 0;
-#else
       if ( (unsigned int)unzoom(m_view.x + GetSize().x)
            > get_level().get_width() )
         m_view.x = zoom(get_level().get_width()) - GetSize().x;
@@ -239,7 +194,6 @@ void bf::ingame_view::set_view_position( wxCoord x, wxCoord y )
 
       if (m_view.y < 0)
         m_view.y = 0;
-#endif
     }
 
   m_parent.adjust_scrollbars();
@@ -251,7 +205,7 @@ void bf::ingame_view::set_view_position( wxCoord x, wxCoord y )
  */
 unsigned int bf::ingame_view::get_zoom() const
 {
-  return m_zoom;
+  return m_renderer.get_zoom();
 } // ingame_view::get_zoom()
 
 /*----------------------------------------------------------------------------*/
@@ -262,7 +216,7 @@ unsigned int bf::ingame_view::get_zoom() const
 void bf::ingame_view::set_zoom(unsigned int z)
 {
   wxPoint c = get_center_in_level();
-  m_zoom = z;
+  m_renderer.set_zoom(z);
 
   wxPoint view_position = compute_global_view_position
     ( wxPoint( zoom(c.x) - GetSize().x/2, zoom(c.y) - GetSize().y/2 ) );
@@ -282,7 +236,7 @@ void bf::ingame_view::set_zoom(unsigned int z, wxPoint mouse_position)
   c.x = ( c.x + mouse_position.x ) / 2;
   c.y = ( c.y + mouse_position.y ) / 2;
 
-  m_zoom = z;
+  m_renderer.set_zoom( z );
   wxPoint view_position = compute_global_view_position
     ( wxPoint( zoom(c.x) - GetSize().x/2, zoom(c.y) - GetSize().y/2 ) );
   set_view_position( view_position.x, view_position.y );
@@ -294,7 +248,7 @@ void bf::ingame_view::set_zoom(unsigned int z, wxPoint mouse_position)
  */
 unsigned int bf::ingame_view::get_active_index() const
 {
-  return m_history.get_level().get_active_layer_index();
+  return get_level().get_active_layer_index();
 } // ingame_view::get_active_index()
 
 /*----------------------------------------------------------------------------*/
@@ -303,9 +257,9 @@ unsigned int bf::ingame_view::get_active_index() const
  */
 void bf::ingame_view::set_active_index( unsigned int index )
 {
-  CLAW_PRECOND( index < m_history.get_level().layers_count() );
+  CLAW_PRECOND( index < get_level().layers_count() );
 
-  m_history.get_level().set_active_layer(index);
+  get_level().set_active_layer(index);
 
   m_parent.adjust_scrollbars();
   m_parent.set_layer_info();
@@ -319,7 +273,7 @@ void bf::ingame_view::set_active_index( unsigned int index )
  */
 bf::layer& bf::ingame_view::get_active_layer() const
 {
-  return m_history.get_level().get_active_layer();
+  return get_level().get_active_layer();
 } // ingame_view::get_active_layer()
 
 /*----------------------------------------------------------------------------*/
@@ -347,7 +301,7 @@ bf::gui_level& bf::ingame_view::get_level()
  */
 void bf::ingame_view::show_grid( bool v )
 {
-  m_display_grid = v;
+  m_renderer.show_grid( v );
 } // ingame_view::show_grid()
 
 /*----------------------------------------------------------------------------*/
@@ -356,7 +310,7 @@ void bf::ingame_view::show_grid( bool v )
  */
 bool bf::ingame_view::get_grid_visibility() const
 {
-  return m_display_grid;
+  return m_renderer.get_grid_visibility();
 } // ingame_view::get_grid_visibility()
 
 /*----------------------------------------------------------------------------*/
@@ -366,7 +320,7 @@ bool bf::ingame_view::get_grid_visibility() const
  */
 void bf::ingame_view::set_bright_background( bool v )
 {
-  m_bright_background = v;
+  m_renderer.set_bright_background( v );
 } // ingame_view::set_bright_background()
 
 /*----------------------------------------------------------------------------*/
@@ -375,7 +329,7 @@ void bf::ingame_view::set_bright_background( bool v )
  */
 bool bf::ingame_view::get_bright_background() const
 {
-  return m_bright_background;
+  return m_renderer.get_bright_background();
 } // ingame_view::get_bright_background()
 
 /*----------------------------------------------------------------------------*/
@@ -385,7 +339,7 @@ bool bf::ingame_view::get_bright_background() const
  */
 void bf::ingame_view::set_id_visibility( bool v )
 {
-  m_display_id = v;
+  m_renderer.set_id_visibility( v );
 } // ingame_view::set_id_visibility()
 
 /*----------------------------------------------------------------------------*/
@@ -394,7 +348,7 @@ void bf::ingame_view::set_id_visibility( bool v )
  */
 bool bf::ingame_view::get_id_visibility() const
 {
-  return m_display_id;
+  return m_renderer.get_id_visibility();
 } // ingame_view::get_id_visibity()
 
 /*----------------------------------------------------------------------------*/
@@ -403,7 +357,7 @@ bool bf::ingame_view::get_id_visibility() const
  */
 void bf::ingame_view::toggle_relationship_drawing()
 {
-  m_display_relationship = !m_display_relationship;
+  m_renderer.toggle_relationship_drawing();
   Refresh();
 } // ingame_view::toggle_relationship_drawing()
 
@@ -413,7 +367,7 @@ void bf::ingame_view::toggle_relationship_drawing()
  */
 bool bf::ingame_view::get_relationship_drawing() const
 {
-  return m_display_relationship;
+  return m_renderer.get_relationship_drawing();
 } // ingame_view::get_relationship_drawing()
 
 /*----------------------------------------------------------------------------*/
@@ -422,7 +376,7 @@ bool bf::ingame_view::get_relationship_drawing() const
  */
 void bf::ingame_view::toggle_graphic_drawing()
 {
-  m_graphic_drawing = !m_graphic_drawing;
+  m_renderer.toggle_graphic_drawing();
   Refresh();
 } // ingame_view::toggle_graphic_drawing()
 
@@ -432,7 +386,7 @@ void bf::ingame_view::toggle_graphic_drawing()
  */
 bool bf::ingame_view::get_graphic_drawing() const
 {
-  return m_graphic_drawing;
+  return m_renderer.get_graphic_drawing();
 } // ingame_view::get_graphic_drawing()
 
 /*----------------------------------------------------------------------------*/
@@ -441,7 +395,7 @@ bool bf::ingame_view::get_graphic_drawing() const
  */
 void bf::ingame_view::toggle_wireframe_drawing()
 {
-  m_wireframe_drawing = !m_wireframe_drawing;
+  m_renderer.toggle_wireframe_drawing();
   Refresh();
 } // ingame_view::toggle_wireframe_drawing()
 
@@ -451,7 +405,7 @@ void bf::ingame_view::toggle_wireframe_drawing()
  */
 bool bf::ingame_view::get_wireframe_drawing() const
 {
-  return m_wireframe_drawing;
+  return m_renderer.get_wireframe_drawing();
 } // ingame_view::get_wireframe_drawing()
 
 /*----------------------------------------------------------------------------*/
@@ -460,16 +414,7 @@ bool bf::ingame_view::get_wireframe_drawing() const
  */
 const bf::grid& bf::ingame_view::get_grid() const
 {
-  return m_grid;
-} // ingame_view::get_grid()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the grid.
- */
-bf::grid& bf::ingame_view::get_grid()
-{
-  return m_grid;
+  return m_renderer.get_grid();
 } // ingame_view::get_grid()
 
 /*----------------------------------------------------------------------------*/
@@ -479,7 +424,7 @@ bf::grid& bf::ingame_view::get_grid()
  */
 void bf::ingame_view::set_grid( const grid& g )
 {
-  m_grid = g;
+  m_renderer.set_grid( g );
 } // ingame_view::set_grid()
 
 /*----------------------------------------------------------------------------*/
@@ -488,19 +433,24 @@ void bf::ingame_view::set_grid( const grid& g )
  */
 void bf::ingame_view::set_grid_on_selection()
 {
+  // TODO move the logic into the grid class and let ingame_view_frame do the
+  // work.
+
   if ( has_selection() )
     {
       const item_instance* selection( get_level().get_main_selection() );
+      grid g( get_grid() );
 
-      wxSize offset = m_grid.get_offset();
-      wxSize step = m_grid.get_step();
+      wxSize step( g.get_step() );
 
       if ( selection->get_rendering_parameters().get_width() != 0 )
         step.x = (int)selection->get_rendering_parameters().get_width();
       if ( selection->get_rendering_parameters().get_height() != 0 )
         step.y = (int)selection->get_rendering_parameters().get_height();
 
-      m_grid.set_step(step);
+      g.set_step(step);
+
+      wxSize offset( g.get_offset() );
 
       offset.x =
         (unsigned int)selection->get_rendering_parameters().get_left() % step.x;
@@ -508,7 +458,9 @@ void bf::ingame_view::set_grid_on_selection()
         (unsigned int)
         selection->get_rendering_parameters().get_bottom() % step.y;
 
-      m_grid.set_offset(offset);
+      g.set_offset( offset );
+
+      set_grid( g );
 
       render();
     }
@@ -576,9 +528,9 @@ bool bf::ingame_view::add_item
           new item_instance
           ( m_layout.get_item_class_pool().get_item_class_ptr(class_name) );
          
-       wxPoint pos_view = compute_local_view_position();
-       item->get_rendering_parameters().set_position
-         (x + unzoom(pos_view.x), y + unzoom(pos_view.y));
+        wxPoint pos_view = compute_local_view_position();
+        item->get_rendering_parameters().set_position
+          (x + unzoom(pos_view.x), y + unzoom(pos_view.y));
 
         do_action( new action_add_item( item, get_active_index() ) );
         set_selection( item );
@@ -844,8 +796,8 @@ void bf::ingame_view::get_structure_sprites
       {
         const layer& the_layer = get_level().get_layer(i);
 
-        if ( (the_layer.get_width() == m_history.get_level().get_width())
-             && (the_layer.get_height() == m_history.get_level().get_height()) )
+        if ( (the_layer.get_width() == get_level().get_width())
+             && (the_layer.get_height() == get_level().get_height()) )
           {
             std::multimap<int, const item_instance*> z_order;
 
@@ -876,14 +828,14 @@ void bf::ingame_view::get_structure_sprites
                 if ( zit->second->get_rendering_parameters().is_flipped() )
                   spr.pos.y =
                     (wxCoord)
-                    ( m_history.get_level().get_height()
+                    ( get_level().get_height()
                       - zit->second->get_rendering_parameters().get_bottom()
                       - zit->second->get_rendering_parameters().get_height()
                       - zit->second->get_rendering_parameters().get_gap_y() );
                 else
                   spr.pos.y =
                     (wxCoord)
-                    ( m_history.get_level().get_height()
+                    ( get_level().get_height()
                       - zit->second->get_rendering_parameters().get_bottom()
                       - zit->second->get_rendering_parameters().get_height()
                       + zit->second->get_rendering_parameters().get_gap_y() );
@@ -909,24 +861,8 @@ void bf::ingame_view::render()
   dc.SetGraphicsContext( gc );
 
   if( IsShown() )
-    {
-      wxFont font(dc.GetFont());
-      font.SetPointSize(8);
-      dc.SetFont(font);
-      dc.SetTextForeground(*wxWHITE);
-      dc.SetTextBackground(*wxBLACK);
-      dc.SetBackgroundMode(wxSOLID);
-
-      if (m_bright_background)
-        dc.SetBackground(*wxGREY_BRUSH);
-      else
-        dc.SetBackground(*wxBLACK_BRUSH);
-
-      dc.Clear();
-
-      render_layers(dc);
-      render_grid(dc);
-    }
+    m_renderer.render
+      ( dc, wxRect( m_view, GetSize() ), m_check_result, m_drag_info );
 } // ingame_view::render()
 
 /*----------------------------------------------------------------------------*/
@@ -967,1225 +903,6 @@ wxPoint bf::ingame_view::compute_mouse_position(const wxPoint& point) const
           unzoom(pos_view.y + GetSize().y - point.y) );
     }
 } // ingame_view::compute_mouse_position()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render all layers.
- * \param dc The device context for the drawings.
- */
-void bf::ingame_view::render_layers( wxGCDC& dc ) const
-{
-  for (unsigned int i=0; i!=m_history.get_level().layers_count(); ++i)
-    if ( get_level().layer_is_visible(i) )
-      {
-        const layer& the_layer = m_history.get_level().get_layer(i);
-        layer::item_iterator it;
-        std::multimap<int, item_instance*> z_order;
-
-        const wxRect vis_box( unzoom(m_view), unzoom(GetSize()) );
-
-        for (it=the_layer.item_begin(); it!=the_layer.item_end(); ++it)
-          {
-            wxRect box = get_presence_box(*it);
-            box.SetPosition
-              ( get_position_in_layer
-                (box.GetPosition(), i, box.GetSize().y) + unzoom(m_view) );
-
-            if ( box.Intersects(vis_box)  )
-              z_order.insert
-                ( std::pair<int, item_instance*>
-                  (it->get_rendering_parameters().get_pos_z(), &(*it)) );
-          }
-
-        render_items( dc, z_order, i );
-
-        if ( i == get_active_index() )
-          render_drag(dc, z_order, i);
-      }
-} // ingame_view::render_layers()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render a set of items.
- * \param dc The device context for the drawings.
- * \param z_order The items.
- * \param i The index of the layer in which the items are.
- */
-void bf::ingame_view::render_items
-( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
-  unsigned int i ) const
-{
-  std::multimap<int, item_instance*>::const_iterator it;
-  std::list<const item_instance*> wireframe_forced;
-
-  if ( m_graphic_drawing )
-    for (it=z_order.begin(); it!=z_order.end(); ++it)
-      if ( has_visual(*(it->second), z_order) )
-        render_item_sprite(dc, *it->second, z_order,i);
-      else
-        {
-          render_item_filled(dc, *it->second, i);
-          wireframe_forced.push_back(it->second);
-        }
-
-  if( m_wireframe_drawing || !m_graphic_drawing )
-    for (it=z_order.begin(); it!=z_order.end(); ++it)
-      render_item_wireframe(dc, *it->second, i );
-  else
-    for ( ; !wireframe_forced.empty(); wireframe_forced.pop_front() )
-      render_item_wireframe(dc, *wireframe_forced.front(), i );
-
-  for (it=z_order.begin(); it!=z_order.end(); ++it)
-    if ( m_check_result.contains(&get_level().get_layer(i), it->second) )
-      render_non_valid_item(dc, *it->second,i);
-
-  if ( m_display_id )
-    for (it=z_order.begin(); it!=z_order.end(); ++it)
-      render_item_id(dc, *it->second, i);
-
-  if ( m_display_relationship )
-    for (it=z_order.begin(); it!=z_order.end(); ++it)
-      render_relationship(dc, *it->second, z_order, i );
-} // ingame_view::render_items()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the relationship among items.
- * \param dc The device context for the drawings.
- * \param item The center item, for which we draw the relationship.
- * \param z_order The items.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_relationship
-( wxDC& dc, const item_instance& item,
-  const std::multimap<int, item_instance*>& z_order,
-  unsigned int index ) const
-{
-  std::list<item_class const*> h;
-  item_class::field_iterator itf;
-
-  item.get_class().find_hierarchy(h);
-
-  for ( ; !h.empty(); h.pop_front() )
-    for ( itf=h.front()->field_begin(); itf!=h.front()->field_end(); ++itf )
-      if ( itf->get_field_type() == type_field::item_reference_field_type )
-        if ( item.has_value(*itf) )
-          {
-            std::list<item_reference_type> ref;
-
-            if ( itf->is_list() )
-              item.get_value(*itf, ref);
-            else
-              {
-                item_reference_type r;
-                item.get_value(*itf, r);
-                ref.push_front(r);
-              }
-
-            std::multimap<int, item_instance*>::const_iterator itz;
-
-            for ( ; !ref.empty(); ref.pop_front() )
-              for (itz=z_order.begin(); itz!=z_order.end(); ++itz)
-                if ( itz->second->get_id() == ref.front().get_value() )
-                  render_relationship(dc, item, *itz->second, index);
-          }
-} // ingame_view::render_relationship()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the relationship among items.
- * \param dc The device context for the drawings.
- * \param ref The center item, for which we draw the relationship.
- * \param rel An item in relation with \a ref.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_relationship
-( wxDC& dc, const item_instance& ref, const item_instance& rel, 
-  unsigned int index ) const
-{
-  const wxPoint center_ref =
-    get_position_in_layer
-    ( wxPoint( ref.get_rendering_parameters().get_left()
-               + ref.get_rendering_parameters().get_width() / 2,
-               ref.get_rendering_parameters().get_bottom()
-               + ref.get_rendering_parameters().get_height() / 2 ),
-      index, 0);
-
-  const wxPoint center_rel =
-    get_position_in_layer
-    ( wxPoint( rel.get_rendering_parameters().get_left()
-               + rel.get_rendering_parameters().get_width() / 2,
-               rel.get_rendering_parameters().get_bottom()
-               + rel.get_rendering_parameters().get_height() / 2 ),
-      index, 0);
-
-  const wxCoord r( zoom(4) );
-  const wxColour clr( std_to_wx_string(ref.get_class().get_color()) );
-
-  dc.SetPen( wxPen(clr, 1, wxDOT_DASH) );
-  dc.SetBrush( wxBrush(clr) );
-
-  dc.DrawCircle(center_ref, r);
-  dc.DrawCircle(center_rel, r/2);
-  dc.DrawLine(center_ref, center_rel);
-} // ingame_view::render_relationship()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render an item on the screen at a given position.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the item on the screen.
- * \param index The index of the layer in which the item is rendered.
- * \param z_order The items.
- */
-void bf::ingame_view::render_item
-( wxGCDC& dc, const item_instance& item, const wxPoint& pos,
-  unsigned int index, const std::multimap<int, item_instance*>& z_order ) const
-{
-  if ( has_visual(item, z_order) )
-    render_item_as_sprite(dc, item, pos, z_order);
-
-  render_item_as_wireframe(dc, item, pos, index);
-
-  if ( m_display_id )
-    {
-      const wxSize size
-        ( (int)item.get_rendering_parameters().get_width(),
-          (int)item.get_rendering_parameters().get_height() );
-      render_item_id(dc, item, pos+size/2);
-    }
-} // ingame_view::render_item()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the sprite of an item on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param z_order The items.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_item_sprite
-( wxDC& dc, const item_instance& item,
-  const std::multimap<int, item_instance*>& z_order, unsigned int index ) const
-{
-  wxPoint pos = 
-    get_position_in_layer
-    ( wxPoint( (wxCoord)item.get_rendering_parameters().get_left(),
-               (wxCoord)item.get_rendering_parameters().get_bottom()), index,
-      (wxCoord)item.get_rendering_parameters().get_height());
-
-  render_item_as_sprite(dc, item, pos, z_order);
-} // ingame_view::render_item_sprite()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Draw a filled box on an item on the screen.
- * \param gc The device context for the drawings.
- * \param item The item to render.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_item_filled
-( wxGCDC& gc, const item_instance& item, unsigned int index ) const
-{
-  wxPoint pos = 
-    get_position_in_layer
-    ( wxPoint( (wxCoord)item.get_rendering_parameters().get_left(),
-               (wxCoord)item.get_rendering_parameters().get_bottom()), index,
-    (wxCoord)item.get_rendering_parameters().get_height() );
-
-  wxSize size
-    ( zoom((wxCoord)item.get_rendering_parameters().get_width()),
-      zoom((wxCoord)item.get_rendering_parameters().get_height()) );
-
-  wxPoint p[4];
-
-  p[0] = wxPoint( pos.x,  pos.y );
-  p[1] = wxPoint( pos.x + size.x - 1, pos.y );
-  p[2] = wxPoint( pos.x + size.x - 1, pos.y + size.y - 1 );
-  p[3] = wxPoint( pos.x, pos.y + size.y - 1 );
-
-  gc.SetPen( get_display_pen(item, index) );
-
-  const wxColour base_colour( std_to_wx_string(item.get_class().get_color()) );
-  unsigned char alpha( wxALPHA_OPAQUE / 2 );
-
-  if ( index != get_active_index() )
-    alpha = alpha / 2 / std::abs( (int)index - (int)get_active_index() );
-
-  const wxColour c
-    ( base_colour.Red(), base_colour.Green(), base_colour.Blue(), alpha );
-  wxBrush brush( c );
-
-  gc.SetBrush(brush);
-
-  gc.DrawLines(4, p);
-} // ingame_view::render_item_filled()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the box around an item on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_item_wireframe
-( wxGCDC& dc, const item_instance& item, unsigned int index ) const
-{
-  wxPoint pos = 
-    get_position_in_layer
-    ( wxPoint((wxCoord)item.get_rendering_parameters().get_left(),
-              (wxCoord)item.get_rendering_parameters().get_bottom()), index,
-    item.get_rendering_parameters().get_height() );
-
-  render_item_as_wireframe(dc, item, pos, index);
-} // ingame_view::render_item_wireframe()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the identifier of an item.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param index The index of the layer.
- */
-void
-bf::ingame_view::render_item_id
-( wxDC& dc, const item_instance& item, unsigned int index ) const
-{
-  const rectangle_type box( get_level().get_visual_box(item) );
-
-  const size_box_type size( zoom(box.width()), zoom(box.height()) );
-
-  const wxPoint pos =
-    get_position_in_layer
-    ( wxPoint( box.left() + unzoom(size.x / 2), box.top()), index, 0 );
-
-  render_item_id(dc, item, pos);
-} // ingame_view::render_item_id()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the sprite of an item on the screen at a given position.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the item on the screen.
- * \param z_order The items.
- */
-void bf::ingame_view::render_item_as_sprite
-( wxDC& dc, const item_instance& item, const wxPoint& pos,
-  const std::multimap<int, item_instance*>& z_order ) const
-{
-  wxPoint p(pos);
-
-  // the y coordinate of the ingame_view and the level are opposed
-  if ( item.get_rendering_parameters().is_mirrored() )
-    p.x -= zoom( wxCoord(item.get_rendering_parameters().get_gap_x()) );
-  else
-    p.x += zoom( wxCoord(item.get_rendering_parameters().get_gap_x()) );
-
-  if ( item.get_rendering_parameters().has_sprite() )
-    p.y += zoom(item.get_rendering_parameters().get_height())
-      - zoom(item.get_rendering_parameters().get_sprite().height());
-  else
-    {
-      const item_class& my_class(item.get_class());
-      const std::string default_name("item_with_decoration.item_to_mimic");
-      item_reference_type mimic;
-
-      if ( my_class.has_field
-           ( default_name, type_field::item_reference_field_type ) )
-        if ( item.has_value( my_class.get_field(default_name) ) )
-          {
-            item.get_value( default_name, mimic );
-
-            std::multimap<int, item_instance*>::const_iterator itz;
-
-            for (itz=z_order.begin(); itz!=z_order.end(); ++itz)
-              if ( itz->second->get_id() == mimic.get_value() )
-                p.y += zoom(item.get_rendering_parameters().get_height())
-                  - zoom(itz->second->get_rendering_parameters()
-                         .get_sprite().height());
-          }
-    }
-
-  if ( item.get_rendering_parameters().is_flipped() )
-    p.y += zoom(item.get_rendering_parameters().get_gap_y());
-  else
-    p.y -= zoom(item.get_rendering_parameters().get_gap_y());
-
-  render_sprite(dc, item, p, z_order);
-} // ingame_view::render_item_as_sprite()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the box of an item on the screen at a given position.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the item on the screen.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_item_as_wireframe
-( wxGCDC& dc, const item_instance& item, const wxPoint& pos,
-  unsigned int index ) const
-{
-  wxSize size
-    ( zoom((wxCoord)item.get_rendering_parameters().get_width()),
-      zoom((wxCoord)item.get_rendering_parameters().get_height()) );
-
-  if ( (size.x == 0) || (size.y == 0) )
-    render_item_as_point( dc, item, pos, index );
-  else
-    render_item_bounding_box( dc, item, pos, size, index );
-
-  if ( get_level().item_is_main_selection(&item) )
-    render_grip(dc, index);
-
-  if ( item.get_class().get_class_name() == "bear::slope" )
-    {
-      render_slope_curve_grip(dc, item, pos, size, index);
-      render_slope_steepness(dc, item, pos, size, index);
-    }
-} // ingame_view::render_item_as_wireframe()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render an item on the screen at a given position.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the item on the screen.
- */
-void bf::ingame_view::render_item_id
-( wxDC& dc, const item_instance& item, const wxPoint& pos ) const
-{
-  wxString s(std_to_wx_string(item.get_id()));
-
-  dc.SetBrush(*wxBLACK_BRUSH);
-  dc.DrawText( s, pos.x - dc.GetTextExtent(s).x / 2, pos.y);
-} // ingame_view::render_item_id()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render an item as a point on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the point on the screen.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_item_as_point
-( wxDC& dc, const item_instance& item, const wxPoint& pos,
-  unsigned int index ) const
-{
-  dc.SetPen( get_display_pen(item, index) );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  const rectangle_type r( get_level().get_visual_box( item ) );
-
-  dc.DrawCircle(pos.x, pos.y, r.width() / 2);
-
-  wxPoint p[2];
-
-  p[0] = wxPoint( pos.x, pos.y - r.height() );
-  p[1] = wxPoint( pos.x, pos.y + r.height() );
-
-  dc.DrawPolygon(2, p);
-
-  p[0] = wxPoint( pos.x - r.width(), pos.y );
-  p[1] = wxPoint( pos.x + r.width(), pos.y );
-
-  dc.DrawPolygon(2, p);
-} // ingame_view::render_item_as_point()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render a sprite on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the box.
- * \param z_order The items.
- * \return true if the sprite was rendered.
- */
-bool bf::ingame_view::render_sprite
-( wxDC& dc, const item_instance& item, const wxPoint& pos,
-  const std::multimap<int, item_instance*>& z_order) const
-{
-  std::pair<wxBitmap, wxPoint> spr( get_item_or_mimic_visual(item, z_order) );
-
-  if ( spr.first.IsOk() )
-    dc.DrawBitmap
-      ( spr.first, pos.x + spr.second.x, pos.y + spr.second.y, true );
-
-  return spr.first.IsOk();
-} // ingame_view::render_sprite()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the bounding box of an item on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the box.
- * \param size The size of the box.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_item_bounding_box
-( wxDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
-  unsigned int index ) const
-{
-  dc.SetPen( get_display_pen(item, index) );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  wxPoint p[4];
-
-  p[0] = wxPoint( pos.x,  pos.y );
-  p[1] = wxPoint( pos.x + size.x - 1, pos.y );
-  p[2] = wxPoint( pos.x + size.x - 1, pos.y + size.y - 1 );
-  p[3] = wxPoint( pos.x, pos.y + size.y - 1 );
-
-  dc.DrawPolygon(4, p);
-} // ingame_view::render_item_bounding_box()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the grip on curve of the slope.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the box.
- * \param size The size of the box.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_slope_curve_grip
-( wxDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
-  unsigned int index ) const
-{
-  if ( index != get_active_index() )
-    return;
-
-  if ( !get_level().item_is_main_selection( &item ) )
-    return;
-
-  dc.SetPen( get_display_pen(item, index) );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  double steepness;
-  double left_x;
-  double left_y;
-  double right_x;
-  double right_y;
-      
-  compute_slope_parameters
-    (item, steepness, left_x, left_y, right_x, right_y);
-      
-  wxPoint p[2];
-  
-  if ( steepness < 0 )
-    {
-      p[0] = wxPoint( pos.x,  pos.y );
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
-    }
-  else
-    {
-      p[0] = wxPoint( pos.x,  pos.y + steepness);
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
-    }
-
-  render_grip_box
-    ( dc, p[0].x - s_grip_size / 2 + left_x, 
-      p[0].y - s_grip_size / 2 - left_y );
-  dc.DrawLine(p[0].x + left_x, p[0].y - left_y, p[0].x, p[0].y);      
-      
-  render_grip_box
-    ( dc, p[1].x - s_grip_size / 2 + right_x, 
-      p[1].y - s_grip_size / 2 - right_y );
-  dc.DrawLine(p[1].x + right_x, p[1].y - right_y, p[1].x, p[1].y);   
-} // ingame_view::render_slope_curve_grip()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the steepness of the slope.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the box.
- * \param size The size of the box.
- * \param index The index of the layer in which the item is rendered.
- */
-void bf::ingame_view::render_slope_steepness
-( wxGCDC& dc, const item_instance& item, const wxPoint& pos, const wxSize& size,
-  unsigned int index ) const
-{
-  wxPen pen( wxColour( std_to_wx_string(item.get_class().get_color()) ), 
-             1, wxSOLID );
-  dc.SetPen( pen );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-  
-  double steepness;
-  double left_x;
-  double left_y;
-  double right_x;
-  double right_y;
-  
-  compute_slope_parameters(item, steepness, left_x, left_y, right_x, right_y);
-        
-  wxPoint p[2];
-  
-  if ( steepness < 0 )
-    {
-      p[0] = wxPoint( pos.x,  pos.y );
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
-    }
-  else
-    {
-      p[0] = wxPoint( pos.x,  pos.y + steepness);
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
-    }
-
-  wxGraphicsPath path = dc.GetGraphicsContext()->CreatePath();
-  
-  path.MoveToPoint(p[0]);
-  path.AddCurveToPoint
-    ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
-      p[1].y - right_y, p[1].x, p[1].y );
-
-  dc.GetGraphicsContext()->StrokePath(path);
-} // ingame_view::render_slope_steepness()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Compute slope parameters.
- * \param item The item to render.
- * \param steepness The steepness of the slope.
- * \param left_x The value of control_point.left.x field
- * \param left_y The value of control_point.left.y field
- * \param right_x The value of control_point.right.x field
- * \param right_y The value of control_point.right.y field
- */
-void bf::ingame_view::compute_slope_parameters
-( const item_instance& item, double & steepness, double & left_x,
-  double & left_y, double & right_x, double & right_y ) const
-{
-  steepness = 0;
-  left_x = 0;
-  left_y = 0;
-  right_x = 0;
-  right_y = 0;
-
-  if ( item.has_value( item.get_class().get_field("slope.steepness") ) )
-    {
-      real_type steepness_field;
-      item.get_value( "slope.steepness", steepness_field );
-      steepness = zoom( wxCoord(steepness_field.get_value() ) );
-    }
-
-  if ( item.has_value
-       ( item.get_class().get_field("slope.control_point.left.x") ) )
-    {
-      real_type left_x_field;
-      item.get_value( "slope.control_point.left.x", left_x_field );
-      left_x = zoom( wxCoord(left_x_field.get_value() ) );
-    }
-
-  if ( item.has_value
-       ( item.get_class().get_field("slope.control_point.left.y") ) )
-    {
-      real_type left_y_field;
-      item.get_value( "slope.control_point.left.y", left_y_field );
-      left_y = zoom( wxCoord(left_y_field.get_value() ) ); 
-    }
-
-  if ( item.has_value
-       ( item.get_class().get_field("slope.control_point.right.x") ) )
-    {
-      real_type right_x_field;
-      item.get_value( "slope.control_point.right.x", right_x_field );
-      right_x = zoom( wxCoord(right_x_field.get_value() ) );
-    }
-
-  if ( item.has_value
-       ( item.get_class().get_field("slope.control_point.right.y") ) )
-    {
-      real_type right_y_field;
-      item.get_value( "slope.control_point.right.y", right_y_field );
-      right_y = zoom( wxCoord(right_y_field.get_value() ) );
-    }
-} // ingame_view::compute_slope_parameters()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render a non valid item on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_non_valid_item
-( wxDC& dc, const item_instance& item, unsigned int index ) const
-{
-  wxPen pen( *wxRED );
-
-  dc.SetPen( pen );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  const wxPoint pos =
-    get_position_in_layer
-    ( wxPoint((wxCoord)item.get_rendering_parameters().get_left(),
-              (wxCoord)item.get_rendering_parameters().get_bottom()), 
-      index, (wxCoord)item.get_rendering_parameters().get_height() );
-
-  wxSize size
-    ( zoom((wxCoord)item.get_rendering_parameters().get_width()),
-      zoom((wxCoord)item.get_rendering_parameters().get_height()) );
-
-  if ( (size.x == 0) || (size.y == 0) )
-    render_non_valid_item_as_point( dc, item, pos );
-  else
-    render_non_valid_item_box( dc, item, pos, size );
-} // ingame_view::render_non_valid_item()
-
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render a non valid item as point on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the box.
- */
-void bf::ingame_view::render_non_valid_item_as_point
-( wxDC& dc, const item_instance& item, const wxPoint& pos ) const
-{
-  wxPoint p[2];
-
-  const rectangle_type r( get_level().get_visual_box( item ) );
-
-  p[0] = wxPoint( pos.x - r.width(), pos.y - r.height() );
-  p[1] = wxPoint( pos.x + r.width(), pos.y + r.height() );
-
-  dc.DrawPolygon(2, p);
-
-  p[0] = wxPoint( pos.x - r.width(), pos.y + r.height() );
-  p[1] = wxPoint( pos.x + r.width(), pos.y - r.height() );
-
-  dc.DrawPolygon(2, p);
-} // ingame_view::render_non_valid_item_as_point()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render a non valid item as point on the screen.
- * \param dc The device context for the drawings.
- * \param item The item to render.
- * \param pos The position of the box.
- * \param size The size of the box.
- */
-void bf::ingame_view::render_non_valid_item_box
-( wxDC& dc, const item_instance& item,
-  const wxPoint& pos, const wxSize& size ) const
-{
-  wxPoint p[2];
-
-  p[0] = wxPoint( pos.x,  pos.y );
-  p[1] = wxPoint( pos.x + size.x - 1, pos.y + size.y - 1 );
-
-  dc.DrawPolygon(2, p);
-
-  p[0] = wxPoint( pos.x + size.x - 1, pos.y );
-  p[1] = wxPoint( pos.x, pos.y + size.y - 1 );
-
-  dc.DrawPolygon(2, p);
-} // ingame_view::render_non_valid_item_box()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the grip of the selected item.
- * \param dc The device context for the drawings.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_grip( wxDC& dc, unsigned int index ) const
-{
-  CLAW_PRECOND( has_selection() );
-
-  const item_instance* main_selection( get_level().get_main_selection() );
-  wxRect b_box
-    ( rectangle_to_wx( get_level().get_visual_box(*main_selection) ) );
-
-  b_box.SetPosition( get_position_in_layer( b_box.GetBottomLeft(), index, 0 ) );
-
-  wxRect box
-    ( b_box.GetLeft(), b_box.GetTop(),
-      zoom(b_box.GetWidth()),
-      zoom(b_box.GetHeight()) );
-
-  dc.SetPen(*wxRED_PEN);
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  render_grip_box
-    ( dc, box.GetLeft() - s_grip_size, box.GetTop() - s_grip_size );
-  render_grip_box( dc, box.GetRight(), box.GetTop() - s_grip_size );
-  render_grip_box( dc, box.GetRight(), box.GetBottom() );
-  render_grip_box( dc, box.GetLeft() - s_grip_size, box.GetBottom() );
-
-  if ( (main_selection->get_rendering_parameters().get_height() != 0)
-       && (main_selection->get_rendering_parameters().get_width() != 0) )
-    {
-      render_grip_box
-        ( dc, box.GetLeft() - s_grip_size,
-          box.GetTop() + box.GetHeight() / 2 - s_grip_size / 2 );
-      render_grip_box
-        ( dc, box.GetRight(),
-          box.GetTop() + box.GetHeight() / 2 - s_grip_size / 2 );
-      render_grip_box
-        ( dc, box.GetLeft() + box.GetWidth() / 2 - s_grip_size / 2,
-          box.GetTop() - s_grip_size );
-      render_grip_box
-        ( dc, box.GetLeft() + box.GetWidth() / 2 - s_grip_size / 2,
-          box.GetBottom() );
-    }
-} // ingame_view::render_grip()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Draws the image of an handle.
- * \param dc The device context for the drawings.
- * \param left The left position of the handle.
- * \param top The top position of the handle.
- */
-void bf::ingame_view::render_grip_box
-( wxDC& dc, wxCoord left, wxCoord top ) const
-{
-  dc.SetPen(*wxRED_PEN);
-  dc.SetBrush( wxBrush( wxColor( wxT("#800000") ) ) );
-
-  dc.DrawRectangle( left, top, s_grip_size, s_grip_size );
-} // ingame_view::render_grip_box()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the result of the drag.
- * \param dc The device context for the drawings.
- * \param z_order The items.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_drag
-( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
-  unsigned int index ) const
-{
-  if ( m_drag_info != NULL )
-    switch(m_drag_info->drag_mode)
-      {
-      case drag_info::drag_mode_selection:
-        render_drag_mode_selection(dc,index);
-        break;
-      case drag_info::drag_mode_move:
-        render_drag_mode_move(dc, z_order,index);
-        break;
-      case drag_info::drag_mode_size:
-        render_drag_mode_size(dc,index);
-        break;      
-      case drag_info::drag_mode_slope:
-        render_drag_mode_slope(dc, index);
-        break;
-      default:
-        {
-          // nothing to do
-        }
-      }
-} // ingame_view::render_drag()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the result of the drag in a situation of selection.
- * \param dc The device context for the drawings.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_drag_mode_selection
-( wxDC& dc, unsigned int index ) const
-{
-  dc.SetPen( wxPen( *wxRED, 1, wxLONG_DASH ) );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  wxPoint p[4];
-  wxPoint pos_view = compute_local_view_position();
-  p[0].x = zoom(m_drag_info->mouse_origin.x) - pos_view.x;
-  p[0].y =  GetSize().y - zoom(m_drag_info->mouse_origin.y - 1) + pos_view.y;
-  
-  p[1] = wxPoint( p[0].x + zoom(m_drag_info->delta().x), p[0].y );
-  p[2] = wxPoint( p[1].x, p[0].y - zoom(m_drag_info->delta()).y );
-  p[3] = wxPoint( p[0].x, p[2].y );
-
-  dc.DrawPolygon(4, p);
-} // ingame_view::render_drag_mode_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the result of the drag in a situation of selection.
- * \param dc The device context for the drawings.
- * \param z_order The item.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_drag_mode_move
-( wxGCDC& dc, const std::multimap<int, item_instance*>& z_order,
-  unsigned int index ) const
-{
-  item_selection::const_iterator it;
-  const item_selection& selection( get_level().get_selection() );
-  wxPoint pos_view = compute_local_view_position();
-
-  for (it=selection.begin(); it!=selection.end(); ++it)
-    {
-      wxPoint pos
-        ( zoom( (wxCoord)(*it)->get_rendering_parameters().get_left()
-                + m_drag_info->delta().x ) - pos_view.x,
-          pos_view.y + GetSize().y - zoom(m_drag_info->delta().y)
-          - zoom((wxCoord)(*it)->get_rendering_parameters().get_bottom())
-          - zoom((wxCoord)(*it)->get_rendering_parameters().get_height()) );
-
-      render_item(dc, **it, pos, get_active_index(), z_order);
-    }
-} // ingame_view::render_drag_mode_move()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the result of the drag in a situation of sizing.
- * \param dc The device context for the drawings.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_drag_mode_size
-( wxDC& dc, unsigned int index ) const
-{
-  dc.SetPen( wxPen( *wxRED, 1, wxSHORT_DASH ) );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-  wxPoint p[4];
-  wxPoint pos_view = compute_local_view_position();
-
-  // m_drag_info->mouse_origin is the immobile corner
-  // m_drag_info->mouse_position is the moving corner
-  p[0].x = zoom(m_drag_info->mouse_origin.x) - pos_view.x;
-  p[0].y = GetSize().y - zoom(m_drag_info->mouse_origin.y - 1) + pos_view.y;
-
-  p[2].x = zoom(m_drag_info->mouse_position.x) - pos_view.x;
-  p[2].y = GetSize().y - zoom(m_drag_info->mouse_position.y - 1) + pos_view.y;
-
-  p[1] = wxPoint( p[2].x, p[0].y );
-  p[3] = wxPoint( p[0].x, p[2].y );
-
-  dc.DrawPolygon(4, p);
-} // ingame_view::render_drag_mode_size()
-
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the result of the drag in a situation of changing slope curve.
- * \param dc The device context for the drawings.
- * \param index The index of the layer.
- */
-void bf::ingame_view::render_drag_mode_slope
-( wxGCDC& dc, unsigned int index ) const
-{
-  wxPen pen
-    ( wxColour
-      ( std_to_wx_string(m_drag_info->picked_item->get_class().get_color()) ), 
-      1, wxSOLID );
-  dc.SetPen( pen );
-  dc.SetBrush(*wxTRANSPARENT_BRUSH);
-  
-  double steepness;
-  double left_x;
-  double left_y;
-  double right_x;
-  double right_y;
-  
-  compute_slope_parameters
-    (*m_drag_info->picked_item, steepness, left_x, left_y, right_x, right_y);
-  
-  wxPoint gap
-    ( m_drag_info->mouse_position.x - m_drag_info->mouse_origin.x,
-      m_drag_info->mouse_position.y - m_drag_info->mouse_origin.y );
-  wxPoint pos_view = compute_local_view_position();
-  wxPoint pos
-    ( zoom( (wxCoord)m_drag_info->picked_item->
-            get_rendering_parameters().get_left() ) - pos_view.x,
-      pos_view.y + GetSize().y 
-      - zoom((wxCoord)m_drag_info->picked_item->
-             get_rendering_parameters().get_bottom())
-      - zoom((wxCoord)m_drag_info->picked_item->
-             get_rendering_parameters().get_height()) );
-  const wxSize size
-    ( (int)m_drag_info->picked_item->get_rendering_parameters().get_width(),
-      (int)m_drag_info->picked_item->get_rendering_parameters().get_height() );
-
-  if ( m_drag_info->left_side )
-    {
-      left_x = gap.x;
-      left_y = gap.y;
-    }
-  else
-    {
-      right_x = gap.x;
-      right_y = gap.y;
-    }
-
-  wxPoint p[2];
-
-  if ( steepness < 0 )
-    {
-      p[0] = wxPoint( pos.x,  pos.y );
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y - steepness );
-    }
-  else
-    {
-      p[0] = wxPoint( pos.x,  pos.y + steepness);
-      p[1] = wxPoint( pos.x + size.x - 1 , pos.y );
-    }
-
-  wxGraphicsPath path = dc.GetGraphicsContext()->CreatePath();
-  
-  path.MoveToPoint(p[0]);
-  path.AddCurveToPoint
-    ( p[0].x + left_x, p[0].y - left_y, p[1].x + right_x, 
-      p[1].y - right_y, p[1].x, p[1].y );
-
-  dc.GetGraphicsContext()->StrokePath(path);
-} // ingame_view::render_drag_mode_slope()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the grid on the screen.
- * \param dc The device context for the drawings.
- */
-void bf::ingame_view::render_grid( wxDC& dc ) const
-{
-  if ( !empty() && m_display_grid )
-    {
-      wxColour color(200, 200, 200);
-      dc.SetPen( wxPen( color, 1, wxSHORT_DASH ) );
-      dc.SetBrush(*wxTRANSPARENT_BRUSH);
-
-      render_grid_vertical_lines(dc);
-      render_grid_horizontal_lines(dc);
-    }
-} // render_grid()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the vertical lines of the grid on the screen.
- * \param dc The device context for the drawings.
- */
-void bf::ingame_view::render_grid_vertical_lines( wxDC& dc ) const
-{
-  const int width = get_active_layer().get_width();
-  const int height = get_active_layer().get_height();
-  const wxCoord offset = m_grid.get_offset().GetX();
-  const wxCoord step = m_grid.get_step().GetX();
-  const wxCoord bound =
-    unzoom( m_view.x + std::min(zoom(width), GetSize().x) );
-
-  for ( int column = unzoom(m_view.x) / step;
-        (column * step) + offset < bound; ++column )
-    if ( (column * step) + offset > unzoom(m_view.x) )
-      {
-        wxPoint p[2];
-        p[0] = wxPoint
-          ( zoom((column * step) + offset) - m_view.x, GetSize().y );
-        p[1] = wxPoint
-          ( p[0].x,
-            GetSize().y - std::min(zoom(height) + m_view.y, GetSize().y) );
-        dc.DrawPolygon(2, p);
-      }
-} // render_grid_vertical_lines()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Render the horizontal lines of the grid on the screen.
- * \param dc The device context for the drawings.
- */
-void bf::ingame_view::render_grid_horizontal_lines( wxDC& dc ) const
-{
-  const int width = get_active_layer().get_width();
-  const int height = get_active_layer().get_height();
-  const wxCoord offset = m_grid.get_offset().GetY();
-  const wxCoord step = m_grid.get_step().GetY();
-  const wxCoord bound =
-    unzoom( m_view.y + std::min(zoom(height), GetSize().y) );
-
-  for ( int line = unzoom(m_view.y) / step;
-        (line * step) + offset < bound; ++line )
-    if ( (line * step) + offset > unzoom(m_view.y) )
-      {
-        wxPoint p[2];
-        p[0] = wxPoint
-          ( 0, GetSize().y - zoom( (line * step) + offset ) + m_view.y );
-        p[1] = wxPoint
-          ( std::min( GetSize().x, zoom(width) - m_view.x), p[0].y );
-        dc.DrawPolygon(2, p);
-      }
-} // ingame_view::render_grid_horizontal_lines()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the visual (sprite and position) of an item.
- * \param item The item to render.
- * \return The sprite and the position where it has to be rendered.
- */
-std::pair<wxBitmap, wxPoint> bf::ingame_view::get_item_visual
-( const item_instance& item ) const
-{
-  CLAW_PRECOND( item.get_rendering_parameters().has_sprite() );
-
-  std::pair<wxBitmap, wxPoint> result;
-  const wxString name
-    ( std_to_wx_string
-      (item.get_rendering_parameters().get_sprite().get_image_name()) );
-
-  result = m_image_cache->get_image
-    ( item.get_rendering_parameters().get_sprite(),
-      zoom(item.get_rendering_parameters().get_sprite().width()),
-      zoom(item.get_rendering_parameters().get_sprite().height()) );
-
-  return result;
-} // ingame_view::get_item_visual()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the visual (sprite and position) of an item.
- * \param item The item to render.
- * \param rendering_attributes The rendering attributes to combine with sprite.
- * \return The sprite and the position where it has to be rendered.
- */
-std::pair<wxBitmap, wxPoint> bf::ingame_view::get_item_visual
-( const item_instance& item, 
-  const bitmap_rendering_attributes& rendering_attributes ) const
-{
-  CLAW_PRECOND( item.get_rendering_parameters().has_sprite() );
-
-  std::pair<wxBitmap, wxPoint> result;
-  const wxString name
-    ( std_to_wx_string
-      (item.get_rendering_parameters().get_sprite().get_image_name()) );
-
-  sprite sp = item.get_rendering_parameters().get_sprite();
-  sp.combine(rendering_attributes);
-
-  result = m_image_cache->get_image
-    ( sp,
-      zoom(item.get_rendering_parameters().get_sprite().width()),
-      zoom(item.get_rendering_parameters().get_sprite().height()) );
-
-  return result;
-} // ingame_view::get_item_visual()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Return if item has a visual.
- * \param item The item to render.
- * \param z_order The items.
- */
-bool bf::ingame_view::has_visual
-( const item_instance& item,
-  const std::multimap<int, item_instance*>& z_order) const
-{
-  bool result(false);
-
-  if ( item.get_rendering_parameters().has_sprite() )
-    result = true;
-  else
-    {
-      const item_class& my_class(item.get_class());
-      const std::string default_name("item_with_decoration.item_to_mimic");
-      item_reference_type mimic;
-
-      if ( my_class.has_field
-           ( default_name, type_field::item_reference_field_type ) )
-        if ( item.has_value( my_class.get_field(default_name) ) )
-          {
-            item.get_value( default_name, mimic );
-
-            std::multimap<int, item_instance*>::const_iterator itz;
-
-            for (itz=z_order.begin(); itz!=z_order.end(); ++itz)
-              if ( itz->second->get_id() == mimic.get_value() )
-                result =  itz->second->get_rendering_parameters().has_sprite();
-          }
-    }
-
-  return result;
-} // ingame_view::has_visual()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the visual (sprite and position) of an item.
- * \param item The item to render.
- * \param z_order The items.
- * \return The sprite and the position where it has to be rendered.
- */
-std::pair<wxBitmap, wxPoint> bf::ingame_view::get_item_or_mimic_visual
-( const item_instance& item,
-  const std::multimap<int, item_instance*>& z_order  ) const
-{
-  CLAW_PRECOND( has_visual(item, z_order) );
-
-  std::pair<wxBitmap, wxPoint> result;
-
-  if ( item.get_rendering_parameters().has_sprite() )
-    result = get_item_visual(item);
-  else
-    {
-      const item_class& my_class(item.get_class());
-      const std::string default_name("item_with_decoration.item_to_mimic");
-      item_reference_type mimic;
-
-      if ( my_class.has_field
-           ( default_name, type_field::item_reference_field_type ) )
-        if ( item.has_value( my_class.get_field(default_name) ) )
-          {
-            item.get_value( default_name, mimic );
-            std::multimap<int, item_instance*>::const_iterator itz;
-
-            for (itz=z_order.begin(); itz!=z_order.end(); ++itz)
-              if ( itz->second->get_id() == mimic.get_value() )
-                result = 
-                  get_item_visual
-                  ( *itz->second,
-                    item.get_rendering_parameters().get_sprite() );
-          }
-    }
-
-  return result;
-} // ingame_view::get_item_or_mimic_visual()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the pen used for displaying an item.
- * \param item The item to display.
- * \param index The index of the layer in which the item is rendered.
- */
-wxPen bf::ingame_view::get_display_pen
-( const item_instance& item, unsigned int index ) const
-{
-  wxPen result( wxColour( std_to_wx_string(item.get_class().get_color()) ) );
-
-  if ( index != get_active_index() )
-    result.SetStyle( wxLONG_DASH );
-
-  if ( get_level().item_is_selected(index, &item) )
-    {
-      if ( index == get_active_index() )
-        {
-          if ( !get_level().item_is_main_selection(&item) )
-            result.SetStyle( wxSHORT_DASH );
-
-          result.SetColour(*wxRED);
-        }
-      else
-        result.SetColour( wxT("#800000") );
-    }
-
-  return result;
-} // ingame_view::get_display_pen()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the layer on which we are working.
- */
-const bf::layer& bf::ingame_view::current_layer()
-{
-  return m_history.get_level().get_active_layer();
-} // ingame_view::current_layer()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2328,40 +1045,6 @@ void bf::ingame_view::set_selection( item_instance* item )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Gets the box bounding box of an item and its sprite, if any.
- * \param item The item to bound.
- */
-wxRect bf::ingame_view::get_presence_box( const item_instance& item ) const
-{
-  wxRect result( rectangle_to_wx( get_level().get_visual_box(item) ) );
-
-  wxPoint pos_gap( result.GetPosition() );
-
-  if ( item.get_rendering_parameters().is_mirrored() )
-    pos_gap.x -= item.get_rendering_parameters().get_gap_x();
-  else
-    pos_gap.x += item.get_rendering_parameters().get_gap_x();
-
-  if ( item.get_rendering_parameters().is_flipped() )
-    pos_gap.y -= item.get_rendering_parameters().get_gap_y();
-  else
-    pos_gap.y += item.get_rendering_parameters().get_gap_y();
-
-  wxPoint pos_min( std::min(result.GetPosition().x, pos_gap.x),
-                   std::min(result.GetPosition().y, pos_gap.y) );
-
-  wxPoint pos_max( std::max(result.GetPosition().x, pos_gap.x),
-                   std::max(result.GetPosition().y, pos_gap.y) );
-
-  result.SetPosition( pos_min );
-  result.width += pos_max.x - pos_min.x;
-  result.height += pos_max.y - pos_min.y;
-
-  return result;
-} // ingame_view::get_presence_box()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Copy the selected items at the position where the mouse button was
  *        released.
  * \param add Indicates if the items are added at the selection.
@@ -2430,12 +1113,12 @@ int bf::ingame_view::update_coordinate_magnetism
 
   result = 0;
 
-  if ( gap_positive <= m_grid.get_magnetism_force() )
+  if ( gap_positive <= get_grid().get_magnetism_force() )
     {
       if ( gap_positive <= gap_negative )
         result = -gap_positive;
     }
-  else if ( gap_negative <= m_grid.get_magnetism_force() )
+  else if ( gap_negative <= get_grid().get_magnetism_force() )
     result = gap_negative;
 
   return result;
@@ -2465,12 +1148,12 @@ void bf::ingame_view::update_mouse_position( const wxPoint& position )
     update_coordinate_magnetism
     ( item_position.x,
       (unsigned int)main_selection->get_rendering_parameters().get_width(),
-      m_grid.get_offset().x, m_grid.get_step().x );
+      get_grid().get_offset().x, get_grid().get_step().x );
   pos.y +=
     update_coordinate_magnetism
     ( item_position.y,
       (unsigned int)main_selection->get_rendering_parameters().get_height(),
-      m_grid.get_offset().y, m_grid.get_step().y );
+      get_grid().get_offset().y, get_grid().get_step().y );
 
   if ( m_drag_info->x_active )
     m_drag_info->mouse_position.x = pos.x;
@@ -2486,31 +1169,33 @@ void bf::ingame_view::update_mouse_position( const wxPoint& position )
  */
 void bf::ingame_view::move_grid(int keycode)
 {
-  wxSize new_offset = m_grid.get_offset();
+  grid g( get_grid() );
+  wxSize new_offset = g.get_offset();
 
   switch( keycode )
     {
     case WXK_LEFT:
       if ( new_offset.x == 0 )
-        new_offset.x = m_grid.get_step().x - 1;
+        new_offset.x = g.get_step().x - 1;
       else
         --new_offset.x;
       break;
     case WXK_DOWN:
       if ( new_offset.y == 0 )
-        new_offset.y = m_grid.get_step().y - 1;
+        new_offset.y = g.get_step().y - 1;
       else
         --new_offset.y;
       break;
     case WXK_RIGHT:
-      new_offset.x = ( new_offset.x + 1 ) % m_grid.get_step().x;
+      new_offset.x = ( new_offset.x + 1 ) % g.get_step().x;
       break;
     case WXK_UP:
-      new_offset.y = ( new_offset.y + 1 ) % m_grid.get_step().y;
+      new_offset.y = ( new_offset.y + 1 ) % g.get_step().y;
       break;
     }
 
-  m_grid.set_offset(new_offset);
+  g.set_offset(new_offset);
+  set_grid( g );
 
   Refresh();
 } // ingame_view::move_grid()
@@ -2616,10 +1301,10 @@ void bf::ingame_view::write_mouse_position(const wxPoint& point)
               wxString::Format
               ( _("id = '%s'"), std_to_wx_string(item->get_id()).c_str() );
 
-          if ( m_history.get_level().has_selection() )
+          if ( get_level().has_selection() )
             {
               const item_rendering_parameters& r1
-                ( m_history.get_level().get_main_selection()->
+                ( get_level().get_main_selection()->
                   get_rendering_parameters() );
               const item_rendering_parameters& r2
                 ( item->get_rendering_parameters() );
@@ -2694,13 +1379,12 @@ bool bf::ingame_view::set_drag_mode_size( const wxPoint& pos )
   item_instance* selection( get_level().get_main_selection() );
   const wxRect box
     ( rectangle_to_wx( get_level().get_visual_box( *selection ) ) );
-  const wxSize s( s_grip_size, s_grip_size );
+  const wxSize s( m_renderer.get_grip_size(), m_renderer.get_grip_size() );
   wxPoint mouse_pos;
 
   const wxRect top_left( box.GetTopLeft() - s, s );
-  const wxRect top_right( box.GetTopRight() - wxSize(0, s_grip_size), s );
-  const wxRect bottom_left
-    ( box.GetBottomLeft() - wxSize(s_grip_size, 0), s );
+  const wxRect top_right( box.GetTopRight() - wxSize(0, s.y), s );
+  const wxRect bottom_left( box.GetBottomLeft() - wxSize(s.x, 0), s );
   const wxRect bottom_right( box.GetBottomRight(), s );
 
   if ( top_left.Contains(pos) )
@@ -2726,22 +1410,23 @@ bool bf::ingame_view::set_drag_mode_size( const wxPoint& pos )
   else if ( (selection->get_rendering_parameters().get_width() != 0)
             && (selection->get_rendering_parameters().get_height() != 0) )
     {
+      const wxCoord grip_size( m_renderer.get_grip_size() );
       const wxCoord h
         ((wxCoord)selection->get_rendering_parameters().get_height() / 2);
       const wxCoord w
         ((wxCoord)selection->get_rendering_parameters().get_width() / 2);
       const wxRect middle_left
-        ( box.GetLeft() - s_grip_size,
-          box.GetTop() + h - s_grip_size / 2, s_grip_size, s_grip_size );
+        ( box.GetLeft() - grip_size,
+          box.GetTop() + h - grip_size / 2, grip_size, grip_size );
       const wxRect middle_right
-        ( box.GetRight(), box.GetTop() + h - s_grip_size / 2,
-          s_grip_size, s_grip_size );
+        ( box.GetRight(), box.GetTop() + h - grip_size / 2,
+          grip_size, grip_size );
       const wxRect middle_bottom
-        ( box.GetLeft() + w - s_grip_size / 2,
-          box.GetTop() - s_grip_size, s_grip_size, s_grip_size );
+        ( box.GetLeft() + w - grip_size / 2, box.GetTop() - grip_size,
+          grip_size, grip_size );
       const wxRect middle_top
-        ( box.GetLeft() + w - s_grip_size / 2,
-          box.GetBottom(), s_grip_size, s_grip_size );
+        ( box.GetLeft() + w - grip_size / 2, box.GetBottom(),
+          grip_size, grip_size );
 
       if ( middle_left.Contains(pos) )
         {
@@ -2804,15 +1489,10 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
           const wxRect box
             ( rectangle_to_wx( get_level().get_visual_box( *item ) ) );
 
-          double steepness;
-          double left_x;
-          double left_y;
-          double right_x;
-          double right_y;
-          
-          compute_slope_parameters
-            (*item, steepness, left_x, left_y, right_x, right_y);
+          slope s;
+          s.read_from( *item );
 
+          /*
           steepness = 
             steepness < 0 ? - unzoom( - steepness ) : unzoom( steepness );
           
@@ -2820,42 +1500,45 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
           left_y = left_y < 0 ? - unzoom( - left_y ) : unzoom( left_y );
           right_x = right_x < 0 ? - unzoom( - right_x ) : unzoom( right_x );
           right_y = right_y < 0 ? - unzoom( - right_y ) : unzoom( right_y );
-
+          */
           wxPoint p[2];
           
-          if ( steepness < 0 )
+          if ( s.steepness < 0 )
             {
               p[0] = wxPoint( box.GetLeft(),  box.GetBottom() );
-              p[1] = wxPoint( box.GetRight(), box.GetBottom() + steepness );
+              p[1] = wxPoint( box.GetRight(), box.GetBottom() + s.steepness );
             }
           else
             {
-              p[0] = wxPoint( box.GetLeft(),  box.GetBottom() - steepness);
+              p[0] = wxPoint( box.GetLeft(),  box.GetBottom() - s.steepness);
               p[1] = wxPoint( box.GetRight(), box.GetBottom() );
             }
           
+          const wxCoord grip_size( m_renderer.get_grip_size() );
           const wxRect left_rect
-            ( p[0].x - s_grip_size / 2 + left_x, 
-              p[0].y - s_grip_size / 2 + left_y,
-              s_grip_size, s_grip_size );
+            ( p[0].x - grip_size / 2 + s.left_handle.x,
+              p[0].y - grip_size / 2 + s.left_handle.y,
+              grip_size, grip_size );
 
           const wxRect right_rect
-             ( p[1].x - s_grip_size / 2 + right_x, 
-               p[1].y - s_grip_size / 2 + right_y,
-              s_grip_size, s_grip_size );
+             ( p[1].x - grip_size / 2 + s.right_handle.x,
+               p[1].y - grip_size / 2 + s.right_handle.y,
+              grip_size, grip_size );
           
           wxPoint mouse_pos;
           
           if ( left_rect.Contains(pos) )
             {
-              m_drag_info->mouse_origin = wxPoint( p[0].x, p[0].y);
-              mouse_pos = wxPoint( p[0].x + left_x, p[0].y + left_y);
+              m_drag_info->mouse_origin = wxPoint( p[0].x, p[0].y );
+              mouse_pos =
+                wxPoint( p[0].x + s.left_handle.x, p[0].y + s.left_handle.y);
               m_drag_info->left_side = true;
             }
           else if ( right_rect.Contains(pos) )
             {
-              m_drag_info->mouse_origin = wxPoint( p[1].x, p[1].y);
-              mouse_pos = wxPoint( p[1].x + right_x, p[1].y + right_y);
+              m_drag_info->mouse_origin = wxPoint( p[1].x, p[1].y );
+              mouse_pos =
+                wxPoint( p[1].x + s.left_handle.x, p[1].y + s.left_handle.y );
               m_drag_info->left_side = false;
             }
           else
@@ -2933,7 +1616,7 @@ void bf::ingame_view::apply_drag_mode_move( bool ctrl, bool shift, bool alt )
 {
   CLAW_PRECOND( m_drag_info->drag_mode == drag_info::drag_mode_move );
 
-  if ( m_grid.get_magnetism_active() && !shift && (has_selection()) )
+  if ( get_grid().get_magnetism_active() && !shift && (has_selection()) )
     update_mouse_position(m_drag_info->mouse_position);
 
   if ( ctrl )
@@ -3019,24 +1702,23 @@ void bf::ingame_view::apply_drag_mode_slope()
     ( m_drag_info->mouse_position.x - m_drag_info->mouse_origin.x,
       m_drag_info->mouse_position.y - m_drag_info->mouse_origin.y );
 
-   double steepness;
-   double left_x;
-   double left_y;
-   double right_x;
-   double right_y;
-   
-   compute_slope_parameters
-     (*m_drag_info->picked_item, steepness, left_x, left_y, right_x, right_y);
+  slope s;
+  s.read_from( *m_drag_info->picked_item );
+  s.scale( zoom( 1 ) );
 
-   if ( m_drag_info->left_side && ( gap.x != left_x || gap.y != left_y ) ) 
-     do_action
-       ( new action_set_slope_curve
-         (m_drag_info->picked_item, gap.x, gap.y, right_x, right_y) );
-   else if ( ! m_drag_info->left_side && 
-             ( gap.x != right_x || gap.y != right_y ) )
-     do_action
-       ( new action_set_slope_curve
-         (m_drag_info->picked_item, left_x, left_y, gap.x, gap.y) );
+  if ( m_drag_info->left_side )
+    {
+      if ( ( gap.x != s.left_handle.x ) || ( gap.y != s.left_handle.y ) )
+        do_action
+          ( new action_set_slope_curve
+            ( m_drag_info->picked_item,
+              gap.x, gap.y, s.right_handle.x, s.right_handle.y ) );
+    }
+  else if ( ( gap.x != s.right_handle.x ) || ( gap.y != s.right_handle.y ) )
+    do_action
+      ( new action_set_slope_curve
+        ( m_drag_info->picked_item,
+          s.left_handle.x, s.left_handle.y, gap.x, gap.y ) );
 } // ingame_view::apply_drag_mode_slope()
 
 /*----------------------------------------------------------------------------*/
@@ -3046,7 +1728,7 @@ void bf::ingame_view::apply_drag_mode_slope()
  */
 wxCoord bf::ingame_view::zoom( wxCoord v ) const
 {
-  return v * (wxCoord)m_zoom / 100;
+  return m_renderer.zoom( v );
 } // ingame_view::zoom()
 
 /*----------------------------------------------------------------------------*/
@@ -3056,7 +1738,7 @@ wxCoord bf::ingame_view::zoom( wxCoord v ) const
  */
 wxPoint bf::ingame_view::zoom( wxPoint v ) const
 {
-  return wxPoint( zoom(v.x), zoom(v.y) );
+  return m_renderer.zoom( v );
 } // ingame_view::zoom()
 
 /*----------------------------------------------------------------------------*/
@@ -3066,7 +1748,7 @@ wxPoint bf::ingame_view::zoom( wxPoint v ) const
  */
 wxSize bf::ingame_view::zoom( wxSize v ) const
 {
-  return wxSize( zoom(v.x), zoom(v.y) );
+  return m_renderer.zoom( v );
 } // ingame_view::zoom()
 
 /*----------------------------------------------------------------------------*/
@@ -3076,7 +1758,7 @@ wxSize bf::ingame_view::zoom( wxSize v ) const
  */
 wxCoord bf::ingame_view::unzoom( wxCoord v ) const
 {
-  return v * 100 / m_zoom;
+  return m_renderer.unzoom( v );
 } // ingame_view::unzoom()
 
 /*----------------------------------------------------------------------------*/
@@ -3086,7 +1768,7 @@ wxCoord bf::ingame_view::unzoom( wxCoord v ) const
  */
 wxPoint bf::ingame_view::unzoom( wxPoint v ) const
 {
-  return wxPoint( unzoom(v.x), unzoom(v.y) );
+  return m_renderer.unzoom( v );
 } // ingame_view::unzoom()
 
 /*----------------------------------------------------------------------------*/
@@ -3096,7 +1778,7 @@ wxPoint bf::ingame_view::unzoom( wxPoint v ) const
  */
 wxSize bf::ingame_view::unzoom( wxSize v ) const
 {
-  return wxSize( unzoom(v.x), unzoom(v.y) );
+  return m_renderer.unzoom( v );
 } // ingame_view::unzoom()
 
 /*----------------------------------------------------------------------------*/
@@ -3110,8 +1792,8 @@ void bf::ingame_view::apply_action( Action* action )
   CLAW_PRECOND( action != NULL );
   item_selection old_sel;
 
-  if ( m_history.get_level().has_selection() )
-    old_sel = m_history.get_level().get_selection();
+  if ( get_level().has_selection() )
+    old_sel = get_level().get_selection();
 
   if ( m_history.do_action(action) )
     {
@@ -3121,8 +1803,8 @@ void bf::ingame_view::apply_action( Action* action )
 
       m_layout.get_layer_list_frame().refresh();
 
-      if ( !m_history.get_level().empty()
-           && !old_sel.same_group_than(m_history.get_level().get_selection()) )
+      if ( !get_level().empty()
+           && !old_sel.same_group_than(get_level().get_selection()) )
         update_layout();
       else
         {
@@ -3131,6 +1813,28 @@ void bf::ingame_view::apply_action( Action* action )
         }
     }
 } // ingame_view::apply_action()
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Compute the position of the view in the current layer.
+ */
+wxPoint bf::ingame_view::compute_local_view_position() const
+{ 
+  return m_renderer.compute_local_view_position();
+} // ingame_view::compute_local_view_position()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Compute the position of the view according to a position in the
+ * current layer.
+ * \param view_position The position of a virtual view. 
+ */
+wxPoint bf::ingame_view::compute_global_view_position
+(wxPoint view_position) const
+{ 
+  return m_renderer.compute_global_view_position( view_position );
+} // ingame_view::compute_global_view_position()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -3161,45 +1865,6 @@ void bf::ingame_view::on_paint( wxPaintEvent& WXUNUSED(event) )
 {
   render();
 } // ingame_view::on_paint()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Compute the position of the view in the current layer.
- */
-wxPoint bf::ingame_view::compute_local_view_position() const
-{ 
-  if ( empty() )
-    return wxPoint(0, 0);
-  else
-    return wxPoint
-      ( (double)m_view.x * 
-        (double)( get_active_layer().get_width() - get_view_size().x ) /
-        (double)( get_level().get_width() - get_view_size().x ),
-        (double)m_view.y * 
-        (double)( get_active_layer().get_height() - get_view_size().y ) /
-        (double)( get_level().get_height() - get_view_size().y ) );
-} // ingame_view::compute_local_view_position()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Compute the position of the view according to a position in the
- * current layer.
- * \param view_position The position of a virtual view. 
- */
-wxPoint bf::ingame_view::compute_global_view_position
-(wxPoint view_position) const
-{ 
-  if ( empty() )
-    return wxPoint(0, 0);
-  else
-    return wxPoint
-      ( (double)view_position.x / 
-        (double)( get_active_layer().get_width() - get_view_size().x ) *
-        (double)( get_level().get_width() - get_view_size().x ),
-        (double)view_position.y / 
-        (double)( get_active_layer().get_height() - get_view_size().y ) *
-        (double)( get_level().get_height() - get_view_size().y ) );
-} // ingame_view::compute_global_view_position()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -3305,7 +1970,7 @@ void bf::ingame_view::on_mouse_move(wxMouseEvent& event)
              && (m_drag_info->drag_mode == drag_info::drag_mode_pick) )
           m_drag_info->drag_mode = drag_info::drag_mode_move;
 
-        if ( !m_grid.get_magnetism_active() || event.ShiftDown()
+        if ( !get_grid().get_magnetism_active() || event.ShiftDown()
              || !has_selection() )
           m_drag_info->mouse_position = point;
         else
