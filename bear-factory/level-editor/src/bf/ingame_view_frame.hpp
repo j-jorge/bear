@@ -128,6 +128,7 @@ namespace bf
     void create_menu();
     wxMenu* create_level_menu() const;
     wxMenu* create_edit_menu(wxMenu* moving_layer_menu);
+    wxMenu* create_align_menu() const;
     wxMenu* create_view_menu() const;
     wxMenu* create_layer_menu(wxMenu* layer_menu);
     wxMenu* create_reference_item_field_menu();

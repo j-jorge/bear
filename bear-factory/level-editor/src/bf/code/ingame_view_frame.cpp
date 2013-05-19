@@ -451,6 +451,7 @@ void bf::ingame_view_frame::create_sizer_controls()
 void bf::ingame_view_frame::create_menu()
 {
   wxMenuBar* bar = new wxMenuBar();
+  m_align_menu = create_align_menu();
   m_moving_layer_menu = new wxMenu();
   m_moving_layer_popup_menu = new wxMenu(); 
   m_reference_item_field_popup_menu = new wxMenu();
@@ -553,31 +554,9 @@ wxMenu* bf::ingame_view_frame::create_edit_menu(wxMenu* moving_layer_menu)
 
   result->AppendSeparator();
 
-  m_align_menu = new wxMenu();
-  wx_menu_append_item
-    ( m_align_menu, ID_ALIGN_LEFT, _("&Left"),
-      _("Align the left edge of the items."), wxBitmap(align_left_xpm) );
-  wx_menu_append_item
-    ( m_align_menu, ID_ALIGN_RIGHT, _("&Right"),
-      _("Align the right edge of the items."), wxBitmap(align_right_xpm) );
-  wx_menu_append_item
-    ( m_align_menu, ID_ALIGN_TOP, _("&Top"),
-      _("Align the top edge of the items."), wxBitmap(align_top_xpm) );
-  wx_menu_append_item
-    ( m_align_menu,  ID_ALIGN_BOTTOM, _("&Bottom"),
-      _("Align the bottom edge of the items."), wxBitmap(align_bottom_xpm) );
-  wx_menu_append_item
-    ( m_align_menu, ID_ALIGN_CENTER_X, _("&Horizontal center"),
-      _("Align the center of the items on the X-axis."),
-      wxBitmap(align_horizontal_middle_xpm) );
-  wx_menu_append_item
-    ( m_align_menu, ID_ALIGN_CENTER_Y, _("&Vertical center"),
-      _("Align the center of the items on the Y-axis."),
-      wxBitmap(align_vertical_middle_xpm) );
-
-  result->AppendSeparator();
   result->Append
-    ( ID_ALIGN, _("&Align"), m_align_menu, _("Align the selected items.") );
+    ( ID_ALIGN, _("&Align"), create_align_menu(),
+      _("Align the selected items.") );
 
   m_arrange_menu = new wxMenu();
   wx_menu_append_item
@@ -613,6 +592,38 @@ wxMenu* bf::ingame_view_frame::create_edit_menu(wxMenu* moving_layer_menu)
 
   return result;
 } // ingame_view_frame::create_edit_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Creates the menu with the operations to align the selection.
+ */
+wxMenu* bf::ingame_view_frame::create_align_menu() const
+{
+  wxMenu* const result( new wxMenu() );
+
+  wx_menu_append_item
+    ( result, ID_ALIGN_LEFT, _("&Left"),
+      _("Align the left edge of the items."), wxBitmap(align_left_xpm) );
+  wx_menu_append_item
+    ( result, ID_ALIGN_RIGHT, _("&Right"),
+      _("Align the right edge of the items."), wxBitmap(align_right_xpm) );
+  wx_menu_append_item
+    ( result, ID_ALIGN_TOP, _("&Top"),
+      _("Align the top edge of the items."), wxBitmap(align_top_xpm) );
+  wx_menu_append_item
+    ( result,  ID_ALIGN_BOTTOM, _("&Bottom"),
+      _("Align the bottom edge of the items."), wxBitmap(align_bottom_xpm) );
+  wx_menu_append_item
+    ( result, ID_ALIGN_CENTER_X, _("&Horizontal center"),
+      _("Align the center of the items on the X-axis."),
+      wxBitmap(align_horizontal_middle_xpm) );
+  wx_menu_append_item
+    ( result, ID_ALIGN_CENTER_Y, _("&Vertical center"),
+      _("Align the center of the items on the Y-axis."),
+      wxBitmap(align_vertical_middle_xpm) );
+
+  return result;
+} // ingame_view_frame::create_align_menu()
 
 /*----------------------------------------------------------------------------*/
 /**
