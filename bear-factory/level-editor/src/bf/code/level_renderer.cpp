@@ -1598,17 +1598,15 @@ wxPen bf::level_renderer::get_display_pen
 {
   wxPen result;
 
-  result.SetWidth( 1 );
+  if ( index == get_level().get_active_layer_index() )
+    result.SetWidth( 2 );
+  else
+    result.SetWidth( 1 );
 
   if ( get_level().item_is_selected(index, &item) )
     {
       if ( index == get_level().get_active_layer_index() )
-        {
-          if ( !get_level().item_is_main_selection(&item) )
-            result.SetWidth( 2 );
-
-          result.SetColour(*wxRED);
-        }
+        result.SetColour(*wxRED);
       else
         result.SetColour( wxT("#800000") );
     }
