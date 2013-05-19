@@ -63,6 +63,9 @@
 #include "bf/icon/align_vertical_middle.xpm"
 #include "bf/icon/bright.xpm"
 #include "bf/icon/clone.xpm"
+#include "bf/icon/edit_active_layer.xpm"
+#include "bf/icon/edit_all_layers.xpm"
+#include "bf/icon/edit_same_tag.xpm"
 #include "bf/icon/graphism.xpm"
 #include "bf/icon/grid.xpm"
 #include "bf/icon/magnetism.xpm"
@@ -328,6 +331,7 @@ void bf::ingame_view_frame::update_zoom() const
 {
   m_zoom_spin->SetValue(m_ingame_view->get_zoom());
 } // ingame_view_frame::update_zoom()
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Make the title of the window.
@@ -583,6 +587,10 @@ wxMenu* bf::ingame_view_frame::create_edit_menu(wxMenu* moving_layer_menu)
     ( ID_MOVE_IN_LAYER, _("C&hange layer..."), moving_layer_menu,
       _("Move the selection in an other layer.") );
 
+  result->Append
+    ( ID_EDIT_MODE, _("Edit &mode..."), create_edit_mode_menu(),
+      _("Tells to which objects are applied the operations.") );
+
 #if 0
   result->AppendSeparator();
   result->Append
@@ -624,6 +632,30 @@ wxMenu* bf::ingame_view_frame::create_align_menu() const
 
   return result;
 } // ingame_view_frame::create_align_menu()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Creates the menu with various edit modes.
+ */
+wxMenu* bf::ingame_view_frame::create_edit_mode_menu() const
+{
+  wxMenu* const result( new wxMenu() );
+
+  wx_menu_append_item
+    ( result, ID_EDIT_ACTIVE_LAYER, _("&Active layer"),
+      _("The operations are done in the selected layer."),
+      wxBitmap(edit_active_layer_xpm) );
+  wx_menu_append_item
+    ( result, ID_EDIT_SAME_TAG, _("Layers &tagged as the active layer"),
+      _("The operations are done on all layers having the same tag than the "
+        "active layer."), wxBitmap(edit_same_tag_xpm) );
+  wx_menu_append_item
+    ( result, ID_EDIT_ALL, _("All &layers"),
+      _("The operations are done on all layers."),
+      wxBitmap(edit_all_layers_xpm) );
+
+  return result;
+} // ingame_view_frame::create_edit_mode_menu()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -796,6 +828,10 @@ void bf::ingame_view_frame::create_toolbar()
   bar->AddTool
     ( wxID_ZOOM_100, _("No zoom"), wxBitmap(zoom_original_xpm), _("No zoom") );
   bar->AddControl(m_zoom_spin);
+
+  bar->AddTool
+    ( ID_EDIT_MODE, _("&Edit mode"), wxBitmap(edit_active_layer_xpm),
+      _("Tells on which objects are applied the operations.") );
 
   bar->Realize();
 } // ingame_view_frame::create_toolbar()
@@ -2740,6 +2776,39 @@ void bf::ingame_view_frame::on_new_layer_from_image
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Create a decorative layer from a big image and generate the sprites.
+ * \param event This event occured.
+ */
+void bf::ingame_view_frame::on_edit_mode_active_layer( wxCommandEvent& event )
+{
+  GetToolBar()->SetToolNormalBitmap
+    ( ID_EDIT_MODE, wxBitmap(edit_active_layer_xpm) );
+} // ingame_view_frame::on_edit_mode_active_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Create a decorative layer from a big image and generate the sprites.
+ * \param event This event occured.
+ */
+void bf::ingame_view_frame::on_edit_mode_same_tag( wxCommandEvent& event )
+{
+  GetToolBar()->SetToolNormalBitmap
+    ( ID_EDIT_MODE, wxBitmap(edit_same_tag_xpm) );
+} // ingame_view_frame::on_edit_mode_same_tag()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Create a decorative layer from a big image and generate the sprites.
+ * \param event This event occured.
+ */
+void bf::ingame_view_frame::on_edit_mode_all( wxCommandEvent& event )
+{
+  GetToolBar()->SetToolNormalBitmap
+    ( ID_EDIT_MODE, wxBitmap(edit_all_layers_xpm) );
+} // ingame_view_frame::on_edit_mode_all()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief An item has been selected in the error frame.
  * \param event The event carrying the item.
  */
@@ -2857,6 +2926,13 @@ BEGIN_EVENT_TABLE(bf::ingame_view_frame, wxFrame)
 
   EVT_MENU( bf::ingame_view_frame::ID_NEW_LAYER_FROM_IMAGE,
             bf::ingame_view_frame::on_new_layer_from_image )
+
+  EVT_MENU( bf::ingame_view_frame::ID_EDIT_ACTIVE_LAYER,
+            bf::ingame_view_frame::on_edit_mode_active_layer )
+  EVT_MENU( bf::ingame_view_frame::ID_EDIT_SAME_TAG,
+            bf::ingame_view_frame::on_edit_mode_same_tag )
+  EVT_MENU( bf::ingame_view_frame::ID_EDIT_ALL,
+            bf::ingame_view_frame::on_edit_mode_all )
 
   EVT_ITEM_SELECTION( bf::ingame_view_frame::ID_ERROR_FRAME,
                       bf::ingame_view_frame::on_error_selected)
