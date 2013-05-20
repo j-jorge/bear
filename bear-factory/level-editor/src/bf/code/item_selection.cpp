@@ -40,7 +40,8 @@ void bf::item_selection::insert( item_instance* item, bool main_selection )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Insert a selection in the selection.
+ * \brief Inserts a selection in the selection. The main selection becomes the
+ *        one of the argument.
  * \param s The items to insert.
  */
 void bf::item_selection::insert( const item_selection& s )
