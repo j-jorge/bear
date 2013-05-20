@@ -30,6 +30,8 @@
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/run_configuration_file.hpp"
 
+#include "bf/icon/item_class.xpm"
+
 #include <wx/notebook.h>
 #include <wx/filename.h>
 #include <wx/toolbar.h>
@@ -234,8 +236,8 @@ void bf::main_frame::create_controls()
     ( wxID_SAVE, _("&Save"), wxArtProvider::GetBitmap(wxART_FILE_SAVE),
       _("Save") );
   bar->AddCheckTool
-    ( ID_NEW_ITEM, _("&New item"), wxArtProvider::GetBitmap(wxART_NEW),
-      wxArtProvider::GetBitmap(wxART_NEW), _("New item") );
+    ( ID_NEW_ITEM, _("&Class tree"), wxBitmap( item_class_xpm ),
+      wxBitmap( item_class_xpm ), _("&Class tree") );
 
   bar->Realize();
 
