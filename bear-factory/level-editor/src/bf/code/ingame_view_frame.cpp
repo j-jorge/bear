@@ -36,6 +36,8 @@
 #include "bf/history/action_align_selection_left.hpp"
 #include "bf/history/action_align_selection_right.hpp"
 #include "bf/history/action_align_selection_top.hpp"
+#include "bf/history/action_arrange_selection_horizontally.hpp"
+#include "bf/history/action_arrange_selection_vertically.hpp"
 #include "bf/history/action_clone_selection.hpp"
 #include "bf/history/action_delete_selection.hpp"
 #include "bf/history/action_group.hpp"
@@ -45,9 +47,7 @@
 #include "bf/history/action_move_in_other_layer.hpp"
 #include "bf/history/action_remove_layer.hpp"
 #include "bf/history/action_resize_level.hpp"
-#include "bf/history/action_set_item_bottom.hpp"
 #include "bf/history/action_set_item_field.hpp"
-#include "bf/history/action_set_item_left.hpp"
 
 #include "bf/icon/compile.xpm"
 #include "bf/icon/quick_compile.xpm"
@@ -1538,36 +1538,6 @@ void bf::ingame_view_frame::update_reference_item_field_menu()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Associate a new position to some coordinates in order to build a list
- *        of positions where the distance between two adjacent coordinates stay
- *        equal in the whole list.
- * \param s The positions to arrange.
- */
-std::map<double, double>
-bf::ingame_view_frame::arrange( const std::set<double>& s ) const
-{
-  std::map<double, double> result;
-
-  if ( s.size() < 3 )
-    return result;
-
-  const std::set<double>::const_iterator first( s.begin() );
-  const std::set<double>::const_iterator last( --s.end() );
-  
-  result[ *first ] = *first;
-  result[ *last ] = *last;
-
-  std::size_t i(1);
-  std::set<double>::const_iterator it( first );
-  
-  for ( ++it; it!=last; ++it, ++i )
-    result[ *it ] = *first + i * (*last - *first) / (s.size() - 1);
-
-  return result;
-} // ingame_view_frame::arrange()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Event sent to a resized window.
  * \param event The event.
  */
@@ -1576,19 +1546,12 @@ void bf::ingame_view_frame::on_size(wxSizeEvent& event)
   adjust_scrollbars();
 
   if ( !m_ingame_view->empty() )
-#if 0
     m_ingame_view->set_view_position
-      (m_h_scrollbar->GetThumbPosition(),
-       m_ingame_view->get_layer_view_size().y -
-       m_v_scrollbar->GetThumbPosition() -
-       100 * m_ingame_view->get_view_size().y / m_ingame_view->get_zoom() );
-#else
-  m_ingame_view->set_view_position
-    (m_h_scrollbar->GetThumbPosition(),
-     m_ingame_view->get_level().get_height() -
-     m_v_scrollbar->GetThumbPosition() -
-     100 * m_ingame_view->get_view_size().y / m_ingame_view->get_zoom() );
-#endif
+      ( m_h_scrollbar->GetThumbPosition(),
+        m_ingame_view->get_level().get_height()
+        - m_v_scrollbar->GetThumbPosition()
+        - 100 * m_ingame_view->get_view_size().y / m_ingame_view->get_zoom() );
+
   event.Skip();
 } // ingame_view_frame::on_size()
 
@@ -2105,80 +2068,32 @@ void bf::ingame_view_frame::on_open_menu( wxMenuEvent& event )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Arrange the selected items on the x-axis.
+ * \brief Arranges the selected items on the x-axis.
  * \param event The event that triggers the arrangeing.
  */
 void bf::ingame_view_frame::on_arrange_horizontally
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  if ( !m_ingame_view->has_selection() )
-    return;
+  m_ingame_view->do_action
+    ( new action_arrange_selection_horizontally
+      ( m_ingame_view->get_edit_selection() ) );
 
-  std::set<double> initial_position;
-
-  const item_selection& selection = m_ingame_view->get_level().get_selection();
-  item_selection::const_iterator it;
-
-  for ( it=selection.begin(); it!=selection.end(); ++it )
-    initial_position.insert
-      ( (*it)->get_rendering_parameters().get_horizontal_middle() );
-
-  const std::map<double, double> old_to_new( arrange( initial_position ) );
-
-  action_group* result = new action_group(_T("Arrange the items horizontally"));
-
-  for ( it=selection.begin(); it!=selection.end(); ++it )
-    {
-      const double ref_pos =
-        (*it)->get_rendering_parameters().get_horizontal_middle();
-      const double new_left =
-        old_to_new.find(ref_pos)->second
-        - (*it)->get_rendering_parameters().get_width() / 2;
-
-      result->add_action( new action_set_item_left( *it, new_left ) );
-    }
-
-  m_ingame_view->do_action( result );
-  if ( ! m_ingame_view->get_active_layer().check_item_position() )
+  if ( !m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
 } // ingame_view_frame::on_arrange_horizontally()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Arrange the selected items on the y-axis.
+ * \brief Arranges the selected items on the y-axis.
  * \param event The event that triggers the arrangeing.
  */
 void bf::ingame_view_frame::on_arrange_vertically
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  if ( !m_ingame_view->has_selection() )
-    return;
+  m_ingame_view->do_action
+    ( new action_arrange_selection_vertically
+      ( m_ingame_view->get_edit_selection() ) );
 
-  std::set<double> initial_position;
-
-  const item_selection& selection = m_ingame_view->get_level().get_selection();
-  item_selection::const_iterator it;
-
-  for ( it=selection.begin(); it!=selection.end(); ++it )
-    initial_position.insert
-      ( (*it)->get_rendering_parameters().get_vertical_middle() );
-
-  const std::map<double, double> old_to_new( arrange( initial_position ) );
-
-  action_group* result = new action_group(_T("Arrange the items vertically"));
-
-  for ( it=selection.begin(); it!=selection.end(); ++it )
-    {
-      const double ref_pos =
-        (*it)->get_rendering_parameters().get_vertical_middle();
-      const double new_bottom =
-        old_to_new.find(ref_pos)->second
-        - (*it)->get_rendering_parameters().get_height() / 2;
-
-      result->add_action( new action_set_item_bottom( *it, new_bottom ) );
-    }
-
-  m_ingame_view->do_action( result );
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
 } // ingame_view_frame::on_arrange_vertically()

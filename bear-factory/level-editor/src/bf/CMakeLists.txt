@@ -8,6 +8,7 @@ include_directories( .. ${BEAR_FACTORY_EDITOR_INCLUDE_DIRECTORY})
 #-------------------------------------------------------------------------------
 set( BF_LE_SOURCE_FILES
   code/about_dialog.cpp
+  code/arrange.cpp
   code/clone_selection_dialog.cpp
   code/configuration.cpp
   code/drag_info.cpp
@@ -53,6 +54,8 @@ set( BF_LE_SOURCE_FILES
   history/code/action_align_selection_left.cpp
   history/code/action_align_selection_right.cpp
   history/code/action_align_selection_top.cpp
+  history/code/action_arrange_selection_horizontally.cpp
+  history/code/action_arrange_selection_vertically.cpp
   history/code/action_clone_selection.cpp
   history/code/action_copy_selection.cpp
   history/code/action_delete_selection.cpp
