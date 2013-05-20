@@ -2201,8 +2201,9 @@ void bf::ingame_view_frame::on_clone( wxCommandEvent& WXUNUSED(event) )
   if ( dlg.ShowModal() == wxID_OK )
     {
       m_ingame_view->do_action
-        ( new action_clone_selection
-          ( m_ingame_view->get_level(), dlg.get_x_count(), dlg.get_y_count(),
+        ( action_clone_selection::create_for_layers
+          ( m_ingame_view->get_level(), m_ingame_view->get_edit_layers(),
+            dlg.get_x_count(), dlg.get_y_count(),
             dlg.get_x_offset(), dlg.get_y_offset(),
             dlg.get_add_to_selection() ) );
       

@@ -17,38 +17,70 @@
 #include <wx/intl.h>
 
 /*----------------------------------------------------------------------------*/
-bf::action_clone_selection::action_clone_selection
-( const gui_level& lvl, unsigned int x_count, unsigned int y_count,
-  double x_offset, double y_offset, bool add )
+/**
+ * \brief Creates a group action that applies this action for several layers.
+ * \param lvl The level in which we take the selection.
+ * \param layers The indices of the layers whose selection is cloned.
+ * \param x_count Count of clones on the x-axis.
+ * \param y_count Count of clones on the y-axis.
+ * \param x_offset Offset on the x-axis.
+ * \param y_offset Offset on the y-axis.
+ * \param add Add the clones in the selection.
+ */
+bf::action_group*
+bf::action_clone_selection::create_for_layers
+( const gui_level& lvl, std::vector<std::size_t> layers,
+  unsigned int x_count, unsigned int y_count, double x_offset, double y_offset,
+  bool add )
 {
-  if ( !lvl.empty() )
-    if ( lvl.has_selection() )
-      {
-        m_layer = lvl.get_active_layer_index();
+  action_group* result( new action_group( _("Clone selected items") ) );
 
-        item_selection::const_iterator it;
-        const item_selection& selection( lvl.get_selection() );
+  for ( std::size_t i(0); i != layers.size(); ++i )
+    result->add_action
+      ( new action_clone_selection
+        ( lvl, layers[i], x_count, y_count, x_offset, y_offset, add ) );
 
-        for (it=selection.begin(); it!=selection.end(); ++it)
-          {
-            double xo(x_offset);
-            double yo(y_offset);
+  return result;
+} // action_clone_selection::create_for_layers()
 
-            if (xo < 0)
-              xo -= 2 * (*it)->get_rendering_parameters().get_width();
-            if (yo < 0)
-              yo -= 2 * (*it)->get_rendering_parameters().get_height();
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param lvl The level in which we take the selection.
+ * \param layer_index The index of the layer whose selection is cloned.
+ * \param x_count Count of clones on the x-axis.
+ * \param y_count Count of clones on the y-axis.
+ * \param x_offset Offset on the x-axis.
+ * \param y_offset Offset on the y-axis.
+ * \param add Add the clones in the selection.
+ */
+bf::action_clone_selection::action_clone_selection
+( const gui_level& lvl, std::size_t layer_index, unsigned int x_count,
+  unsigned int y_count, double x_offset, double y_offset, bool add )
+  : m_layer( layer_index )
+{
+  const item_selection& selection( lvl.get_selection( layer_index ) );
 
-            clone_item(**it, x_count, y_count, xo, yo);
-          }
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
+    {
+      double xo(x_offset);
+      double yo(y_offset);
 
-        lvl.fix_identifiers
-          ( std::vector<item_instance*>
-            (m_new_items.begin(), m_new_items.end()) );
+      if (xo < 0)
+        xo -= 2 * (*it)->get_rendering_parameters().get_width();
 
-        if (!add)
-          m_new_items.clear();
-      }
+      if (yo < 0)
+        yo -= 2 * (*it)->get_rendering_parameters().get_height();
+
+      clone_item(**it, x_count, y_count, xo, yo);
+    }
+
+  lvl.fix_identifiers
+    ( std::vector<item_instance*>( m_new_items.begin(), m_new_items.end() ) );
+
+  if (!add)
+    m_new_items.clear();
 } // action_clone_selection::action_clone_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -74,6 +106,14 @@ wxString bf::action_clone_selection::get_description() const
 } // action_clone_selection::get_description()
 
 /*----------------------------------------------------------------------------*/
+/**
+ * \brief Clone an item.
+ * \param item The item to clone.
+ * \param x_count Count of clones on the x-axis.
+ * \param y_count Count of clones on the y-axis.
+ * \param x_offset Offset on the x-axis.
+ * \param y_offset Offset on the y-axis.
+ */
 void bf::action_clone_selection::clone_item
 ( const item_instance& item, unsigned int x_count, unsigned int y_count,
   double x_offset, double y_offset )

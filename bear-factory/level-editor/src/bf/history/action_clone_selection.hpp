@@ -14,30 +14,28 @@
 #include "bf/item_selection.hpp"
 #include "bf/history/action_group.hpp"
 
+#include <vector>
+
 namespace bf
 {
   class item_instance;
 
   /**
-   * \brief The action of deleting the selected items.
+   * \brief The action of cloning the selected items along a grid.
    * \author Julien Jorge
    */
   class action_clone_selection:
     public action_group
   {
   public:
-    /**
-     * \brief Constructor.
-     * \param lvl The level in which we take the selection.
-     * \param x_count Count of clones on the x-axis.
-     * \param y_count Count of clones on the y-axis.
-     * \param x_offset Offset on the x-axis.
-     * \param y_offset Offset on the y-axis.
-     * \param add Add the clones in the selection.
-     */
+    static action_group* create_for_layers
+    ( const gui_level& lvl, std::vector<std::size_t> layers,
+      unsigned int x_count, unsigned int y_count, double x_offset,
+      double y_offset, bool add );
+
     action_clone_selection
-    ( const gui_level& lvl, unsigned int x_count, unsigned int y_count,
-      double x_offset, double y_offset, bool add );
+    ( const gui_level& lvl, std::size_t layer_index, unsigned int x_count,
+      unsigned int y_count, double x_offset, double y_offset, bool add );
 
     void execute( gui_level& lvl );
     void undo( gui_level& lvl );
@@ -45,14 +43,6 @@ namespace bf
     wxString get_description() const;
 
   private:
-    /**
-     * \brief Clone an item.
-     * \param item The item to clone.
-     * \param x_count Count of clones on the x-axis.
-     * \param y_count Count of clones on the y-axis.
-     * \param x_offset Offset on the x-axis.
-     * \param y_offset Offset on the y-axis.
-     */
     void clone_item
     ( const item_instance& item, unsigned int x_count, unsigned int y_count,
       double x_offset, double y_offset );
@@ -62,7 +52,7 @@ namespace bf
     item_selection m_new_items;
 
     /** \brief The index of the layer in which the items are added. */
-    unsigned int m_layer;
+    const std::size_t m_layer;
 
   }; // class action_clone_selection
 } // namespace bf
