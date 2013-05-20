@@ -2262,7 +2262,8 @@ void bf::ingame_view_frame::on_align_center_x( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_align_center_y( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_align_selection_center_y(m_ingame_view->get_level()) );
+    ( new action_align_selection_center_y
+      ( m_ingame_view->get_edit_selection() ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
