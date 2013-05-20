@@ -49,8 +49,8 @@ namespace bf
   public:
     edit_mode();
 
-    value_type get_edit_mode() const;
-    void set_edit_mode( value_type v );
+    value_type get_value() const;
+    void set_value( value_type v );
 
     item_selection get_selection( const gui_level& lvl ) const;
 

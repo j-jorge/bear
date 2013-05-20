@@ -27,20 +27,20 @@ bf::edit_mode::edit_mode()
 /**
  * \brief Tells to which items the operations are applied.
  */
-bf::edit_mode::value_type bf::edit_mode::get_edit_mode() const
+bf::edit_mode::value_type bf::edit_mode::get_value() const
 {
   return m_current_mode;
-} // edit_mode::get_edit_mode()
+} // edit_mode::get_value()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Sets to which items the operations are applied.
  * \param v The new edit mode.
  */
-void bf::edit_mode::set_edit_mode( value_type v )
+void bf::edit_mode::set_value( value_type v )
 {
   m_current_mode = v;
-} // edit_mode::set_edit_mode()
+} // edit_mode::set_value()
 
 /*----------------------------------------------------------------------------*/
 /**

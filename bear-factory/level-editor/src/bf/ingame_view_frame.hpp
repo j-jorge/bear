@@ -120,6 +120,7 @@ namespace bf
 
     void update_zoom() const;
     void update_toolbar() const;
+    void update_edit_mode() const;
 
   private:
     void make_title();
@@ -256,6 +257,7 @@ namespace bf
 
     void on_new_layer_from_image(wxCommandEvent& event);
 
+    void on_edit_mode( wxCommandEvent& event );
     void on_edit_mode_active_layer( wxCommandEvent& event );
     void on_edit_mode_same_tag( wxCommandEvent& event );
     void on_edit_mode_all( wxCommandEvent& event );
@@ -292,6 +294,10 @@ namespace bf
 
     /** \brief The popup menu displayed when right-clicking the level. */
     wxMenu m_popup_menu;
+
+    /** \brief The menu to select in the toolbar to which items are applied the
+        operations. */
+    wxMenu* m_edit_mode_menu;
 
     /** \brief The alignment menu, displayed both in the menu and when clicking
         on the toolbar tool. */

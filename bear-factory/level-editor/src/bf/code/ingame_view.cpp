@@ -287,6 +287,25 @@ const bf::gui_level& bf::ingame_view::get_level() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells to which items the operations are applied.
+ */
+bf::edit_mode bf::ingame_view::get_edit_mode() const
+{
+  return m_edit_mode;
+} // ingame_view::get_edit_mode()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells to which items the operations are applied.
+ * \param m The new edit mode.
+ */
+void bf::ingame_view::set_edit_mode( edit_mode m )
+{
+  m_edit_mode = m;
+} // ingame_view::set_edit_mode()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the level on which we are working.
  */
 bf::gui_level& bf::ingame_view::get_level()

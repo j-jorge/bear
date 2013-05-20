@@ -11,6 +11,7 @@
 #ifndef __BF_INGAME_VIEW_HPP__
 #define __BF_INGAME_VIEW_HPP__
 
+#include "bf/edit_mode.hpp"
 #include "bf/grid.hpp"
 #include "bf/level_clipboard.hpp"
 #include "bf/level_check_result.hpp"
@@ -80,6 +81,9 @@ namespace bf
     layer& get_active_layer() const;
     const gui_level& get_level() const;
     gui_level& get_level();
+
+    edit_mode get_edit_mode() const;
+    void set_edit_mode( edit_mode m );
 
     void show_grid( bool v );
     bool get_grid_visibility() const;
@@ -226,6 +230,9 @@ namespace bf
 
     /** \brief This object will draw the level in the view. */
     level_renderer m_renderer;
+
+    /** \brief Tells to which items the operations are applied. */
+    edit_mode m_edit_mode;
 
     /** \brief The items copied in the clipboard. */
     static level_clipboard s_clipboard;

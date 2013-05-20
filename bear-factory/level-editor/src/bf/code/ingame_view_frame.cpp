@@ -101,7 +101,7 @@ bf::ingame_view_frame::ingame_view_frame
   : wxFrame( &layout.get_main_frame(), wxID_ANY, _("New level") ),
     m_accelerator(*this), m_layout(layout), m_level_file(level_file),
     m_layer_info(_("no layer")), m_changed(false), m_compile_changed(false),
-    m_align_menu(NULL), m_arrange_menu(NULL)
+    m_edit_mode_menu(NULL), m_align_menu(NULL), m_arrange_menu(NULL)
 {
   create_controls(layout, lvl);
   m_layout.add_level_view(*this);
@@ -455,6 +455,7 @@ void bf::ingame_view_frame::create_sizer_controls()
 void bf::ingame_view_frame::create_menu()
 {
   wxMenuBar* bar = new wxMenuBar();
+  m_edit_mode_menu = create_edit_mode_menu();
   m_align_menu = create_align_menu();
   m_moving_layer_menu = new wxMenu();
   m_moving_layer_popup_menu = new wxMenu(); 
@@ -874,7 +875,33 @@ void bf::ingame_view_frame::update_toolbar() const
 
   bar->EnableTool(wxID_UNDO, m_ingame_view->get_history().can_undo());
   bar->EnableTool(wxID_REDO, m_ingame_view->get_history().can_redo());
+
+  update_edit_mode();
 } // ingame_view_frame::update_toolbar()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Updates the icon of the edit mode button in the toolbar.
+ */
+void bf::ingame_view_frame::update_edit_mode() const
+{
+  wxBitmap icon;
+
+  switch( m_ingame_view->get_edit_mode().get_value() )
+    {
+    case edit_mode::active_layer:
+      icon = wxBitmap(edit_active_layer_xpm);
+      break;
+    case edit_mode::layers_by_tag:
+      icon = wxBitmap(edit_same_tag_xpm);
+      break;
+    case edit_mode::all_layers:
+      icon = wxBitmap(edit_all_layers_xpm);
+      break;
+    }
+
+  GetToolBar()->SetToolNormalBitmap( ID_EDIT_MODE, icon );
+} // ingame_view_frame::update_edit_mode()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2776,13 +2803,26 @@ void bf::ingame_view_frame::on_new_layer_from_image
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Opens the menu to select the edit mode.
+ * \param event This event occured.
+ */
+void bf::ingame_view_frame::on_edit_mode( wxCommandEvent& event )
+{
+  PopupMenu( m_edit_mode_menu );
+} // ingame_view_frame::on_edit_mode()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Create a decorative layer from a big image and generate the sprites.
  * \param event This event occured.
  */
 void bf::ingame_view_frame::on_edit_mode_active_layer( wxCommandEvent& event )
 {
-  GetToolBar()->SetToolNormalBitmap
-    ( ID_EDIT_MODE, wxBitmap(edit_active_layer_xpm) );
+  edit_mode m( m_ingame_view->get_edit_mode() );
+  m.set_value( edit_mode::active_layer );
+  m_ingame_view->set_edit_mode( m );
+
+  update_edit_mode();
 } // ingame_view_frame::on_edit_mode_active_layer()
 
 /*----------------------------------------------------------------------------*/
@@ -2792,8 +2832,11 @@ void bf::ingame_view_frame::on_edit_mode_active_layer( wxCommandEvent& event )
  */
 void bf::ingame_view_frame::on_edit_mode_same_tag( wxCommandEvent& event )
 {
-  GetToolBar()->SetToolNormalBitmap
-    ( ID_EDIT_MODE, wxBitmap(edit_same_tag_xpm) );
+  edit_mode m( m_ingame_view->get_edit_mode() );
+  m.set_value( edit_mode::layers_by_tag );
+  m_ingame_view->set_edit_mode( m );
+
+  update_edit_mode();
 } // ingame_view_frame::on_edit_mode_same_tag()
 
 /*----------------------------------------------------------------------------*/
@@ -2803,8 +2846,11 @@ void bf::ingame_view_frame::on_edit_mode_same_tag( wxCommandEvent& event )
  */
 void bf::ingame_view_frame::on_edit_mode_all( wxCommandEvent& event )
 {
-  GetToolBar()->SetToolNormalBitmap
-    ( ID_EDIT_MODE, wxBitmap(edit_all_layers_xpm) );
+  edit_mode m( m_ingame_view->get_edit_mode() );
+  m.set_value( edit_mode::all_layers );
+  m_ingame_view->set_edit_mode( m );
+
+  update_edit_mode();
 } // ingame_view_frame::on_edit_mode_all()
 
 /*----------------------------------------------------------------------------*/
@@ -2927,6 +2973,8 @@ BEGIN_EVENT_TABLE(bf::ingame_view_frame, wxFrame)
   EVT_MENU( bf::ingame_view_frame::ID_NEW_LAYER_FROM_IMAGE,
             bf::ingame_view_frame::on_new_layer_from_image )
 
+  EVT_MENU( bf::ingame_view_frame::ID_EDIT_MODE,
+            bf::ingame_view_frame::on_edit_mode )
   EVT_MENU( bf::ingame_view_frame::ID_EDIT_ACTIVE_LAYER,
             bf::ingame_view_frame::on_edit_mode_active_layer )
   EVT_MENU( bf::ingame_view_frame::ID_EDIT_SAME_TAG,
