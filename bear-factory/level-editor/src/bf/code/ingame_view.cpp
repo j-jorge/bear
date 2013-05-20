@@ -306,6 +306,15 @@ void bf::ingame_view::set_edit_mode( edit_mode m )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the selection to which the operations must apply.
+ */
+bf::item_selection bf::ingame_view::get_edit_selection() const
+{
+  return m_edit_mode.get_selection( get_level() );
+} // ingame_view::get_edit_selection()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the level on which we are working.
  */
 bf::gui_level& bf::ingame_view::get_level()
@@ -1085,7 +1094,8 @@ void bf::ingame_view::move_selection()
 {
   do_action
     ( new action_move_selection
-      ( get_level(), m_drag_info->delta().x, m_drag_info->delta().y ) );
+      ( get_edit_selection(),
+        m_drag_info->delta().x, m_drag_info->delta().y ) );
 } // ingame_view::move_selection()
 
 /*----------------------------------------------------------------------------*/

@@ -2302,7 +2302,7 @@ void bf::ingame_view_frame::on_offset( wxCommandEvent& WXUNUSED(event) )
     {
       m_ingame_view->do_action
         ( new action_move_selection
-          ( m_ingame_view->get_level(), dlg.get_x(), dlg.get_y() ) );
+          ( m_ingame_view->get_edit_selection(), dlg.get_x(), dlg.get_y() ) );
 
       if ( ! m_ingame_view->get_active_layer().check_item_position() )
         m_ingame_view->show_item_position_error(this);
@@ -2596,7 +2596,7 @@ void bf::ingame_view_frame::on_move_selection_up
 ( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_move_selection( m_ingame_view->get_level(), 0, 1 ) );
+    ( new action_move_selection( m_ingame_view->get_edit_selection(), 0, 1 ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2611,7 +2611,7 @@ void bf::ingame_view_frame::on_move_selection_down
 ( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_move_selection( m_ingame_view->get_level(), 0, -1 ) );
+    ( new action_move_selection( m_ingame_view->get_edit_selection(), 0, -1 ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2626,7 +2626,7 @@ void bf::ingame_view_frame::on_move_selection_left
 ( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_move_selection( m_ingame_view->get_level(), -1, 0 ) );
+    ( new action_move_selection( m_ingame_view->get_edit_selection(), -1, 0 ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2641,7 +2641,7 @@ void bf::ingame_view_frame::on_move_selection_right
 ( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_move_selection( m_ingame_view->get_level(), 1, 0 ) );
+    ( new action_move_selection( m_ingame_view->get_edit_selection(), 1, 0 ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);

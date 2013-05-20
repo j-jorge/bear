@@ -85,6 +85,8 @@ namespace bf
     edit_mode get_edit_mode() const;
     void set_edit_mode( edit_mode m );
 
+    item_selection get_edit_selection() const;
+
     void show_grid( bool v );
     bool get_grid_visibility() const;
 

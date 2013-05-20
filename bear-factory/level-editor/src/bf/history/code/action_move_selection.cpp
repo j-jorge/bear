@@ -10,32 +10,36 @@
  */
 #include "bf/history/action_move_selection.hpp"
 
-#include "bf/gui_level.hpp"
+#include "bf/item_instance.hpp"
+#include "bf/item_selection.hpp"
 #include "bf/history/action_set_item_position.hpp"
 
 #include <wx/intl.h>
 
 /*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param selection The items to move.
+ * \param dx The movement on the x-axis.
+ * \param dy The movement on the y-axis.
+ */
 bf::action_move_selection::action_move_selection
-( const gui_level& lvl, double dx, double dy )
+( const item_selection& selection, double dx, double dy )
 {
-  if ( !lvl.empty() )
-    if ( lvl.has_selection() )
-      {
-        item_selection::const_iterator it;
-        const item_selection& selection( lvl.get_selection() );
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
+    add_action
+      ( new action_set_item_position
+        ( *it,
+          (*it)->get_rendering_parameters().get_left() + dx,
+          (*it)->get_rendering_parameters().get_bottom() + dy ) );
 
-        for (it=selection.begin(); it!=selection.end(); ++it)
-          add_action
-            ( new action_set_item_position
-              ( *it,
-                (*it)->get_rendering_parameters().get_left() + dx,
-                (*it)->get_rendering_parameters().get_bottom() + dy ) );
-
-      }
 } // action_move_selection::action_move_selection()
 
 /*----------------------------------------------------------------------------*/
+/**
+ * Gets a description of the work done by this action.
+ */
 wxString bf::action_move_selection::get_description() const
 {
   return _("Move selected items");

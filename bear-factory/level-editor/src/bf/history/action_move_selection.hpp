@@ -15,6 +15,8 @@
 
 namespace bf
 {
+  class item_selection;
+
   /**
    * \brief The action of moving the selected items.
    * \author Julien Jorge
@@ -23,13 +25,8 @@ namespace bf
     public action_group
   {
   public:
-    /**
-     * \brief Constructor.
-     * \param lvl The level in which we take the selection.
-     * \param dx The movement on the x-axis.
-     * \param dy The movement on the y-axis.
-     */
-    action_move_selection( const gui_level& lvl, double dx, double dy );
+    action_move_selection
+    ( const item_selection& selection, double dx, double dy );
 
     wxString get_description() const;
 
