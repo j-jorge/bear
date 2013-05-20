@@ -2233,9 +2233,10 @@ void bf::ingame_view_frame::on_align_top( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_align_bottom( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_align_selection_bottom(m_ingame_view->get_level()) );
+    ( new action_align_selection_bottom
+      ( m_ingame_view->get_edit_selection() ) );
 
-  if ( ! m_ingame_view->get_active_layer().check_item_position() )
+  if ( !m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
 } // ingame_view_frame::on_align_bottom()
 
