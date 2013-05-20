@@ -315,6 +315,15 @@ bf::item_selection bf::ingame_view::get_edit_selection() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the indices of the layers to which the operations must apply.
+ */
+std::vector<std::size_t> bf::ingame_view::get_edit_layers() const
+{
+  return m_edit_mode.get_edit_layers( get_level() );
+} // ingame_view::get_edit_layers()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the level on which we are working.
  */
 bf::gui_level& bf::ingame_view::get_level()
@@ -791,7 +800,8 @@ void bf::ingame_view::copy_to_clipboard() const
 void bf::ingame_view::cut_to_clipboard()
 {
   copy_to_clipboard();
-  do_action( new action_delete_selection(get_level()) );
+
+  do_action( new action_delete_selection( get_level() ) );
 } // ingame_view::cut_to_clipboard()
 
 /*----------------------------------------------------------------------------*/

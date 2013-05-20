@@ -13,6 +13,8 @@
 
 #include "bf/history/action_group.hpp"
 
+#include <vector>
+
 namespace bf
 {
   /**
@@ -23,13 +25,12 @@ namespace bf
     public action_group
   {
   public:
-    /**
-     * \brief Constructor.
-     * \param lvl The level in which we take the selection.
-     */
     action_delete_selection( const gui_level& lvl );
+    action_delete_selection
+    ( const gui_level& lvl, std::vector<std::size_t> layers );
 
-    wxString get_description() const;
+  private:
+    void add_actions_for_layer( const gui_level& lvl, std::size_t layer_index );
 
   }; // class action_delete_selection
 } // namespace bf

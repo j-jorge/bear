@@ -50,22 +50,8 @@ void bf::edit_mode::set_value( value_type v )
 bf::item_selection
 bf::edit_mode::get_selection( const gui_level& lvl ) const
 {
-  if ( lvl.empty() )
-    return item_selection();
-
-  switch( m_current_mode )
-    {
-    case active_layer:
-      return get_active_layer_selection( lvl );
-    case layers_by_tag:
-      return get_selection_by_tag( lvl );
-    case all_layers:
-      return get_all_selections( lvl );
-    }
-
-  CLAW_FAIL( "Invalid edit mode" );
-
-  return item_selection();
+  return get_selections_by_layer_index
+    ( lvl, get_edit_layers( lvl ), lvl.get_active_layer_index() );
 } // edit_mode::get_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -73,20 +59,36 @@ bf::edit_mode::get_selection( const gui_level& lvl ) const
  * \brief Gets the selection of the active layer.
  * \param lvl The level from which the items are taken.
  */
-bf::item_selection
-bf::edit_mode::get_active_layer_selection( const gui_level& lvl ) const
+std::vector<std::size_t>
+bf::edit_mode::get_edit_layers( const gui_level& lvl ) const
 {
-  return lvl.get_selection();
-} // edit_mode::get_active_layer_selection()
+  std::vector<std::size_t> result;
+
+  switch( m_current_mode )
+    {
+    case active_layer:
+      result.push_back( lvl.get_active_layer_index() );
+      break;
+
+    case layers_by_tag:
+      result = get_layer_indices_by_tag( lvl );
+      break;
+
+    case all_layers:
+      result = get_all_layers_indices( lvl );
+    }
+
+  return result;
+} // edit_mode::get_edit_layers()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Gets the selection of all layers having the same tag than the active
+ * \brief Gets the indices of all layers having the same tag than the active
  *        layer.
- * \param lvl The level from which the items are taken.
+ * \param lvl The level from which the layers are taken.
  */
-bf::item_selection
-bf::edit_mode::get_selection_by_tag( const gui_level& lvl ) const
+std::vector<std::size_t>
+bf::edit_mode::get_layer_indices_by_tag( const gui_level& lvl ) const
 {
   std::vector<std::size_t> layers;
 
@@ -96,26 +98,24 @@ bf::edit_mode::get_selection_by_tag( const gui_level& lvl ) const
     if ( lvl.get_layer( i ).get_tag() == ref_tag )
       layers.push_back( i );
 
-  return get_selections_by_layer_index
-    ( lvl, layers, lvl.get_active_layer_index() );
-} // edit_mode::get_selection_by_tag()
+  return layers;
+} // edit_mode::get_layer_indices_by_tag()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Gets the selection in all layers.
- * \param lvl The level from which the items are taken.
+ * \brief Gets the indices of all layers.
+ * \param lvl The level from which the layers are taken.
  */
-bf::item_selection
-bf::edit_mode::get_all_selections( const gui_level& lvl ) const
+std::vector<std::size_t>
+bf::edit_mode::get_all_layers_indices( const gui_level& lvl ) const
 {
   std::vector<std::size_t> layers;
 
   for ( std::size_t i(0); i!=lvl.layers_count(); ++i )
     layers.push_back( i );
 
-  return get_selections_by_layer_index
-    ( lvl, layers, lvl.get_active_layer_index() );
-} // edit_mode::get_all_selections()
+  return layers;
+} // edit_mode::get_all_layers_indices()
 
 /*----------------------------------------------------------------------------*/
 /**

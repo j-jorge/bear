@@ -15,23 +15,51 @@
 
 #include <wx/intl.h>
 
-/*----------------------------------------------------------------------------*/
-bf::action_delete_selection::action_delete_selection( const gui_level& lvl )
-{
-  if ( !lvl.empty() )
-    if ( lvl.has_selection() )
-      {
-        item_selection::const_iterator it;
-        const item_selection& selection( lvl.get_selection() );
 
-        for (it=selection.begin(); it!=selection.end(); ++it)
-          add_action
-            ( new action_remove_item(*it, lvl.get_active_layer_index()) );
-      }
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs the action to remove the items selected in the active
+ *        layer.
+ * \param lvl The level from which the items are removed.
+ */
+bf::action_delete_selection::action_delete_selection( const gui_level& lvl )
+  : action_group( _("Delete selected items") )
+{
+  if ( lvl.empty() )
+    return;
+
+  add_actions_for_layer( lvl, lvl.get_active_layer_index() );
 } // action_delete_selection::action_delete_selection()
 
 /*----------------------------------------------------------------------------*/
-wxString bf::action_delete_selection::get_description() const
+/**
+ * \brief Constructs the action to remove the items selected in a given
+ *        collection of layers.
+ * \param lvl The level from which the items are removed.
+ * \param layers The layers from the selection of which the items are taken.
+ */
+bf::action_delete_selection::action_delete_selection
+( const gui_level& lvl, std::vector<std::size_t> layers )
+  : action_group( _("Delete selected items") )
 {
-  return _("Delete selected items");
-} // action_delete_selection::get_description()
+  for ( std::size_t i(0); i!=layers.size(); ++i )
+    add_actions_for_layer( lvl, layers[i] );
+} // action_delete_selection::action_delete_selection()
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds the actions that remove the items selected in a given layer.
+ * \param lvl The level from which the items are removed.
+ * \param layer_index The index of the  layer from the selection of which the
+ *        items are taken.
+ */
+void bf::action_delete_selection::add_actions_for_layer
+( const gui_level& lvl, std::size_t layer_index )
+{
+  const item_selection& selection( lvl.get_selection( layer_index ) );
+
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
+    add_action( new action_remove_item( *it, layer_index ) );
+} // action_delete_selection::add_actions_for_layer()

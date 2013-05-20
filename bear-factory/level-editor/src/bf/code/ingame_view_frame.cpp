@@ -1822,7 +1822,8 @@ void bf::ingame_view_frame::on_paste( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_delete( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_delete_selection(m_ingame_view->get_level()) );
+    ( new action_delete_selection
+      ( m_ingame_view->get_level(), m_ingame_view->get_edit_layers() ) );
   update_toolbar();
 } // ingame_view_frame::on_delete()
 
@@ -2232,7 +2233,7 @@ void bf::ingame_view_frame::on_offset( wxCommandEvent& WXUNUSED(event) )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on moving selection in the top layer.
+ * \brief Apply the action that consists to moving selection in the top layer.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_move_in_layer_up
@@ -2249,7 +2250,7 @@ void bf::ingame_view_frame::on_move_in_layer_up
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on moving selection in the bottom
+ * \brief Apply the action that consists to moving selection in the bottom
  *        layer.
  * \param event The event.
  */
@@ -2267,7 +2268,7 @@ void bf::ingame_view_frame::on_move_in_layer_down
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on moving selection in the bottom
+ * \brief Apply the action that consists to moving selection in the bottom
  *        layer.
  * \param event The event.
  */
@@ -2304,7 +2305,7 @@ void bf::ingame_view_frame::on_move_in_other_layer
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on selecting a layer.
+ * \brief Apply the action that consists to selecting a layer.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_select_layer( wxCommandEvent& event )
@@ -2328,7 +2329,7 @@ void bf::ingame_view_frame::on_select_layer( wxCommandEvent& event )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on set a reference item.
+ * \brief Apply the action that consists to set a reference item.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_set_item_to_selection( wxCommandEvent& event )
@@ -2358,7 +2359,7 @@ void bf::ingame_view_frame::on_set_item_to_selection( wxCommandEvent& event )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on set a reference item list.
+ * \brief Apply the action that consists to set a reference item list.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_set_list_item_to_selection
@@ -2392,7 +2393,7 @@ void bf::ingame_view_frame::on_set_list_item_to_selection
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on add a reference item list.
+ * \brief Apply the action that consists to add a reference item list.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_add_list_item_to_selection
@@ -2426,7 +2427,7 @@ void bf::ingame_view_frame::on_add_list_item_to_selection
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on set a reference item.
+ * \brief Apply the action that consists to set a reference item.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_set_selection_to_item( wxCommandEvent& event )
@@ -2452,7 +2453,7 @@ void bf::ingame_view_frame::on_set_selection_to_item( wxCommandEvent& event )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on set a reference item list.
+ * \brief Apply the action that consists to set a reference item list.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_set_list_selection_to_item
@@ -2480,7 +2481,7 @@ void bf::ingame_view_frame::on_set_list_selection_to_item
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the action that consists on add a reference item list.
+ * \brief Apply the action that consists to add a reference item list.
  * \param event The event.
  */
 void bf::ingame_view_frame::on_add_list_selection_to_item

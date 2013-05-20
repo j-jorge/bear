@@ -86,6 +86,7 @@ namespace bf
     void set_edit_mode( edit_mode m );
 
     item_selection get_edit_selection() const;
+    std::vector<std::size_t> get_edit_layers() const;
 
     void show_grid( bool v );
     bool get_grid_visibility() const;

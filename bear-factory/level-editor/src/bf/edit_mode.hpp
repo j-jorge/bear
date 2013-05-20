@@ -53,11 +53,13 @@ namespace bf
     void set_value( value_type v );
 
     item_selection get_selection( const gui_level& lvl ) const;
+    std::vector<std::size_t> get_edit_layers( const gui_level& lvl ) const;
 
   private:
-    item_selection get_active_layer_selection( const gui_level& lvl ) const;
-    item_selection get_selection_by_tag( const gui_level& lvl ) const;
-    item_selection get_all_selections( const gui_level& lvl ) const;
+    std::vector<std::size_t>
+    get_layer_indices_by_tag( const gui_level& lvl ) const;
+    std::vector<std::size_t>
+    get_all_layers_indices( const gui_level& lvl ) const;
 
     item_selection get_selections_by_layer_index
     ( const gui_level& lvl, std::vector<std::size_t> layers,
