@@ -643,15 +643,16 @@ wxMenu* bf::ingame_view_frame::create_edit_mode_menu() const
   wxMenu* const result( new wxMenu() );
 
   wx_menu_append_item
-    ( result, ID_EDIT_ACTIVE_LAYER, _("&Active layer"),
+    ( result, ID_EDIT_ACTIVE_LAYER, _("&Active layer\tF3"),
       _("The operations are done in the selected layer."),
       wxBitmap(edit_active_layer_xpm) );
   wx_menu_append_item
-    ( result, ID_EDIT_SAME_TAG, _("Layers &tagged as the active layer"),
+    ( result, ID_EDIT_SAME_TAG,
+      _("Layers &tagged as the active layer\tCtrl+F3"),
       _("The operations are done on all layers having the same tag than the "
         "active layer."), wxBitmap(edit_same_tag_xpm) );
   wx_menu_append_item
-    ( result, ID_EDIT_ALL, _("All &layers"),
+    ( result, ID_EDIT_ALL, _("All &layers\tShift+F3"),
       _("The operations are done on all layers."),
       wxBitmap(edit_all_layers_xpm) );
 
