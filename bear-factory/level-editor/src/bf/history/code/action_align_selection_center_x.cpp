@@ -10,34 +10,32 @@
  */
 #include "bf/history/action_align_selection_center_x.hpp"
 
-#include "bf/gui_level.hpp"
+#include "bf/item_instance.hpp"
+#include "bf/item_selection.hpp"
 #include "bf/history/action_set_item_left.hpp"
 
 #include <wx/intl.h>
 
 /*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param selection The items to align.
+ */
 bf::action_align_selection_center_x::action_align_selection_center_x
-( const gui_level& lvl )
+( const item_selection& selection )
+  : action_group( _("Align the selected items") )
 {
-  if ( !lvl.empty() )
-    if ( lvl.has_selection() )
-      {
-        item_selection::const_iterator it;
-        const item_selection& selection( lvl.get_selection() );
-        const item_instance& main_item( *lvl.get_main_selection() );
+  if ( selection.empty() )
+    return;
 
-        for (it=selection.begin(); it!=selection.end(); ++it)
-          add_action
-            ( new action_set_item_left
-              ( *it,
-                main_item.get_rendering_parameters().get_left()
-                + main_item.get_rendering_parameters().get_width() / 2
-                - (*it)->get_rendering_parameters().get_width() / 2 ) );
-      }
+  const item_instance& main_item( *selection.get_main_selection() );
+
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it)
+    add_action
+      ( new action_set_item_left
+        ( *it,
+          main_item.get_rendering_parameters().get_left()
+          + main_item.get_rendering_parameters().get_width() / 2
+          - (*it)->get_rendering_parameters().get_width() / 2 ) );
 } // action_align_selection_center_x::action_align_selection_center_x()
-
-/*----------------------------------------------------------------------------*/
-wxString bf::action_align_selection_center_x::get_description() const
-{
-  return _("Align the selected items");
-} // action_align_selection_center_x::get_description()

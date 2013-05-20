@@ -2191,7 +2191,8 @@ void bf::ingame_view_frame::on_arrange_vertically
 void bf::ingame_view_frame::on_align_left( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_align_selection_left(m_ingame_view->get_level()) );
+    ( new action_align_selection_left
+      ( m_ingame_view->get_edit_selection() ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2205,7 +2206,8 @@ void bf::ingame_view_frame::on_align_left( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_align_right( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_align_selection_right(m_ingame_view->get_level()) );
+    ( new action_align_selection_right
+      ( m_ingame_view->get_edit_selection() ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2219,7 +2221,8 @@ void bf::ingame_view_frame::on_align_right( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_align_top( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_align_selection_top(m_ingame_view->get_level()) );
+    ( new action_align_selection_top
+      ( m_ingame_view->get_edit_selection() ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2248,7 +2251,8 @@ void bf::ingame_view_frame::on_align_bottom( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_align_center_x( wxCommandEvent& WXUNUSED(event) )
 {
   m_ingame_view->do_action
-    ( new action_align_selection_center_x(m_ingame_view->get_level()) );
+    ( new action_align_selection_center_x
+      ( m_ingame_view->get_edit_selection() ) );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);

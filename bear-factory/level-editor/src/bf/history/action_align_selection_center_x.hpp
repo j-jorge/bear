@@ -15,6 +15,8 @@
 
 namespace bf
 {
+  class item_selection;
+
   /**
    * \brief The action of aligning the center_x of the selected items.
    * \author Julien Jorge
@@ -23,13 +25,7 @@ namespace bf
     public action_group
   {
   public:
-    /**
-     * \brief Constructor.
-     * \param lvl The level in which we take the selection.
-     */
-    action_align_selection_center_x( const gui_level& lvl );
-
-    wxString get_description() const;
+    action_align_selection_center_x( const item_selection& selection );
 
   }; // class action_align_selection_center_x
 } // namespace bf
