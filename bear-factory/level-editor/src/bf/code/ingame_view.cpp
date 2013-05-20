@@ -1106,7 +1106,7 @@ void bf::ingame_view::move_selection()
 void bf::ingame_view::rotate_selection( bool clockwise )
 {
   do_action
-    ( new action_rotate_selection( get_level(), clockwise ) );
+    ( new action_rotate_selection( get_edit_selection(), clockwise ) );
 } // ingame_view::rotate_selection()
 
 /*----------------------------------------------------------------------------*/

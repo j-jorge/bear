@@ -15,6 +15,8 @@
 
 namespace bf
 {
+  class item_selection;
+
   /**
    * \brief The action of rotating the selected items.
    * \author Sebastien Angibaud
@@ -23,12 +25,7 @@ namespace bf
     public action_group
   {
   public:
-    /**
-     * \brief Constructor.
-     * \param lvl The level in which we take the selection.
-     * \param clockwise Indicates if the rotation is clockwise.
-     */
-    action_rotate_selection( const gui_level& lvl, bool clockwise );
+    action_rotate_selection( const item_selection& selection, bool clockwise );
 
     wxString get_description() const;
 
