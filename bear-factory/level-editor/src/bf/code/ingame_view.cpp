@@ -1090,8 +1090,10 @@ void bf::ingame_view::set_selection( item_instance* item )
 void bf::ingame_view::copy_selection(bool add)
 {
   do_action
-    ( new action_copy_selection
-      ( get_level(), m_drag_info->delta().x, m_drag_info->delta().y, add ) );
+    ( action_copy_selection::create_for_layers
+      ( get_level(), get_edit_layers(), m_drag_info->delta().x,
+        m_drag_info->delta().y, add ) );
+
   m_parent.update_toolbar();
 } // ingame_view::copy_selection()
 
@@ -2123,8 +2125,11 @@ void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
       const double dy
         ( point.y - selection->get_rendering_parameters().get_bottom() );
 
-      do_action( new action_copy_selection( get_level(), dx, dy, false ) );
+      do_action
+        ( action_copy_selection::create_for_layers
+          ( get_level(), get_edit_layers(), dx, dy, false ) );
     }
+
   m_parent.update_toolbar();
 } // ingame_view::on_mouse_middle_up()
 

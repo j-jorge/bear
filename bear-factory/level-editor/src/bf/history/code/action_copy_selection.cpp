@@ -18,35 +18,62 @@
 #include <wx/intl.h>
 
 /*----------------------------------------------------------------------------*/
-bf::action_copy_selection::action_copy_selection
-( const gui_level& lvl, double dx, double dy, bool add )
-  : m_add_to_selection(add)
+/**
+ * \brief Creates a group of actions that copies the items selected in a
+ *        collection of layers.
+ * \param lvl The level in which we take the selection.
+ * \param layers The indices of the layers whose selection is cloned.
+ * \param dx The distance of the copy on the x-axis.
+ * \param dy The distance of the copy on the y-axis.
+ * \param add Tell if the copy has to be added to the current selection.
+ */
+bf::action_group*
+bf::action_copy_selection::create_for_layers
+( const gui_level& lvl, std::vector<std::size_t> layers, double dx, double dy,
+  bool add )
 {
-  if ( !lvl.empty() )
-    if ( lvl.has_selection() )
-      {
-        m_layer = lvl.get_active_layer_index();
+  action_group* const result
+    ( new action_group( _("Copy the selected items") ) );
 
-        item_selection::const_iterator it;
-        const item_selection& selection( lvl.get_selection() );
+  for ( std::size_t i(0); i != layers.size(); ++i )
+    result->add_action
+      ( new action_copy_selection( lvl, layers[i], dx, dy, add ) );
 
-        for (it=selection.begin(); it!=selection.end(); ++it)
-          {
-            double x = (*it)->get_rendering_parameters().get_left() + dx;
-            double y = (*it)->get_rendering_parameters().get_bottom() + dy;
+  return result;
+} // action_copy_selection::create_for_layers()
 
-            item_instance* item = new item_instance(**it);
-            item->get_rendering_parameters().set_position(x, y);
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param lvl The level in which we take the selection.
+ * \param layer_index The index of the layer whose selection is cloned.
+ * \param dx The distance of the copy on the x-axis.
+ * \param dy The distance of the copy on the y-axis.
+ * \param add Tell if the copy has to be added to the current selection.
+ */
+bf::action_copy_selection::action_copy_selection
+( const gui_level& lvl, std::size_t layer_index, double dx, double dy,
+  bool add )
+  : m_add_to_selection(add), m_layer(layer_index)
+{
+  const item_selection& selection( lvl.get_selection( layer_index ) );
 
-            add_action( new action_add_item(item, m_layer) );
+  for (item_selection::const_iterator it( selection.begin() );
+       it != selection.end(); ++it )
+    {
+      double x = (*it)->get_rendering_parameters().get_left() + dx;
+      double y = (*it)->get_rendering_parameters().get_bottom() + dy;
 
-            m_new_items.insert(item, (*it == selection.get_main_selection()) );
-          }
+      item_instance* item = new item_instance(**it);
+      item->get_rendering_parameters().set_position(x, y);
 
-        lvl.fix_identifiers
-          ( std::vector<item_instance*>
-            (m_new_items.begin(), m_new_items.end()) );
-      }
+      add_action( new action_add_item(item, m_layer) );
+
+      m_new_items.insert(item, (*it == selection.get_main_selection()) );
+    }
+
+  lvl.fix_identifiers
+    ( std::vector<item_instance*>( m_new_items.begin(), m_new_items.end() ) );
 } // action_copy_selection::action_copy_selection()
 
 /*----------------------------------------------------------------------------*/

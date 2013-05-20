@@ -14,6 +14,8 @@
 #include "bf/item_selection.hpp"
 #include "bf/history/action_group.hpp"
 
+#include <vector>
+
 namespace bf
 {
   /**
@@ -24,15 +26,13 @@ namespace bf
     public action_group
   {
   public:
-    /**
-     * \brief Constructor.
-     * \param lvl The level in which we take the selection.
-     * \param dx The distance of the copy on the x-axis.
-     * \param dy The distance of the copy on the y-axis.
-     * \param add Tell if the copy has to be added to the current selection.
-     */
+    static action_group* create_for_layers
+    ( const gui_level& lvl, std::vector<std::size_t> layers, double dx,
+      double dy, bool add );
+
     action_copy_selection
-    ( const gui_level& lvl, double dx, double dy, bool add );
+    ( const gui_level& lvl, std::size_t layer_index, double dx, double dy,
+      bool add );
 
     void execute( gui_level& lvl );
     void undo( gui_level& lvl );
@@ -51,7 +51,7 @@ namespace bf
     const bool m_add_to_selection;
 
     /** \brief The index of the layer in which the items are added. */
-    unsigned int m_layer;
+    const std::size_t m_layer;
 
   }; // class action_copy_selection
 } // namespace bf
