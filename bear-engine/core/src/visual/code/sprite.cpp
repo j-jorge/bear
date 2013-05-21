@@ -35,6 +35,8 @@ bear::visual::sprite::sprite
   : bitmap_rendering_attributes( clip_rectangle.size() ), m_image(img),
     m_clip_rectangle(clip_rectangle), m_opaque_rectangle(0, 0, 0, 0)
 {
+  CLAW_PRECOND( clip_rectangle.width > 0 );
+  CLAW_PRECOND( clip_rectangle.height > 0 );
   CLAW_PRECOND( m_clip_rectangle.position.x
                 + m_clip_rectangle.width <= m_image.width() );
   CLAW_PRECOND( m_clip_rectangle.position.y
@@ -62,6 +64,8 @@ bear::visual::sprite::sprite
                 + m_clip_rectangle.height <= m_image.height() );
   CLAW_PRECOND( m_opaque_rectangle.width() <= m_clip_rectangle.width );
   CLAW_PRECOND( m_opaque_rectangle.height() <= m_clip_rectangle.height );
+  CLAW_PRECOND( m_opaque_rectangle.width() >= 0 );
+  CLAW_PRECOND( m_opaque_rectangle.height() >= 0 );
 } // sprite::sprite()
 
 /*----------------------------------------------------------------------------*/
@@ -126,6 +130,9 @@ bear::visual::sprite::get_opaque_rectangle() const
  */
 void bear::visual::sprite::set_opaque_rectangle( const rectangle_type& r )
 {
+  CLAW_PRECOND( r.width() >= 0 );
+  CLAW_PRECOND( r.height() >= 0 );
+
   m_opaque_rectangle = r;
 } // sprite::set_opaque_rectangle()
 
@@ -144,5 +151,5 @@ const bear::visual::image& bear::visual::sprite::get_image() const
  */
 bool bear::visual::sprite::is_valid() const
 {
-  return m_image.is_valid();
+  return m_image.is_valid() && (width() >= 0) && (height() >= 0);
 } // sprite::is_valid()

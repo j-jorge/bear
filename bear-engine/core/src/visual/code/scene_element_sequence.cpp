@@ -131,7 +131,7 @@ bear::visual::scene_element_sequence::get_bounding_box() const
       coordinate_type left
         ( get_position().x + result.left() * get_scale_factor_x() );
       coordinate_type bottom
-        ( get_position().y + result.bottom() * get_scale_factor_y());
+        ( get_position().y + result.bottom() * get_scale_factor_y() );
       coordinate_type w( result.width() * get_scale_factor_x() );
       coordinate_type h( result.height() * get_scale_factor_y() );
 

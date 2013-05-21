@@ -14,6 +14,7 @@
 #include "visual/scene_element.hpp"
 
 #include <limits>
+#include <claw/assert.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -96,6 +97,9 @@ bear::visual::scene_sprite::get_bounding_box() const
       rectangle_type
       ( get_position().x, get_position().y, get_position().x + w,
         get_position().y + h );
+
+  CLAW_POSTCOND( get_opaque_box().empty()
+                 || result.includes( get_opaque_box() ) );
 
   return result;
 } // scene_sprite::get_bounding_box()
@@ -221,11 +225,15 @@ bear::visual::rectangle_type
 bear::visual::scene_sprite::scale_rectangle( const rectangle_type& r ) const
 {
   const double fx =
-    m_sprite.width() / m_sprite.clip_rectangle().width
-    * get_scale_factor_x();
+    ( m_sprite.clip_rectangle().width == 0 )
+    ? 0
+    : ( m_sprite.width() / m_sprite.clip_rectangle().width
+        * get_scale_factor_x() );
   const double fy =
-    m_sprite.height() / m_sprite.clip_rectangle().height
-    * get_scale_factor_y();
+    ( m_sprite.clip_rectangle().height == 0 )
+    ? 0
+    : ( m_sprite.height() / m_sprite.clip_rectangle().height
+        * get_scale_factor_y() );
 
   coordinate_type left = r.left() * fx;
   coordinate_type bottom = r.bottom() * fy;
