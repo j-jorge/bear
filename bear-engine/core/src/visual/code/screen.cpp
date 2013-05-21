@@ -403,10 +403,6 @@ void bear::visual::screen::split
   e.burst(boxes, output);
 
   const rectangle_type r( e.get_opaque_box() );
-
-  CLAW_ASSERT( r.empty() || e.get_bounding_box().includes( r ),
-               "The opaque box does not fit in the bounding box." );
-
   const double opaque_box_min_size(0);
 
   if ( (r.width() > opaque_box_min_size) && (r.height() > opaque_box_min_size) )
