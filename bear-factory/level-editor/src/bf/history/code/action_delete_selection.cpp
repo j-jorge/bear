@@ -15,22 +15,6 @@
 
 #include <wx/intl.h>
 
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Constructs the action to remove the items selected in the active
- *        layer.
- * \param lvl The level from which the items are removed.
- */
-bf::action_delete_selection::action_delete_selection( const gui_level& lvl )
-  : action_group( _("Delete selected items") )
-{
-  if ( lvl.empty() )
-    return;
-
-  add_actions_for_layer( lvl, lvl.get_active_layer_index() );
-} // action_delete_selection::action_delete_selection()
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructs the action to remove the items selected in a given

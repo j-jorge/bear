@@ -25,7 +25,6 @@ namespace bf
     public action_group
   {
   public:
-    action_delete_selection( const gui_level& lvl );
     action_delete_selection
     ( const gui_level& lvl, std::vector<std::size_t> layers );
 

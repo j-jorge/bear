@@ -791,7 +791,8 @@ void bf::ingame_view::cut_to_clipboard()
 {
   copy_to_clipboard();
 
-  do_action( new action_delete_selection( get_level() ) );
+  do_action
+    ( new action_delete_selection( get_level(), get_edit_layers() ) );
 } // ingame_view::cut_to_clipboard()
 
 /*----------------------------------------------------------------------------*/

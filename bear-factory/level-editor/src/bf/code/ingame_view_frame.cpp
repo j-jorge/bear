@@ -861,17 +861,6 @@ void bf::ingame_view_frame::update_toolbar() const
   else
     bar->EnableTool(wxID_ZOOM_OUT, true);
 
-  const bool has_selection = m_ingame_view->has_selection();
-  bar->EnableTool(wxID_CUT, has_selection);
-  bar->EnableTool(wxID_COPY, has_selection);
-  bar->EnableTool(wxID_DELETE, has_selection);
-  bar->EnableTool(ID_CLONE, has_selection);
-  bar->EnableTool(ID_OFFSET, has_selection);
-  bar->EnableTool(ID_ALIGN, has_selection);
-  bar->EnableTool(ID_ARRANGE, has_selection);
-
-  bar->EnableTool( wxID_PASTE, m_ingame_view->get_clipboard().has_items() );
-
   bar->EnableTool(wxID_UNDO, m_ingame_view->get_history().can_undo());
   bar->EnableTool(wxID_REDO, m_ingame_view->get_history().can_redo());
 
