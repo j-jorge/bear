@@ -41,19 +41,6 @@ bool bf::gui_level::has_selection( unsigned int layer_index ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if the selection of the layer on which we are working is not
- *        empty.
- */
-bool bf::gui_level::has_selection( ) const
-{
-  if ( empty() )
-    return false;
-  else
-    return has_selection( m_active_layer );
-} // gui_level::has_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Get the selection in a layer.
  * \param layer_index The index of the layer.
  */
@@ -88,17 +75,6 @@ bf::gui_level::get_main_selection( unsigned int layer_index ) const
   CLAW_PRECOND( has_selection( layer_index ) );
 
   return get_selection( layer_index ).get_main_selection();
-} // gui_level::get_main_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the main selection in the layer on which we are working.
- */
-bf::item_instance* bf::gui_level::get_main_selection() const
-{
-  CLAW_PRECOND( has_selection() );
-
-  return get_selection().get_main_selection();
 } // gui_level::get_main_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -141,7 +117,7 @@ bool bf::gui_level::item_is_selected( item_instance const* item ) const
 {
   CLAW_PRECOND( m_active_layer < layers_count() );
 
-  return item_is_selected( m_active_layer, item );
+  return item_is_selected( get_layer_by_item(*item), item );
 } // gui_level::item_is_selected()
 
 /*----------------------------------------------------------------------------*/
@@ -166,9 +142,9 @@ bool bf::gui_level::item_is_main_selection
  */
 bool bf::gui_level::item_is_main_selection( item_instance const* item ) const
 {
-  CLAW_PRECOND( m_active_layer < layers_count() );
+  CLAW_PRECOND( get_layer_by_item(*item) < layers_count() );
 
-  return item_is_main_selection(m_active_layer, item);
+  return item_is_main_selection( get_layer_by_item(*item), item);
 } // gui_level::item_is_main_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -209,9 +185,9 @@ void bf::gui_level::add_to_selection
  */
 void bf::gui_level::add_to_selection( item_instance* item, bool main_selection )
 {
-  CLAW_PRECOND( m_active_layer < layers_count() );
+  CLAW_PRECOND( get_layer_by_item(*item) < layers_count() );
 
-  add_to_selection( m_active_layer, item, main_selection );
+  add_to_selection( get_layer_by_item(*item), item, main_selection );
 } // gui_level::add_to_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -252,9 +228,9 @@ void bf::gui_level::remove_from_selection
  */
 void bf::gui_level::remove_from_selection( item_instance* item )
 {
-  CLAW_PRECOND( m_active_layer < layers_count() );
+  CLAW_PRECOND( get_layer_by_item(*item) < layers_count() );
 
-  remove_from_selection( m_active_layer, item );
+  remove_from_selection( get_layer_by_item(*item), item );
 } // gui_level::remove_from_selection()
 
 /*----------------------------------------------------------------------------*/

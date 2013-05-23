@@ -59,7 +59,7 @@ namespace bf
 
     std::pair<bool, layer::item_iterator>
     find_item_by_id( const std::string& id ) const;
-    unsigned int get_layer_by_item( const item_instance& item ) const;
+    std::size_t get_layer_by_item( const item_instance& item ) const;
 
     void generate_valid_id( std::string& id ) const;
     void generate_valid_id

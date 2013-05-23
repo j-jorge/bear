@@ -43,6 +43,7 @@ set( BF_LE_SOURCE_FILES
   code/properties_frame.cpp
   code/run_configuration.cpp
   code/run_configuration_frame.cpp
+  code/selection_manager.cpp
   code/slope.cpp
   code/windows_layout.cpp
 
@@ -61,12 +62,10 @@ set( BF_LE_SOURCE_FILES
   history/code/action_delete_selection.cpp
   history/code/action_deprioritize.cpp
   history/code/action_group.cpp
-  history/code/action_move_down.cpp
   history/code/action_move_in_other_layer.cpp
   history/code/action_move_layer_backward.cpp
   history/code/action_move_layer_forward.cpp
   history/code/action_move_selection.cpp
-  history/code/action_move_up.cpp
   history/code/action_paste_items.cpp
   history/code/action_prioritize.cpp
   history/code/action_remove_item.cpp

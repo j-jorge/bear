@@ -1139,9 +1139,9 @@ void bf::level_renderer::render_non_valid_item_box
  */
 void bf::level_renderer::render_grip( wxDC& dc, unsigned int index ) const
 {
-  CLAW_PRECOND( get_level().has_selection() );
+  CLAW_PRECOND( get_level().has_selection( index ) );
 
-  const item_instance* main_selection( get_level().get_main_selection() );
+  const item_instance* main_selection( get_level().get_main_selection(index) );
   wxRect b_box
     ( rectangle_to_wx( get_level().get_visual_box(*main_selection) ) );
 

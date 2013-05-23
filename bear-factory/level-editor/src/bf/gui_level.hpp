@@ -35,13 +35,11 @@ namespace bf
       const std::string& mus );
 
     bool has_selection( unsigned int layer_index ) const;
-    bool has_selection() const;
 
     const item_selection& get_selection( unsigned int layer_index ) const;
     const item_selection& get_selection() const;
 
     item_instance* get_main_selection( unsigned int layer_index ) const;
-    item_instance* get_main_selection() const;
 
     void set_selection( unsigned int layer_index, const item_selection& s );
 

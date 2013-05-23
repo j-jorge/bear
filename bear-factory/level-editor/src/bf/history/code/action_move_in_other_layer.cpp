@@ -20,29 +20,30 @@
 bf::action_move_in_other_layer::action_move_in_other_layer
 ( const gui_level& lvl, unsigned int layer )
 {
-  if ( !lvl.empty() )
-    if ( lvl.has_selection() )
-      {
-        m_new_layer = lvl.get_active_layer_index();
+  if ( lvl.empty() )
+    return;
 
-        if ( ( m_new_layer != layer ) && ( layer < lvl.layers_count() ) )
-          {
-	    m_last_layer = layer;
-            item_selection::const_iterator it;
-            const item_selection& selection( lvl.get_selection() );
+  m_new_layer = lvl.get_active_layer_index();
+  m_last_layer = layer;
+  
+  if ( lvl.has_selection( m_new_layer )
+       && ( m_new_layer != layer )
+       && ( m_last_layer < lvl.layers_count() ) )
+    {
+      item_selection::const_iterator it;
+      const item_selection& selection( lvl.get_selection() );
 
-            for (it=selection.begin(); it!=selection.end(); ++it)
-              add_action( new action_remove_item( *it, m_new_layer ) );
+      for (it=selection.begin(); it!=selection.end(); ++it)
+        add_action( new action_remove_item( *it, m_new_layer ) );
 
-            for (it=selection.begin(); it!=selection.end(); ++it)
-              {
-                item_instance* item = new item_instance(**it);
-                add_action( new action_add_item( item, m_last_layer ) );
-                m_new_items.insert
-                  (item, (*it == selection.get_main_selection()) );
-              }
-          }
-      }
+      for (it=selection.begin(); it!=selection.end(); ++it)
+        {
+          item_instance* item = new item_instance(**it);
+          add_action( new action_add_item( item, m_last_layer ) );
+          m_new_items.insert
+            ( item, (*it == selection.get_main_selection() ) );
+        }
+    }
 } // action_move_in_other_layer::action_move_in_other_layer()
 
 /*----------------------------------------------------------------------------*/

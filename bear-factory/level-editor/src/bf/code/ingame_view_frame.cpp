@@ -41,9 +41,7 @@
 #include "bf/history/action_clone_selection.hpp"
 #include "bf/history/action_delete_selection.hpp"
 #include "bf/history/action_group.hpp"
-#include "bf/history/action_move_down.hpp"
 #include "bf/history/action_move_selection.hpp"
-#include "bf/history/action_move_up.hpp"
 #include "bf/history/action_move_in_other_layer.hpp"
 #include "bf/history/action_remove_layer.hpp"
 #include "bf/history/action_resize_level.hpp"
@@ -1258,11 +1256,11 @@ void bf::ingame_view_frame::update_moving_layer_menu
   moving_layer_index.clear();
 
   wx_menu_append_item
-    ( moving_layer_menu, ID_MOVE_IN_LAYER_UP, _("&Backward"),
+    ( moving_layer_menu, ID_MOVE_IN_LAYER_UP, _("&Backward\tCtrl+PAGEUP"),
       _("Move the selection one layer backward."),
       wxBitmap(move_backward_xpm) );
   wx_menu_append_item
-    ( moving_layer_menu, ID_MOVE_IN_LAYER_DOWN, _("&Forward"),
+    ( moving_layer_menu, ID_MOVE_IN_LAYER_DOWN, _("&Forward\tCtrl+PAGEDOWN"),
       _("Move the selection one layer forward."), wxBitmap(move_forward_xpm) );
 
 
@@ -2241,10 +2239,16 @@ void bf::ingame_view_frame::on_offset( wxCommandEvent& WXUNUSED(event) )
 void bf::ingame_view_frame::on_move_in_layer_up
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  m_ingame_view->do_action
-    ( new action_move_up( m_ingame_view->get_level() ) );
+  std::size_t current_index( m_ingame_view->get_active_index() );
 
-  m_ingame_view->set_active_index(m_ingame_view->get_active_index()-1);
+  if ( current_index == 0 )
+    return;
+
+  m_ingame_view->do_action
+    ( new action_move_in_other_layer
+      ( m_ingame_view->get_level(), current_index - 1 ) );
+
+  m_ingame_view->set_active_index( current_index - 1 );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);
@@ -2259,10 +2263,19 @@ void bf::ingame_view_frame::on_move_in_layer_up
 void bf::ingame_view_frame::on_move_in_layer_down
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  m_ingame_view->do_action
-    ( new action_move_down( m_ingame_view->get_level() ) );
+  if ( m_ingame_view->get_level().empty() )
+    return;
 
-  m_ingame_view->set_active_index(m_ingame_view->get_active_index()+1);
+  std::size_t current_index( m_ingame_view->get_active_index() );
+  
+  if ( current_index == m_ingame_view->get_level().layers_count() - 1 )
+    return;
+
+  m_ingame_view->do_action
+    ( new action_move_in_other_layer
+      ( m_ingame_view->get_level(), current_index + 1 ) );
+
+  m_ingame_view->set_active_index( current_index + 1 );
 
   if ( ! m_ingame_view->get_active_layer().check_item_position() )
     m_ingame_view->show_item_position_error(this);

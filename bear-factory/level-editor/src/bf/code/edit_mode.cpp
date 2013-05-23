@@ -83,6 +83,23 @@ bf::edit_mode::get_edit_layers( const gui_level& lvl ) const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells if an item is owned by a layer concerned by the current edit
+ *        mode.
+ * \param lvl The level from which the layers are taken.
+ * \param item The item to check.
+ */
+bool bf::edit_mode::is_in_edited_layer
+( const gui_level& lvl, item_instance* item ) const
+{
+  const std::vector<std::size_t> layers( get_edit_layers( lvl ) );
+
+  return std::find
+    ( layers.begin(), layers.end(), lvl.get_layer_by_item( *item ) )
+    != layers.end();
+} // edit_mode::is_in_edited_layer()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Gets the indices of all layers having the same tag than the active
  *        layer.
  * \param lvl The level from which the layers are taken.

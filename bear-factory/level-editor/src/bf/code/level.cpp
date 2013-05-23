@@ -253,9 +253,9 @@ bf::level::find_item_by_id( const std::string& id ) const
  * \return The index of the layer containing the item, or layers_count() if none
  *         of the layers contain him.
  */
-unsigned int bf::level::get_layer_by_item( const item_instance& item ) const
+std::size_t bf::level::get_layer_by_item( const item_instance& item ) const
 {
-  unsigned int result(0);
+  std::size_t result(0);
   bool found(false);
 
   while ( !found && (result!=layers_count()) )

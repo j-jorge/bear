@@ -32,8 +32,6 @@
 #include "bf/history/action_paste_items.hpp"
 #include "bf/history/action_set_item_position_and_size.hpp"
 #include "bf/history/action_set_slope_curve.hpp"
-#include "bf/history/action_move_down.hpp"
-#include "bf/history/action_move_up.hpp"
 #include "bf/history/action_rotate_selection.hpp"
 
 #include <wx/dcbuffer.h>
@@ -90,7 +88,8 @@ bool bf::ingame_view::item_drop_target::OnDropText
 bf::ingame_view::ingame_view
 ( ingame_view_frame& parent, gui_level* lvl, windows_layout& layout )
   : super( &parent, wxID_ANY ), m_parent(parent), m_layout(layout),
-    m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_renderer( *lvl )
+    m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_renderer( *lvl ),
+    m_selection_manager( *lvl, layout.get_properties_frame() )
 {
   CLAW_PRECOND(lvl != NULL);
   SetDropTarget( new item_drop_target(*this) );
@@ -291,7 +290,7 @@ const bf::gui_level& bf::ingame_view::get_level() const
  */
 bf::edit_mode bf::ingame_view::get_edit_mode() const
 {
-  return m_edit_mode;
+  return m_selection_manager.get_edit_mode();
 } // ingame_view::get_edit_mode()
 
 /*----------------------------------------------------------------------------*/
@@ -301,7 +300,7 @@ bf::edit_mode bf::ingame_view::get_edit_mode() const
  */
 void bf::ingame_view::set_edit_mode( edit_mode m )
 {
-  m_edit_mode = m;
+  m_selection_manager.set_edit_mode( m );
 } // ingame_view::set_edit_mode()
 
 /*----------------------------------------------------------------------------*/
@@ -310,7 +309,7 @@ void bf::ingame_view::set_edit_mode( edit_mode m )
  */
 bf::item_selection bf::ingame_view::get_edit_selection() const
 {
-  return m_edit_mode.get_selection( get_level() );
+  return m_selection_manager.get_edit_mode().get_selection( get_level() );
 } // ingame_view::get_edit_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -319,7 +318,7 @@ bf::item_selection bf::ingame_view::get_edit_selection() const
  */
 std::vector<std::size_t> bf::ingame_view::get_edit_layers() const
 {
-  return m_edit_mode.get_edit_layers( get_level() );
+  return m_selection_manager.get_edit_mode().get_edit_layers( get_level() );
 } // ingame_view::get_edit_layers()
 
 /*----------------------------------------------------------------------------*/
@@ -475,7 +474,8 @@ void bf::ingame_view::set_grid_on_selection()
 
   if ( has_selection() )
     {
-      const item_instance* selection( get_level().get_main_selection() );
+      const item_instance* selection
+        ( get_edit_selection().get_main_selection() );
       grid g( get_grid() );
 
       wxSize step( g.get_step() );
@@ -700,7 +700,7 @@ void bf::ingame_view::update_layout()
  */
 bool bf::ingame_view::has_selection() const
 {
-  return get_level().has_selection();
+  return m_selection_manager.has_selection();
 } // ingame_view::has_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -709,8 +709,7 @@ bool bf::ingame_view::has_selection() const
  */
 void bf::ingame_view::clear_selection()
 {
-  get_level().clear_selection();
-  m_layout.get_properties_frame().clear();
+  m_selection_manager.clear_selection();
   Refresh();
 } // ingame_view::clear_selection()
 
@@ -720,12 +719,7 @@ void bf::ingame_view::clear_selection()
  */
 void bf::ingame_view::select_all()
 {
-  const std::vector<item_instance*> items
-    ( get_level().pick_items
-      ( rectangle_type
-        ( 0.0, 00., get_level().get_width(), get_level().get_height() ) ) );
-
-  set_selection( std::vector<item_instance*>( items.begin(), items.end() ) );
+  m_selection_manager.select_all();
 } // ingame_view::select_all()
 
 /*----------------------------------------------------------------------------*/
@@ -745,7 +739,7 @@ void bf::ingame_view::select_item_and_layer( item_instance* item )
   get_level().set_layer_visibility(index, true);
 
   // select the item
-  set_selection(item);
+  m_selection_manager.set_selection( item );
 
   // center the view on the item
   wxCoord x = zoom((wxCoord)item->get_rendering_parameters().get_left() +
@@ -774,9 +768,10 @@ bf::level_clipboard& bf::ingame_view::get_clipboard() const
  */
 void bf::ingame_view::copy_to_clipboard() const
 {
-  if ( has_selection() )
+  if ( get_level().has_selection( get_active_index() ) )
     {
-      const item_instance& main_selection( *get_level().get_main_selection() );
+      const item_instance& main_selection
+        ( *get_level().get_main_selection( get_active_index() ) );
 
       item_copy copy;
       copy.x = main_selection.get_rendering_parameters().get_left();
@@ -969,116 +964,59 @@ void bf::ingame_view::select_item_at
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Change the selection on an item.
+ * \brief Changes the selection on an item.
  * \param item The item to process.
- * \remark The function does nothing if item == NULL.
  */
 void bf::ingame_view::toggle_selection( item_instance* item )
 {
-  if ( item != NULL )
-    {
-      if ( get_level().item_is_selected(item) )
-        {
-          get_level().remove_from_selection(item);
-          m_layout.get_properties_frame().remove_item(item);
-        }
-      else
-        {
-          get_level().add_to_selection(item, true);
-          m_layout.get_properties_frame().add_item(item);
-        }
-
-      Refresh();
-    }
+  m_selection_manager.toggle_selection( item );
+  Refresh();
 } // ingame_view::toggle_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Add an item in the selection.
+ * \brief Adds an item in the selection.
  * \param item The item to select.
  */
 void bf::ingame_view::add_selection( item_instance* item )
 {
-  if ( item != NULL )
-    {
-      get_level().add_to_selection(item, true);
-      m_layout.get_properties_frame().add_item(item);
-      Refresh();
-    }
+  m_selection_manager.add_selection( item );
+  Refresh();
 } // ingame_view::add_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Add some items in the selection.
- * \param item The items to select.
+ * \brief Adds some items in the selection.
+ * \param items The items to select.
  */
-void bf::ingame_view::add_selection( const std::vector<item_instance*>& item )
+void bf::ingame_view::add_selection
+( const std::vector<item_instance*>& items )
 {
-  if ( !item.empty() )
-    {
-      std::vector<item_instance*>::const_iterator it;
-
-      for (it=item.begin(); it!=item.end(); ++it)
-        get_level().add_to_selection(*it);
-
-      m_layout.get_properties_frame().add_items(item);
-      get_level().add_to_selection(item.front(), true);
-      Refresh();
-    }
+  m_selection_manager.add_selection( items );
+  Refresh();
 } // ingame_view::add_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the selected items.
+ * \brief Sets the selected items.
  * \param item The items to select.
- */
-void bf::ingame_view::set_selection( const std::vector<item_instance*>& item )
-{
-  if ( item.empty() )
-    clear_selection();
-  else
-    set_selection( item, item.front() );
-} // ingame_view::set_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Set the selected items.
- * \param item The items to select.
- * \param selected Set this item as the selected item.
- * \param add Indicates if the items are added at the selection.
  */
 void bf::ingame_view::set_selection
-( const std::vector<item_instance*>& item, item_instance* selected, bool add )
+( const std::vector<item_instance*>& item )
 {
-  CLAW_PRECOND( std::find( item.begin(), item.end(), selected ) != item.end() );
-
-  if ( !add )
-    {
-      get_level().clear_selection();
-      m_layout.get_properties_frame().clear();
-    }
-
-  add_selection( item );
-  get_level().add_to_selection(selected, true);
-
+  m_selection_manager.set_selection( item );
   Refresh();
 } // ingame_view::set_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the selected item.
+ * \brief Sets the selected item.
  * \param item The item to select.
  */
 void bf::ingame_view::set_selection( item_instance* item )
 {
-  if ( item == NULL )
-    clear_selection();
-  else
-    {
-      std::vector<item_instance*> item_list;
-      item_list.push_back(item);
-      set_selection( item_list );
-    }
+  m_selection_manager.set_selection( item );
+  Refresh();
 } // ingame_view::set_selection()
 
 /*----------------------------------------------------------------------------*/
@@ -1172,7 +1110,11 @@ int bf::ingame_view::update_coordinate_magnetism
  */
 void bf::ingame_view::update_mouse_position( const wxPoint& position )
 {
-  const item_instance* main_selection( get_level().get_main_selection() );
+  if ( !get_level().has_selection( get_active_index() ) )
+    return;
+
+  const item_instance* main_selection
+    ( get_level().get_main_selection( get_active_index() ) );
 
   // magnetism
   wxPoint item_position;
@@ -1342,10 +1284,12 @@ void bf::ingame_view::write_mouse_position(const wxPoint& point)
               wxString::Format
               ( _("id = '%s'"), std_to_wx_string(item->get_id()).c_str() );
 
-          if ( get_level().has_selection() )
+          const item_selection selection( get_edit_selection() );
+
+          if ( !selection.empty() )
             {
               const item_rendering_parameters& r1
-                ( get_level().get_main_selection()->
+                ( selection.get_main_selection()->
                   get_rendering_parameters() );
               const item_rendering_parameters& r2
                 ( item->get_rendering_parameters() );
@@ -1417,7 +1361,7 @@ bool bf::ingame_view::set_drag_mode_size( const wxPoint& pos )
 
   bool grip = true;
 
-  item_instance* selection( get_level().get_main_selection() );
+  item_instance* const selection( get_edit_selection().get_main_selection() );
   const wxRect box
     ( rectangle_to_wx( get_level().get_visual_box( *selection ) ) );
   const wxSize s( m_renderer.get_grip_size(), m_renderer.get_grip_size() );
@@ -1521,9 +1465,9 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
 {
   bool grip = true;
 
-  if(  has_selection() )
+  if( has_selection() )
     {
-      item_instance* item( get_level().get_main_selection() );
+      item_instance* item( get_edit_selection().get_main_selection() );
 
       if ( item->get_class().get_class_name() == "bear::slope" )
         {
@@ -1533,15 +1477,6 @@ bool bf::ingame_view::set_drag_mode_slope( const wxPoint& pos )
           slope s;
           s.read_from( *item );
 
-          /*
-          steepness = 
-            steepness < 0 ? - unzoom( - steepness ) : unzoom( steepness );
-          
-          left_x = left_x < 0 ? - unzoom( - left_x ) : unzoom( left_x );
-          left_y = left_y < 0 ? - unzoom( - left_y ) : unzoom( left_y );
-          right_x = right_x < 0 ? - unzoom( - right_x ) : unzoom( right_x );
-          right_y = right_y < 0 ? - unzoom( - right_y ) : unzoom( right_y );
-          */
           wxPoint p[2];
           
           if ( s.steepness < 0 )
@@ -1851,10 +1786,8 @@ template<typename Action>
 void bf::ingame_view::apply_action( Action* action )
 {
   CLAW_PRECOND( action != NULL );
-  item_selection old_sel;
 
-  if ( get_level().has_selection() )
-    old_sel = get_level().get_selection();
+  const item_selection old_sel( get_edit_selection() );
 
   if ( m_history.do_action(action) )
     {
@@ -1865,7 +1798,7 @@ void bf::ingame_view::apply_action( Action* action )
       m_layout.get_layer_list_frame().refresh();
 
       if ( !get_level().empty()
-           && !old_sel.same_group_than(get_level().get_selection()) )
+           && !old_sel.same_group_than( get_edit_selection() ) )
         update_layout();
       else
         {
@@ -1874,7 +1807,6 @@ void bf::ingame_view::apply_action( Action* action )
         }
     }
 } // ingame_view::apply_action()
-
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -2116,9 +2048,10 @@ void bf::ingame_view::on_mouse_middle_up(wxMouseEvent& event)
       select_item_at( point, items );
       add_selection( std::vector<item_instance*>(items.begin(), items.end()) );
     }
-  else if ( has_selection() )
+  else if ( get_level().has_selection( get_active_index() ) )
     {
-      const item_instance* selection( get_level().get_main_selection() );
+      const item_instance* selection
+        ( get_level().get_main_selection( get_active_index() ) );
 
       const double dx
         ( point.x - selection->get_rendering_parameters().get_left() );
@@ -2213,27 +2146,6 @@ void bf::ingame_view::on_key_down(wxKeyEvent& event)
                         m_view.y + GetSize().y - event.GetY());
           write_mouse_position(point);
         }
-      break;
-    case  WXK_PAGEDOWN:
-      if ( event.ControlDown() && event.ShiftDown()
-           && get_level().has_selection()
-           && (get_active_index() < get_level().layers_count() - 1) )
-	{
-	  do_action( new action_move_down( get_level() ));
-	  set_active_index(get_active_index()+1);
-	}
-      else
-        event.Skip();
-      break;
-    case  WXK_PAGEUP:
-      if ( event.ControlDown() && event.ShiftDown()
-           && get_level().has_selection() && (get_active_index() > 0) )
-	{
-	  do_action( new action_move_up( get_level() ));
-	  set_active_index(get_active_index()-1);
-	}
-      else
-        event.Skip();
       break;
     default:
       event.Skip();

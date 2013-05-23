@@ -54,6 +54,7 @@ namespace bf
 
     item_selection get_selection( const gui_level& lvl ) const;
     std::vector<std::size_t> get_edit_layers( const gui_level& lvl ) const;
+    bool is_in_edited_layer( const gui_level& lvl, item_instance* item ) const;
 
   private:
     std::vector<std::size_t>

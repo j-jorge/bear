@@ -16,6 +16,7 @@
 #include "bf/level_clipboard.hpp"
 #include "bf/level_check_result.hpp"
 #include "bf/level_renderer.hpp"
+#include "bf/selection_manager.hpp"
 #include "bf/history/level_history.hpp"
 
 #include <wx/wx.h>
@@ -155,9 +156,6 @@ namespace bf
     void add_selection( item_instance* item );
     void add_selection( const std::vector<item_instance*>& item);
     void set_selection( const std::vector<item_instance*>& item);
-    void set_selection
-    ( const std::vector<item_instance*>& item, item_instance* selected,
-      bool add = false);
     void set_selection( item_instance* item );
 
     void copy_selection(bool add = false);
@@ -234,8 +232,8 @@ namespace bf
     /** \brief This object will draw the level in the view. */
     level_renderer m_renderer;
 
-    /** \brief Tells to which items the operations are applied. */
-    edit_mode m_edit_mode;
+    /** \brief This object manages how the items are selected in the level. */
+    selection_manager m_selection_manager;
 
     /** \brief The items copied in the clipboard. */
     static level_clipboard s_clipboard;
