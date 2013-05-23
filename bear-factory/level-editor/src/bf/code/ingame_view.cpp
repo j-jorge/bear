@@ -716,6 +716,7 @@ void bf::ingame_view::clear_selection()
 void bf::ingame_view::select_all()
 {
   m_selection_manager.select_all();
+  Refresh();
 } // ingame_view::select_all()
 
 /*----------------------------------------------------------------------------*/

@@ -115,7 +115,7 @@ void bf::selection_manager::select_all()
  */
 void bf::selection_manager::toggle_selection( item_instance* item )
 {
-  if ( (item == NULL) || m_edit_mode.is_in_edited_layer( m_level, item ) )
+  if ( (item == NULL) || !m_edit_mode.is_in_edited_layer( m_level, item ) )
     return;
 
   if ( m_level.item_is_selected( item ) )
@@ -137,7 +137,7 @@ void bf::selection_manager::toggle_selection( item_instance* item )
  */
 void bf::selection_manager::add_selection( item_instance* item )
 {
-  if ( m_edit_mode.is_in_edited_layer( m_level, item ) )
+  if ( !m_edit_mode.is_in_edited_layer( m_level, item ) )
     return;
 
   m_level.add_to_selection(item, true);
