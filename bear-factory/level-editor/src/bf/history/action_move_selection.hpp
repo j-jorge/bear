@@ -11,12 +11,11 @@
 #ifndef __BF_ACTION_MOVE_SELECTION_HPP__
 #define __BF_ACTION_MOVE_SELECTION_HPP__
 
+#include "bf/item_selection.hpp"
 #include "bf/history/action_group.hpp"
 
 namespace bf
 {
-  class item_selection;
-
   /**
    * \brief The action of moving the selected items.
    * \author Julien Jorge
@@ -28,7 +27,11 @@ namespace bf
     action_move_selection
     ( const item_selection& selection, double dx, double dy );
 
-    wxString get_description() const;
+    item_selection get_selection() const;
+
+  private:
+    /** \brief The items moved by this action. */
+    item_selection m_selection;
 
   }; // class action_move_selection
 } // namespace bf

@@ -53,8 +53,8 @@ void bf::action_remove_item::execute( gui_level& lvl )
 
   create_related_actions(lvl);
 
-  m_selected = lvl.item_is_selected( m_layer, m_item );
-  m_main_selection = lvl.item_is_main_selection( m_layer, m_item );
+  m_selected = lvl.item_is_selected( m_item );
+  m_main_selection = lvl.item_is_main_selection( m_item );
 
   m_pre_actions->execute(lvl);
   lvl.remove_item( m_layer, m_item );
@@ -74,7 +74,7 @@ void bf::action_remove_item::undo( gui_level& lvl )
   m_pre_actions->undo(lvl);
 
   if ( m_selected )
-    lvl.add_to_selection( m_layer, m_item, m_main_selection );
+    lvl.add_to_selection( m_item, m_main_selection );
 
   m_done = false;
 } // action_remove_item::undo()

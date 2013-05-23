@@ -25,7 +25,10 @@
  */
 bf::action_rotate_selection::action_rotate_selection
 ( const item_selection& selection, bool clockwise )
+  : action_group( _("Rotate selected items") )
 {
+  m_selection = selection;
+
   const std::string field("basic_renderable_item.angle");
   const double delta( clockwise ? 0.05 : -0.05 );
 
@@ -52,7 +55,10 @@ bf::action_rotate_selection::action_rotate_selection
 } // action_rotate_selection::action_rotate_selection()
 
 /*----------------------------------------------------------------------------*/
-wxString bf::action_rotate_selection::get_description() const
+/**
+ * Gets the selection rotated by this action.
+ */
+bf::item_selection bf::action_rotate_selection::get_selection() const
 {
-  return _("Rotate selected items");
-} // action_rotate_selection::get_description()
+  return m_selection;
+} // action_rotate_selection::get_selection()

@@ -37,45 +37,28 @@ namespace bf
     bool has_selection( unsigned int layer_index ) const;
 
     const item_selection& get_selection( unsigned int layer_index ) const;
-    const item_selection& get_selection() const;
-
     item_instance* get_main_selection( unsigned int layer_index ) const;
 
-    void set_selection( unsigned int layer_index, const item_selection& s );
-
-    bool item_is_selected
-    ( unsigned int layer_index, item_instance const* item ) const;
     bool item_is_selected( item_instance const* item ) const;
-
-    bool item_is_main_selection
-    ( unsigned int layer_index, item_instance const* item ) const;
     bool item_is_main_selection( item_instance const* item ) const;
 
-    void add_to_selection( unsigned int layer_index, const item_selection& s );
-    void add_to_selection
-    ( unsigned int layer_index, item_instance* item,
-      bool main_selection = false );
-
+    void add_to_selection( const item_selection& s );
     void add_to_selection( item_instance* item, bool main_selection = false );
 
-    void remove_from_selection( unsigned int layer_index, item_instance* item );
-    void
-    remove_from_selection( unsigned int layer_index, const item_selection& s );
     void remove_from_selection( item_instance* item );
+    void remove_from_selection( const item_selection& s );
 
     void clear_selection( unsigned int layer_index );
-    void clear_selection();
 
     void remove_item( unsigned int layer_index, item_instance* item );
 
     bool layer_is_visible( unsigned int layer_index ) const;
-
     void set_layer_visibility( unsigned int layer_index, bool b );
 
     void set_active_layer( unsigned int layer_index );
     layer& get_active_layer() const;
 
-    unsigned int get_active_layer_index() const;
+    std::size_t get_active_layer_index() const;
 
     layer& add_layer
     ( const std::string& class_name, const std::string& name,
@@ -89,10 +72,6 @@ namespace bf
 
     bool check_item_position() const;
 
-    item_instance* first_item( const position_type& pos ) const;
-    item_instance* first_selected_item( position_type pos ) const;
-    std::vector<item_instance*> find_items_at( position_type pos ) const;
-    std::vector<item_instance*> pick_items( rectangle_type pos ) const;
     rectangle_type get_visual_box( const item_instance& item ) const;
 
   private:

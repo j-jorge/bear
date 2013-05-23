@@ -31,7 +31,7 @@ bf::action_move_in_other_layer::action_move_in_other_layer
        && ( m_last_layer < lvl.layers_count() ) )
     {
       item_selection::const_iterator it;
-      const item_selection& selection( lvl.get_selection() );
+      const item_selection& selection( lvl.get_selection( m_new_layer ) );
 
       for (it=selection.begin(); it!=selection.end(); ++it)
         add_action( new action_remove_item( *it, m_new_layer ) );
@@ -59,13 +59,13 @@ void bf::action_move_in_other_layer::execute( gui_level& lvl )
 		( m_new_layer < lvl.layers_count() ) && 
 		( m_last_layer < lvl.layers_count() ) );
 
-  m_previous_items = lvl.get_selection(m_new_layer);
+  m_previous_items = lvl.get_selection( m_new_layer );
   m_previous_in_other_layer_items = lvl.get_selection(m_last_layer);
 
   action_group::execute(lvl);
 
   lvl.clear_selection(m_last_layer);
-  lvl.add_to_selection(m_last_layer, m_new_items);
+  lvl.add_to_selection( m_new_items );
 } // action_move_in_other_layer::execute()
 
 /*----------------------------------------------------------------------------*/
@@ -77,8 +77,8 @@ void bf::action_move_in_other_layer::undo( gui_level& lvl )
 
   action_group::undo(lvl);
 
-  lvl.clear_selection(m_last_layer);
-  lvl.add_to_selection(m_last_layer, m_previous_in_other_layer_items);
-  lvl.clear_selection(m_new_layer);
-  lvl.add_to_selection(m_new_layer, m_previous_items);
+  lvl.clear_selection( m_last_layer );
+  lvl.add_to_selection( m_previous_in_other_layer_items );
+  lvl.clear_selection( m_new_layer );
+  lvl.add_to_selection( m_previous_items );
 } // action_move_in_other_layer::undo()

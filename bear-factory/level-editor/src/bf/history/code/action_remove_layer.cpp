@@ -48,7 +48,7 @@ void bf::action_remove_layer::undo( gui_level& lvl )
   CLAW_PRECOND( lvl.layers_count() >= m_index );
 
   lvl.add_layer( m_layer, m_index );
-  lvl.set_selection( m_index, m_selection );
+  lvl.add_to_selection( m_selection );
 
   m_layer = NULL;
 } // action_remove_layer::undo()

@@ -685,11 +685,7 @@ void bf::ingame_view::update_layout()
   m_layout.get_layer_list_frame().set_level_view(this);
   m_layout.get_properties_frame().clear();
 
-  if ( has_selection() )
-    m_layout.get_properties_frame().add_items
-      ( std::vector<item_instance*>
-        ( get_level().get_selection().begin(),
-          get_level().get_selection().end() ) );
+  m_selection_manager.refresh_properties();
 
   Refresh();
 } // ingame_view::update_layout()
@@ -768,23 +764,22 @@ bf::level_clipboard& bf::ingame_view::get_clipboard() const
  */
 void bf::ingame_view::copy_to_clipboard() const
 {
-  if ( get_level().has_selection( get_active_index() ) )
-    {
-      const item_instance& main_selection
-        ( *get_level().get_main_selection( get_active_index() ) );
+  const item_selection selection( get_edit_selection() );
 
-      item_copy copy;
-      copy.x = main_selection.get_rendering_parameters().get_left();
-      copy.y = main_selection.get_rendering_parameters().get_bottom();
+  if ( selection.empty() )
+    return;
 
-      item_selection::const_iterator it;
-      const item_selection& selection( get_level().get_selection() );
+  const item_instance& main_selection( *selection.get_main_selection() );
 
-      for (it=selection.begin(); it!=selection.end(); ++it)
-        copy.items.push_front(**it);
+  item_copy copy;
+  copy.x = main_selection.get_rendering_parameters().get_left();
+  copy.y = main_selection.get_rendering_parameters().get_bottom();
 
-      s_clipboard.copy_items( copy );
-    }
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
+    copy.items.push_front(**it);
+
+  s_clipboard.copy_items( copy );
 } // ingame_view::copy_to_clipboard()
 
 /*----------------------------------------------------------------------------*/
@@ -949,13 +944,14 @@ void bf::ingame_view::select_item_at
   result.clear();
 
   const std::vector<item_instance*> items
-    ( get_level().find_items_at( position_type( pos.x, pos.y ) ) );
+    ( get_edit_mode().find_items_at
+      ( get_level(), position_type( pos.x, pos.y ) ) );
 
   if ( !items.empty() )
     {
       const std::set<item_instance*> candidates( items.begin(), items.end() );
 
-      item_choice_frame dlg( this, get_level().get_selection(), candidates );
+      item_choice_frame dlg( this, get_edit_selection(), candidates );
 
       if ( dlg.ShowModal() == wxID_OK )
         dlg.get_selection(result);
@@ -1271,7 +1267,8 @@ void bf::ingame_view::write_mouse_position(const wxPoint& point)
       m_parent.GetStatusBar()->SetStatusText
         ( wxString::Format( _("y=%d"), point.y), 2 );
 
-      item_instance* item = get_level().first_item( wx_to_position( point ) );
+      item_instance* const item
+        ( get_edit_mode().first_item( get_level(), wx_to_position( point ) ) );
       wxString class_str, id_str, dist_str;
 
       if ( item != NULL )
@@ -1628,8 +1625,9 @@ void bf::ingame_view::apply_drag_mode_selection( bool ctrl, bool alt )
   CLAW_PRECOND( m_drag_info->drag_mode == drag_info::drag_mode_selection );
 
   const std::vector<item_instance*> items
-    ( get_level().pick_items
-      ( rectangle_type
+    ( get_edit_mode().pick_items
+      ( get_level(),
+        rectangle_type
         ( m_drag_info->mouse_origin.x, m_drag_info->mouse_origin.y,
           m_drag_info->mouse_position.x, m_drag_info->mouse_position.y ) ) );
 
@@ -1891,12 +1889,14 @@ void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
       else
         {
           item_instance* const first_selected_item =
-            get_level().first_selected_item( wx_to_position( point ) );
+            get_edit_mode().first_selected_item
+            ( get_level(), wx_to_position( point ) );
 
           if ( (first_selected_item == NULL) || event.ControlDown() )
             {
               item_instance* const item
-                ( get_level().first_item( wx_to_position( point ) ) );
+                ( get_edit_mode().first_item
+                  ( get_level(), wx_to_position( point ) ) );
 
               if (item != NULL)
                 items.insert(item);
@@ -2018,7 +2018,8 @@ void bf::ingame_view::on_mouse_left_double_click(wxMouseEvent& event)
   wxPoint point = compute_mouse_position( event.GetPosition() );
 
   item_instance* const item =
-    get_level().first_selected_item( position_type( point.x, point.y ) );
+    get_edit_mode().first_selected_item
+    ( get_level(), position_type( point.x, point.y ) );
 
   if ( item != NULL )
     {

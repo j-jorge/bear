@@ -50,7 +50,7 @@ void bf::action_add_item::undo( gui_level& lvl )
   CLAW_PRECOND( m_done );
   CLAW_PRECOND( lvl.layers_count() > m_layer );
 
-  lvl.remove_from_selection( m_layer, m_item );
+  lvl.remove_from_selection( m_item );
   lvl.get_layer( m_layer ).remove_item( m_item );
   m_done = false;
 } // action_add_item::undo()

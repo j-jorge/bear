@@ -28,7 +28,7 @@ bf::gui_level::gui_level
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if the selection of a layer is not empty.
+ * \brief Tells if the selection of a layer is not empty.
  * \param layer_index The layer to check.
  */
 bool bf::gui_level::has_selection( unsigned int layer_index ) const
@@ -41,7 +41,7 @@ bool bf::gui_level::has_selection( unsigned int layer_index ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the selection in a layer.
+ * \brief Gets the selection in a layer.
  * \param layer_index The index of the layer.
  */
 const bf::item_selection&
@@ -55,183 +55,91 @@ bf::gui_level::get_selection( unsigned int layer_index ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the selection in the layer on which we are working.
- */
-const bf::item_selection& bf::gui_level::get_selection() const
-{
-  CLAW_PRECOND( m_active_layer < layers_count() );
-
-  return get_selection( m_active_layer );
-} // gui_level::get_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the main selection in a layer.
+ * \brief Gets the main selection in a layer.
  * \param layer_index The index of the layer.
  */
 bf::item_instance*
 bf::gui_level::get_main_selection( unsigned int layer_index ) const
 {
-  CLAW_PRECOND( has_selection( layer_index ) );
-
   return get_selection( layer_index ).get_main_selection();
 } // gui_level::get_main_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the selection of a layer.
- * \param layer_index The index of the layer.
- * \param s The selection in the layer.
- * \pre All items in \a s are in the layer number \a layer_index.
- */
-void bf::gui_level::set_selection
-( unsigned int layer_index, const item_selection& s )
-{
-  CLAW_PRECOND( layer_index < layers_count() );
-  CLAW_PRECOND( layers_count() == m_selection_by_layer.size() );
-
-  m_selection_by_layer[layer_index] = s;
-} // gui_level::set_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if an item is selected.
- * \param layer_index The layer to search the item in.
- * \param item The item to search.
- */
-bool bf::gui_level::item_is_selected
-( unsigned int layer_index, item_instance const* item ) const
-{
-  CLAW_PRECOND( layer_index < layers_count() );
-  CLAW_PRECOND( layers_count() == m_selection_by_layer.size() );
-
-  return m_selection_by_layer[layer_index].is_selected(item);
-} // gui_level::item_is_selected()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if an item is selected in the layer in which we are working.
+ * \brief Tells if an item is selected in its layer.
  * \param item The item to search.
  */
 bool bf::gui_level::item_is_selected( item_instance const* item ) const
 {
-  CLAW_PRECOND( m_active_layer < layers_count() );
+  const std::size_t layer_index( get_layer_by_item(*item) );
 
-  return item_is_selected( get_layer_by_item(*item), item );
+  return m_selection_by_layer[layer_index].is_selected( item );
 } // gui_level::item_is_selected()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if an item is the main selection.
- * \param layer_index The layer to search the item in.
- * \param item The item to search.
- */
-bool bf::gui_level::item_is_main_selection
-( unsigned int layer_index, item_instance const* item ) const
-{
-  CLAW_PRECOND( layer_index < layers_count() );
-  CLAW_PRECOND( layers_count() == m_selection_by_layer.size() );
-
-  return m_selection_by_layer[layer_index].is_main_selection(item);
-} // gui_level::item_is_main_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if an item is the main selection.
+ * \brief Tells if an item is the main selection in its layer.
  * \param item The item to search.
  */
 bool bf::gui_level::item_is_main_selection( item_instance const* item ) const
 {
-  CLAW_PRECOND( get_layer_by_item(*item) < layers_count() );
-
-  return item_is_main_selection( get_layer_by_item(*item), item);
+  return (item != NULL)
+    && get_main_selection( get_layer_by_item(*item) ) == item;
 } // gui_level::item_is_main_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Add a selection in the selection of a layer.
- * \param layer_index The layer in which we select the items.
+ * \brief Adds a selection in the selection of the layers.
  * \param s The items to add.
  */
 void bf::gui_level::add_to_selection
-( unsigned int layer_index, const item_selection& s )
+( const item_selection& s )
 {
-  CLAW_PRECOND( layer_index < layers_count() );
-  CLAW_PRECOND( layers_count() == m_selection_by_layer.size() );
+  for ( item_selection::const_iterator it( s.begin() ); it != s.end(); ++it )
+    add_to_selection( *it );
 
-  m_selection_by_layer[layer_index].insert(s);
+  add_to_selection( s.get_main_selection(), true );
 } // gui_level::add_to_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Add an item in the selection of a layer.
- * \param layer_index The layer in which we select the item.
+ * \brief Adds an item in the selection of its layer.
  * \param item The item to select.
- * \param main_selection Set the item as the main selection.
+ * \param main_selection Tells to set the item as the main selection.
  */
 void bf::gui_level::add_to_selection
-( unsigned int layer_index, item_instance* item, bool main_selection )
+( item_instance* item, bool main_selection )
 {
-  CLAW_PRECOND( layer_index < layers_count() );
+  if ( item == NULL )
+    return;
 
-  m_selection_by_layer[layer_index].insert(item, main_selection);
+  const std::size_t layer_index( get_layer_by_item( *item ) );
+  
+  m_selection_by_layer[layer_index].insert( item, main_selection );
 } // gui_level::add_to_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Add an item in the selection of the layer on which we are working.
- * \param item The item to select.
- * \param main_selection Set the item as the main selection.
- */
-void bf::gui_level::add_to_selection( item_instance* item, bool main_selection )
-{
-  CLAW_PRECOND( get_layer_by_item(*item) < layers_count() );
-
-  add_to_selection( get_layer_by_item(*item), item, main_selection );
-} // gui_level::add_to_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Remove an item from the selection of a layer.
- * \param layer_index The layer in which we deselect the item.
+ * \brief Removes an item from the selection of its layer.
  * \param item The item to deselect.
  */
-void bf::gui_level::remove_from_selection
-( unsigned int layer_index, item_instance* item )
+void bf::gui_level::remove_from_selection( item_instance* item )
 {
-  CLAW_PRECOND( layer_index < layers_count() );
-  CLAW_PRECOND( layers_count() == m_selection_by_layer.size() );
+  const std::size_t layer_index( get_layer_by_item( *item ) );
 
   m_selection_by_layer[layer_index].remove(item);
 } // gui_level::remove_from_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Remove a selection from the selection of a layer.
- * \param layer_index The layer in which we deselect the items.
+ * \brief Removes a selection from the selections of the layers.
  * \param s The items to remove.
  */
-void bf::gui_level::remove_from_selection
-( unsigned int layer_index, const item_selection& s )
+void bf::gui_level::remove_from_selection( const item_selection& s )
 {
-  CLAW_PRECOND( layer_index < layers_count() );
-  CLAW_PRECOND( layers_count() == m_selection_by_layer.size() );
-
-  m_selection_by_layer[layer_index].remove(s);
+  for ( item_selection::const_iterator it( s.begin() ); it != s.end(); ++it )
+    remove_from_selection( *it );
 } // gui_level::remove_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Remove an item from the selection of the layer on which we are
- *        working.
- * \param item The item to deselect.
- */
-void bf::gui_level::remove_from_selection( item_instance* item )
-{
-  CLAW_PRECOND( get_layer_by_item(*item) < layers_count() );
-
-  remove_from_selection( get_layer_by_item(*item), item );
-} // gui_level::remove_from_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -248,16 +156,6 @@ void bf::gui_level::clear_selection( unsigned int layer_index )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Clear the selection in the layer in which we are working.
- */
-void bf::gui_level::clear_selection()
-{
-  if ( m_active_layer < layers_count() )
-    clear_selection( m_active_layer );
-} // gui_level::clear_selection()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Remove an item from the level.
  * \param layer_index The layer in which we remove the item.
  * \param item The item to remove.
@@ -266,7 +164,7 @@ void bf::gui_level::remove_item( unsigned int layer_index, item_instance* item )
 {
   CLAW_PRECOND( layer_index < layers_count() );
 
-  remove_from_selection(layer_index, item);
+  remove_from_selection( item );
   get_layer(layer_index).remove_item(item);
 } // gui_level::remove_item()
 
@@ -324,7 +222,7 @@ bf::layer& bf::gui_level::get_active_layer() const
 /**
  * \brief Get the index of the layer on which we are working.
  */
-unsigned int bf::gui_level::get_active_layer_index() const
+std::size_t bf::gui_level::get_active_layer_index() const
 {
   return m_active_layer;
 } // gui_level::get_active_layer()
@@ -457,120 +355,6 @@ bool bf::gui_level::check_item_position() const
 
   return result;  
 } // gui_level::check_item_position()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Pick the first item found near a given point.
- * \param pos The position of the point.
- */
-bf::item_instance*
-bf::gui_level::first_item( const position_type& pos ) const
-{
-  item_instance* result( NULL );
-  layer::item_iterator it;
-  coordinate_type min_max_dist( std::numeric_limits<coordinate_type>::max() );
-
-  if ( !empty() )
-    {
-      layer& the_layer( get_active_layer() );
-
-      for ( it = the_layer.item_begin(); it != the_layer.item_end(); ++it )
-        {
-          const rectangle_type box( get_visual_box( *it ) );
-
-          if ( box.includes(pos) )
-            {
-              const coordinate_type dist =
-                std::max
-                ( std::max( pos.x - box.left(), box.right() - pos.x),
-                  std::max( pos.y - box.top(), box.bottom() - pos.y) );
-
-              if ( dist < min_max_dist )
-                {
-                  result = &(*it);
-                  min_max_dist = dist;
-                }
-            }
-        }
-    }
-
-  return result;
-} // gui_level::pick_first_item()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Gets the first item in the active selection that overlaps a given
- *        position.
- * \param pos The point to test.
- */
-bf::item_instance* bf::gui_level::first_selected_item( position_type pos ) const
-{
-  if ( empty() )
-    return NULL;
-
-  item_selection::const_iterator it;
-  const item_selection& selection( get_selection() );
-
-  for ( it=selection.begin(); it!=selection.end(); ++it )
-    {
-      const rectangle_type box( get_visual_box( **it ) ); 
-
-      if ( box.includes( pos ) )
-        return *it;
-    }
-
-  return NULL;
-} // gui_level::first_selected_item()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Finds all the items of the active layer that overlaps a given point.
- * \param pos The point.
- */
-std::vector<bf::item_instance*>
-bf::gui_level::find_items_at( position_type pos ) const
-{
-  std::vector<item_instance*> result;
-
-  if ( !empty() )
-    {
-      const layer& the_layer( get_active_layer() );
-
-      for ( layer::item_iterator it = the_layer.item_begin();
-            it != the_layer.item_end(); ++it )
-        {
-          const rectangle_type box( get_visual_box( *it ) );
-
-          if ( box.includes( pos ) )
-            result.push_back( &(*it) );
-        }
-    }
-
-  return result;
-} // gui_level::find_items_at()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Finds all the items intersecting a given box.
- * \param box The box where to pick the items.
- */
-std::vector<bf::item_instance*>
-bf::gui_level::pick_items( rectangle_type box ) const
-{
-  std::vector<item_instance*> result;
-
-  if ( !empty() )
-    {
-      const layer& the_layer( get_active_layer() );
-
-      for ( layer::item_iterator it = the_layer.item_begin();
-            it != the_layer.item_end(); ++it)
-        if ( box.intersects( get_visual_box( *it ) ) )
-          result.push_back( &(*it) );
-    }
-
-  return result;
-} // gui_level::pick_items()
 
 /*----------------------------------------------------------------------------*/
 /**

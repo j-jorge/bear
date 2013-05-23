@@ -11,6 +11,7 @@
 #ifndef __BF_ACTION_ROTATE_SELECTION_HPP__
 #define __BF_ACTION_ROTATE_SELECTION_HPP__
 
+#include "bf/item_selection.hpp"
 #include "bf/history/action_group.hpp"
 
 namespace bf
@@ -27,7 +28,11 @@ namespace bf
   public:
     action_rotate_selection( const item_selection& selection, bool clockwise );
 
-    wxString get_description() const;
+    item_selection get_selection() const;
+
+  private:
+    /** \brief The items moved by this action. */
+    item_selection m_selection;
 
   }; // class action_rotate_selection
 } // namespace bf

@@ -55,12 +55,12 @@ void bf::action_paste_items::execute( gui_level& lvl )
 {
   CLAW_PRECOND( m_layer < lvl.layers_count() );
 
-  m_previous_items = lvl.get_selection(m_layer);
+  m_previous_items = lvl.get_selection( m_layer );
 
   action_group::execute(lvl);
 
-  lvl.clear_selection(m_layer);
-  lvl.add_to_selection(m_layer, m_new_items);
+  lvl.clear_selection( m_layer );
+  lvl.add_to_selection( m_new_items );
 } // action_paste_items::execute()
 
 /*----------------------------------------------------------------------------*/
@@ -68,11 +68,11 @@ void bf::action_paste_items::undo( gui_level& lvl )
 {
   CLAW_PRECOND( m_layer < lvl.layers_count() );
 
-  lvl.remove_from_selection(m_layer, m_new_items);
+  lvl.remove_from_selection( m_new_items );
 
   action_group::undo(lvl);
 
-  lvl.add_to_selection(m_layer, m_previous_items);
+  lvl.add_to_selection( m_previous_items );
 } // action_paste_items::undo()
 
 /*----------------------------------------------------------------------------*/

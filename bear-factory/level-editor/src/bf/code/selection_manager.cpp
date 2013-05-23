@@ -44,12 +44,22 @@ void bf::selection_manager::set_edit_mode( edit_mode m )
 {
   m_edit_mode = m;
 
+  refresh_properties();
+} // selection_manager::set_edit_mode()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Refreshes the properties frame with the selected items.
+ * \param m The new edit mode.
+ */
+void bf::selection_manager::refresh_properties() const
+{
   m_properties.clear();
 
   const item_selection selection( m_edit_mode.get_selection( m_level ) );
   m_properties.add_items
     ( std::vector<item_instance*>( selection.begin(), selection.end() ) );
-} // selection_manager::set_edit_mode()
+} // selection_manager::refresh_properties()
 
 /*----------------------------------------------------------------------------*/
 /**

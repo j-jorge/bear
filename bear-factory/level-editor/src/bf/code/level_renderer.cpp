@@ -1264,7 +1264,7 @@ void bf::level_renderer::render_drag_mode_move
   unsigned int index ) const
 {
   item_selection::const_iterator it;
-  const item_selection& selection( get_level().get_selection() );
+  const item_selection& selection( get_level().get_selection( index ) );
   wxPoint pos_view = compute_local_view_position();
 
   for (it=selection.begin(); it!=selection.end(); ++it)
@@ -1276,8 +1276,7 @@ void bf::level_renderer::render_drag_mode_move
           - zoom((wxCoord)(*it)->get_rendering_parameters().get_bottom())
           - zoom((wxCoord)(*it)->get_rendering_parameters().get_height()) );
 
-      render_item
-        (dc, **it, pos, get_level().get_active_layer_index(), z_order);
+      render_item( dc, **it, pos, index, z_order );
     }
 } // level_renderer::render_drag_mode_move()
 
@@ -1603,7 +1602,7 @@ wxPen bf::level_renderer::get_display_pen
   else
     result.SetWidth( 1 );
 
-  if ( get_level().item_is_selected(index, &item) )
+  if ( get_level().item_is_selected( &item ) )
     {
       if ( index == get_level().get_active_layer_index() )
         result.SetColour(*wxRED);

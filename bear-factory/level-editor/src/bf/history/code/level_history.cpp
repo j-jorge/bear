@@ -72,6 +72,9 @@ void bf::level_history::undo()
       level_action* action = m_past.back();
       m_past.pop_back();
 
+      m_last_selection_move = NULL;
+      m_last_selection_rotate = NULL;
+
       action->undo(*m_level);
 
       m_future.push_front( action );
@@ -148,12 +151,13 @@ bool bf::level_history::do_action( action_move_selection* action )
       action->execute( *m_level );
 
       const bool same_selection =
-        m_last_selection_move_items.same_group_than(m_level->get_selection());
+        ( m_last_selection_move != NULL )
+        && ( m_last_selection_move->get_selection().same_group_than
+             ( action->get_selection() ) );
 
       // merge if the elapsed time since the last move is lower than 2 seconds
-      if ( (m_last_selection_move!=NULL)
-           && (wxDateTime::GetTimeNow() - m_last_selection_move_date < 2)
-           && same_selection )
+      if ( same_selection
+           && (wxDateTime::GetTimeNow() - m_last_selection_move_date < 2) )
         {
           m_last_selection_move->move(*action);
           delete action;
@@ -161,7 +165,6 @@ bool bf::level_history::do_action( action_move_selection* action )
       else
         {
           m_last_selection_move = action;
-          m_last_selection_move_items = m_level->get_selection();
           push_action(action);
         }
 
@@ -190,12 +193,13 @@ bool bf::level_history::do_action( action_rotate_selection* action )
       action->execute( *m_level );
 
       const bool same_selection =
-        m_last_selection_rotate_items.same_group_than(m_level->get_selection());
+        ( m_last_selection_rotate != NULL )
+        && ( m_last_selection_rotate->get_selection().same_group_than
+             ( action->get_selection() ) );
 
       // merge if the elapsed time since the last rotate is lower than 2 seconds
-      if ( (m_last_selection_rotate != NULL)
-           && (wxDateTime::GetTimeNow() - m_last_selection_rotate_date < 2)
-           && same_selection )
+      if ( same_selection
+           && (wxDateTime::GetTimeNow() - m_last_selection_rotate_date < 2) )
         {
           m_last_selection_rotate->move(*action);
           delete action;
@@ -203,7 +207,6 @@ bool bf::level_history::do_action( action_rotate_selection* action )
       else
         {
           m_last_selection_rotate = action;
-          m_last_selection_rotate_items = m_level->get_selection();
           push_action(action);
         }
 

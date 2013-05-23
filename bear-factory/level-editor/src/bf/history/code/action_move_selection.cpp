@@ -25,7 +25,10 @@
  */
 bf::action_move_selection::action_move_selection
 ( const item_selection& selection, double dx, double dy )
+  : action_group( _("Move the selected items") )
 {
+  m_selection = selection;
+
   for ( item_selection::const_iterator it( selection.begin() );
         it != selection.end(); ++it )
     add_action
@@ -33,14 +36,13 @@ bf::action_move_selection::action_move_selection
         ( *it,
           (*it)->get_rendering_parameters().get_left() + dx,
           (*it)->get_rendering_parameters().get_bottom() + dy ) );
-
 } // action_move_selection::action_move_selection()
 
 /*----------------------------------------------------------------------------*/
 /**
- * Gets a description of the work done by this action.
+ * Gets the selection moved by this action.
  */
-wxString bf::action_move_selection::get_description() const
+bf::item_selection bf::action_move_selection::get_selection() const
 {
-  return _("Move selected items");
-} // action_move_selection::get_description()
+  return m_selection;
+} // action_move_selection::get_selection()

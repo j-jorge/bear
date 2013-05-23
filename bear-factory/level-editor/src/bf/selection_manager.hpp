@@ -32,6 +32,8 @@ namespace bf
     edit_mode get_edit_mode() const;
     void set_edit_mode( edit_mode m );
 
+    void refresh_properties() const;
+
     bool has_selection() const;
     void clear_selection();
     void select_all();

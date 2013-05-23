@@ -1437,7 +1437,7 @@ void bf::ingame_view_frame::clear_reference_item_field_menu()
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Add entry in reference_item_field menu to set item in selection's 
- field.
+ *        field.
  */
 void bf::ingame_view_frame::add_entry_item_to_selection()
 {
@@ -1447,11 +1447,14 @@ void bf::ingame_view_frame::add_entry_item_to_selection()
         std::set<std::string> item_reference_fields;
         std::set<std::string> item_reference_list_fields;
         
-        const item_selection& selection = 
-          m_ingame_view->get_level().get_selection();
-        item_selection::const_iterator it;
+        const std::size_t layer_index
+          ( m_ingame_view->get_level().get_layer_by_item
+            ( *m_reference_item_field_instance ) );
+        const item_selection& selection
+          ( m_ingame_view->get_level().get_selection( layer_index ) );
         
-        for ( it=selection.begin(); it!=selection.end(); ++it )
+        for ( item_selection::const_iterator it( selection.begin() );
+              it != selection.end(); ++it )
           (*it)->get_item_reference_field_names
             ( item_reference_fields, item_reference_list_fields );
         
@@ -1484,12 +1487,16 @@ void bf::ingame_view_frame::add_entry_selection_to_item()
 {
   if ( m_reference_item_field_instance != NULL )
     {
+      const std::size_t layer_index
+        ( m_ingame_view->get_level().get_layer_by_item
+          ( *m_reference_item_field_instance ) );
       const item_selection& selection = 
-        m_ingame_view->get_level().get_selection();
+        m_ingame_view->get_level().get_selection( layer_index );
+
       item_selection selection_with_id;
-      item_selection::const_iterator it;
           
-      for ( it=selection.begin(); it!=selection.end(); ++it )
+      for ( item_selection::const_iterator it( selection.begin() );
+            it != selection.end(); ++it )
         if ( ! (*it)->get_id().empty() )
           selection_with_id.insert(*it);
 
@@ -1673,8 +1680,10 @@ void bf::ingame_view_frame::on_context_menu(wxContextMenuEvent& event)
         point = 
           m_ingame_view->compute_mouse_position
           ( ScreenToClient( event.GetPosition() ) );
-      m_reference_item_field_instance = 
-        m_ingame_view->get_level().first_item( wx_to_position( point ) );
+
+      m_reference_item_field_instance =
+        m_ingame_view->get_edit_mode().first_item
+        ( m_ingame_view->get_level(), wx_to_position( point ) );
 
       if ( m_reference_item_field_instance != NULL )
         update_reference_item_field_menu();
@@ -2351,18 +2360,22 @@ void bf::ingame_view_frame::on_set_item_to_selection( wxCommandEvent& event )
 {
   std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
 
-  const item_selection& selection = 
-    m_ingame_view->get_level().get_selection();
+  const std::size_t layer_index
+    ( m_ingame_view->get_level().get_layer_by_item
+      ( *m_reference_item_field_instance ) );
+
+  const item_selection& selection
+    ( m_ingame_view->get_level().get_selection( layer_index ) );
   
-  item_selection::const_iterator it;
   type_field field( field_name, type_field::item_reference_field_type );
   
   bf::item_reference_type value;
   value.set_value(m_reference_item_field_instance->get_id());
   action_group* g = 
     new action_group( std_to_wx_string("Set " + field_name + " field"));
-  
-  for ( it = selection.begin(); it != selection.end(); ++it )
+
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
     if ( (*it)->get_class().has_field
          ( field_name, type_field::item_reference_field_type ) )
       g->add_action
@@ -2382,9 +2395,13 @@ void bf::ingame_view_frame::on_set_list_item_to_selection
 {
   std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
 
-  const item_selection& selection = m_ingame_view->get_level().get_selection();
+  const std::size_t layer_index
+    ( m_ingame_view->get_level().get_layer_by_item
+      ( *m_reference_item_field_instance ) );
+
+  const item_selection& selection
+    ( m_ingame_view->get_level().get_selection( layer_index ) );
   
-  item_selection::const_iterator it;
   type_field field( field_name, type_field::item_reference_field_type );
   field.set_is_list(true);
             
@@ -2396,7 +2413,8 @@ void bf::ingame_view_frame::on_set_list_item_to_selection
   action_group* g = 
     new action_group( std_to_wx_string("Set " + field_name + " field"));
   
-  for ( it = selection.begin(); it != selection.end(); ++it )
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
     if ( (*it)->get_class().has_field
          ( field_name, type_field::item_reference_field_type ) )
       g->add_action
@@ -2416,13 +2434,18 @@ void bf::ingame_view_frame::on_add_list_item_to_selection
 {
   std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
 
-  const item_selection& selection = m_ingame_view->get_level().get_selection();
-  item_selection::const_iterator it;
-  
+  const std::size_t layer_index
+    ( m_ingame_view->get_level().get_layer_by_item
+      ( *m_reference_item_field_instance ) );
+
+  const item_selection& selection
+    ( m_ingame_view->get_level().get_selection( layer_index ) );
+
   action_group* g = 
     new action_group( std_to_wx_string("Add " + field_name + " field"));
 
-  for ( it = selection.begin(); it != selection.end(); ++it )
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
     if ( (*it)->get_class().has_field
          ( field_name, type_field::item_reference_field_type ) )
       {
@@ -2449,12 +2472,17 @@ void bf::ingame_view_frame::on_set_selection_to_item( wxCommandEvent& event )
 {  
   std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
 
-  const item_selection& selection = 
-    m_ingame_view->get_level().get_selection();
+  const std::size_t layer_index
+    ( m_ingame_view->get_level().get_layer_by_item
+      ( *m_reference_item_field_instance ) );
+
+  const item_selection& selection
+    ( m_ingame_view->get_level().get_selection( layer_index ) );
+
   item_selection selection_with_id;
-  item_selection::const_iterator it;
   
-  for ( it = selection.begin(); it != selection.end(); ++it )
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
     if ( ! (*it)->get_id().empty() )
       selection_with_id.insert(*it);
   
@@ -2476,12 +2504,17 @@ void bf::ingame_view_frame::on_set_list_selection_to_item
 {
   std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
 
-  const item_selection& selection = 
-    m_ingame_view->get_level().get_selection();
-  item_selection::const_iterator it;
-  
+  const std::size_t layer_index
+    ( m_ingame_view->get_level().get_layer_by_item
+      ( *m_reference_item_field_instance ) );
+
+  const item_selection& selection
+    ( m_ingame_view->get_level().get_selection( layer_index ) );
+
   std::list< bf::item_reference_type> values;
-  for ( it = selection.begin(); it != selection.end(); ++it )
+
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
     if ( ! (*it)->get_id().empty() )
       {
         bf::item_reference_type value;
@@ -2504,14 +2537,18 @@ void bf::ingame_view_frame::on_add_list_selection_to_item
 {
   std::string field_name( m_reference_item_field_popup_fields[event.GetId()] );
 
-  const item_selection& selection = 
-    m_ingame_view->get_level().get_selection();
-  item_selection::const_iterator it;
+  const std::size_t layer_index
+    ( m_ingame_view->get_level().get_layer_by_item
+      ( *m_reference_item_field_instance ) );
+
+  const item_selection& selection
+    ( m_ingame_view->get_level().get_selection( layer_index ) );
 
   std::list< bf::item_reference_type> values;
   m_reference_item_field_instance->get_value(field_name, values);
   
-  for ( it = selection.begin(); it != selection.end(); ++it )
+  for ( item_selection::const_iterator it( selection.begin() );
+        it != selection.end(); ++it )
     if ( ! (*it)->get_id().empty() )
       {
         bf::item_reference_type value;

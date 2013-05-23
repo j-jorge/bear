@@ -11,8 +11,6 @@
 #ifndef __BF_LEVEL_HISTORY_HPP__
 #define __BF_LEVEL_HISTORY_HPP__
 
-#include "bf/item_selection.hpp"
-
 #include <wx/string.h>
 #include <list>
 
@@ -87,18 +85,12 @@ namespace bf
     /** \brief The date of the last movement of the selection. */
     time_t m_last_selection_move_date;
 
-    /** \brief The selection moved by m_last_selection_move. */
-    item_selection m_last_selection_move_items;
-    
     /** \brief The last action of rotating the selection, 
         used to merge successive little moves. */
     action_rotate_selection* m_last_selection_rotate;
 
     /** \brief The date of the last rotation of the selection. */
     time_t m_last_selection_rotate_date;
-
-    /** \brief The selection rotated by m_last_selection_rotate. */
-    item_selection m_last_selection_rotate_items;
 
   }; // class level_history
 } // namespace bf

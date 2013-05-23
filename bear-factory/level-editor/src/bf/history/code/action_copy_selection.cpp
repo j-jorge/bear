@@ -88,7 +88,7 @@ void bf::action_copy_selection::execute( gui_level& lvl )
   if (!m_add_to_selection)
     lvl.clear_selection(m_layer);
 
-  lvl.add_to_selection(m_layer, m_new_items);
+  lvl.add_to_selection( m_new_items );
 } // action_copy_selection::execute()
 
 /*----------------------------------------------------------------------------*/
@@ -96,11 +96,11 @@ void bf::action_copy_selection::undo( gui_level& lvl )
 {
   CLAW_PRECOND( m_layer < lvl.layers_count() );
 
-  lvl.remove_from_selection(m_layer, m_new_items);
+  lvl.remove_from_selection( m_new_items );
 
   action_group::undo(lvl);
 
-  lvl.add_to_selection(m_layer, m_previous_items);
+  lvl.add_to_selection( m_previous_items );
 } // action_copy_selection::undo()
 
 /*----------------------------------------------------------------------------*/

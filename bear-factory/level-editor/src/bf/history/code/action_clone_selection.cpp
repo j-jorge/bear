@@ -88,13 +88,13 @@ void bf::action_clone_selection::execute( gui_level& lvl )
 {
   action_group::execute(lvl);
 
-  lvl.add_to_selection(m_layer, m_new_items);
+  lvl.add_to_selection( m_new_items );
 } // action_clone_selection::execute()
 
 /*----------------------------------------------------------------------------*/
 void bf::action_clone_selection::undo( gui_level& lvl )
 {
-  lvl.remove_from_selection(m_layer, m_new_items);
+  lvl.remove_from_selection( m_new_items );
 
   action_group::undo(lvl);
 } // action_clone_selection::undo()

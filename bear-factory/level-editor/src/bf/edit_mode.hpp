@@ -12,6 +12,7 @@
 #define __BF_EDIT_MODE_HPP__
 
 #include "bf/item_selection.hpp"
+#include "bf/types.hpp"
 
 #include <vector>
 
@@ -55,6 +56,15 @@ namespace bf
     item_selection get_selection( const gui_level& lvl ) const;
     std::vector<std::size_t> get_edit_layers( const gui_level& lvl ) const;
     bool is_in_edited_layer( const gui_level& lvl, item_instance* item ) const;
+
+    item_instance* first_item
+    ( const gui_level& lvl, const position_type& pos ) const;
+    item_instance* first_selected_item
+    ( const gui_level& lvl, position_type pos ) const;
+    std::vector<item_instance*> find_items_at
+    ( const gui_level& lvl, position_type pos ) const;
+    std::vector<item_instance*> pick_items
+    ( const gui_level& lvl, rectangle_type pos ) const;
 
   private:
     std::vector<std::size_t>
