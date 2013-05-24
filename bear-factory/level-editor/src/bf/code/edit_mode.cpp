@@ -64,6 +64,9 @@ bf::edit_mode::get_edit_layers( const gui_level& lvl ) const
 {
   std::vector<std::size_t> result;
 
+  if ( lvl.empty() )
+    return result;
+
   switch( m_current_mode )
     {
     case active_layer:
@@ -275,6 +278,9 @@ bf::item_selection bf::edit_mode::get_selections_by_layer_index
   std::size_t main_index ) const
 {
   item_selection result;
+
+  if ( main_index == lvl.layers_count() )
+    return result;
 
   for ( std::size_t i(0); i!=layers.size(); ++i )
     result.insert( lvl.get_selection( layers[i] ) );
