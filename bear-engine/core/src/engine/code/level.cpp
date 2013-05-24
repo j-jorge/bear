@@ -71,7 +71,20 @@ void bear::engine::level::start()
     m_layers[i]->start();
 
   play_music();
+
+  m_started_signal();
 } // level::start()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a function to call when the start of the level is done.
+ * \param f The function to call.
+ */
+boost::signals::connection
+bear::engine::level::on_started( boost::function<void ()> f )
+{
+  return m_started_signal.connect( f );
+} // bear::engine::level::on_started()
 
 /*----------------------------------------------------------------------------*/
 /**

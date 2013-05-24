@@ -73,6 +73,7 @@ namespace bear
       ~level();
 
       void start();
+      boost::signals::connection on_started( boost::function<void ()> f );
       void stop();
 
       void progress( universe::time_type elapsed_time );
@@ -200,6 +201,9 @@ namespace bear
 
       /** \brief The item to use to set the ears in the sound manager. */
       universe::item_handle m_ears;
+
+      /** \brief The signal emitted when the level starts. */
+      boost::signal<void ()> m_started_signal;
 
       /** \brief The signal emitted when the progress of the whole level is
           done. */
