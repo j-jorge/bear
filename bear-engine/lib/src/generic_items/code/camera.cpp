@@ -157,6 +157,54 @@ bool bear::camera::set_bool_field( const std::string& name, bool value )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set the valid area.
+ * \param rect The valid area.
+ */
+void bear::camera::set_valid_area( const universe::rectangle_type& rect )
+{
+  m_valid_area = rect;
+} // camera::set_valid_area()
+
+/*----------------------------------------------------------------------------*/
+/** \brief Set the minimum size of the camera. 
+ * \param min_size The minimum size.
+ */
+void bear::camera::set_min_size( const universe::size_box_type& min_size )
+{
+  m_min_size = min_size;
+} // camera::set_min_size()
+
+/*----------------------------------------------------------------------------*/
+/** \brief Set the maximum size of the camera. 
+ * \param max_size The maximum size.
+ */
+void bear::camera::set_max_size( const universe::size_box_type& max_size )
+{
+  m_max_size = max_size;
+} // camera::set_max_size()
+
+/*----------------------------------------------------------------------------*/
+/** \brief Set the maximum move length of the camera. 
+ * \param max_move_length The maximum move length.
+ */
+void bear::camera::set_max_move_length
+( universe::coordinate_type max_move_length )
+{
+  m_max_move_length = max_move_length;
+} // camera::set_max_move_length()
+
+/*----------------------------------------------------------------------------*/
+/** \brief Set the maximum zoom length of the camera. 
+ * \param max_zoom_length The maximum zoom length.
+ */
+void bear::camera::set_max_zoom_length
+( universe::coordinate_type max_zoom_length )
+{
+  m_max_zoom_length = max_zoom_length;
+} // camera::set_max_zoom_length()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Progressively change the size of the camera.
  * \param s The size to attain.
  */

@@ -64,6 +64,12 @@ namespace bear
     bool set_real_field( const std::string& name, double value );
     bool set_bool_field( const std::string& name, bool value );
 
+    void set_valid_area( const universe::rectangle_type& area );
+    void set_min_size( const universe::size_box_type& min_size );
+    void set_max_size( const universe::size_box_type& max_size );
+    void set_max_move_length( universe::coordinate_type max_zoom_length );
+    void set_max_zoom_length( universe::coordinate_type max_zoom_length );
+
     void set_wanted_size( const universe::size_box_type& s );
     void set_shaker_force( double agitation_force );
     const universe::size_box_type& get_default_size() const;
