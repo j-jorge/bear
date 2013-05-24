@@ -130,37 +130,23 @@ void bf::ingame_view_frame::adjust_scrollbars()
 {
   if ( !m_ingame_view->empty() )
     {
-#if 0
       m_h_scrollbar->SetScrollbar
         ( m_ingame_view->get_view_position().x,
-          m_ingame_view->get_view_size().x * 100 / m_ingame_view->get_zoom(),
-          m_ingame_view->get_layer_view_size().x,
-          m_ingame_view->get_view_size().x * 100 /
-          ( 2 * m_ingame_view->get_zoom()), true );
+          m_ingame_view->get_view_size().x  * 
+          m_ingame_view->get_zoom() / 100,
+          m_ingame_view->get_level().get_width() * 
+          m_ingame_view->get_zoom() / 100,
+          m_ingame_view->get_view_size().x / 2, true );
+
       m_v_scrollbar->SetScrollbar
-        ( m_ingame_view->get_layer_view_size().y -
-          m_ingame_view->get_view_position().y - 100 *
-          m_ingame_view->get_view_size().y / m_ingame_view->get_zoom(),
-          m_ingame_view->get_view_size().y*100/m_ingame_view->get_zoom(),
-          m_ingame_view->get_layer_view_size().y,
-          (100 * m_ingame_view->get_view_size().y) /
-          ( 2 * m_ingame_view->get_zoom()), true );
-#else
-     m_h_scrollbar->SetScrollbar
-        ( m_ingame_view->get_view_position().x,
-          m_ingame_view->get_view_size().x * 100 / m_ingame_view->get_zoom(),
-          m_ingame_view->get_level().get_width(),
-          m_ingame_view->get_view_size().x * 100 /
-          ( 2 * m_ingame_view->get_zoom()), true );
-      m_v_scrollbar->SetScrollbar
-        ( m_ingame_view->get_level().get_height() -
-          m_ingame_view->get_view_position().y - 100 *
-          m_ingame_view->get_view_size().y / m_ingame_view->get_zoom(),
-          m_ingame_view->get_view_size().y*100/m_ingame_view->get_zoom(),
-          m_ingame_view->get_level().get_height(),
-          (100 * m_ingame_view->get_view_size().y) /
-          ( 2 * m_ingame_view->get_zoom()), true );
-#endif
+        ( m_ingame_view->get_level().get_height() * 
+          m_ingame_view->get_zoom() / 100-
+          m_ingame_view->get_view_position().y -
+          m_ingame_view->get_view_size().y * m_ingame_view->get_zoom() / 100,
+          m_ingame_view->get_view_size().y * m_ingame_view->get_zoom() / 100,
+          m_ingame_view->get_level().get_height() * 
+          m_ingame_view->get_zoom() / 100,
+          m_ingame_view->get_view_size().y / 2, true );
     }
 } // ingame_view_frame::adjust_scrollbars()
 
@@ -1583,19 +1569,11 @@ void bf::ingame_view_frame::on_activate( wxActivateEvent& WXUNUSED(event) )
  */
 void bf::ingame_view_frame::on_scroll( wxScrollEvent& WXUNUSED(event) )
 {
-#if 0
   m_ingame_view->set_view_position
     ( m_h_scrollbar->GetThumbPosition(),
-      m_ingame_view->get_layer_view_size().y -
+      m_ingame_view->get_level().get_height() * m_ingame_view->get_zoom() / 100-
       m_v_scrollbar->GetThumbPosition() -
-      100 * m_ingame_view->get_view_size().y / m_ingame_view->get_zoom() );
-#else
-  m_ingame_view->set_view_position
-    ( m_h_scrollbar->GetThumbPosition(),
-      m_ingame_view->get_level().get_height() -
-      m_v_scrollbar->GetThumbPosition() -
-      100 * m_ingame_view->get_view_size().y / m_ingame_view->get_zoom() );
-#endif
+      m_ingame_view->get_view_size().y * m_ingame_view->get_zoom() / 100 );
 } // ingame_view_frame::on_scroll()
 
 /*----------------------------------------------------------------------------*/

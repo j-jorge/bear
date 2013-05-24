@@ -137,7 +137,9 @@ const wxPoint& bf::ingame_view::get_view_position() const
  */
 wxSize bf::ingame_view::get_view_size() const
 {
-  return m_renderer.get_view_size();
+  //return m_renderer.get_view_size();
+  return 
+    wxSize( m_renderer.unzoom(GetSize().x), m_renderer.unzoom(GetSize().y) );
 } // ingame_view::get_view_size()
 
 /*----------------------------------------------------------------------------*/
@@ -2095,6 +2097,7 @@ void bf::ingame_view::on_mouse_wheel_rotation(wxMouseEvent& event)
           {
             set_zoom( get_zoom() - 5, point );
             m_parent.update_zoom();
+            m_parent.adjust_scrollbars();
           }
       }
     else if ( event.AltDown() )
@@ -2113,6 +2116,7 @@ void bf::ingame_view::on_mouse_wheel_rotation(wxMouseEvent& event)
       {
         set_zoom( get_zoom() + 5, point );
         m_parent.update_zoom();
+        m_parent.adjust_scrollbars();
       }
     else if ( event.AltDown() )
       rotate_selection(false);
