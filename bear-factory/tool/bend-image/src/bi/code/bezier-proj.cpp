@@ -96,58 +96,73 @@ int main( int argc, char* argv[])
   channel_map count = create_channel_map(width, height);
 
   point_type prev_p( bezier.begin()->get_position() );
+
+  // This is the distance between the currently processed point of the curve and
+  // the origin of the curve.
   double source_distance(0);
 
   for ( std::size_t x=0; x!=width; ++x )
     {
       const curve::section::resolved_point p = bezier.get_point_at_x( x )[0];
-      const point_type dp(p.get_position());
+      const point_type curve_point(p.get_position());
       point_type tangent( p.get_section().get_tangent_at(p.get_date()) );
 
       const point_type norm( tangent.get_orthonormal_clockwise() );
 
-      source_distance += dp.distance(prev_p);
-      prev_p = dp;
+      source_distance += curve_point.distance(prev_p);
+      prev_p = curve_point;
 
-      const int sx
-        ( (unsigned int)(source_distance + 0.5) % source.width() );
+      // We are going to test each point around current point in the target
+      // image and modify its color according to the distance to the normal on
+      // the point of the curve.
+      const std::size_t neighborhood_size
+        ( std::min( source.width(), source.height() ) );
 
-      for ( std::size_t dx(0); dx != source.height(); ++dx )
-        for ( std::size_t dy(0); dy != source.height(); ++dy )
+      for ( std::size_t dx(0); dx != neighborhood_size; ++dx )
+        for ( std::size_t dy(0); dy != neighborhood_size; ++dy )
           {
             const double dist = point_type(dx, dy).length();
 
-            if ( dist <= source.height() - 1 )
+            if ( dist <= neighborhood_size - 1 )
               {
-                const int sy(dist + 0.5);
-                const int tx( dp.x - dx );
-                const int ty( dp.y + dy );
+                const int target_x( curve_point.x - dx );
+                const int target_y( curve_point.y + dy );
                 
-                const point_type tp( tx, ty );
-                const point_type v( dp, tp );
+                const point_type target_point( target_x, target_y );
+                const point_type v( curve_point, target_point );
 
+                // This is the angle between the tested point and the normal
                 const double a =
                   std::acos
                   ( norm.dot_product( v ) / ( v.length() * norm.length() ) );
 
-                double r =
-                  (dp == tp) ? 1 :
+                // We measure the impact of the source color on the target pixel
+                // relatively to the distance to the normal and to the distance
+                // to the curve.
+                double color_impact =
+                  (curve_point == target_point) ? 1 :
                   1
-                  - point_type(tp, dp).length()
+                  - v.length()
                   * std::abs(std::sin(a)) / source.height();
 
-                r = std::min( 1.0, std::max( 0.0, r ) );
+                color_impact = std::min( 1.0, std::max( 0.0, color_impact ) );
 
-                if ( (tx >= 0) && ((unsigned)tx < width)
-                     && (ty >= 0) && ((unsigned)ty < height)
-                     && (count[ty][tx] < r) )
+                if ( (target_x >= 0) && ((unsigned)target_x < width)
+                     && (target_y >= 0) && ((unsigned)target_y < height)
+                     && (count[target_y][target_x] < color_impact) )
                   {
-                    const claw::graphic::rgba_pixel pxl( source[sy][sx] );
-                    red[ty][tx] = (double)pxl.components.red;
-                    green[ty][tx] = (double)pxl.components.green;
-                    blue[ty][tx] = (double)pxl.components.blue;
-                    alpha[ty][tx] = (double)pxl.components.alpha;
-                    count[ty][tx] = r;
+                    const int source_y( dist + 0.5 );
+                    const int source_x
+                      ( (unsigned int)(source_distance + 0.5)
+                        % source.width() );
+
+                    const claw::graphic::rgba_pixel pxl
+                      ( source[source_y][source_x] );
+                    red[target_y][target_x] = (double)pxl.components.red;
+                    green[target_y][target_x] = (double)pxl.components.green;
+                    blue[target_y][target_x] = (double)pxl.components.blue;
+                    alpha[target_y][target_x] = (double)pxl.components.alpha;
+                    count[target_y][target_x] = color_impact;
                   }
               }
           }
@@ -156,6 +171,7 @@ int main( int argc, char* argv[])
   for ( std::size_t y=0; y!=height; ++y )
     for ( std::size_t x=0; x!=width; ++x )
       {
+        dest[y][x].pixel = 0;
         const double c( count[y][x] );
 
         if ( c != 0 )
