@@ -393,7 +393,7 @@ bool bear::slope::align_on_ground
         ( info.get_bottom_left_on_contact().x, get_y_at_x( pos_x ) );
   
       if ( std::abs(pos.x - info.other_previous_state().get_left()) +
-           std::abs(pos.y - info.other_previous_state().get_bottom()) < 0.6)
+           std::abs(pos.y - info.other_previous_state().get_bottom()) < 1.6 )
         pos = info.other_previous_state().get_bottom_left();
 
       const universe::collision_align_policy policy
