@@ -1878,7 +1878,7 @@ void bf::ingame_view::on_mouse_left_down(wxMouseEvent& event)
     {
       grip = set_drag_mode_size( point );
   
-      if ( ! grip )
+      if ( ! grip || event.ShiftDown() )
         grip = set_drag_mode_slope( point );
     }
 
