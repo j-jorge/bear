@@ -627,11 +627,11 @@ void bf::level_renderer::render_relationship
   const wxCoord r( zoom(4) );
   const wxColour clr( std_to_wx_string(ref.get_class().get_color()) );
 
-  dc.SetPen( wxPen(clr, 1, wxDOT_DASH) );
+  dc.SetPen( get_display_pen(ref, index) );
   dc.SetBrush( wxBrush(clr) );
 
-  dc.DrawCircle(center_ref, r);
-  dc.DrawCircle(center_rel, r/2);
+  dc.DrawCircle(center_ref, std::max(r,1));
+  dc.DrawCircle(center_rel, std::max(r/2,1));
   dc.DrawLine(center_ref, center_rel);
 } // level_renderer::render_relationship()
 
@@ -1237,7 +1237,7 @@ void bf::level_renderer::render_drag
 void bf::level_renderer::render_drag_mode_selection
 ( wxDC& dc, unsigned int index ) const
 {
-  dc.SetPen( wxPen( *wxRED, 1, wxLONG_DASH ) );
+  dc.SetPen( wxPen( *wxRED, 1 ) );
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
 
   wxPoint p[4];
@@ -1289,7 +1289,7 @@ void bf::level_renderer::render_drag_mode_move
 void bf::level_renderer::render_drag_mode_size
 ( wxDC& dc, unsigned int index ) const
 {
-  dc.SetPen( wxPen( *wxRED, 1, wxSHORT_DASH ) );
+  dc.SetPen( wxPen( *wxRED, 1 ) );
   dc.SetBrush(*wxTRANSPARENT_BRUSH);
 
   wxPoint p[4];
@@ -1391,7 +1391,7 @@ void bf::level_renderer::render_grid( wxDC& dc ) const
   if ( !get_level().empty() && m_display_grid )
     {
       wxColour color(200, 200, 200);
-      dc.SetPen( wxPen( color, 1, wxSHORT_DASH ) );
+      dc.SetPen( wxPen( color, 1 ) );
       dc.SetBrush(*wxTRANSPARENT_BRUSH);
 
       render_grid_vertical_lines(dc);
