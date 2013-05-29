@@ -19,18 +19,19 @@
 
 namespace bf
 {
+  /**
+   * \brief A parser for simple arithmetic expressions.
+   * \author Julien Jorge
+   */
   class arithmetic_parser
   {
-  public:
+  private:
     typedef boost::spirit::classic::position_iterator<const char*> iterator;
     typedef
     boost::spirit::classic::node_iter_data_factory<iterator> node_factory;
     typedef
     boost::spirit::classic::tree_match<iterator, node_factory> tree_match;
     typedef tree_match::node_t tree_node;
-
-  private:
-    typedef boost::spirit::classic::scanner<iterator> scanner;
 
   public:
     bool evaluate( double& result, std::string expr ) const;

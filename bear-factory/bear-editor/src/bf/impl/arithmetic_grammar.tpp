@@ -50,8 +50,7 @@ bf::arithmetic_grammar::definition<Scanner>::definition
  
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Constructs the definition of the grammar.
- * \param self The grammar of which we are the definition.
+ * \brief Returns the main rule of the grammar.
  */
 template<typename Scanner>
 const boost::spirit::classic::rule

@@ -23,7 +23,10 @@
 
 /*----------------------------------------------------------------------------*/
 /**
- * 
+ * \brief Evaluates an arithmetic expression.
+ * \param result (out) The result of the evaluation.
+ * \param expr The expression to parse.
+ * \return true if the expression has been well parsed.
  */
 bool bf::arithmetic_parser::evaluate( double& result, std::string expr ) const
 {
@@ -43,6 +46,13 @@ bool bf::arithmetic_parser::evaluate( double& result, std::string expr ) const
     return evaluate_tree( result, info.trees[0] );
 } // arithmetic_parser::evaluate()
  
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Evaluates the value of the tree obtained from the parsed expression.
+ * \param result (out) The result of the evaluation.
+ * \param tree The expression to evaluate.
+ * \return true if the expression has evaluated.
+ */
 bool bf::arithmetic_parser::evaluate_tree
 ( double& result, tree_node const& tree ) const
 {
@@ -66,6 +76,16 @@ bool bf::arithmetic_parser::evaluate_tree
   return false;
 } // arithmetic_parser::evaluate_tree()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Evaluates an operator from the tree obtained from the parsed
+ *        expression.
+ * \param result (out) The result of the evaluation.
+ * \param op The operator to evaluate.
+ * \param left_tree The tree built from the left operand.
+ * \param right_tree The tree built from the right operand.
+ * \return true if the expression has evaluated.
+ */
 bool bf::arithmetic_parser::evaluate_operator
 ( double& result, char op, tree_node const& left_tree,
   tree_node const& right_tree ) const
@@ -98,6 +118,13 @@ bool bf::arithmetic_parser::evaluate_operator
   return false;
 } // arithmetic_parser::evaluate_operator()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Reads the double value represented by a given string.
+ * \param result The value read from the string.
+ * \param s The string to parse.
+ * \return true if s has been well converted into a double.
+ */
 bool bf::arithmetic_parser::parse_real( double& result, std::string s ) const
 {
   try
