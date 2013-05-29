@@ -9,6 +9,8 @@
  * \author Julien Jorge
  */
 
+#include "bf/arithmetic_parser.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Read the value from a stream.
@@ -34,10 +36,14 @@ template<typename T>
 std::istream&
 bf::stream_conv< bf::custom_type<T> >::read( std::istream& is, value_type& v )
 {
-  typename value_type::value_type real_v;
+  std::string expr;
+  std::getline( is, expr );
 
-  if ( is >> real_v )
-    v.set_value(real_v);
+  const arithmetic_parser parser;
+  double value;
+
+  if ( parser.evaluate( value, expr ) )
+    v.set_value( (typename value_type::value_type)value );
 
   return is;
 } // read()

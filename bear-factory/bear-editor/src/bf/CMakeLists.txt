@@ -20,6 +20,7 @@ set( BF_E_SOURCE_FILES
   code/animation_view_ctrl.cpp
   code/any_animation.cpp
   code/any_animation_edit.cpp
+  code/arithmetic_parser.cpp
   code/base_editor_application.cpp
   code/bitmap_rendering_attributes.cpp
   code/bitmap_rendering_attributes_edit.cpp
