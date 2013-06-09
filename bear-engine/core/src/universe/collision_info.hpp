@@ -54,10 +54,10 @@ namespace bear
     private:
       /** \brief The previous state of the item considered as reference in the
           collision. */
-      const physical_item_state& m_reference_state;
+      const physical_item_state& m_previous_self;
 
       /** \brief The previous state of the other item in the collision. */
-      const physical_item_state& m_other_state;
+      const physical_item_state& m_previous_other;
 
       /** \brief The other item in the collision. */
       physical_item& m_other;

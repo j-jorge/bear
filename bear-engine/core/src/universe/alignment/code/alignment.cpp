@@ -32,5 +32,5 @@ void bear::universe::alignment::align
   const bear::universe::position_type& that_old_pos,
   bear::universe::rectangle_type& that_new_box ) const
 {
-  // nothing to do
+  that_new_box.bottom_left( that_old_pos );
 } // alignment::align()

@@ -302,6 +302,9 @@ void bear::slope::collision_as_slope
         {
           that.set_contact_friction(f);
           do_z_shift(that);
+
+          CLAW_POSTCOND( get_left() <= that.get_horizontal_middle() );
+          CLAW_POSTCOND( that.get_horizontal_middle() <= get_right() );
         }
     }
 } // slope::collision_as_slope()
@@ -384,13 +387,13 @@ bool bear::slope::align_on_ground
   bool result = false;
 
   const universe::coordinate_type pos_x
-    ( info.get_bottom_left_on_contact().x + that.get_width() / 2 );
+    ( that.get_horizontal_middle() );
   
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_up_down(that, info) )
     {
       universe::position_type pos
-        ( info.get_bottom_left_on_contact().x, get_y_at_x( pos_x ) );
+        ( pos_x - that.get_width() / 2, get_y_at_x( pos_x ) );
   
       if ( std::abs(pos.x - info.other_previous_state().get_left()) +
            std::abs(pos.y - info.other_previous_state().get_bottom()) < 1.6 )
@@ -478,15 +481,14 @@ bool bear::slope::item_crossed_up_down
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Apply the angle of the slope to a colliding item.
+ * \brief Applies the angle of the slope to a colliding item.
  * \param that The other item in the collision.
  * \param info Informations on the collision.
  */
 void bear::slope::apply_angle_to
 ( engine::base_item& that, const universe::collision_info& info ) const
 {
-  const universe::coordinate_type pos_x
-    ( info.get_bottom_left_on_contact().x + that.get_width() / 2 );
+  const universe::coordinate_type pos_x( that.get_horizontal_middle() );
   
   const curve_type::section::resolved_point p =
     get_curve().get_point_at_x( pos_x - get_left() )[0];

@@ -29,7 +29,7 @@ bear::universe::collision_info::collision_info
 ( const physical_item_state& previous_self,
   const physical_item_state& previous_that,
   physical_item& self, physical_item& that, collision_repair& repair )
-  : m_reference_state( previous_self ), m_other_state( previous_that ),
+  : m_previous_self( previous_self ), m_previous_other( previous_that ),
     m_other(that), m_repair(repair)
 {
   alignment* align = find_alignment();
@@ -66,7 +66,7 @@ bear::universe::collision_info::get_bottom_left_on_contact() const
 const bear::universe::physical_item_state&
 bear::universe::collision_info::other_previous_state() const
 {
-  return m_other_state;
+  return m_previous_other;
 } // collision_info::other_previous_state()
 
 /*----------------------------------------------------------------------------*/
@@ -76,7 +76,7 @@ bear::universe::collision_info::other_previous_state() const
 const bear::universe::physical_item_state&
 bear::universe::collision_info::reference_previous_state() const
 {
-  return m_reference_state;
+  return m_previous_self;
 } // collision_info::reference_previous_state()
 
 /*----------------------------------------------------------------------------*/
@@ -110,8 +110,8 @@ bear::universe::collision_info::find_alignment() const
   rectangle_type self_previous_box;
   rectangle_type that_previous_box;
 
-  self_previous_box = m_reference_state.get_bounding_box();
-  that_previous_box = m_other_state.get_bounding_box();
+  self_previous_box = m_previous_self.get_bounding_box();
+  that_previous_box = m_previous_other.get_bounding_box();
 
   zone::position z = zone::find(that_previous_box, self_previous_box );
   alignment* result(NULL);
@@ -151,7 +151,7 @@ void bear::universe::collision_info::apply_alignment
   self_new_box = self.get_bounding_box();
   that_new_box = m_other.get_bounding_box();
 
-  align.align( self_new_box, m_other_state.get_bottom_left(), that_new_box );
+  align.align( self_new_box, m_previous_other.get_bottom_left(), that_new_box );
 
   m_position_on_contact = that_new_box.bottom_left();
   m_side = zone::find(that_new_box, self_new_box);
