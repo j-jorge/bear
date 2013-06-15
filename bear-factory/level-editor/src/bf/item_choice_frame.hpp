@@ -11,13 +11,14 @@
 #ifndef __BF_ITEM_CHOICE_FRAME_HPP__
 #define __BF_ITEM_CHOICE_FRAME_HPP__
 
+#include "bf/item_selection.hpp"
+
 #include <wx/wx.h>
 #include <set>
 
 namespace bf
 {
   class item_instance;
-  class item_selection;
 
   /**
    * \brief The window showing the item choice for selection.
@@ -58,10 +59,10 @@ namespace bf
     wxCheckListBox* m_item_checklistbox;
 
     /* \brief The list of choice. */
-    const std::set<item_instance*>& m_choice;
+    const std::set<item_instance*> m_choice;
 
     /* \brief The selected group. */
-    const item_selection& m_selected_group;
+    const item_selection m_selected_group;
 
     /* \brief The button to inverse the selection. */
     wxButton* m_inverse_button;
