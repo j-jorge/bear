@@ -14,15 +14,12 @@
 #include "universe/shape/shape_traits.hpp"
 
 /*----------------------------------------------------------------------------*/
-bear::universe::coordinate_type bear::universe::curved_box::s_line_width(10);
-
-/*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  */
 bear::universe::curved_box::curved_box()
   : m_bottom_left(0, 0), m_size(0, 0), m_steepness(0), m_top_margin(0),
-    m_left_control_point(0, 0), m_right_control_point(0, 0)
+    m_left_control_point(0, 0), m_right_control_point(0, 0), m_line_width(10)
 {
 
 } // curved_box::curved_box()
@@ -67,6 +64,20 @@ bool bear::universe::curved_box::intersects( const curved_box& that ) const
     ( shape_traits<curved_box>::get_bottom_left( that ),
       shape_traits<curved_box>::get_bottom_right( that ) );
 } // curved_box::intersects()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if this shape intersects another shape.
+ * \param that The other shape.
+ */
+bool bear::universe::curved_box::intersects_strict
+( const shape_base& that ) const
+{
+  curved_box strict_this(*this);
+  strict_this.m_line_width = 0;
+
+  return that.intersects( strict_this );
+} // curved_box::intersects_strict()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -282,6 +293,7 @@ void bear::universe::curved_box::do_set_height( size_type s )
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Tells if this shape intersects another shape.
+ * \param that The other shape.
  */
 bool bear::universe::curved_box::do_intersects( const shape_base& that ) const
 {
@@ -318,5 +330,5 @@ bool bear::universe::curved_box::check_intersection_above
   // We check if the vertical position of the other is above or below the
   // curve. In the latter case, there is an intersection.
   
-  return get_y_at_x( x ) + s_line_width > middle_position.y;
+  return get_y_at_x( x ) + m_line_width > middle_position.y;
 } // curved_box::check_intersection_above()

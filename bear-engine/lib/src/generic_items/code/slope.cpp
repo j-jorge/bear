@@ -386,14 +386,12 @@ bool bear::slope::align_on_ground
 {
   bool result = false;
 
-  const universe::coordinate_type pos_x
-    ( that.get_horizontal_middle() );
+  const universe::coordinate_type pos_x( that.get_horizontal_middle() );
   
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_up_down(that, info) )
     {
-      universe::position_type pos
-        ( pos_x - that.get_width() / 2, get_y_at_x( pos_x ) );
+      universe::position_type pos( that.get_left(), get_y_at_x( pos_x ) );
   
       if ( std::abs(pos.x - info.other_previous_state().get_left()) +
            std::abs(pos.y - info.other_previous_state().get_bottom()) < 1.6 )
