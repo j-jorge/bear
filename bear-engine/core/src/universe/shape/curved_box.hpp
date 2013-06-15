@@ -40,6 +40,8 @@ namespace bear
       virtual bool intersects( const rectangle& that ) const;
       virtual bool intersects( const curved_box& that ) const;
 
+      bool intersects_strict( const shape_base& that ) const;
+
       coordinate_type get_steepness() const;
       void set_steepness( coordinate_type s );
 
@@ -94,8 +96,8 @@ namespace bear
       /** \brief The vector of right control point. */
       vector_type m_right_control_point;
     
-      /** \brief The width of the curve, uset to check the collisions. */
-      static coordinate_type s_line_width;
+      /** \brief The width of the curve, used to check the collisions. */
+      coordinate_type m_line_width;
 
     }; // class curved_box
   } // namespace universe
