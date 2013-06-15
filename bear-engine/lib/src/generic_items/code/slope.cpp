@@ -199,6 +199,26 @@ bear::slope::get_y_at_x( universe::coordinate_type x ) const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the curve describing the slope.
+ */
+bear::universe::curved_box* bear::slope::get_curved_box() const
+{
+  universe::shape_base* const s( get_shape().clone_impl() );
+
+  universe::curved_box* const c
+    ( dynamic_cast<universe::curved_box*>( s ) );
+
+  if ( c == NULL )
+    {
+      delete s;
+      return NULL;
+    }
+
+  return c;
+} // slope::get_curved_box()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Gets the steepness of the slope.
  */
 bear::universe::coordinate_type bear::slope::get_steepness() const
@@ -531,22 +551,3 @@ void bear::slope::apply_angle_to
     (that, that.get_x_axis().get_orthonormal_anticlockwise());
 } // slope::apply_angle_to()
 
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Gets the curve describing the slope.
- */
-bear::universe::curved_box* bear::slope::get_curved_box() const
-{
-  universe::shape_base* const s( get_shape().clone_impl() );
-
-  universe::curved_box* const c
-    ( dynamic_cast<universe::curved_box*>( s ) );
-
-  if ( c == NULL )
-    {
-      delete s;
-      return NULL;
-    }
-
-  return c;
-} // slope::get_curved_box()
