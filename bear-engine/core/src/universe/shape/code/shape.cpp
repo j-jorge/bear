@@ -39,7 +39,7 @@ bear::universe::shape::shape( const shape_base& s )
  * \param that The instance to copy.
  */
 bear::universe::shape::shape( const shape& that )
-  : m_impl( ( that.m_impl == NULL ) ? NULL : that.m_impl->clone() )
+  : m_impl( that.clone_impl() )
 {
 
 } // shape::shape()

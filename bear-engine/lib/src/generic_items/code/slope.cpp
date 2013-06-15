@@ -302,9 +302,6 @@ void bear::slope::collision_as_slope
         {
           that.set_contact_friction(f);
           do_z_shift(that);
-
-          CLAW_POSTCOND( get_left() <= that.get_horizontal_middle() );
-          CLAW_POSTCOND( that.get_horizontal_middle() <= get_right() );
         }
     }
 } // slope::collision_as_slope()
@@ -487,7 +484,7 @@ void bear::slope::apply_angle_to
 ( engine::base_item& that, const universe::collision_info& info ) const
 {
   const universe::coordinate_type pos_x( that.get_horizontal_middle() );
-  
+
   const curve_type::section::resolved_point p =
     get_curve().get_point_at_x( pos_x - get_left() )[0];
   bear::universe::position_type tangent
