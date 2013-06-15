@@ -105,8 +105,6 @@ namespace bear
 
     universe::coordinate_type get_y_at_x( universe::coordinate_type x ) const;
 
-    universe::curved_box* get_curved_box() const;
-
   protected:
     void populate_loader_map( engine::item_loader_map& m );
 
@@ -134,6 +132,8 @@ namespace bear
 
     void apply_angle_to
     ( engine::base_item& that, const universe::collision_info& info ) const;
+
+    universe::curved_box* get_curved_box() const;
 
   private:
     /** \brief The coefficient for tangent friction. */
