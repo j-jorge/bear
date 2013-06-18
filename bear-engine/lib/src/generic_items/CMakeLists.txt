@@ -14,6 +14,7 @@ set( GENERIC_ITEM_SOURCE_FILES
   code/base_train.cpp
   code/block.cpp
   code/bridge.cpp
+  code/browser_launcher_toggle.cpp
   code/camera.cpp
   code/camera_on_object.cpp
   code/camera_shaker.cpp
@@ -50,7 +51,6 @@ set( GENERIC_ITEM_SOURCE_FILES
   code/linear_movement_sequence_loop.cpp
   code/mouse_detector.cpp
   code/mouse_over_manager.cpp
-  code/navigator_launcher_toggle.cpp
   code/path_trace.cpp
   code/path_tracer.cpp
   code/reference_item.cpp

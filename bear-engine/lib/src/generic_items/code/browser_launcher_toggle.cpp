@@ -5,10 +5,10 @@
 */
 /**
  * \file
- * \brief Implementation of the bear::navigator_launcher_toggle class.
+ * \brief Implementation of the bear::browser_launcher_toggle class.
  * \author Sebastien Angibaud
  */
-#include "generic_items/navigator_launcher_toggle.hpp"
+#include "generic_items/browser_launcher_toggle.hpp"
 
 #ifdef _WIN32
 #include <windef.h>
@@ -17,16 +17,16 @@
 #include <shellapi.h>
 #endif
 
-BASE_ITEM_EXPORT( navigator_launcher_toggle, bear )
+BASE_ITEM_EXPORT( browser_launcher_toggle, bear )
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  */
-bear::navigator_launcher_toggle::navigator_launcher_toggle()
+bear::browser_launcher_toggle::browser_launcher_toggle()
 {
   
-} // navigator_launcher_toggle::navigator_launcher_toggle()
+} // browser_launcher_toggle::browser_launcher_toggle()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -34,25 +34,25 @@ bear::navigator_launcher_toggle::navigator_launcher_toggle()
  * \param name The name of the field.
  * \param value The value of the field.
  */
-bool bear::navigator_launcher_toggle::set_string_field
+bool bear::browser_launcher_toggle::set_string_field
 ( const std::string& name, const std::string& value )
 {
   bool result = true;
 
-  if ( name == "navigator_launcher_toggle.url" )
+  if ( name == "browser_launcher_toggle.url" )
     m_url = value;
   else
     result = super::set_string_field( name, value );
 
   return result;
-} // navigator_launcher_toggle::set_string_field()
+} // browser_launcher_toggle::set_string_field()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Play the sample.
  * \param activator (ignored) The item that activates the toggle, if any.
  */
-void bear::navigator_launcher_toggle::on_toggle_on
+void bear::browser_launcher_toggle::on_toggle_on
 ( engine::base_item* activator )
 {
 #ifdef _WIN32
@@ -64,4 +64,4 @@ void bear::navigator_launcher_toggle::on_toggle_on
   
   system(command.c_str());
 #endif
-} // navigator_launcher_toggle::on_toggle_on()
+} // browser_launcher_toggle::on_toggle_on()

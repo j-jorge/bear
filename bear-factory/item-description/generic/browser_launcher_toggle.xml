@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::browser_launcher_toggle" category="level loading" box_color="#9B975F" url="http://www.gamned.org/wiki/index.php/browser_launcher_toggle">
+  <inherit>
+    <class>bear::item_with_toggle</class>
+    <class>bear::base_item</class>
+  </inherit>
+  <description>This item starts launchs the default browser with an url.</description>
+  <fields>
+    <field type="string" name="browser_launcher_toggle.url">
+      <description>
+	The url.
+      </description>
+      <default_value>none</default_value>
+    </field>
+  </fields>
+</item>
