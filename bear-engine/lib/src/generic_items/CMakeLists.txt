@@ -58,6 +58,7 @@ set( GENERIC_ITEM_SOURCE_FILES
   code/rocket.cpp
   code/rolling_credits.cpp
   code/slope.cpp
+  code/spring.cpp
   code/star.cpp
   code/straight_slope.cpp
   code/teleport_item.cpp
