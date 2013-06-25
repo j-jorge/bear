@@ -44,6 +44,9 @@ namespace bear
 
       void add_enter_callback( const callback& c );
 
+      void set_margin( coordinate_type x, coordinate_type y );
+      void set_margin( const size_box_type& m );
+
     private:
       bool on_key_press( const input::key_info& key );
       bool on_char_pressed( const input::key_info& key );

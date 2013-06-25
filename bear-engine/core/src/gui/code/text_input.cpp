@@ -13,6 +13,8 @@
 #include "gui/static_text.hpp"
 #include "visual/scene_line.hpp"
 
+#include "time/time.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -72,6 +74,27 @@ void bear::gui::text_input::add_enter_callback( const callback& c )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set the margins between the text and the borders of the control.
+ * \param x The margin on the x-axis.
+ * \param y The margin on the y-axis.
+ */
+void bear::gui::text_input::set_margin( coordinate_type x, coordinate_type y )
+{
+  m_static_text->set_margin( x, y );
+} // text_input::set_margin()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set the margins between the text and the borders of the control.
+ * \param m The margins.
+ */
+void bear::gui::text_input::set_margin( const size_box_type& m )
+{
+  m_static_text->set_margin(m);
+} // text_input::set_margin()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Insert a key in the text.
  * \param key The pressed key.
  */
@@ -127,11 +150,14 @@ void bear::gui::text_input::on_resized()
  */
 void bear::gui::text_input::display( std::list<visual::scene_element>& e ) const
 {
+  if ( systime::get_unix_time() % 2 == 0 )
+    return;
+
   std::vector<visual::position_type> p(2);
 
-  p[0].x = 0;
-  p[0].y = 0;
-  p[1].y = height();
+  p[0].x = m_static_text->get_margin().x;
+  p[0].y = m_static_text->get_margin().y;
+  p[1].y = height() - m_static_text->get_margin().y;
 
   for (std::size_t i(m_first); i!=m_cursor; ++i)
     p[0].x +=

@@ -203,6 +203,15 @@ void bear::gui::static_text::set_margin( const size_box_type& m )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the margins between the text and the borders of the control.
+ */
+bear::gui::size_box_type bear::gui::static_text::get_margin() const
+{
+  return m_margin;
+} // static_text::get_margin()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the minimal height required to display one line of text.
  */
 bear::gui::size_type bear::gui::static_text::get_min_height_with_text() const

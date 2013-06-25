@@ -71,6 +71,7 @@ namespace bear
 
       void set_margin( coordinate_type x, coordinate_type y );
       void set_margin( const size_box_type& m );
+      size_box_type get_margin() const;
 
       size_type get_min_height_with_text() const;
 
@@ -104,10 +105,11 @@ namespace bear
       visual::writing m_writing;
 
       /** \brief The margins around the text. */
-      visual::size_box_type m_margin;
+      size_box_type m_margin;
 
       /** \brief Rendering attributes of the text. */
       visual::bitmap_rendering_attributes m_text_rendering_attributes;
+
     }; // class static_text
   } // namespace gui
 } // namespace bear
