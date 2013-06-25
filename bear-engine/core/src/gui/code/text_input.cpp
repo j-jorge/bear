@@ -150,7 +150,7 @@ void bear::gui::text_input::on_resized()
  */
 void bear::gui::text_input::display( std::list<visual::scene_element>& e ) const
 {
-  if ( systime::get_unix_time() % 2 == 0 )
+  if ( systime::get_date_ms() % 600 < 300 )
     return;
 
   std::vector<visual::position_type> p(2);
