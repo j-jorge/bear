@@ -46,6 +46,7 @@ namespace bear
       const std::string&  get_text() const;
 
       void add_enter_callback( const callback& c );
+      void add_changed_callback( const callback& c );
 
       void set_margin( coordinate_type x, coordinate_type y );
       void set_margin( const size_box_type& m );
@@ -93,6 +94,9 @@ namespace bear
 
       /** \brief Callback executed when enter is pressed. */
       callback_group m_enter_callback;
+
+      /** \brief Callback executed when the text has changed. */
+      callback_group m_changed_callback;
 
     }; // class text_input
   } // namespace gui

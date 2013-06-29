@@ -44,7 +44,11 @@ void bear::gui::text_input::clear()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the text of the component.
+ * \brief Sets the text of the component.
+ *
+ * Calling this method does not trigger the callback passed to
+ * add_changed_callback().
+ *
  * \param text The new text.
  */
 void bear::gui::text_input::set_text( const std::string& text )
@@ -67,13 +71,23 @@ const std::string& bear::gui::text_input::get_text() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Add callback called when enter is pressed.
+ * \brief Adds a callback called when enter is pressed.
  * \param c The callback.
  */
 void bear::gui::text_input::add_enter_callback( const callback& c )
 {
   m_enter_callback.add(c);
 } // text_input::add_enter_callback()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a callback called when the text has changed.
+ * \param c The callback.
+ */
+void bear::gui::text_input::add_changed_callback( const callback& c )
+{
+  m_changed_callback.add(c);
+} // text_input::add_changed_callback()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -184,6 +198,7 @@ void bear::gui::text_input::insert_character( char key )
     ++m_last;
 
   move_right();
+  m_changed_callback.execute();
 } // text_input::insert_character()
 
 /*----------------------------------------------------------------------------*/
@@ -204,6 +219,8 @@ bool bear::gui::text_input::special_code( const input::key_info& key )
 
           if (m_last == m_text.size() + 1)
             --m_last;
+
+          m_changed_callback.execute();
         }
     }
   else if ( key.is_backspace() )
@@ -216,6 +233,7 @@ bool bear::gui::text_input::special_code( const input::key_info& key )
             --m_last;
 
           move_left();
+          m_changed_callback.execute();
         }
     }
   else if ( key.is_left() )
