@@ -1,20 +1,15 @@
 cmake_minimum_required(VERSION 2.6)
 
+set( BEAR_ROOT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" )
+
 set(
   BEAR_ENGINE_COMMON_INCLUDE_DIRECTORY
   "${CMAKE_CURRENT_SOURCE_DIR}/bear-engine/common/include"
   )
-set(
-  BEAR_ENGINE_INCLUDE_DIRECTORY
-  "${CMAKE_CURRENT_SOURCE_DIR}/bear-engine/core/src"
-  )
-set(
-  BEAR_ITEMS_INCLUDE_DIRECTORY
-  "${CMAKE_CURRENT_SOURCE_DIR}/bear-engine/lib/src"
-  )
 
 set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-helper" )
 
+include( bear-config )
 include( gettext )
 include( compiler-defaults )
 include( docbook-to-man )

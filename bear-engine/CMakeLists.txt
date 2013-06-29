@@ -1,22 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(bear-engine)
 
-# where the game programs are installed
-if( NOT BEAR_ENGINE_INSTALL_EXECUTABLE_DIR )
-  set( BEAR_ENGINE_INSTALL_EXECUTABLE_DIR bin )
-endif( NOT BEAR_ENGINE_INSTALL_EXECUTABLE_DIR )
-
-# where the engine libraries are installed
-if( NOT BEAR_ENGINE_INSTALL_LIBRARY_DIR )
-  if( WIN32 )
-    set( BEAR_ENGINE_INSTALL_LIBRARY_DIR
-      "${BEAR_ENGINE_INSTALL_EXECUTABLE_DIR}"
-      )
-  else( WIN32 )
-    set( BEAR_ENGINE_INSTALL_LIBRARY_DIR lib )
-  endif( WIN32 )
-endif( NOT BEAR_ENGINE_INSTALL_LIBRARY_DIR )
-
 # Directories where the executable and libraries are built
 set( BEAR_ENGINE_EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_BINARY_DIR}/bin" )
 set( BEAR_ENGINE_LIBRARY_OUTPUT_PATH "${BEAR_ENGINE_EXECUTABLE_OUTPUT_PATH}" )
