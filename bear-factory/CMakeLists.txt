@@ -27,7 +27,7 @@ set( LIBRARY_OUTPUT_PATH "${EXECUTABLE_OUTPUT_PATH}" )
 
 #-------------------------------------------------------------------------------
 # Claw
-FIND_SVN_CLAW()
+find_package( libclaw 1.7.4 )
 
 #-------------------------------------------------------------------------------
 # Include directories for Claw

@@ -32,7 +32,7 @@ set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 #-------------------------------------------------------------------------------
 # Claw
-FIND_SVN_CLAW()
+find_package( libclaw 1.7.4 )
 
 #-------------------------------------------------------------------------------
 # Include directories for Claw
