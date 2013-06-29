@@ -136,7 +136,7 @@ bool bear::engine::gui_layer::mouse_pressed
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_pressed(key, pos);
+    return m_root->mouse_pressed( key, pos - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_pressed()
@@ -152,7 +152,7 @@ bool bear::engine::gui_layer::mouse_released
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_released(key, pos);
+    return m_root->mouse_released( key, pos - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_released()
@@ -168,7 +168,7 @@ bool bear::engine::gui_layer::mouse_maintained
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_maintained(key, pos);
+    return m_root->mouse_maintained( key, pos - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_maintained()
@@ -182,7 +182,7 @@ bool bear::engine::gui_layer::mouse_move
 ( const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_move(pos);
+    return m_root->mouse_move( pos - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_move()
