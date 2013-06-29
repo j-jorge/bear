@@ -11,6 +11,15 @@ set(
   "${BEAR_ROOT_DIRECTORY}/bear-engine/lib/src"
   )
 
+if( NOT DEFINED BEAR_ENGINE_LIBRARY_DIRECTORY )
+
+  #The path to the directory containing the libraries of the Bear engine.
+  set(
+    BEAR_ENGINE_LIBRARY_DIRECTORY
+    "${BEAR_ROOT_DIRECTORY}/bear-engine/bin"
+    )
+endif()
+
 #-------------------------------------------------------------------------------
 # Install properties
 #
