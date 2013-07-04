@@ -488,8 +488,18 @@ void bear::slope::apply_angle_to
 {
   const universe::coordinate_type pos_x( that.get_horizontal_middle() );
 
+  /*
+    The item may have been aligned with its center on our right or left. In
+    such cases, we compute the tangent near the end of the curve.
+
+    We do not use the exact end because it sometimes produces a tangent in the
+    wrong direction.
+  */
   const curve_type::section::resolved_point p =
-    get_curve().get_point_at_x( pos_x - get_left() )[0];
+    get_curve().get_point_at_x
+    ( std::min
+      ( get_width() - 0.01,
+        std::max( universe::coordinate_type(0.01), pos_x - get_left() ) ) )[0];
   bear::universe::position_type tangent
     ( p.get_section().get_tangent_at(p.get_date()) );
   
