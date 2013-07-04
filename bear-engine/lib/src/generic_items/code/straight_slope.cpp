@@ -102,19 +102,6 @@ void bear::straight_slope::build()
 {
   super::build();
 
-  if (m_top_side_is_active)
-    set_height( get_height() + m_margin );
-
-  if (m_bottom_side_is_active)
-    {
-      set_height( get_height() + m_margin );
-      set_bottom( get_bottom() - m_margin );
-
-      claw::math::coordinate_2d<int> gap(get_gap());
-      gap.y += m_margin;
-      set_gap(gap);
-    }
-
   init_default_contact_mode
     ( m_top_side_is_active, m_bottom_side_is_active, false, false );
 } // straight_slope::build()
@@ -143,18 +130,18 @@ void bear::straight_slope::collision_check_center_included
       if ( (prev_bottom_middle.x >= get_left())
            && (prev_bottom_middle.x <= get_right()) )
         {
-          if ( (prev_bottom_middle.y >= get_top() - m_margin)
-               && (that.get_bottom() < get_top() - m_margin) )
-            result = collision_classic_ground(that, info);
+          if ( (prev_bottom_middle.y >= get_top() )
+               && (that.get_bottom() < get_top() ) )
+              result = collision_classic_ground(that, info);
           else if ( (that.get_top() > get_bottom())
                     && (prev_top <= get_bottom()) )
             result = collision_classic_ceiling(that, info);
         }
       else if ( (that.get_bottom() <= get_top())
-                && (prev_bottom_middle.y >= get_top() - 2 * m_margin) )
+                && (prev_bottom_middle.y >= get_top() - m_margin) )
         result = collision_slope_ground(that, info);
       else if ( (that.get_top() >= get_bottom())
-                && (prev_top <= get_bottom() + 2 * m_margin) )
+                && (prev_top <= get_bottom() + m_margin) )
         result = collision_slope_ceiling(that, info);
 
       if (result.align)
@@ -179,7 +166,7 @@ bear::straight_slope::collision_classic_ground
   if ( !m_top_side_is_active )
     return collision_result(false);
 
-  const universe::position_type pos( that.get_left(), get_top() - m_margin );
+  const universe::position_type pos( that.get_left(), get_top() );
 
   const universe::collision_align_policy policy
     ( get_top_contact_mode( info, pos ) );
@@ -202,7 +189,7 @@ bear::straight_slope::collision_classic_ceiling
     return collision_result(false);
 
   const universe::position_type pos
-    ( that.get_left(), get_bottom() + m_margin - that.get_height() );
+    ( that.get_left(), get_bottom() - that.get_height() );
 
   const universe::collision_align_policy policy
     ( get_bottom_contact_mode( info, pos ) );
@@ -224,7 +211,7 @@ bear::straight_slope::collision_slope_ground
   if ( !m_top_side_is_active )
     return collision_result(false);
 
-  const universe::position_type pos( that.get_left(), get_top() - m_margin );
+  const universe::position_type pos( that.get_left(), get_top() );
 
   universe::speed_type s = that.get_speed();
 
@@ -255,7 +242,7 @@ bear::straight_slope::collision_slope_ceiling
     return collision_result(false);
 
   const universe::position_type pos
-    ( that.get_left(), get_bottom() + m_margin - that.get_height() );
+    ( that.get_left(), get_bottom() - that.get_height() );
 
   universe::speed_type s = that.get_speed();
 
