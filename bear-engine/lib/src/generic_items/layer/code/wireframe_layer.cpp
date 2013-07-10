@@ -45,15 +45,18 @@ void bear::wireframe_layer::render
 
   for (it=m_items.begin(); it!=m_items.end(); ++it)
     {
-      uintptr_t addr = reinterpret_cast<uintptr_t>(*it);
-
-      color.components.red = (~addr & 0xFF);
-      color.components.green =  (~addr & 0xFF00) >> 8;
-      color.components.blue = (~addr & 0xFF0000) >> 16;
-
-      draw_box(e, delta, **it, color);
-      draw_system(e, delta, **it, color);
-      draw_slope(e, delta, **it, color);
+      if ( *it != NULL )
+        {
+          uintptr_t addr = reinterpret_cast<uintptr_t>(*it);
+          
+          color.components.red = (~addr & 0xFF);
+          color.components.green =  (~addr & 0xFF00) >> 8;
+          color.components.blue = (~addr & 0xFF0000) >> 16;
+          
+          draw_box(e, delta, **it, color);
+          draw_system(e, delta, **it, color);
+          draw_slope(e, delta, **it, color);
+        }
     }
 } // wireframe_layer::render()
 
