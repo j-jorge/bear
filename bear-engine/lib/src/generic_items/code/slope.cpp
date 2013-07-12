@@ -457,9 +457,11 @@ bool bear::slope::item_crossed_up_down
 {
   bool result = false;
 
-  if ( that.get_bottom()
-       <= get_y_at_x( that.get_center_of_mass().x ) + s_line_width )
+  // the other item has its bottom below the curve
+  if ( that.get_bottom() <= get_y_at_x( that.get_center_of_mass().x ) )
     {
+      // we check where the other item was prior to the collision.
+
       const universe::position_type other_prev_bottom
         ( info.other_previous_state().get_bottom_middle() );
 
