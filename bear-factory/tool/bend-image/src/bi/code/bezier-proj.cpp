@@ -17,9 +17,10 @@ typedef claw::math::curve<point_type> curve;
 void help( const std::string& n )
 {
   std::cerr << "usage:\n" << n
-            << " width height source_image\n"
-            << "\nPoints are read from stdin in the following format:\n"
+            << " width height source_image [input_file]\n"
+            << "\nPoints are described in the following format:\n"
             << "p.x p.y [in.x in.y out.x out.y]"
+            << "\nIf input_file is not set, the points are read from stdin."
             << std::endl;
 } // help()
 
@@ -67,7 +68,7 @@ curve read_curve( std::istream& is )
 
 int main( int argc, char* argv[])
 {
-  if ( argc != 4 )
+  if ( (argc < 4) || (argc > 5) )
     {
       help(argv[0]);
       return 1;
@@ -83,7 +84,16 @@ int main( int argc, char* argv[])
       return 1;
     }
 
-  curve bezier( read_curve(std::cin) );
+  curve bezier;
+
+  if ( argc != 5 )
+    bezier = read_curve(std::cin);
+  else
+    {
+      std::ifstream input_file( argv[4] );
+      bezier = read_curve( input_file );
+    }
+
   const claw::graphic::image source(f);
 
   claw::graphic::image dest(width, height);
@@ -103,7 +113,13 @@ int main( int argc, char* argv[])
 
   for ( std::size_t x=0; x!=width; ++x )
     {
-      const curve::section::resolved_point p = bezier.get_point_at_x( x )[0];
+      const std::vector<curve::section::resolved_point> points
+        ( bezier.get_point_at_x( x ) );
+
+      if ( points.empty() )
+        continue;
+
+      const curve::section::resolved_point p( points[0] );
       const point_type curve_point(p.get_position());
       point_type tangent( p.get_section().get_tangent_at(p.get_date()) );
 
