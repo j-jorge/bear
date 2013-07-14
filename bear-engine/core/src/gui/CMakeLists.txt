@@ -40,4 +40,5 @@ target_link_libraries(
   ${GUI_TARGET_NAME}
   bear_input
   bear_visual
+  bear_time
 )
