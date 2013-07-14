@@ -51,6 +51,13 @@ set( VISUAL_SOURCE_FILES
   font/code/true_type_memory_file.cpp
 )
 
+if( WIN32 )
+  set( VISUAL_SOURCE_FILES
+    glew/code/glew.cpp
+    ${VISUAL_SOURCE_FILES}
+    )
+endif()
+
 add_library(
   ${VISUAL_TARGET_NAME}
   ${BEAR_ENGINE_CORE_LINK_TYPE}

@@ -15,6 +15,11 @@
 #define __VISUAL_GL_HPP__
 
 #define GL_GLEXT_PROTOTYPES 1
+
+#ifdef _WIN32
+#include "glew/glew.h"
+#else
 #include <GL/gl.h>
+#endif
 
 #endif // __VISUAL_GL_HPP__
