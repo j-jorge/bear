@@ -297,11 +297,8 @@ void bear::visual::gl_screen::begin_render()
 void bear::visual::gl_screen::render
 ( const position_type& pos, const sprite& s )
 {
-  if ( s.has_transparency() )
-    {
-      glEnable(GL_BLEND);
-      VISUAL_GL_ERROR_THROW();
-    }
+  glEnable(GL_BLEND);
+  VISUAL_GL_ERROR_THROW();
 
   glColor4f( s.get_red_intensity(), s.get_green_intensity(),
              s.get_blue_intensity(), s.get_opacity() );
@@ -326,12 +323,6 @@ void bear::visual::gl_screen::render
     }
 
   render_sprite( pos, s );
-
-  if ( s.has_transparency() )
-    {
-      glDisable(GL_BLEND);
-      VISUAL_GL_ERROR_THROW();
-    }
 } // gl_screen::render()
 
 /*----------------------------------------------------------------------------*/
@@ -371,11 +362,8 @@ void bear::visual::gl_screen::draw_line
   const GLfloat max =
     std::numeric_limits<color_type::component_type>::max();
 
-  if (color.components.alpha != max)
-    {
-      glEnable(GL_BLEND);
-      VISUAL_GL_ERROR_THROW();
-    }
+  glEnable(GL_BLEND);
+  VISUAL_GL_ERROR_THROW();
 
   glBegin(GL_LINE_STRIP);
   {
@@ -394,12 +382,6 @@ void bear::visual::gl_screen::draw_line
   VISUAL_GL_ERROR_THROW();
 
   update_z_position();
-
-  if (color.components.alpha != max)
-    {
-      glDisable(GL_BLEND);
-      VISUAL_GL_ERROR_THROW();
-    }
 } // gl_screen::draw_line()
 
 /*----------------------------------------------------------------------------*/
@@ -416,11 +398,8 @@ void bear::visual::gl_screen::draw_polygon
 
   const GLfloat max = std::numeric_limits<color_type::component_type>::max();
 
-  if (color.components.alpha != max)
-    {
-      glEnable(GL_BLEND);
-      VISUAL_GL_ERROR_THROW();
-    }
+  glEnable(GL_BLEND);
+  VISUAL_GL_ERROR_THROW();
 
   glBegin(GL_QUADS);
   {
@@ -437,11 +416,8 @@ void bear::visual::gl_screen::draw_polygon
 
   update_z_position();
 
-  if (color.components.alpha != max)
-    {
-      glDisable(GL_BLEND);
-      VISUAL_GL_ERROR_THROW();
-    }
+  glDisable(GL_BLEND);
+  VISUAL_GL_ERROR_THROW();
 } // gl_screen::draw_polygon()
 
 /*----------------------------------------------------------------------------*/
