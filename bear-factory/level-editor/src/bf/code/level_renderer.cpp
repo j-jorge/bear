@@ -218,6 +218,24 @@ bool bf::level_renderer::get_bright_background() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Toggles the visibility of the continuity hints.
+ */
+void bf::level_renderer::toggle_continuity_hints()
+{
+  m_display_continuity_hint = !m_display_continuity_hint;
+} // level_renderer::toggle_continuity_hints()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the continuity hints are displayed..
+ */
+bool bf::level_renderer::get_continuity_hints() const
+{
+  return m_display_continuity_hint;
+} // level_renderer::get_continuity_hints()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Show/hide the id.
  * \param v Tell is the id is visible.
  */

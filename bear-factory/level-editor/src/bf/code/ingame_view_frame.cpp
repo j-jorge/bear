@@ -64,6 +64,7 @@
 #include "bf/icon/align_vertical_middle.xpm"
 #include "bf/icon/bright.xpm"
 #include "bf/icon/clone.xpm"
+#include "bf/icon/continuity_hint.xpm"
 #include "bf/icon/edit_active_layer.xpm"
 #include "bf/icon/edit_all_layers.xpm"
 #include "bf/icon/edit_same_tag.xpm"
@@ -688,6 +689,9 @@ wxMenu* bf::ingame_view_frame::create_view_menu() const
   result->AppendCheckItem
     ( ID_BRIGHT_BACKGROUND, _("&Bright background\tB"),
       _("Use a bright background.") );
+  result->AppendCheckItem
+    ( ID_CONTINUITY_HINT, _("Continuity &hint\tC"),
+      _("Display the hints to check the continuity of adjacent sprites.") );
 
   result->AppendSeparator();
   result->AppendCheckItem
@@ -804,6 +808,9 @@ void bf::ingame_view_frame::create_toolbar()
   bar->AddCheckTool
     ( ID_BRIGHT_BACKGROUND, _("&Bright background"), wxBitmap(bright_xpm),
       wxBitmap(bright_xpm), _("Bright background") );
+  bar->AddCheckTool
+    ( ID_CONTINUITY_HINT, _("Continuity &hint"), wxBitmap(continuity_hint_xpm),
+      wxBitmap(continuity_hint_xpm), _("Continuity hint") );
   bar->AddSeparator();
 
   m_zoom_spin = new wxSpinCtrl( bar, ID_ZOOM );
@@ -839,6 +846,8 @@ void bf::ingame_view_frame::update_toolbar() const
   bar->ToggleTool(ID_ID_VISIBLE, m_ingame_view->get_id_visibility());
   bar->ToggleTool
     (ID_BRIGHT_BACKGROUND, m_ingame_view->get_bright_background());
+  bar->ToggleTool
+    (ID_CONTINUITY_HINT, m_ingame_view->get_continuity_hints());
   bar->ToggleTool(ID_GRAPHISM, m_ingame_view->get_graphic_drawing());
   bar->ToggleTool(ID_WIREFRAME, m_ingame_view->get_wireframe_drawing());
   bar->ToggleTool(ID_RELATIONSHIP, m_ingame_view->get_relationship_drawing());
@@ -892,6 +901,7 @@ void bf::ingame_view_frame::create_accelerators()
     ( ID_SELECT_NONE, (int)'A', accelerator_table::control_pressed,
       accelerator_table::alt_released, accelerator_table::shift_pressed );
   m_accelerator.add_accelerator( ID_BRIGHT_BACKGROUND, (int)'B' );
+  m_accelerator.add_accelerator( ID_CONTINUITY_HINT, (int)'C' );
 
   m_accelerator.add_accelerator
     ( wxID_COPY, (int)'C', accelerator_table::control_pressed );
@@ -994,6 +1004,16 @@ void bf::ingame_view_frame::toggle_bright_background()
     ( !m_ingame_view->get_bright_background() );
   m_ingame_view->Refresh();
 } // ingame_view_frame::toggle_bright_background()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Toggles the display of the continuity hints.
+ */
+void bf::ingame_view_frame::toggle_continuity_hints()
+{
+  m_ingame_view->toggle_continuity_hints();
+  m_ingame_view->Refresh();
+} // ingame_view_frame::toggle_continuity_hints()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1210,6 +1230,7 @@ void bf::ingame_view_frame::update_menu( MenuType& m ) const
   m.Check(ID_GRID_MAGNETISM, m_ingame_view->get_grid().get_magnetism_active());
   m.Check(ID_ID_VISIBLE, m_ingame_view->get_id_visibility());
   m.Check(ID_BRIGHT_BACKGROUND, m_ingame_view->get_bright_background());
+  m.Check(ID_CONTINUITY_HINT, m_ingame_view->get_continuity_hints());
   m.Check(ID_GRAPHISM, m_ingame_view->get_graphic_drawing());
   m.Check(ID_WIREFRAME, m_ingame_view->get_wireframe_drawing());
   m.Check(ID_RELATIONSHIP, m_ingame_view->get_relationship_drawing());
@@ -2626,6 +2647,19 @@ void bf::ingame_view_frame::on_bright_background
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Answers to a click on the menu "Continuity hint".
+ * \param event This event occured.
+ */
+void bf::ingame_view_frame::on_continuity_hint
+( wxCommandEvent& WXUNUSED(event) )
+{
+  toggle_continuity_hints();
+  GetToolBar()->ToggleTool
+    ( ID_CONTINUITY_HINT, m_ingame_view->get_continuity_hints() );
+} // ingame_view_frame::on_continuity_hint()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Answer to a click on the menu "zoom_100".
  * \param event This event occured.
  */
@@ -2900,6 +2934,8 @@ BEGIN_EVENT_TABLE(bf::ingame_view_frame, wxFrame)
 
   EVT_MENU( bf::ingame_view_frame::ID_BRIGHT_BACKGROUND,
             bf::ingame_view_frame::on_bright_background )
+  EVT_MENU( bf::ingame_view_frame::ID_CONTINUITY_HINT,
+            bf::ingame_view_frame::on_continuity_hint )
   EVT_MENU( wxID_ZOOM_100,
             bf::ingame_view_frame::on_zoom_100)
   EVT_MENU( wxID_ZOOM_IN,

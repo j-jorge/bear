@@ -83,6 +83,7 @@ namespace bf
         ID_MOVE_SELECTION_LEFT,
         ID_MOVE_SELECTION_RIGHT,
         ID_BRIGHT_BACKGROUND,
+        ID_CONTINUITY_HINT,
         ID_ZOOM,
         ID_PREVIOUS_LAYER,
         ID_NEXT_LAYER,
@@ -151,6 +152,7 @@ namespace bf
     void toggle_id_visibility();
     void toggle_relationship_visibility();
     void toggle_bright_background();
+    void toggle_continuity_hints();
     void toggle_wireframe_mode();
     void toggle_graphic_mode();
 
@@ -250,6 +252,7 @@ namespace bf
     void on_arrange(wxCommandEvent& event);
 
     void on_bright_background(wxCommandEvent& event);
+    void on_continuity_hint(wxCommandEvent& event);
     void on_zoom_100(wxCommandEvent& event);
     void on_zoom_in(wxCommandEvent& event);
     void on_zoom_out(wxCommandEvent& event);

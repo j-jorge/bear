@@ -375,6 +375,24 @@ bool bf::ingame_view::get_bright_background() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Toggles the visibility of the continuity hints.
+ */
+void bf::ingame_view::toggle_continuity_hints()
+{
+  m_renderer.toggle_continuity_hints();
+} // ingame_view::toggle_continuity_hints()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the continuity hints are displayed..
+ */
+bool bf::ingame_view::get_continuity_hints() const
+{
+  return m_renderer.get_continuity_hints();
+} // ingame_view::get_continuity_hints()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Show/hide the id.
  * \param v Tell is the id is visible.
  */

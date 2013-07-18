@@ -98,6 +98,9 @@ namespace bf
     void set_bright_background( bool b );
     bool get_bright_background() const;
 
+    void toggle_continuity_hints();
+    bool get_continuity_hints() const;
+
     void set_id_visibility( bool v );
     bool get_id_visibility() const;
 
