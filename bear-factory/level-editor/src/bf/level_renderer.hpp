@@ -135,6 +135,11 @@ namespace bf
     void render_item_id
     ( wxDC& dc, const item_instance& item, unsigned int layer ) const;
 
+    void render_continuity_hint
+    ( wxDC& dc, const item_instance& item, unsigned int index ) const;
+    void render_continuity_hint
+    ( wxDC& dc, wxCoord x, wxCoord y, wxCoord s, wxColor c ) const;
+
     void render_item_as_sprite
     ( wxDC& dc, const item_instance& item, const wxPoint& pos,
       const std::multimap<int, item_instance*>& z_order) const;
@@ -231,6 +236,9 @@ namespace bf
 
     /** \brief Tell if we use a bright background. */
     bool m_bright_background;
+
+    /** \brief Tell if we display a hint to show the continuity of the items. */
+    bool m_display_continuity_hint;
 
     /** \brief A cache of the sprites of the level. */
     sprite_image_cache* m_image_cache;

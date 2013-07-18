@@ -37,7 +37,8 @@ bf::level_renderer::level_renderer( const gui_level& lvl )
   : m_level( lvl ), m_view(0, 0, 1, 1), m_drag_info(NULL),
     m_wireframe_drawing(true), m_graphic_drawing(true), m_display_grid(false),
     m_display_id(true), m_display_relationship(true),
-    m_bright_background(false), m_image_cache(new sprite_image_cache),
+    m_bright_background(false), m_display_continuity_hint(false),
+    m_image_cache(new sprite_image_cache),
     m_zoom(100)
 {
 
@@ -553,7 +554,11 @@ void bf::level_renderer::render_items
 
   if ( m_display_relationship )
     for (it=z_order.begin(); it!=z_order.end(); ++it)
-      render_relationship(dc, *it->second, z_order, i );
+      render_relationship( dc, *it->second, z_order, i );
+
+  if ( m_display_continuity_hint )
+    for (it=z_order.begin(); it!=z_order.end(); ++it)
+      render_continuity_hint( dc, *it->second, i );
 } // level_renderer::render_items()
 
 /*----------------------------------------------------------------------------*/
@@ -772,6 +777,91 @@ bf::level_renderer::render_item_id
 
   render_item_id(dc, item, pos);
 } // level_renderer::render_item_id()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Renders the hints to check the continuity of an item and its
+ *        neighbors.
+ * \param dc The device context for the drawings.
+ * \param item The item to render.
+ * \param index The index of the layer.
+ */
+void bf::level_renderer::render_continuity_hint
+( wxDC& dc, const item_instance& item, unsigned int index ) const
+{
+  const rectangle_type box( get_level().get_visual_box(item) );
+
+  const size_box_type size( zoom(box.width()), zoom(box.height()) );
+  const wxCoord box_width(10);
+
+  if ( (size.x <= 2 * box_width) || (size.y <= 2 * box_width) )
+    return;
+
+  const wxPoint pos =
+    get_position_in_layer( wxPoint( box.left(), box.top()), index, 0 );
+
+  const bool mirror( item.get_rendering_parameters().is_mirrored() );
+  const wxColor left_color( mirror ? *wxBLACK : *wxWHITE );
+  const wxColor right_color( mirror ? *wxWHITE : *wxBLACK );
+
+  const bool flip( item.get_rendering_parameters().is_flipped());
+  const wxColor bottom_color( flip ? *wxBLACK : *wxWHITE );
+  const wxColor top_color( flip ? *wxWHITE : *wxBLACK );
+
+  const wxCoord little_margin( box_width / 2 );
+  const wxCoord h_margin( size.x / 2 - box_width / 2 );
+  
+  render_continuity_hint
+    ( dc, pos.x + h_margin, pos.y + little_margin, box_width, left_color );
+  render_continuity_hint
+    ( dc, pos.x + size.x - h_margin, pos.y + little_margin, box_width,
+      right_color );
+  render_continuity_hint
+    ( dc, pos.x + h_margin, pos.y + size.y - little_margin, box_width,
+      left_color );
+  render_continuity_hint
+    ( dc, pos.x + size.x - h_margin, pos.y + size.y - little_margin,
+      box_width, right_color );
+
+  const wxCoord v_margin( size.y / 2 - box_width / 2 );
+
+  render_continuity_hint
+    ( dc, pos.x + little_margin, pos.y + v_margin, box_width, top_color );
+  render_continuity_hint
+    ( dc, pos.x + little_margin, pos.y + size.y - v_margin, box_width,
+      bottom_color );
+  render_continuity_hint
+    ( dc, pos.x + size.x - little_margin, pos.y + v_margin, box_width,
+      top_color );
+  render_continuity_hint
+    ( dc, pos.x + size.x - little_margin, pos.y + size.y - v_margin,
+      box_width, bottom_color );
+} // level_renderer::render_continuity_hint()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Renders a continuity hint.
+ * \param dc The device context for the drawings.
+ * \param x The x-coordinate of the center of the hint.
+ * \param y The y-coordinate of the center of the hint.
+ * \param s The size of the hint.
+ * \param c The color of the hint.
+ */
+void bf::level_renderer::render_continuity_hint
+( wxDC& dc, wxCoord x, wxCoord y, wxCoord s, wxColor c ) const
+{
+  dc.SetPen( wxPen( c ) );
+  dc.SetBrush( wxBrush( c ) );
+
+  wxPoint p[4];
+
+  p[0] = wxPoint( x - s / 2,  y - s / 2 );
+  p[1] = wxPoint( x + s / 2, y - s / 2 );
+  p[2] = wxPoint( x + s / 2, y + s / 2 );
+  p[3] = wxPoint( x - s / 2, y + s / 2 );
+
+  dc.DrawPolygon(4, p);
+} // level_renderer::render_continuity_hint()
 
 /*----------------------------------------------------------------------------*/
 /**
