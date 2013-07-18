@@ -827,7 +827,8 @@ void bear::engine::model<Base>::reset_action( universe::time_type d )
 
   for ( it=m_action->mark_begin(); it!=m_action->mark_end(); ++it )
     if ( it->has_animation() )
-      if ( it->get_animation()->is_finite() )
+      if ( it->get_animation()->is_finite()
+           || (it->get_animation()->get_first_index() != 0) )
         it->get_animation()->reset();
 
   progress_animations(0, m_date, true);

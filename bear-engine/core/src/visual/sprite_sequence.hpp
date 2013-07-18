@@ -49,6 +49,8 @@ namespace bear
       void set_loop_back( bool loop_back );
       void set_loops( unsigned int loops );
 
+      unsigned int get_first_index() const;
+
       void set_first_index(unsigned int index);
       void set_last_index(unsigned int index);
 

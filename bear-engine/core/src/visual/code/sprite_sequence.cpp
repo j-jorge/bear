@@ -159,7 +159,16 @@ void bear::visual::sprite_sequence::set_loops( unsigned int loops )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the index of the first frame of the loops.
+ * \brief Gets the index of the first frame of the loops.
+ */
+unsigned int bear::visual::sprite_sequence::get_first_index() const
+{
+  return m_first_index;
+} // sprite_sequence::get_first_index()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the index of the first frame of the loops.
  * \param index The index.
  */
 void bear::visual::sprite_sequence::set_first_index( unsigned int index )
