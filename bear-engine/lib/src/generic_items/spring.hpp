@@ -19,6 +19,8 @@
 #include "engine/item_brick/item_with_decoration.hpp"
 #include "engine/item_brick/activable_sides.hpp"
 
+#include "generic_items/class_export.hpp"
+
 #include "engine/export.hpp"
 
 namespace bear
@@ -38,7 +40,7 @@ namespace bear
    *
    * \author Julien Jorge
    */
-  class spring:
+  class GENERIC_ITEMS_EXPORT spring:
     public engine::item_with_decoration
   < engine::basic_renderable_item<engine::base_item> >,
     public engine::activable_sides
