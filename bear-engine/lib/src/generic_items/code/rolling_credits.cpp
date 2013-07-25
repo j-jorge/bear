@@ -15,7 +15,10 @@
 
 #include "engine/level_globals.hpp"
 #include "engine/resource_pool.hpp"
+
 #include "visual/scene_writing.hpp"
+#include "visual/text_layout.hpp"
+#include "visual/text_layout_display_size.hpp"
 
 #include <claw/string_algorithm.hpp>
 #include <libintl.h>
@@ -32,11 +35,16 @@ BASE_ITEM_EXPORT( rolling_credits, bear )
  * \param b The intensity of the blue component of the displayed line.
  * \param o The opacity of the displayed line.
  * \param pos The bottom-left position of the line in the layer.
+ * \param width The maximum width of the line.
+ * \param a The alignment of the text.
  */
 bear::rolling_credits::credit_line::credit_line
 ( const std::string& text, const visual::font& font, double r, double g,
-  double b, double o, const universe::position_type& pos )
-: m_visual( visual::scene_writing(pos.x, pos.y, visual::writing(font, text)) ),
+  double b, double o, const universe::position_type& pos,
+  universe::size_type width, visual::text_align::horizontal_align a )
+: m_visual
+  ( visual::scene_writing
+    ( pos.x, pos.y, create_writing(text, font, width, a)) ),
   m_is_on(false)
 {
   m_visual.get_rendering_attributes().set_intensity(r, g, b);
@@ -102,6 +110,34 @@ void bear::rolling_credits::credit_line::turn_on()
   m_is_on = true;
 } // rolling_credits::credit_line::turn_on()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param text The text displayed in the credits.
+ * \param font The font used to display the text.
+ * \param width The maximum width of the line.
+ * \param a The alignment of the text.
+ */
+bear::visual::writing bear::rolling_credits::credit_line::create_writing
+( const std::string& text, const visual::font& font,
+  universe::size_type width, visual::text_align::horizontal_align a ) const
+{
+  visual::size_box_type s( width, font.get_line_spacing() * text.length() );
+
+  visual::text_layout_display_size func( text, font, s.y );
+  visual::text_layout layout( font, text, s, a );
+
+  layout.arrange_text<visual::text_layout_display_size&>( func );
+
+  s = func.get_bounding_box().size();
+
+  if ( s.y < font.get_line_spacing() )
+    s.y = font.get_line_spacing();
+
+  return visual::writing( font, text, s, a );
+} // rolling_credits::credit_line::create_writing()
+
+
 
 
 
@@ -136,13 +172,15 @@ void bear::rolling_credits::build()
   visual::font font;
   double font_size(12);
   double red(1), green(1), blue(1), opacity(1);
+  visual::text_align::horizontal_align horizontal_align;
+  visual::size_type width( get_width() );
 
   while ( claw::text::getline(iss, line) )
     if ( line.empty() )
       m_lines.push_back
         ( credit_line
-          (" ", font, red, green, blue, opacity, 
-           get_bottom_left()) );
+          ( line, font, red, green, blue, opacity,  get_bottom_left(), width,
+            horizontal_align ) );
     else if ( line[0] == '#' )
       {
         std::string s;
@@ -159,12 +197,19 @@ void bear::rolling_credits::build()
             iss_line >> s >> font_size;
             font = get_level_globals().get_font(s, font_size);
           }
+        else if ( s == "#align" )
+          {
+            iss_line >> s;
+            horizontal_align =
+              visual::text_align::horizontal_align_from_string
+              ( s, visual::text_align::align_center );
+          }
       }
     else
       m_lines.push_back
         ( credit_line
-          ( gettext(line.c_str()), font, red, green, blue, opacity,
-            get_bottom_left() ) );
+          ( line, font, red, green, blue, opacity, get_bottom_left(), width,
+            horizontal_align ) );
 } // rolling_credits::build()
 
 /*----------------------------------------------------------------------------*/
@@ -188,7 +233,6 @@ void bear::rolling_credits::progress( universe::time_type elapsed_time )
   for ( it=m_lines.begin(); !stop; )
     {
       universe::position_type p(it->get_bottom_left());
-      p.x = get_horizontal_middle() - it->get_size().x / 2;
       p.y += speed * elapsed_time;
       it->set_bottom_left( p );
       it->turn_on();

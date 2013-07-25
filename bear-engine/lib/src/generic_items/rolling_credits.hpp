@@ -18,6 +18,7 @@
 
 #include "visual/font/font.hpp"
 #include "visual/scene_element.hpp"
+#include "visual/writing.hpp"
 
 #include "generic_items/class_export.hpp"
 #include "engine/export.hpp"
@@ -52,7 +53,8 @@ namespace bear
     public:
       credit_line
       ( const std::string& text, const visual::font& font, double r, double g,
-        double b, double o, const universe::position_type& pos );
+        double b, double o, const universe::position_type& pos,
+        universe::size_type width, visual::text_align::horizontal_align a );
 
       const visual::scene_element& create_scene_element() const;
 
@@ -65,8 +67,15 @@ namespace bear
       void turn_on();
 
     private:
+      visual::writing create_writing
+      ( const std::string& text, const visual::font& font,
+        visual::coordinate_type width,
+        visual::text_align::horizontal_align a ) const;
+
+    private:
       /** \brief The visual displayed on the screen. */
       visual::scene_element m_visual;
+
       /** \brief Tell if the line has to be displayed. */
       bool m_is_on;
 
