@@ -548,6 +548,11 @@ bear::visual::gl_screen::get_render_coord
   result[1] = rotate( coord_double(right, top), a, center );
   result[2] = rotate( coord_double(right, bottom), a, center );
   result[3] = rotate( coord_double(left, bottom), a, center );
+
+  for ( std::size_t i(0); i!=4; ++i ) {
+    result[i].x = (int)( result[i].x + 0.5 );
+    result[i].y = (int)( result[i].y + 0.5 );
+  }
 } // gl_screen::get_render_coord()
 
 /*----------------------------------------------------------------------------*/

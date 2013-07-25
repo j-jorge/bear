@@ -240,14 +240,13 @@ bool bear::descending_ceiling::align_on_ceiling
 {
   bool result = false;
 
-  const universe::coordinate_type pos_x
-    ( info.get_bottom_left_on_contact().x + that.get_width() / 2 );
+  const universe::coordinate_type pos_x( that.get_horizontal_middle() );
 
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_down_up(that, info) )
     {
-      universe::position_type pos
-        ( info.get_bottom_left_on_contact().x,
+      const universe::position_type pos
+        ( that.get_left(),
           m_line.y_value(pos_x) - info.other_item().get_height() );
 
       if ( collision_align_bottom(info, pos) )
