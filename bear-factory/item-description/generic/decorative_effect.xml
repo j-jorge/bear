@@ -39,17 +39,6 @@
       <description>Final factor applied to the size.</description>
       <default_value>1</default_value>
     </field>
-
-    <field type="real" name="decorative_effect.opacity_factor.init">
-      <description>Initial factor applied to the opacity.</description>
-      <default_value>1</default_value>
-    </field>
-
-    <field type="real" name="decorative_effect.opacity_factor.end">
-      <description>Final factor applied to the opacity.</description>
-      <default_value>1</default_value>
-    </field>
-
     <field type="real" name="decorative_effect.angle_offset.init">
       <description>Initial offset applied to the angle.</description>
       <default_value>1</default_value>
@@ -72,36 +61,6 @@
         Final color.
       </description>
       <default_value>color: opacity=1, red=1, green=1, blue=1</default_value>
-    </field>
-    
-    <field type="real" name="decorative_effect.intensity_factor.red.init">
-      <description>Initial factor applied to the intensity of the red component.</description>
-      <default_value>1</default_value>
-    </field>
-
-    <field type="real" name="decorative_effect.intensity_factor.red.end">
-      <description>Final factor applied to the intensity of the red component.</description>
-      <default_value>1</default_value>
-    </field>
-
-    <field type="real" name="decorative_effect.intensity_factor.green.init">
-      <description>Initial factor applied to the intensity of the green component.</description>
-      <default_value>1</default_value>
-    </field>
-
-    <field type="real" name="decorative_effect.intensity_factor.green.end">
-      <description>Final factor applied to the intensity of the green component.</description>
-      <default_value>1</default_value>
-    </field>
-
-    <field type="real" name="decorative_effect.intensity_factor.blue.init">
-      <description>Initial factor applied to the intensity of the blue component.</description>
-      <default_value>1</default_value>
-    </field>
-
-    <field type="real" name="decorative_effect.intensity_factor.blue.end">
-      <description>Final factor applied to the intensity of the blue component.</description>
-      <default_value>1</default_value>
     </field>
   </fields>
   <new_default_value name="base_item.artificial">true</new_default_value>

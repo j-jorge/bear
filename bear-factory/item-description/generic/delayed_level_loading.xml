@@ -20,6 +20,10 @@
                    the user presses a key.</description>
       <default_value>false</default_value>
     </field>
+    <field type="boolean" name="delayed_level_loading.push_mode">
+      <description>Indicates if the level must be pushed.</description>
+      <default_value>false</default_value>
+    </field>
     <field type="string" name="delayed_level_loading.level" required="true">
       <description>The path of the level to start, or the name of a game
         variable containing this path.

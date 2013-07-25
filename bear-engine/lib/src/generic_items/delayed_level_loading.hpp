@@ -64,6 +64,7 @@ namespace bear
     bool is_valid() const;
 
     void progress( universe::time_type elapsed_time );
+    void set_push_mode(bool push_mode);
 
   private:
     void start_fading();
@@ -98,6 +99,9 @@ namespace bear
     /** \brief Tell if the level must starts before the end of the delay if the
         user presses a key. */
     bool m_load_on_input;
+
+    /** \brief Tell if the level must be pushed. */
+    bool m_push_mode;
 
     /** \brief The identifier of the fading effect. */
     std::size_t m_effect_id;

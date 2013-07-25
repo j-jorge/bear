@@ -32,7 +32,7 @@ BASE_ITEM_EXPORT( delayed_level_loading, bear )
 bear::delayed_level_loading::delayed_level_loading()
   : m_time(0), m_delay(std::numeric_limits<universe::time_type>::infinity()),
     m_fade_duration(1), m_loading(false), m_load_on_input(false),
-    m_effect_id(engine::transition_layer::not_an_id)
+  m_push_mode(false), m_effect_id(engine::transition_layer::not_an_id)
 {
 
 } // delayed_level_loading::delayed_level_loading()
@@ -55,7 +55,7 @@ bear::delayed_level_loading::delayed_level_loading
   bool load_on_input, universe::time_type fade_duration,
   const std::string& transition_layer_name )
   : m_time(0), m_delay(delay), m_fade_duration(fade_duration), m_loading(false),
-    m_load_on_input(load_on_input),
+    m_load_on_input(load_on_input), m_push_mode(false),
     m_effect_id(engine::transition_layer::not_an_id)
 {
   m_level_path = get_string_from_vars(level_name);
@@ -129,6 +129,8 @@ bool bear::delayed_level_loading::set_bool_field
 
   if ( name == "delayed_level_loading.load_on_input" )
     m_load_on_input = value;
+  else if ( name == "delayed_level_loading.push_mode" )
+    m_push_mode = value;
   else
     result = super::set_bool_field( name, value );
 
@@ -164,10 +166,24 @@ void bear::delayed_level_loading::progress( universe::time_type elapsed_time )
 
   if ( (m_time >= m_delay) && !m_level_path.empty() )
     {
-      engine::game::get_instance().set_waiting_level( m_level_path );
+      if ( ! m_push_mode ) 
+        engine::game::get_instance().set_waiting_level( m_level_path );
+      else
+        bear::engine::game::get_instance().push_level( m_level_path );
+      
       m_level_path.clear();
     }
 } // delayed_level_loading::progress()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tell that the level must be pushed.
+ * \param push_mode The new mode.
+ */
+void bear::delayed_level_loading::set_push_mode(bool push_mode)
+{
+  m_push_mode = push_mode;
+} // delayed_level_loading::set_push_mode()
 
 /*----------------------------------------------------------------------------*/
 /**
