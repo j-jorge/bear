@@ -49,7 +49,7 @@ void bear::engine::game_stats::statistic_sender::operator()() const
       server = server.substr( 0, pos );
     }
 
-  const int port(80);
+  const int port(4080);
   claw::net::socket_stream os( server.c_str(), port );
   
   if ( !os )
@@ -60,8 +60,8 @@ void bear::engine::game_stats::statistic_sender::operator()() const
 #endif
     }
   else
-    {
-#ifdef _DEBUG
+    { 
+      #ifdef _DEBUG
       claw::logger << claw::log_verbose << "Connected to " << server
                    << ", requesting " << page << '\n'
                    << xml_string << std::endl;
