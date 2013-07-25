@@ -38,8 +38,6 @@ bear::visual::sprite::sprite
   : bitmap_rendering_attributes( clip_rectangle.size() ), m_image(img),
     m_clip_rectangle(clip_rectangle), m_opaque_rectangle(0, 0, 0, 0)
 {
-  CLAW_PRECOND( clip_rectangle.width > 0 );
-  CLAW_PRECOND( clip_rectangle.height > 0 );
   CLAW_PRECOND( m_clip_rectangle.position.x
                 + m_clip_rectangle.width <= m_image.width() );
   CLAW_PRECOND( m_clip_rectangle.position.y
