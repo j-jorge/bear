@@ -49,7 +49,7 @@ void bear::engine::game_stats::statistic_sender::operator()() const
       server = server.substr( 0, pos );
     }
 
-  const int port(4080);
+  const int port(80);
   claw::net::socket_stream os( server.c_str(), port );
   
   if ( !os )
