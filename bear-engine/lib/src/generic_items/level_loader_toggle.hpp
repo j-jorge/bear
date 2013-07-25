@@ -31,6 +31,8 @@ namespace bear
    *   name of the level to load or the path of the level itself,
    * - \a transition_layer_name: string, the name of the transition layer
    *   receiving the fade effect (default = none).
+   * - \a push_mode: bool, indicates if the level must be pushed
+   * (default = false).
    * - any field supported by the parent class.
    *
    * \author Julien Jorge
@@ -49,6 +51,7 @@ namespace bear
 
     bool set_string_field( const std::string& name, const std::string& value );
     bool set_real_field( const std::string& name, double value );
+    bool set_bool_field( const std::string& name, bool value );
 
     bool is_valid() const;
 
@@ -66,6 +69,9 @@ namespace bear
 
     /** \brief The duration of the fading. */
     universe::time_type m_fade_duration;
+
+    /** \brief Indicates if the level must be pushed. */
+    bool m_push_mode;
 
   }; // class level_loader_toggle
 } // namespace bear

@@ -26,7 +26,7 @@ BASE_ITEM_EXPORT( level_loader_toggle, bear )
  * \brief Constructor.
  */
 bear::level_loader_toggle::level_loader_toggle()
-  : m_fade_duration(1)
+: m_fade_duration(1), m_push_mode(false)
 {
 
 } // level_loader_toggle::level_loader_toggle()
@@ -74,6 +74,26 @@ bool bear::level_loader_toggle::set_real_field
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set a field of type \c bool.
+ * \param name The name of the field.
+ * \param value The new value of the field.
+ * \return false if the field "name" is unknow, true otherwise.
+ */
+bool bear::level_loader_toggle::set_bool_field
+( const std::string& name, bool value )
+{
+  bool result(true);
+
+  if ( name == "level_loader_toggle.push_mode" )
+    m_push_mode = value;
+  else
+    result = super::set_bool_field( name, value );
+
+  return result;
+} // level_loader_toggle::set_bool_field()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Tell if the item is well initialised.
  */
 bool bear::level_loader_toggle::is_valid() const
@@ -95,6 +115,7 @@ void bear::level_loader_toggle::on_toggle_on( engine::base_item* activator )
 
   loader->set_center_of_mass(get_center_of_mass());
   loader->set_global(is_global());
+  loader->set_push_mode(m_push_mode);
 
   new_item( *loader );
 } // level_loader_toggle::on_toggle_on()

@@ -60,8 +60,8 @@ void bear::engine::game_stats::statistic_sender::operator()() const
 #endif
     }
   else
-    {
-#ifdef _DEBUG
+    { 
+      #ifdef _DEBUG
       claw::logger << claw::log_verbose << "Connected to " << server
                    << ", requesting " << page << '\n'
                    << xml_string << std::endl;

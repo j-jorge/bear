@@ -23,5 +23,9 @@
       </description>
       <default_value>none</default_value>
     </field>
+    <field type="boolean" name="level_loader_toggle.push_mode">
+      <description>Indicates if the level must be pushed.</description>
+      <default_value>false</default_value>
+    </field>
   </fields>
 </item>
