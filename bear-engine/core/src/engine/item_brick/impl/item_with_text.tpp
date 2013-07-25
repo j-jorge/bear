@@ -24,7 +24,7 @@
  */
 template<class Base>
 bear::engine::item_with_text<Base>::item_with_text()
-  : m_text_inside(false), m_stretched_text(false)
+  : m_text_inside(false), m_stretched_text(false), m_scale_to_fit(false)
 {
 
 } // item_with_text::item_with_text()
