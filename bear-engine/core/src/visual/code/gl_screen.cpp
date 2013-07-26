@@ -726,6 +726,11 @@ void bear::visual::gl_screen::set_video_mode
   glClearDepth(1.0);
 
 #ifdef _WIN32
+  const GLenum err = glewInit();
+
+  if ( err != GLEW_OK )
+    claw::logger << claw::log_error << "Failed to initialize Glew: "
+                 << glewGetErrorString(err) << std::endl;
   glEnable(GL_TEXTURE_2D);
   VISUAL_GL_ERROR_THROW();
 

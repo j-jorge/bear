@@ -19,6 +19,8 @@
 #include "universe/item_handle.hpp"
 #include "universe/physical_item.hpp"
 
+#include "generic_items/class_export.hpp"
+
 #include <list>
 
 namespace bear
@@ -38,7 +40,7 @@ namespace bear
    *
    * \author Julien Jorge
    */
-  class item_information_layer:
+  class GENERIC_ITEMS_EXPORT item_information_layer:
     public bear::engine::gui_layer
   {
   public:
