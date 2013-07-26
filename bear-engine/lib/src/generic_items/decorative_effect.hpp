@@ -60,6 +60,8 @@ namespace bear
     void set_duration(universe::time_type d);
     universe::time_type get_duration() const;
 
+    void resize_item( bool r );
+
     void set_size_factor_init(double f);
     void set_color_init(const visual::color& c);
     void set_angle_offset_init(double f);
@@ -116,6 +118,13 @@ namespace bear
     /** \brief Tell if the aspect of m_item must be restored at the end of the
         effect. */
     bool m_restore_at_end;
+
+    /** \brief Tell to resize the item when the size in the rendering attributes
+        is changed. */
+    bool m_resize_item;
+
+    /** \brief The initial size of the item. */
+    universe::size_box_type m_initial_size;
 
   }; // class decorative_effect
 } // namespace bear

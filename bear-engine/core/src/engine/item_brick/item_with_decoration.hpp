@@ -68,6 +68,7 @@ namespace bear
       visual::sprite get_sprite() const;
 
       void auto_size();
+      void extend_to_bounding_box( bool extend );
 
     protected:
       visual::animation& get_animation();
@@ -82,6 +83,7 @@ namespace bear
       /** \brief Indicates if the decoration must be extended 
           on the bounding box. */
       bool m_extend_on_bounding_box;
+
     }; // class item_with_decoration
   } // namespace engine
 } // namespace bear
