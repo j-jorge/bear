@@ -121,12 +121,15 @@ namespace bear
       void set_distance_unit( double d );
       double get_distance_unit() const;
 
-      void restore_images();
+      void restore_resources();
 
       void freeze();
 
     private:
       void warn_missing_ressource( std::string name ) const;
+
+      void restore_images();
+      void restore_shader_programs();
 
       void constructor_default();
 
