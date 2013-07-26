@@ -971,6 +971,7 @@ void bear::engine::level_globals::restore_images()
   // before restoring any image, otherwise one of the older images may delete a
   // texture whose id is used by a restored image.
   m_image_manager.clear_images();
+  m_font_manager.clear_fonts();
 
   if ( m_shared_resources != NULL )
     const_cast<level_globals*>( m_shared_resources )->restore_images();
@@ -989,6 +990,8 @@ void bear::engine::level_globals::restore_images()
         claw::logger << claw::log_error << "cannot open file '" << names[i]
                      << "'." << std::endl;
     }
+
+  m_font_manager.restore_fonts();
 } // level_globals::restore_images()
 
 /*----------------------------------------------------------------------------*/
