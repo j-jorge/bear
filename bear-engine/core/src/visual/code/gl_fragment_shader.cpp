@@ -13,6 +13,8 @@
  */
 #include "visual/gl_fragment_shader.hpp"
 
+#include "visual/gl_error.hpp"
+
 #include <string>
 #include <sstream>
 #include <claw/logger.hpp>
@@ -33,6 +35,8 @@ bear::visual::gl_fragment_shader::gl_fragment_shader( std::istream& p )
   const char *fragmentText = code.c_str();
 
   glShaderSource( m_fragment_shader, 1, &fragmentText, 0 );
+  VISUAL_GL_ERROR_THROW();
+
   glCompileShader( m_fragment_shader );
   log_errors();
 } // gl_fragment_shader::gl_fragment_shader()
@@ -43,6 +47,9 @@ bear::visual::gl_fragment_shader::gl_fragment_shader( std::istream& p )
  */
 bear::visual::gl_fragment_shader::~gl_fragment_shader()
 {
+  if ( !glIsShader( m_fragment_shader ) )
+    return;
+
   glDeleteShader( m_fragment_shader );
 } // gl_fragment_shader::~gl_fragment_shader()
 

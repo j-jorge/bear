@@ -13,6 +13,8 @@
  */
 #include "visual/gl_shader_program.hpp"
 
+#include "visual/gl_error.hpp"
+
 #include <string>
 #include <claw/logger.hpp>
 
@@ -26,7 +28,9 @@ bear::visual::gl_shader_program::gl_shader_program( std::istream& program_code )
 {
   m_program_id = glCreateProgram();
 
+  VISUAL_GL_ERROR_THROW();
   glAttachShader( m_program_id, m_fragment_shader.shader_id() );
+  VISUAL_GL_ERROR_THROW();
 
   glLinkProgram( m_program_id );
   log_errors( "link" );
@@ -41,6 +45,9 @@ bear::visual::gl_shader_program::gl_shader_program( std::istream& program_code )
  */
 bear::visual::gl_shader_program::~gl_shader_program()
 {
+  if ( !glIsProgram( m_program_id ) )
+    return;
+
   GLint shader_count;
 
   glGetProgramiv( m_program_id, GL_ATTACHED_SHADERS, &shader_count );

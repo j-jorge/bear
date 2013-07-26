@@ -54,6 +54,9 @@ bear::visual::gl_image::gl_image(const claw::graphic::image& data)
  */
 bear::visual::gl_image::~gl_image()
 {
+  if ( !glIsTexture( m_texture_id ) )
+    return;
+
   glDeleteTextures(1, &m_texture_id);
 } // gl_image::~gl_image()
 

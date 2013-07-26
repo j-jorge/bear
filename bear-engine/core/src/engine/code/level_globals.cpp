@@ -926,6 +926,39 @@ double bear::engine::level_globals::get_distance_unit() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Reload the resources.
+ */
+void bear::engine::level_globals::restore_resources()
+{
+  restore_images();
+  restore_shader_programs();
+} // level_globals::restore_resources()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells that no more resources are supposed to be created.
+ */
+void bear::engine::level_globals::freeze()
+{
+  m_frozen = true;
+} // level_globals::freeze()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Prints a warning telling that a resource was not preloaded.
+ * \param name The name of the resource.
+ */
+void
+bear::engine::level_globals::warn_missing_ressource( std::string name ) const
+{
+  if ( m_frozen )
+    claw::logger << claw::log_warning
+                 << "The following resource was not preloaded: '" << name
+                 << "'." << std::endl;
+} // level_globals::warn_missing_ressource()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Reload the images.
  */
 void bear::engine::level_globals::restore_images()
@@ -960,26 +993,37 @@ void bear::engine::level_globals::restore_images()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tells that no more resources are supposed to be created.
+ * \brief Reload the shaders.
  */
-void bear::engine::level_globals::freeze()
+void bear::engine::level_globals::restore_shader_programs()
 {
-  m_frozen = true;
-} // level_globals::freeze()
+  std::vector<std::string> names;
 
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Prints a warning telling that a resource was not preloaded.
- * \param name The name of the resource.
- */
-void
-bear::engine::level_globals::warn_missing_ressource( std::string name ) const
-{
-  if ( m_frozen )
-    claw::logger << claw::log_warning
-                 << "The following resource was not preloaded: '" << name
-                 << "'." << std::endl;
-} // level_globals::warn_missing_ressource()
+  m_image_manager.get_shader_program_names(names);
+
+  // Clearing the shaders will delete programs. All shaders must be cleared
+  // before restoring any shader, otherwise one of the older shaders may delete
+  // a program whose id is used by a restored shader.
+  m_image_manager.clear_shader_programs();
+
+  if ( m_shared_resources != NULL )
+    const_cast<level_globals*>( m_shared_resources )->restore_shader_programs();
+
+  for (unsigned int i=0; i!=names.size(); ++i)
+    {
+      claw::logger << claw::log_verbose << "restoring shader '" << names[i]
+                   << "'." << std::endl;
+
+      std::stringstream f;
+      shader_loader::parse_shader_file( f, names[i] );
+
+      if (f)
+        m_image_manager.restore_shader_program(names[i], f);
+      else
+        claw::logger << claw::log_error << "cannot open file '" << names[i]
+                     << "'." << std::endl;
+    }
+} // level_globals::restore_shader_programs()
 
 /*----------------------------------------------------------------------------*/
 /**

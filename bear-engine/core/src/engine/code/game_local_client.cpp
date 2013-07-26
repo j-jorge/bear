@@ -903,9 +903,9 @@ void bear::engine::game_local_client::render()
 {
   if ( m_screen->need_restoration() )
     {
-      // The images are shared among the level_globals of each level, thus we do
-      // not have to restore the ones in m_level_in_abeyance
-      m_current_level->get_globals().restore_images();
+      // The resources are shared among the level_globals of each level, thus
+      // we do not have to restore the ones in m_level_in_abeyance.
+      m_current_level->get_globals().restore_resources();
       m_screen->set_restored();
     }
 

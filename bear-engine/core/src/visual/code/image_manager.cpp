@@ -166,7 +166,7 @@ void bear::visual::image_manager::restore_shader_program
 {
   CLAW_PRECOND( has_shader_program(name) );
 
-  m_images[ name ].restore( file );
+  m_shader_program[ name ].restore( file );
 } // image_manager::restore_shader_program()
 
 /*---------------------------------------------------------------------------*/
