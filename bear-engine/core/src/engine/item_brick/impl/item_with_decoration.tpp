@@ -249,6 +249,19 @@ void bear::engine::item_with_decoration<Base>::auto_size()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells the item to adjust the size of its decoration to the bounds of
+ *        its bounding box.
+ * \param extend Extend to the bounds, or not.
+ */
+template<class Base>
+void bear::engine::item_with_decoration<Base>::extend_to_bounding_box
+( bool extend )
+{
+  m_extend_on_bounding_box = extend;
+} // item_with_decoration::extend_to_bounding_box()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the animation of the item.
  */
 template<class Base>

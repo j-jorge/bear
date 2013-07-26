@@ -26,7 +26,7 @@ bear::decorative_effect::decorative_effect()
   m_size_factor_init(1), m_size_factor_end(1),
   m_angle_offset_init(1),
   m_angle_offset_end(1), m_item(NULL), m_same_lifespan(false),
-  m_restore_at_end(false)
+  m_restore_at_end(false), m_resize_item(false)
 {
   set_artificial(true);
   set_phantom(true);
@@ -48,6 +48,7 @@ void bear::decorative_effect::build()
   else
     {
       m_rendering_attributes = m_item->get_rendering_attributes();
+      m_initial_size = m_item.get_item()->get_size();
 
       apply_effect();
 
@@ -76,7 +77,10 @@ void bear::decorative_effect::progress( universe::time_type elapsed_time )
       if (m_same_lifespan)
         m_item.get_item()->kill();
       else if (m_restore_at_end)
-        m_item->set_rendering_attributes( m_rendering_attributes );
+        {
+          m_item->set_rendering_attributes( m_rendering_attributes );
+          m_item.get_item()->set_size( m_initial_size );
+        }
     }
   else
     {
@@ -225,6 +229,17 @@ bear::universe::time_type bear::decorative_effect::get_duration() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells if the item is resized when the size of the rendering attributes
+ *        is changed.
+ * \param r Resize it or not.
+ */
+void bear::decorative_effect::resize_item( bool r )
+{
+  m_resize_item = r;
+} // decorative_effect::resize_item()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Set the initial factor applied to the size.
  * \param f The factor to apply.
  */
@@ -335,14 +350,30 @@ void bear::decorative_effect::apply_effect() const
         r = 2.0 - r;
     }
 
+  if ( m_resize_item )
+    {
+      engine::base_item& item( *m_item.get_item() );
+
+      item.set_width
+        ( m_initial_size.x
+          * ( m_size_factor_init
+              + ( m_size_factor_end - m_size_factor_init ) * r ) );
+      item.set_height
+        ( m_initial_size.y
+          * ( m_size_factor_init
+              + ( m_size_factor_end - m_size_factor_init ) * r ) );
+    }
+
   m_item->get_rendering_attributes().set_width
     ( m_rendering_attributes.width()
-      * (m_size_factor_init + (m_size_factor_end - m_size_factor_init) * r) );
+      * ( m_size_factor_init
+          + (m_size_factor_end - m_size_factor_init) * r ) );
   
   m_item->get_rendering_attributes().set_height
     ( m_rendering_attributes.height()
-      * (m_size_factor_init + (m_size_factor_end - m_size_factor_init) * r) );
-  
+      * ( m_size_factor_init
+          + (m_size_factor_end - m_size_factor_init) * r ) );
+
   m_item->get_rendering_attributes().set_opacity
     ( m_rendering_attributes.get_opacity()
       * (m_color_init.get_opacity()
