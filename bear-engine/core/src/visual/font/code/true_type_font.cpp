@@ -22,7 +22,9 @@
  * \brief Constructor.
  */
 bear::visual::true_type_font::glyph_sheet::glyph_sheet()
-  : m_image( 512, 512 ), m_next_position( 1, 1 ), m_current_line_height(0)
+  : m_image_size( 512, 512 ), m_image( m_image_size.x, m_image_size.y ),
+    m_next_position( 1, 1 ),
+    m_current_line_height(0)
 {
 
 } // true_type_font::glyph_sheet::glyph_sheet()
@@ -130,7 +132,7 @@ void bear::visual::true_type_font::glyph_sheet::invalidate()
 void
 bear::visual::true_type_font::glyph_sheet::restore( const freetype_face& face )
 {
-  claw::graphic::image all_glyphs( m_image.width(), m_image.height() );
+  claw::graphic::image all_glyphs( m_image_size.x, m_image_size.y );
 
   for ( character_to_placement::const_iterator it = m_placement.begin();
         it != m_placement.end(); ++it )

@@ -86,6 +86,14 @@ namespace bear
         void restore( const freetype_face& face );
 
       private:
+        /**
+         * \brief The size of the created image.
+         *
+         * Since the image becomes invalid after a call to invalidate(), we
+         * cannot compute its size in restore().
+         */
+        const size_box_type m_image_size;
+
         /** \brief The image where the glyphs are drawn. */
         image m_image;
 
