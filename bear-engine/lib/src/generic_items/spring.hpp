@@ -55,10 +55,13 @@ namespace bear
 
   public:
     spring();
+    ~spring();
 
     bool set_real_field( const std::string& name, double value );
 
     void build();
+
+    void set_bounce_sound( audio::sample* s );
 
   protected:
     void populate_loader_map( engine::item_loader_map& m );
@@ -70,9 +73,14 @@ namespace bear
     void collision
     ( engine::base_item& that, universe::collision_info& info );
 
+    void play_sound() const;
+
   private:
     /** \brief The force applied to the item. */
     universe::force_type m_applied_force;
+
+    /** \brief The sound played when an item bounces on the spring. */
+    audio::sample* m_sample;
 
   }; // class spring
 } // namespace bear

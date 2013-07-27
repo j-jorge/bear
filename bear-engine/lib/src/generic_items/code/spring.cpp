@@ -26,10 +26,19 @@ BASE_ITEM_EXPORT( spring, bear )
  * \brief Contructor.
  */
 bear::spring::spring()
-  : m_applied_force(0, 0)
+: m_applied_force(0, 0), m_sample( NULL )
 {
 
 } // spring::spring()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Destructor.
+ */
+bear::spring::~spring()
+{
+  delete m_sample;
+} // spring::~spring()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -67,7 +76,18 @@ void bear::spring::build()
     }
 
   get_animation().set_current_index(get_animation().get_max_index());
-} // forced_join_creator::build()
+} // spring::build()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the sound played when an item bounces on the spring.
+ * \param s The sound.
+ */
+void bear::spring::set_bounce_sound( audio::sample* s )
+{
+  delete m_sample;
+  m_sample = s;
+} // spring::set_bounce_sound()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -128,9 +148,13 @@ void bear::spring::collision_check_and_bounce
       if (bounce)
         {
           that.add_external_force(m_applied_force);
+
           if ( top_contact )
             that.set_bottom_contact(false);
+
           get_animation().reset();
+
+          play_sound();
         }
     }
   else
@@ -148,3 +172,20 @@ void bear::spring::collision
 {
   collision_check_and_bounce(that, info);
 } // spring::collision()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Plays the sample.
+ */
+void bear::spring::play_sound() const
+{
+  if ( m_sample == NULL )
+    return;
+
+  audio::sound_effect effect( m_sample->get_effect() );
+
+  if ( !is_global() )
+    effect.set_position( get_center_of_mass() );
+
+  m_sample->play(effect);
+} // spring::play_sound()
