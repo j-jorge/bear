@@ -87,7 +87,7 @@ For general questions, send an email to julien.jorge@stuff-o-matic.com.
 Legal information
 ====
 
-The software is licenced under the version 2 of the GNU GPL. All
+The software is licensed under the version 2 of the GNU GPL. All
 multimedia resources are provided under the terms of the version 3 of
 the Creative Commons license, with attribution and share-alike clauses
 (CC-by-sa).
