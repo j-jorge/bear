@@ -23,7 +23,8 @@ BASE_ITEM_EXPORT( cursor, bear )
  * \brief Constructor.
  */
 bear::cursor::cursor()
-: m_visibility_duration( std::numeric_limits<universe::time_type>::max() ),
+: m_screen_position(0, 0),
+  m_visibility_duration( std::numeric_limits<universe::time_type>::max() ),
   m_inactive_duration( 0 )
 {
   set_artificial(true);

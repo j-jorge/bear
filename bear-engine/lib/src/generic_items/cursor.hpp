@@ -28,14 +28,12 @@ namespace bear
    *
    */
   class GENERIC_ITEMS_EXPORT cursor:
-    public engine::item_with_input_listener
-      < decorative_item >
+    public engine::item_with_input_listener< decorative_item >
   {
     DECLARE_BASE_ITEM(cursor);
 
     /** \brief The type of the parent class. */
-    typedef engine::item_with_input_listener
-      < decorative_item > super;
+    typedef engine::item_with_input_listener< decorative_item > super;
 
   public:
     cursor();
