@@ -110,6 +110,9 @@ void bear::visual::gl_screen::initialize()
   SDL_EventState( SDL_QUIT, SDL_ENABLE );
 
 #ifdef _WIN32
+  SDL_EnableKeyRepeat(0, 0);
+  SDL_EnableUNICODE(1);
+
   SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
   SDL_EventState( SDL_BUTTON_WHEELUP, SDL_ENABLE );
   SDL_EventState( SDL_BUTTON_WHEELDOWN, SDL_ENABLE );
