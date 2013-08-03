@@ -22,8 +22,9 @@
  * \brief Constructor of a balloon.
  */
 bear::engine::balloon::balloon()
-  : m_size_frame(0, 0), m_has_started(false), m_time(0), m_on_top(true),
-    m_on_right(true), m_active(false), m_increasing_duration(0.25)
+  : m_size_frame(0, 0), m_has_started(false), m_time(0), m_play_time(0),
+    m_on_top(true), m_on_right(true), m_active(false),
+    m_increasing_duration(0.25)
 {
   m_text.set_background_color( claw::graphic::white_pixel );
   m_text.get_text_rendering_attributes().set_intensity(0,0,0);
