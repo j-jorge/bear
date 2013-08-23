@@ -80,7 +80,7 @@ std::string bear::engine::freedesktop_game_filesystem::get_custom_game_file
 
   if ( !game_directory.empty() )
     {
-      boost::filesystem::path path( game_directory, boost::filesystem::native );
+      boost::filesystem::path path( game_directory );
       path /= name;
       result = path.string();
     }
@@ -99,12 +99,12 @@ std::string
 bear::engine::freedesktop_game_filesystem::get_game_directory
 ( std::string dir ) const
 {
-  boost::filesystem::path path( dir, boost::filesystem::native );
+  boost::filesystem::path path( dir );
 
   std::string result;
   std::string subdir = get_name_as_filename( m_game_name );
 
-  path /= boost::filesystem::path(subdir, boost::filesystem::native);
+  path /= boost::filesystem::path( subdir );
 
   try
     {
@@ -137,8 +137,7 @@ bear::engine::freedesktop_game_filesystem::get_freedesktop_directory
 
   if ( env_dir.empty() )
     dir =
-      boost::filesystem::path
-      ( claw::system_info::get_user_directory(), boost::filesystem::native )
+      boost::filesystem::path( claw::system_info::get_user_directory() )
       / default_dir;
   else
     dir = env_dir;

@@ -75,7 +75,7 @@ std::string bear::engine::default_game_filesystem::get_custom_game_file
 
   if ( !result.empty() )
     {
-      boost::filesystem::path path( result, boost::filesystem::native );
+      boost::filesystem::path path( result );
       path /= name;
       result = path.string();
     }
@@ -91,13 +91,12 @@ std::string bear::engine::default_game_filesystem::get_custom_game_file
  */
 std::string bear::engine::default_game_filesystem::get_game_directory() const
 {
-  boost::filesystem::path dir
-    ( claw::system_info::get_user_directory(), boost::filesystem::native );
+  boost::filesystem::path dir( claw::system_info::get_user_directory() );
 
   std::string result;
   std::string subdir = '.' + get_name_as_filename( m_game_name );
 
-  dir /= boost::filesystem::path(subdir, boost::filesystem::native);
+  dir /= boost::filesystem::path( subdir );
 
   try
     {

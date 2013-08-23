@@ -158,7 +158,7 @@ void sdc::application::process_files()
 sdc::application::spritedesc_collection
 sdc::application::process_file( std::string name ) const
 {
-  const boost::filesystem::path file_path( name, boost::filesystem::native );
+  const boost::filesystem::path file_path( name );
   const boost::filesystem::path file_directory( file_path.parent_path() );
   xcf_map xcf( file_directory.string(), m_xcfinfo_program );
 

@@ -116,19 +116,13 @@ bool bear::engine::resource_pool::find_file_name_straight
 
   for (it=m_path.begin(); (it!=m_path.end()) && !result; ++it)
     {
-#if BOOST_VERSION / 100 % 1000 < 34
-      const std::string filepath = *it + '/' + name;
-#else
-      const std::string filepath =
-        *it + boost::filesystem::slash<boost::filesystem::path>::value + name;
-#endif
-      const boost::filesystem::path path( filepath, boost::filesystem::native );
+      const boost::filesystem::path path( boost::filesystem::path(*it) / name );
 
       if ( boost::filesystem::exists( path ) )
         if ( !boost::filesystem::is_directory( path ) )
           {
             result = true;
-            name = filepath;
+            name = path.string();
           }
     }
 

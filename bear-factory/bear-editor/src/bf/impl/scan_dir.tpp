@@ -31,7 +31,7 @@ void bf::scan_dir<Func>::operator()
 ( const std::string& dir, Func& f, Iterator first_ext, Iterator last_ext )
 {
   std::queue<boost::filesystem::path> pending;
-  boost::filesystem::path path(dir, boost::filesystem::native);
+  boost::filesystem::path path(dir);
 
   if ( !boost::filesystem::exists(path) )
     return;
@@ -49,8 +49,13 @@ void bf::scan_dir<Func>::operator()
       for ( ; it!=eit; ++it)
         if ( boost::filesystem::is_directory(*it) )
           pending.push(*it);
-        else if (supported_extension( it->string(), first_ext, last_ext ))
-          f(it->string());
+        else
+          {
+            const std::string file_name( it->path().string() );
+
+            if ( supported_extension( file_name, first_ext, last_ext ) )
+              f( file_name );
+          }
     }
 } // scan_dir::operator()
 

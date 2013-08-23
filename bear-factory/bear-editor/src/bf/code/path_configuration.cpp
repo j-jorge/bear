@@ -115,7 +115,7 @@ std::string bf::path_configuration::get_config_directory() const
  */
 bool bf::path_configuration::get_full_path( std::string& p ) const
 {
-  boost::filesystem::path path( p, boost::filesystem::native );
+  boost::filesystem::path path( p );
   bool result = boost::filesystem::exists( path );
   std::list<std::string>::const_reverse_iterator it;
 
@@ -176,14 +176,14 @@ bf::path_configuration::expand_file_name( std::string& p, std::size_t m ) const
  */
 bool bf::path_configuration::get_relative_path( std::string& p ) const
 {
-  boost::filesystem::path path( p, boost::filesystem::native );
+  boost::filesystem::path path( p );
   bool result = false;
   std::list<std::string>::const_reverse_iterator it;
 
   for (it=data_path.rbegin(); !result && (it!=data_path.rend()); ++it)
     {
       bool stop(false);
-      boost::filesystem::path data( *it, boost::filesystem::native );
+      boost::filesystem::path data( *it );
       boost::filesystem::path::iterator pit = path.begin();
       boost::filesystem::path::iterator dit = data.begin();
 
@@ -199,14 +199,10 @@ bool bf::path_configuration::get_relative_path( std::string& p ) const
       if ( dit == data.end() )
         {
           result = true;
-          p = *pit;
+          p = pit->string();
+
           for ( ++pit; pit!=path.end(); ++pit )
-#if BOOST_VERSION / 100 % 1000 < 34
-            p += '/' + *pit;
-#else
-            p +=
-              boost::filesystem::slash<boost::filesystem::path>::value + *pit;
-#endif
+            p = (boost::filesystem::path(p) / *pit).string();
         }
     }
 
@@ -253,8 +249,7 @@ bool bf::path_configuration::create_config_directory() const
 {
   bool result = false;
 
-  boost::filesystem::path path
-    ( get_config_directory(), boost::filesystem::native );
+  boost::filesystem::path path( get_config_directory() );
 
   if ( boost::filesystem::exists( path ) )
     result = boost::filesystem::is_directory( path );
@@ -276,8 +271,7 @@ bool bf::path_configuration::create_config_file() const
   if ( create_config_directory() )
     {
       boost::filesystem::path path
-        ( get_config_directory() + s_config_file_name,
-          boost::filesystem::native );
+        ( get_config_directory() + s_config_file_name );
 
       if ( !boost::filesystem::exists( path ) )
         {
@@ -374,7 +368,7 @@ bool bf::path_configuration::find_random_file_name_on_disk
   for (it=data_path.begin(); (it!=data_path.end()) && (candidates.size() < m);
        ++it)
     {
-      const boost::filesystem::path dirpath( *it, boost::filesystem::native );
+      const boost::filesystem::path dirpath( *it );
 
       if ( boost::filesystem::exists( dirpath ) )
         if ( boost::filesystem::is_directory( dirpath ) )
@@ -421,7 +415,7 @@ void bf::path_configuration::find_all_files_in_dir
 ( const std::string& dirname, const std::string& pattern, std::size_t offset,
   std::size_t m, std::list<std::string>& result ) const
 {
-  const boost::filesystem::path path( dirname, boost::filesystem::native );
+  const boost::filesystem::path path( dirname );
 
   CLAW_PRECOND( boost::filesystem::is_directory(path) );
 
@@ -429,13 +423,17 @@ void bf::path_configuration::find_all_files_in_dir
   const boost::filesystem::directory_iterator eit;
 
   for ( ; (it!=eit) && (result.size() < m); ++it )
-    if ( boost::filesystem::is_directory(*it) )
-      {
-        if ( glob_potential_match(pattern, it->string(), offset) )
-          find_all_files_in_dir(it->string(), pattern, offset, m, result);
-      }
-    else if ( glob_match(pattern, it->string(), offset) )
-      result.push_back(it->string());
+    {
+      const std::string entry_path( it->path().string() );
+
+      if ( boost::filesystem::is_directory(*it) )
+        {
+          if ( glob_potential_match(pattern, entry_path, offset) )
+            find_all_files_in_dir(entry_path, pattern, offset, m, result);
+        }
+      else if ( glob_match(pattern, entry_path, offset) )
+        result.push_back( entry_path );
+    }
 } // path_configuration::find_all_files_in_dir()
 
 /*----------------------------------------------------------------------------*/

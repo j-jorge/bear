@@ -109,10 +109,9 @@ bool bf::configuration::create_config_file() const
 {
   bool result = false;
 
-  boost::filesystem::path path
+  const boost::filesystem::path path
     ( path_configuration::get_instance().get_config_directory()
-      + s_config_file_name,
-      boost::filesystem::native );
+      + s_config_file_name );
 
   if ( !boost::filesystem::exists( path ) )
     {
