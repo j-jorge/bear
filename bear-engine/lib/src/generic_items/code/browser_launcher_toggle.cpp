@@ -65,6 +65,10 @@ void bear::browser_launcher_toggle::on_toggle_on
   std::string command("xdg-open ");
   command += m_url;
   
-  system(command.c_str());
+  const int exec_result = system(command.c_str());
+
+  if ( exec_result == -1 )
+    claw::logger << claw::log_error << "Failed to start the web browser."
+                 << std::endl;
 #endif
 } // browser_launcher_toggle::on_toggle_on()

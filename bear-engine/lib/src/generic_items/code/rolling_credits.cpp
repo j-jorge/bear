@@ -172,7 +172,8 @@ void bear::rolling_credits::build()
   visual::font font;
   double font_size(12);
   double red(1), green(1), blue(1), opacity(1);
-  visual::text_align::horizontal_align horizontal_align;
+  visual::text_align::horizontal_align horizontal_align
+    ( visual::text_align::align_center );
   visual::size_type width( get_width() );
 
   while ( claw::text::getline(iss, line) )
