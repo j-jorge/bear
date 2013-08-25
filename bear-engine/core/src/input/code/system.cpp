@@ -39,8 +39,7 @@ void bear::input::system::initialize()
   SDL_EnableUNICODE(1);
 
   SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
-  SDL_EventState( SDL_BUTTON_WHEELUP, SDL_ENABLE );
-  SDL_EventState( SDL_BUTTON_WHEELDOWN, SDL_ENABLE );
+  SDL_EventState( SDL_MOUSEWHEEL, SDL_ENABLE );
 
   // force the creation of the instance
   get_instance().refresh();

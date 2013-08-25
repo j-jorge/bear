@@ -125,13 +125,29 @@ void bear::input::mouse::refresh()
 
   SDL_Event e;
 
-  while ( SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_MOUSEEVENTMASK) == 1 )
-    {
-      SDL_MouseButtonEvent* evt = reinterpret_cast<SDL_MouseButtonEvent*>(&e);
+  // The range of events to process. It includes button up and button down.
+  const SDL_EventType event_min( SDL_MOUSEMOTION );
+  const SDL_EventType event_max( SDL_MOUSEWHEEL );
+  
+  while ( SDL_PeepEvents(&e, 1, SDL_GETEVENT, event_min, event_max ) == 1 )
+    if ( e.type == SDL_MOUSEBUTTONDOWN )
+      {
+        const SDL_MouseButtonEvent* const evt =
+          reinterpret_cast<SDL_MouseButtonEvent*>(&e);
 
-      if ( (evt->type == SDL_MOUSEBUTTONDOWN) && (evt->state == SDL_PRESSED) )
-        m_pressed_buttons.push_back( sdl_button_to_local( evt->button ) );
-    }
+        if ( evt->state == SDL_PRESSED )
+          m_pressed_buttons.push_back( sdl_button_to_local( evt->button ) );
+      }
+    else if ( e.type == SDL_MOUSEWHEEL )
+      {
+        const SDL_MouseWheelEvent* const evt =
+          reinterpret_cast<SDL_MouseWheelEvent*>(&e);
+
+        if ( evt->y > 0 )
+          m_pressed_buttons.push_back( mc_wheel_up );
+        else
+          m_pressed_buttons.push_back( mc_wheel_down );
+      }
 } // mouse::refresh()
 
 /*----------------------------------------------------------------------------*/
@@ -166,8 +182,6 @@ bear::input::mouse::mouse_code bear::input::mouse::sdl_button_to_local
     case SDL_BUTTON_LEFT : return mc_left_button; break;
     case SDL_BUTTON_MIDDLE : return mc_middle_button; break;
     case SDL_BUTTON_RIGHT : return mc_right_button; break;
-    case SDL_BUTTON_WHEELUP : return mc_wheel_up; break;
-    case SDL_BUTTON_WHEELDOWN : return mc_wheel_down; break;
     default: return mc_invalid;
     }
 
