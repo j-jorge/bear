@@ -107,6 +107,16 @@ set( BEAR_ENGINE_INCLUDE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/core/src" )
 subdirs(
   core
   lib
-  running_bear
   desktop
   )
+
+option(
+  RUNNING_BEAR_ENABLED
+  "Tells to compile the main program of the engine."
+  FALSE )
+
+if( RUNNING_BEAR_ENABLED )
+subdirs(
+  running_bear
+  )
+endif()
