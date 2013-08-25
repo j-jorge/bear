@@ -39,7 +39,7 @@ bear::input::joystick::joystick( unsigned int joy_id )
 {
   CLAW_PRECOND( joy_id < number_of_joysticks() );
 
-  const char* name( SDL_JoystickName(joy_id) );
+  const char* name( SDL_JoystickNameForIndex(joy_id) );
 
   if ( name != NULL )
     claw::logger << claw::log_verbose << "Creating joystick number " << joy_id
