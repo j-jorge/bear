@@ -58,11 +58,13 @@ link_directories(
 
 #-------------------------------------------------------------------------------
 # check OpenGL
-include( FindOpenGL )
-
-if( NOT OPENGL_FOUND )
-  message( FATAL_ERROR "OpenGL must be installed." )
-endif( NOT OPENGL_FOUND )
+if( NOT BUILD_PLATFORM STREQUAL "android" )
+  include( FindOpenGL )
+  
+  if( NOT OPENGL_FOUND )
+    message( FATAL_ERROR "OpenGL must be installed." )
+  endif()
+endif()
 
 #-------------------------------------------------------------------------------
 # check SDL
