@@ -16,10 +16,22 @@
 
 #define GL_GLEXT_PROTOTYPES 1
 
-#ifdef _WIN32
+#if defined( _WIN32 )
+
 #include "glew/glew.h"
+
+#elif defined( __ANDROID__ )
+
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+
+typedef GLfloat GLdouble;
+
 #else
+
 #include <GL/gl.h>
+#include <GL/glext.h>
+
 #endif
 
 #endif // __VISUAL_GL_HPP__

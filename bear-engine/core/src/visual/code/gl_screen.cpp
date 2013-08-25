@@ -584,28 +584,28 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
     std::max
     ( half_pixel_width,
       std::min
-      ( 1.0 - half_pixel_width,
+      ( GLdouble(1.0) - half_pixel_width,
         clip_rectangle.position.x / tex_size.x ) );
 
   result.second_point.x =
     std::max
     ( half_pixel_width,
       std::min
-      ( 1.0 - half_pixel_width,
+      ( GLdouble(1.0) - half_pixel_width,
         clip_rectangle.right() / tex_size.x ) );
 
   result.first_point.y =
     std::max
     ( half_pixel_height,
       std::min
-      ( 1.0 - half_pixel_height,
+      ( GLdouble(1.0) - half_pixel_height,
         clip_rectangle.position.y / tex_size.y ) );
 
   result.second_point.y =
     std::max
     ( half_pixel_height,
       std::min
-      ( 1.0 - half_pixel_height,
+      ( GLdouble(1.0) - half_pixel_height,
         clip_rectangle.bottom() / tex_size.y ) );
 
   if ( result.first_point.x > result.second_point.x )

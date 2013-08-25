@@ -17,7 +17,6 @@
 #include <sstream>
 
 #include "visual/gl.hpp"
-#include <GL/glext.h>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -48,17 +47,27 @@ void bear::visual::gl_error::throw_on_error( const std::string& prefix )
         case GL_INVALID_OPERATION:
           err_string << "operation is not allowed in the current state.";
           break;
-        case GL_STACK_OVERFLOW: err_string << "stack overflow.";
-          break;
-        case GL_STACK_UNDERFLOW: err_string << "stack underflow.";
-          break;
         case GL_OUT_OF_MEMORY:
           err_string << "not enough memory to execute the command.";
           break;
+
+#ifdef GL_STACK_OVERFLOW
+        case GL_STACK_OVERFLOW: err_string << "stack overflow.";
+          break;
+#endif
+
+#ifdef GL_STACK_UNDERFLOW
+        case GL_STACK_UNDERFLOW: err_string << "stack underflow.";
+          break;
+#endif
+
+#ifdef GL_TABLE_TOO_LARGE
         case GL_TABLE_TOO_LARGE:
           err_string <<
             "table exceeds the implementation's maximum supported table size.";
           break;
+#endif
+
         default:
           err_string << "unknow error code " << err << '.';
         }
