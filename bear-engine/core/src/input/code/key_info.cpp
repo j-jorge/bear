@@ -49,6 +49,16 @@ bear::input::key_info::key_info( key_code c, charset::char_type s )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Builds a key_info from a character.
+ * \param s The character.
+ */
+bear::input::key_info bear::input::key_info::from_char( charset::char_type s )
+{
+  return key_info( 0, s );
+} // key_info::from_char()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Tell if two key_info are equals.
  * \param that The key_info to compare to.
  */

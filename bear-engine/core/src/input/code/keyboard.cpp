@@ -286,13 +286,18 @@ void bear::input::keyboard::refresh_events()
   SDL_Event e;
   m_key_events.clear();
 
-  while ( SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_KEYDOWNMASK) == 1 )
+  // The range of events to process.
+  const SDL_EventType event_min( SDL_TEXTINPUT );
+  const SDL_EventType event_max( event_min );
+  
+  while ( SDL_PeepEvents(&e, 1, SDL_GETEVENT, event_min, event_max ) == 1 )
     {
-      SDL_KeyboardEvent* evt = reinterpret_cast<SDL_KeyboardEvent*>(&e);
-      m_key_events.push_back
-        ( key_event
-          ( key_event::key_event_character,
-            key_info(evt->keysym.sym, evt->keysym.unicode) ) );
+      const SDL_TextInputEvent* const evt
+        ( reinterpret_cast<SDL_TextInputEvent*>(&e) );
+      
+      for ( const char* c( evt->text ); *c != '\0'; ++c )
+        m_key_events.push_back
+          ( key_event( key_event::key_event_character, key_info( *c ) ) );
     }
 
 } // keyboard::refresh_events()
@@ -304,16 +309,17 @@ void bear::input::keyboard::refresh_events()
 void bear::input::keyboard::refresh_keys()
 {
   int num_keys;
-  Uint8* keys;
+  const Uint8* keys;
 
-  keys = SDL_GetKeyState( &num_keys );
+  keys = SDL_GetKeyboardState( &num_keys );
   m_pressed_keys.clear();
 
   for (unsigned int i=0; i!=(unsigned int)num_keys; ++i)
     if ( keys[i] )
       {
-        SDLMod mod = SDL_GetModState();
-        key_code k = sdl_key_to_local(i, mod & KMOD_SHIFT, mod & KMOD_ALT);
+        const SDL_Keymod mod( SDL_GetModState() );
+        const key_code k
+          ( sdl_key_to_local(i, mod & KMOD_SHIFT, mod & KMOD_ALT) );
 
         if ( (k != kc_not_a_key) &&
              (k != kc_num_lock) &&
@@ -412,16 +418,16 @@ bear::input::key_code bear::input::keyboard::sdl_key_to_local
 
     case SDLK_DELETE : return kc_delete; break;
 
-    case SDLK_KP0 : return kc_keypad_0; break;
-    case SDLK_KP1 : return kc_keypad_1; break;
-    case SDLK_KP2 : return kc_keypad_2; break;
-    case SDLK_KP3 : return kc_keypad_3; break;
-    case SDLK_KP4 : return kc_keypad_4; break;
-    case SDLK_KP5 : return kc_keypad_5; break;
-    case SDLK_KP6 : return kc_keypad_6; break;
-    case SDLK_KP7 : return kc_keypad_7; break;
-    case SDLK_KP8 : return kc_keypad_8; break;
-    case SDLK_KP9 : return kc_keypad_9; break;
+    case SDLK_KP_0 : return kc_keypad_0; break;
+    case SDLK_KP_1 : return kc_keypad_1; break;
+    case SDLK_KP_2 : return kc_keypad_2; break;
+    case SDLK_KP_3 : return kc_keypad_3; break;
+    case SDLK_KP_4 : return kc_keypad_4; break;
+    case SDLK_KP_5 : return kc_keypad_5; break;
+    case SDLK_KP_6 : return kc_keypad_6; break;
+    case SDLK_KP_7 : return kc_keypad_7; break;
+    case SDLK_KP_8 : return kc_keypad_8; break;
+    case SDLK_KP_9 : return kc_keypad_9; break;
     case SDLK_KP_PERIOD   : return kc_keypad_period;   break;
     case SDLK_KP_DIVIDE   : return kc_keypad_divide;   break;
     case SDLK_KP_MULTIPLY : return kc_keypad_multiply; break;
@@ -457,9 +463,9 @@ bear::input::key_code bear::input::keyboard::sdl_key_to_local
     case SDLK_F14 : return kc_F14; break;
     case SDLK_F15 : return kc_F15; break;
 
-    case SDLK_NUMLOCK   : return kc_num_lock;    break;
-    case SDLK_CAPSLOCK  : return kc_caps_lock;   break;
-    case SDLK_SCROLLOCK : return kc_scroll_lock; break;
+    case SDLK_NUMLOCKCLEAR : return kc_num_lock;    break;
+    case SDLK_CAPSLOCK     : return kc_caps_lock;   break;
+    case SDLK_SCROLLLOCK   : return kc_scroll_lock; break;
 
     case SDLK_RSHIFT : return kc_right_shift;   break;
     case SDLK_LSHIFT : return kc_left_shift;    break;
@@ -467,13 +473,12 @@ bear::input::key_code bear::input::keyboard::sdl_key_to_local
     case SDLK_LCTRL  : return kc_left_control;  break;
     case SDLK_RALT   : return kc_right_alt;     break;
     case SDLK_LALT   : return kc_left_alt;      break;
-    case SDLK_LSUPER : return kc_left_super;    break;
-    case SDLK_RSUPER : return kc_right_super;   break;
+    case SDLK_LGUI   : return kc_left_super;    break;
+    case SDLK_RGUI   : return kc_right_super;   break;
 
-    case SDLK_PRINT  : return kc_print_screen; break;
-    case SDLK_SYSREQ : return kc_system;       break;
-    case SDLK_BREAK  : return kc_break;        break;
-    case SDLK_MENU   : return kc_menu;         break;
+    case SDLK_PRINTSCREEN : return kc_print_screen; break;
+    case SDLK_SYSREQ      : return kc_system;       break;
+    case SDLK_MENU        : return kc_menu;         break;
     default: return kc_not_a_key;
     }
 

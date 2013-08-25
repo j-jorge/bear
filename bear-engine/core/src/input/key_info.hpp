@@ -35,6 +35,8 @@ namespace bear
       explicit key_info( key_code c );
       key_info( key_code c, charset::char_type s );
 
+      static key_info from_char( charset::char_type s );
+
       bool operator==( const key_info& that ) const;
       bool operator<( const key_info& that ) const;
 

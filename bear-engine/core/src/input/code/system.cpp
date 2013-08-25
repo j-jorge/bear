@@ -35,9 +35,6 @@ void bear::input::system::initialize()
   if ( SDL_InitSubSystem(SDL_INIT_JOYSTICK) != 0 )
     throw claw::exception( SDL_GetError() );
 
-  SDL_EnableKeyRepeat(0, 0);
-  SDL_EnableUNICODE(1);
-
   SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
   SDL_EventState( SDL_MOUSEWHEEL, SDL_ENABLE );
 
