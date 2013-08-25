@@ -159,10 +159,16 @@ void bear::input::mouse::update_position()
   int x, y;
 
   SDL_GetMouseState( &x, &y );
-  SDL_Surface* s( SDL_GetVideoSurface() );
 
-  if ( s!=NULL )
-    y = s->h - y;
+  SDL_Window* const window( SDL_GetMouseFocus() );
+
+  if ( window != NULL )
+    {
+      int h;
+      SDL_GetWindowSize( window, NULL, &h );
+
+      y = h - y;
+    }
 
   m_position.set(x, y);
 } // mouse::update_position()
