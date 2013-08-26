@@ -768,6 +768,9 @@ bear::visual::gl_screen::get_best_screen_size
   SDL_Rect** modes = SDL_ListModes(NULL, flags);
   screen_size_type result( w, h );
 
+  claw::logger << claw::log_verbose << "Requested screen resolution is "
+               << result.x << 'x' << result.y << '.' << std::endl;
+
   if ( modes == NULL )
     claw::logger << claw::log_error
                  << "Cannot detect the available screen resolutions. "
@@ -783,7 +786,9 @@ bear::visual::gl_screen::get_best_screen_size
       double resize_ratio = std::min( r_x, r_y );
 
       if ( resize_ratio < 1 )
-        result = resize_ratio * m_display_size;
+        result =
+          screen_size_type
+          ( resize_ratio * get_size().x, resize_ratio * get_size().y );
     }
   else
     {
