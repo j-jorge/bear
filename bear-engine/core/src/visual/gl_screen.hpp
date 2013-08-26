@@ -110,7 +110,9 @@ namespace bear
       screen_size_type get_best_screen_size
         ( unsigned int w, unsigned int y, bool f ) const;
       screen_size_type get_best_screen_size
-        ( unsigned int w, unsigned int h, SDL_Rect** modes ) const;
+        ( unsigned int w, unsigned int h,
+          const std::vector<SDL_DisplayMode>& modes ) const;
+      std::vector<SDL_DisplayMode> get_sdl_display_modes() const;
 
       bool is_closed();
 
@@ -119,6 +121,9 @@ namespace bear
       void use_program( const shader_program& p ) const;
 
     private:
+      /** \brief The window created by SDL. */
+      SDL_Window* m_window;
+
       /** \brief The width and height of the screen. */
       screen_size_type m_size;
 
@@ -134,9 +139,6 @@ namespace bear
 
       /** \brief The title of the window. */
       const std::string m_title;
-
-      /** \brief The size of the screen at the initialization. */
-      screen_size_type m_display_size;
 
       /** \brief The real size of the window. */
       screen_size_type m_window_size;

@@ -28,8 +28,6 @@
 #include <limits>
 #include <list>
 
-
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Creates a new setter for a given program.
@@ -139,16 +137,11 @@ void bear::visual::gl_screen::release()
 bear::visual::gl_screen::gl_screen
 ( const claw::math::coordinate_2d<unsigned int>& size,
   const std::string& title, bool full )
-  : m_size(size), m_screenshot_buffer(NULL), m_title(title)
+  : m_window(NULL), m_size(size), m_screenshot_buffer(NULL), m_title(title)
 {
-  SDL_VideoInfo const * const video_info = SDL_GetVideoInfo();
-  m_display_size =
-    screen_size_type( video_info->current_w, video_info->current_h );
-  
   fullscreen(full);
   m_need_restoration = false;
 
-  SDL_WM_SetCaption( title.c_str(), NULL );
   glEnable(GL_TEXTURE_2D);
 
 #ifdef BEAR_USE_GL_DEPTH_TEST
@@ -212,10 +205,7 @@ bear::visual::gl_screen::get_size() const
 claw::math::coordinate_2d<unsigned int>
 bear::visual::gl_screen::get_container_size() const
 {
-  const SDL_VideoInfo* info = SDL_GetVideoInfo();
-
-  return claw::math::coordinate_2d<unsigned int>
-    ( info->current_w, info->current_h ); 
+  return claw::math::coordinate_2d<unsigned int>( m_window->w, m_window->h ); 
 } // gl_screen::get_container_size()
 
 /*----------------------------------------------------------------------------*/
@@ -336,7 +326,7 @@ void bear::visual::gl_screen::render
 bool bear::visual::gl_screen::end_render()
 {
   glFlush();
-  SDL_GL_SwapBuffers();
+  SDL_GL_SwapWindow( m_window );
   VISUAL_GL_ERROR_THROW();
 
   return !is_closed();
@@ -685,13 +675,11 @@ void bear::visual::gl_screen::set_video_mode
 {
   const screen_size_type best_size( get_best_screen_size(w, h, f) );
 
-  SDL_Surface* const current_surface = SDL_GetVideoSurface();
-  
-  if ( current_surface != NULL )
+  if ( m_window != NULL )
     {
-      if ( ( ( (current_surface->flags & SDL_FULLSCREEN) != 0) == f )
-           && (w == (unsigned int)current_surface->w)
-           && (h != (unsigned int)current_surface->h) )
+      if ( ( ( (m_window->flags & SDL_WINDOW_FULLSCREEN) != 0) == f )
+           && (w == (unsigned int)m_window->w)
+           && (h != (unsigned int)m_window->h) )
         return;
     }
 
@@ -700,21 +688,25 @@ void bear::visual::gl_screen::set_video_mode
   initialize();
 #endif
 
-  Uint32 flags = SDL_OPENGL;
+  Uint32 flags = SDL_WINDOW_OPENGL;
 
   if (f)
-    flags |= SDL_FULLSCREEN;
+    flags |= SDL_WINDOW_FULLSCREEN;
 
   claw::logger << "Setting video mode to " << best_size.x << 'x' << best_size.y
                << ' ' << (f ? "fullscreen" : "windowed") << std::endl;
 
   SDL_EventState( SDL_QUIT, SDL_DISABLE );
 
-  SDL_Surface* s = SDL_SetVideoMode( best_size.x, best_size.y, 32, flags );
+  m_window =
+    SDL_CreateWindow
+    ( m_title.c_str(), SDL_WINDOWNPOS_CENTERED, SDL_WINDOWNPOS_CENTERED,
+      best_size.x, best_size.y, flags );
 
-  SDL_EventState( SDL_QUIT, SDL_ENABLE );
+  if ( m_window == NULL )
+    throw claw::exception( SDL_GetError() );
 
-  if (!s)
+  if ( SDL_GL_CreateContext( m_window ) == NULL )
     throw claw::exception( SDL_GetError() );
 
   m_window_size = best_size;
@@ -740,8 +732,6 @@ void bear::visual::gl_screen::set_video_mode
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
 
-  SDL_WM_SetCaption( m_title.c_str(), NULL );
-
   claw::logger << claw::log_verbose << "Screen needs restoration (was "
                << m_need_restoration << ")." << std::endl;
 
@@ -760,46 +750,41 @@ bear::visual::gl_screen::screen_size_type
 bear::visual::gl_screen::get_best_screen_size
 ( unsigned int w, unsigned int h, bool f ) const
 {
-  Uint32 flags = SDL_OPENGL;
-
-  if (f)
-    flags |= SDL_FULLSCREEN;
-
-  SDL_Rect** modes = SDL_ListModes(NULL, flags);
   screen_size_type result( w, h );
 
   claw::logger << claw::log_verbose << "Requested screen resolution is "
                << result.x << 'x' << result.y << '.' << std::endl;
 
-  if ( modes == NULL )
-    claw::logger << claw::log_error
-                 << "Cannot detect the available screen resolutions. "
-                 << std::endl;
-  else if ( modes == (SDL_Rect**)-1 )
+  if ( f )
+    {
+      claw::logger << claw::log_verbose << "Available screen resolutions:"
+                   << std::endl;
+      
+      const std::vector<SDL_DisplayMode> modes( get_sdl_display_modes() );
+
+      for ( std::size_t i(0); i != modes.size(); ++i )
+        claw::logger << claw::log_verbose << modes[i].w << 'x' << modes[i].h
+                     << std::endl;
+
+      result = get_best_screen_size( w, h, modes );
+    }
+  else
     {
       claw::logger << claw::log_verbose
-                   << "Any screen resolutions is accepted. "
+                   << "Setting resolution in windowed mode."
                    << std::endl;
+      
+      SDL_DisplayMode m;
+      SDL_GetDesktopDisplayMode(0, &m);
 
-      const double r_x = (double)m_display_size.x / get_size().x;
-      const double r_y = (double)m_display_size.y / get_size().y;
+      const double r_x = (double)m.w / get_size().x;
+      const double r_y = (double)m.h / get_size().y;
       double resize_ratio = std::min( r_x, r_y );
 
       if ( resize_ratio < 1 )
         result =
           screen_size_type
           ( resize_ratio * get_size().x, resize_ratio * get_size().y );
-    }
-  else
-    {
-      claw::logger << claw::log_verbose << "Available screen resolutions:"
-                   << std::endl;
-      
-      for ( std::size_t i(0); modes[i] != NULL; ++i )
-        claw::logger << claw::log_verbose << modes[i]->w << 'x' << modes[i]->h
-                     << std::endl;
-
-      result = get_best_screen_size( w, h, modes );
     }
 
   claw::logger << claw::log_verbose << "Selected screen resolution is "
@@ -810,6 +795,26 @@ bear::visual::gl_screen::get_best_screen_size
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets the display modes as returned by SDL.
+ */
+std::vector<SDL_DisplayMode>
+bear::visual::gl_screen::get_sdl_display_modes() const
+{
+  const int count( SDL_GetNumDisplayModes(0) );
+
+  if ( count < 1 )
+    throw new claw::exception( SDL_GetError() );
+
+  std::vector<SDL_DisplayMode> result( count );
+
+  for ( int i(0); i!=count; ++i )
+    SDL_GetDisplayMode( 0, i, &result[i] );
+
+  return result;
+} // gl_screen::get_sdl_display_modes()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Finds a screen resolution that has is the nearest of a given size.
  * \param w The expected width.
  * \param h The expected height.
@@ -817,22 +822,26 @@ bear::visual::gl_screen::get_best_screen_size
  */
 bear::visual::gl_screen::screen_size_type
 bear::visual::gl_screen::get_best_screen_size
-( unsigned int w, unsigned int h, SDL_Rect** modes ) const
+( unsigned int w, unsigned int h,
+  const std::vector<SDL_DisplayMode>& modes ) const
 {
+  SDL_DisplayMode m;
+  SDL_GetDesktopDisplayMode(0, &m);
+
   const double requested_ratio( (double)w / h );
-  screen_size_type result( m_display_size );
-  double display_ratio( (double)m_display_size.x / m_display_size.y );
+  screen_size_type result( m.w, m.h );
+  double display_ratio( (double)result.x / result.y );
   double best_scale_factor_distance;
   
   if ( (display_ratio >= 1) && (requested_ratio >= 1) )
-    best_scale_factor_distance = std::abs( (double)m_display_size.x / w - 1 );
+    best_scale_factor_distance = std::abs( (double)m.w / w - 1 );
   else
-    best_scale_factor_distance = std::abs( (double)m_display_size.y / h - 1 );
+    best_scale_factor_distance = std::abs( (double)m.h / h - 1 );
 
-  for ( std::size_t i(0); modes[i] != NULL; ++i )
+  for ( std::size_t i(0); i!=modes.size(); ++i )
     {
-      const unsigned int width( modes[i]->w );
-      const unsigned int height( modes[i]->h );
+      const unsigned int width( modes[i].w );
+      const unsigned int height( modes[i].h );
 
       const double scale_factor
         ( std::min( (double)height / h, (double)width / w ) );
@@ -857,20 +866,12 @@ bool bear::visual::gl_screen::is_closed()
 {
   SDL_PumpEvents();
 
-  std::list<SDL_Event> not_mine;
   SDL_Event e;
-  bool result( false );
+  
+  const SDL_EventType event_min( SDL_QUIT );
+  const SDL_EventType event_max( event_min );
 
-  while ( !result && (SDL_PeepEvents(&e, 1, SDL_GETEVENT, SDL_ALLEVENTS) == 1) )
-    if ( e.type == SDL_QUIT )
-      result = true;
-    else
-      not_mine.push_back(e);
-
-  for ( ; !not_mine.empty(); not_mine.pop_front() )
-    SDL_PushEvent( &not_mine.front() );
-
-  return result;
+  return SDL_PeepEvents(&e, 1, SDL_GETEVENT, event_min, event_max) == 1;
 } // gl_screen::is_closed()
 
 /*----------------------------------------------------------------------------*/
