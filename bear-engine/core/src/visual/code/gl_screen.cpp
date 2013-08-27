@@ -691,7 +691,7 @@ void bear::visual::gl_screen::set_video_mode
     {
       if ( ( ( (current_surface->flags & SDL_FULLSCREEN) != 0) == f )
            && (w == (unsigned int)current_surface->w)
-           && (h != (unsigned int)current_surface->h) )
+           && (h == (unsigned int)current_surface->h) )
         return;
     }
 
