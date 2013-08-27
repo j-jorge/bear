@@ -205,7 +205,12 @@ bear::visual::gl_screen::get_size() const
 claw::math::coordinate_2d<unsigned int>
 bear::visual::gl_screen::get_container_size() const
 {
-  return claw::math::coordinate_2d<unsigned int>( m_window->w, m_window->h ); 
+  int w;
+  int h;
+
+  SDL_GetWindowSize( m_window, &w, &h );
+
+  return claw::math::coordinate_2d<unsigned int>( w, h );
 } // gl_screen::get_container_size()
 
 /*----------------------------------------------------------------------------*/
@@ -677,9 +682,12 @@ void bear::visual::gl_screen::set_video_mode
 
   if ( m_window != NULL )
     {
-      if ( ( ( (m_window->flags & SDL_WINDOW_FULLSCREEN) != 0) == f )
-           && (w == (unsigned int)m_window->w)
-           && (h != (unsigned int)m_window->h) )
+      const bool is_fullscreen =
+        ( SDL_GetWindowFlags(m_window) & SDL_WINDOW_FULLSCREEN ) != 0;
+      const claw::math::coordinate_2d<unsigned int> size
+        ( get_container_size() );
+
+      if ( ( is_fullscreen == f ) && (w == size.x) && (h == size.y) )
         return;
     }
 
@@ -700,7 +708,7 @@ void bear::visual::gl_screen::set_video_mode
 
   m_window =
     SDL_CreateWindow
-    ( m_title.c_str(), SDL_WINDOWNPOS_CENTERED, SDL_WINDOWNPOS_CENTERED,
+    ( m_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
       best_size.x, best_size.y, flags );
 
   if ( m_window == NULL )
