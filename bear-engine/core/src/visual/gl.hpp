@@ -22,10 +22,13 @@
 
 #elif defined( __ANDROID__ )
 
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include <GLES/gl.h>
+#include <GLES/glext.h>
 
 typedef GLfloat GLdouble;
+#define glOrtho glOrthof
+
+#include "visual/gl_dummy_shader_interface.hpp"
 
 #else
 

@@ -144,12 +144,6 @@ bear::visual::gl_screen::gl_screen
 
   glEnable(GL_TEXTURE_2D);
 
-#ifdef BEAR_USE_GL_DEPTH_TEST
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LEQUAL);
-#endif
-
-  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 } // gl_screen::gl_screen() [constructor]
 
@@ -280,8 +274,7 @@ void bear::visual::gl_screen::begin_render()
   while ( !m_shader.empty() )
     pop_shader();
 
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  m_z_position = 0;
+  glClear( GL_COLOR_BUFFER_BIT );
 
   resize_view();
 } // gl_screen::begin_render()
@@ -297,9 +290,6 @@ void bear::visual::gl_screen::render
 {
   glEnable(GL_BLEND);
   VISUAL_GL_ERROR_THROW();
-
-  glColor4f( s.get_red_intensity(), s.get_green_intensity(),
-             s.get_blue_intensity(), s.get_opacity() );
 
   const gl_image* impl = static_cast<const gl_image*>(s.get_image().get_impl());
   glBindTexture( GL_TEXTURE_2D, impl->texture_id() );
@@ -357,29 +347,25 @@ void bear::visual::gl_screen::draw_line
 
   glLineWidth(w);
 
-  const GLfloat max =
-    std::numeric_limits<color_type::component_type>::max();
-
   glEnable(GL_BLEND);
   VISUAL_GL_ERROR_THROW();
 
-  glBegin(GL_LINE_STRIP);
-  {
-    glColor4f( (GLfloat)color.components.red / max,
-         (GLfloat)color.components.green / max,
-         (GLfloat)color.components.blue / max,
-         (GLfloat)color.components.alpha / max );
-
-    for ( unsigned int i=0; i!=p.size(); ++i )
-      glVertex3f( p[i].x, p[i].y, m_z_position );
-
-    if ( close )
-      glVertex3f( p[0].x, p[0].y, m_z_position );
-  }
-  glEnd();
+  const std::vector<GLfloat> colors( fill_gl_colors( color, p.size() ) );
+  glEnableClientState( GL_COLOR_ARRAY );
+  glColorPointer( 4, GL_FLOAT, 0, colors.data() );
   VISUAL_GL_ERROR_THROW();
 
-  update_z_position();
+  const std::vector<GLfloat> positions( fill_gl_positions( p ) );
+  glEnableClientState( GL_VERTEX_ARRAY );
+  glVertexPointer( 2, GL_FLOAT, 0, positions.data() );
+  VISUAL_GL_ERROR_THROW();
+
+  glDrawArrays( GL_LINE_STRIP, 0, p.size() );
+  VISUAL_GL_ERROR_THROW();
+
+  glDisableClientState( GL_COLOR_ARRAY );
+  glDisableClientState( GL_VERTEX_ARRAY );
+  glDisable(GL_BLEND);
 } // gl_screen::draw_line()
 
 /*----------------------------------------------------------------------------*/
@@ -394,28 +380,25 @@ void bear::visual::gl_screen::draw_polygon
   glBindTexture( GL_TEXTURE_2D, 0 );
   VISUAL_GL_ERROR_THROW();
 
-  const GLfloat max = std::numeric_limits<color_type::component_type>::max();
-
   glEnable(GL_BLEND);
   VISUAL_GL_ERROR_THROW();
 
-  glBegin(GL_QUADS);
-  {
-    glColor4f( (GLfloat)color.components.red / max,
-         (GLfloat)color.components.green / max,
-         (GLfloat)color.components.blue / max,
-         (GLfloat)color.components.alpha / max );
-
-    for ( unsigned int i=0; i!=p.size(); ++i )
-      glVertex3f( p[i].x, p[i].y, m_z_position );
-  }
-  glEnd();
+  const std::vector<GLfloat> colors( fill_gl_colors( color, p.size() ) );
+  glEnableClientState( GL_COLOR_ARRAY );
+  glColorPointer( 4, GL_FLOAT, 0, colors.data() );
   VISUAL_GL_ERROR_THROW();
 
-  update_z_position();
+  const std::vector<GLfloat> positions( fill_gl_positions( p ) );
+  glEnableClientState( GL_VERTEX_ARRAY );
+  glVertexPointer( 2, GL_FLOAT, 0, positions.data() );
+  VISUAL_GL_ERROR_THROW();
 
+  glDrawArrays( GL_TRIANGLE_FAN, 0, p.size() );
+  VISUAL_GL_ERROR_THROW();
+
+  glDisableClientState( GL_COLOR_ARRAY );
+  glDisableClientState( GL_VERTEX_ARRAY );
   glDisable(GL_BLEND);
-  VISUAL_GL_ERROR_THROW();
 } // gl_screen::draw_polygon()
 
 /*----------------------------------------------------------------------------*/
@@ -504,12 +487,15 @@ void bear::visual::gl_screen::render_sprite
 
   const claw::math::box_2d<GLdouble> clip_vertices = get_texture_clip(s);
 
-  typedef claw::math::coordinate_2d<GLdouble> coord_double;
-
-  coord_double render_coord[4];
+  std::vector<position_type> render_coord(4);
   get_render_coord( pos, s, render_coord );
 
-  render_image( render_coord, clip_vertices );
+  color_type color;
+  color.set
+    ( s.get_red_intensity(), s.get_green_intensity(),
+      s.get_blue_intensity(), s.get_opacity() );
+
+  render_image( render_coord, clip_vertices, color );
 } // gl_screen::render_sprite()
 
 /*----------------------------------------------------------------------------*/
@@ -524,9 +510,9 @@ void bear::visual::gl_screen::render_sprite
 void
 bear::visual::gl_screen::get_render_coord
 ( const position_type& pos, const sprite& s,
-  claw::math::coordinate_2d<GLdouble>* result ) const
+  std::vector<position_type>& result ) const
 {
-  typedef claw::math::coordinate_2d<GLdouble> coord_double;
+  typedef position_type coord_double;
 
   GLdouble bottom( pos.y );
   GLdouble top( bottom + s.height() );
@@ -631,39 +617,51 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
  * \param clip Part of the texture to draw.
  */
 void bear::visual::gl_screen::render_image
-( const claw::math::coordinate_2d<GLdouble> render_coord[],
-  const claw::math::box_2d<GLdouble>& clip )
+( const std::vector<position_type>& render_coord,
+  const claw::math::box_2d<GLdouble>& clip,
+  const color_type& color )
 {
-  glBegin(GL_QUADS);
-  {
-    // Top-left corner
-    glTexCoord2d( clip.first_point.x, clip.first_point.y );
-    glVertex3d(render_coord[0].x, render_coord[0].y, m_z_position);
+  const std::size_t vertex_count( render_coord.size() );
 
-    // Top-right corner
-    glTexCoord2d( clip.second_point.x, clip.first_point.y );
-    glVertex3d(render_coord[1].x, render_coord[1].y, m_z_position);
-
-    // Bottom-right corner
-    glTexCoord2d( clip.second_point.x, clip.second_point.y );
-    glVertex3d(render_coord[2].x, render_coord[2].y, m_z_position);
-
-    // Bottom-left corner
-    glTexCoord2d( clip.first_point.x, clip.second_point.y );
-    glVertex3d(render_coord[3].x, render_coord[3].y, m_z_position);
-  }
-  glEnd();
+  const std::vector<GLfloat> colors( fill_gl_colors( color, vertex_count ) );
+  glEnableClientState( GL_COLOR_ARRAY );
+  glColorPointer( 4, GL_FLOAT, 0, colors.data() );
   VISUAL_GL_ERROR_THROW();
 
-  update_z_position();
+  const std::vector<GLfloat> positions( fill_gl_positions( render_coord ) );
+  glEnableClientState( GL_VERTEX_ARRAY );
+  glVertexPointer( 2, GL_FLOAT, 0, positions.data() );
+  VISUAL_GL_ERROR_THROW();
+
+  const std::vector<GLfloat> texture_positions
+    ( fill_gl_texture_positions( clip ) );
+  glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+  glTexCoordPointer( 2, GL_FLOAT, 0, texture_positions.data() );
+  VISUAL_GL_ERROR_THROW();
+
+  glDrawArrays( GL_TRIANGLE_FAN, 0, vertex_count );
+  VISUAL_GL_ERROR_THROW();
+
+  glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+  glDisableClientState( GL_VERTEX_ARRAY );
+  glDisableClientState( GL_COLOR_ARRAY );
+  glDisable(GL_BLEND);
+
+  VISUAL_GL_ERROR_THROW();
 } // gl_screen::render_image()
 
 /*----------------------------------------------------------------------------*/
-claw::math::coordinate_2d<GLdouble> bear::visual::gl_screen::rotate
-( const claw::math::coordinate_2d<GLdouble>& pos, GLdouble a,
-  const claw::math::coordinate_2d<GLdouble>& center ) const
+/**
+ * \brief Computes the result of the rotation at a given angle of a point around
+ *        a given center.
+ * \param pos The point to rotate.
+ * \param a The angle of the rotation.
+ * \param center The center of the rotation.
+ */
+bear::visual::position_type bear::visual::gl_screen::rotate
+( const position_type& pos, GLdouble a, const position_type& center ) const
 {
-  claw::math::coordinate_2d<GLdouble> result(pos);
+  position_type result(pos);
   result.rotate(center, a);
   return result;
 } // gl_screen::rotate()
@@ -726,7 +724,6 @@ void bear::visual::gl_screen::set_video_mode
   SDL_ShowCursor(0);
 
   glClearColor(0.0, 0.0, 0.0, 0.0);
-  glClearDepth(1.0);
 
 #ifdef _WIN32
   const GLenum err = glewInit();
@@ -884,12 +881,80 @@ bool bear::visual::gl_screen::is_closed()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Update the z position at with the next element will be rendered.
+ * \brief Returns a vector of floats where each 4 consecutive cells are
+ *        made of the normalized red, green, blue and alpha components of a
+ *        given color.
+ * \param c The color to assign in the returned vector.
+ * \param count The number of colors the returned vector must contain.
  */
-void bear::visual::gl_screen::update_z_position()
+std::vector<GLfloat> bear::visual::gl_screen::fill_gl_colors
+( const color_type& c, std::size_t count ) const
 {
-  m_z_position += std::numeric_limits<GLdouble>::epsilon();
-} // gl_screen::update_z_position()
+  const GLfloat max( std::numeric_limits<color_type::component_type>::max() );
+  const GLfloat r( (GLfloat)c.components.red / max );
+  const GLfloat g( (GLfloat)c.components.green / max );
+  const GLfloat b( (GLfloat)c.components.blue / max );
+  const GLfloat a( (GLfloat)c.components.alpha / max );
+
+  std::vector<GLfloat> result( count * 4 /* components per color */ );
+
+  for ( std::size_t i(0); i != count; i += 4 )
+    {
+      result[i] = r;
+      result[i+1] = g;
+      result[i+2] = b;
+      result[i+3] = a;
+    }
+
+  return result;
+} // gl_screen::fill_gl_colors()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Returns a vector of floats where each 2 consecutive cells are
+ *        made of the x and y coordinates of a vector of points.
+ * \param p The points to copy in the returned vector.
+ */
+std::vector<GLfloat>
+bear::visual::gl_screen::fill_gl_positions
+( const std::vector<position_type>& p ) const
+{
+  std::vector<GLfloat> result;
+  result.reserve( p.size() * 2 /* components per coordinate */ );
+
+  for ( std::size_t i(0); i!=p.size(); ++i )
+    {
+      result.push_back( p[i].x );
+      result.push_back( p[i].y );
+    }
+
+  return result;
+} // gl_screen::fill_gl_positions()
+
+std::vector<GLfloat> bear::visual::gl_screen::fill_gl_texture_positions
+( const claw::math::box_2d<GLdouble>& clip ) const
+{
+  std::vector<GLfloat> result;
+  result.reserve( 8 /* two coordinates per corner of clip */ );
+
+  // Top-left corner
+  result.push_back( clip.first_point.x );
+  result.push_back( clip.first_point.y );
+
+  // Top-right corner
+  result.push_back( clip.second_point.x );
+  result.push_back( clip.first_point.y );
+  
+  // Bottom-right corner
+  result.push_back( clip.second_point.x );
+  result.push_back( clip.second_point.y );
+  
+  // Bottom-left corner
+  result.push_back( clip.first_point.x );
+  result.push_back( clip.second_point.y );
+
+  return result;
+} // gl_screen::fill_gl_texture_positions()
 
 /*----------------------------------------------------------------------------*/
 /**

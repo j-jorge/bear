@@ -94,16 +94,17 @@ namespace bear
       
       void get_render_coord
         ( const position_type& pos, const sprite& s,
-          claw::math::coordinate_2d<GLdouble>* result ) const;
+          std::vector<position_type>& result ) const;
       claw::math::box_2d<GLdouble> get_texture_clip( const sprite& s ) const;
 
       void render_image
-      ( const claw::math::coordinate_2d<GLdouble> render_coord[],
-        const claw::math::box_2d<GLdouble>& clip );
+        ( const std::vector<position_type>& render_coord,
+          const claw::math::box_2d<GLdouble>& clip,
+          const color_type& color );
 
-      claw::math::coordinate_2d<GLdouble>
-      rotate( const claw::math::coordinate_2d<GLdouble>& pos, GLdouble a,
-              const claw::math::coordinate_2d<GLdouble>& center ) const;
+      position_type
+      rotate( const position_type& pos, GLdouble a,
+              const position_type& center ) const;
 
       void set_video_mode( unsigned int w, unsigned int y, bool f );
 
@@ -116,7 +117,13 @@ namespace bear
 
       bool is_closed();
 
-      void update_z_position();
+      std::vector<GLfloat>
+        fill_gl_colors( const color_type& c, std::size_t count ) const;
+      std::vector<GLfloat>
+        fill_gl_positions( const std::vector<position_type>& p ) const;
+      std::vector<GLfloat>
+        fill_gl_texture_positions
+        ( const claw::math::box_2d<GLdouble>& clip ) const;
 
       void use_program( const shader_program& p ) const;
 
@@ -133,9 +140,6 @@ namespace bear
       /** \brief A buffer in which we do the screenshots, to avoid an allocation
           at each call. */
       claw::graphic::rgba_pixel_8* m_screenshot_buffer;
-
-      /** \brief The z position of the next item to render. */
-      GLdouble m_z_position;
 
       /** \brief The title of the window. */
       const std::string m_title;
