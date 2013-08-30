@@ -140,7 +140,17 @@ set( GENERIC_ITEM_SOURCE_FILES
   system/code/system_sound_toggle.cpp
   )
 
-add_library( ${GENERIC_ITEM_TARGET_NAME} SHARED ${GENERIC_ITEM_SOURCE_FILES} )
+if( BUILD_PLATFORM STREQUAL "android" )
+  set( GENERIC_ITEM_LINK_TYPE STATIC )
+else()
+  set( GENERIC_ITEM_LINK_TYPE SHARED )
+endif()
+
+add_library(
+  ${GENERIC_ITEM_TARGET_NAME}
+  ${GENERIC_ITEM_LINK_TYPE}
+  ${GENERIC_ITEM_SOURCE_FILES}
+  )
 
 set_target_properties(
   ${GENERIC_ITEM_TARGET_NAME}
@@ -160,10 +170,10 @@ if(WIN32)
     bear_gui
     intl
     )
-else(WIN32)
+else()
   target_link_libraries(
     ${GENERIC_ITEM_TARGET_NAME}
     bear_engine
     bear_gui
     )
-endif(WIN32)
+endif()
