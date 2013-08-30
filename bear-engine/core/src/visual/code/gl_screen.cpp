@@ -16,6 +16,7 @@
 #include "visual/gl_error.hpp"
 #include "visual/gl_image.hpp"
 #include "visual/gl_shader_program.hpp"
+#include "visual/sdl_error.hpp"
 #include "visual/shader_program.hpp"
 #include "visual/sprite.hpp"
 
@@ -27,6 +28,8 @@
 
 #include <limits>
 #include <list>
+
+#include <SDL/SDL_main.h>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -92,14 +95,17 @@ bear::visual::gl_screen::uniform_setter::operator()
  */
 void bear::visual::gl_screen::initialize()
 {
+  if ( SDL_Init(0) != 0 )
+    VISUAL_SDL_ERROR_THROW();
+
   if ( !SDL_WasInit(SDL_INIT_VIDEO) )
     if ( SDL_InitSubSystem(SDL_INIT_VIDEO) != 0 )
-      throw claw::exception( SDL_GetError() );
+      VISUAL_SDL_ERROR_THROW();
 
   if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) != 0 )
     {
       SDL_QuitSubSystem(SDL_INIT_VIDEO);
-      throw claw::exception( SDL_GetError() );
+      VISUAL_SDL_ERROR_THROW();
     }
 
   for (unsigned int i=0; i!=SDL_USEREVENT; ++i)
@@ -710,10 +716,10 @@ void bear::visual::gl_screen::set_video_mode
       best_size.x, best_size.y, flags );
 
   if ( m_window == NULL )
-    throw claw::exception( SDL_GetError() );
+    VISUAL_SDL_ERROR_THROW();
 
   if ( SDL_GL_CreateContext( m_window ) == NULL )
-    throw claw::exception( SDL_GetError() );
+    VISUAL_SDL_ERROR_THROW();
 
   m_window_size = best_size;
 
@@ -808,7 +814,7 @@ bear::visual::gl_screen::get_sdl_display_modes() const
   const int count( SDL_GetNumDisplayModes(0) );
 
   if ( count < 1 )
-    throw new claw::exception( SDL_GetError() );
+    VISUAL_SDL_ERROR_THROW();
 
   std::vector<SDL_DisplayMode> result( count );
 

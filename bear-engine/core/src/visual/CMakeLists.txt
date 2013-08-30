@@ -29,6 +29,7 @@ set( VISUAL_SOURCE_FILES
   code/scene_star.cpp
   code/scene_writing.cpp
   code/screen.cpp
+  code/sdl_error.cpp
   code/sequence_effect.cpp
   code/shader_program.cpp
   code/sprite.cpp

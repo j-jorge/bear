@@ -102,6 +102,8 @@ set( ENGINE_SOURCE_FILES
   network/code/message_factory.cpp
   network/message/code/sync.cpp
 
+  resource_pool/code/directory_resource_pool.cpp
+
   script/code/call_sequence.cpp
   script/code/method_call.cpp
   script/code/script_context.cpp

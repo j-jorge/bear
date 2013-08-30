@@ -15,7 +15,7 @@
 #ifndef __ENGINE_RESOURCE_POOL_HPP__
 #define __ENGINE_RESOURCE_POOL_HPP__
 
-#include <list>
+#include <vector>
 #include <string>
 #include <iostream>
 #include <claw/basic_singleton.hpp>
@@ -26,6 +26,8 @@ namespace bear
 {
   namespace engine
   {
+    class base_resource_pool;
+
     /**
      * \brief The resource pool stores the resource files.
      * \author Julien Jorge
@@ -42,18 +44,17 @@ namespace bear
       // At least under Windows with MinGW.
       static resource_pool& get_instance();
 
+      ~resource_pool();
+
       void add_path( const std::string& path );
+      void add_pool( base_resource_pool* pool );
 
       void get_file( const std::string& name, std::ostream& os );
       bool exists( const std::string& name ) const;
 
     private:
-      bool find_file( const std::string& name, std::ifstream& f ) const;
-      bool find_file_name_straight( std::string& name ) const;
-
-    private:
-      /** \brief Paths for resources. */
-      std::list<std::string> m_path;
+      /** \brief Pools in which the files are searched. */
+      std::vector<base_resource_pool*> m_pool;
 
     }; // class resource_pool
   } // namespace engine
