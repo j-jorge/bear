@@ -32,7 +32,8 @@ namespace bear
       public base_game_filesystem
     {
     public:
-      default_game_filesystem( std::string game_name );
+      explicit default_game_filesystem( std::string game_name );
+      default_game_filesystem( std::string game_name, std::string root );
 
       virtual default_game_filesystem* clone() const;
 
@@ -46,6 +47,9 @@ namespace bear
     private:
       /** \brief The name of the game. */
       const std::string m_game_name;
+
+      /** brief The root directory where the files are stored. */
+      std::string m_root;
 
     }; // class default_game_filesystem
   } // namespace engine

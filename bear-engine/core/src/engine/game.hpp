@@ -98,6 +98,7 @@ namespace bear
       double get_active_area_margin() const;
 
       game_filesystem get_game_filesystem() const;
+      void set_game_filesystem( const game_filesystem& f );
 
       void get_game_variable( base_variable& val ) const;
       void get_game_variables

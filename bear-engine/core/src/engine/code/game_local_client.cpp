@@ -472,6 +472,17 @@ bear::engine::game_local_client::get_game_filesystem() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Sets the abstraction of the filesystem that can be used by the game.
+ * \param f The abstract file system.
+ */
+void bear::engine::game_local_client::set_game_filesystem
+( const game_filesystem& f )
+{
+  m_game_filesystem = f;
+} // game_filesystem::set_game_filesystem()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the value of a global variable.
  * \param val (in/out) The variable for which we want the value.
  */

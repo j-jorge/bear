@@ -24,7 +24,20 @@
  */
 bear::engine::default_game_filesystem::default_game_filesystem
 ( std::string game_name )
-  : m_game_name( game_name )
+  : m_game_name( game_name ), m_root( claw::system_info::get_user_directory() )
+{
+
+} // default_game_filesystem::default_game_filesystem()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param game_name The name of the game
+ * \param root The root directory where the game files are created.
+ */
+bear::engine::default_game_filesystem::default_game_filesystem
+( std::string game_name, std::string root )
+  : m_game_name( game_name ), m_root( root )
 {
 
 } // default_game_filesystem::default_game_filesystem()
@@ -91,7 +104,7 @@ std::string bear::engine::default_game_filesystem::get_custom_game_file
  */
 std::string bear::engine::default_game_filesystem::get_game_directory() const
 {
-  boost::filesystem::path dir( claw::system_info::get_user_directory() );
+  boost::filesystem::path dir( m_root );
 
   std::string result;
   std::string subdir = '.' + get_name_as_filename( m_game_name );
