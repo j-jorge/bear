@@ -904,7 +904,7 @@ std::vector<GLfloat> bear::visual::gl_screen::fill_gl_colors
 
   std::vector<GLfloat> result( count * 4 /* components per color */ );
 
-  for ( std::size_t i(0); i != count; i += 4 )
+  for ( std::size_t i(0); i != result.size(); i += 4 )
     {
       result[i] = r;
       result[i+1] = g;
