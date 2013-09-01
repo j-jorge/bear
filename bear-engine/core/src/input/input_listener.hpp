@@ -25,6 +25,7 @@ namespace bear
   namespace input
   {
     class key_info;
+    class finger_event;
 
     /**
      * \brief Base class for classes who want to be informed about the state of
@@ -63,6 +64,8 @@ namespace bear
 
       virtual
       bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
+
+      virtual bool finger_action( const finger_event& event );
 
     }; // class input_listener
   } // namespace input

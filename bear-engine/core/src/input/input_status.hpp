@@ -17,6 +17,7 @@
 #include "input/joystick_status.hpp"
 #include "input/keyboard_status.hpp"
 #include "input/mouse_status.hpp"
+#include "input/finger_status.hpp"
 
 #include "input/class_export.hpp"
 
@@ -44,6 +45,9 @@ namespace bear
 
       /** \brief Status of the mouse's keys. */
       mouse_status m_mouse;
+
+      /** \brief Status of the finger. */
+      finger_status m_finger;
 
     }; // input_status
   } // namespace input

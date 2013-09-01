@@ -249,7 +249,7 @@ bear::input::keyboard::const_iterator bear::input::keyboard::end() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the last events.
+ * \brief Returns the last events.
  */
 const bear::input::keyboard::event_list&
 bear::input::keyboard::get_events() const

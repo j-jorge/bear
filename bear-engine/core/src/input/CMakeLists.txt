@@ -3,6 +3,9 @@ set( INPUT_TARGET_NAME bear_input )
 #-------------------------------------------------------------------------------
 set( INPUT_SOURCE_FILES
   code/controller_button.cpp
+  code/finger.cpp
+  code/finger_event.cpp
+  code/finger_status.cpp
   code/input_listener.cpp
   code/input_status.cpp
   code/joystick.cpp

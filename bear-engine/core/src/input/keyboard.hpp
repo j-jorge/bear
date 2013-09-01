@@ -35,7 +35,7 @@ namespace bear
       /** \brief Iterator on the pressed keys. */
       typedef std::list<key_code>::const_iterator const_iterator;
 
-      /** \brief Iterator on the events. */
+      /** \brief The type of the list of the key events. */
       typedef std::list<key_event> event_list;
 
     public:

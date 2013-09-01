@@ -25,7 +25,7 @@ BASE_ITEM_EXPORT( mouse_detector, bear )
 bear::mouse_detector::mouse_detector()
 : m_toggle(NULL), 
   m_right_button(false), m_left_button(true), m_middle_button(false), 
-  m_wheel_up(false), m_wheel_down(false)
+  m_wheel_up(false), m_wheel_down(false), m_finger(true)
 {
   set_artificial(true);
   set_phantom(true); 
@@ -64,6 +64,8 @@ bool bear::mouse_detector::set_bool_field
     m_wheel_up = value;
   else if (name == "mouse_detector.wheel_down")
     m_wheel_down = value;
+  else if (name == "mouse_detector.finger")
+    m_finger = value;
   else
     result = super::set_bool_field(name, value);
 
@@ -133,6 +135,28 @@ bool bear::mouse_detector::check_mouse_position
         ( button == bear::input::mouse::mc_wheel_up && m_wheel_up ) ||
         ( button == bear::input::mouse::mc_middle_button && m_middle_button)));
 } // mouse_detector::check_mouse_position()
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Process an event related to the finger. If the finger is down within
+ *        the bounds of the item, the toggle is activated.
+ * \param event The event to process.
+ */
+bool bear::mouse_detector::finger_action( const input::finger_event& event )
+{
+  bool result = false;
+  
+  if ( (event.get_type() == input::finger_event::finger_event_pressed)
+       && get_bounding_box().includes
+       ( get_level().screen_to_level( event.get_position() ) ) )
+    {
+      if ( m_toggle != (physical_item*)NULL )
+        m_toggle->toggle(this);
+    }
+
+  return result;
+} // mouse_detector::finger_action()
 
 /*----------------------------------------------------------------------------*/
 /**

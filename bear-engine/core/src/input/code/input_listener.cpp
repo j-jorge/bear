@@ -164,3 +164,14 @@ bool bear::input::input_listener::mouse_move
 {
   return false;
 } // input_listener::mouse_move()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Method called a finger related event occurs.
+ * \param event The event.
+ * \return true if the event has been processed.
+ */
+bool bear::input::input_listener::finger_action( const finger_event& event )
+{
+  return false;
+} // input_listener::finger_action()

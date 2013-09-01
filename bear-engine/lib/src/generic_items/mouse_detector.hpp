@@ -51,13 +51,15 @@ namespace bear
 
   protected:
     bool mouse_released
-      ( bear::input::mouse::mouse_code button,
+      ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
     bool check_mouse_position
-      ( bear::input::mouse::mouse_code button,
+      ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
 
   private:
+    bool finger_action( const input::finger_event& event );
+
     void get_dependent_items
       ( std::list<bear::universe::physical_item*>& d ) const;
 
@@ -65,20 +67,24 @@ namespace bear
     /** \brief The toggle to activate. */
     handle_type m_toggle;
 
-    /* \brief Indicates if the toggle must be activated on right press. */
+    /** \brief Indicates if the toggle must be activated on right press. */
     bool m_right_button;
 
-    /* \brief Indicates if the toggle must be activated on left press. */
+    /** \brief Indicates if the toggle must be activated on left press. */
     bool m_left_button;
 
-    /* \brief Indicates if the toggle must be activated on middle press. */
+    /** \brief Indicates if the toggle must be activated on middle press. */
     bool m_middle_button;
 
-    /* \brief Indicates if the toggle must be activated on wheel up. */
+    /** \brief Indicates if the toggle must be activated on wheel up. */
     bool m_wheel_up;
 
-    /* \brief Indicates if the toggle must be activated on wheel down. */
+    /** \brief Indicates if the toggle must be activated on wheel down. */
     bool m_wheel_down;
+
+    /** \brief Indicates if the toggle must be activated on finger events. */
+    bool m_finger;
+
   }; // class mouse_detector
 } // namespace bear
 

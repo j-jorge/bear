@@ -24,6 +24,7 @@ namespace bear
 {
   namespace input
   {
+    class finger;
     class joystick;
     class keyboard;
     class mouse;
@@ -50,6 +51,7 @@ namespace bear
 
       void refresh();
 
+      finger& get_finger();
       keyboard& get_keyboard();
       mouse& get_mouse();
       joystick& get_joystick( unsigned int joy_id );
@@ -71,6 +73,9 @@ namespace bear
 
       /** \brief The joysticks. */
       std::vector<joystick*> m_joystick;
+
+      /** \brief The finger. */
+      finger* m_finger;
 
     }; // class system
   } // namespace input

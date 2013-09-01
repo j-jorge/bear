@@ -22,6 +22,7 @@ void bear::input::input_status::read()
   m_keyboard.read();
   m_joystick.read();
   m_mouse.read();
+  m_finger.read();
 } // input_status::read()
 
 /*----------------------------------------------------------------------------*/
@@ -34,4 +35,5 @@ void bear::input::input_status::scan_inputs( input_listener& listener ) const
   m_keyboard.scan_inputs( listener );
   m_joystick.scan_inputs( listener );
   m_mouse.scan_inputs( listener );
+  m_finger.scan_inputs( listener );
 } // input_status::scan_inputs()

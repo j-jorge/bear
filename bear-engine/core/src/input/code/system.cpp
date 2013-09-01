@@ -13,6 +13,7 @@
  */
 #include "input/system.hpp"
 
+#include "input/finger.hpp"
 #include "input/joystick.hpp"
 #include "input/keyboard.hpp"
 #include "input/mouse.hpp"
@@ -37,6 +38,9 @@ void bear::input::system::initialize()
 
   SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
   SDL_EventState( SDL_MOUSEWHEEL, SDL_ENABLE );
+  SDL_EventState( SDL_FINGERDOWN, SDL_ENABLE );
+  SDL_EventState( SDL_FINGERUP, SDL_ENABLE );
+  SDL_EventState( SDL_FINGERMOTION, SDL_ENABLE );
 
   // force the creation of the instance
   get_instance().refresh();
@@ -77,7 +81,16 @@ void bear::input::system::refresh()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Create an instance of the bear::input::keyboard class.
+ * \brief Returns the instance of the bear::input::finger class.
+ */
+bear::input::finger& bear::input::system::get_finger()
+{
+  return *m_finger;
+} // system::get_finger()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Returns the instance of the bear::input::keyboard class.
  */
 bear::input::keyboard& bear::input::system::get_keyboard()
 {
@@ -86,7 +99,7 @@ bear::input::keyboard& bear::input::system::get_keyboard()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Create an instance of the bear::input::mouse class.
+ * \brief Returns the instance of the bear::input::mouse class.
  */
 bear::input::mouse& bear::input::system::get_mouse()
 {
@@ -95,7 +108,8 @@ bear::input::mouse& bear::input::system::get_mouse()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Create an instance of the bear::input::joystick class.
+ * \brief Returns the instance of the bear::input::joystick class for a given
+ *        joystick.
  * \param joy_id Joystick identifier.
  * \pre joy_id < bear::input::joystick::number_of_joysticks()
  */
@@ -117,6 +131,8 @@ bear::input::system::system()
 
   for (unsigned int i=0; i!=joystick::number_of_joysticks(); ++i)
     m_joystick.push_back( new joystick(i) );
+
+  m_finger = new finger;
 } // system::system()
 
 /*----------------------------------------------------------------------------*/
@@ -139,6 +155,8 @@ void bear::input::system::refresh_alone()
 
   for (unsigned int i=0; i!=m_joystick.size(); ++i)
     m_joystick[i]->refresh();
+
+  m_finger->refresh();
 } // system::refresh_alone()
 
 /*----------------------------------------------------------------------------*/
@@ -147,20 +165,17 @@ void bear::input::system::refresh_alone()
  */
 void bear::input::system::clear()
 {
-  if (m_keyboard != NULL)
-    {
-      delete m_keyboard;
-      m_keyboard = NULL;
-    }
+  delete m_keyboard;
+  m_keyboard = NULL;
 
-  if (m_mouse != NULL)
-    {
-      delete m_mouse;
-      m_mouse = NULL;
-    }
+  delete m_mouse;
+  m_mouse = NULL;
 
   for (unsigned int i=0; i!=m_joystick.size(); ++i)
     delete m_joystick[i];
 
   m_joystick.clear();
+
+  delete m_finger;
+  m_finger = NULL;
 } // system::clear()
