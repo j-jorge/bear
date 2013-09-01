@@ -937,6 +937,13 @@ bear::visual::gl_screen::fill_gl_positions
   return result;
 } // gl_screen::fill_gl_positions()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Returns a vector of floats where each 2 consecutive cells are
+ *        made of the x and y coordinates of the texture coordinates represented
+ *        by a given clip rectangle.
+ * \param clip The rectangle from which we computes the coordinates.
+ */
 std::vector<GLfloat> bear::visual::gl_screen::fill_gl_texture_positions
 ( const claw::math::box_2d<GLdouble>& clip ) const
 {
