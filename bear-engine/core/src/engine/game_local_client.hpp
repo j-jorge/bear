@@ -185,6 +185,9 @@ namespace bear
         ( universe::time_type dt, systime::milliseconds_type current_time,
           universe::time_type time_range );
 
+      void progress
+        ( systime::milliseconds_type current_time, universe::time_type dt,
+          universe::time_type time_range, universe::time_type time_scale );
       void progress( universe::time_type elapsed_time );
       void render();
 

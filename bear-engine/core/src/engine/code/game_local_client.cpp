@@ -781,22 +781,31 @@ void bear::engine::game_local_client::one_step_beyond()
 
   if ( dt >= m_time_step )
     {
-      set_time_scale(1);
-      m_last_progress = current_time;
+      const systime::milliseconds_type step_begin_date
+        ( systime::get_date_ms() );
+      progress( current_time, dt, time_range, time_scale );
 
-      if ( m_synchronized_render )
-        dt = synchronous_progress(dt);
-      else
-        dt = asynchronous_progress(dt, current_time, time_range);
-
-      m_last_progress -= dt / time_scale;
+      const systime::milliseconds_type progress_end_date
+        ( systime::get_date_ms() );
 
       render();
+
       current_time = systime::get_date_ms();
+
+      if ( current_time - step_begin_date > m_time_step )
+        claw::logger << claw::log_verbose
+                     << "OVERLOAD: "
+                     << (current_time - step_begin_date)
+                     << " spent, " << m_time_step << " allowed, "
+                     << int( (progress_end_date - step_begin_date) * 100
+                             / m_time_step ) << "% in progress, "
+                     << int( (current_time - progress_end_date) * 100
+                             / m_time_step ) << "% in render"
+                     << std::endl;
     }
   
-  if ( current_time < m_last_progress + m_time_step )
-    systime::sleep( m_last_progress + m_time_step - current_time );
+  //if ( current_time < m_last_progress + m_time_step )
+  //  systime::sleep( m_last_progress + m_time_step - current_time );
 } // game_local_client::one_step_beyond()
 
 /*----------------------------------------------------------------------------*/
@@ -891,6 +900,32 @@ bear::engine::game_local_client::asynchronous_progress
   else
     return dt;
 } // game_local_client::asynchronous_progress()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Do one iteration in the progression of the game.
+ * \param current_time The date at which the progress is done.
+ * \param dt The elapsed time since the last progress, according to the game's
+ *        point of view.
+ * \param time_range The elapsed time since the last progress, according to the
+ *        engine's point of view.
+ * \param time_scale The scale factor applied to the engine's time to obtain the
+ *        game's time.
+ */
+void bear::engine::game_local_client::progress
+( systime::milliseconds_type current_time, universe::time_type dt,
+  universe::time_type time_range, universe::time_type time_scale )
+{
+  set_time_scale(1);
+  m_last_progress = current_time;
+
+  if ( m_synchronized_render )
+    dt = synchronous_progress(dt);
+  else
+    dt = asynchronous_progress(dt, current_time, time_range);
+
+  m_last_progress -= dt / time_scale;
+} // game_local_client::progress()
 
 /*----------------------------------------------------------------------------*/
 /**
