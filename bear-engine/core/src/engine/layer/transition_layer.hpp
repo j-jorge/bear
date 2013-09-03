@@ -90,6 +90,7 @@ namespace bear
       ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
       bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
+      bool finger_action( const bear::input::finger_event& event );
 
       void erase_effect( std::size_t id );
       std::size_t push_effect( transition_effect* e, int p = 0 );

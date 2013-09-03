@@ -186,3 +186,20 @@ bool bear::engine::gui_layer::mouse_move
   else
     return false;
 } // gui_layer::mouse_move()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Process an event triggered by a finger.
+ * \param event The event to process.
+ */
+bool bear::engine::gui_layer::finger_action
+( const bear::input::finger_event& event )
+{
+  /** \todo adjust the position of the event passed to the root to make it
+      relative to the root.*/
+
+  if ( m_root != NULL )
+    return m_root->finger_action( event );
+  else
+    return false;
+} // gui_layer::finger_action()

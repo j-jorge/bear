@@ -246,6 +246,18 @@ bool bear::engine::transition_layer::mouse_move
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Process an event triggered by a finger.
+ * \param event The event to process.
+ */
+bool bear::engine::transition_layer::finger_action
+( const bear::input::finger_event& event )
+{
+  return diffuse_call
+    ( boost::bind( &transition_effect::finger_action, _1, event) );
+} // transition_layer::finger_action()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Erase an effect.
  * \param id The identifier of the effect to erase.
  */

@@ -65,6 +65,7 @@ namespace bear
         ( input::mouse::mouse_code key,
           const claw::math::coordinate_2d<unsigned int>& pos );
       bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
+      bool finger_action( const bear::input::finger_event& event );
 
     private:
       /** \brief The size of the layer. */
