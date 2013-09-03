@@ -326,7 +326,6 @@ void bear::visual::gl_screen::render
  */
 bool bear::visual::gl_screen::end_render()
 {
-  glFlush();
   SDL_GL_SwapWindow( m_window );
   VISUAL_GL_ERROR_THROW();
 
