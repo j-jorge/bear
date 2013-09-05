@@ -18,7 +18,9 @@
 #include "visual/shader_program.hpp"
 
 #include <SDL/SDL.h>
+
 #include "visual/gl.hpp"
+#include "visual/gl_state.hpp"
 
 namespace bear
 {
@@ -34,25 +36,6 @@ namespace bear
     private:
       /** \brief The type used to represent the size of a screen. */
       typedef claw::math::coordinate_2d<unsigned int> screen_size_type;
-
-      /**
-       * \brief The visitor that sets the variables of a shader program.
-       */
-      class uniform_setter
-      {
-      public:
-        explicit uniform_setter( GLuint program );
-
-        void operator()( std::string name, int value ) const;
-        void operator()( std::string name, double value ) const;
-        void operator()( std::string name, bool value ) const;
-
-      private:
-        /** \brief The identifier of the shader program in which the variables
-            are set. */
-        const GLuint m_program;
-
-      }; // class uniform_setter
 
     public:
       static void initialize();
@@ -98,7 +81,7 @@ namespace bear
       claw::math::box_2d<GLdouble> get_texture_clip( const sprite& s ) const;
 
       void render_image
-        ( const std::vector<position_type>& render_coord,
+        ( GLuint texture_id, const std::vector<position_type>& render_coord,
           const claw::math::box_2d<GLdouble>& clip,
           const color_type& color );
 
@@ -117,15 +100,12 @@ namespace bear
 
       bool is_closed();
 
-      std::vector<GLfloat>
-        fill_gl_colors( const color_type& c, std::size_t count ) const;
-      std::vector<GLfloat>
-        fill_gl_positions( const std::vector<position_type>& p ) const;
-      std::vector<GLfloat>
-        fill_gl_texture_positions
+      std::vector<position_type>
+        get_texture_coordinates
         ( const claw::math::box_2d<GLdouble>& clip ) const;
 
-      void use_program( const shader_program& p ) const;
+      void push_state( const gl_state& state );
+      shader_program get_current_shader() const;
 
     private:
       /** \brief The window created by SDL. */
@@ -149,6 +129,9 @@ namespace bear
 
       /** \brief The shaders to apply to the next rendering commands. */
       std::vector<shader_program> m_shader;
+
+      /** \brief The OpenGL drawing commands. */
+      std::vector<gl_state> m_gl_state;
 
     }; // class gl_screen
   } // namespace visual

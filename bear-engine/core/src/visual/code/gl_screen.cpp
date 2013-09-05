@@ -33,63 +33,6 @@
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Creates a new setter for a given program.
- * \param program The identifier of the shader program in which the variables
- *        are set.
- */
-bear::visual::gl_screen::uniform_setter::uniform_setter( GLuint program )
-  : m_program( program )
-{
-
-} // gl_screen::uniform_setter::uniform_setter()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets the value of an integer uniform.
- * \param name The name of the uniform.
- * \param value The value to assign to the uniform.
- */
-void
-bear::visual::gl_screen::uniform_setter::operator()
-( std::string name, int value ) const
-{
-  glUniform1i( glGetUniformLocation( m_program, name.c_str() ), value);
-  VISUAL_GL_ERROR_THROW();
-} // gl_screen::uniform_setter::operator()()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets the value of a float uniform.
- * \param name The name of the uniform.
- * \param value The value to assign to the uniform.
- */
-void
-bear::visual::gl_screen::uniform_setter::operator()
-( std::string name, double value ) const
-{
-  glUniform1f( glGetUniformLocation( m_program, name.c_str() ), value);
-  VISUAL_GL_ERROR_THROW();
-} // gl_screen::uniform_setter::operator()()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets the value of a boolean uniform.
- * \param name The name of the uniform.
- * \param value The value to assign to the uniform.
- */
-void
-bear::visual::gl_screen::uniform_setter::operator()
-( std::string name, bool value ) const
-{
-  glUniform1i( glGetUniformLocation( m_program, name.c_str() ), value);
-  VISUAL_GL_ERROR_THROW();
-} // gl_screen::uniform_setter::operator()()
-
-
-
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Global initializations common to all gl_screens. Must be called at the
  *        begining of your program.
  */
@@ -149,8 +92,13 @@ bear::visual::gl_screen::gl_screen
   m_need_restoration = false;
 
   glEnable(GL_TEXTURE_2D);
+  VISUAL_GL_ERROR_THROW();
+  
+  glEnable(GL_BLEND);
+  VISUAL_GL_ERROR_THROW();
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  VISUAL_GL_ERROR_THROW();
 } // gl_screen::gl_screen() [constructor]
 
 /*----------------------------------------------------------------------------*/
@@ -294,28 +242,6 @@ void bear::visual::gl_screen::begin_render()
 void bear::visual::gl_screen::render
 ( const position_type& pos, const sprite& s )
 {
-  glEnable(GL_BLEND);
-  VISUAL_GL_ERROR_THROW();
-
-  const gl_image* impl = static_cast<const gl_image*>(s.get_image().get_impl());
-  glBindTexture( GL_TEXTURE_2D, impl->texture_id() );
-  VISUAL_GL_ERROR_THROW();
-
-  if ( s.get_angle() == 0 )
-    {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-      VISUAL_GL_ERROR_THROW();
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      VISUAL_GL_ERROR_THROW();
-    }
-  else
-    {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-      VISUAL_GL_ERROR_THROW();
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      VISUAL_GL_ERROR_THROW();
-    }
-
   render_sprite( pos, s );
 } // gl_screen::render()
 
@@ -326,8 +252,15 @@ void bear::visual::gl_screen::render
  */
 bool bear::visual::gl_screen::end_render()
 {
+  for ( std::size_t i(0); i!=m_gl_state.size(); ++i )
+    m_gl_state[i].draw();
+
+  VISUAL_GL_ERROR_THROW();
+
   SDL_GL_SwapWindow( m_window );
   VISUAL_GL_ERROR_THROW();
+
+  m_gl_state.clear();
 
   return !is_closed();
 } // gl_screen::end_render()
@@ -344,33 +277,15 @@ void bear::visual::gl_screen::draw_line
 ( const color_type& color, const std::vector<position_type>& p,
   double w, bool close )
 {
-  if ( w <= 0 )
+  if ( (w <= 0) || p.empty() )
     return;
 
-  glBindTexture( GL_TEXTURE_2D, 0 );
-  VISUAL_GL_ERROR_THROW();
+  std::vector<position_type> vertices( p );
 
-  glLineWidth(w);
+  if ( close )
+    vertices.push_back( vertices.front() );
 
-  glEnable(GL_BLEND);
-  VISUAL_GL_ERROR_THROW();
-
-  const std::vector<GLfloat> colors( fill_gl_colors( color, p.size() ) );
-  glEnableClientState( GL_COLOR_ARRAY );
-  glColorPointer( 4, GL_FLOAT, 0, colors.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  const std::vector<GLfloat> positions( fill_gl_positions( p ) );
-  glEnableClientState( GL_VERTEX_ARRAY );
-  glVertexPointer( 2, GL_FLOAT, 0, positions.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  glDrawArrays( GL_LINE_STRIP, 0, p.size() );
-  VISUAL_GL_ERROR_THROW();
-
-  glDisableClientState( GL_COLOR_ARRAY );
-  glDisableClientState( GL_VERTEX_ARRAY );
-  glDisable(GL_BLEND);
+  push_state( gl_state( get_current_shader(), vertices, color, w ) );
 } // gl_screen::draw_line()
 
 /*----------------------------------------------------------------------------*/
@@ -382,28 +297,8 @@ void bear::visual::gl_screen::draw_line
 void bear::visual::gl_screen::draw_polygon
 ( const color_type& color, const std::vector<position_type>& p )
 {
-  glBindTexture( GL_TEXTURE_2D, 0 );
-  VISUAL_GL_ERROR_THROW();
-
-  glEnable(GL_BLEND);
-  VISUAL_GL_ERROR_THROW();
-
-  const std::vector<GLfloat> colors( fill_gl_colors( color, p.size() ) );
-  glEnableClientState( GL_COLOR_ARRAY );
-  glColorPointer( 4, GL_FLOAT, 0, colors.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  const std::vector<GLfloat> positions( fill_gl_positions( p ) );
-  glEnableClientState( GL_VERTEX_ARRAY );
-  glVertexPointer( 2, GL_FLOAT, 0, positions.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  glDrawArrays( GL_TRIANGLE_FAN, 0, p.size() );
-  VISUAL_GL_ERROR_THROW();
-
-  glDisableClientState( GL_COLOR_ARRAY );
-  glDisableClientState( GL_VERTEX_ARRAY );
-  glDisable(GL_BLEND);
+  push_state
+    ( gl_state( get_current_shader(), p, color ) );
 } // gl_screen::draw_polygon()
 
 /*----------------------------------------------------------------------------*/
@@ -414,9 +309,6 @@ void bear::visual::gl_screen::draw_polygon
 void bear::visual::gl_screen::push_shader( const shader_program& p )
 {
   m_shader.push_back( p );
-
-  if ( p.is_valid() )
-    use_program( p );
 } // gl_screen::push_shader()
 
 /*----------------------------------------------------------------------------*/
@@ -433,20 +325,6 @@ void bear::visual::gl_screen::pop_shader()
     }
 
   m_shader.pop_back();
-
-  typedef std::vector<shader_program>::const_reverse_iterator iterator_type;
-  bool valid_found(false);
-
-  for ( iterator_type it = m_shader.rbegin();
-        !valid_found && (it != m_shader.rend()); ++it )
-    if ( it->is_valid() )
-      {
-        use_program( *it );
-        valid_found = true;
-      }
-
-  if ( !valid_found )
-    glUseProgram( 0 );
 } // gl_screen::pop_shader()
 
 /*----------------------------------------------------------------------------*/
@@ -500,7 +378,10 @@ void bear::visual::gl_screen::render_sprite
     ( s.get_red_intensity(), s.get_green_intensity(),
       s.get_blue_intensity(), s.get_opacity() );
 
-  render_image( render_coord, clip_vertices, color );
+  const gl_image* impl = static_cast<const gl_image*>(s.get_image().get_impl());
+  GLuint texture_id( impl->texture_id() );
+
+  render_image( texture_id, render_coord, clip_vertices, color );
 } // gl_screen::render_sprite()
 
 /*----------------------------------------------------------------------------*/
@@ -617,42 +498,21 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Draw current texture.
- * \param render_box On gl_screen position and size of the texture.
+ * \brief Draw a textured polygon.
+ * \param texture_id The identifier of the texture use.
+ * \param render_coord The coordinates of the vertices to draw.
  * \param clip Part of the texture to draw.
+ * \param color The color of the vertices.
  */
 void bear::visual::gl_screen::render_image
-( const std::vector<position_type>& render_coord,
+( GLuint texture_id, const std::vector<position_type>& render_coord,
   const claw::math::box_2d<GLdouble>& clip,
   const color_type& color )
 {
-  const std::size_t vertex_count( render_coord.size() );
-
-  const std::vector<GLfloat> colors( fill_gl_colors( color, vertex_count ) );
-  glEnableClientState( GL_COLOR_ARRAY );
-  glColorPointer( 4, GL_FLOAT, 0, colors.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  const std::vector<GLfloat> positions( fill_gl_positions( render_coord ) );
-  glEnableClientState( GL_VERTEX_ARRAY );
-  glVertexPointer( 2, GL_FLOAT, 0, positions.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  const std::vector<GLfloat> texture_positions
-    ( fill_gl_texture_positions( clip ) );
-  glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-  glTexCoordPointer( 2, GL_FLOAT, 0, texture_positions.data() );
-  VISUAL_GL_ERROR_THROW();
-
-  glDrawArrays( GL_TRIANGLE_FAN, 0, vertex_count );
-  VISUAL_GL_ERROR_THROW();
-
-  glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-  glDisableClientState( GL_VERTEX_ARRAY );
-  glDisableClientState( GL_COLOR_ARRAY );
-  glDisable(GL_BLEND);
-
-  VISUAL_GL_ERROR_THROW();
+  push_state
+    ( gl_state
+      ( texture_id, get_current_shader(), get_texture_coordinates(clip),
+        render_coord, color ) );
 } // gl_screen::render_image()
 
 /*----------------------------------------------------------------------------*/
@@ -886,102 +746,60 @@ bool bear::visual::gl_screen::is_closed()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Returns a vector of floats where each 4 consecutive cells are
- *        made of the normalized red, green, blue and alpha components of a
- *        given color.
- * \param c The color to assign in the returned vector.
- * \param count The number of colors the returned vector must contain.
- */
-std::vector<GLfloat> bear::visual::gl_screen::fill_gl_colors
-( const color_type& c, std::size_t count ) const
-{
-  const GLfloat max( std::numeric_limits<color_type::component_type>::max() );
-  const GLfloat r( (GLfloat)c.components.red / max );
-  const GLfloat g( (GLfloat)c.components.green / max );
-  const GLfloat b( (GLfloat)c.components.blue / max );
-  const GLfloat a( (GLfloat)c.components.alpha / max );
-
-  std::vector<GLfloat> result( count * 4 /* components per color */ );
-
-  for ( std::size_t i(0); i != result.size(); i += 4 )
-    {
-      result[i] = r;
-      result[i+1] = g;
-      result[i+2] = b;
-      result[i+3] = a;
-    }
-
-  return result;
-} // gl_screen::fill_gl_colors()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Returns a vector of floats where each 2 consecutive cells are
- *        made of the x and y coordinates of a vector of points.
- * \param p The points to copy in the returned vector.
- */
-std::vector<GLfloat>
-bear::visual::gl_screen::fill_gl_positions
-( const std::vector<position_type>& p ) const
-{
-  std::vector<GLfloat> result;
-  result.reserve( p.size() * 2 /* components per coordinate */ );
-
-  for ( std::size_t i(0); i!=p.size(); ++i )
-    {
-      result.push_back( p[i].x );
-      result.push_back( p[i].y );
-    }
-
-  return result;
-} // gl_screen::fill_gl_positions()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Returns a vector of floats where each 2 consecutive cells are
- *        made of the x and y coordinates of the texture coordinates represented
+ * \brief Returns a vector of the texture coordinates represented
  *        by a given clip rectangle.
  * \param clip The rectangle from which we computes the coordinates.
  */
-std::vector<GLfloat> bear::visual::gl_screen::fill_gl_texture_positions
+std::vector<bear::visual::position_type>
+bear::visual::gl_screen::get_texture_coordinates
 ( const claw::math::box_2d<GLdouble>& clip ) const
 {
-  std::vector<GLfloat> result;
-  result.reserve( 8 /* two coordinates per corner of clip */ );
+  std::vector<position_type> result(4);
 
   // Top-left corner
-  result.push_back( clip.first_point.x );
-  result.push_back( clip.first_point.y );
+  result[0].x = clip.first_point.x;
+  result[0].y = clip.first_point.y;
 
   // Top-right corner
-  result.push_back( clip.second_point.x );
-  result.push_back( clip.first_point.y );
+  result[1].x = clip.second_point.x;
+  result[1].y = clip.first_point.y;
   
   // Bottom-right corner
-  result.push_back( clip.second_point.x );
-  result.push_back( clip.second_point.y );
+  result[2].x = clip.second_point.x;
+  result[2].y = clip.second_point.y;
   
   // Bottom-left corner
-  result.push_back( clip.first_point.x );
-  result.push_back( clip.second_point.y );
+  result[3].x = clip.first_point.x;
+  result[3].y = clip.second_point.y;
 
   return result;
-} // gl_screen::fill_gl_texture_positions()
+} // gl_screen::get_texture_coordinates()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Enables a given shader.
- * \param p The shader to enable.
+ * \brief Pushes a new rendering command.
+ * \param state The rendering command.
  */
-void bear::visual::gl_screen::use_program( const shader_program& p ) const
+void bear::visual::gl_screen::push_state( const gl_state& state )
 {
-  const gl_shader_program* const s
-    ( static_cast<const gl_shader_program*>(p.get_impl()) );
+  if ( m_gl_state.empty() || !m_gl_state.back().is_compatible_with(state) )
+    m_gl_state.push_back( state );
+  else
+    m_gl_state.back().merge( state );
+} // gl_screen::push_state()
 
-  glUseProgram( s->program_id() );
-  VISUAL_GL_ERROR_THROW();
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Returns the current shader program to apply.
+ */
+bear::visual::shader_program
+bear::visual::gl_screen::get_current_shader() const
+{
+  typedef std::vector<shader_program>::const_reverse_iterator iterator_type;
 
-  shader_program::variable_visitor_type visitor;
-  shader_program::input_variable_map vars( p.get_variables() );
-  visitor.run( vars, uniform_setter( s->program_id() ) );
-} // gl_screen::use_program()
+  for ( iterator_type it = m_shader.rbegin(); it != m_shader.rend(); ++it )
+    if ( it->is_valid() )
+      return *it;
+
+  return shader_program();
+} // gl_screen::get_current_shader()

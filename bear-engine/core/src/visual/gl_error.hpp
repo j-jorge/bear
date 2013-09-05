@@ -19,7 +19,7 @@
 #include <string>
 
 #define VISUAL_GL_ERROR_THROW() \
-  bear::visual::gl_error::throw_on_error( __FUNCTION__ )
+  bear::visual::gl_error::throw_on_error( __LINE__, __FUNCTION__ )
 
 namespace bear
 {
@@ -32,7 +32,7 @@ namespace bear
     class VISUAL_EXPORT gl_error
     {
     public:
-      static void throw_on_error( const std::string& prefix );
+      static void throw_on_error( std::size_t line, const std::string& file );
 
     }; // class gl_error
 

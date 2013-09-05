@@ -21,16 +21,18 @@
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Throws an exception if there is a problem with OpenGL.
- * \param prefix A prefix to the message of the exception.
+ * \param line The line where the error occurred.
+ * \param file The file where the error occurred.
  */
-void bear::visual::gl_error::throw_on_error( const std::string& prefix )
+void bear::visual::gl_error::throw_on_error
+( std::size_t line, const std::string& file )
 {
   const GLenum err = glGetError();
 
   if ( err != GL_NO_ERROR )
     {
       std::ostringstream err_string;
-      err_string << prefix << ": ";
+      err_string << file << ':' << line << ": ";
 
       switch (err)
         {

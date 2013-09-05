@@ -15,6 +15,7 @@ set( VISUAL_SOURCE_FILES
   code/gl_screen.cpp
   code/gl_fragment_shader.cpp
   code/gl_shader_program.cpp
+  code/gl_state.cpp
   code/image.cpp
   code/image_manager.cpp
   code/placed_sprite.cpp
