@@ -70,6 +70,7 @@ namespace bear
       ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
       bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
+      bool finger_action( const input::finger_event& event );
 
     private:
       /** \brief The sub layers */

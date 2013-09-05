@@ -133,6 +133,18 @@ bool bear::engine::item_with_input_listener<Base>::mouse_move_local
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief A finger has been used over the item.
+ * \param event The event dispatched by the finger.
+ */
+template<class Base>
+bool bear::engine::item_with_input_listener<Base>::finger_action_local
+( const input::finger_event& event )
+{
+  return false;
+} // item_with_input_listener::finger_action_local()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief A keyboard key is maintained.
  * \param key The code of the key.
  */
@@ -227,3 +239,22 @@ bool bear::engine::item_with_input_listener<Base>::mouse_move
   else
     return input_listener::mouse_move( pos );
 } // item_with_input_listener::mouse_move()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief The finger has been used.
+ * \param event The event dispatched by the usage of the finger.
+ */
+template<class Base>
+bool bear::engine::item_with_input_listener<Base>::finger_action
+( const input::finger_event& event )
+{
+  const universe::position_type global
+    ( this->get_level().screen_to_level( event.get_position() ) );
+
+  if ( this->get_bounding_box().includes( global ) )
+    return finger_action_local
+      ( event.at_position( global - this->get_bottom_left() ) );
+  else
+    return input_listener::finger_action( event );
+} // item_with_input_listener::finget_action()

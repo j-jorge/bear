@@ -42,8 +42,32 @@ bool bear::system_music_toggle::mouse_pressed_local
 {
   super::mouse_pressed_local( button, pos );
 
-  bear::engine::game::get_instance().set_music_muted
-    ( !bear::engine::game::get_instance().get_music_muted() );
+  toggle_music();
 
   return true;
 } // system_music_toggle::mouse_pressed_local()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief The finger has been used on the item.
+ * \param event The event dispatched by the finger.
+ */
+bool bear::system_music_toggle::finger_action_local
+( const input::finger_event& event )
+{
+  super::finger_action_local( event );
+
+  toggle_music();
+
+  return true;
+} // system_music_toggle::finger_action_local()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Toggles the fullscreen mode.
+ */
+void bear::system_music_toggle::toggle_music() const
+{
+  bear::engine::game::get_instance().set_music_muted
+    ( !bear::engine::game::get_instance().get_music_muted() );
+} // system_music_toggle::toggle_music()

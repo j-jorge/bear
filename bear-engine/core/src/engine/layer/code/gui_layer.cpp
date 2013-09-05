@@ -15,6 +15,8 @@
 
 #include "engine/game.hpp"
 
+#include "input/finger_event.hpp"
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -195,11 +197,9 @@ bool bear::engine::gui_layer::mouse_move
 bool bear::engine::gui_layer::finger_action
 ( const bear::input::finger_event& event )
 {
-  /** \todo adjust the position of the event passed to the root to make it
-      relative to the root.*/
-
   if ( m_root != NULL )
-    return m_root->finger_action( event );
+    return m_root->finger_action
+      ( event.at_position( event.get_position() - m_root->get_position() ) );
   else
     return false;
 } // gui_layer::finger_action()

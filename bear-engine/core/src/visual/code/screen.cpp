@@ -19,6 +19,8 @@
 #include <claw/bitmap.hpp>
 #include <claw/logger.hpp>
 
+#include "time/time.hpp"
+
 /*----------------------------------------------------------------------------*/
 bear::visual::screen::sub_system
 bear::visual::screen::s_sub_system(screen_undef);
@@ -258,9 +260,20 @@ bool bear::visual::screen::end_render()
 {
   CLAW_PRECOND(m_mode == SCREEN_RENDER);
 
+  systime::milliseconds_type start( systime::get_date_ms() );
   render_elements();
 
+  systime::milliseconds_type elements_finish( systime::get_date_ms() );
+
   bool result = m_impl->end_render();
+
+  systime::milliseconds_type finish( systime::get_date_ms() );
+  claw::logger << claw::log_verbose
+               << "Elements in " << (elements_finish - start)
+               << " ms, end in " << (finish - elements_finish)
+               << " ms."
+               << std::endl;
+
   m_mode = SCREEN_IDLE;
 
   return result;
@@ -341,8 +354,11 @@ void bear::visual::screen::render_elements()
 {
   if ( m_dumb_rendering )
     {
-      for ( ; !m_scene_element.empty(); m_scene_element.pop_front() )
-        render_element( m_scene_element.front() );
+      for ( scene_element_list::const_iterator it( m_scene_element.begin() );
+            it != m_scene_element.end(); ++it )
+        render_element( *it );
+      
+      m_scene_element.clear();
     }
   else
     {

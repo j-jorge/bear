@@ -80,6 +80,20 @@ bear::input::finger_event::get_position() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Returns a copy of this event as if it occured at a given position.
+ * \param p The position of the returned event.
+ */
+bear::input::finger_event
+bear::input::finger_event::at_position( const position_type& p ) const
+{
+  finger_event result(*this);
+  result.m_position = p;
+
+  return result;
+} // finger_event::at_position()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Returns the distance of the motion.
  */
 const bear::input::position_type&

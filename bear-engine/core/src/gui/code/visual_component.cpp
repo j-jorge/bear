@@ -14,6 +14,7 @@
 #include "gui/visual_component.hpp"
 
 #include "input/key_info.hpp"
+#include "input/finger_event.hpp"
 
 #include "visual/scene_line.hpp"
 #include "visual/scene_rectangle.hpp"
@@ -367,6 +368,37 @@ bool bear::gui::visual_component::mouse_move
 
   return result;
 } // visual_component::mouse_move()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Inform the component that the finger has been used.
+ * \param event The event dispatched by the finger.
+ */
+bool
+bear::gui::visual_component::finger_action( const input::finger_event& event )
+{
+  if ( !is_enabled() )
+    return false;
+
+  bool result;
+
+  if (m_input_priority)
+    {
+      result = on_finger_action(event);
+
+      if ( !result )
+        result = broadcast_finger_action( event );
+    }
+  else
+    {
+      result = broadcast_finger_action( event );
+
+      if ( !result )
+        result = on_finger_action(event);
+    }
+
+  return result;
+} // visual_component::finger_action()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1089,7 +1121,7 @@ bool bear::gui::visual_component::on_mouse_maintained
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell the component that the mouse has been moved.
+ * \brief Tells the component that the mouse has been moved.
  * \param pos The new position of the cursor.
  * \return true if the button has been processed.
  */
@@ -1098,6 +1130,17 @@ bool bear::gui::visual_component::on_mouse_move
 {
   return false;
 } // visual_component::on_mouse_move()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells the component that the finger has been used.
+ * \param event The event dispatched by the finger.
+ */
+bool bear::gui::visual_component::on_finger_action
+( const input::finger_event& event )
+{
+  return false;
+} // visual_component::on_finger_action()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1188,6 +1231,27 @@ bool bear::gui::visual_component::broadcast_mouse_maintained
 
   return result;
 } // visual_component::broadcast_mouse_maintained()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Informs the sub components that the finger has been used.
+ * \param event The event dispatched by the finger.
+ */
+bool bear::gui::visual_component::broadcast_finger_action
+( const input::finger_event& event )
+{
+  bool result(false);
+  component_list::iterator it;
+  const position_type pos( event.get_position() );
+
+  for (it=m_components.begin(); !result && (it!=m_components.end()); ++it)
+    if ( (*it)->m_box.includes(pos) )
+      result =
+        (*it)->finger_action
+        ( event.at_position( pos - (*it)->get_position() ) );
+
+  return result;
+} // visual_component::broadcast_finger_action()
 
 /*----------------------------------------------------------------------------*/
 /**

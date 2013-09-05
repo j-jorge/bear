@@ -313,3 +313,23 @@ bool bear::engine::gui_layer_stack::mouse_move
 
   return result;
 } // gui_layer_stack::mouse_move()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Inform the layer that the finger has been used.
+ * \param event The event dispatched by the finger.
+ */
+bool bear::engine::gui_layer_stack::finger_action
+( const input::finger_event& event )
+{
+  bool result = false;
+  unsigned int i = m_sub_layers.size();
+
+  while ( (i != 0) && !result )
+    {
+      --i;
+      result = m_sub_layers[i]->finger_action( event );
+    }
+
+  return result;
+} // gui_layer_stack::finger_action()

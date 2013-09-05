@@ -80,6 +80,8 @@ namespace bear
 
       bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
 
+      bool finger_action( const input::finger_event& event );
+
       void fit( size_type margin = 0 );
 
       void set_size_maximum();
@@ -173,6 +175,8 @@ namespace bear
       ( input::mouse::mouse_code key,
         const claw::math::coordinate_2d<unsigned int>& pos );
 
+      virtual bool on_finger_action( const input::finger_event& event );
+
       virtual void on_focused();
 
     private:
@@ -187,6 +191,7 @@ namespace bear
       bool broadcast_mouse_maintained
       ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
+      bool broadcast_finger_action( const input::finger_event& event );
 
       void stay_in_owner();
 

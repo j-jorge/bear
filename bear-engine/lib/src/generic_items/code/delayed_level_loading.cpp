@@ -270,6 +270,23 @@ bool bear::delayed_level_loading::mouse_pressed
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief A finger has been used.
+ * \param event The event dispatched by the finger.
+ */
+bool bear::delayed_level_loading::finger_action
+( const input::finger_event& event )
+{
+  if ( m_load_on_input )
+    {
+      start_fading();
+      return true;
+    }
+  else
+    return false;
+} // delayed_level_loading::finger_action()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get a string from the game variable.
  * \param name The name of the game variable.
  * \return \a name if there is such a variable.

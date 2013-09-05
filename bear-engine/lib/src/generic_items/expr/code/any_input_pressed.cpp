@@ -125,3 +125,14 @@ bool bear::any_input_pressed::mouse_maintained
   m_pressed = true;
   return false;
 } // any_input_pressed::mouse_maintained()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief A finger has been used.
+ * \param event The event describing the usage of the finger.
+ */
+bool bear::any_input_pressed::finger_action( const input::finger_event& event )
+{
+  m_pressed = true;
+  return false;
+} // any_input_pressed::finger_action()

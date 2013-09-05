@@ -47,6 +47,8 @@ namespace bear
       const position_type& get_position() const;
       const position_type& get_distance() const;
 
+      finger_event at_position( const position_type& p ) const;
+
     private:
       finger_event( event_type t );
 

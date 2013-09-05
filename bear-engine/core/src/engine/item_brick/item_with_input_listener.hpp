@@ -72,6 +72,8 @@ namespace bear
 
       virtual bool mouse_move_local( const universe::position_type& pos );
 
+      virtual bool finger_action_local( const input::finger_event& event );
+
     private:
       bool key_maintained( const input::key_info& key );
 
@@ -91,6 +93,8 @@ namespace bear
         const claw::math::coordinate_2d<unsigned int>& pos );
 
       bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
+
+      bool finger_action( const input::finger_event& event );
 
     private:
       /** \brief The status of the controllers. */

@@ -63,6 +63,7 @@ namespace bear
     bool mouse_maintained
       ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
+    bool finger_action( const input::finger_event& event );
 
   private:
     /** \brief Tell if a key or a button is pressed. */

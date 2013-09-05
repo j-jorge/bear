@@ -43,7 +43,31 @@ bool bear::system_fullscreen_toggle::mouse_pressed_local
 {
   super::mouse_pressed_local( button, pos );
 
-  bear::engine::game::get_instance().toggle_fullscreen();
+  toggle_fullscreen();
 
   return true;
 } // system_fullscreen_toggle::mouse_pressed_local()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief The finger has been used on the item.
+ * \param event The event dispatched by the finger.
+ */
+bool bear::system_fullscreen_toggle::finger_action_local
+( const input::finger_event& event )
+{
+  super::finger_action_local( event );
+
+  toggle_fullscreen();
+
+  return true;
+} // system_fullscreen_toggle::finger_action_local()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Toggles the fullscreen.
+ */
+void bear::system_fullscreen_toggle::toggle_fullscreen() const
+{
+  bear::engine::game::get_instance().toggle_fullscreen();
+} // system_fullscreen_toggle::toggle_fullscreen()

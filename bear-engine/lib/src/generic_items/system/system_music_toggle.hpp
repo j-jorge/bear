@@ -44,6 +44,9 @@ namespace bear
   private:
     bool mouse_pressed_local
       ( input::mouse::mouse_code button, const universe::position_type& pos );
+    bool finger_action_local( const input::finger_event& event );
+
+    void toggle_music() const;
 
   }; // class system_music_toggle
 } // namespace bear

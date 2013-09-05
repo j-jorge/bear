@@ -74,6 +74,7 @@ namespace bear
     ( input::joystick::joy_code button, unsigned int joy_index );
     bool mouse_pressed( input::mouse::mouse_code button,
                         const claw::math::coordinate_2d<unsigned int>& pos );
+    bool finger_action( const input::finger_event& event );
 
     std::string get_string_from_vars( const std::string& name ) const;
 

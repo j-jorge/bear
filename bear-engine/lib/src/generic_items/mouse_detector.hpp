@@ -57,9 +57,9 @@ namespace bear
       ( input::mouse::mouse_code button,
         const claw::math::coordinate_2d<unsigned int>& pos );
 
-  private:
     bool finger_action( const input::finger_event& event );
 
+  private:
     void get_dependent_items
       ( std::list<bear::universe::physical_item*>& d ) const;
 
