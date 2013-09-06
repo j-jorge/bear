@@ -179,33 +179,42 @@ bear::engine::model_snapshot_tweener::get_mark_in_local_coordinates
 void bear::engine::model_snapshot_tweener::insert_tweener
 ( std::size_t id, const model_mark_placement& end, universe::time_type d )
 {
-  m_tweeners.insert
-  ( claw::tween::single_tweener
-    (m_placement[id].get_angle(), end.get_angle(), d,
-      boost::bind( &model_mark_placement::set_angle, &m_placement[id], _1 ),
-      m_placement[id].get_angle_easing() ) );
-  m_tweeners.insert
-  ( claw::tween::single_tweener
-    (m_placement[id].get_position().x, end.get_position().x, d,
-      boost::bind
-      ( &model_mark_placement::set_x_position, &m_placement[id], _1 ),
-      m_placement[id].get_x_position_easing() ) );
-  m_tweeners.insert
-  ( claw::tween::single_tweener
-    (m_placement[id].get_position().y, end.get_position().y, d,
-      boost::bind
-      ( &model_mark_placement::set_y_position, &m_placement[id], _1 ),
-      m_placement[id].get_y_position_easing() ) );
-  m_tweeners.insert
-  ( claw::tween::single_tweener
-    (m_placement[id].get_size().x, end.get_size().x, d,
-      boost::bind
-      ( &model_mark_placement::set_width, &m_placement[id], _1 ),
-      m_placement[id].get_width_easing() ) );
-  m_tweeners.insert
-  ( claw::tween::single_tweener
-    (m_placement[id].get_size().y, end.get_size().y, d,
-      boost::bind
-      ( &model_mark_placement::set_height, &m_placement[id], _1 ),
-      m_placement[id].get_height_easing() ) );
+  if ( m_placement[id].get_angle() != end.get_angle() )
+    m_tweeners.insert
+      ( claw::tween::single_tweener
+        (m_placement[id].get_angle(), end.get_angle(), d,
+         boost::bind( &model_mark_placement::set_angle, &m_placement[id], _1 ),
+         m_placement[id].get_angle_easing() ) );
+
+  if ( m_placement[id].get_position().x != end.get_position().x )
+    m_tweeners.insert
+      ( claw::tween::single_tweener
+        (m_placement[id].get_position().x, end.get_position().x, d,
+         boost::bind
+         ( &model_mark_placement::set_x_position, &m_placement[id], _1 ),
+         m_placement[id].get_x_position_easing() ) );
+
+  if ( m_placement[id].get_position().y != end.get_position().y )
+    m_tweeners.insert
+      ( claw::tween::single_tweener
+        (m_placement[id].get_position().y, end.get_position().y, d,
+         boost::bind
+         ( &model_mark_placement::set_y_position, &m_placement[id], _1 ),
+         m_placement[id].get_y_position_easing() ) );
+
+  if ( m_placement[id].get_size().x != end.get_size().x )
+    m_tweeners.insert
+      ( claw::tween::single_tweener
+        (m_placement[id].get_size().x, end.get_size().x, d,
+         boost::bind
+         ( &model_mark_placement::set_width, &m_placement[id], _1 ),
+         m_placement[id].get_width_easing() ) );
+
+  if ( m_placement[id].get_size().y != end.get_size().y )
+    m_tweeners.insert
+      ( claw::tween::single_tweener
+        (m_placement[id].get_size().y, end.get_size().y, d,
+         boost::bind
+         ( &model_mark_placement::set_height, &m_placement[id], _1 ),
+         m_placement[id].get_height_easing() ) );
 } // model_snapshot_tweener::insert_tweener()

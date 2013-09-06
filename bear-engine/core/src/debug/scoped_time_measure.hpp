@@ -48,14 +48,21 @@ namespace bear
   } // namespace debug
 } // namespace bear
 
+/**
+ * \brief Creates a scoped_time_measure.
+ * \param name The name of the timer.
+ */
+#define BEAR_SCOPED_TIMELOG( name )                                     \
+  bear::debug::scoped_time_measure                                      \
+  __FUNCTION__ ## __LINE__ ## _scoped_time_log( (name) )
+
 #ifdef BEAR_PROFILE
   /**
    * \brief Creates a scoped_time_measure.
    * \param name The name of the timer.
    */
   #define BEAR_CREATE_SCOPED_TIMELOG( name )                              \
-    bear::debug::scoped_time_measure                                      \
-    __FUNCTION__ ## __LINE__ ## _scoped_time_log( (name) )
+    BEAR_SCOPED_TIMELOG( name )
 
 #else // def BEAR_PROFILE
   #define BEAR_CREATE_SCOPED_TIMELOG( name )
