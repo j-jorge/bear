@@ -125,7 +125,7 @@ void bear::universe::world::add_static(physical_item* who)
   who->set_owner(*this);
 
   if ( who->is_global() )
-    m_global_static_items.push_front( who );
+    m_global_static_items.push_back( who );
 
   m_static_surfaces.insert( who );
 } // world::add_static()
@@ -943,7 +943,7 @@ void bear::universe::world::item_found_in_collision
   if ( a != 0 )
     {
       it->get_world_progress_structure().init();
-      colliding.push_front(it);
+      colliding.push_back(it);
 
       if ( !(item.is_phantom() || item.is_fixed() ) && it->can_move_items() )
         {
@@ -1039,8 +1039,8 @@ void bear::universe::world::stabilize_dependent_items( item_list& items ) const
 
   while ( !pending.empty() )
     {
-      physical_item* const src( pending.front() );
-      pending.pop_front();
+      physical_item* const src( pending.back() );
+      pending.pop_back();
       g.add_vertex(src);
 
       // get the item relatively to which I move
@@ -1058,9 +1058,10 @@ void bear::universe::world::stabilize_dependent_items( item_list& items ) const
       src->get_dependent_items(dep_items);
 
       // check if there is any new item in dep_items
-      for ( ; !dep_items.empty(); dep_items.pop_front() )
+      for ( item_list::const_iterator it = dep_items.begin();
+            it != dep_items.end(); ++it )
         {
-          physical_item* dep( dep_items.front() );
+          physical_item* dep( *it );
 
           if ( dep == NULL )
             claw::logger << claw::log_warning << "Dependent item is NULL"
@@ -1225,7 +1226,7 @@ bool bear::universe::world::item_in_regions
 void bear::universe::world::add(physical_item* const& who)
 {
   who->set_owner(*this);
-  m_entities.push_front( who );
+  m_entities.push_back( who );
 } // world::add()
 
 /*----------------------------------------------------------------------------*/
@@ -1268,7 +1269,7 @@ bear::universe::world::select_item( item_list& items, physical_item* it ) const
 
   if ( !it->get_world_progress_structure().is_selected() )
     {
-      items.push_front(it);
+      items.push_back(it);
       it->get_world_progress_structure().init();
       it->get_world_progress_structure().select();
       result = true;

@@ -18,7 +18,7 @@
 #include "universe/class_export.hpp"
 
 #include <claw/non_copyable.hpp>
-#include <list>
+#include <vector>
 
 namespace bear
 {
@@ -37,10 +37,10 @@ namespace bear
     {
     public:
       /** \brief A list of items, the same than universe::world. */
-      typedef std::list<physical_item*> item_list;
+      typedef std::vector<physical_item*> item_list;
 
       /** \brief A list of constant items. */
-      typedef std::list<const physical_item*> const_item_list;
+      typedef std::vector<const physical_item*> const_item_list;
 
     private:
       /** \brief Comparator to sort the neighbours in a collision by increasing

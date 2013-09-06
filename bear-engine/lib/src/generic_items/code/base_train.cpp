@@ -66,7 +66,7 @@ void bear::base_train::collision_as_base_train
 ( engine::base_item& that, universe::collision_info& info )
 {
   if ( info.get_collision_side() == universe::zone::top_zone )
-    m_list_items.push_front(that);
+    m_list_items.push_back(that);
 } // base_train::collision_as_base_train()
 
 /*----------------------------------------------------------------------------*/
@@ -103,15 +103,15 @@ void bear::base_train::update_item_positions
  * \param d (out) A list to which are added such items.
  */
 void bear::base_train::get_items
-( std::list<universe::physical_item*>& d ) const
+( std::vector<universe::physical_item*>& d ) const
 {
   item_list::const_iterator it;
 
   for( it=m_list_items.begin(); it!=m_list_items.end(); ++it )
     if ( *it != NULL )
-      d.push_front( it->get() );
+      d.push_back( it->get() );
 
   for( it=m_old_items.begin(); it!=m_old_items.end(); ++it )
     if ( *it != NULL )
-      d.push_front( it->get() );
+      d.push_back( it->get() );
 } // base_train::get_items()

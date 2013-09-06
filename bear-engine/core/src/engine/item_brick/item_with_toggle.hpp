@@ -86,7 +86,7 @@ namespace bear
       void toggle_off( base_item* activator );
 
       virtual
-      void get_dependent_items( std::list<universe::physical_item*>& d ) const;
+      void get_dependent_items( typename super::item_list& d ) const;
 
     protected:
       

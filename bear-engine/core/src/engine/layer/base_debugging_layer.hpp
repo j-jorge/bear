@@ -41,7 +41,7 @@ namespace bear
 
     protected:
       /** \brief The type of a list of items. */
-      typedef std::list<universe::physical_item*> item_list;
+      typedef std::vector<universe::physical_item*> item_list;
 
     public:
       base_debugging_layer( input::key_code toggle_key );

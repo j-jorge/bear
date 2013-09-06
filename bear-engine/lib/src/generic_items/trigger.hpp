@@ -79,7 +79,7 @@ namespace bear
     void add_toggle( base_item* t );
 
     virtual void get_dependent_items
-      ( std::list<universe::physical_item*>& d ) const;
+      ( universe::physical_item::item_list& d ) const;
 
   private:
     void on_trigger_on( base_item* activator );

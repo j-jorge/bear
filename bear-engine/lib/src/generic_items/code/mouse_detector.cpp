@@ -164,10 +164,10 @@ bool bear::mouse_detector::finger_action( const input::finger_event& event )
  * \param d (out) A list to which are added such items.
  */
 void bear::mouse_detector::get_dependent_items
-( std::list<bear::universe::physical_item*>& d ) const
+( universe::physical_item::item_list& d ) const
 {
   super::get_dependent_items(d);
 
   if ( m_toggle != (physical_item*)NULL )
-      d.push_back(m_toggle.get_item());
+    d.push_back(m_toggle.get_item());
 } // mouse_detector::get_dependent_items()

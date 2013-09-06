@@ -24,6 +24,7 @@
 #include <claw/math.hpp>
 
 #include <list>
+#include <vector>
 
 namespace bear
 {
@@ -53,6 +54,9 @@ namespace bear
       /** \brief Const iterator on the list of links. */
       typedef link_list_type::const_iterator const_link_iterator;
 
+      /** \brief The list of items passed to get_dependent_items(). */
+      typedef std::vector<physical_item*> item_list;
+
     private:
       /** \brief A list of handles. */
       typedef std::list<item_handle*> handle_list;
@@ -78,7 +82,7 @@ namespace bear
 
       time_type get_age() const;
 
-      virtual void get_dependent_items( std::list<physical_item*>& d ) const;
+      virtual void get_dependent_items( item_list& d ) const;
 
       virtual void time_step( time_type elapsed_time );
 

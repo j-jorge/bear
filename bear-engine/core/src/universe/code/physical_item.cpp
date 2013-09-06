@@ -203,8 +203,7 @@ bear::universe::time_type bear::universe::physical_item::get_age() const
  * \brief Get the items concerned by a progress/move of this one.
  * \param d (out) A list to which are added such items.
  */
-void bear::universe::physical_item::get_dependent_items
-( std::list<physical_item*>& d ) const
+void bear::universe::physical_item::get_dependent_items( item_list& d ) const
 {
   // nothing to do
 } // physical_item::get_dependent_items()

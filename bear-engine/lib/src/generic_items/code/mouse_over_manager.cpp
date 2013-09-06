@@ -169,7 +169,7 @@ void bear::mouse_over_manager::get_visual
  * \param d (out) A list to which are added such items.
  */
 void bear::mouse_over_manager::get_dependent_items
-( std::list<bear::universe::physical_item*>& d ) const
+( universe::physical_item::item_list& d ) const
 {
   super::get_dependent_items(d);
 

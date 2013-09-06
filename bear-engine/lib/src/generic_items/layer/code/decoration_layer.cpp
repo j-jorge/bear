@@ -39,15 +39,15 @@ bear::decoration_layer::decoration_layer
  */
 bear::decoration_layer::~decoration_layer()
 {
-  std::list<engine::base_item*> items;
-  std::list<engine::base_item*>::const_iterator it;
+  item_map::item_list items;
+  item_map::item_list::const_iterator it;
 
   m_items.get_all_unique(items);
 
   for (it=items.begin(); it!=items.end(); ++it)
     delete *it;
 
-  std::list<engine::base_item*>::const_iterator it_g;
+  item_map::item_list::const_iterator it_g;
 
   for(it_g=m_global_items.begin(); it_g!=m_global_items.end(); ++it_g)
     delete *it_g;
@@ -71,11 +71,11 @@ void bear::decoration_layer::start()
 void bear::decoration_layer::progress
 ( const region_type& active_area, universe::time_type elapsed_time  )
 {
-  std::list<engine::base_item*> items;
+  item_map::item_list items;
 
   m_items.get_areas_unique( active_area.begin(), active_area.end(), items );
 
-  std::list<engine::base_item*>::const_iterator it;
+  item_map::item_list::const_iterator it;
 
   for (it=items.begin(); it!=items.end(); ++it)
     (*it)->progress( elapsed_time );
@@ -111,11 +111,11 @@ void bear::decoration_layer::do_get_visual
 ( std::list<engine::scene_visual>& visuals,
   const universe::rectangle_type& visible_area ) const
 {
-  std::list<engine::base_item*> items;
+  item_map::item_list items;
 
   m_items.get_area_unique( visible_area, items );
 
-  std::list<engine::base_item*>::const_iterator it;
+  item_map::item_list::const_iterator it;
 
   for (it=items.begin(); it!=items.end(); ++it)
     visuals.push_back( (*it)->get_visual() );
@@ -139,7 +139,7 @@ void bear::decoration_layer::do_get_visual
 void bear::decoration_layer::do_add_item( engine::base_item& item )
 {
   if ( item.is_global() )
-    m_global_items.push_front(&item);
+    m_global_items.push_back(&item);
   else
     m_items.insert( &item );
 } // decoration_layer::do_add_item()

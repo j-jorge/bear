@@ -33,7 +33,7 @@ namespace bear
   public:
     /** \brief The type of the list in which we store the items depending on the
         base_train. */
-    typedef std::list<universe::item_handle> item_list;
+    typedef std::vector<universe::item_handle> item_list;
 
   protected:
     void init(const universe::position_type& position);
@@ -44,7 +44,7 @@ namespace bear
     void update_item_positions
     ( const universe::position_type& position, 
       const universe::speed_type& speed );
-    void get_items( std::list<universe::physical_item*>& d ) const;
+    void get_items( std::vector<universe::physical_item*>& d ) const;
 
   private:
     /** \brief The list of items on the platform. */

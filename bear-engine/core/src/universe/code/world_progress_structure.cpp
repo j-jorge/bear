@@ -276,7 +276,7 @@ double bear::universe::world_progress_structure::get_collision_area() const
 void bear::universe::world_progress_structure::meet( physical_item* item )
 {
   if ( &m_item < item )
-    m_already_met.push_front(item);
+    m_already_met.push_back(item);
   else
     item->get_world_progress_structure().meet(&m_item);
 } // world_progress_structure::meet()
@@ -306,10 +306,10 @@ bear::universe::world_progress_structure::pick_next_neighbor()
 {
   physical_item* result(NULL);
 
-  const item_list::iterator eit( m_collision_neighborhood.end() );
-
   while ( (result==NULL) && !m_collision_neighborhood.empty() )
     {
+      const item_list::iterator eit( m_collision_neighborhood.end() );
+
       item_list::iterator it = std::max_element
         ( m_collision_neighborhood.begin(), eit, lt_collision(m_item) );
 

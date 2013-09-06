@@ -140,7 +140,7 @@ namespace bear
       const universe::position_type& previous_pos,
       const universe::position_type& next_pos,
       universe::coordinate_type margin ) const;
-    void get_dependent_items( std::list<physical_item*>& d ) const;
+    void get_dependent_items( universe::physical_item::item_list& d ) const;
     
     void apply_angle_to
     ( engine::base_item& that, const universe::collision_info& info) const;

@@ -47,7 +47,7 @@ void bear::reflecting_decoration::progress( universe::time_type elapsed_time )
 
   m_items_list.clear();
 
-  std::list<universe::physical_item*> items;
+  universe::world::item_list items;
 
   if ( get_layer().has_world() )
     {
@@ -57,7 +57,7 @@ void bear::reflecting_decoration::progress( universe::time_type elapsed_time )
       get_layer().get_world().pick_items_in_rectangle
         ( items, get_bounding_box(), filter);
 
-      std::list<universe::physical_item*>::iterator it;
+      universe::world::item_list::iterator it;
       for ( it = items.begin(); it != items.end(); ++it )
         {
           engine::base_item* item = dynamic_cast<engine::base_item*>(*it);

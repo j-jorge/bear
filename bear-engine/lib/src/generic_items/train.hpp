@@ -48,7 +48,7 @@ namespace bear
     void move( universe::time_type elapsed_time );
 
   private:
-    void get_dependent_items( std::list<physical_item*>& d ) const;
+    void get_dependent_items( universe::physical_item::item_list& d ) const;
   }; // class train
 } // namespace bear
 

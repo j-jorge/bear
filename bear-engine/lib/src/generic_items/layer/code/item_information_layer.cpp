@@ -474,11 +474,11 @@ bear::universe::physical_item* bear::item_information_layer::find_item
         (result == NULL) && (it!=get_level().layer_end()); ++it )
     if ( it->has_world() )
       {
-        std::list<universe::physical_item*> items;
+        universe::world::item_list items;
 
         it->get_world().pick_items_by_position( items, pos );
 
-        std::list<universe::physical_item*>::const_iterator it;
+        universe::world::item_list::const_iterator it;
 
         for ( it=items.begin(); (it!=items.end()) && (result==NULL); ++it )
           if ( !is_handled(*it) )

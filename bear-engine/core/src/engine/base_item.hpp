@@ -195,7 +195,7 @@ namespace bear
 
       void kill_when_dying( base_item& item );
       virtual void get_dependent_items
-        ( std::list<universe::physical_item*>& d ) const;
+        ( universe::physical_item::item_list& d ) const;
       
     protected:
       void set_always_displayed(bool b);

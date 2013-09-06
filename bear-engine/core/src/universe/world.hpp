@@ -55,7 +55,7 @@ namespace bear
       typedef static_map<physical_item*> item_map;
 
       /** \brief A list of items. */
-      typedef std::list<physical_item*> item_list;
+      typedef std::vector<physical_item*> item_list;
 
     public:
       world( const size_box_type& size );

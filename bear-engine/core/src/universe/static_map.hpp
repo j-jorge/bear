@@ -53,11 +53,11 @@ namespace bear
       typedef rectangle_type area_type;
 
       /** \brief A list of items, can contains duplicates. */
-      typedef std::list<item_type> item_list;
+      typedef std::vector<item_type> item_list;
 
     private:
       /** \brief Items in a cell. */
-      typedef std::list<item_type> item_box;
+      typedef std::vector<item_type> item_box;
 
       /** \brief A column of the map. */
       typedef std::vector<item_box> column;

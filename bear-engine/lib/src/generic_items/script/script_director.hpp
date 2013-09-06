@@ -63,7 +63,7 @@ namespace bear
     bool set_real_field( const std::string& name, double value );
     bool set_bool_field( const std::string& name, bool value );
 
-    void get_dependent_items( std::list<universe::physical_item*>& d ) const;
+    void get_dependent_items( universe::physical_item::item_list& d ) const;
 
   protected:
     void on_script_started();

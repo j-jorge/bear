@@ -125,7 +125,7 @@ bool bear::script_director::set_bool_field
  * \param d (out) A list to which are added such items.
  */
 void bear::script_director::get_dependent_items
-( std::list<universe::physical_item*>& d ) const
+( universe::physical_item::item_list& d ) const
 {
   engine::script_context::actor_item_map_const_iterator_type it;
 

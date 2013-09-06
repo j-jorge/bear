@@ -612,16 +612,17 @@ bool bear::bridge::check_item
  * \brief Get the items concerned by a progress/move of this one.
  * \param d (out) A list to which are added such items.
  */
-void bear::bridge::get_dependent_items( std::list<physical_item*>& d ) const
+void bear::bridge::get_dependent_items
+( universe::physical_item::item_list& d ) const
 {
   items_list_const_iterator it;
   
   for( it=m_items.begin(); it!=m_items.end(); ++it )
     if ( it->get_item().get() != NULL ) 
-      d.push_front( it->get_item().get() );
+      d.push_back( it->get_item().get() );
 
-  d.push_front(m_top_left_ref);
-  d.push_front(m_top_right_ref);
+  d.push_back(m_top_left_ref);
+  d.push_back(m_top_right_ref);
 } // bridge::get_dependent_items()
 
 /*----------------------------------------------------------------------------*/

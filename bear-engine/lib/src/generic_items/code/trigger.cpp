@@ -152,7 +152,7 @@ void bear::trigger::add_toggle( base_item* t )
  * \param d (out) The itemps depending on this item.
  */
 void bear::trigger::get_dependent_items
-( std::list<universe::physical_item*>& d ) const
+( universe::physical_item::item_list& d ) const
 {
   super::get_dependent_items( d );
 

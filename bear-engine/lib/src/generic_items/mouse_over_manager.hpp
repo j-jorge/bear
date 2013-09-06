@@ -64,7 +64,7 @@ namespace bear
     void get_visual( std::list<bear::engine::scene_visual>& visuals ) const;
     bool mouse_move( const claw::math::coordinate_2d<unsigned int>& pos );
     void get_dependent_items
-      ( std::list<bear::universe::physical_item*>& d ) const;
+      ( universe::physical_item::item_list& d ) const;
     void play_sound( handle_type item );
 
   private:

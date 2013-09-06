@@ -77,7 +77,7 @@ void bear::universe::static_map<ItemType>::insert( const item_type& item )
 
   for ( int col = left; col <= right; ++col )
     for ( int line = bottom; line <= top; ++line )
-      m_map[col][line].push_front(item);
+      m_map[col][line].push_back(item);
 } // static_map::insert()
 
 /*----------------------------------------------------------------------------*/
@@ -128,7 +128,7 @@ void bear::universe::static_map<ItemType>::get_area_unique
   item_list result;
   get_area( area, result );
   make_set( result );
-  items.splice( items.end(), result );
+  items.insert( items.end(), result.begin(), result.end() );
 } // static_map::get_area()
 
 /*----------------------------------------------------------------------------*/
@@ -180,7 +180,7 @@ bear::universe::static_map<ItemType>::get_all_unique( item_list& items ) const
       result.insert( result.end(), m_map[x][y].begin(), m_map[x][y].end() );
 
   make_set(result);
-  items.splice( items.end(), result );
+  items.insert( items.end(), result.begin(), result.end() );
 } // static_map::get_all()
 
 /*----------------------------------------------------------------------------*/
@@ -251,12 +251,8 @@ template<class ItemType>
 void bear::universe::static_map<ItemType>::make_set
 ( item_list& items ) const
 {
-  item_list result;
-  std::set<ItemType> seen;
-
-  for ( ; !items.empty(); items.pop_front() )
-    if ( seen.insert(items.front()).second )
-      result.push_back(items.front());
-
+  const std::set<ItemType> unique( items.begin(), items.end() );
+  item_list result( unique.begin(), unique.end() );
+  
   items.swap(result);
 } // static_map::make_set()

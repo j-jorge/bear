@@ -781,27 +781,10 @@ void bear::engine::game_local_client::one_step_beyond()
 
   if ( dt >= m_time_step )
     {
-      const systime::milliseconds_type step_begin_date
-        ( systime::get_date_ms() );
       progress( current_time, dt, time_range, time_scale );
-
-      const systime::milliseconds_type progress_end_date
-        ( systime::get_date_ms() );
-
       render();
 
       current_time = systime::get_date_ms();
-
-      if ( current_time - step_begin_date > m_time_step )
-        claw::logger << claw::log_verbose
-                     << "OVERLOAD: "
-                     << (current_time - step_begin_date)
-                     << " spent, " << m_time_step << " allowed, "
-                     << int( (progress_end_date - step_begin_date) * 100
-                             / m_time_step ) << "% in progress, "
-                     << int( (current_time - progress_end_date) * 100
-                             / m_time_step ) << "% in render"
-                     << std::endl;
     }
   
   if ( current_time < m_last_progress + m_time_step )

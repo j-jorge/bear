@@ -915,7 +915,7 @@ void bear::engine::base_item::kill_when_dying( base_item& item )
  * \param d (out) The items to update with this one.
  */
 void bear::engine::base_item::get_dependent_items
-( std::list<universe::physical_item*>& d ) const
+( universe::physical_item::item_list& d ) const
 {
   super::get_dependent_items(d);
 

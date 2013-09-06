@@ -33,6 +33,10 @@ namespace bear
   class GENERIC_ITEMS_EXPORT decoration_layer:
     public engine::layer
   {
+  private:
+    /** \brief The type of the structure containing the items. */
+    typedef universe::static_map<engine::base_item*> item_map;
+
   public:
     decoration_layer( const universe::size_box_type& size );
     virtual ~decoration_layer();
@@ -54,10 +58,10 @@ namespace bear
 
   private:
     /** \brief All the decorations. */
-    universe::static_map<engine::base_item*> m_items;
+    item_map m_items;
 
     /** \brief All global items. */
-    std::list<engine::base_item*> m_global_items;
+    std::vector<engine::base_item*> m_global_items;
 
   }; // class decoration_layer
 } // namespace bear

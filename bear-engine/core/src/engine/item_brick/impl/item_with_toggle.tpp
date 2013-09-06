@@ -304,7 +304,7 @@ void bear::engine::item_with_toggle<Base>::toggle_off( base_item* activator )
  */
 template<class Base>
 void bear::engine::item_with_toggle<Base>::get_dependent_items
-( std::list<universe::physical_item*>& d ) const
+( typename super::item_list& d ) const
 {
   handle_list::const_iterator it;
 

@@ -94,7 +94,8 @@ void bear::train::move( universe::time_type elapsed_time )
  * \brief Get the items concerned by a progress/move of this one.
  * \param d (out) A list to which are added such items.
  */
-void bear::train::get_dependent_items( std::list<physical_item*>& d ) const
+void bear::train::get_dependent_items
+( universe::physical_item::item_list& d ) const
 {
   super::get_dependent_items(d);
 
