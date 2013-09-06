@@ -804,8 +804,8 @@ void bear::engine::game_local_client::one_step_beyond()
                      << std::endl;
     }
   
-  //if ( current_time < m_last_progress + m_time_step )
-  //  systime::sleep( m_last_progress + m_time_step - current_time );
+  if ( current_time < m_last_progress + m_time_step )
+    systime::sleep( m_last_progress + m_time_step - current_time );
 } // game_local_client::one_step_beyond()
 
 /*----------------------------------------------------------------------------*/
@@ -1011,20 +1011,20 @@ void bear::engine::game_local_client::init_environment() const
  */
 void bear::engine::game_local_client::close_environment() const
 {
-  claw::logger << claw::log_verbose << "Closing screen environment."
+  claw::logger << claw::log_verbose << "Closing sound environment."
                << std::endl;
 
-  visual::screen::release();
+  audio::sound_manager::release();
 
   claw::logger << claw::log_verbose << "Closing input environment."
                << std::endl;
 
   input::system::release();
 
-  claw::logger << claw::log_verbose << "Closing sound environment."
+  claw::logger << claw::log_verbose << "Closing screen environment."
                << std::endl;
 
-  audio::sound_manager::release();
+  visual::screen::release();
 
   claw::socket_traits::release();
 } // game_local_client::close_environment()

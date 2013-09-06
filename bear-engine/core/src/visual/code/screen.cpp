@@ -260,19 +260,9 @@ bool bear::visual::screen::end_render()
 {
   CLAW_PRECOND(m_mode == SCREEN_RENDER);
 
-  systime::milliseconds_type start( systime::get_date_ms() );
   render_elements();
 
-  systime::milliseconds_type elements_finish( systime::get_date_ms() );
-
   bool result = m_impl->end_render();
-
-  systime::milliseconds_type finish( systime::get_date_ms() );
-  claw::logger << claw::log_verbose
-               << "Elements in " << (elements_finish - start)
-               << " ms, end in " << (finish - elements_finish)
-               << " ms."
-               << std::endl;
 
   m_mode = SCREEN_IDLE;
 

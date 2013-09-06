@@ -27,7 +27,11 @@
  */
 unsigned int bear::input::joystick::number_of_joysticks()
 {
+#ifdef __ANDROID__
+  return 0;
+#else
   return SDL_NumJoysticks();
+#endif
 } // joystick::number_of_joysticks()
 
 /*----------------------------------------------------------------------------*/

@@ -54,8 +54,8 @@ void bear::input::system::release()
 {
   system::get_instance().clear();
 
-  SDL_QuitSubSystem(SDL_INIT_VIDEO);
   SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
+  SDL_QuitSubSystem(SDL_INIT_VIDEO);
 } // system::release()
 
 /*----------------------------------------------------------------------------*/
