@@ -212,7 +212,6 @@ void bear::engine::level::shot
               std::list<scene_visual> visuals;
 
               m_layers[i]->get_visual( visuals, active );
-              visuals.sort( scene_visual::z_position_compare() );
 
               render( visuals, area.bottom_left(), screen, ratio, ratio );
             }
