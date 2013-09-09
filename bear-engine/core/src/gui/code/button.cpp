@@ -168,7 +168,7 @@ void bear::gui::button::adjust_component_positions()
   m_icon->set_left( 0 );
   m_icon->set_bottom( ( h - m_icon->height() ) / 2 );
 
-  if ( m_text->get_text().empty() )
+  if ( m_text->get_text().empty() || ( m_icon->width() == 0) )
     m_text->set_left( 0 );
   else
     m_text->set_left( m_icon->right() + m_margin );
