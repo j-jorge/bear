@@ -15,6 +15,8 @@
 
 #include "debug/timelog.hpp"
 
+#include <claw/logger.hpp>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -33,7 +35,13 @@ bear::debug::scoped_time_measure::scoped_time_measure
  */
 bear::debug::scoped_time_measure::~scoped_time_measure()
 {
+#ifdef __ANDROID__
+  claw::logger << claw::log_verbose << "[PROF]" << m_name << '\t'
+                        << systime::get_date_ms() - m_start_date
+                        << '\n';
+#else
   timelog::get_output() << m_name << '\t'
                         << systime::get_date_ms() - m_start_date
                         << '\n';
+#endif
 } // scoped_time_measure::~scoped_time_measure()
