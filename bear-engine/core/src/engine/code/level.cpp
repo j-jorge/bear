@@ -643,7 +643,15 @@ void bear::engine::level::render_layers
 
       universe::rectangle_type area( view );
       get_layer_area(i, area);   // the camera scaled in the layer
-      render( visuals, area.bottom_left(), screen, r_x, r_y );
+
+      const double layer_r_x
+        ( std::max
+          ( r_x, (double)screen.get_size().x / m_layers[i]->get_size().x ) );
+      const double layer_r_y
+        ( std::max
+          ( r_y, (double)screen.get_size().y / m_layers[i]->get_size().y ) );
+
+      render( visuals, area.bottom_left(), screen, layer_r_x, layer_r_y );
     }
 } // level::render_layers()
 
