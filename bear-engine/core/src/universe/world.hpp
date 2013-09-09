@@ -190,6 +190,9 @@ namespace bear
       bool create_neighborhood
         ( physical_item& item, const item_list& potential_collision ) const;
 
+      bool interesting_collision
+        ( const physical_item& a, const physical_item& b ) const;
+
     private:
       /** \brief Size of the parts of m_static_surfaces. */
       static const unsigned int s_map_compression;

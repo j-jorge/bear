@@ -126,6 +126,8 @@ namespace bear
       bool default_collision
         ( const collision_info& info, const collision_align_policy& policy );
 
+      bool interesting_collision( const physical_item& that ) const;
+
     protected:
       void default_move( time_type elapsed_time );
 
@@ -179,6 +181,8 @@ namespace bear
       void remove_all_handles() const;
 
       coordinate_type get_align_epsilon() const;
+
+      virtual bool do_interesting_collision( const physical_item& that ) const;
 
       // not implemented
       physical_item& operator=(const physical_item&);

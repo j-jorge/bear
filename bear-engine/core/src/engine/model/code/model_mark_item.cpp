@@ -73,7 +73,7 @@ bear::engine::model_mark_item::set_collision_function( const std::string& f )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Process a collision with an other item.
+ * \brief Process a collision with another item.
  * \param that The other item.
  * \param info Some informations about the collision.
  */
@@ -83,9 +83,23 @@ void bear::engine::model_mark_item::collision
   if ( (&that != m_model_item) && (m_model_item != (base_item*)NULL) )
     {
       const model_mark_item* m = dynamic_cast<model_mark_item*>(&that);
+  
       if ( (m == NULL) || (m->m_model_item != m_model_item) )
         m_model_item->execute
           ( m_collision_function,
             text_interface::auto_converter_maker(this, &that, &info) );
     }
 } // model_mark_item::collision()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if it is interesting to process a collision against a given
+ *        item.
+ * \param that The other item.
+ */
+bool bear::engine::model_mark_item::do_interesting_collision
+( const universe::physical_item& that ) const
+{
+  return ( m_model_item != handle_type(NULL) )
+    && ( &that != m_model_item.get() );
+} // model_mark_item::do_interesting_collision()

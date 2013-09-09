@@ -908,8 +908,7 @@ void bear::universe::world::search_items_for_collision
   m_static_surfaces.get_area_unique( r, static_items );
 
   for( its=static_items.begin(); its!=static_items.end(); ++its)
-    if ( !(*its)->is_artificial()
-         && !item.get_world_progress_structure().has_met(*its) )
+    if ( interesting_collision( item, **its ) )
       item_found_in_collision( item, *its, colliding, mass, area );
 
   item_list::const_iterator it;
@@ -917,8 +916,7 @@ void bear::universe::world::search_items_for_collision
   // add living item
   for ( it=potential_collision.begin(); it!=potential_collision.end(); ++it )
     if ( (*it!=&item) && (*it)->get_bounding_box().intersects(r)
-         && !item.get_world_progress_structure().has_met(*it)
-         && !(*it)->is_artificial() )
+         && interesting_collision( item, **it ) )
       item_found_in_collision( item, *it, colliding, mass, area );
 } // world::search_items_for_collision()
 
@@ -1354,3 +1352,20 @@ bool bear::universe::world::create_neighborhood
 
   return result;
 } // world::create_neighborhood()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if it is interesting to process a collision against two given
+ *        items. The function returns true if one of the items is not interested
+ *        by the collision.
+ * \param a The first item.
+ * \param b The other item.
+ */
+bool bear::universe::world::interesting_collision
+( const physical_item& a, const physical_item& b ) const
+{
+  return !b.is_artificial()
+    && !a.get_world_progress_structure().has_met(&b)
+    && a.interesting_collision( b )
+    && b.interesting_collision( a );
+} // world::interesting_collision()

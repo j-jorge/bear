@@ -533,6 +533,18 @@ bool bear::universe::physical_item::default_collision
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells if it is interesting to process a collision against a given
+ *        item.
+ * \param that The other item.
+ */
+bool bear::universe::physical_item::interesting_collision
+( const physical_item& that ) const
+{
+  return do_interesting_collision( that );
+} // physical_item::interesting_collision()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Apply the default movement of the item (forced_movement or
  *        acceleration and speed).
  * \param elapsed_time Elasped time since the last progress.
@@ -1038,3 +1050,15 @@ bear::universe::physical_item::get_align_epsilon() const
   else
     return 0;
 } // physical_item::get_align_epsilon()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if it is interesting to process a collision against a given
+ *        item.
+ * \param that The other item.
+ */
+bool bear::universe::physical_item::do_interesting_collision
+( const physical_item& that ) const
+{
+  return true;
+} // physical_item::do_interesting_collision()

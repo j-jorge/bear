@@ -49,6 +49,8 @@ namespace bear
 
     private:
       void collision( base_item& that, universe::collision_info& info );
+      bool do_interesting_collision
+        ( const universe::physical_item& that ) const;
 
     private:
       /** \brief The model object owning this mark object. */

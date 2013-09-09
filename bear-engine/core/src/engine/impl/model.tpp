@@ -978,6 +978,12 @@ void bear::engine::model<Base>::update_mark_items_positions()
       item.set_size( m.get_size() );
       item.set_center_of_mass( m.get_position() );
       item.set_z_position( m.get_depth_position() );
+
+      const bool empty_mark( (m.get_size().x == 0) || (m.get_size().y == 0) );
+
+      item.set_can_move_items( !empty_mark && this->can_move_items() );
+      item.set_artificial( empty_mark || this->is_artificial() );
+      item.set_weak_collisions( empty_mark || this->has_weak_collisions() );
     }
 } // model::update_mark_item_positions()
 
