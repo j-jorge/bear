@@ -73,6 +73,7 @@ void bear::visual::gl_screen::initialize()
  */
 void bear::visual::gl_screen::release()
 {
+  gl_renderer::get_instance().stop();
   SDL_QuitSubSystem(SDL_INIT_VIDEO);
 } // gl_screen::release()
 
@@ -195,10 +196,10 @@ bool bear::visual::gl_screen::end_render()
   if ( is_closed() )
     {
       gl_renderer::get_instance().stop();
-      return true;
+      return false;
     }
   else
-    return false;
+    return true;
 } // gl_screen::end_render()
 
 /*----------------------------------------------------------------------------*/
