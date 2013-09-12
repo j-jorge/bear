@@ -310,6 +310,9 @@ void bear::visual::gl_renderer::render_states()
     
   boost::mutex::scoped_lock states_lock( m_mutex.gl_set_states );
 
+  if ( m_states.empty() )
+    return;
+
   make_current();
 
   resize_view();
