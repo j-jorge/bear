@@ -13,8 +13,8 @@
  */
 #include "visual/gl_screen.hpp"
 
-#include "visual/gl_error.hpp"
 #include "visual/gl_image.hpp"
+#include "visual/gl_renderer.hpp"
 #include "visual/gl_shader_program.hpp"
 #include "visual/sdl_error.hpp"
 #include "visual/shader_program.hpp"
@@ -86,45 +86,10 @@ void bear::visual::gl_screen::release()
 bear::visual::gl_screen::gl_screen
 ( const claw::math::coordinate_2d<unsigned int>& size,
   const std::string& title, bool full )
-  : m_window(NULL), m_size(size), m_screenshot_buffer(NULL), m_title(title)
 {
-  fullscreen(full);
-  m_need_restoration = false;
-
-  glEnable(GL_TEXTURE_2D);
-  VISUAL_GL_ERROR_THROW();
-  
-  glEnable(GL_BLEND);
-  VISUAL_GL_ERROR_THROW();
-
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  VISUAL_GL_ERROR_THROW();
+  gl_renderer::get_instance().set_video_mode( size, full );
+  gl_renderer::get_instance().set_title( title );
 } // gl_screen::gl_screen() [constructor]
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Destructor.
- */
-bear::visual::gl_screen::~gl_screen()
-{
-  delete[] m_screenshot_buffer;
-} // gl_screen::~gl_screen)
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets a new dimension for the resulting projection to match the size of
- *        the screen.
- */
-void bear::visual::gl_screen::resize_view()
-{
-  glViewport( 0, 0, m_window_size.x, m_window_size.y );
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho( 0, m_size.x, 0, m_size.y, -1, 0 );
-  glMatrixMode(GL_MODELVIEW);
-
-  VISUAL_GL_ERROR_THROW();
-} // gl_screen::resize_view()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -133,7 +98,7 @@ void bear::visual::gl_screen::resize_view()
  */
 void bear::visual::gl_screen::fullscreen( bool b )
 {
-  set_video_mode(m_size.x, m_size.y, b);
+  //  gl_renderer::get_instance().set_fullscreen(b);
 } // gl_screen::fullscreen()
 
 /*----------------------------------------------------------------------------*/
@@ -143,7 +108,7 @@ void bear::visual::gl_screen::fullscreen( bool b )
 claw::math::coordinate_2d<unsigned int>
 bear::visual::gl_screen::get_size() const
 {
-  return m_size;
+  return gl_renderer::get_instance().get_size();
 } // gl_screen::get_size()
 
 /*----------------------------------------------------------------------------*/
@@ -153,12 +118,7 @@ bear::visual::gl_screen::get_size() const
 claw::math::coordinate_2d<unsigned int>
 bear::visual::gl_screen::get_container_size() const
 {
-  int w;
-  int h;
-
-  SDL_GetWindowSize( m_window, &w, &h );
-
-  return claw::math::coordinate_2d<unsigned int>( w, h );
+  return gl_renderer::get_instance().get_container_size();
 } // gl_screen::get_container_size()
 
 /*----------------------------------------------------------------------------*/
@@ -167,7 +127,7 @@ bear::visual::gl_screen::get_container_size() const
  */
 bool bear::visual::gl_screen::need_restoration() const
 {
-  return m_need_restoration;
+  return false;
 } // gl_screen::need_restoration()
 
 /*----------------------------------------------------------------------------*/
@@ -177,7 +137,6 @@ bool bear::visual::gl_screen::need_restoration() const
 void bear::visual::gl_screen::set_restored()
 {
   claw::logger << claw::log_verbose << "Screen is restored." << std::endl;
-  m_need_restoration = false;
 } // gl_screen::set_restored()
 
 /*----------------------------------------------------------------------------*/
@@ -187,13 +146,7 @@ void bear::visual::gl_screen::set_restored()
  */
 void bear::visual::gl_screen::set_background_color( const color_type& c )
 {
-  const GLfloat max
-    ( std::numeric_limits<claw::graphic::rgb_pixel::component_type>::max() );
-
-  glClearColor( (GLfloat)c.components.red / max,
-                (GLfloat)c.components.green / max,
-                (GLfloat)c.components.blue / max,
-                (GLfloat)c.components.alpha / max );
+  gl_renderer::get_instance().set_background_color( c );
 } // gl_screen::set_background_color()
 
 /*----------------------------------------------------------------------------*/
@@ -202,19 +155,7 @@ void bear::visual::gl_screen::set_background_color( const color_type& c )
  */
 bear::visual::color_type bear::visual::gl_screen::get_background_color() const
 {
-  const GLfloat max
-    ( std::numeric_limits<claw::graphic::rgb_pixel::component_type>::max() );
-
-  GLfloat c[4];
-  glGetFloatv( GL_COLOR_CLEAR_VALUE, c );
-
-  color_type result;
-  result.components.red = max * c[0];
-  result.components.green = max * c[1];
-  result.components.blue = max * c[2];
-  result.components.alpha = max * c[3];
-
-  return result;
+  return gl_renderer::get_instance().get_background_color();
 } // gl_screen::get_background_color()
 
 /*----------------------------------------------------------------------------*/
@@ -223,14 +164,8 @@ bear::visual::color_type bear::visual::gl_screen::get_background_color() const
  */
 void bear::visual::gl_screen::begin_render()
 {
-  VISUAL_GL_ERROR_THROW();
-
   while ( !m_shader.empty() )
     pop_shader();
-
-  glClear( GL_COLOR_BUFFER_BIT );
-
-  resize_view();
 } // gl_screen::begin_render()
 
 /*----------------------------------------------------------------------------*/
@@ -252,17 +187,18 @@ void bear::visual::gl_screen::render
  */
 bool bear::visual::gl_screen::end_render()
 {
-  for ( std::size_t i(0); i!=m_gl_state.size(); ++i )
-    m_gl_state[i].draw();
+  claw::logger << claw::log_verbose
+               << "Rendering states " << m_gl_state.size()
+               << std::endl;
+  gl_renderer::get_instance().set_gl_states( m_gl_state );
 
-  VISUAL_GL_ERROR_THROW();
-
-  SDL_GL_SwapWindow( m_window );
-  VISUAL_GL_ERROR_THROW();
-
-  m_gl_state.clear();
-
-  return !is_closed();
+  if ( is_closed() )
+    {
+      gl_renderer::get_instance().stop();
+      return true;
+    }
+  else
+    return false;
 } // gl_screen::end_render()
 
 /*----------------------------------------------------------------------------*/
@@ -334,26 +270,7 @@ void bear::visual::gl_screen::pop_shader()
  */
 void bear::visual::gl_screen::shot( claw::graphic::image& img ) const
 {
-  GLint p[4];
-  glGetIntegerv( GL_VIEWPORT, p );
-  const unsigned int w = p[2];
-  const unsigned int h = p[3];
-
-  img.set_size( w, h );
-  const std::size_t pixels_count(w * h);
-
-  glReadPixels( 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, m_screenshot_buffer );
-  VISUAL_GL_ERROR_THROW();
-
-  for ( claw::graphic::rgba_pixel_8* it=m_screenshot_buffer;
-        it!=m_screenshot_buffer + pixels_count;
-        ++it )
-    it->components.alpha = 255;
-
-  for (unsigned int y=0; y!=h; ++y)
-    std::copy( m_screenshot_buffer + y * w,
-               m_screenshot_buffer + (y+1) * w,
-               img[h - y - 1].begin() );
+  gl_renderer::get_instance().shot( img );
 } // gl_screen::shot()
 
 /*----------------------------------------------------------------------------*/
@@ -530,203 +447,6 @@ bear::visual::position_type bear::visual::gl_screen::rotate
   result.rotate(center, a);
   return result;
 } // gl_screen::rotate()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Set the size of the screen.
- * \param w The width of the screen.
- * \param h The height of the screen.
- * \param f Tell if we want a fullscreen mode.
- */
-void bear::visual::gl_screen::set_video_mode
-( unsigned int w, unsigned int h, bool f )
-{
-  const screen_size_type best_size( get_best_screen_size(w, h, f) );
-
-  if ( m_window != NULL )
-    {
-      const bool is_fullscreen =
-        ( SDL_GetWindowFlags(m_window) & SDL_WINDOW_FULLSCREEN ) != 0;
-      const claw::math::coordinate_2d<unsigned int> size
-        ( get_container_size() );
-
-      if ( ( is_fullscreen == f ) && (w == size.x) && (h == size.y) )
-        return;
-    }
-
-#ifdef _WIN32
-  release();
-  initialize();
-#endif
-
-  Uint32 flags = SDL_WINDOW_OPENGL;
-
-  if (f)
-    flags |= SDL_WINDOW_FULLSCREEN;
-
-  claw::logger << "Setting video mode to " << best_size.x << 'x' << best_size.y
-               << ' ' << (f ? "fullscreen" : "windowed") << std::endl;
-
-  SDL_EventState( SDL_QUIT, SDL_DISABLE );
-
-  m_window =
-    SDL_CreateWindow
-    ( m_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-      best_size.x, best_size.y, flags );
-
-  if ( m_window == NULL )
-    VISUAL_SDL_ERROR_THROW();
-
-  if ( SDL_GL_CreateContext( m_window ) == NULL )
-    VISUAL_SDL_ERROR_THROW();
-
-  m_window_size = best_size;
-
-  delete[] m_screenshot_buffer;
-  m_screenshot_buffer =
-    new claw::graphic::rgba_pixel_8[ best_size.x * best_size.y ];
-
-  SDL_ShowCursor(0);
-
-  glClearColor(0.0, 0.0, 0.0, 0.0);
-
-#ifdef _WIN32
-  const GLenum err = glewInit();
-
-  if ( err != GLEW_OK )
-    claw::logger << claw::log_error << "Failed to initialize Glew: "
-                 << glewGetErrorString(err) << std::endl;
-  glEnable(GL_TEXTURE_2D);
-  VISUAL_GL_ERROR_THROW();
-
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  VISUAL_GL_ERROR_THROW();
-
-  claw::logger << claw::log_verbose << "Screen needs restoration (was "
-               << m_need_restoration << ")." << std::endl;
-
-  m_need_restoration = true;
-#endif
-} // gl_screen::set_video_mode()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Finds a screen resolution that has is the nearest of a given size.
- * \param w The width of the screen.
- * \param h The height of the screen.
- * \param f Tell if we want a fullscreen mode.
- */
-bear::visual::gl_screen::screen_size_type
-bear::visual::gl_screen::get_best_screen_size
-( unsigned int w, unsigned int h, bool f ) const
-{
-  screen_size_type result( w, h );
-
-  claw::logger << claw::log_verbose << "Requested screen resolution is "
-               << result.x << 'x' << result.y << '.' << std::endl;
-
-  if ( f )
-    {
-      claw::logger << claw::log_verbose << "Available screen resolutions:"
-                   << std::endl;
-      
-      const std::vector<SDL_DisplayMode> modes( get_sdl_display_modes() );
-
-      for ( std::size_t i(0); i != modes.size(); ++i )
-        claw::logger << claw::log_verbose << modes[i].w << 'x' << modes[i].h
-                     << std::endl;
-
-      result = get_best_screen_size( w, h, modes );
-    }
-  else
-    {
-      claw::logger << claw::log_verbose
-                   << "Setting resolution in windowed mode."
-                   << std::endl;
-      
-      SDL_DisplayMode m;
-      SDL_GetDesktopDisplayMode(0, &m);
-
-      const double r_x = (double)m.w / get_size().x;
-      const double r_y = (double)m.h / get_size().y;
-      double resize_ratio = std::min( r_x, r_y );
-
-      if ( resize_ratio < 1 )
-        result =
-          screen_size_type
-          ( resize_ratio * get_size().x, resize_ratio * get_size().y );
-    }
-
-  claw::logger << claw::log_verbose << "Selected screen resolution is "
-               << result.x << 'x' << result.y << '.' << std::endl;
-
-  return result;
-} // gl_screen::get_best_screen_size()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Gets the display modes as returned by SDL.
- */
-std::vector<SDL_DisplayMode>
-bear::visual::gl_screen::get_sdl_display_modes() const
-{
-  const int count( SDL_GetNumDisplayModes(0) );
-
-  if ( count < 1 )
-    VISUAL_SDL_ERROR_THROW();
-
-  std::vector<SDL_DisplayMode> result( count );
-
-  for ( int i(0); i!=count; ++i )
-    SDL_GetDisplayMode( 0, i, &result[i] );
-
-  return result;
-} // gl_screen::get_sdl_display_modes()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Finds a screen resolution that has is the nearest of a given size.
- * \param w The expected width.
- * \param h The expected height.
- * \param modes The available resolutions.
- */
-bear::visual::gl_screen::screen_size_type
-bear::visual::gl_screen::get_best_screen_size
-( unsigned int w, unsigned int h,
-  const std::vector<SDL_DisplayMode>& modes ) const
-{
-  SDL_DisplayMode m;
-  SDL_GetDesktopDisplayMode(0, &m);
-
-  const double requested_ratio( (double)w / h );
-  screen_size_type result( m.w, m.h );
-  double display_ratio( (double)result.x / result.y );
-  double best_scale_factor_distance;
-  
-  if ( (display_ratio >= 1) && (requested_ratio >= 1) )
-    best_scale_factor_distance = std::abs( (double)m.w / w - 1 );
-  else
-    best_scale_factor_distance = std::abs( (double)m.h / h - 1 );
-
-  for ( std::size_t i(0); i!=modes.size(); ++i )
-    {
-      const unsigned int width( modes[i].w );
-      const unsigned int height( modes[i].h );
-
-      const double scale_factor
-        ( std::min( (double)height / h, (double)width / w ) );
-
-      const double scale_factor_distance( std::abs( scale_factor - 1 ) );
-
-      if ( scale_factor_distance < best_scale_factor_distance )
-        {
-          best_scale_factor_distance = scale_factor_distance;
-          result = screen_size_type( width, height );
-        }
-    }
-
-  return result;
-} // gl_screen::get_best_screen_size()
 
 /*----------------------------------------------------------------------------*/
 /**

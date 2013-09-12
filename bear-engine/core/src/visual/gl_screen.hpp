@@ -43,9 +43,7 @@ namespace bear
 
       gl_screen( const claw::math::coordinate_2d<unsigned int>& size,
                  const std::string& title="", bool full=false );
-      ~gl_screen();
 
-      void resize_view();
       void fullscreen( bool b );
       claw::math::coordinate_2d<unsigned int> get_size() const;
       claw::math::coordinate_2d<unsigned int> get_container_size() const;
@@ -89,15 +87,6 @@ namespace bear
       rotate( const position_type& pos, GLdouble a,
               const position_type& center ) const;
 
-      void set_video_mode( unsigned int w, unsigned int y, bool f );
-
-      screen_size_type get_best_screen_size
-        ( unsigned int w, unsigned int y, bool f ) const;
-      screen_size_type get_best_screen_size
-        ( unsigned int w, unsigned int h,
-          const std::vector<SDL_DisplayMode>& modes ) const;
-      std::vector<SDL_DisplayMode> get_sdl_display_modes() const;
-
       bool is_closed();
 
       std::vector<position_type>
@@ -108,25 +97,6 @@ namespace bear
       shader_program get_current_shader() const;
 
     private:
-      /** \brief The window created by SDL. */
-      SDL_Window* m_window;
-
-      /** \brief The width and height of the screen. */
-      screen_size_type m_size;
-
-      /** \brief Tell if the screen needs to be restored. */
-      bool m_need_restoration;
-
-      /** \brief A buffer in which we do the screenshots, to avoid an allocation
-          at each call. */
-      claw::graphic::rgba_pixel_8* m_screenshot_buffer;
-
-      /** \brief The title of the window. */
-      const std::string m_title;
-
-      /** \brief The real size of the window. */
-      screen_size_type m_window_size;
-
       /** \brief The shaders to apply to the next rendering commands. */
       std::vector<shader_program> m_shader;
 

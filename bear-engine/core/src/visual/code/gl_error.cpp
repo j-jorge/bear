@@ -14,6 +14,7 @@
 #include "visual/gl_error.hpp"
 
 #include <claw/exception.hpp>
+#include <claw/logger.hpp>
 #include <sstream>
 
 #include "visual/gl.hpp"
@@ -73,6 +74,8 @@ void bear::visual::gl_error::throw_on_error
         default:
           err_string << "unknow error code " << err << '.';
         }
+
+      claw::logger << claw::log_error << err_string << std::endl;
 
       throw claw::exception( err_string.str() );
     }

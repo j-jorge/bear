@@ -11,11 +11,12 @@
  * \brief Implementation of the bear::visual::image class.
  * \author Julien Jorge
  */
+#include "visual/gl_image.hpp"
+
+#include "visual/gl_renderer.hpp"
+
 #include <climits>
 #include <limits>
-
-#include "visual/gl_image.hpp"
-#include "visual/gl_error.hpp"
 
 #include <claw/exception.hpp>
 #include <claw/assert.hpp>
@@ -54,10 +55,7 @@ bear::visual::gl_image::gl_image(const claw::graphic::image& data)
  */
 bear::visual::gl_image::~gl_image()
 {
-  if ( !glIsTexture( m_texture_id ) )
-    return;
-
-  glDeleteTextures(1, &m_texture_id);
+  gl_renderer::get_instance().delete_texture( m_texture_id );
 } // gl_image::~gl_image()
 
 /*----------------------------------------------------------------------------*/
@@ -66,10 +64,6 @@ bear::visual::gl_image::~gl_image()
  */
 GLuint bear::visual::gl_image::texture_id() const
 {
-  if ( !glIsTexture( m_texture_id ) )
-    claw::logger << claw::log_error << "Requesting invalid texture: "
-                 << m_texture_id << std::endl;
-
   return m_texture_id;
 } // gl_image::texture_id()
 
@@ -101,44 +95,8 @@ void bear::visual::gl_image::draw
  ( const claw::graphic::image& data,
    claw::math::coordinate_2d<unsigned int> pos )
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "draw image" );
-
-  glBindTexture(GL_TEXTURE_2D, m_texture_id);
-
-  const claw::graphic::rgba_pixel_8::component_type opaque =
-    std::numeric_limits<claw::graphic::rgba_pixel_8::component_type>::max();
-
-  const std::size_t pixels_count( data.width() * data.height() );
-  claw::graphic::rgba_pixel_8* const pixels =
-    new claw::graphic::rgba_pixel_8[ pixels_count ];
-
-  {
-    BEAR_CREATE_SCOPED_TIMELOG( "std copy image" );
-
-    std::copy( data.begin(), data.end(), pixels );
-  }
-
-  {
-    BEAR_CREATE_SCOPED_TIMELOG( "glTexSubImage2D" );
-
-    glTexSubImage2D
-      ( GL_TEXTURE_2D, 0, pos.x, pos.y, data.width(), data.height(), GL_RGBA,
-        GL_UNSIGNED_BYTE, pixels );
-  }
-  VISUAL_GL_ERROR_THROW();
-
-  {
-    BEAR_CREATE_SCOPED_TIMELOG( "check transparency" );
-
-    for ( claw::graphic::rgba_pixel_8* p = pixels;
-          (p != pixels + pixels_count) && !m_has_transparency; ++p )
-      m_has_transparency = p->components.alpha != opaque;
-  }
-
-  {
-    BEAR_CREATE_SCOPED_TIMELOG( "delete" );
-    delete[] pixels;
-  }
+  m_has_transparency =
+    gl_renderer::get_instance().draw_texture( m_texture_id, data, pos );
 } // gl_image::draw()
 
 /*----------------------------------------------------------------------------*/
@@ -147,23 +105,7 @@ void bear::visual::gl_image::draw
  */
 void bear::visual::gl_image::create_texture()
 {
-  unsigned int v;
-  for ( v=1; (v < m_size.x) && /* overflow */ (v != 0); v *= 2 ) { }
-
-  m_size.x = v;
-
-  for ( v=1; (v < m_size.y) && /* overflow */ (v != 0); v *= 2 ) { }
-
-  m_size.y = v;
-
-  glGenTextures(1, &m_texture_id);
-  glBindTexture(GL_TEXTURE_2D, m_texture_id);
-
-  VISUAL_GL_ERROR_THROW();
-
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, GL_RGBA,
-               GL_UNSIGNED_BYTE, NULL );
-  VISUAL_GL_ERROR_THROW();
+  m_texture_id = gl_renderer::get_instance().create_texture( m_size );
 } // gl_image::create_texture()
 
 /*----------------------------------------------------------------------------*/
