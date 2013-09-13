@@ -270,6 +270,8 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
  */
 void bear::visual::gl_renderer::stop()
 {
+  boost::mutex::scoped_lock lock( m_mutex.stop );
+  
   m_stop = true;
 } // gl_renderer::stop()
 
@@ -280,10 +282,17 @@ void bear::visual::gl_renderer::stop()
  */
 void bear::visual::gl_renderer::render_loop()
 {
+  // render every 15 milliseconds
   const systime::milliseconds_type render_delta( 15 );
 
-  while ( !m_stop )
+  while ( true )
     {
+      // lock m_stop to ensure that stop() will block if called during the loop.
+      boost::mutex::scoped_lock lock( m_mutex.stop );
+      
+      if ( m_stop )
+        break;
+
       ensure_window_exists();
 
       const systime::milliseconds_type start_date( systime::get_date_ms() );
@@ -323,7 +332,6 @@ void bear::visual::gl_renderer::render_states()
   for ( state_list::const_iterator it( m_states.begin() );
         it != m_states.end(); ++it )
     it->draw();
-
   VISUAL_GL_ERROR_THROW();
 
   SDL_GL_SwapWindow( m_window );

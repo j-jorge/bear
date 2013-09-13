@@ -155,6 +155,9 @@ namespace bear
             the window, m_window or m_gl_context. */
         boost::mutex window;
 
+        /** \brief This mutex is locked when the m_stop boolean is accessed. */
+        boost::mutex stop;
+
       } m_mutex;
 
     }; // class gl_renderer
