@@ -15,6 +15,7 @@
 
 #include "gui/static_text.hpp"
 #include "gui/picture.hpp"
+#include "input/finger_event.hpp"
 #include "input/keyboard.hpp"
 
 /*----------------------------------------------------------------------------*/
@@ -246,3 +247,19 @@ bool bear::gui::button::on_mouse_press
   m_click_callback.execute();
   return true;
 } // button::on_mouse_press()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Validates the button in response to a finger event of type
+ *        finger_event::finger_event_pressed.
+ * \param event The event.
+ */
+bool bear::gui::button::on_finger_action( const input::finger_event& event )
+{
+  if ( event.get_type() != input::finger_event::finger_event_pressed )
+    return false;
+
+  m_click_callback.execute();
+  return true;
+} // button::on_finger_action()
+

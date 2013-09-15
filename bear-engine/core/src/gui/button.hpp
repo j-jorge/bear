@@ -64,6 +64,7 @@ namespace bear
       bool on_mouse_press
         ( input::mouse::mouse_code key,
           const claw::math::coordinate_2d<unsigned int>& pos );
+      bool on_finger_action( const input::finger_event& event );
 
     private:
       /** \brief The text in the button. */

@@ -13,6 +13,7 @@
  */
 #include "gui/checkbox.hpp"
 
+#include "input/finger_event.hpp"
 #include "input/keyboard.hpp"
 
 /*----------------------------------------------------------------------------*/
@@ -110,3 +111,18 @@ bool bear::gui::checkbox::on_mouse_press
   toggle_value();
   return true;
 } // checkbox::on_mouse_press()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Toggles the state of the box in response to a finger event of type
+ *        finger_event::finger_event_pressed.
+ * \param event The event.
+ */
+bool bear::gui::checkbox::on_finger_action( const input::finger_event& event )
+{
+  if ( event.get_type() != input::finger_event::finger_event_pressed )
+    return false;
+
+  toggle_value();
+  return true;
+} // checkbox::on_finger_action()
