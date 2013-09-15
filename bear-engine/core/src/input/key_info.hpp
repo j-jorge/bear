@@ -57,6 +57,7 @@ namespace bear
       bool is_end() const;
       bool is_delete() const;
       bool is_backspace() const;
+      bool is_back() const;
       bool is_function(unsigned int f) const;
 
       bool is_printable() const;

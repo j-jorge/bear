@@ -199,6 +199,7 @@ std::string bear::input::keyboard::get_name_of( key_code k )
     case kc_system: return "system"; break;
     case kc_break: return "break"; break;
     case kc_menu: return "menu"; break;
+    case kc_back: return "back"; break;
     default:
       return "Unknown key";
     }
@@ -308,18 +309,18 @@ void bear::input::keyboard::refresh_events()
  */
 void bear::input::keyboard::refresh_keys()
 {
-  int num_keys;
-  const Uint8* keys;
+  int num_codes;
+  const Uint8* scan_codes( SDL_GetKeyboardState( &num_codes ) );
 
-  keys = SDL_GetKeyboardState( &num_keys );
   m_pressed_keys.clear();
 
-  for (unsigned int i=0; i!=(unsigned int)num_keys; ++i)
-    if ( keys[i] )
+  for (unsigned int i=0; i!=(unsigned int)num_codes; ++i)
+    if ( scan_codes[i] )
       {
         const SDL_Keymod mod( SDL_GetModState() );
         const key_code k
-          ( sdl_key_to_local(i, mod & KMOD_SHIFT, mod & KMOD_ALT) );
+          ( sdl_key_to_local
+            ( SDL_SCANCODE_TO_KEYCODE(i), mod & KMOD_SHIFT, mod & KMOD_ALT) );
 
         if ( (k != kc_not_a_key) &&
              (k != kc_num_lock) &&
@@ -479,6 +480,9 @@ bear::input::key_code bear::input::keyboard::sdl_key_to_local
     case SDLK_PRINTSCREEN : return kc_print_screen; break;
     case SDLK_SYSREQ      : return kc_system;       break;
     case SDLK_MENU        : return kc_menu;         break;
+
+    case SDLK_AC_BACK : return kc_back; break;
+
     default: return kc_not_a_key;
     }
 

@@ -232,6 +232,15 @@ bool bear::input::key_info::is_backspace() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells if this key is the back key.
+ */
+bool bear::input::key_info::is_back() const
+{
+  return m_code == keyboard::kc_back;
+} // key_info::is_back()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Tell if this key is a given function key.
  * \param f The function number.
  */

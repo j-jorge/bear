@@ -346,15 +346,16 @@ static const key_code kc_system = 309;
 static const key_code kc_break = 310;
 static const key_code kc_menu = 311;
 
+static const key_code kc_back = 312;
 /**
  * \brief Code representing an invalid code.
  * \remark Currently the same as c_key_codes_count.
  */
-static const key_code kc_not_a_key = 312;
+static const key_code kc_not_a_key = 313;
 
 /** \brief Number of valid key codes. */
-static const unsigned int c_key_codes_count = 312;
+static const unsigned int c_key_codes_count = 313;
 
 private:
 static const key_code kc_range_min = kc_null;
-static const key_code kc_range_max = kc_menu;
+static const key_code kc_range_max = kc_back;
