@@ -22,7 +22,8 @@
  * \param parent The window owning this dialog.
  */
 bf::config_frame::config_frame( wxWindow* parent )
-  : wxDialog( parent, wxID_ANY, wxString(_("Configuration")) )
+  : wxDialog( parent, wxID_ANY, _("Configuration"), wxDefaultPosition, 
+             wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER )
 {
   create_controls();
   Fit();
