@@ -391,11 +391,7 @@ bool bear::slope::align_on_ground
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_up_down(that, info) )
     {
-      universe::position_type pos( that.get_left(), get_y_at_x( pos_x ) );
-  
-      if ( std::abs(pos.x - info.other_previous_state().get_left()) +
-           std::abs(pos.y - info.other_previous_state().get_bottom()) < 1.6 )
-        pos = info.other_previous_state().get_bottom_left();
+      const universe::position_type pos( that.get_left(), get_y_at_x( pos_x ) );
 
       const universe::collision_align_policy policy
         ( get_top_contact_mode(info, pos) );
@@ -509,9 +505,9 @@ void bear::slope::apply_angle_to
   bear::universe::position_type tangent
     ( p.get_section().get_tangent_at(p.get_date()) );
   
-  double angle = std::atan2( tangent.y, tangent.x );
+  const double angle = std::atan2( tangent.y, tangent.x );
   
-  that.set_contact_angle( angle);
+  that.set_contact_angle( angle );
 
   universe::coordinate_type g_force(0);
 
@@ -520,29 +516,26 @@ void bear::slope::apply_angle_to
                        * info.other_previous_state().get_mass()
                        + info.other_previous_state().get_force().y);
 
-  const universe::coordinate_type normal_length =
-    g_force * std::cos(angle);
-  const universe::coordinate_type x_gravity_length =
-    g_force * std::sin(angle);
+  const universe::coordinate_type normal_length
+    ( g_force * std::cos(angle) );
+  const universe::coordinate_type acceleration_length_on_surface
+    ( g_force * std::sin(angle) );
   const universe::coordinate_type friction_length =
     normal_length * m_tangent_friction;
 
-  if ( x_gravity_length > friction_length )
+  if ( acceleration_length_on_surface > friction_length )
     {
-      const universe::coordinate_type d =
-        x_gravity_length - friction_length;
+      const universe::coordinate_type d
+        ( acceleration_length_on_surface - friction_length );
 
       if ( get_steepness() > 0 )
         that.add_internal_force( universe::force_type(-d, 0) );
       else
         that.add_internal_force( universe::force_type(d, 0) );
     }
-  else
-    that.add_internal_force
-      ( universe::force_type(x_gravity_length, 0) );
-
+  
   info.get_collision_repair().set_contact_normal
-    (that, that.get_x_axis().get_orthonormal_anticlockwise());
+    ( that, that.get_x_axis().get_orthonormal_anticlockwise() );
 } // slope::apply_angle_to()
 
 /*----------------------------------------------------------------------------*/
