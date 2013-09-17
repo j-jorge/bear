@@ -1473,6 +1473,7 @@ void bear::universe::physical_item_state::to_string( std::string& str ) const
   oss << "\nfriction: s=" << get_friction();
   oss << " c=" << get_contact_friction();
   oss << "\ndensity: " << get_density();
+  oss << "\nhardness/elasticity: " << get_hardness() << ' ' << get_elasticity();
   oss << "\nangle: " << get_system_angle();
   oss << "\nfixed: " << is_fixed() << ' ' << m_attributes.m_x_fixed << ' '
       << m_attributes.m_y_fixed;

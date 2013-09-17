@@ -520,11 +520,12 @@ void bear::slope::apply_angle_to
     ( g_force * std::cos(angle) );
   const universe::coordinate_type acceleration_length_on_surface
     ( g_force * std::sin(angle) );
-  const universe::coordinate_type friction_length =
-    normal_length * m_tangent_friction;
+  const universe::coordinate_type friction_length
+    ( normal_length * m_tangent_friction );
 
   if ( acceleration_length_on_surface > friction_length )
     {
+      // the other item slides on the slope
       const universe::coordinate_type d
         ( acceleration_length_on_surface - friction_length );
 
@@ -533,9 +534,14 @@ void bear::slope::apply_angle_to
       else
         that.add_internal_force( universe::force_type(d, 0) );
     }
-  
-  info.get_collision_repair().set_contact_normal
-    ( that, that.get_x_axis().get_orthonormal_anticlockwise() );
+
+  const universe::vector_type mvt
+    ( that.get_bottom_middle()
+      - info.other_previous_state().get_bottom_middle() );
+
+  if ( mvt.length() > 1 )
+    info.get_collision_repair().set_contact_normal
+      ( that, that.get_x_axis().get_orthonormal_anticlockwise() );
 } // slope::apply_angle_to()
 
 /*----------------------------------------------------------------------------*/

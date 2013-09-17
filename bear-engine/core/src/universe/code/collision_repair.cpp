@@ -74,37 +74,37 @@ void bear::universe::collision_repair::apply_force_transfert()
 
   // transfer the forces
   // Find the velocity in the direction of the contact.
-  speed_type relative_velocity =
-    m_contact_reference->get_speed() - other->get_speed();
-  double separating_velocity = relative_velocity.dot_product(m_contact_normal);
+  const speed_type relative_velocity
+    ( m_contact_reference->get_speed() - other->get_speed() );
+  const double separating_velocity
+    ( relative_velocity.dot_product(m_contact_normal) );
 
-  if ( separating_velocity <= 0 )
+  if ( separating_velocity < 0 )
     {
       // calculate the new separating velocity
-      double restitution =
-        m_contact_reference->get_hardness() * other->get_elasticity() +
-        m_contact_reference->get_elasticity() * other->get_hardness();
+      const double restitution
+        ( m_contact_reference->get_hardness() * other->get_elasticity()
+          + m_contact_reference->get_elasticity() * other->get_hardness() );
 
-      double new_sep_velocity =
-        -separating_velocity * restitution;
+      const double new_sep_velocity( -separating_velocity * restitution );
 
-      double delta_velocity = new_sep_velocity - separating_velocity;
-      double total_inverse_mass =
-        1 / m_contact_reference->get_mass() + 1 / other->get_mass();
+      const double delta_velocity( new_sep_velocity - separating_velocity );
+      const double total_inverse_mass
+        ( 1 / m_contact_reference->get_mass() + 1 / other->get_mass() );
 
       if ( total_inverse_mass > 0 )
         {
-          double impulse = delta_velocity / total_inverse_mass;
-
-          speed_type impulse_per_inverse_mass = m_contact_normal * impulse;
+          const double impulse( delta_velocity / total_inverse_mass );
+          const speed_type impulse_per_inverse_mass
+            ( m_contact_normal * impulse );
 
           m_contact_reference->set_speed
-            ( m_contact_reference->get_speed() +
-              impulse_per_inverse_mass / m_contact_reference->get_mass() );
+            ( m_contact_reference->get_speed()
+              + impulse_per_inverse_mass / m_contact_reference->get_mass() );
 
-          other->set_speed( other->get_speed() -
-                            impulse_per_inverse_mass / other->get_mass() );
-
+          other->set_speed
+            ( other->get_speed()
+              - impulse_per_inverse_mass / other->get_mass() );
         }
     }
 } // collision_repair::apply_force_transfert()
