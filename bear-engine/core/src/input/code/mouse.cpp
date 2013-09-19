@@ -148,6 +148,10 @@ void bear::input::mouse::refresh()
         else
           m_pressed_buttons.push_back( mc_wheel_down );
       }
+
+#ifdef __ANDROID__
+  m_pressed_buttons.clear();
+#endif
 } // mouse::refresh()
 
 /*----------------------------------------------------------------------------*/
