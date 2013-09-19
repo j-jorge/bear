@@ -77,3 +77,12 @@ bool bear::engine::check_item_class::evaluate() const
   else
     return m_collision->get_class_name() == m_class_name;
 } // check_item_class::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::engine::check_item_class::formatted_string() const
+{
+  return "check_item_class( " + m_class_name + " )";
+} // check_item_class::formatted_string()

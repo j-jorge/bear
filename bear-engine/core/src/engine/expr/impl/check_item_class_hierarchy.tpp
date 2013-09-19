@@ -14,6 +14,8 @@
 
 #include "engine/base_item.hpp"
 
+#include <typeinfo>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Set the data on the colliding item.
@@ -57,3 +59,15 @@ bool bear::engine::check_item_class_hierarchy<T>::evaluate() const
 {
   return dynamic_cast<const T*>(m_collision.get_item_ptr()) != NULL;
 } // check_item_class_hierarchy::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+template<typename T>
+std::string
+bear::engine::check_item_class_hierarchy<T>::formatted_string() const
+{
+  return std::string( "check_item_class_hierarchy( " )
+    + typeid(T).name() + " )";
+} // check_item_class_hierarchy::formatted_string()

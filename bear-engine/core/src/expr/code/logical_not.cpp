@@ -70,3 +70,13 @@ bool bear::expr::logical_not::evaluate() const
 {
   return !m_operand.evaluate();
 } // logical_not::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::expr::logical_not::formatted_string()
+  const
+{
+  return "not( " + m_operand.formatted_string() + " )";
+} // logical_not::formatted_string()

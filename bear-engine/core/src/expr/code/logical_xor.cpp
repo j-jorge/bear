@@ -43,3 +43,14 @@ bool bear::expr::logical_xor::evaluate() const
 {
   return m_left.evaluate() ^ m_right.evaluate();
 } // logical_xor::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::expr::logical_xor::formatted_string()
+  const
+{
+  return "xor( " + m_left.formatted_string() + ", " + m_right.formatted_string()
+    + " )";
+} // logical_xor::formatted_string()

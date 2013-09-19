@@ -14,6 +14,8 @@
 #ifndef __EXPR_BASE_BOOLEAN_EXPRESSION_HPP__
 #define __EXPR_BASE_BOOLEAN_EXPRESSION_HPP__
 
+#include <string>
+
 #include "expr/class_export.hpp"
 
 namespace bear
@@ -35,6 +37,8 @@ namespace bear
 
       virtual base_boolean_expression* clone() const = 0;
       virtual result_type evaluate() const = 0;
+
+      virtual std::string formatted_string() const = 0;
 
     }; // class base_boolean_expression
 

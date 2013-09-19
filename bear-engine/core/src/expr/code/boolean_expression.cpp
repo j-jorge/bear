@@ -153,6 +153,15 @@ bear::expr::boolean_expression bear::expr::boolean_expression::operator^
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::expr::boolean_expression::formatted_string() const
+{
+  return m_expr->formatted_string();
+} // boolean_expression::formatted_string()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Logical not.
  * \param e The expression to negate.
  */

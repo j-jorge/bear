@@ -77,3 +77,16 @@ bool bear::engine::check_item_instance::evaluate() const
   else
     return m_collision.get_item_ptr() == m_instance.get();
 } // check_item_instance::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::engine::check_item_instance::formatted_string() const
+{
+  std::ostringstream result;
+
+  result << "check_item_instance( " << m_instance.get() << " )";
+
+  return result.str();
+} // check_item_instance::formatted_string()

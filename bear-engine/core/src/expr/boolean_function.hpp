@@ -44,6 +44,8 @@ namespace bear
       base_boolean_expression* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
       void set_function( FunctionType m );
 
     private:
@@ -73,6 +75,8 @@ namespace bear
 
       base_boolean_expression* clone() const;
       bool evaluate() const;
+
+      std::string formatted_string() const;
 
       void set_function( FunctionType m );
 

@@ -45,6 +45,8 @@ namespace bear
       expr::base_boolean_expression* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
     private:
       /** \brief The data on the colliding item. */
       collision_in_expression m_collision;

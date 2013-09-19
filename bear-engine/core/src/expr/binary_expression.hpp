@@ -51,6 +51,8 @@ namespace bear
       Base* clone() const;
       result_type evaluate() const;
 
+      std::string formatted_string() const;
+
     private:
       /** \brief The left operand. */
       operand_type m_left;

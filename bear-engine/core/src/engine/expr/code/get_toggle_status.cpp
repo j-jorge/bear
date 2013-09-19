@@ -15,7 +15,11 @@
 
 #include "engine/base_item.hpp"
 #include "engine/item_brick/with_toggle.hpp"
+
 #include <claw/logger.hpp>
+
+#include <sstream>
+#include <typeinfo>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -84,3 +88,23 @@ bool bear::engine::get_toggle_status::evaluate() const
   else
     return m_toggle->is_on();
 } // get_toggle_status::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::engine::get_toggle_status::formatted_string() const
+{
+  std::ostringstream result;
+
+  result << "get_toggle_status( ";
+
+  if ( m_toggle == (with_toggle*)NULL )
+    result << "null";
+  else
+    result << typeid(*m_toggle).name();
+
+  result << " [= " << evaluate() << "] )";
+
+  return result.str();
+} // get_toggle_status::formatted_string()

@@ -250,6 +250,15 @@ bear::expr::linear_expression bear::expr::linear_expression::operator/
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::expr::linear_expression::formatted_string() const
+{
+  return m_expr->formatted_string();
+} // linear_expression::formatted_string()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Create an expression checking if the evaluation of two linear
  *        expressions are equal.
  * \param a The left operand.

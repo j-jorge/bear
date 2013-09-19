@@ -12,6 +12,8 @@
  * \author Julien Jorge.
  */
 
+#include <typeinfo>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -71,6 +73,19 @@ bool bear::expr::boolean_function<FunctionType, PointerType>::evaluate() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+template<typename FunctionType, typename PointerType>
+std::string
+bear::expr::boolean_function<FunctionType, PointerType>::formatted_string()
+  const
+{
+  return std::string( typeid(m_function).name() )
+    + "( " + typeid(*m_value).name() + " )";
+} // boolean_function::formatted_string()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Set the fonction to call.
  * \param m The function to call.
  */
@@ -124,6 +139,17 @@ bool bear::expr::boolean_function<FunctionType, void>::evaluate() const
 {
   return m_function();
 } // boolean_function::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+template<typename FunctionType>
+std::string
+bear::expr::boolean_function<FunctionType, void>::formatted_string() const
+{
+  return std::string( typeid(m_function).name() ) + "()";
+} // boolean_function::formatted_string()
 
 /*----------------------------------------------------------------------------*/
 /**

@@ -50,6 +50,8 @@ namespace bear
       bool_level_variable_getter* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
     }; // class bool_level_variable_getter
   } // namespace engine
 } // namespace bear

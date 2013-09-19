@@ -38,6 +38,8 @@ namespace bear
       base_boolean_expression* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
     private:
       /** \brief The operand. */
       boolean_expression m_operand;

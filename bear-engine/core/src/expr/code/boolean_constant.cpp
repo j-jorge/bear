@@ -45,6 +45,18 @@ bool bear::expr::boolean_constant::evaluate() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::expr::boolean_constant::formatted_string() const
+{
+  if ( m_value )
+    return "true";
+  else
+    return "false";
+} // boolean_constant::formatted_string()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Set the value of the constant.
  * \param b The new value.
  */

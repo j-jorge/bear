@@ -45,6 +45,8 @@ namespace bear
       expr::base_boolean_expression* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
     private:
       /** \brief The name of the class. */
       std::string m_class_name;

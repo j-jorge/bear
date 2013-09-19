@@ -35,6 +35,8 @@ namespace bear
       base_boolean_expression* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
     private:
       /** \brief The left operand. */
       boolean_expression m_left;

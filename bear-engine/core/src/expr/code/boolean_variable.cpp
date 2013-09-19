@@ -13,6 +13,8 @@
  */
 #include "expr/boolean_variable.hpp"
 
+#include <sstream>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -43,3 +45,17 @@ bool bear::expr::boolean_variable::evaluate() const
 {
   return m_value;
 } // boolean_variable::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::expr::boolean_variable::formatted_string()
+  const
+{
+  std::ostringstream result;
+
+  result << "var( " << m_value << " )";
+
+  return result.str();
+} // boolean_variable::formatted_string()

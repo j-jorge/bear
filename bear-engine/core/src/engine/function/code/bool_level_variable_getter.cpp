@@ -53,3 +53,17 @@ bool bear::engine::bool_level_variable_getter::evaluate() const
 {
   return (*this)();
 } // bool_level_variable_getter::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::engine::bool_level_variable_getter::formatted_string() const
+{
+  std::ostringstream result;
+
+  result << "levelvar( " << get_name() << " [=" << evaluate()
+         << "] )";
+
+  return result.str();
+} // bool_level_variable_getter::formatted_string()

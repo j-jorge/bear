@@ -14,6 +14,8 @@
 
 #include "engine/function/bool_game_variable_getter.hpp"
 
+#include <sstream>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Contructor.
@@ -41,3 +43,17 @@ bool bear::engine::bool_game_variable_getter::evaluate() const
 {
   return (*this)();
 } // bool_game_variable_getter::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+std::string bear::engine::bool_game_variable_getter::formatted_string() const
+{
+  std::ostringstream result;
+
+  result << "gamevar( " << get_name() << " [=" << evaluate()
+         << "] )";
+
+  return result.str();
+} // bool_game_variable_getter::formatted_string()

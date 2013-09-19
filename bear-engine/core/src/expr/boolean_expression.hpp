@@ -14,6 +14,8 @@
 #ifndef __EXPR_BOOLEAN_EXPRESSION_HPP__
 #define __EXPR_BOOLEAN_EXPRESSION_HPP__
 
+#include <string>
+
 #include "expr/class_export.hpp"
 
 namespace bear
@@ -48,6 +50,8 @@ namespace bear
       boolean_expression operator&&( const boolean_expression& that ) const;
       boolean_expression operator||( const boolean_expression& that ) const;
       boolean_expression operator^( const boolean_expression& that ) const;
+
+      std::string formatted_string() const;
 
     private:
       /** \brief The implemented expression. */

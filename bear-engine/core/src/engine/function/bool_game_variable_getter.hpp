@@ -48,6 +48,8 @@ namespace bear
       bool_game_variable_getter* clone() const;
       bool evaluate() const;
 
+      std::string formatted_string() const;
+
     }; // class bool_game_variable_getter
   } // namespace engine
 } // namespace bear

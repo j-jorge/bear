@@ -60,7 +60,6 @@ void bear::engine::world::progress_entities
 {
   universe::world::progress_entities(regions, elapsed_time);
   m_population.remove_dead_items();
-  //print_item_stats();
 } // world::progress_entities()
 
 /*----------------------------------------------------------------------------*/

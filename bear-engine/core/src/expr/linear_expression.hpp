@@ -60,6 +60,8 @@ namespace bear
       linear_expression operator*( const linear_expression& that ) const;
       linear_expression operator/( const linear_expression& that ) const;
 
+      std::string formatted_string() const;
+
     private:
       /** \brief The implemented expression. */
       base_linear_expression* m_expr;

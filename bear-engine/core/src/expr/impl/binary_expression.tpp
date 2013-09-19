@@ -12,6 +12,9 @@
  * \author Julien Jorge.
  */
 
+#include <typeinfo>
+#include <sstream>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Contructor.
@@ -118,3 +121,20 @@ bear::expr::binary_expression<Base, Operand, Function>::evaluate() const
   Function f;
   return f(get_left_operand().evaluate(), get_right_operand().evaluate());
 } // binary_expression::evaluate()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets a formatted and human readable representation of this expression.
+ */
+template<typename Base, typename Operand, typename Function>
+std::string
+bear::expr::binary_expression<Base, Operand, Function>::formatted_string() const
+{
+  std::ostringstream result;
+
+  result << typeid(Function).name() << "( "
+         << get_left_operand().formatted_string()
+         << ", " << get_right_operand().formatted_string() << " )";
+
+  return result.str();
+} // binary_expression::formatted_string()
