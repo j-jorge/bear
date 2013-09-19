@@ -58,6 +58,9 @@ bool bear::system_fullscreen_toggle::finger_action_local
 {
   super::finger_action_local( event );
 
+  if ( event.get_type() != input::finger_event::finger_event_pressed )
+    return false;
+
   toggle_fullscreen();
 
   return true;

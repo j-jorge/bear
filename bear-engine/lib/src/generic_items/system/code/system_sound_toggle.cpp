@@ -57,8 +57,11 @@ bool bear::system_sound_toggle::finger_action_local
 {
   super::finger_action_local( event );
 
-  toggle_sound();
+  if ( event.get_type() != input::finger_event::finger_event_pressed )
+    return false;
 
+  toggle_sound();
+  
   return true;
 } // system_sound_toggle::finger_action_local()
 
