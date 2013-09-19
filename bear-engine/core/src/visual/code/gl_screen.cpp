@@ -188,9 +188,6 @@ void bear::visual::gl_screen::render
  */
 bool bear::visual::gl_screen::end_render()
 {
-  claw::logger << claw::log_verbose
-               << "Rendering states " << m_gl_state.size()
-               << std::endl;
   gl_renderer::get_instance().set_gl_states( m_gl_state );
 
   if ( is_closed() )

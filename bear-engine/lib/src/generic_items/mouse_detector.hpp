@@ -28,8 +28,7 @@ namespace bear
    *
    */
   class GENERIC_ITEMS_EXPORT mouse_detector :
-    public engine::item_with_input_listener
-  < engine::base_item >
+    public engine::item_with_input_listener< engine::base_item >
   {
     DECLARE_BASE_ITEM(mouse_detector);
 
