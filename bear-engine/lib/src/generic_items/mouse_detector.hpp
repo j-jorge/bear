@@ -63,6 +63,8 @@ namespace bear
     void get_dependent_items
       ( universe::physical_item::item_list& d ) const;
 
+    void trigger_toggle();
+
   private:
     /** \brief The toggle to activate. */
     handle_type m_toggle;

@@ -107,9 +107,7 @@ bool bear::mouse_detector::mouse_released
   if ( check_mouse_position( button, pos ) )
     {
       result = true;
-
-      if ( m_toggle != (physical_item*)NULL )
-        m_toggle->toggle(this);
+      trigger_toggle();
     }
   else
     result = false;
@@ -136,7 +134,6 @@ bool bear::mouse_detector::check_mouse_position
         ( button == bear::input::mouse::mc_middle_button && m_middle_button)));
 } // mouse_detector::check_mouse_position()
 
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Process an event related to the finger. If the finger is down within
@@ -150,10 +147,7 @@ bool bear::mouse_detector::finger_action( const input::finger_event& event )
   if ( (event.get_type() == input::finger_event::finger_event_pressed)
        && get_bounding_box().includes
        ( get_level().screen_to_level( event.get_position() ) ) )
-    {
-      if ( m_toggle != (physical_item*)NULL )
-        m_toggle->toggle(this);
-    }
+    trigger_toggle();
 
   return result;
 } // mouse_detector::finger_action()
@@ -171,3 +165,13 @@ void bear::mouse_detector::get_dependent_items
   if ( m_toggle != (physical_item*)NULL )
     d.push_back(m_toggle.get_item());
 } // mouse_detector::get_dependent_items()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Toggles the state of m_toggle.
+ */
+void bear::mouse_detector::trigger_toggle()
+{
+  if ( m_toggle != handle_type(NULL) )
+    m_toggle->toggle(this);
+} // mouse_detector::trigger_toggle()
