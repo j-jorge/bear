@@ -379,7 +379,6 @@ void bf::layer::compile( compiled_file& f, compilation_context& c ) const
 {
   f << m_layer_type << m_width << m_height << m_tag;
 
-  std::map<std::string, unsigned int> id_to_int;
   std::list<item_instance*> referenced, not_referenced;
   std::list<item_instance*>::const_iterator iti;
   item_set_type::const_iterator it;
