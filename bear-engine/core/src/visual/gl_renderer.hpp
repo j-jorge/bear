@@ -19,6 +19,7 @@
 
 #include <claw/image.hpp>
 
+#include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -51,6 +52,7 @@ namespace bear
 
     public:
       static gl_renderer& get_instance();
+      static void terminate();
 
       GLuint create_texture( screen_size_type& size );
       bool draw_texture
@@ -71,12 +73,11 @@ namespace bear
       color_type get_background_color();
       void set_background_color( const color_type& c );
 
+    private:
       void stop();
 
-    private:
       void render_loop();
 
-    private:
       void render_states();
       void set_background_color();
 
@@ -159,6 +160,9 @@ namespace bear
         boost::mutex stop;
 
       } m_mutex;
+
+      /** \brief The thread running the render loop of this instance. */
+      boost::thread m_render_thread;
 
     }; // class gl_renderer
 

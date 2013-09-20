@@ -20,8 +20,6 @@
 
 #include <claw/logger.hpp>
 
-#include <boost/thread.hpp>
-
 /*----------------------------------------------------------------------------*/
 bear::visual::gl_renderer::renderer_pointer
 bear::visual::gl_renderer::s_instance( (gl_renderer*)NULL );
@@ -34,14 +32,24 @@ bear::visual::gl_renderer::s_instance( (gl_renderer*)NULL );
 bear::visual::gl_renderer& bear::visual::gl_renderer::get_instance()
 {
   if ( s_instance == NULL )
-    {
-      s_instance = renderer_pointer( new gl_renderer() );
-
-      boost::thread t( boost::bind(&gl_renderer::render_loop, s_instance) );
-    }
+    s_instance = renderer_pointer( new gl_renderer() );
 
   return *s_instance;
 } // gl_renderer::get_instance()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Terminates the rendering process.
+ */
+void bear::visual::gl_renderer::terminate()
+{
+  if ( s_instance != NULL )
+    {
+      s_instance->stop();
+      delete s_instance;
+      s_instance = NULL;
+    }
+} // gl_renderer::terminate()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -270,9 +278,12 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
  */
 void bear::visual::gl_renderer::stop()
 {
-  boost::mutex::scoped_lock lock( m_mutex.stop );
-  
-  m_stop = true;
+  {
+    boost::mutex::scoped_lock lock( m_mutex.stop );
+    m_stop = true;
+  }
+
+  m_render_thread.detach();
 } // gl_renderer::stop()
 
 /*----------------------------------------------------------------------------*/
@@ -591,4 +602,7 @@ bear::visual::gl_renderer::gl_renderer()
     m_video_mode_is_set( false ), m_screenshot_buffer( NULL )
 {
   m_mutex.gl_access.lock();
+
+  m_render_thread =
+    boost::thread( boost::bind(&gl_renderer::render_loop, this) );
 } // gl_renderer::gl_renderer()
