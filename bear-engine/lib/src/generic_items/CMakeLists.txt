@@ -80,6 +80,7 @@ set( GENERIC_ITEM_SOURCE_FILES
   expr/code/boolean_constant_creator.cpp
   expr/code/check_item_class_creator.cpp
   expr/code/check_item_instance_creator.cpp
+  expr/code/check_system_name_creator.cpp
   expr/code/expression_creator.cpp
   expr/code/get_toggle_status_creator.cpp
   expr/code/linear_constant_creator.cpp
