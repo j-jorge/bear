@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::check_system_name_creator" category="expression" box_color="#69DAFF" fixable="false">
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::check_item_class_creator" category="expression" box_color="#69DAFF" fixable="false">
   <inherit>
     <class>bear::base_item</class>
     <class>bear::with_boolean_expression_creation</class>
   </inherit>
-  <description>This class is a boolean expression checking if the game is
-  running on a specific system.</description>
+  <description>This class is a boolean expression checking if an item
+  is an instance of a given class. This item is a parameter for the
+  items of type applied_boolean_expression. He kills himself at the
+  end of his build() method.</description>
   <fields>
-    <field type="string" name="check_system_name_creator.system_name"
-           required="true">
-      <description>The name of the system for which the expression is
-      true.</description>
+    <field type="string" name="check_item_class_creator.class_name"
+           required="true" list="true">
+      <description>The condition is validated if the item inherits one of these
+      classes.</description>
+    </field>
+    <field type="item_reference" name="check_item_class_creator.collision_data" required="true">
+      <description>The item for which we observe the collisions.</description>
       <set>
-        <element value="android"/>
-        <element value="unix"/>
-        <element value="windows"/>
+        <element value="bear::with_trigger"/>
       </set>
     </field>
   </fields>

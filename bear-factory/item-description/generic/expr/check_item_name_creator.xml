@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item xmlns="http://www.gamned.org/bear/schema/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gamned.org/bear/schema/0.5 http://www.gamned.org/bear/schema/0.5/item-description.xsd" class="bear::check_system_name_creator" category="expression" box_color="#69DAFF" fixable="false">
+  <inherit>
+    <class>bear::base_item</class>
+    <class>bear::with_boolean_expression_creation</class>
+  </inherit>
+  <description>This class is a boolean expression checking if the game is
+  running on a specific system.</description>
+  <fields>
+    <field type="string" name="check_system_name_creator.system_name"
+           required="true">
+      <description>The name of the system for which the expression is
+      true.</description>
+      <set>
+        <element value="android"/>
+        <element value="unix"/>
+        <element value="windows"/>
+      </set>
+    </field>
+  </fields>
+</item>
