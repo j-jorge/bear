@@ -60,12 +60,6 @@ namespace bear
       friend class game_action_set_current_level;
 
     private:
-      /** \brief Type of the game specific initialisation procedure. */
-      typedef void (*init_game_function_type)();
-
-      /** \brief Type of the game specific ending procedure. */
-      typedef void (*end_game_function_type)();
-
       /**
        * \brief Game status.
        */
@@ -291,14 +285,6 @@ namespace bear
 
       /** \brief The abstraction of the filesystem, as seen by the game. */
       game_filesystem m_game_filesystem;
-
-      /** \brief The prefix of the name of the game specific initialization
-          procedure. */
-      static const std::string s_init_game_function_prefix;
-
-      /** \brief The prefix of the name of the game specific ending
-          procedure. */
-      static const std::string s_end_game_function_prefix;
 
     }; // class game_local_client
   } // namespace engine

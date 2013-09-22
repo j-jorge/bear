@@ -20,6 +20,7 @@
 #include "engine/game_action/game_action_push_level.hpp"
 #include "engine/game_action/game_action_set_current_level.hpp"
 #include "engine/compiled_file.hpp"
+#include "engine/game_initializer.hpp"
 #include "engine/level.hpp"
 #include "engine/level_globals.hpp"
 #include "engine/level_loader.hpp"
@@ -44,12 +45,6 @@
 #include <claw/socket_traits.hpp>
 #include <claw/string_algorithm.hpp>
 #include <sstream>
-
-/*----------------------------------------------------------------------------*/
-const std::string
-bear::engine::game_local_client::s_init_game_function_prefix("init_");
-const std::string
-bear::engine::game_local_client::s_end_game_function_prefix("end_");
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -691,18 +686,9 @@ void bear::engine::game_local_client::init_stats()
  */
 void bear::engine::game_local_client::init_game() const
 {
-  const std::string game_proc
-    ( s_init_game_function_prefix + get_formatted_game_name() );
+  claw::logger << claw::log_verbose << "Initializing game." << std::endl;
 
-  claw::logger << claw::log_verbose << "Initialising game: '" << game_proc
-               << "()'" << std::endl;
-
-  if ( m_symbols.have_symbol( game_proc ) )
-    {
-      init_game_function_type func =
-        m_symbols.get_symbol<init_game_function_type>( game_proc );
-      func();
-    }
+  game_initializer::get_instance().init();
 } // game_local_client::init_game()
 
 /*----------------------------------------------------------------------------*/
@@ -711,18 +697,9 @@ void bear::engine::game_local_client::init_game() const
  */
 void bear::engine::game_local_client::end_game() const
 {
-  const std::string game_proc
-    ( s_end_game_function_prefix + get_formatted_game_name() );
+  claw::logger << claw::log_verbose << "Ending game." << std::endl;
 
-  claw::logger << claw::log_verbose << "Ending game: '" << game_proc
-               << "()'" << std::endl;
-
-  if ( m_symbols.have_symbol( game_proc ) )
-    {
-      end_game_function_type func =
-        m_symbols.get_symbol<end_game_function_type>( game_proc );
-      func();
-    }
+  game_initializer::get_instance().end();
 } // game_local_client::end_game()
 
 /*----------------------------------------------------------------------------*/

@@ -7,6 +7,7 @@ set( ENGINE_SOURCE_FILES
   code/compiled_file.cpp
   code/game.cpp
   code/game_description.cpp
+  code/game_initializer.cpp
   code/game_local_client.cpp
   code/game_network.cpp
   code/game_stats.cpp
