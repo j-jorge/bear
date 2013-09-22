@@ -41,7 +41,7 @@ bool bear::teleport_item::set_item_field
   bool result(true);
 
   if ( name == "teleport_item.reference_point" )
-    m_reference = handle_type((universe::physical_item*)value);
+    m_reference = handle_type(value);
   else
     result = super::set_item_field(name, value);
 
@@ -54,7 +54,7 @@ bool bear::teleport_item::set_item_field
  */
 bool bear::teleport_item::is_valid() const
 {
-  return m_reference != handle_type();
+  return m_reference != handle_type(NULL);
 } // teleport_item::is_valid()
 
 /*----------------------------------------------------------------------------*/
@@ -76,7 +76,7 @@ bear::universe::position_type bear::teleport_item::get_gap() const
  */
 void bear::teleport_item::on_toggle_on( engine::base_item* activator )
 {
-  if ( m_reference != handle_type() )
+  if ( m_reference != handle_type(NULL) )
     {
       bear::universe::position_type gap
         ( m_reference->get_center_of_mass() - get_center_of_mass() );
