@@ -36,10 +36,10 @@ namespace bear
       public base_reference_point
     {
     public:
-      explicit ratio_reference_point
+      ratio_reference_point
       ( physical_item& item,
-        const universe::position_type& ratio,
-        const universe::position_type& gap );
+        const position_type& ratio,
+        const position_type& gap = position_type(0, 0) );
 
       virtual base_reference_point* clone() const;
 
@@ -54,10 +54,10 @@ namespace bear
       item_handle m_item;
 
       /* \brief The ratio applied to compute reference point. */
-      universe::position_type m_ratio;
+      position_type m_ratio;
 
-       /* \brief The gap applied to compute reference point. */
-      universe::position_type m_gap;
+      /* \brief The gap applied to compute reference point. */
+      position_type m_gap;
 
     }; // class ratio_reference_point
   } // namespace universe
