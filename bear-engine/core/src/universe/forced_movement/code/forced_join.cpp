@@ -91,7 +91,10 @@ bear::universe::forced_join::do_next_position( time_type elapsed_time )
           m_remaining_time -= elapsed_time;
         }
       else
-        remaining_time = elapsed_time - m_remaining_time;
+        {
+          remaining_time = elapsed_time - m_remaining_time; 
+          m_remaining_time = 0;
+        }
 
       set_moving_item_position( fictive_item + dp );
 
