@@ -22,7 +22,6 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
-#include <set>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -84,12 +83,7 @@ void bf::path_configuration::save() const
           std::set< std::string > workspaces;
           std::set< std::string >::const_iterator it_set;
           
-          for ( it_map = item_class_path.begin();  
-                it_map != item_class_path.end(); ++it_map )
-            workspaces.insert(it_map->first);
-          for ( it_map = data_path.begin();  
-                it_map != data_path.end(); ++it_map )
-            workspaces.insert(it_map->first);
+          get_workspace_names(workspaces);          
           
           for ( it_set = workspaces.begin(); 
                 it_set != workspaces.end(); ++it_set )
@@ -238,6 +232,47 @@ bool bf::path_configuration::get_relative_path( std::string& p ) const
 
   return result;
 } // path_configuration::get_relative_path()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get names of workspaces.
+ */
+void bf::path_configuration::get_workspace_names
+( std::set< std::string >& workspaces ) const
+{
+  std::map<std::string, std::list<std::string> >::const_iterator it_map;
+          
+  workspaces.clear();
+  
+  for ( it_map = item_class_path.begin();  
+        it_map != item_class_path.end(); ++it_map )
+    workspaces.insert(it_map->first);
+  for ( it_map = data_path.begin();  
+        it_map != data_path.end(); ++it_map )
+    workspaces.insert(it_map->first);
+} // path_configuration::get_workspace_names
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set item_class path.
+ * \param path The new paths.
+ */
+void bf::path_configuration::set_item_class_path
+      (const std::map< std::string, std::list<std::string> >& path)
+{
+  item_class_path = path;
+} // path_configuration::set_item_class_path
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Set data path.
+ * \param path The new paths.
+ */
+void bf::path_configuration::set_data_path
+(const std::map< std::string, std::list<std::string> >& path)
+{
+  data_path = path;
+} // path_configuration::set_data_path
 
 /*----------------------------------------------------------------------------*/
 /**

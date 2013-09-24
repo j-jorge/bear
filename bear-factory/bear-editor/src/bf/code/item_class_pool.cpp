@@ -87,7 +87,6 @@ bf::item_class_pool::scan_directory( const std::list<std::string>& dir_path )
 
   for (it=dir_path.begin(); it!=dir_path.end(); ++it)
     {
-      std::cout << "=>" << *it << std::endl;
       std::map<std::string, std::string> files;
 
       open_item_class_file f(files);

@@ -19,6 +19,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <set>
 #include <claw/basic_singleton.hpp>
 
 namespace bf
@@ -63,6 +64,11 @@ namespace bf
     bool expand_file_name( std::string& p ) const;
     bool expand_file_name( std::string& p, std::size_t m ) const;
     bool get_relative_path( std::string& p ) const;
+    void get_workspace_names( std::set< std::string >& workspaces ) const;
+    void set_item_class_path
+      (const std::map< std::string, std::list<std::string> >& path);
+    void set_data_path
+      (const std::map< std::string, std::list<std::string> >& path);
 
   private:
     void load();
