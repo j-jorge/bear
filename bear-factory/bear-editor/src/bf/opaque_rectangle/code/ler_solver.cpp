@@ -1212,15 +1212,14 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_min_x
   result.first.x = min_x;
   result.first.y = default_y;
   result.second = false;
-  bool found = false;
   
   if ( ! p.empty() ) 
     {
+      bool found = false;
       point_list::const_iterator it = p.end();
       do
 	{
 	  --it;
-	  
 	  if ( it->x > min_x )
 	    {
 	      found = true;
@@ -1228,7 +1227,7 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_min_x
 	      result.second = true;
 	    }
 	}
-      while ( (it != p.begin()) && !found );
+      while ( !found && (it != p.begin()) );
     }
 
   return result;
@@ -1241,15 +1240,14 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_max_x
   result.first.x = max_x;
   result.first.y = default_y;
   result.second = false;
-  bool found = false;
   
   if ( ! p.empty() ) 
     {
+      bool found = false;
       point_list::const_iterator it = p.end();
       do
 	{
 	  --it;
-	  
 	  if ( it->x < max_x )
 	    {
 	      found = true;
@@ -1257,7 +1255,7 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_max_x
 	      result.second = true;
 	    }
 	}
-      while ( (it != p.begin()) && (!found) );
+      while ( !found && (it != p.begin()) );
     }
 
   return result;
@@ -1270,15 +1268,14 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_min_y
   result.first.x = default_x;
   result.first.y = min_y;
   result.second = false;
-  bool found = false;
   
   if ( ! p.empty() ) 
     {
+      bool found = false;
       point_list::const_iterator it = p.end();
       do
 	{
 	  --it;
-	  
 	  if ( it->y > min_y )
 	    {
 	      found = true;
@@ -1286,7 +1283,7 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_min_y
 	      result.second = true;
 	    }
 	}
-      while ( (it != p.begin()) && (!found) );
+      while ( !found && (it != p.begin()) );
     }
 
   return result;
@@ -1299,15 +1296,14 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_max_y
   result.first.x = default_x;
   result.first.y = max_y;
   result.second = false;
-  bool found = false;
   
   if ( ! p.empty() ) 
     {
+      bool found = false;
       point_list::const_iterator it = p.end();
       do
 	{
 	  --it;
-	  
 	  if ( it->y < max_y )
 	    {
 	      found = true;
@@ -1315,7 +1311,7 @@ bf::ler_solver::supported_point bf::ler_solver::get_point_end_max_y
 	      result.second = true;
 	    }
 	}
-      while ( (it != p.begin()) && (!found) );
+      while ( !found && (it != p.begin()) );
     }
 
   return result;

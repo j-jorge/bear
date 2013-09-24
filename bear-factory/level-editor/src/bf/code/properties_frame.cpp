@@ -232,7 +232,6 @@ void bf::properties_frame::update_controls()
   CLAW_PRECOND( !m_prop->empty() );
 
   item_field_edit::item_iterator it=m_prop->begin();
-  std::string id(it->get_id());
   bool can_be_fixed(it->get_class().get_fixable());
   wxCheckBoxState fixed( it->get_fixed() ? wxCHK_CHECKED : wxCHK_UNCHECKED );
 
