@@ -82,9 +82,12 @@ void bf::level_editor::update_image_pool() const
 
   std::list<std::string>::const_iterator it;
 
-  for ( it=path_configuration::get_instance().data_path.begin();
-        it!=path_configuration::get_instance().data_path.end(); ++it )
-    image_pool::get_instance().scan_directory(*it);
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
+  it_map = path_configuration::get_instance().data_path.find("default");
+  
+  if ( it_map != path_configuration::get_instance().data_path.end() )
+    for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
+      image_pool::get_instance().scan_directory(*it);
 } // level_editor::update_image_pool()
 
 /*----------------------------------------------------------------------------*/
@@ -235,7 +238,13 @@ bool bf::level_editor::do_command_line_init()
 {
   init_config();
 
-  return !path_configuration::get_instance().item_class_path.empty();
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
+  it_map = path_configuration::get_instance().data_path.find("default");
+  
+  if ( it_map != path_configuration::get_instance().data_path.end() )
+    return ! it_map->second.empty();
+  else
+    return false;
 } // level_editor::do_command_line_init()
 
 /*----------------------------------------------------------------------------*/
@@ -246,12 +255,30 @@ void bf::level_editor::init_config()
 {
   m_config.load();
 
-  if ( path_configuration::get_instance().item_class_path.empty()
-       || path_configuration::get_instance().data_path.empty() )
-    configure();
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
+  it_map = path_configuration::get_instance().data_path.find("default");
+  
+  if ( it_map != path_configuration::get_instance().data_path.end() )
+    {
+      if ( it_map->second.empty() )
+        configure();
+      else
+        {
+          it_map = 
+            path_configuration::get_instance().item_class_path.find
+            ("default");
+          
+          if ( it_map != 
+               path_configuration::get_instance().item_class_path.end() )
+            if ( it_map->second.empty() )
+              configure();
+        }
+    }
 
-  m_class_pool.scan_directory
-    ( path_configuration::get_instance().item_class_path );
+  it_map = 
+    path_configuration::get_instance().item_class_path.find("default");
+  if ( it_map != path_configuration::get_instance().item_class_path.end() )
+    m_class_pool.scan_directory( it_map->second );
 } // level_editor::init_config()
 
 /*----------------------------------------------------------------------------*/
