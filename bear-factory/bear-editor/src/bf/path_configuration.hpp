@@ -18,6 +18,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 #include <claw/basic_singleton.hpp>
 
 namespace bf
@@ -88,10 +89,10 @@ namespace bf
   public:
     /** \brief Path to the directory containing the XML files for item
         classes. */
-    std::list<std::string> item_class_path;
+    std::map< std::string, std::list<std::string> > item_class_path;
 
     /** \brief Path to the data directory of the game. */
-    std::list<std::string> data_path;
+    std::map< std::string, std::list<std::string> > data_path;
 
   private:
     /** \brief Recent results obtained with find_random_file_name. */

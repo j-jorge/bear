@@ -40,12 +40,12 @@ void bf::config_frame::fill_controls()
 
   std::list<std::string>::const_iterator it;
 
-  for ( it=path_configuration::get_instance().item_class_path.begin();
-        it!=path_configuration::get_instance().item_class_path.end(); ++it )
+  for ( it=path_configuration::get_instance().item_class_path["default"].begin();
+        it!=path_configuration::get_instance().item_class_path["default"].end(); ++it )
     m_item_classes_list->Append( std_to_wx_string(*it) );
 
-  for ( it=path_configuration::get_instance().data_path.begin();
-        it!=path_configuration::get_instance().data_path.end(); ++it )
+  for ( it=path_configuration::get_instance().data_path["default"].begin();
+        it!=path_configuration::get_instance().data_path["default"].end(); ++it )
     m_data_path_list->Append( std_to_wx_string(*it) );
 } // config_frame::fill_controls()
 
@@ -128,11 +128,11 @@ void bf::config_frame::on_ok( wxCommandEvent& WXUNUSED(event) )
   path_configuration::get_instance().data_path.clear();
 
   for ( unsigned int i=0; i!=m_item_classes_list->GetCount(); ++i )
-    path_configuration::get_instance().item_class_path.push_back
+    path_configuration::get_instance().item_class_path["default"].push_back
       ( wx_to_std_string( m_item_classes_list->GetString(i) ) );
 
   for ( unsigned int i=0; i!=m_data_path_list->GetCount(); ++i )
-    path_configuration::get_instance().data_path.push_back
+    path_configuration::get_instance().data_path["default"].push_back
       ( wx_to_std_string( m_data_path_list->GetString(i) ) );
 
   path_configuration::get_instance().save();

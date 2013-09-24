@@ -100,9 +100,11 @@ void bf::new_layer_from_image_dialog::create_controls( std::size_t max_index )
   wxArrayString c;
   std::list<std::string>::const_iterator it;
 
-  for ( it=path_configuration::get_instance().data_path.begin();
-        it!=path_configuration::get_instance().data_path.end(); ++it )
-    c.Add( std_to_wx_string(*it) );
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
+  it_map = path_configuration::get_instance().data_path.find("default");
+  if ( it_map != path_configuration::get_instance().data_path.end() )
+    for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
+      c.Add( std_to_wx_string(*it) );
 
   m_output_dir =
     new wxComboBox

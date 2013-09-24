@@ -22,6 +22,7 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
+#include <set>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -79,20 +80,41 @@ void bf::path_configuration::save() const
           f << s_comment
             << " Path to the directory containing XML item class files\n";
 
-          std::list<std::string>::const_iterator it;
+          std::map<std::string, std::list<std::string> >::const_iterator it_map;
+          std::set< std::string > workspaces;
+          std::set< std::string >::const_iterator it_set;
+          
+          for ( it_map = item_class_path.begin();  
+                it_map != item_class_path.end(); ++it_map )
+            workspaces.insert(it_map->first);
+          for ( it_map = data_path.begin();  
+                it_map != data_path.end(); ++it_map )
+            workspaces.insert(it_map->first);
+          
+          for ( it_set = workspaces.begin(); 
+                it_set != workspaces.end(); ++it_set )
+            {
+              f << s_section_left << *it_set << s_section_right << '\n';
+              std::list<std::string>::const_iterator it;
 
-          for (it=item_class_path.begin(); it!=item_class_path.end(); ++it)
-            f << s_items_directory_field << ' ' << s_field_assign << ' ' << *it
-              << '\n';
+              it_map = item_class_path.find(*it_set);
+              if ( it_map != item_class_path.end() )
+                for ( it = it_map->second.begin(); 
+                      it != it_map->second.end(); ++it )
+                  f << s_items_directory_field << ' ' << s_field_assign 
+                    << ' ' << *it << '\n';
 
-          f << '\n' << s_comment
-            << " Path to the directory containing the data of the game\n";
-
-          for (it=data_path.begin(); it!=data_path.end(); ++it)
-            f << s_data_directory_field << ' ' << s_field_assign << ' ' << *it
-              << '\n';
+              f << '\n' << s_comment
+                << " Path to the directory containing the data of the game\n";
+              
+              it_map = data_path.find(*it_set);
+              if ( it_map != data_path.end() )
+                for ( it = it_map->second.begin(); 
+                      it != it_map->second.end(); ++it )
+                  f << s_data_directory_field << ' ' << s_field_assign 
+                    << ' ' << *it << '\n';
+            }
         }
-
     }
 } // path_configuration::save()
 
@@ -118,18 +140,22 @@ bool bf::path_configuration::get_full_path( std::string& p ) const
   boost::filesystem::path path( p );
   bool result = boost::filesystem::exists( path );
   std::list<std::string>::const_reverse_iterator it;
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
 
-  for (it=data_path.rbegin(); !result && (it!=data_path.rend()); ++it)
-    {
-      path = *it;
-      path /= p;
-
-      if ( boost::filesystem::exists( path ) )
-        {
-          result = true;
-          p = path.string();
-        }
-    }
+  it_map = data_path.find("default");
+  if ( it_map != data_path.end() )
+    for ( it = it_map->second.rbegin(); 
+          !result && (it != it_map->second.rend()); ++it)
+      {
+        path = *it;
+        path /= p;
+        
+        if ( boost::filesystem::exists( path ) )
+          {
+            result = true;
+            p = path.string();
+          }
+      }
 
   return result;
 } // path_configuration::get_full_path()
@@ -179,32 +205,36 @@ bool bf::path_configuration::get_relative_path( std::string& p ) const
   boost::filesystem::path path( p );
   bool result = false;
   std::list<std::string>::const_reverse_iterator it;
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
 
-  for (it=data_path.rbegin(); !result && (it!=data_path.rend()); ++it)
-    {
-      bool stop(false);
-      boost::filesystem::path data( *it );
-      boost::filesystem::path::iterator pit = path.begin();
-      boost::filesystem::path::iterator dit = data.begin();
-
-      while ( !stop && (pit!=path.end()) && (dit!=data.end()) )
-        if ( *pit != *dit )
-          stop = true;
-        else
+  it_map = data_path.find("default");
+  if ( it_map != data_path.end() )
+    for ( it = it_map->second.rbegin(); 
+          !result && (it!=it_map->second.rend()); ++it)
+      {
+        bool stop(false);
+        boost::filesystem::path data( *it );
+        boost::filesystem::path::iterator pit = path.begin();
+        boost::filesystem::path::iterator dit = data.begin();
+        
+        while ( !stop && (pit!=path.end()) && (dit!=data.end()) )
+          if ( *pit != *dit )
+            stop = true;
+          else
+            {
+              ++pit;
+              ++dit;
+            }
+        
+        if ( dit == data.end() )
           {
-            ++pit;
-            ++dit;
+            result = true;
+            p = pit->string();
+            
+            for ( ++pit; pit!=path.end(); ++pit )
+              p = (boost::filesystem::path(p) / *pit).string();
           }
-
-      if ( dit == data.end() )
-        {
-          result = true;
-          p = pit->string();
-
-          for ( ++pit; pit!=path.end(); ++pit )
-            p = (boost::filesystem::path(p) / *pit).string();
-        }
-    }
+      }
 
   return result;
 } // path_configuration::get_relative_path()
@@ -223,20 +253,42 @@ void bf::path_configuration::load()
       if (f)
         {
           claw::configuration_file config(f);
-          claw::configuration_file::const_field_iterator it;
 
-          item_class_path.clear();
-          data_path.clear();
+          claw::configuration_file::const_file_iterator it_file;
+          for ( it_file = config.file_begin(); 
+                it_file != config.file_end(); ++it_file )
+            {
+              item_class_path[*it_file].clear();
+              data_path[*it_file].clear();
 
-          for (it=config.field_begin(s_items_directory_field);
-               it!=config.field_end(s_items_directory_field); ++it)
-            item_class_path.push_back(*it);
-
-          for (it=config.field_begin(s_data_directory_field);
-               it!=config.field_end(s_data_directory_field); ++it)
-            data_path.push_back(*it);
+              claw::configuration_file::const_field_iterator it;
+              
+              for ( it = config.field_begin(*it_file, s_items_directory_field);
+                    it != config.field_end(*it_file, s_items_directory_field); 
+                    ++it)
+                item_class_path[*it_file].push_back( *it );
+              
+              for ( it = config.field_begin(*it_file, s_data_directory_field);
+                    it != config.field_end(*it_file, s_data_directory_field); 
+                    ++it)
+                data_path[*it_file].push_back( *it );
+            }
         }
     }
+
+  std::map<std::string, std::list<std::string> >::const_iterator it_map;
+  it_map = item_class_path.find("default");
+  std::list<std::string>::const_iterator it_list;
+  if ( it_map != item_class_path.end() )
+    for ( it_list = it_map->second.begin(); 
+          it_list != it_map->second.end(); ++it_list )
+      std::cout << "1:" << it_map->first << " => " << *it_list << std::endl;
+
+  it_map = data_path.find("default");
+  if ( it_map != data_path.end() )
+    for ( it_list = it_map->second.begin(); 
+          it_list != it_map->second.end(); ++it_list )
+      std::cout << "2:" << it_map->first << " => " << *it_list << std::endl;
 } // path_configuration::load()
 
 /*----------------------------------------------------------------------------*/
@@ -361,21 +413,25 @@ bool bf::path_configuration::find_cached_random_file_name
 bool bf::path_configuration::find_random_file_name_on_disk
 ( std::string& name, std::size_t m ) const
 {
+  std::map< std::string, std::list<std::string> >::const_iterator it_map;
   std::list<std::string>::const_iterator it;
   std::list<std::string> candidates;
   bool result(false);
 
-  for (it=data_path.begin(); (it!=data_path.end()) && (candidates.size() < m);
-       ++it)
-    {
-      const boost::filesystem::path dirpath( *it );
-
-      if ( boost::filesystem::exists( dirpath ) )
-        if ( boost::filesystem::is_directory( dirpath ) )
-          // plus 1 for the trailing slash of the root directory
-          find_all_files_in_dir
-            (*it, name, it->length() + 1, m, candidates);
-    }
+  it_map = data_path.find("default");
+  if ( it_map != data_path.end() )
+    for ( it = it_map->second.begin(); 
+          (it != it_map->second.end()) && (candidates.size() < m);
+          ++it )
+      {
+        const boost::filesystem::path dirpath( *it );
+        
+        if ( boost::filesystem::exists( dirpath ) )
+          if ( boost::filesystem::is_directory( dirpath ) )
+            // plus 1 for the trailing slash of the root directory
+            find_all_files_in_dir
+              (*it, name, it->length() + 1, m, candidates);
+      }
 
   if ( !candidates.empty() )
     {

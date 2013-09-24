@@ -16,6 +16,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 #include <claw/configuration_file.hpp>
 #include <wx/gdicmn.h>
 
