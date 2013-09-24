@@ -275,20 +275,6 @@ void bf::path_configuration::load()
             }
         }
     }
-
-  std::map<std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = item_class_path.find("default");
-  std::list<std::string>::const_iterator it_list;
-  if ( it_map != item_class_path.end() )
-    for ( it_list = it_map->second.begin(); 
-          it_list != it_map->second.end(); ++it_list )
-      std::cout << "1:" << it_map->first << " => " << *it_list << std::endl;
-
-  it_map = data_path.find("default");
-  if ( it_map != data_path.end() )
-    for ( it_list = it_map->second.begin(); 
-          it_list != it_map->second.end(); ++it_list )
-      std::cout << "2:" << it_map->first << " => " << *it_list << std::endl;
 } // path_configuration::load()
 
 /*----------------------------------------------------------------------------*/
