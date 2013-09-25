@@ -106,7 +106,12 @@ void bear::engine::spritepos::load( std::istream& f )
     if ( !line.empty() )
       if ( line[0] != '#' )
         {
-          std::string::size_type pos = line.find_first_of(':');
+          std::string::size_type pos( line.find_first_of(':') );
+          const std::string::size_type next
+            ( line.find_first_of( ':', pos + 1 ) );
+
+          if ( next != std::string::npos )
+            pos = next;
 
           std::string n( line.substr(0, pos) );
           claw::text::trim(n);
