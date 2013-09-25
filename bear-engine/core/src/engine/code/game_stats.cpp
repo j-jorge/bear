@@ -117,8 +117,10 @@ void bear::engine::game_stats::start( std::string name, std::string id ) const
 
   std::string tag;
 
-#ifdef _WIN32
+#if defined( _WIN32 )
   tag = "win32";
+#elif defined( __ANDROID__ )
+  tag = "android"
 #else
   tag = "unix";
 #endif
