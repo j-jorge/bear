@@ -15,6 +15,9 @@
 #define __BF_CONFIG_FRAME_HPP__
 
 #include <wx/wx.h>
+#include <map>
+#include <string>
+#include <list>
 
 #include "bf/libeditor_export.hpp"
 
@@ -34,7 +37,8 @@ namespace bf
         IDC_BROWSE_ITEM_CLASSES_BUTTON,
         IDC_ERASE_ITEM_CLASSES_BUTTON,
         IDC_BROWSE_DATA_PATH_BUTTON,
-        IDC_ERASE_DATA_PATH_BUTTON
+        IDC_ERASE_DATA_PATH_BUTTON,
+        IDC_CHOICE
       }; // enum control_id
 
   public:
@@ -43,6 +47,7 @@ namespace bf
   private:
 
     void fill_controls();
+    void fill_list_view();
 
     void create_controls();
     void create_member_controls();
@@ -54,13 +59,24 @@ namespace bf
     void on_erase_item_classes(wxCommandEvent& event);
     void on_browse_data_path(wxCommandEvent& event);
     void on_erase_data_path(wxCommandEvent& event);
+    void on_select_workspace(wxCommandEvent& event);
 
   private:
+    /** \brief The list of workspaces. */
+    wxChoice* m_workspaces;
+
     /** \brief The list of paths to the item classes files. */
     wxListBox* m_item_classes_list;
 
     /** \brief The list of paths to the data of the game. */
     wxListBox* m_data_path_list;
+
+    /** \brief Path to the directory containing the XML files for item
+        classes. */
+    std::map< std::string, std::list<std::string> > m_item_class_path;
+
+    /** \brief Path to the data directory of the game. */
+    std::map< std::string, std::list<std::string> > m_data_path;
 
     DECLARE_EVENT_TABLE()
 

@@ -82,8 +82,6 @@ void bf::configuration::save() const
 
       if (f)
         {
-          std::list<std::string>::const_iterator it;
-
           f << '\n' << s_section_left << s_main_frame_section << s_section_right
             << '\n' << s_comment << " Position and size of the main window\n";
           write_rect( f, main_rect );

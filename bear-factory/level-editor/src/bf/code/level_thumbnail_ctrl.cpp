@@ -145,10 +145,9 @@ void bf::level_thumbnail_ctrl::compute_view_box()
  */
 void bf::level_thumbnail_ctrl::render()
 {
-  wxBufferedPaintDC dc(this);
-
   if ( IsShown() )
     {
+      wxBufferedPaintDC dc(this);
       dc.SetBackground(*wxBLACK_BRUSH);
       dc.Clear();
 
