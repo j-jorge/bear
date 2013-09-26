@@ -145,7 +145,6 @@ bool bear::mouse_detector::finger_action( const input::finger_event& event )
   bool result = false;
   
   if ( m_finger
-       && (event.get_type() == input::finger_event::finger_event_pressed)
        && get_bounding_box().includes
        ( get_level().screen_to_level( event.get_position() ) ) )
     {
