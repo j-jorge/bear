@@ -17,6 +17,8 @@
 #include "engine/class_export.hpp"
 #include "universe/forced_movement/forced_movement.hpp"
 
+#include "universe/derived_item_handle.hpp"
+
 #include <vector>
 
 namespace bear
@@ -52,6 +54,9 @@ namespace bear
     {
       friend class forced_movement_applicator_loader;
 
+    private:
+      typedef universe::derived_item_handle<base_item> handle_type;
+
     public:
       bool is_valid() const;
 
@@ -60,7 +65,7 @@ namespace bear
 
     private:
       /** \brief The items to move. */
-      std::vector<base_item*> m_actor;
+      std::vector<handle_type> m_actor;
 
       /** \brief The item from which we take the movement. */
       universe::forced_movement m_movement;
