@@ -33,7 +33,7 @@ forced_movement_applicator_loader
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Instanciate a copy of this object.
+ * \brief Instantiates a copy of this object.
  */
 bear::engine::forced_movement_applicator_loader*
 bear::engine::forced_movement_applicator_loader::clone() const
@@ -43,7 +43,7 @@ bear::engine::forced_movement_applicator_loader::clone() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set a field of type "list of item".
+ * \brief Sets a field of type "list of item".
  * \param name The name of the field.
  * \param value The value of the field.
  */
@@ -53,7 +53,7 @@ bool bear::engine::forced_movement_applicator_loader::set_field
   bool result = true;
 
   if ( name == "actor" )
-    m_item.m_actor = value;
+    m_item.m_actor.insert( m_item.m_actor.end(), value.begin(), value.end() );
   else
     result = false;
 

@@ -21,12 +21,7 @@
  */
 bool bear::engine::forced_movement_applicator::is_valid() const
 {
-  bool result = !m_movement.is_null();
-
-  for (unsigned int i=0; result && (i!=m_actor.size()); ++i)
-    result = m_actor[i] != NULL;
-
-  return result;
+  return !m_movement.is_null();
 } // forced_movement_applicator::is_valid()
 
 /*----------------------------------------------------------------------------*/
@@ -46,5 +41,6 @@ bear::engine::forced_movement_applicator::get_movement() const
 void bear::engine::forced_movement_applicator::give_movement()
 {
   for (unsigned int i=0; i!=m_actor.size(); ++i)
-    m_actor[i]->set_forced_movement(m_movement);
+    if ( m_actor[i] != (handle_type)NULL )
+      m_actor[i]->set_forced_movement(m_movement);
 } // forced_movement_applicator::give_movement()
