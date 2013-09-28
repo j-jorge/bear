@@ -215,6 +215,18 @@ void bear::engine::model_mark::remove_substitute()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells if the animation of the mark must be reset when the action
+ *        begins.
+ */
+bool bear::engine::model_mark::reset_animation_with_action() const
+{
+  return has_animation()
+    && ( get_animation()->is_finite()
+         || (get_animation()->get_first_index() != 0) );
+} // model_mark::reset_animation_with_action()
+
+/*----------------------------------------------------------------------------*/
+/**
  * Get the item to keep centered on this mark.
  */
 bear::engine::model_mark_item& bear::engine::model_mark::get_box_item() const

@@ -57,6 +57,8 @@ namespace bear
       void set_substitute( const model_animation& anim );
       void remove_substitute();
 
+      bool reset_animation_with_action() const;
+
       model_mark_item& get_box_item() const;
 
       void add_box_item_in_layer( layer& the_layer );
