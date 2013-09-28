@@ -22,6 +22,7 @@
  */
 bear::engine::model_mark::model_mark()
   : m_apply_angle_to_animation(false), m_pause_when_hidden(false),
+    m_reset_animation_with_action(true),
     m_box_item( new model_mark_item ), m_item_in_layer(false)
 {
 
@@ -32,14 +33,19 @@ bear::engine::model_mark::model_mark()
  * \brief Constructor.
  * \param label The label of the mark.
  * \param anim The animation displayed on the mark.
- * \param apply_angle Tell if the angle of the mark is applied to the animation.
- * \param pause_hidden Tell if the animation must be paused when hidden.
+ * \param apply_angle Tells if the angle of the mark is applied to the
+ *        animation.
+ * \param pause_hidden Tells if the animation must be paused when hidden.
+ * \param reset_animation_with_action Tells if the animation must be reset when
+ *        the action begins.
  */
 bear::engine::model_mark::model_mark
 ( const std::string& label, const model_animation& anim, bool apply_angle,
-  bool pause_hidden )
+  bool pause_hidden, bool reset_animation_with_action )
   : m_label(label), m_animation(anim), m_apply_angle_to_animation(apply_angle),
-    m_pause_when_hidden(pause_hidden), m_box_item( new model_mark_item ),
+    m_pause_when_hidden(pause_hidden),
+    m_reset_animation_with_action(reset_animation_with_action),
+    m_box_item( new model_mark_item ),
     m_item_in_layer(false)
 {
 
@@ -220,7 +226,8 @@ void bear::engine::model_mark::remove_substitute()
  */
 bool bear::engine::model_mark::reset_animation_with_action() const
 {
-  return has_animation()
+  return m_reset_animation_with_action
+    &&  has_animation()
     && ( get_animation()->is_finite()
          || (get_animation()->get_first_index() != 0) );
 } // model_mark::reset_animation_with_action()

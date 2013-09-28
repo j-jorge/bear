@@ -35,7 +35,7 @@ namespace bear
       model_mark();
       model_mark
       ( const std::string& label, const model_animation& anim,
-        bool apply_angle, bool pause_hidden );
+        bool apply_angle, bool pause_hidden, bool reset_animation_with_action );
       model_mark( const model_mark& that );
       ~model_mark();
 
@@ -79,6 +79,9 @@ namespace bear
 
       /** \brief Tell if the animation must be paused when hidden. */
       bool m_pause_when_hidden;
+
+      /** \brief Tells if the animation must be reset when an action begins. */
+      bool m_reset_animation_with_action;
 
       /** \brief The item centered on this mark. */
       model_mark_item* m_box_item;
