@@ -22,6 +22,7 @@
  */
 bear::engine::model_mark::model_mark()
   : m_apply_angle_to_animation(false), m_pause_when_hidden(false),
+    m_reset_animation_with_action(true),
     m_box_item( new model_mark_item ), m_item_in_layer(false)
 {
 
@@ -32,14 +33,19 @@ bear::engine::model_mark::model_mark()
  * \brief Constructor.
  * \param label The label of the mark.
  * \param anim The animation displayed on the mark.
- * \param apply_angle Tell if the angle of the mark is applied to the animation.
- * \param pause_hidden Tell if the animation must be paused when hidden.
+ * \param apply_angle Tells if the angle of the mark is applied to the
+ *        animation.
+ * \param pause_hidden Tells if the animation must be paused when hidden.
+ * \param reset_animation_with_action Tells if the animation must be reset when
+ *        the action begins.
  */
 bear::engine::model_mark::model_mark
 ( const std::string& label, const model_animation& anim, bool apply_angle,
-  bool pause_hidden )
+  bool pause_hidden, bool reset_animation_with_action )
   : m_label(label), m_animation(anim), m_apply_angle_to_animation(apply_angle),
-    m_pause_when_hidden(pause_hidden), m_box_item( new model_mark_item ),
+    m_pause_when_hidden(pause_hidden),
+    m_reset_animation_with_action(reset_animation_with_action),
+    m_box_item( new model_mark_item ),
     m_item_in_layer(false)
 {
 
@@ -51,8 +57,11 @@ bear::engine::model_mark::model_mark
  * \param that The instance to copy from.
  */
 bear::engine::model_mark::model_mark( const model_mark& that )
-  : m_label(that.m_label), m_animation(that.m_animation),
-    m_apply_angle_to_animation(that.m_apply_angle_to_animation),
+  : m_label(that.m_label), m_animation( that.m_animation ),
+    m_substitute( that.m_substitute ),
+    m_apply_angle_to_animation( that.m_apply_angle_to_animation ),
+    m_pause_when_hidden( that.m_pause_when_hidden ),
+    m_reset_animation_with_action( that.m_reset_animation_with_action ),
     m_box_item(that.m_box_item->clone()), m_item_in_layer(false)
 {
 
@@ -93,7 +102,10 @@ void bear::engine::model_mark::swap( model_mark& that ) throw()
 {
   std::swap(m_label, that.m_label);
   std::swap(m_animation, that.m_animation);
+  std::swap(m_substitute, that.m_substitute);
   std::swap(m_apply_angle_to_animation, that.m_apply_angle_to_animation);
+  std::swap(m_pause_when_hidden, that.m_pause_when_hidden);
+  std::swap(m_reset_animation_with_action, that.m_reset_animation_with_action);
   std::swap(m_box_item, that.m_box_item);
   std::swap(m_item_in_layer, that.m_item_in_layer);
 } // model_mark::swap()
@@ -212,6 +224,19 @@ void bear::engine::model_mark::remove_substitute()
 {
   m_substitute = NULL;
 } // model_mark::remove_substitute()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the animation of the mark must be reset when the action
+ *        begins.
+ */
+bool bear::engine::model_mark::reset_animation_with_action() const
+{
+  return m_reset_animation_with_action
+    &&  has_animation()
+    && ( get_animation()->is_finite()
+         || (get_animation()->get_first_index() != 0) );
+} // model_mark::reset_animation_with_action()
 
 /*----------------------------------------------------------------------------*/
 /**

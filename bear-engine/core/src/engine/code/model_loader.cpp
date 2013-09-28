@@ -34,24 +34,25 @@
  */
 bear::engine::model_loader::model_loader
 ( std::istream& f, level_globals& glob )
-  : m_file(f, true), m_level_globals(glob)
+  : m_file(f, true), m_level_globals(glob),
+    m_major_version(0),
+    m_minor_version(0),
+    m_release_version(0)
 {
 
 } // model_loader::model_loader()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Build the model
+ * \brief Builds the model
  */
 bear::engine::model_actor* bear::engine::model_loader::run()
 {
-  unsigned int maj(0), min(0), rel(0);
-
-  m_file >> maj >> min >> rel;
+  m_file >> m_major_version >> m_minor_version >> m_release_version;
 
   if ( !m_file )
     throw claw::exception("Can't read the version of the model file.");
-  else if ( (maj != 0) || (min < 6) )
+  else if ( !model_version_greater_or_equal( 0, 6, 0 ) )
     throw claw::exception("This version of the model file is not supported.");
   else
     {
@@ -63,6 +64,30 @@ bear::engine::model_actor* bear::engine::model_loader::run()
       return result;
     }
 } // model_loader::run()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the version of the model in process is greater or equal to
+ *        a given version.
+ * \param major The major version number to compare to.
+ * \param minor The minor version number to compare to.
+ * \param release The realese version number to compare to.
+ * \return true if the version of the model is lexicographically greater or
+ *         equal to the provided version.
+ */
+bool bear::engine::model_loader::model_version_greater_or_equal
+( unsigned int major, unsigned int minor, unsigned int release ) const
+{
+  if ( major == m_major_version )
+    {
+      if ( minor == m_minor_version )
+        return release <= m_release_version;
+      else
+        return minor <= m_minor_version;
+    }
+  else
+    return major <= m_major_version;
+} // model_loader::model_version_greater_or_equal()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -157,16 +182,27 @@ void bear::engine::model_loader::load_marks
       std::string label;
       bool apply_angle;
       bool pause_hidden;
+      bool reset_with_action( true );
       std::size_t anim_index;
 
-      if ( m_file >> label >> apply_angle >> pause_hidden >> anim_index )
+      if ( m_file >> label >> apply_angle >> pause_hidden )
+        {
+          if ( model_version_greater_or_equal( 0, 10, 0 ) )
+            m_file >> reset_with_action;
+
+          m_file >> anim_index;
+        }
+
+      if ( m_file )
         {
           model_animation anim;
 
           if ( anim_index < anim_map.size() )
             anim = anim_map[anim_index];
 
-          a.get_mark(i) = model_mark( label, anim, apply_angle, pause_hidden );
+          a.get_mark(i) =
+            model_mark
+            ( label, anim, apply_angle, pause_hidden, reset_with_action );
         }
       else
         claw::logger << claw::log_error << "The mark is incomplete."

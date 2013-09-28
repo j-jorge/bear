@@ -826,10 +826,13 @@ void bear::engine::model<Base>::reset_action( universe::time_type d )
   model_action::mark_iterator it;
 
   for ( it=m_action->mark_begin(); it!=m_action->mark_end(); ++it )
-    if ( it->has_animation() )
-      if ( it->get_animation()->is_finite()
-           || (it->get_animation()->get_first_index() != 0) )
+    if ( it->reset_animation_with_action() )
+      {
+        if ( it->get_label() == "fire" )
+          std::cout << "reset fire in " << m_action_name << std::endl;
+
         it->get_animation()->reset();
+      }
 
   progress_animations(0, m_date, true);
 

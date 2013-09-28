@@ -45,6 +45,9 @@ namespace bear
       model_actor* run();
 
     private:
+      bool model_version_greater_or_equal
+        ( unsigned int major, unsigned int minor, unsigned int release ) const;
+
       void load_actions( model_actor& m, const anim_map_type& anim_map );
       void load_action( model_actor& m, const anim_map_type& anim_map );
       void load_sound( std::vector<std::string>& sound_name, bool& glob );
@@ -62,6 +65,15 @@ namespace bear
 
       /** \brief The level_globals in which we load the resources. */
       level_globals& m_level_globals;
+
+      /** \brief The major version number in the model file. */
+      unsigned int m_major_version;
+
+      /** \brief The minor version number in the model file. */
+      unsigned int m_minor_version;
+
+      /** \brief The release version number in the model file. */
+      unsigned int m_release_version;
 
     }; // class model_loader
   } // namespace engine

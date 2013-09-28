@@ -41,6 +41,10 @@ void bf::xml::model_mark_node::read( mark& m, const wxXmlNode* node ) const
     ( reader_tool::read_bool_opt
       ( node, wxT("pause_animation_when_hidden"),
         m.pause_animation_when_hidden() ) );
+  m.reset_animation_with_action
+    ( reader_tool::read_bool_opt
+      ( node, wxT("reset_animation_with_action"),
+        m.reset_animation_with_action() ) );
 
   const wxXmlNode* child = reader_tool::skip_comments(node->GetChildren());
 
@@ -74,6 +78,7 @@ bf::xml::model_mark_node::write( const mark& m, std::ostream& os ) const
   os << "<mark label=\"" << xml::util::replace_special_characters(m.get_label())
      << "\" apply_angle_to_animation=\"" << m.apply_angle_to_animation()
      << "\" pause_animation_when_hidden=\"" << m.pause_animation_when_hidden()
+     << "\" reset_animation_with_action=\"" << m.reset_animation_with_action()
      << "\">\n";
 
   if ( m.has_animation() )

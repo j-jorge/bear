@@ -201,10 +201,13 @@ void bf::mark_list_frame::on_new_mark(wxCommandEvent& WXUNUSED(event))
         if ( dlg.ShowModal() == wxID_OK )
           {
             mark* m = new mark();
+
             m->set_label(dlg.get_mark_name());
             m->set_animation(dlg.get_mark_animation());
             m->apply_angle_to_animation(dlg.apply_angle_to_animation());
             m->pause_animation_when_hidden(dlg.pause_animation_when_hidden());
+            m->reset_animation_with_action(dlg.reset_animation_with_action());
+
             m_model_frame->do_action
               ( new action_add_mark(a.get_name(), m) );
             fill();
@@ -279,9 +282,10 @@ void bf::mark_list_frame::on_show_properties(wxCommandEvent& WXUNUSED(event))
             if ( dlg.ShowModal() == wxID_OK )
               m_model_frame->do_action
                 ( new action_modify_mark
-                  (m, dlg.get_mark_name(), dlg.get_mark_animation(),
-                   dlg.apply_angle_to_animation(),
-                   dlg.pause_animation_when_hidden()) );
+                  ( m, dlg.get_mark_name(), dlg.get_mark_animation(),
+                    dlg.apply_angle_to_animation(),
+                    dlg.pause_animation_when_hidden(),
+                    dlg.reset_animation_with_action() ) );
 
             fill();
             m_mark_list->Select(index);

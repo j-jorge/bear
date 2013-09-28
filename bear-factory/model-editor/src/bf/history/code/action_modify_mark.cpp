@@ -25,15 +25,18 @@
  * \param label The new label of the mark.
  * \param animation The new animation of the mark.
  * \param apply_angle_to_animation The new angle application statut.
- * \param pause_hidden Tell if the animation must be paused when the mark is
+ * \param pause_hidden Tells if the animation must be paused when the mark is
  *        hidden.
+ * \param reset_with_action Tells if the animation must be reset when the action
+ *        starts.
  */
 bf::action_modify_mark::action_modify_mark
 ( mark* m, const std::string& label, const bf::any_animation& animation,
-  bool apply_angle_to_animation, bool pause_hidden )
+  bool apply_angle_to_animation, bool pause_hidden, bool reset_with_action )
   : m_mark(m), m_label(label), m_animation(animation),
     m_apply_angle_to_animation(apply_angle_to_animation),
-    m_pause_animation_when_hidden(pause_hidden)
+    m_pause_animation_when_hidden(pause_hidden),
+    m_reset_animation_with_action(reset_with_action)
 {
 
 } // action_modify_mark::action_modify_mark()
@@ -44,18 +47,25 @@ bf::action_modify_mark::action_modify_mark
  */
 void bf::action_modify_mark::execute( gui_model& mdl )
 {
-  const std::string l(m_mark->get_label());
-  const bf::any_animation a(m_mark->get_animation());
-  bool apply_angle_to_animation(m_mark->apply_angle_to_animation());
+  const std::string label( m_mark->get_label() );
+  const bf::any_animation a( m_mark->get_animation() );
+  const bool apply_angle_to_animation( m_mark->apply_angle_to_animation() );
+  const bool pause_animation_when_hidden
+    ( m_mark->pause_animation_when_hidden() );
+  const bool reset_animation_with_action
+    ( m_mark->reset_animation_with_action() );
 
   m_mark->set_label( m_label );
   m_mark->set_animation( m_animation );
-  m_mark->apply_angle_to_animation(m_apply_angle_to_animation);
-  m_mark->pause_animation_when_hidden(m_pause_animation_when_hidden);
+  m_mark->apply_angle_to_animation( m_apply_angle_to_animation );
+  m_mark->pause_animation_when_hidden( m_pause_animation_when_hidden );
+  m_mark->reset_animation_with_action( m_reset_animation_with_action );
 
-  m_label = l;
+  m_label = label;
   m_animation = a;
   m_apply_angle_to_animation = apply_angle_to_animation;
+  m_pause_animation_when_hidden = pause_animation_when_hidden;
+  m_reset_animation_with_action = reset_animation_with_action;
 } // action_modify_mark::execute()
 
 /*----------------------------------------------------------------------------*/
@@ -71,11 +81,12 @@ bool bf::action_modify_mark::is_identity( const gui_model& mdl ) const
   return (m_mark->get_label() == m_label)
     && (m_mark->get_animation() == m_animation )
     && (m_mark->apply_angle_to_animation() == m_apply_angle_to_animation)
-    && (m_mark->pause_animation_when_hidden() == m_pause_animation_when_hidden);
+    && (m_mark->pause_animation_when_hidden() == m_pause_animation_when_hidden)
+    && (m_mark->reset_animation_with_action() == m_reset_animation_with_action);
 } // action_modify_mark::is_identity()
 
 /*----------------------------------------------------------------------------*/
 wxString bf::action_modify_mark::get_description() const
 {
-  return _("Set mark label and animation");
+  return _("Set mark properties");
 } // action_modify_mark::get_description()

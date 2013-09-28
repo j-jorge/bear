@@ -52,6 +52,9 @@ namespace bf
     void pause_animation_when_hidden( bool b );
     bool pause_animation_when_hidden() const;
 
+    void reset_animation_with_action( bool b );
+    bool reset_animation_with_action() const;
+
     void compile
     ( compiled_file& f,
       const std::map<any_animation, std::size_t>& anim_ref ) const;
@@ -63,12 +66,15 @@ namespace bf
     /** \brief The animation centered on this mark. */
     any_animation m_animation;
 
-    /** \brief Tell if the angle applied to the mark is also applied to the
+    /** \brief Tells if the angle applied to the mark is also applied to the
         animation. */
     bool m_apply_angle_to_animation;
 
-    /** \brief Tell if the animation must be paused when the mark is hidden. */
+    /** \brief Tells if the animation must be paused when the mark is hidden. */
     bool m_pause_animation_when_hidden;
+
+    /** \brief Tells if the animation must be reset when an action begins. */
+    bool m_reset_animation_with_action;
 
   }; // class mark
 } // namespace bf

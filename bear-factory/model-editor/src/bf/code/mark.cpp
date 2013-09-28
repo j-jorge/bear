@@ -20,14 +20,15 @@
  * \brief Constructor.
  */
 bf::mark::mark()
-  : m_apply_angle_to_animation(false), m_pause_animation_when_hidden(false)
+  : m_apply_angle_to_animation(false), m_pause_animation_when_hidden(false),
+    m_reset_animation_with_action(true)
 {
 
 } // mark::mark()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the label of the mark.
+ * \brief Sets the label of the mark.
  * \param label The label of the mark.
  */
 void bf::mark::set_label( const std::string& label )
@@ -37,7 +38,7 @@ void bf::mark::set_label( const std::string& label )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the label of the mark.
+ * \brief Gets the label of the mark.
  */
 const std::string& bf::mark::get_label() const
 {
@@ -46,7 +47,7 @@ const std::string& bf::mark::get_label() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Set the animation used for this mark.
+ * \brief Sets the animation used for this mark.
  * \param anim The animation.
  */
 void bf::mark::set_animation( const any_animation& anim )
@@ -56,7 +57,7 @@ void bf::mark::set_animation( const any_animation& anim )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the animation file used for this mark.
+ * \brief Gets the animation file used for this mark.
  */
 const bf::any_animation& bf::mark::get_animation() const
 {
@@ -65,7 +66,7 @@ const bf::any_animation& bf::mark::get_animation() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if this mark has an animation associated to it.
+ * \brief Tells if this mark has an animation associated to it.
  */
 bool bf::mark::has_animation() const
 {
@@ -74,7 +75,7 @@ bool bf::mark::has_animation() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get the animation associated with this mark.
+ * \brief Gets the animation associated with this mark.
  */
 bf::animation bf::mark::get_animation_data() const
 {
@@ -83,7 +84,7 @@ bf::animation bf::mark::get_animation_data() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if the angle applied to the mark is also applied to the
+ * \brief Tells if the angle applied to the mark is also applied to the
  *        animation.
  * \param b Apply it or not.
  */
@@ -94,7 +95,7 @@ void bf::mark::apply_angle_to_animation(bool b)
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if the angle applied to the mark is also applied to the
+ * \brief Tells if the angle applied to the mark is also applied to the
  *        animation.
  */
 bool bf::mark::apply_angle_to_animation() const
@@ -104,7 +105,7 @@ bool bf::mark::apply_angle_to_animation() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if the animation is paused when the mark is hidden.
+ * \brief Tells if the animation is paused when the mark is hidden.
  * \param b Pause or not.
  */
 void bf::mark::pause_animation_when_hidden(bool b)
@@ -114,7 +115,7 @@ void bf::mark::pause_animation_when_hidden(bool b)
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tell if the animation is paused when the mark is hidden.
+ * \brief Tells if the animation is paused when the mark is hidden.
  */
 bool bf::mark::pause_animation_when_hidden() const
 {
@@ -123,7 +124,26 @@ bool bf::mark::pause_animation_when_hidden() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Compile the mark.
+ * \brief Tells if the animation must be reset when an action begins.
+ * \param b Reset or not.
+ */
+void bf::mark::reset_animation_with_action(bool b)
+{
+  m_reset_animation_with_action = b;
+} // mark::reset_animation_with_action()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells if the animation must be reset when an action begins.
+ */
+bool bf::mark::reset_animation_with_action() const
+{
+  return m_reset_animation_with_action;
+} // mark::reset_animation_with_action()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Compiles the mark.
  * \param f The file in which we compile.
  * \param anim_ref The references to the animations common to several marks.
  */
@@ -131,7 +151,8 @@ void bf::mark::compile
 ( compiled_file& f,
   const std::map<any_animation, std::size_t>& anim_ref ) const
 {
-  f << m_label << m_apply_angle_to_animation << m_pause_animation_when_hidden;
+  f << m_label << m_apply_angle_to_animation << m_pause_animation_when_hidden
+    << m_reset_animation_with_action;
 
   if ( has_animation() )
     f << anim_ref.find(get_animation())->second;
