@@ -57,8 +57,11 @@ bear::engine::model_mark::model_mark
  * \param that The instance to copy from.
  */
 bear::engine::model_mark::model_mark( const model_mark& that )
-  : m_label(that.m_label), m_animation(that.m_animation),
-    m_apply_angle_to_animation(that.m_apply_angle_to_animation),
+  : m_label(that.m_label), m_animation( that.m_animation ),
+    m_substitute( that.m_substitute ),
+    m_apply_angle_to_animation( that.m_apply_angle_to_animation ),
+    m_pause_when_hidden( that.m_pause_when_hidden ),
+    m_reset_animation_with_action( that.m_reset_animation_with_action ),
     m_box_item(that.m_box_item->clone()), m_item_in_layer(false)
 {
 
@@ -99,7 +102,10 @@ void bear::engine::model_mark::swap( model_mark& that ) throw()
 {
   std::swap(m_label, that.m_label);
   std::swap(m_animation, that.m_animation);
+  std::swap(m_substitute, that.m_substitute);
   std::swap(m_apply_angle_to_animation, that.m_apply_angle_to_animation);
+  std::swap(m_pause_when_hidden, that.m_pause_when_hidden);
+  std::swap(m_reset_animation_with_action, that.m_reset_animation_with_action);
   std::swap(m_box_item, that.m_box_item);
   std::swap(m_item_in_layer, that.m_item_in_layer);
 } // model_mark::swap()

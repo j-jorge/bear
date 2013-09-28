@@ -182,15 +182,19 @@ void bear::engine::model_loader::load_marks
       std::string label;
       bool apply_angle;
       bool pause_hidden;
+      bool reset_with_action( true );
       std::size_t anim_index;
 
-      if ( m_file >> label >> apply_angle >> pause_hidden >> anim_index )
+      if ( m_file >> label >> apply_angle >> pause_hidden )
         {
-          bool reset_with_action( true );
-
           if ( model_version_greater_or_equal( 0, 10, 0 ) )
             m_file >> reset_with_action;
 
+          m_file >> anim_index;
+        }
+
+      if ( m_file )
+        {
           model_animation anim;
 
           if ( anim_index < anim_map.size() )

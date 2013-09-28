@@ -45,6 +45,7 @@ namespace bf
     const bf::any_animation& get_mark_animation() const;
     bool apply_angle_to_animation() const;
     bool pause_animation_when_hidden() const;
+    bool reset_animation_with_action() const;
 
     void fill_from( const mark& a );
 
@@ -75,6 +76,9 @@ namespace bf
     /** \brief Tell if the animation is paused when the mark is hidden. */
     bool m_pause_animation_when_hidden;
 
+    /** \brief Tells if the animation must be reset when an action begins. */
+    bool m_reset_animation_with_action;
+
     /** \brief The text control in which we configure the label of the mark. */
     wxTextCtrl* m_mark_label_box;
 
@@ -87,6 +91,10 @@ namespace bf
     /** \brief The control to check if the animation is paused when
         the mark is hidden. */
     wxCheckBox* m_pause_when_hidden_box;
+
+    /** \brief The control to check if the animation is reset when the action
+        containing the mark begins. */
+    wxCheckBox* m_reset_with_action_box;
 
     DECLARE_EVENT_TABLE()
 

@@ -33,7 +33,8 @@ namespace bf
   public:
     action_modify_mark
     ( mark* m, const std::string& label, const bf::any_animation& animation,
-      bool apply_angle_to_animation, bool pause_hidden );
+      bool apply_angle_to_animation, bool pause_hidden,
+      bool reset_with_action );
 
     void execute( gui_model& mdl );
     void undo( gui_model& mdl );
@@ -51,12 +52,15 @@ namespace bf
     /** \brief The new animation of the mark. */
     bf::any_animation m_animation;
 
-    /** \brief Tell if the angle applied to the mark is also applied to the
+    /** \brief Tells if the angle applied to the mark is also applied to the
         animation. */
     bool m_apply_angle_to_animation;
 
-    /** \brief Tell if the animation must be paused when the mark is hidden. */
+    /** \brief Tells if the animation must be paused when the mark is hidden. */
     bool m_pause_animation_when_hidden;
+
+    /** \brief Tells if the animation must be reset when the action starts. */
+    bool m_reset_animation_with_action;
 
   }; // class action_modify_mark
 } // namespace bf

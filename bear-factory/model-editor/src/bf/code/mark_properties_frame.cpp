@@ -27,7 +27,8 @@
 bf::mark_properties_frame::mark_properties_frame
 ( wxWindow* parent, const action* a )
   : wxDialog(parent, wxID_ANY, wxString(_("Mark properties"))), m_action(a),
-    m_apply_angle_to_animation(false), m_pause_animation_when_hidden(false)
+    m_apply_angle_to_animation(false), m_pause_animation_when_hidden(false),
+    m_reset_animation_with_action(true)
 {
   create_controls();
   Fit();
@@ -73,6 +74,15 @@ bool bf::mark_properties_frame::pause_animation_when_hidden() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells if the animation must be reset when the action begins.
+ */
+bool bf::mark_properties_frame::reset_animation_with_action() const
+{
+  return m_reset_animation_with_action;
+} // mark_properties_frame::reset_animation_with_action()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Set the properties of the mark.
  * \param a The mark from which we take the info.
  */
@@ -83,6 +93,7 @@ void bf::mark_properties_frame::fill_from( const mark& a )
   m_mark_animation.reload();
   m_apply_angle_to_animation = a.apply_angle_to_animation();
   m_pause_animation_when_hidden = a.pause_animation_when_hidden();
+  m_reset_animation_with_action = a.reset_animation_with_action();
 
   fill_controls();
 } // mark_properties_frame::set_mark_size()
@@ -96,6 +107,7 @@ void bf::mark_properties_frame::fill_controls()
   m_mark_label_box->SetValue( std_to_wx_string(m_mark_label) );
   m_apply_angle_box->SetValue( m_apply_angle_to_animation );
   m_pause_when_hidden_box->SetValue( m_pause_animation_when_hidden );
+  m_reset_with_action_box->SetValue( m_reset_animation_with_action );
 } // mark_properties_frame::fill_controls()
 
 /*----------------------------------------------------------------------------*/
@@ -118,9 +130,11 @@ void bf::mark_properties_frame::create_member_controls()
   m_mark_label_box = new wxTextCtrl( this, wxID_ANY );
   m_edit_animation = new wxButton(this, IDC_EDIT_ANIMATION, _("Edit"));
   m_apply_angle_box = new wxCheckBox
-    ( this, wxID_ANY, _("Apply angle to animation") );
+    ( this, wxID_ANY, _("Apply the angle of the mark to the animation.") );
   m_pause_when_hidden_box = new wxCheckBox
-    ( this, wxID_ANY, _("Pause the animation when the mark is hidden") );
+    ( this, wxID_ANY, _("Pause the animation when the mark is hidden.") );
+  m_reset_with_action_box = new wxCheckBox
+    ( this, wxID_ANY, _("Reset the animation when the action begins.") );
 } // mark_properties_frame::create_member_controls()
 
 /*----------------------------------------------------------------------------*/
@@ -148,6 +162,7 @@ void bf::mark_properties_frame::create_sizer_controls()
 
   sizer->Add( m_apply_angle_box, 0, wxALL, 10 );
   sizer->Add( m_pause_when_hidden_box, 0, wxALL, 10 );
+  sizer->Add( m_reset_with_action_box, 0, wxALL, 10 );
 
   sizer->Add( CreateStdDialogButtonSizer(wxOK | wxCANCEL), 0,
               wxALL | wxCENTER, 5 );
@@ -182,6 +197,7 @@ void bf::mark_properties_frame::on_ok(wxCommandEvent& WXUNUSED(event))
       m_mark_label = wx_to_std_string( m_mark_label_box->GetValue() );
       m_apply_angle_to_animation = m_apply_angle_box->GetValue();
       m_pause_animation_when_hidden = m_pause_when_hidden_box->GetValue();
+      m_reset_animation_with_action = m_reset_with_action_box->GetValue();
 
       EndModal(wxID_OK);
     }
