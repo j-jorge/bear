@@ -335,7 +335,6 @@ void bear::visual::gl_renderer::render_states()
 
   make_current();
 
-  resize_view();
   set_background_color();
 
   glClear( GL_COLOR_BUFFER_BIT );
@@ -469,6 +468,8 @@ void bear::visual::gl_renderer::ensure_window_exists()
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
+
+  resize_view();
 
   release_context();
 
