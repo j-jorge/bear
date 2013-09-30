@@ -24,6 +24,7 @@
 #include "engine/i18n/translator.hpp"
 #include "engine/libraries_pool.hpp"
 #include "engine/stat_variable.hpp"
+#include "engine/system/base_system_event_manager.hpp"
 #include "engine/system/game_filesystem.hpp"
 #include "engine/variable/var_map.hpp"
 #include "time/time.hpp"
@@ -71,10 +72,17 @@ namespace bear
           /** \brief The game is running. */
           status_run,
 
+          /** \brief The game is sleeping. */
+          status_sleep,
+
           /** \brief We're quiting. */
           status_quit
 
         }; // enum status
+
+      /** \brief The type of the pointer on the instance of the event
+          manager. */
+      typedef base_system_event_manager* event_manager_ptr;
 
     public:
       static void print_help();
@@ -83,6 +91,9 @@ namespace bear
       ~game_local_client();
 
       void run();
+      void sleep();
+      void wake_up();
+
       systime::milliseconds_type get_time_step() const;
       void set_time_scale( double s );
       double get_time_scale() const;
@@ -191,6 +202,7 @@ namespace bear
       void close_environment() const;
 
       void init_game_filesystem();
+      void init_event_manager();
 
       void load_libraries( const std::list<std::string>& p );
       void init_resource_pool( const std::list<std::string>& p ) const;
@@ -227,6 +239,9 @@ namespace bear
 
       /** \brief The current status of the game. */
       status m_status;
+
+      /** \brief The status of the game before it was sent to sleep. */
+      status m_sleep_status;
 
       /** \brief Description of the game. */
       game_description m_game_description;
@@ -285,6 +300,9 @@ namespace bear
 
       /** \brief The abstraction of the filesystem, as seen by the game. */
       game_filesystem m_game_filesystem;
+
+      /** \brief The abstraction of the system event handler. */
+      event_manager_ptr m_event_manager;
 
     }; // class game_local_client
   } // namespace engine

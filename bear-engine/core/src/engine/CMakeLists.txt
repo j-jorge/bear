@@ -119,6 +119,7 @@ set( ENGINE_SOURCE_FILES
   script/node_parser/code/node_parser_call_group.cpp
   script/node_parser/code/node_parser_file.cpp
 
+  system/code/android_system_event_manager.cpp
   system/code/base_game_filesystem.cpp
   system/code/default_game_filesystem.cpp
   system/code/freedesktop_game_filesystem.cpp

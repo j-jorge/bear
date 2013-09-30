@@ -77,6 +77,24 @@ void bear::engine::game::run()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells the running game to stop its activities.
+ */
+void bear::engine::game::sleep()
+{
+  m_game->sleep();
+} // game::sleep()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells the running game to come back to work.
+ */
+void bear::engine::game::wake_up()
+{
+  m_game->wake_up();
+} // game::wake_up()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the time step between to progress on the level.
  */
 bear::systime::milliseconds_type bear::engine::game::get_time_step() const

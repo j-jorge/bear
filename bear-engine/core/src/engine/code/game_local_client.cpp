@@ -25,9 +25,12 @@
 #include "engine/level_globals.hpp"
 #include "engine/level_loader.hpp"
 #include "engine/resource_pool.hpp"
+#include "engine/version.hpp"
+
+#include "engine/system/android_system_event_manager.hpp"
 #include "engine/system/default_game_filesystem.hpp"
 #include "engine/system/freedesktop_game_filesystem.hpp"
-#include "engine/version.hpp"
+
 #include "engine/variable/base_variable.hpp"
 #include "engine/variable/variable_eraser.hpp"
 #include "engine/variable/variable_copy.hpp"
@@ -65,13 +68,14 @@ bear::engine::game_local_client::game_local_client( int& argc, char** &argv )
   : m_status(status_init), m_screen(NULL), m_fullscreen(false),
     m_current_level(NULL), m_level_in_abeyance(NULL), m_time_step(15),
     m_time_scale(1), m_frames_per_second(60), m_synchronized_render(false),
-    m_level_paused_sync(false)
+    m_level_paused_sync(false), m_event_manager(NULL)
 {
   if ( !check_arguments(argc, argv) )
     m_status = status_quit;
   else
     {
       init_environment();
+      init_event_manager();
       init_game_filesystem();
 
       try
@@ -97,6 +101,8 @@ bear::engine::game_local_client::game_local_client( int& argc, char** &argv )
  */
 bear::engine::game_local_client::~game_local_client()
 {
+  delete m_event_manager;
+
   clear();
   close_environment();
 
@@ -126,6 +132,34 @@ void bear::engine::game_local_client::run()
       close_environment();
     }
 } // game_local_client::run()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells the running game to stop its activities.
+ */
+void bear::engine::game_local_client::sleep()
+{
+  if ( m_status == status_sleep )
+    return;
+
+  m_sleep_status = m_status;
+  m_status = status_sleep;
+
+  if ( m_current_level != NULL )
+    m_current_level->set_pause();
+} // game_local_client::sleep()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells the running game to come back to work.
+ */
+void bear::engine::game_local_client::wake_up()
+{
+  if ( m_current_level != NULL )
+    m_current_level->unset_pause();
+
+  m_status = m_sleep_status;
+} // game_local_client::wake_up()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -758,8 +792,11 @@ void bear::engine::game_local_client::one_step_beyond()
 
   if ( dt >= m_time_step )
     {
-      progress( current_time, dt, time_range, time_scale );
-      render();
+      if ( m_status != status_sleep )
+        {
+          progress( current_time, dt, time_range, time_scale );
+          render();
+        }
 
       current_time = systime::get_date_ms();
     }
@@ -1002,6 +1039,19 @@ void bear::engine::game_local_client::init_game_filesystem()
   m_game_filesystem = default_game_filesystem( m_game_description.game_name() );
 #endif
 } // game_local_client::init_game_filesystem()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Initializes the abstraction of the event handler.
+ */
+void bear::engine::game_local_client::init_event_manager()
+{
+#ifdef __ANDROID__
+  m_event_manager = event_manager_ptr( new android_system_event_manager() );
+#else
+  m_event_manager = event_manager_ptr( NULL );
+#endif
+} // game_local_client::init_event_manager()
 
 /*----------------------------------------------------------------------------*/
 /**

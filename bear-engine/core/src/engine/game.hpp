@@ -51,6 +51,9 @@ namespace bear
       ~game();
 
       void run();
+      void sleep();
+      void wake_up();
+
       systime::milliseconds_type get_time_step() const;
       void set_time_scale( double s );
       double get_time_scale() const;
