@@ -229,9 +229,11 @@ bool bf::xml::xml_to_value<bf::animation_file_type>::supported_node
  * \brief Read the value from a xml value node.
  * \param anim (out) The animation we have read.
  * \param node The node from which we read the value.
+ * \param pool The image pool from which we take the images of the animation.
  */
 void bf::xml::xml_to_value<bf::animation_file_type>::operator()
-  ( animation_file_type& anim, const wxXmlNode* node ) const
+  ( animation_file_type& anim, const wxXmlNode* node,
+    const image_pool& pool ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -240,7 +242,7 @@ void bf::xml::xml_to_value<bf::animation_file_type>::operator()
   if ( !node->GetPropVal( wxT("path"), &path ) )
     throw missing_property("path");
 
-  anim.set_path( wx_to_std_string(path) );
+  anim.set_path( wx_to_std_string(path), pool );
 
   load_rendering_attributes(anim, node);
 
@@ -273,9 +275,11 @@ bool bf::xml::xml_to_value<bf::any_animation>::supported_node
  * \brief Read the value from a xml value node.
  * \param anim (out) The animation we have read.
  * \param node The node from which we read the value.
+ * \param pool The image pool from which we take the images of the animation.
  */
 void bf::xml::xml_to_value<bf::any_animation>::operator()
-  ( any_animation& anim, const wxXmlNode* node ) const
+  ( any_animation& anim, const wxXmlNode* node,
+    const image_pool& pool ) const
 {
   wxString name = node->GetName();
 
@@ -283,14 +287,14 @@ void bf::xml::xml_to_value<bf::any_animation>::operator()
     {
       animation_file_type data;
       xml_to_value<animation_file_type> reader;
-      reader(data, node);
+      reader(data, node, pool);
       anim.set_animation_file(data);
     }
   else if ( xml_to_value<animation>::supported_node(name) )
     {
       animation data;
       xml_to_value<animation> reader;
-      reader(data, node);
+      reader(data, node, pool);
       anim.set_animation(data);
     }
   else

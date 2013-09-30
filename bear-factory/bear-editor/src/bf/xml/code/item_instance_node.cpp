@@ -26,14 +26,26 @@
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Constructs a node parser.
+ * \param classes The pool from which we can access the item classes used by the
+ *        item.
+ * \param images The pool from which we can access the images used by the item.
+ */
+bf::xml::item_instance_node::item_instance_node
+( const item_class_pool& classes, const image_pool& images )
+  : m_item_class_pool( classes ), m_image_pool( images )
+{
+
+} // item_instance_node::item_instance_node()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Read an xml node "item".
- * \param pool The pool of the item classes where the class of the item can be
- *        found.
  * \param node The node.
  * \return A dynamically allocated item_instance as described by the XML node.
  */
 bf::item_instance* bf::xml::item_instance_node::read
-( const item_class_pool& pool, const wxXmlNode* node ) const
+( const wxXmlNode* node ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("item") );
@@ -48,7 +60,8 @@ bf::item_instance* bf::xml::item_instance_node::read
 
   try
     {
-      item = new item_instance( pool.get_item_class_ptr(class_name) );
+      item =
+        new item_instance( m_item_class_pool.get_item_class_ptr(class_name) );
       item->set_fixed
         ( xml::reader_tool::read_bool_opt(node, wxT("fixed"), false) );
       item->set_id
@@ -88,7 +101,7 @@ void bf::xml::item_instance_node::write
 
   os << ">\n";
 
-  item_instance_fields_node field_node;
+  item_instance_fields_node field_node( m_image_pool );
   field_node.write(item, os);
 
   os << "    </item><!-- " << item.get_class().get_class_name() << " -->\n\n";
@@ -109,7 +122,7 @@ void bf::xml::item_instance_node::load_fields
     {
       if ( node->GetName() == wxT("fields") )
         {
-          xml::item_instance_fields_node reader;
+          xml::item_instance_fields_node reader( m_image_pool );
           reader.read(item, node);
         }
       else

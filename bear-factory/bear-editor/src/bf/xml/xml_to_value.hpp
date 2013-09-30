@@ -102,7 +102,9 @@ namespace bf
     public:
       static bool supported_node( const wxString& node_name );
 
-      void operator()( animation_file_type& v, const wxXmlNode* node ) const;
+      void operator()
+        ( animation_file_type& v, const wxXmlNode* node,
+          const image_pool& pool ) const;
 
     }; // class xml_to_value [animation_file_type]
 
@@ -116,7 +118,9 @@ namespace bf
     public:
       static bool supported_node( const wxString& node_name );
 
-      void operator()( any_animation& v, const wxXmlNode* node ) const;
+      void operator()
+        ( any_animation& v, const wxXmlNode* node,
+          const image_pool& pool ) const;
 
     }; // class xml_to_value [any_animation]
 

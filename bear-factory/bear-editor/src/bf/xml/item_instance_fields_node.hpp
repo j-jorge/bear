@@ -19,6 +19,7 @@
 
 namespace bf
 {
+  class image_pool;
   class item_class;
   class item_instance;
 
@@ -31,6 +32,8 @@ namespace bf
     class item_instance_fields_node
     {
     public:
+      item_instance_fields_node( const image_pool& pool );
+
       void read( item_instance& item, const wxXmlNode* node ) const;
       void write
       ( const item_instance& item, std::ostream& os ) const;
@@ -39,6 +42,11 @@ namespace bf
       void save_item_by_class
       ( const item_instance& item, const item_class& the_class,
         std::ostream& os ) const;
+
+    private:
+      /** \brief The pool from which we can access the images used by the
+          item. */
+      const image_pool& m_image_pool;
 
     }; // class item_instance_fields_node
   } // namespace xml
