@@ -43,6 +43,26 @@ bf::value_editor_dialog<Editor, Type>::value_editor_dialog
  * \brief Constructor.
  * \param parent The parent window.
  * \param title The title of the dialog.
+ * \param v The initial value.
+ * \param pool The image pool to use.
+ */
+template<typename Editor, typename Type>
+bf::value_editor_dialog<Editor, Type>::value_editor_dialog
+( wxWindow& parent, const wxString& title, const value_type& v,
+  const image_pool& pool )
+  : wxDialog( &parent, wxID_ANY, title,
+              wxDefaultPosition, wxDefaultSize,
+              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
+{
+  m_editor = new editor_type( *this, m_value, pool );
+  init();
+} // value_editor_dialog::value_editor_dialog()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param parent The parent window.
+ * \param title The title of the dialog.
  * \param values The valid values for the field.
  * \param v The initial value.
  */

@@ -17,6 +17,7 @@
 #include "bf/animation.hpp"
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
+#include "bf/image_pool.hpp"
 #include "bf/spin_ctrl.hpp"
 
 #include <wx/wx.h>
@@ -47,7 +48,7 @@ namespace bf
 
   public:
     animation_edit
-    ( wxWindow& parent,
+    ( wxWindow& parent, const image_pool& pool,
       const animation& anim = default_value<animation>::get() );
 
     bool validate();
@@ -129,6 +130,9 @@ namespace bf
 
     /** \brief The control in which we display the animation. */
     animation_view_ctrl* m_animation_view;
+
+    /** \brief The image pool to use. */
+    const image_pool& m_image_pool;
 
     DECLARE_EVENT_TABLE()
 

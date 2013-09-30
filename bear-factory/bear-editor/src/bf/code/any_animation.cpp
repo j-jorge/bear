@@ -89,11 +89,12 @@ void bf::any_animation::set_animation( const animation& a )
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Reload the animation.
+ * \param pool The image pool to use.
  */
-void bf::any_animation::reload()
+void bf::any_animation::reload(const image_pool& pool)
 {
   if ( m_content_type == content_file )
-    m_animation_file.set_path( m_animation_file.get_path() );
+    m_animation_file.set_path( m_animation_file.get_path(), pool );
 } // any_animation::reload()
 
 /*----------------------------------------------------------------------------*/

@@ -13,7 +13,6 @@
  */
 #include "bf/xml/xml_to_value.hpp"
 
-#include "bf/image_pool.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/reader_tool.hpp"
 
@@ -65,9 +64,10 @@ bf::xml::bitmap_rendering_attributes_xml_to_value::load_rendering_attributes
  * \brief Read the value from a xml value node.
  * \param spr (out) The sprite we have read.
  * \param node The node from which we read the value.
+ * \param pool The image_pool to use.
  */
 void bf::xml::xml_to_value<bf::sprite>::operator()
-  ( sprite& spr, const wxXmlNode* node ) const
+  ( sprite& spr, const wxXmlNode* node, const image_pool& pool ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -85,14 +85,14 @@ void bf::xml::xml_to_value<bf::sprite>::operator()
         ( xml::reader_tool::read_uint(node, wxT("clip_height")) );
       spr.set_spritepos_entry
         ( wx_to_std_string
-          (image_pool::get_instance().find_spritepos_name_from_size
-           ( std_to_wx_string(spr.get_image_name()),
-             spr.get_clip_rectangle() )) );
+          ( pool.find_spritepos_name_from_size
+            ( std_to_wx_string(spr.get_image_name()),
+              spr.get_clip_rectangle() )) );
     }
   else
     {
       spr.set_clip_rectangle
-        ( image_pool::get_instance().get_spritepos_rectangle
+        ( pool.get_spritepos_rectangle
           ( std_to_wx_string(spr.get_image_name()),
             std_to_wx_string(spritepos) ) );
       spr.set_spritepos_entry( spritepos );
@@ -126,9 +126,10 @@ bool bf::xml::xml_to_value<bf::animation>::supported_node
  * \brief Read the value from a xml value node.
  * \param anim (out) The animation we have read.
  * \param node The node from which we read the value.
+ * \param pool The image pool to use.
  */
 void bf::xml::xml_to_value<bf::animation>::operator()
-  ( animation& anim, const wxXmlNode* node ) const
+  ( animation& anim, const wxXmlNode* node, const image_pool& pool ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -140,7 +141,7 @@ void bf::xml::xml_to_value<bf::animation>::operator()
   anim.set_loop_back
   ( xml::reader_tool::read_bool_opt(node, wxT("loop_back"), false));
 
-  load_frames(anim, node->GetChildren());
+  load_frames(anim, node->GetChildren(), pool);
 
   load_rendering_attributes(anim, node);
 
@@ -158,13 +159,14 @@ void bf::xml::xml_to_value<bf::animation>::operator()
  * \brief Load the frames of an animation.
  * \param anim The animation in which we set a list of frames.
  * \param node The node to parse.
+ * \param pool The image pool to use.
  */
 void bf::xml::xml_to_value<bf::animation>::load_frames
-( animation& anim, const wxXmlNode* node ) const
+( animation& anim, const wxXmlNode* node, const image_pool& pool ) const
 {
   for ( ; node!=NULL; node=node->GetNext() )
     if ( node->GetName() == wxT("frame") )
-      load_frame(anim, node);
+      load_frame(anim, node, pool);
     else if ( node->GetName() != wxT("comment") )
       claw::logger << claw::log_warning << "Ignored node '"
                    << wx_to_std_string(node->GetName()) << "'" << std::endl;
@@ -175,9 +177,10 @@ void bf::xml::xml_to_value<bf::animation>::load_frames
  * \brief Load a frame of an animation.
  * \param anim The animation in which we add the frame.
  * \param node The node to parse.
+ * \param pool The image pool to use.
  */
 void bf::xml::xml_to_value<bf::animation>::load_frame
-( animation& anim, const wxXmlNode* node ) const
+( animation& anim, const wxXmlNode* node, const image_pool& pool ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("frame") );
 
@@ -197,7 +200,7 @@ void bf::xml::xml_to_value<bf::animation>::load_frame
       if ( children->GetName() == wxT("sprite") )
         {
           xml::xml_to_value<sprite> xml_conv;
-          xml_conv(spr, children);
+          xml_conv(spr, children, pool);
           frame.set_sprite(spr);
           anim.add_frame() = frame;
         }

@@ -14,6 +14,7 @@
 #ifndef __BF_SPRITE_IMAGE_CACHE_HPP__
 #define __BF_SPRITE_IMAGE_CACHE_HPP__
 
+#include "bf/image_pool.hpp"
 #include "bf/sprite.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -73,6 +74,7 @@ namespace bf
     }; // struct value_type
 
   public:
+    sprite_image_cache(const image_pool& pool);
     std::pair<wxBitmap, wxPoint> get_image( const sprite& s );
     std::pair<wxBitmap, wxPoint> get_image
     ( const sprite& s, unsigned int w, unsigned int h );
@@ -88,6 +90,8 @@ namespace bf
     /** \brief The cache of images. */
     std::map<key_type, value_type> m_cache;
 
+    /** \brief The image pool to use. */
+    const image_pool& m_image_pool;
   }; // class sprite_image_cache
 } // namespace bf
 

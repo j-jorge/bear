@@ -31,7 +31,6 @@ namespace bf
    * \author Julien Jorge
    */
   class BEAR_EDITOR_EXPORT image_pool
-    : public claw::pattern::basic_singleton<image_pool>
   {
   private:
     typedef std::map<wxString, wxBitmap> image_map;
@@ -111,7 +110,6 @@ namespace bf
 
     /** \brief The spritepos entries for each image. */
     mutable spritepos_map m_spritepos;
-
   }; // class image_pool
 } // namespace bf
 

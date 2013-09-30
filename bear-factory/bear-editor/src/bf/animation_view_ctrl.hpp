@@ -15,6 +15,7 @@
 #define __BF_ANIMATION_VIEW_CTRL_HPP__
 
 #include "bf/animation_player.hpp"
+#include "bf/image_pool.hpp"
 #include "bf/spin_ctrl.hpp"
 
 #include "bf/libeditor_export.hpp"
@@ -46,7 +47,8 @@ namespace bf
 
   public:
     animation_view_ctrl
-    ( wxWindow& parent, const animation& anim = animation() );
+    ( wxWindow& parent, const image_pool& pool,
+      const animation& anim = animation() );
 
     void set_animation( const animation& anim );
 
@@ -69,6 +71,9 @@ namespace bf
     void on_timer( wxTimerEvent& event );
 
   private:
+    /** \brief The image pool to use. */
+    const image_pool& m_image_pool;
+
     /** \brief The control that displays the current sprite of the animation. */
     sprite_view_ctrl* m_sprite_view;
 

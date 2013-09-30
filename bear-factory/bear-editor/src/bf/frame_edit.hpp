@@ -17,6 +17,7 @@
 #include "bf/free_edit.hpp"
 #include "bf/animation_frame.hpp"
 #include "bf/custom_type.hpp"
+#include "bf/image_pool.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <wx/wx.h>
@@ -44,8 +45,8 @@ namespace bf
 
   public:
     frame_edit
-    ( wxWindow& parent,
-      const animation_frame& frame = default_value<animation_frame>::get());
+      ( wxWindow& parent, const image_pool& pool,
+        const animation_frame& frame = default_value<animation_frame>::get());
 
     const animation_frame& get_frame() const;
 
@@ -69,6 +70,9 @@ namespace bf
 
     /** \brief The control in which we display the sprite. */
     sprite_edit* m_sprite;
+
+    /** \brief The image pool to use. */
+    const image_pool& m_image_pool;
 
     // DECLARE_EVENT_TABLE()
 

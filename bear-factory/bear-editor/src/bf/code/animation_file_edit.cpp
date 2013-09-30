@@ -22,11 +22,13 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this window.
+ * \param pool The image pool to use.
  * \param v The initial animation.
  */
 bf::animation_file_edit::animation_file_edit
-( wxWindow& parent, const animation_file_type& v )
-  : wxPanel(&parent, wxID_ANY), base_edit<animation_file_type>(v)
+( wxWindow& parent, const image_pool& pool, const animation_file_type& v )
+  : wxPanel(&parent, wxID_ANY), base_edit<animation_file_type>(v), 
+    m_image_pool(pool)
 {
   create_controls();
   value_updated();
@@ -42,7 +44,7 @@ bool bf::animation_file_edit::validate()
 {
   if ( m_rendering_attributes->validate() )
     {
-      set_value(make_animation_file());
+      set_value(make_animation_file(m_image_pool));
       return true;
     }
   else
@@ -52,14 +54,17 @@ bool bf::animation_file_edit::validate()
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Get the animation_file corresponding to the values in the control.
+ * \param pool The image pool to use.
  */
-bf::animation_file_type bf::animation_file_edit::make_animation_file() const
+bf::animation_file_type 
+bf::animation_file_edit::make_animation_file( const image_pool& pool ) const
 {
   animation_file_type result;
 
   if ( m_rendering_attributes->validate() )
     {
-      result.set_path( wx_to_std_string(m_path_text->GetValue()) );
+      result.set_path
+        ( wx_to_std_string(m_path_text->GetValue()), pool );
       result.assign(m_rendering_attributes->get_value());
     }
 
@@ -98,7 +103,7 @@ void bf::animation_file_edit::create_controls()
 
   m_path_text = new wxTextCtrl( this, wxID_ANY );
 
-  m_animation_view = new animation_view_ctrl(*this);
+  m_animation_view = new animation_view_ctrl(*this, m_image_pool);
 
   create_sizer_controls();
   fill_controls();
@@ -181,7 +186,7 @@ void bf::animation_file_edit::on_browse_animation
 
       m_path_text->SetValue( std_to_wx_string(new_p) );
       animation_file_type v( get_value() );
-      v.set_path(new_p);
+      v.set_path(new_p, m_image_pool);
       set_value(v);
 
       fill_controls();

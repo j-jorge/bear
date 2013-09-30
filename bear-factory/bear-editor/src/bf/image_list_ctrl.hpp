@@ -15,6 +15,7 @@
 #define __BF_IMAGE_LIST_CTRL_HPP__
 
 #include "bf/libeditor_export.hpp"
+#include "bf/image_pool.hpp"
 
 #include <wx/panel.h>
 #include <wx/scrolbar.h>
@@ -49,7 +50,7 @@ namespace bf
     }; // class list_view
 
   public:
-    image_list_ctrl( wxWindow& parent );
+    image_list_ctrl( wxWindow& parent, const image_pool& pool );
 
     void set_list( const std::list<wxString>& img );
     void set_selection( int i );
@@ -88,6 +89,9 @@ namespace bf
 
     /** \brief The index, in m_image, of the selected image. */
     int m_selection;
+
+    /** \brief The image pool to use. */
+    const image_pool& m_image_pool;
 
     /** \brief The margin between the thumnails. */
     static const wxSize s_margin;

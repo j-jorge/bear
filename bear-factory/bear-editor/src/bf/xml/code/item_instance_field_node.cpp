@@ -93,10 +93,10 @@ void bf::xml::item_instance_field_node::load_field
         load_value_list<string_type>( item, f.get_name(), node );
         break;
       case type_field::sprite_field_type:
-        load_value_list<sprite>( item, f.get_name(), node );
+        load_sprite_value_list( item, f.get_name(), node );
         break;
       case type_field::animation_field_type:
-        load_value_list<any_animation>( item, f.get_name(), node );
+        load_value_list( item, f.get_name(), node );
         break;
       case type_field::item_reference_field_type:
         load_value_list<item_reference_type>( item, f.get_name(), node );

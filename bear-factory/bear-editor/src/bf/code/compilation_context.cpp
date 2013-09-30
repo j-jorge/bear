@@ -23,9 +23,11 @@
  * \brief Constructor.
  * \param optimization_level The optimisation level during the compilation. If
  *        the value is less than 1 then the opaque boxes are not computed.
+ * \param pool The image pool to use.
  */
-bf::compilation_context::compilation_context( unsigned int optimization_level )
-  : m_optimization_level(optimization_level)
+ bf::compilation_context::compilation_context
+ ( unsigned int optimization_level, const image_pool& pool )
+   : m_image_cache(pool), m_optimization_level(optimization_level)
 {
 
 } // compilation_context::compilation_context()

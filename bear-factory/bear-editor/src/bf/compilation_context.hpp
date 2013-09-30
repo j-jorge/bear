@@ -15,6 +15,7 @@
 #ifndef __BF_COMPILATION_CONTEXT_HPP__
 #define __BF_COMPILATION_CONTEXT_HPP__
 
+#include "bf/image_pool.hpp"
 #include "bf/sprite_image_cache.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -48,7 +49,8 @@ namespace bf
     typedef std::map<std::string, unsigned int> identifier_map;
 
   public:
-    compilation_context( unsigned int optimization_level );
+    compilation_context
+      ( unsigned int optimization_level, const image_pool& pool );
 
     rectangle get_opaque_rectangle
       ( const sprite& s, const std::string& image_name );

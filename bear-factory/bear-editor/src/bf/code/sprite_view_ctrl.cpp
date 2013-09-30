@@ -25,10 +25,12 @@
 /**
  * \brief Constructor.
  * \param parent The parent window.
+ * \param pool The image pool to use.
  * \param spr The sprite to display.
  */
-bf::sprite_view_ctrl::sprite_view_ctrl( wxWindow& parent, const sprite& spr )
-  : wxPanel(&parent), m_sprite_view(NULL)
+bf::sprite_view_ctrl::sprite_view_ctrl
+( wxWindow& parent, const image_pool& pool, const sprite& spr )
+  : wxPanel(&parent), m_sprite_view(NULL), m_image_pool(pool)
 {
   create_controls();
   create_sizers();
@@ -66,7 +68,7 @@ void bf::sprite_view_ctrl::create_controls()
   choices.Add( wxT("200") );
   choices.Add( wxT("400") );
 
-  m_sprite_view = new sprite_view(*this, ID_SPRITE_VIEW);
+  m_sprite_view = new sprite_view(*this, m_image_pool, ID_SPRITE_VIEW);
   m_sprite_view->Connect
     ( ID_SPRITE_VIEW, wxEVT_MOTION,
       wxMouseEventHandler(sprite_view_ctrl::on_mouse_move), NULL, this );

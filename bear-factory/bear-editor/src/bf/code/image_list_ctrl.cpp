@@ -61,9 +61,10 @@ END_EVENT_TABLE()
 /**
  * \brief Constructor.
  * \param parent The window containing this list.
+ * \param pool The image pool to use.
  */
-bf::image_list_ctrl::image_list_ctrl( wxWindow& parent )
-  : wxPanel(&parent), m_selection(0)
+bf::image_list_ctrl::image_list_ctrl( wxWindow& parent, const image_pool& pool )
+: wxPanel(&parent), m_selection(0), m_image_pool(pool)
 {
   create_controls();
 } // image_list_ctrl::image_list_ctrl()
@@ -245,7 +246,7 @@ void bf::image_list_ctrl::render_list( wxDC& dc )
   for ( ; (it!=eit) && (pos.y < m_image_list->GetSize().y); ++it, ++i )
     {
       render_name(dc, *it, pos, i);
-      render_thumb(dc, image_pool::get_instance().get_thumbnail(*it), pos, i);
+      render_thumb(dc, m_image_pool.get_thumbnail(*it), pos, i);
     }
 } // image_list_ctrl::render_list()
 

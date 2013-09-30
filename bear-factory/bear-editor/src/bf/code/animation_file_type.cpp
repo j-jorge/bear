@@ -22,8 +22,10 @@
 /**
  * \brief Set the path of the animation file.
  * \param p The new path.
+ * \param pool The image_pool to use.
  */
-void bf::animation_file_type::set_path( const std::string& p )
+void bf::animation_file_type::set_path
+( const std::string& p, const image_pool& pool )
 {
   m_path = p;
 
@@ -37,7 +39,7 @@ void bf::animation_file_type::set_path( const std::string& p )
       if ( path_configuration::get_instance().expand_file_name(p, 1) )
         {
           animation_file_xml_reader reader;
-          m_animation = reader.load( std_to_wx_string(p) );
+          m_animation = reader.load( std_to_wx_string(p), pool );
         }
     }
 } // animation_file_type::set_path()

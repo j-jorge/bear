@@ -22,11 +22,12 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this window.
+ * \param pool The image pool to use.
  * \param v The initial animation.
  */
 bf::any_animation_edit::any_animation_edit
-( wxWindow& parent, const any_animation& v )
-  : wxPanel(&parent, wxID_ANY), base_edit<any_animation>(v)
+( wxWindow& parent, const image_pool& pool, const any_animation& v )
+  : wxPanel(&parent, wxID_ANY), base_edit<any_animation>(v), m_image_pool(pool)
 {
   create_controls();
   value_updated();
@@ -137,8 +138,8 @@ void bf::any_animation_edit::create_controls()
     ( std_to_wx_string
       ( any_animation::content_to_string(get_value().get_content_type()) ) );
 
-  m_animation_edit = new animation_edit(*this);
-  m_animation_file_edit = new animation_file_edit(*this);
+  m_animation_edit = new animation_edit(*this, m_image_pool);
+  m_animation_file_edit = new animation_file_edit(*this, m_image_pool);
 
   create_sizer_controls();
   fill_controls();

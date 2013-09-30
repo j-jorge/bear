@@ -16,6 +16,7 @@
 
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
+#include "bf/image_pool.hpp"
 #include "bf/sprite.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -48,7 +49,8 @@ namespace bf
 
   public:
     sprite_edit
-    ( wxWindow& parent, const sprite& spr = default_value<sprite>::get() );
+      ( wxWindow& parent, const image_pool& pool, 
+        const sprite& spr = default_value<sprite>::get() );
 
     bool validate();
 
@@ -102,6 +104,9 @@ namespace bf
 
     /** \brief The control in which we display the sprite. */
     sprite_view_ctrl* m_sprite_view;
+
+    /** \brief The image pool to use. */
+    const image_pool& m_image_pool;
 
     DECLARE_EVENT_TABLE()
 
