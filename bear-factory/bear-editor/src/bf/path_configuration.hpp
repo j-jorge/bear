@@ -15,6 +15,7 @@
 #define __BF_PATH_CONFIGURATION_HPP__
 
 #include "bf/libeditor_export.hpp"
+#include "bf/workspace.hpp"
 
 #include <string>
 #include <list>
@@ -52,6 +53,16 @@ namespace bf
     /** \brief The type of the container in which we store the results of the
         calls to find_random_file_name_on_disk(). */
     typedef std::list<random_file_result> cached_random_file_list_type;
+ 
+  public:
+    /** \brief Map of workspace. */
+    typedef std::map< std::string, workspace > workspaces_map;
+    
+    /** \brief Const iterator on map of workspace. */
+    typedef workspaces_map::const_iterator workspaces_const_iterator;
+    
+    /** \brief Itrator on map of workspace. */
+    typedef workspaces_map::iterator workspaces_iterator;
 
   public:
     path_configuration();
@@ -64,11 +75,7 @@ namespace bf
     bool expand_file_name( std::string& p ) const;
     bool expand_file_name( std::string& p, std::size_t m ) const;
     bool get_relative_path( std::string& p ) const;
-    void get_workspace_names( std::set< std::string >& workspaces ) const;
-    void set_item_class_path
-      (const std::map< std::string, std::list<std::string> >& path);
-    void set_data_path
-      (const std::map< std::string, std::list<std::string> >& path);
+    void set_workspaces(const workspaces_map& w);
 
   private:
     void load();
@@ -93,12 +100,8 @@ namespace bf
         std::size_t offset ) const;
 
   public:
-    /** \brief Path to the directory containing the XML files for item
-        classes. */
-    std::map< std::string, std::list<std::string> > item_class_path;
-
-    /** \brief Path to the data directory of the game. */
-    std::map< std::string, std::list<std::string> > data_path;
+    /** \brief Map of workspaces. */
+    workspaces_map workspaces;
 
   private:
     /** \brief Recent results obtained with find_random_file_name. */

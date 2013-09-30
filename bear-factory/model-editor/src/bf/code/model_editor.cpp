@@ -75,11 +75,12 @@ void bf::model_editor::update_image_pool() const
   image_pool::get_instance().clear();
 
   std::list<std::string>::const_iterator it;
+  path_configuration::workspaces_const_iterator it_map;
+  it_map = path_configuration::get_instance().workspaces.find("default");
 
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
+  if ( it_map != path_configuration::get_instance().workspaces.end() )
+    for ( it = it_map->second.data_begin(); 
+          it != it_map->second.data_end(); ++it )
     image_pool::get_instance().scan_directory(*it);
 } // model_editor::update_image_pool()
 
@@ -202,10 +203,11 @@ void bf::model_editor::init_config()
 {
   m_config.load();
 
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    if ( it_map->second.empty() )
+  path_configuration::workspaces_const_iterator it_map;
+  it_map = path_configuration::get_instance().workspaces.find("default");
+
+  if ( it_map != path_configuration::get_instance().workspaces.end() )
+    if ( it_map->second.data_begin() == it_map->second.data_end() )
       configure();
 } // model_editor::init_config()
 

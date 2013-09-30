@@ -37,33 +37,17 @@ void bf::config_frame::fill_controls()
 {
   m_item_classes_list->Clear();
   m_data_path_list->Clear();
-  m_workspaces->Clear();
+  m_workspaces_choice->Clear();
 
-  std::set< std::string > workspaces;
-  path_configuration::get_instance().get_workspace_names( workspaces );
-  std::set< std::string >::const_iterator it_set;
+  path_configuration::workspaces_const_iterator it_map;
+  m_workspaces = path_configuration::get_instance().workspaces;
 
-  for ( it_set = workspaces.begin(); it_set != workspaces.end(); ++it_set )
+  for ( it_map = m_workspaces.begin(); it_map != m_workspaces.end(); ++it_map )
+    m_workspaces_choice->Append( std_to_wx_string(it_map->first) );
+
+  if  ( ! m_workspaces_choice->IsEmpty() )
     {
-      m_workspaces->Append( std_to_wx_string(*it_set) );
-  
-      std::list<std::string>::const_iterator it;
-      std::map<std::string, std::list<std::string> >::const_iterator it_map;
-          
-      it_map = path_configuration::get_instance().item_class_path.find(*it_set);
-      if ( it_map != path_configuration::get_instance().item_class_path.end() )
-        for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
-          m_item_class_path[*it_set].push_back(*it);
-      
-      it_map = path_configuration::get_instance().data_path.find(*it_set);
-      if ( it_map != path_configuration::get_instance().data_path.end() )
-        for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
-          m_data_path[*it_set].push_back(*it);
-    }
-
-  if  ( ! workspaces.empty() )
-    {
-      m_workspaces->SetSelection(0);      
+      m_workspaces_choice->SetSelection(0);      
       fill_list_view();
     }
 }
@@ -77,16 +61,18 @@ void bf::config_frame::fill_list_view()
   m_item_classes_list->Clear();
   m_data_path_list->Clear();
   
-  if ( ! m_workspaces->IsEmpty() )
+  if ( ! m_workspaces_choice->IsEmpty() )
     {
-      std::string s = wx_to_std_string( m_workspaces->GetStringSelection() );
+      std::string s = wx_to_std_string
+        ( m_workspaces_choice->GetStringSelection() );
       std::list<std::string>::const_iterator it;
       
-      for ( it = m_item_class_path[s].begin();
-            it != m_item_class_path[s].end(); ++it )
+      for ( it = m_workspaces[s].item_class_begin();
+            it != m_workspaces[s].item_class_end(); ++it )
         m_item_classes_list->Append( std_to_wx_string(*it) );
       
-      for ( it = m_data_path[s].begin(); it != m_data_path[s].end(); ++it )
+      for ( it = m_workspaces[s].data_begin(); 
+            it != m_workspaces[s].data_end(); ++it )
         m_data_path_list->Append( std_to_wx_string(*it) );
     }
 } // config_frame::fill_list_view()
@@ -108,7 +94,7 @@ void bf::config_frame::create_controls()
  */
 void bf::config_frame::create_member_controls()
 {
-  m_workspaces = new wxChoice( this, IDC_CHOICE );
+  m_workspaces_choice = new wxChoice( this, IDC_CHOICE );
   m_item_classes_list = new wxListBox( this, wxID_ANY );
   m_data_path_list = new wxListBox( this, wxID_ANY );
 } // config_frame::create_member_controls()
@@ -120,7 +106,7 @@ void bf::config_frame::create_member_controls()
 void bf::config_frame::create_sizer_controls()
 {
   wxBoxSizer* sizer = new wxBoxSizer( wxVERTICAL );
-  sizer->Add( m_workspaces, 0, wxEXPAND );
+  sizer->Add( m_workspaces_choice, 0, wxEXPAND );
 
   // item classes
   wxBoxSizer* v_sizer = new wxBoxSizer( wxVERTICAL );
@@ -168,11 +154,7 @@ void bf::config_frame::create_sizer_controls()
  */
 void bf::config_frame::on_ok( wxCommandEvent& WXUNUSED(event) )
 {
-  path_configuration::get_instance().item_class_path.clear();
-  path_configuration::get_instance().data_path.clear();
-
-  path_configuration::get_instance().set_item_class_path( m_item_class_path );
-  path_configuration::get_instance().set_data_path( m_data_path );
+  path_configuration::get_instance().set_workspaces( m_workspaces );
 
   path_configuration::get_instance().save();
 
@@ -202,12 +184,13 @@ void bf::config_frame::on_browse_item_classes( wxCommandEvent& WXUNUSED(event) )
 
   if ( diag.ShowModal() == wxID_OK )
     {
-      if ( m_workspaces->GetSelection() != wxNOT_FOUND )
+      if ( m_workspaces_choice->GetSelection() != wxNOT_FOUND )
         {
           m_item_classes_list->Append( diag.GetPath() );
           std::string s = 
-            wx_to_std_string( m_workspaces->GetStringSelection() );
-          m_item_class_path[s].push_back( wx_to_std_string(diag.GetPath()) );
+            wx_to_std_string( m_workspaces_choice->GetStringSelection() );
+          m_workspaces[s].add_item_class_path
+            ( wx_to_std_string(diag.GetPath()) );
         }
     }
 } // config_frame::on_browse_item_classes()
@@ -221,16 +204,16 @@ void bf::config_frame::on_erase_item_classes( wxCommandEvent& WXUNUSED(event) )
 {
   int i = m_item_classes_list->GetSelection();
 
-  if ( i != wxNOT_FOUND && m_workspaces->GetSelection() != wxNOT_FOUND )
+  if ( i != wxNOT_FOUND && m_workspaces_choice->GetSelection() != wxNOT_FOUND )
     {
       m_item_classes_list->Delete(i);
       
       std::string s = 
-        wx_to_std_string( m_workspaces->GetStringSelection() );
-      m_item_class_path[s].clear();
+        wx_to_std_string( m_workspaces_choice->GetStringSelection() );
+      m_workspaces[s].clear_item_class_path();
 
       for ( unsigned int j = 0; j < m_item_classes_list->GetCount(); ++j )
-        m_item_class_path[s].push_back
+        m_workspaces[s].add_item_class_path
           ( wx_to_std_string( m_item_classes_list->GetString(j) ) );
     }
 } // config_frame::on_erase_item_classes()
@@ -246,12 +229,12 @@ void bf::config_frame::on_browse_data_path( wxCommandEvent& WXUNUSED(event) )
 
   if ( diag.ShowModal() == wxID_OK )
     {
-      if ( m_workspaces->GetSelection() != wxNOT_FOUND )
+      if ( m_workspaces_choice->GetSelection() != wxNOT_FOUND )
         {
           m_data_path_list->Append( diag.GetPath() );
           std::string s = 
-            wx_to_std_string( m_workspaces->GetStringSelection() );
-          m_data_path[s].push_back( wx_to_std_string(diag.GetPath()) );
+            wx_to_std_string( m_workspaces_choice->GetStringSelection() );
+          m_workspaces[s].add_data_path( wx_to_std_string(diag.GetPath()) );
         }
     }
 } // config_frame::on_browse_data_path()
@@ -265,16 +248,16 @@ void bf::config_frame::on_erase_data_path( wxCommandEvent& WXUNUSED(event) )
 {
   int i = m_data_path_list->GetSelection();
 
-  if ( i != wxNOT_FOUND && m_workspaces->GetSelection() != wxNOT_FOUND )
+  if ( i != wxNOT_FOUND && m_workspaces_choice->GetSelection() != wxNOT_FOUND )
     {
       m_data_path_list->Delete(i);
       
       std::string s = 
-        wx_to_std_string( m_workspaces->GetStringSelection() );
-      m_data_path[s].clear();
+        wx_to_std_string( m_workspaces_choice->GetStringSelection() );
+      m_workspaces[s].clear_data_path();
 
       for ( unsigned int j = 0; j < m_data_path_list->GetCount(); ++j )
-        m_data_path[s].push_back
+        m_workspaces[s].add_data_path
           ( wx_to_std_string( m_data_path_list->GetString(j) ) );
     }
 } // config_frame::on_erase_data_path()

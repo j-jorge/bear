@@ -79,34 +79,26 @@ void bf::path_configuration::save() const
           f << s_comment
             << " Path to the directory containing XML item class files\n";
 
-          std::map<std::string, std::list<std::string> >::const_iterator it_map;
-          std::set< std::string > workspaces;
-          std::set< std::string >::const_iterator it_set;
+          workspaces_const_iterator it_map;
           
-          get_workspace_names(workspaces);          
-          
-          for ( it_set = workspaces.begin(); 
-                it_set != workspaces.end(); ++it_set )
+          for ( it_map = workspaces.begin(); 
+                it_map != workspaces.end(); ++it_map )
             {
-              f << s_section_left << *it_set << s_section_right << '\n';
+              f << s_section_left << it_map->first << s_section_right << '\n';
               std::list<std::string>::const_iterator it;
 
-              it_map = item_class_path.find(*it_set);
-              if ( it_map != item_class_path.end() )
-                for ( it = it_map->second.begin(); 
-                      it != it_map->second.end(); ++it )
-                  f << s_items_directory_field << ' ' << s_field_assign 
-                    << ' ' << *it << '\n';
+              for ( it = it_map->second.item_class_begin(); 
+                    it != it_map->second.item_class_end(); ++it )
+                f << s_items_directory_field << ' ' << s_field_assign 
+                  << ' ' << *it << '\n';
 
               f << '\n' << s_comment
                 << " Path to the directory containing the data of the game\n";
               
-              it_map = data_path.find(*it_set);
-              if ( it_map != data_path.end() )
-                for ( it = it_map->second.begin(); 
-                      it != it_map->second.end(); ++it )
-                  f << s_data_directory_field << ' ' << s_field_assign 
-                    << ' ' << *it << '\n';
+              for ( it = it_map->second.data_begin(); 
+                    it != it_map->second.data_end(); ++it )
+                f << s_data_directory_field << ' ' << s_field_assign 
+                  << ' ' << *it << '\n';
             }
         }
     }
@@ -133,13 +125,13 @@ bool bf::path_configuration::get_full_path( std::string& p ) const
 {
   boost::filesystem::path path( p );
   bool result = boost::filesystem::exists( path );
-  std::list<std::string>::const_reverse_iterator it;
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
+  workspace::path_list_const_reverse_iterator it;
+  workspaces_const_iterator it_map;
 
-  it_map = data_path.find("default");
-  if ( it_map != data_path.end() )
-    for ( it = it_map->second.rbegin(); 
-          !result && (it != it_map->second.rend()); ++it)
+  it_map = workspaces.find("default");
+  if ( it_map != workspaces.end() )
+    for ( it = it_map->second.data_rbegin(); 
+          !result && (it != it_map->second.data_rend()); ++it)
       {
         path = *it;
         path /= p;
@@ -198,13 +190,13 @@ bool bf::path_configuration::get_relative_path( std::string& p ) const
 {
   boost::filesystem::path path( p );
   bool result = false;
-  std::list<std::string>::const_reverse_iterator it;
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
+  workspace::path_list_const_reverse_iterator it;
+  workspaces_const_iterator it_map;
 
-  it_map = data_path.find("default");
-  if ( it_map != data_path.end() )
-    for ( it = it_map->second.rbegin(); 
-          !result && (it!=it_map->second.rend()); ++it)
+  it_map = workspaces.find("default");
+  if ( it_map != workspaces.end() )
+    for ( it = it_map->second.data_rbegin(); 
+          !result && (it!=it_map->second.data_rend()); ++it)
       {
         bool stop(false);
         boost::filesystem::path data( *it );
@@ -235,44 +227,13 @@ bool bf::path_configuration::get_relative_path( std::string& p ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Get names of workspaces.
+ * \brief Set workspaces.
+ * \param w The workspaces.
  */
-void bf::path_configuration::get_workspace_names
-( std::set< std::string >& workspaces ) const
+void bf::path_configuration::set_workspaces(const workspaces_map& w)
 {
-  std::map<std::string, std::list<std::string> >::const_iterator it_map;
-          
-  workspaces.clear();
-  
-  for ( it_map = item_class_path.begin();  
-        it_map != item_class_path.end(); ++it_map )
-    workspaces.insert(it_map->first);
-  for ( it_map = data_path.begin();  
-        it_map != data_path.end(); ++it_map )
-    workspaces.insert(it_map->first);
-} // path_configuration::get_workspace_names
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Set item_class path.
- * \param path The new paths.
- */
-void bf::path_configuration::set_item_class_path
-      (const std::map< std::string, std::list<std::string> >& path)
-{
-  item_class_path = path;
-} // path_configuration::set_item_class_path
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Set data path.
- * \param path The new paths.
- */
-void bf::path_configuration::set_data_path
-(const std::map< std::string, std::list<std::string> >& path)
-{
-  data_path = path;
-} // path_configuration::set_data_path
+  workspaces = w;
+} // path_configuration::set_workspaces
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -293,20 +254,19 @@ void bf::path_configuration::load()
           for ( it_file = config.file_begin(); 
                 it_file != config.file_end(); ++it_file )
             {
-              item_class_path[*it_file].clear();
-              data_path[*it_file].clear();
+              workspaces[*it_file].clear();
 
               claw::configuration_file::const_field_iterator it;
               
               for ( it = config.field_begin(*it_file, s_items_directory_field);
                     it != config.field_end(*it_file, s_items_directory_field); 
                     ++it)
-                item_class_path[*it_file].push_back( *it );
+                workspaces[*it_file].add_item_class_path( *it );
               
               for ( it = config.field_begin(*it_file, s_data_directory_field);
                     it != config.field_end(*it_file, s_data_directory_field); 
                     ++it)
-                data_path[*it_file].push_back( *it );
+                workspaces[*it_file].add_data_path( *it );
             }
         }
     }
@@ -434,15 +394,15 @@ bool bf::path_configuration::find_cached_random_file_name
 bool bf::path_configuration::find_random_file_name_on_disk
 ( std::string& name, std::size_t m ) const
 {
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  std::list<std::string>::const_iterator it;
+  workspaces_const_iterator it_map;
+  workspace::path_list_const_iterator it;
   std::list<std::string> candidates;
   bool result(false);
 
-  it_map = data_path.find("default");
-  if ( it_map != data_path.end() )
-    for ( it = it_map->second.begin(); 
-          (it != it_map->second.end()) && (candidates.size() < m);
+  it_map = workspaces.find("default");
+  if ( it_map != workspaces.end() )
+    for ( it = it_map->second.data_begin(); 
+          (it != it_map->second.data_end()) && (candidates.size() < m);
           ++it )
       {
         const boost::filesystem::path dirpath( *it );

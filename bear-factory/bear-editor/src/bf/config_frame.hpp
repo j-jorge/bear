@@ -20,6 +20,7 @@
 #include <list>
 
 #include "bf/libeditor_export.hpp"
+#include "bf/path_configuration.hpp"
 
 namespace bf
 {
@@ -63,7 +64,7 @@ namespace bf
 
   private:
     /** \brief The list of workspaces. */
-    wxChoice* m_workspaces;
+    wxChoice* m_workspaces_choice;
 
     /** \brief The list of paths to the item classes files. */
     wxListBox* m_item_classes_list;
@@ -71,12 +72,8 @@ namespace bf
     /** \brief The list of paths to the data of the game. */
     wxListBox* m_data_path_list;
 
-    /** \brief Path to the directory containing the XML files for item
-        classes. */
-    std::map< std::string, std::list<std::string> > m_item_class_path;
-
-    /** \brief Path to the data directory of the game. */
-    std::map< std::string, std::list<std::string> > m_data_path;
+    /** \brief Map of workspaces. */
+    path_configuration::workspaces_map m_workspaces;
 
     DECLARE_EVENT_TABLE()
 

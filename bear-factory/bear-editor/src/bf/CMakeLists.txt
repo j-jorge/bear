@@ -72,6 +72,7 @@ set( BF_E_SOURCE_FILES
   code/type_field.cpp
   code/type_field_interval.cpp
   code/type_field_set.cpp
+  code/workspace.cpp
   code/wx_type_cast.cpp
 
   opaque_rectangle/code/ler_base_problem.cpp
