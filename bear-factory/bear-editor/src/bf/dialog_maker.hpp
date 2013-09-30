@@ -43,10 +43,14 @@ namespace bf
     create( wxWindow& parent, const wxString& type, const type_field& f,
             const value_type& v );
 
+    static dialog_type*
+    create( wxWindow& parent, const wxString& type, const type_field& f,
+            const value_type& v, const image_pool& pool );
+
   }; // class dialog_maker
 
   /**
-   * \brief Specialisation of the bf::dialog_maket class for bf::set_edit<> type
+   * \brief Specialization of the bf::dialog_maker class for bf::set_edit<> type
    *        controls.
    *
    * \b Template \b parameters:
@@ -72,7 +76,7 @@ namespace bf
   }; // class dialog_maker [set_edit]
 
   /**
-   * \brief Specialisation of the bf::dialog_maket class for
+   * \brief Specialization of the bf::dialog_maker class for
    *        bf::interval_edit<> type controls.
    *
    * \b Template \b parameters:

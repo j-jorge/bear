@@ -17,7 +17,6 @@
 #include "bf/animation.hpp"
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/spin_ctrl.hpp"
 
 #include <wx/wx.h>
@@ -28,6 +27,7 @@ namespace bf
 {
   class animation_view_ctrl;
   class bitmap_rendering_attributes_edit;
+  class image_pool;
 
   /**
    * \brief The window showing the properties of a animation.

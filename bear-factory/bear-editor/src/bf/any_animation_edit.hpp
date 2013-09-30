@@ -17,7 +17,6 @@
 #include "bf/any_animation.hpp"
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <wx/wx.h>
@@ -26,6 +25,7 @@ namespace bf
 {
   class animation_edit;
   class animation_file_edit;
+  class image_pool;
 
   /**
    * \brief Control for editing a field whose value is any animation.

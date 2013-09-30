@@ -54,7 +54,7 @@ bf::value_editor_dialog<Editor, Type>::value_editor_dialog
               wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
 {
-  m_editor = new editor_type( *this, m_value, pool );
+  m_editor = new editor_type( *this, pool, m_value );
   init();
 } // value_editor_dialog::value_editor_dialog()
 
@@ -204,6 +204,28 @@ bf::value_editor_dialog< Editor, std::list<T> >::value_editor_dialog
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
 {
   m_dialog = new dialog_type( *this, type, default_value<T>::get() );
+
+  init();
+  fill();
+} // value_editor_dialog::value_editor_dialog()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param parent The parent window.
+ * \param type The name of the edited type.
+ * \param v The initial value.
+ * \param pool The image pool to use.
+ */
+template<typename Editor, typename T>
+bf::value_editor_dialog< Editor, std::list<T> >::value_editor_dialog
+( wxWindow& parent, const wxString& type, const value_type& v,
+  const image_pool& pool )
+  : wxDialog( &parent, wxID_ANY, _("List of '") + type + wxT("'"),
+              wxDefaultPosition, wxDefaultSize,
+              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
+{
+  m_dialog = new dialog_type( *this, type, default_value<T>::get(), pool );
 
   init();
   fill();

@@ -48,7 +48,7 @@ namespace bf
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const value_type& v,
-      const image_pool& pool);
+      const image_pool& pool );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const wxArrayString& values,
@@ -99,6 +99,10 @@ namespace bf
   public:
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const value_type& v );
+
+    value_editor_dialog
+    ( wxWindow& parent, const wxString& type, const value_type& v,
+      const image_pool& pool );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const wxArrayString& values,

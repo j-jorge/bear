@@ -39,6 +39,26 @@ bf::dialog_maker<Control, Type>::create
  * \param type The name of the edited type.
  * \param f The edited field.
  * \param v The initial value.
+ * \param pool The pool from which we take the images of the sprites.
+ */
+template<typename Control, typename Type>
+typename bf::dialog_maker<Control, Type>::dialog_type*
+bf::dialog_maker<Control, Type>::create
+( wxWindow& parent, const wxString& type, const type_field& f,
+  const value_type& v, const image_pool& pool )
+{
+  return new dialog_type
+    ( parent, std_to_wx_string(f.get_name()) + wxT(" (") + type + wxT(")"), v,
+      pool );
+} // dialog_maker::create()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Create the dialog.
+ * \param parent The parent window.
+ * \param type The name of the edited type.
+ * \param f The edited field.
+ * \param v The initial value.
  */
 template<typename T, typename Type>
 typename bf::dialog_maker<bf::set_edit<T>, Type>::dialog_type*
