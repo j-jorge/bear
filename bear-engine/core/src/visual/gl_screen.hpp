@@ -44,11 +44,12 @@ namespace bear
       gl_screen( const claw::math::coordinate_2d<unsigned int>& size,
                  const std::string& title="", bool full=false );
 
+      void set_pause();
+      void unset_pause();
+
       void fullscreen( bool b );
       claw::math::coordinate_2d<unsigned int> get_size() const;
       claw::math::coordinate_2d<unsigned int> get_container_size() const;
-      bool need_restoration() const;
-      void set_restored();
 
       void set_background_color( const color_type& c );
       color_type get_background_color() const;

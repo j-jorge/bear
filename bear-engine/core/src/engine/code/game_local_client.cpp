@@ -75,7 +75,6 @@ bear::engine::game_local_client::game_local_client( int& argc, char** &argv )
   else
     {
       init_environment();
-      init_event_manager();
       init_game_filesystem();
 
       try
@@ -83,6 +82,8 @@ bear::engine::game_local_client::game_local_client( int& argc, char** &argv )
           m_screen = new visual::screen
             ( m_game_description.screen_size(),
               m_game_description.game_name(), m_fullscreen );
+
+          init_event_manager();
 
           set_dumb_rendering( m_game_description.dumb_rendering() );
         }
@@ -121,6 +122,7 @@ void bear::engine::game_local_client::run()
       init_game();
 
       load_level( m_game_description.start_level() );
+      m_screen->unset_pause();
 
       run_level();
 
@@ -145,6 +147,8 @@ void bear::engine::game_local_client::sleep()
   m_sleep_status = m_status;
   m_status = status_sleep;
 
+  m_screen->set_pause();
+
   if ( m_current_level != NULL )
     m_current_level->set_pause();
 } // game_local_client::sleep()
@@ -155,6 +159,19 @@ void bear::engine::game_local_client::sleep()
  */
 void bear::engine::game_local_client::wake_up()
 {
+#ifdef __ANDROID__
+  claw::logger << claw::log_verbose << "Restoring resources" << std::endl;
+
+  // The resources are shared among the level_globals of each level, thus
+  // we do not have to restore the ones in m_level_in_abeyance.
+  if ( m_current_level != NULL )
+    m_current_level->get_globals().restore_resources();
+
+  claw::logger << claw::log_verbose << "Screen restored" << std::endl;
+#endif
+
+  m_screen->unset_pause();
+
   if ( m_current_level != NULL )
     m_current_level->unset_pause();
 
@@ -944,14 +961,6 @@ void bear::engine::game_local_client::progress
  */
 void bear::engine::game_local_client::render()
 {
-  if ( m_screen->need_restoration() )
-    {
-      // The resources are shared among the level_globals of each level, thus
-      // we do not have to restore the ones in m_level_in_abeyance.
-      m_current_level->get_globals().restore_resources();
-      m_screen->set_restored();
-    }
-
   if ( (m_frames_per_second != 0) && !m_synchronized_render )
     {
       const systime::milliseconds_type render_date

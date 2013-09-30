@@ -61,11 +61,12 @@ namespace bear
               const std::string& title="", bool full=false );
       ~screen();
 
+      void set_pause();
+      void unset_pause();
+
       void fullscreen( bool b );
       claw::math::coordinate_2d<unsigned int> get_size() const;
       claw::math::coordinate_2d<unsigned int> get_container_size() const;
-      bool need_restoration() const;
-      void set_restored();
 
       void set_opaque_box_visible( bool b );
       void set_dumb_rendering( bool b );

@@ -94,6 +94,24 @@ bear::visual::gl_screen::gl_screen
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells not to render anything for a while.
+ */
+void bear::visual::gl_screen::set_pause()
+{
+  gl_renderer::get_instance().set_pause();
+} // gl_screen::set_pause()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Turns the rendering process on again.
+ */
+void bear::visual::gl_screen::unset_pause()
+{
+  gl_renderer::get_instance().unset_pause();
+} // gl_screen::unset_pause()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Turn fullscreen mode on/off.
  * \param b Tell if we want a fullscreen mode.
  */
@@ -121,24 +139,6 @@ bear::visual::gl_screen::get_container_size() const
 {
   return gl_renderer::get_instance().get_container_size();
 } // gl_screen::get_container_size()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if the environment needs to be restored.
- */
-bool bear::visual::gl_screen::need_restoration() const
-{
-  return false;
-} // gl_screen::need_restoration()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Inform that the environment had been restored.
- */
-void bear::visual::gl_screen::set_restored()
-{
-  claw::logger << claw::log_verbose << "Screen is restored." << std::endl;
-} // gl_screen::set_restored()
 
 /*----------------------------------------------------------------------------*/
 /**

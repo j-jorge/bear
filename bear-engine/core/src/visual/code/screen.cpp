@@ -110,6 +110,25 @@ bear::visual::screen::~screen()
   delete m_impl;
 } // screen::~screen()
 
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells not to render anything for a while.
+ */
+void bear::visual::screen::set_pause()
+{
+  m_impl->set_pause();
+} // screen::set_pause()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Turns the rendering process on again.
+ */
+void bear::visual::screen::unset_pause()
+{
+  m_impl->unset_pause();
+} // screen::unset_pause()
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Turn fullscreen mode on/off.
@@ -138,28 +157,6 @@ bear::visual::screen::get_container_size() const
 {
   return m_impl->get_container_size();
 } // screen::get_container_size()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if the environment needs to be restored.
- */
-bool bear::visual::screen::need_restoration() const
-{
-  CLAW_PRECOND(m_mode == SCREEN_IDLE);
-
-  return m_impl->need_restoration();
-} // screen::need_restoration()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Inform that the environment had been restored.
- */
-void bear::visual::screen::set_restored()
-{
-  CLAW_PRECOND(m_mode == SCREEN_IDLE);
-
-  m_impl->set_restored();
-} // screen::set_restored()
 
 /*----------------------------------------------------------------------------*/
 /**

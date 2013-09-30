@@ -38,13 +38,13 @@ namespace bear
     public:
       virtual ~base_screen() {}
 
+      virtual void set_pause() = 0;
+      virtual void unset_pause() = 0;
+
       virtual void fullscreen( bool b ) = 0;
       virtual claw::math::coordinate_2d<unsigned int> get_size() const = 0;
       virtual claw::math::coordinate_2d<unsigned int>
         get_container_size() const = 0;
-
-      virtual bool need_restoration() const { return false; }
-      virtual void set_restored() {}
 
       virtual void set_background_color( const color_type& c ) = 0;
       virtual color_type get_background_color() const = 0;

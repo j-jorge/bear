@@ -274,12 +274,32 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Tells not to render anything for a while.
+ */
+void bear::visual::gl_renderer::set_pause()
+{
+  boost::mutex::scoped_lock lock( m_mutex.loop_state );
+  m_pause = true;
+} // gl_renderer::set_pause()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Turns the rendering process on again.
+ */
+void bear::visual::gl_renderer::unset_pause()
+{
+  boost::mutex::scoped_lock lock( m_mutex.loop_state );
+  m_pause = false;
+} // gl_renderer::unset_pause()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Tells to stop the rendering process.
  */
 void bear::visual::gl_renderer::stop()
 {
   {
-    boost::mutex::scoped_lock lock( m_mutex.stop );
+    boost::mutex::scoped_lock lock( m_mutex.loop_state );
     m_stop = true;
   }
 
@@ -299,7 +319,7 @@ void bear::visual::gl_renderer::render_loop()
   while ( true )
     {
       // lock m_stop to ensure that stop() will block if called during the loop.
-      boost::mutex::scoped_lock lock( m_mutex.stop );
+      boost::mutex::scoped_lock lock( m_mutex.loop_state );
       
       if ( m_stop )
         break;
@@ -308,7 +328,8 @@ void bear::visual::gl_renderer::render_loop()
 
       const systime::milliseconds_type start_date( systime::get_date_ms() );
 
-      render_states();
+      if ( !m_pause )
+        render_states();
 
       const systime::milliseconds_type end_date( systime::get_date_ms() );
 
@@ -597,7 +618,7 @@ bear::visual::gl_renderer::get_best_screen_size
  * Constructs a gl_renderer instance with no rendering informations.
  */
 bear::visual::gl_renderer::gl_renderer()
-  : m_stop( false ), m_window( NULL ), m_gl_context( NULL ),
+  : m_stop( false ), m_pause( false ), m_window( NULL ), m_gl_context( NULL ),
     m_background_color(0, 0, 0), m_window_size( 640, 480 ),
     m_view_size( 640, 480 ), m_fullscreen( false ),
     m_video_mode_is_set( false ), m_screenshot_buffer( NULL )

@@ -73,6 +73,9 @@ namespace bear
       color_type get_background_color();
       void set_background_color( const color_type& c );
 
+      void set_pause();
+      void unset_pause();
+
     private:
       void stop();
 
@@ -108,6 +111,9 @@ namespace bear
 
       /** \brief Tells if we must stop the rendering process. */
       bool m_stop;
+      
+      /** \brief Tells if we must pause the rendering process. */
+      bool m_pause;
       
       /** \brief The window created by SDL. */
       SDL_Window* m_window;
@@ -156,8 +162,9 @@ namespace bear
             the window, m_window or m_gl_context. */
         boost::mutex window;
 
-        /** \brief This mutex is locked when the m_stop boolean is accessed. */
-        boost::mutex stop;
+        /** \brief This mutex is locked when the variables modifying the
+            execution of the rendering loop is accessed. */
+        boost::mutex loop_state;
 
       } m_mutex;
 

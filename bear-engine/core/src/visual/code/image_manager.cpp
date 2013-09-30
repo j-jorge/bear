@@ -64,7 +64,7 @@ void bear::visual::image_manager::clear_images()
   for (it=m_images.begin(); it!=m_images.end(); ++it)
     it->second.clear();
 } // image_manager::clear_images()
-
+#include <claw/logger.hpp>
 /*---------------------------------------------------------------------------*/
 /**
  * \brief Restore an image.
@@ -80,7 +80,7 @@ void bear::visual::image_manager::restore_image
 {
   CLAW_PRECOND( exists(name) );
 
-  claw::graphic::image img(file);
+  claw::graphic::png img(file);
   m_images[name].restore(img);
 } // image_manager::restore_image()
 
