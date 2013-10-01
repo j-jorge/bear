@@ -44,7 +44,8 @@ namespace bear
     public:
       explicit level_loader
         ( compiled_file& f, const std::string& path,
-          const level_globals* shared_resources = NULL );
+          const level_globals* shared_resources,
+          const level_globals* resource_source );
 
       ~level_loader();
 

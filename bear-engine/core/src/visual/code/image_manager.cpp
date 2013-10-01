@@ -44,8 +44,24 @@ void bear::visual::image_manager::load_image
   CLAW_PRECOND( !exists(name) );
 
   claw::graphic::png img(file);
-  m_images[name] = image(img);
+  add_image( name, image(img) );
 } // image_manager::load_image()
+
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief Adds an existing image to the cache.
+ * \param name The name of the loaded image.
+ * \param img The image to add.
+ * \pre name is not used by another image.
+ * \post get_image(name) is the image in file_name.
+ */
+void bear::visual::image_manager::add_image
+( std::string name, const image& img )
+{
+  CLAW_PRECOND( !exists(name) );
+
+  m_images[name] = img;
+} // image_manager::add_image()
 
 /*---------------------------------------------------------------------------*/
 /**

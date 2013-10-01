@@ -36,6 +36,7 @@ namespace bear
     public:
       void clear();
       void load_image( std::string name, std::istream& file );
+      void add_image( std::string name, const image& img );
 
       void clear_images();
       void restore_image( std::string name, std::istream& file );

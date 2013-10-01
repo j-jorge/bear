@@ -36,7 +36,9 @@ namespace bear
     {
     public:
       level_globals();
-      explicit level_globals( const level_globals* shared );
+      level_globals
+        ( const level_globals* shared,
+          const level_globals* temporary_resources );
 
       void load_image( const std::string& file_name );
       void load_sound( const std::string& file_name );
@@ -137,6 +139,10 @@ namespace bear
       /** \brief Another level_globals from which we can take the resources
           instead of building new ones. */
       const level_globals* m_shared_resources;
+
+      /** \brief Another level_globals from which we can temporarily take the
+          resources instead of building new ones. */
+      const level_globals* m_temporary_resources;
 
       /** \brief The image resources in the level. */
       visual::image_manager m_image_manager;

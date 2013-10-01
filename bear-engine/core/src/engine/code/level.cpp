@@ -33,14 +33,16 @@
  * \param level_music The default music of the level.
  * \param shared_resources A level_globals from which we can take the resources
  *        instead of building new ones in the new level.
+ * \param resource_source A level_globals from which we can temporarily take
+ *        the resources instead of building new ones in the new level.
  */
 bear::engine::level::level
 ( const std::string& name, const std::string& filename,
   const universe::size_box_type& level_size, const std::string& level_music,
-  const level_globals* shared_resources )
+  const level_globals* shared_resources, const level_globals* resource_source )
   : m_name(name),  m_filename(filename), m_camera(NULL),
     m_level_size(level_size),
-    m_level_globals( new level_globals(shared_resources) ),
+    m_level_globals( new level_globals(shared_resources, resource_source) ),
     m_music(level_music), m_music_id(0), m_paused(0),
     m_overview_activated(false)
 {

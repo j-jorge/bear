@@ -29,8 +29,6 @@
 #include "engine/layer/layer_factory.hpp"
 #include "engine/loader/item_loader_map.hpp"
 
-#include "debug/scoped_time_measure.hpp"
-
 #include "easing.hpp"
 
 #include <claw/exception.hpp>
@@ -42,10 +40,13 @@
  * \param path The path of the level to load.
  * \param shared_resources A level_globals from which we can take the resources
  *        instead of building new ones in the new level.
+ * \param resource_source A level_globals from which we can temporarily take
+ *        the resources instead of building new ones in the new level.
  */
 bear::engine::level_loader::level_loader
 ( compiled_file& f, const std::string& path,
-  const level_globals* shared_resources )
+  const level_globals* shared_resources,
+  const level_globals* resource_source )
   : m_level(NULL), m_layer(NULL), m_file(f), m_current_item(NULL),
     m_current_loader(NULL), m_items_count(0), m_item_index(0),
     m_maj(0), m_min(0), m_rel(0)
@@ -67,7 +68,9 @@ bear::engine::level_loader::level_loader
   m_file >> level_size.x >> level_size.y >> level_music >> m_items_count
          >> layers_count >> m_next_code;
 
-  m_level = new level( name, path, level_size, level_music, shared_resources );
+  m_level =
+    new level
+    ( name, path, level_size, level_music, shared_resources, resource_source );
 } // level_loader::level_loader()
 
 /*----------------------------------------------------------------------------*/
@@ -214,8 +217,6 @@ void bear::engine::level_loader::load_layer()
 
   m_file >> class_name >> size.x >> size.y;
 
-  BEAR_CREATE_SCOPED_TIMELOG( "layer " + class_name );
-
   if ( (m_maj == 0) && (m_min >= 9) )
     m_file >> tag;
 
@@ -237,8 +238,6 @@ void bear::engine::level_loader::validate_current_item()
 {
   assert( m_current_item != NULL );
 
-  BEAR_CREATE_SCOPED_TIMELOG( "validate" );
-
   if ( !m_current_item->is_valid() )
     throw claw::exception
       ( std::string("Invalid item: ") + m_current_item->get_class_name() );
@@ -257,8 +256,6 @@ void bear::engine::level_loader::validate_current_item()
  */
 void bear::engine::level_loader::load_item_declaration()
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "load_item_declaration" );
-
   CLAW_PRECOND( m_current_item == NULL );
   CLAW_PRECOND( m_current_loader == NULL );
 
@@ -297,9 +294,6 @@ void bear::engine::level_loader::load_item_definition()
 
   m_current_item = m_referenced[m_referenced_index];
 
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_definition" );
-
   m_current_loader = new item_loader_map( m_current_item->get_loaders() );
 
   m_file >> fixed >> m_next_code;
@@ -326,8 +320,6 @@ void bear::engine::level_loader::load_item()
   ++m_item_index;
 
   m_current_item = create_item_from_string(class_name);
-
-  BEAR_CREATE_SCOPED_TIMELOG( "load_item" );
 
   m_current_loader = new item_loader_map( m_current_item->get_loaders() );
 
@@ -392,9 +384,6 @@ void bear::engine::level_loader::load_item_field_list()
  */
 void bear::engine::level_loader::load_item_field_int()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_int" );
-
   std::string field_name;
   int val;
   m_file >> field_name >> val >> m_next_code;
@@ -411,9 +400,6 @@ void bear::engine::level_loader::load_item_field_int()
  */
 void bear::engine::level_loader::load_item_field_u_int()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_u_int" );
-
   std::string field_name;
   unsigned int val;
   m_file >> field_name >> val >> m_next_code;
@@ -430,9 +416,6 @@ void bear::engine::level_loader::load_item_field_u_int()
  */
 void bear::engine::level_loader::load_item_field_real()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_real" );
-
   std::string field_name;
   double val;
   m_file >> field_name >> val >> m_next_code;
@@ -449,9 +432,6 @@ void bear::engine::level_loader::load_item_field_real()
  */
 void bear::engine::level_loader::load_item_field_bool()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_bool" );
-
   std::string field_name;
   bool val;
   m_file >> field_name >> val >> m_next_code;
@@ -468,9 +448,6 @@ void bear::engine::level_loader::load_item_field_bool()
  */
 void bear::engine::level_loader::load_item_field_string()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_string" );
-
   std::string field_name;
   std::string val;
 
@@ -491,9 +468,6 @@ void bear::engine::level_loader::load_item_field_string()
  */
 void bear::engine::level_loader::load_item_field_sprite()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_sprite" );
-
   std::string field_name;
 
   m_file >> field_name;
@@ -515,9 +489,6 @@ void bear::engine::level_loader::load_item_field_sprite()
  */
 void bear::engine::level_loader::load_item_field_animation()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_animation" );
-
   std::string field_name;
 
   m_file >> field_name;
@@ -538,9 +509,6 @@ void bear::engine::level_loader::load_item_field_animation()
  */
 void bear::engine::level_loader::load_item_field_item()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_item" );
-
   std::string field_name;
   unsigned int index;
 
@@ -558,9 +526,6 @@ void bear::engine::level_loader::load_item_field_item()
  */
 void bear::engine::level_loader::load_item_field_sample()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_sample" );
-
   std::string field_name;
 
   m_file >> field_name;
@@ -582,9 +547,6 @@ void bear::engine::level_loader::load_item_field_sample()
  */
 void bear::engine::level_loader::load_item_field_font()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_font" );
-
   std::string field_name;
 
   m_file >> field_name;
@@ -603,9 +565,6 @@ void bear::engine::level_loader::load_item_field_font()
  */
 void bear::engine::level_loader::load_item_field_color()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_color" );
-
   std::string field_name;
 
   m_file >> field_name;
@@ -624,9 +583,6 @@ void bear::engine::level_loader::load_item_field_color()
  */
 void bear::engine::level_loader::load_item_field_easing()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_easing" );
-
   std::string field_name;
 
   m_file >> field_name;
@@ -645,9 +601,6 @@ void bear::engine::level_loader::load_item_field_easing()
  */
 void bear::engine::level_loader::load_item_field_int_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_int_list" );
-
   std::vector<int> val;
   std::string field_name = load_list<int>(val);
 
@@ -663,9 +616,6 @@ void bear::engine::level_loader::load_item_field_int_list()
  */
 void bear::engine::level_loader::load_item_field_u_int_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_u_int_list" );
-
   std::vector<unsigned int> val;
   std::string field_name = load_list<unsigned int>(val);
 
@@ -681,9 +631,6 @@ void bear::engine::level_loader::load_item_field_u_int_list()
  */
 void bear::engine::level_loader::load_item_field_real_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_real_list" );
-
   std::vector<double> val;
   std::string field_name = load_list<double>(val);
 
@@ -699,9 +646,6 @@ void bear::engine::level_loader::load_item_field_real_list()
  */
 void bear::engine::level_loader::load_item_field_bool_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_bool_list" );
-
   std::vector<bool> val;
   std::string field_name = load_list<bool>(val);
 
@@ -717,9 +661,6 @@ void bear::engine::level_loader::load_item_field_bool_list()
  */
 void bear::engine::level_loader::load_item_field_string_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_string_list" );
-
   unsigned int n;
   std::string v;
   std::string field_name;
@@ -750,9 +691,6 @@ void bear::engine::level_loader::load_item_field_string_list()
  */
 void bear::engine::level_loader::load_item_field_sprite_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_sprite_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -776,9 +714,6 @@ void bear::engine::level_loader::load_item_field_sprite_list()
  */
 void bear::engine::level_loader::load_item_field_animation_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_animation_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -802,9 +737,6 @@ void bear::engine::level_loader::load_item_field_animation_list()
  */
 void bear::engine::level_loader::load_item_field_item_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_item_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -834,9 +766,6 @@ void bear::engine::level_loader::load_item_field_item_list()
  */
 void bear::engine::level_loader::load_item_field_sample_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_sample_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -865,9 +794,6 @@ void bear::engine::level_loader::load_item_field_sample_list()
  */
 void bear::engine::level_loader::load_item_field_font_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_font_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -891,9 +817,6 @@ void bear::engine::level_loader::load_item_field_font_list()
  */
 void bear::engine::level_loader::load_item_field_color_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_color_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -917,9 +840,6 @@ void bear::engine::level_loader::load_item_field_color_list()
  */
 void bear::engine::level_loader::load_item_field_easing_list()
 {
-  BEAR_CREATE_SCOPED_TIMELOG
-    ( "load_item_field_easing_list" );
-
   std::string field_name;
   unsigned int n;
 
@@ -945,8 +865,6 @@ void bear::engine::level_loader::load_item_field_easing_list()
 bear::engine::base_item* bear::engine::level_loader::create_item_from_string
 ( const std::string& name ) const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "create_item_from_string " + name );
-
   claw::logger << claw::log_verbose << "Creating item '" << name << "'..."
                << std::endl;
 
@@ -979,8 +897,6 @@ bear::engine::base_item* bear::engine::level_loader::create_item_from_string
 bear::engine::layer* bear::engine::level_loader::create_layer_from_string
 ( const std::string& name, const universe::size_box_type& s ) const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "create_layer_from_string " + name );
-
   claw::logger << claw::log_verbose << "Creating layer '" << name << "'"
                << std::endl;
 
@@ -1010,8 +926,6 @@ bear::engine::layer* bear::engine::level_loader::create_layer_from_string
  */
 void bear::engine::level_loader::escape( std::string& str ) const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "escape" );
-
   std::string result;
   result.reserve(str.size());
   claw::text::c_escape( str.begin(), str.end(), std::back_inserter(result) );
@@ -1024,8 +938,6 @@ void bear::engine::level_loader::escape( std::string& str ) const
  */
 bear::audio::sample* bear::engine::level_loader::load_sample_data() const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "load_sample_data" );
-
   std::string sample_path;
   int loops;
   double volume;
@@ -1045,8 +957,6 @@ bear::audio::sample* bear::engine::level_loader::load_sample_data() const
  */
 bear::visual::font bear::engine::level_loader::load_font_data() const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "load_font_data" );
-
   std::string font_path;
   double size;
 
@@ -1060,8 +970,6 @@ bear::visual::font bear::engine::level_loader::load_font_data() const
  */
 bear::visual::color bear::engine::level_loader::load_color_data() const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "load_color_data" );
-
   double red, green, blue, opacity;
 
   m_file >> opacity >> red >> green >> blue;
@@ -1082,8 +990,6 @@ bear::visual::color bear::engine::level_loader::load_color_data() const
 bear::engine::easing_function
 bear::engine::level_loader::load_easing_data() const
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "load_easing_data" );
-
   std::string s;
   m_file >> s;
 
@@ -1102,8 +1008,6 @@ bear::engine::level_loader::load_easing_data() const
 template<typename T>
 std::string bear::engine::level_loader::load_list( std::vector<T>& v )
 {
-  BEAR_CREATE_SCOPED_TIMELOG( "load_list" );
-
   std::string field_name;
   unsigned int n;
   T val;

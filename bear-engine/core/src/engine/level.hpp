@@ -72,7 +72,8 @@ namespace bear
       ( const std::string& name, const std::string& filename,
         const universe::size_box_type& level_size,
         const std::string& level_music,
-        const level_globals* shared_resources = NULL );
+        const level_globals* shared_resources,
+        const level_globals* resource_source );
       ~level();
 
       void start();

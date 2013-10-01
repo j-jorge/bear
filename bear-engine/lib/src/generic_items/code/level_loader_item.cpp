@@ -72,7 +72,9 @@ void bear::level_loader_item::build()
     (m_level_path, *m_level_stream);
 
   m_level_file = new engine::compiled_file( *m_level_stream, true );
-  m_level_loader = new engine::level_loader(*m_level_file, m_level_path);
+  m_level_loader =
+    new engine::level_loader
+    ( *m_level_file, m_level_path, NULL, &get_level_globals() );
 
   m_items_count = m_level_loader->get_items_count();
 } // level_loader_item::build()

@@ -1154,8 +1154,11 @@ void bear::engine::game_local_client::load_level( const std::string& path )
     shared_resources = &m_level_in_abeyance->get_globals();
 
   const systime::milliseconds_type loading_date( systime::get_date_ms() );
-  
-  level_loader loader( level_file, path, shared_resources );
+
+  const level_globals* resources_source
+    ( (m_current_level == NULL) ? NULL : &m_current_level->get_globals() );
+
+  level_loader loader( level_file, path, shared_resources, resources_source );
   loader.complete_run();
 
   claw::logger << "Level loaded in "

@@ -38,7 +38,7 @@ bool bear::engine::level_globals::s_music_muted(false);
  * \brief Constructor.
  */
 bear::engine::level_globals::level_globals()
-  : m_shared_resources(NULL), m_frozen(false)
+  : m_shared_resources(NULL), m_temporary_resources(NULL), m_frozen(false)
 {
   constructor_default();
 } // level_globals::level_globals()
@@ -48,9 +48,13 @@ bear::engine::level_globals::level_globals()
  * \brief Constructor.
  * \param shared Another level_globals from which we can take the resources
  *        instead of building new ones.
+ * \param temporary_resources Another level_globals from which we can
+ *        temporarily take the resources instead of building new ones.
  */
-bear::engine::level_globals::level_globals( const level_globals* shared )
-  : m_shared_resources( shared ), m_frozen(false)
+bear::engine::level_globals::level_globals
+( const level_globals* shared, const level_globals* temporary_resources )
+  : m_shared_resources( shared ), m_temporary_resources( temporary_resources ),
+    m_frozen(false)
 {
   constructor_default();
 } // level_globals::level_globals()
@@ -62,7 +66,14 @@ bear::engine::level_globals::level_globals( const level_globals* shared )
  */
 void bear::engine::level_globals::load_image( const std::string& file_name )
 {
-  if ( !image_exists(file_name) )
+  if ( image_exists(file_name) )
+    return;
+
+  if ( (m_temporary_resources != NULL)
+       && m_temporary_resources->image_exists( file_name ) )
+    m_image_manager.add_image
+      ( file_name, m_temporary_resources->get_existing_image( file_name ) );
+  else
     {
       claw::logger << claw::log_verbose << "loading image '" << file_name
                    << "'." << std::endl;
@@ -941,6 +952,7 @@ void bear::engine::level_globals::restore_resources()
 void bear::engine::level_globals::freeze()
 {
   m_frozen = true;
+  m_temporary_resources = NULL;
 } // level_globals::freeze()
 
 /*----------------------------------------------------------------------------*/
