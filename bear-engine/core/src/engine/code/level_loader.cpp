@@ -47,8 +47,7 @@ bear::engine::level_loader::level_loader
 ( compiled_file& f, const std::string& path,
   const level_globals* shared_resources,
   const level_globals* resource_source )
-  : m_perf(path),
-    m_level(NULL), m_layer(NULL), m_file(f), m_current_item(NULL),
+  : m_level(NULL), m_layer(NULL), m_file(f), m_current_item(NULL),
     m_current_loader(NULL), m_items_count(0), m_item_index(0),
     m_maj(0), m_min(0), m_rel(0)
 {
