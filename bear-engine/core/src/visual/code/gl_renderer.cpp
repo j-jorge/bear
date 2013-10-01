@@ -292,6 +292,10 @@ void bear::visual::gl_renderer::set_pause()
 void bear::visual::gl_renderer::unset_pause()
 {
   boost::mutex::scoped_lock lock( m_mutex.loop_state );
+
+  if ( m_pause == false )
+    return;
+
   m_mutex.gl_access.unlock();
 
   m_pause = false;
