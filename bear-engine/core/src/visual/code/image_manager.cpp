@@ -19,8 +19,6 @@
 #include <claw/functional.hpp>
 #include <claw/png.hpp>
 
-#include "debug/scoped_time_measure.hpp"
-
 /*---------------------------------------------------------------------------*/
 /**
  * \brief Deletes all images.
@@ -45,8 +43,6 @@ void bear::visual::image_manager::load_image
 {
   CLAW_PRECOND( !exists(name) );
 
-  BEAR_CREATE_SCOPED_TIMELOG( "load image" );
-
   claw::graphic::png img(file);
   m_images[name] = image(img);
 } // image_manager::load_image()
@@ -64,7 +60,7 @@ void bear::visual::image_manager::clear_images()
   for (it=m_images.begin(); it!=m_images.end(); ++it)
     it->second.clear();
 } // image_manager::clear_images()
-#include <claw/logger.hpp>
+
 /*---------------------------------------------------------------------------*/
 /**
  * \brief Restore an image.
