@@ -103,6 +103,7 @@ set( ENGINE_SOURCE_FILES
   network/code/message_factory.cpp
   network/message/code/sync.cpp
 
+  resource_pool/code/android_resource_pool.cpp
   resource_pool/code/directory_resource_pool.cpp
 
   script/code/call_sequence.cpp
@@ -120,6 +121,7 @@ set( ENGINE_SOURCE_FILES
   script/node_parser/code/node_parser_file.cpp
 
   system/code/android_system_event_manager.cpp
+  system/code/android_game_filesystem.cpp
   system/code/base_game_filesystem.cpp
   system/code/default_game_filesystem.cpp
   system/code/freedesktop_game_filesystem.cpp

@@ -28,6 +28,7 @@
 #include "engine/version.hpp"
 
 #include "engine/system/android_system_event_manager.hpp"
+#include "engine/system/android_game_filesystem.hpp"
 #include "engine/system/default_game_filesystem.hpp"
 #include "engine/system/freedesktop_game_filesystem.hpp"
 
@@ -1030,11 +1031,20 @@ void bear::engine::game_local_client::close_environment() const
  */
 void bear::engine::game_local_client::init_game_filesystem()
 {
-#ifdef BEAR_USES_FREEDESKTOP
+#if defined( __ANDROID__ )
+
+  m_game_filesystem =
+    android_game_filesystem( m_game_description.game_name() );
+
+#elif defined( BEAR_USES_FREEDESKTOP )
+
   m_game_filesystem =
     freedesktop_game_filesystem( m_game_description.game_name() );
+
 #else
+
   m_game_filesystem = default_game_filesystem( m_game_description.game_name() );
+
 #endif
 } // game_local_client::init_game_filesystem()
 
