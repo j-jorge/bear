@@ -18,6 +18,7 @@
 
 #include <SDL/SDL_mixer.h>
 #include <iostream>
+#include <boost/thread.hpp>
 
 #include "audio/class_export.hpp"
 
@@ -49,8 +50,16 @@ namespace bear
       static unsigned int get_audio_format();
 
     private:
+      void load_sound( char* buffer, std::size_t buffer_length );
+
+      void ensure_loaded() const;
+
+    private:
       /** \brief The sound allocated by SDL_mixer. */
       Mix_Chunk* m_sound;
+
+      /** \brief The thread loading the sound. */
+      boost::thread* m_loader;
 
       /** \brief Output audio rate. */
       static unsigned int s_audio_rate;

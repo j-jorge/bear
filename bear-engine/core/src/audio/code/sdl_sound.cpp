@@ -38,24 +38,16 @@ bear::audio::sdl_sound::sdl_sound
 ( std::istream& file, const std::string& name, sound_manager& owner )
   : sound(name, owner), m_sound(NULL)
 {
-  SDL_RWops* rw;
-
   file.seekg( 0, std::ios::end );
   std::streamoff file_size = file.tellg();
   file.seekg( 0, std::ios::beg );
 
   char* buffer = new char[file_size];
-
   file.read( buffer, file_size );
 
-  rw = SDL_RWFromMem(buffer, file_size);
-
-  if (rw)
-      m_sound = Mix_LoadWAV_RW( rw, 1 );
-  delete[] buffer;
-
-  if (!m_sound)
-    throw claw::exception( Mix_GetError() );
+  m_loader =
+    new boost::thread
+    ( boost::bind( &sdl_sound::load_sound, this, buffer, file_size ) );
 } // sdl_sound::sdl_sound()
 
 /*----------------------------------------------------------------------------*/
@@ -66,7 +58,7 @@ bear::audio::sdl_sound::sdl_sound
  */
 bear::audio::sdl_sound::sdl_sound
 ( const sdl_sound& that, sound_manager& owner )
-  : sound(that.get_sound_name(), owner), m_sound(NULL)
+  : sound(that.get_sound_name(), owner), m_sound(NULL), m_loader(NULL)
 {
   const Uint32 buffer_length( that.m_sound->alen );
   Uint8* const buffer( new Uint8[buffer_length] );
@@ -89,6 +81,10 @@ bear::audio::sdl_sound::sdl_sound
  */
 bear::audio::sdl_sound::~sdl_sound()
 {
+  ensure_loaded();
+
+  delete m_loader;
+
   Mix_FreeChunk( m_sound );
 } // sdl_sound::~sdl_sound()
 
@@ -109,6 +105,8 @@ bear::audio::sample* bear::audio::sdl_sound::new_sample()
  */
 int bear::audio::sdl_sound::play( unsigned int loops ) const
 {
+  ensure_loaded();
+
   const int sdl_loops((int)loops - 1);
   const int channel = Mix_PlayChannel(-1, m_sound, sdl_loops);
 
@@ -159,3 +157,39 @@ unsigned int bear::audio::sdl_sound::get_audio_format()
 {
   return s_audio_format;
 } // sdl_sound::get_audio_format()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Loads the sound from a given data.
+ * \param buffer The buffer from which the sound is read. It will be deleted by
+ *        the end of the call.
+ * \param buffer_length The length of buffer.
+ */
+void bear::audio::sdl_sound::load_sound
+( char* buffer, std::size_t buffer_length )
+{
+  SDL_RWops* rw( SDL_RWFromMem(buffer, buffer_length) );
+
+  if (rw)
+    m_sound = Mix_LoadWAV_RW( rw, 1 );
+  delete[] buffer;
+
+  if (!m_sound)
+    {
+      claw::logger << claw::log_error << Mix_GetError() << std::endl;
+      throw claw::exception( Mix_GetError() );
+    }
+} // sdl_sound::load_sound()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Ensures the sound has been fully loaded. The function will force the
+ *        loading to finish if the sound has not been loaded yet.
+ */
+void bear::audio::sdl_sound::ensure_loaded() const
+{
+  if ( m_loader == NULL )
+    return;
+
+  m_loader->join();
+} // sdl_sound::ensure_loaded()
