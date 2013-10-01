@@ -279,6 +279,9 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
 void bear::visual::gl_renderer::set_pause()
 {
   boost::mutex::scoped_lock lock( m_mutex.loop_state );
+
+  m_mutex.gl_access.lock();
+
   m_pause = true;
 } // gl_renderer::set_pause()
 
@@ -289,6 +292,8 @@ void bear::visual::gl_renderer::set_pause()
 void bear::visual::gl_renderer::unset_pause()
 {
   boost::mutex::scoped_lock lock( m_mutex.loop_state );
+  m_mutex.gl_access.unlock();
+
   m_pause = false;
 } // gl_renderer::unset_pause()
 
