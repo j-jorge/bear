@@ -36,6 +36,7 @@ namespace bear
     public:
       sdl_sound
         ( std::istream& file, const std::string& name, sound_manager& owner );
+      sdl_sound( const sdl_sound& that, sound_manager& owner );
       ~sdl_sound();
 
       sample* new_sample();

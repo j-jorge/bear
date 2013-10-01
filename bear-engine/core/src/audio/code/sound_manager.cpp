@@ -85,6 +85,28 @@ void bear::audio::sound_manager::load_sound
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Adds a copy of a sound from another cache into this one.
+ * \param name The name of the sound.
+ * \param source The cache from which the sound is copied.
+ * \pre name is not used by another sound and source.sound_exists(name) is true.
+ */
+void bear::audio::sound_manager::copy_sound
+( const std::string& name, const sound_manager& source )
+{
+  CLAW_PRECOND( !sound_exists(name) );
+  CLAW_PRECOND( source.sound_exists(name) );
+
+  if (s_initialized)
+    {
+      sound* const ref( source.m_sounds.find(name)->second );
+      m_sounds[name] = new sdl_sound( *dynamic_cast<sdl_sound*>(ref), *this);
+    }
+  else
+    m_sounds[name] = new sound(name, *this);
+} // sound_manager::copy_sound()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Start to play a sound.
  * \param name The name of the sound to play.
  */

@@ -49,6 +49,7 @@ namespace bear
 
       void clear();
       void load_sound( const std::string& name, std::istream& file );
+      void copy_sound( const std::string& name, const sound_manager& source );
 
       void play_sound( const std::string& name );
       void play_sound( const std::string& name, const sound_effect& effect );

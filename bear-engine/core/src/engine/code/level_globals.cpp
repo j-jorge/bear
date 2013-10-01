@@ -96,9 +96,21 @@ void bear::engine::level_globals::load_image( const std::string& file_name )
  */
 void bear::engine::level_globals::load_sound( const std::string& file_name )
 {
-  // The sounds cannot be shared between the level globals, thus we search only
-  // in this instance.
-  if ( !m_sound_manager.sound_exists(file_name) )
+  if ( m_sound_manager.sound_exists(file_name) )
+    return;
+
+  const level_globals* source(NULL);
+
+  if ( ( m_shared_resources != NULL )
+       && m_shared_resources->sound_exists( file_name ) )
+    source = m_shared_resources;
+  else if ( (m_temporary_resources != NULL)
+       && m_temporary_resources->sound_exists( file_name ) )
+    source = m_temporary_resources;
+
+  if ( source != NULL )
+    m_sound_manager.copy_sound( file_name, source->m_sound_manager );
+  else
     {
       claw::logger << claw::log_verbose << "loading sound '" << file_name
                    << "'." << std::endl;

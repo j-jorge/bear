@@ -60,6 +60,31 @@ bear::audio::sdl_sound::sdl_sound
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Copy constructor.
+ * \param that The instance to copy from.
+ * \param owner The instance of sound_manager who stores me.
+ */
+bear::audio::sdl_sound::sdl_sound
+( const sdl_sound& that, sound_manager& owner )
+  : sound(that.get_sound_name(), owner), m_sound(NULL)
+{
+  const Uint32 buffer_length( that.m_sound->alen );
+  Uint8* const buffer( new Uint8[buffer_length] );
+  
+  std::copy
+    ( that.m_sound->abuf, that.m_sound->abuf + buffer_length, buffer );
+  
+  m_sound = Mix_QuickLoad_RAW( buffer, buffer_length );
+
+  if (!m_sound)
+    {
+      delete[] buffer;
+      throw claw::exception( Mix_GetError() );
+    }
+} // sdl_sound::sdl_sound()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Destructor.
  */
 bear::audio::sdl_sound::~sdl_sound()
