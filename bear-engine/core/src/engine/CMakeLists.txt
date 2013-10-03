@@ -51,6 +51,7 @@ set( ENGINE_SOURCE_FILES
   game_action/code/game_action_set_current_level.cpp
 
   i18n/code/base_translator.cpp
+  i18n/code/android_gettext_translator.cpp
   i18n/code/gettext_translator.cpp
   i18n/code/translator.cpp
 
