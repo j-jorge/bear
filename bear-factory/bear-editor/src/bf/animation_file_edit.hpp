@@ -17,7 +17,7 @@
 #include "bf/animation_file_type.hpp"
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <wx/wx.h>
@@ -47,14 +47,14 @@ namespace bf
 
   public:
     animation_file_edit
-      ( wxWindow& parent, const image_pool& pool,
+      ( wxWindow& parent, workspace_environment* env,
         const animation_file_type& v =
         default_value<animation_file_type>::get() );
 
     bool validate();
 
   private:
-    animation_file_type make_animation_file(const image_pool& pool) const;
+    animation_file_type make_animation_file(workspace_environment* env) const;
 
     void value_updated();
     void fill_controls();
@@ -78,8 +78,8 @@ namespace bf
     /** \brief The control in which we display the animation. */
     animation_view_ctrl* m_animation_view;
 
-    /** \brief The image pool to use. */
-    const image_pool& m_image_pool;
+    /** \brief The workspace environment to use. */
+    workspace_environment* m_workspace;
 
     DECLARE_EVENT_TABLE()
 

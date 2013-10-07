@@ -29,6 +29,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief Event sent when something has changed in the sound frame.
    * \author Julien Jorge
@@ -65,7 +67,8 @@ namespace bf
       }; // enum control_id
 
   public:
-    sound_frame( wxWindow* parent, wxWindowID id = wxID_ANY );
+    sound_frame
+    ( wxWindow* parent, wxWindowID id = wxID_ANY, workspace_environment* env );
 
     void set_sound_description( sound_description d );
     sound_description get_sound_description() const;
@@ -90,6 +93,9 @@ namespace bf
     /** \brief Tells if the sound is played globally. */
     wxCheckBox* m_play_globally;
 
+    /** \brief The workspace environment used. */
+    workspace_environment* m_workspace; 
+    
     DECLARE_EVENT_TABLE()
 
   }; // class sound_frame

@@ -17,7 +17,6 @@
 #include "bf/animation_file_xml_writer.hpp"
 #include "bf/compilation_context.hpp"
 #include "bf/config_frame.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/main_frame.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/version.hpp"
@@ -38,26 +37,12 @@ void bf::animation_editor::configure()
   config_frame dlg(NULL);
 
   if ( dlg.ShowModal() == wxID_OK )
-    update_image_pool();
+    {
+      // TO DO :
+      // Call update_image_pool() for each main_frame
+      ;
+    }
 } // animation_editor::configure()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Update the image pool.
- */
-void bf::animation_editor::update_image_pool() const
-{
-  image_pool::get_instance().clear();
-
-  workspace::path_list_const_iterator it;
-  path_configuration::workspaces_const_iterator it_map;
-  it_map = path_configuration::get_instance().workspaces.find("default");
-
-  if ( it_map != path_configuration::get_instance().workspaces.end() )
-    for ( it = it_map->second.data_begin(); 
-          it != it_map->second.data_end(); ++it )
-      image_pool::get_instance().scan_directory(*it);
-} // animation_editor::update_image_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -80,9 +65,18 @@ void bf::animation_editor::compile( const wxString& path ) const
 
   if ( doc.Load(path) )
     {
-      animation_file_xml_reader reader;
-      animation anim( reader.load( doc.GetRoot() ) );
-      compile_animation(anim, path);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          
+          animation_file_xml_reader reader;
+          animation anim( reader.load( doc.GetRoot(), &env ) );
+          compile_animation(anim, path);
+        }
     }
   else
     throw claw::exception("Can't load XML file.");
@@ -100,8 +94,16 @@ void bf::animation_editor::update( const wxString& path ) const
 
   if ( doc.Load(path) )
     {
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      workspace_environment env;
+      
+      if ( ! w.empty() )
+        env.set_name(w);
+
       animation_file_xml_reader reader;
-      anim = reader.load( doc.GetRoot() );
+      anim = reader.load( doc.GetRoot(), &env );
     }
   else
     throw claw::exception("Can't load XML file.");
@@ -133,10 +135,19 @@ void bf::animation_editor::compile_animation
 
   if (f)
     {
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      workspace_environment env;
+      
+      if ( ! w.empty() )
+        env.set_name(w);
+
       compiled_file cf(f);
       cf << BF_MAJOR_VERSION << BF_MINOR_VERSION << BF_RELEASE_NUMBER;
 
-      compilation_context context( std::numeric_limits<unsigned int>::max() );
+      compilation_context context
+        ( std::numeric_limits<unsigned int>::max(), &env );
       anim.compile(cf, context);
     }
   else
@@ -150,20 +161,23 @@ void bf::animation_editor::compile_animation
 bool bf::animation_editor::do_init_app()
 {
   init_config();
-  update_image_pool();
 
   main_frame* frame = NULL;
 
   if (argc > 1)
     for (int i=1; i<argc; ++i)
       {
-        frame = new main_frame();
+        std::string w =
+          path_configuration::get_instance().search_workspace
+          ( wx_to_std_string( argv[i] ) );
+        
+        frame = new main_frame(w);
         frame->load_animation( argv[i] );
         frame->Show();
       }
   else
     {
-      frame = new main_frame();
+      frame = new main_frame( "" );
       frame->SetSize( m_config.main_rect );
       frame->Show();
     }
@@ -178,14 +192,4 @@ bool bf::animation_editor::do_init_app()
 void bf::animation_editor::init_config()
 {
   m_config.load();
-
-  path_configuration::workspaces_const_iterator it_map;
-  it_map = path_configuration::get_instance().workspaces.find("default");
-
-  if ( it_map != path_configuration::get_instance().workspaces.end() )
-    if ( it_map->second.data_begin() == it_map->second.data_end() )
-      {
-        config_frame dlg(NULL);
-        dlg.ShowModal();
-      }
 } // animation_editor::init_config()

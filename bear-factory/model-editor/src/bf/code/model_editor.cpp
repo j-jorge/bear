@@ -16,10 +16,10 @@
 #include "bf/model_file_compiler.hpp"
 #include "bf/config_frame.hpp"
 #include "bf/gui_model.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/main_frame.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/version.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/model_file.hpp"
 
@@ -63,26 +63,12 @@ void bf::model_editor::configure()
   config_frame dlg(NULL);
 
   if ( dlg.ShowModal() == wxID_OK )
-    update_image_pool();
+    {
+      // TO DO
+      // Call update_image_pool() for each main_frame 
+      ; 
+    }
 } // model_editor::configure()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Update the image pool.
- */
-void bf::model_editor::update_image_pool() const
-{
-  image_pool::get_instance().clear();
-
-  std::list<std::string>::const_iterator it;
-  path_configuration::workspaces_const_iterator it_map;
-  it_map = path_configuration::get_instance().workspaces.find("default");
-
-  if ( it_map != path_configuration::get_instance().workspaces.end() )
-    for ( it = it_map->second.data_begin(); 
-          it != it_map->second.data_end(); ++it )
-    image_pool::get_instance().scan_directory(*it);
-} // model_editor::update_image_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -150,14 +136,24 @@ void bf::model_editor::update( const wxString& path ) const
  * \return true if the compilation went ok.
  */
 bool
-bf::model_editor::compile_model( const model& mdl, const wxString& path ) const
+bf::model_editor::compile_model
+( const model& mdl, const wxString& path ) const
 {
   bool result(true);
 
   try
     {
       model_file_compiler c;
-      c.compile( mdl, wx_to_std_string(path) );
+
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          c.compile( mdl, wx_to_std_string(path), &env );
+        }
     }
   catch(...)
     {
@@ -174,7 +170,6 @@ bf::model_editor::compile_model( const model& mdl, const wxString& path ) const
 bool bf::model_editor::do_init_app()
 {
   init_config();
-  update_image_pool();
 
   m_main_frame = new main_frame;
   m_main_frame->Show();
@@ -202,13 +197,6 @@ bool bf::model_editor::do_command_line_init()
 void bf::model_editor::init_config()
 {
   m_config.load();
-
-  path_configuration::workspaces_const_iterator it_map;
-  it_map = path_configuration::get_instance().workspaces.find("default");
-
-  if ( it_map != path_configuration::get_instance().workspaces.end() )
-    if ( it_map->second.data_begin() == it_map->second.data_end() )
-      configure();
 } // model_editor::init_config()
 
 /*----------------------------------------------------------------------------*/

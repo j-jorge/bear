@@ -21,11 +21,11 @@
 /**
  * \brief Load a animation.
  * \param file_path The path to the animation file.
- * \param pool The image pool to use.
+ * \param env The worksapce environment to use.
  */
 bf::animation
 bf::animation_file_xml_reader::load
-( const wxString& file_path, const image_pool& pool ) const
+( const wxString& file_path, workspace_environment* env ) const
 {
   wxXmlDocument doc;
 
@@ -38,17 +38,17 @@ bf::animation_file_xml_reader::load
   if ( node == NULL )
     throw xml::missing_node("animation");
 
-  return load( node, pool );
+  return load( node, env );
 } // animation_file_xml_reader::load()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load a node of type "animation".
  * \param node The node to parse.
- * \param pool The image pool to use.
+ * \param env The workspace environment to use.
  */
 bf::animation bf::animation_file_xml_reader::load
-( wxXmlNode* node, const image_pool& pool ) const
+( wxXmlNode* node, workspace_environment* env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -58,7 +58,7 @@ bf::animation bf::animation_file_xml_reader::load
   animation anim;
   xml::xml_to_value<animation> xml_conv;
 
-  xml_conv( anim, node, pool );
+  xml_conv( anim, node, env );
 
   return anim;
 } // animation_file_xml_reader::load_animation()

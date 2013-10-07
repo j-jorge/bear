@@ -15,7 +15,7 @@
 #ifndef __BF_COMPILATION_CONTEXT_HPP__
 #define __BF_COMPILATION_CONTEXT_HPP__
 
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/sprite_image_cache.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -50,7 +50,7 @@ namespace bf
 
   public:
     compilation_context
-      ( unsigned int optimization_level, const image_pool& pool );
+      ( unsigned int optimization_level, workspace_environment* env );
 
     rectangle get_opaque_rectangle
       ( const sprite& s, const std::string& image_name );
@@ -58,6 +58,7 @@ namespace bf
     unsigned int get_compiled_identifier( const std::string& item ) const;
     void set_compiled_identifier( const std::string& item, unsigned int id );
     void clear_compiled_identifiers();
+    std::string get_workspace_name() const;
 
   private:
     rectangle compute_opaque_rectangle( const sprite& s );
@@ -76,6 +77,8 @@ namespace bf
     /** \brief The optimisation level during the compilation. */
     unsigned int m_optimization_level;
 
+    /** \brief The workspace environment to use. */
+    workspace_environment* m_workspace;
   }; // class compilation_context
 } // namespace bf
 

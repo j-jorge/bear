@@ -29,7 +29,6 @@ namespace bf
   {
   public:
     void configure();
-    void update_image_pool() const;
     void set_main_rect( const wxRect& r );
 
     void compile( const wxString& path ) const;

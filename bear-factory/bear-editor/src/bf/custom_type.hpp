@@ -20,6 +20,7 @@
 
 namespace bf
 {
+  class compilation_context;
   class compiled_file;
 
   /**
@@ -80,7 +81,7 @@ namespace bf
     public custom_type<std::string>
   {
   public:
-    void compile( compiled_file& f ) const;
+    void compile( compiled_file& f, compilation_context& c ) const;
   }; // class base_file_type
 
   /**

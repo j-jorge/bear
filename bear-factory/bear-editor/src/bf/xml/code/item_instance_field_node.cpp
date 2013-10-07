@@ -14,9 +14,9 @@
 #include "bf/xml/item_instance_field_node.hpp"
 
 #include "bf/human_readable.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/item_class.hpp"
 #include "bf/item_instance.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include "bf/xml/reader_tool.hpp"
 #include "bf/xml/value_to_xml.hpp"
@@ -29,11 +29,11 @@
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructs a node parser.
- * \param pool The pool from which we can access the images used by the item.
+ * \param env The workspace environment used.
  */
 bf::xml::item_instance_field_node::item_instance_field_node
-( const image_pool& pool )
-  : m_image_pool( pool )
+( workspace_environment* env )
+  : m_workspace( env )
 {
 
 } // item_instance_field_node::item_instance_field_node()
@@ -346,7 +346,7 @@ namespace bf
       xml_to_value<sprite> xml_conv;
     
       sprite result;
-      xml_conv( result, node, m_image_pool );
+      xml_conv( result, node, m_workspace );
     
       return result;
     } // item_instance_field_node::load_value_from_xml()
@@ -364,7 +364,7 @@ namespace bf
       xml_to_value<any_animation> xml_conv;
     
       any_animation result;
-      xml_conv( result, node, m_image_pool );
+      xml_conv( result, node, m_workspace );
     
       return result;
     } // item_instance_field_node::load_value_from_xml()

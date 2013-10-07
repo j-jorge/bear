@@ -36,11 +36,12 @@ bf::config_frame::config_frame( wxWindow* parent )
 void bf::config_frame::fill_controls()
 {
   m_item_classes_list->Clear();
-  m_data_path_list->Clear();
+  m_data_path_list->Clear(); 
+  m_run_path->Clear();
   m_workspaces_choice->Clear();
 
   path_configuration::workspaces_const_iterator it_map;
-  m_workspaces = path_configuration::get_instance().workspaces;
+  m_workspaces = path_configuration::get_instance().get_workspaces();
 
   for ( it_map = m_workspaces.begin(); it_map != m_workspaces.end(); ++it_map )
     m_workspaces_choice->Append( std_to_wx_string(it_map->first) );
@@ -60,7 +61,8 @@ void bf::config_frame::fill_list_view()
 {
   m_item_classes_list->Clear();
   m_data_path_list->Clear();
-  
+  m_run_path->Clear();
+
   if ( ! m_workspaces_choice->IsEmpty() )
     {
       std::string s = wx_to_std_string
@@ -74,6 +76,8 @@ void bf::config_frame::fill_list_view()
       for ( it = m_workspaces[s].data_begin(); 
             it != m_workspaces[s].data_end(); ++it )
         m_data_path_list->Append( std_to_wx_string(*it) );
+
+      m_run_path->Append( std_to_wx_string( m_workspaces[s].get_run_path() ) );
     }
 } // config_frame::fill_list_view()
 
@@ -97,6 +101,7 @@ void bf::config_frame::create_member_controls()
   m_workspaces_choice = new wxChoice( this, IDC_CHOICE );
   m_item_classes_list = new wxListBox( this, wxID_ANY );
   m_data_path_list = new wxListBox( this, wxID_ANY );
+  m_run_path = new wxListBox( this, wxID_ANY );
 } // config_frame::create_member_controls()
 
 /*----------------------------------------------------------------------------*/
@@ -137,6 +142,19 @@ void bf::config_frame::create_sizer_controls()
                     wxDefaultPosition, wxSize(30, -1) ), 0, wxALL, 5 );
 
   s_sizer->Add( m_data_path_list, 1, wxEXPAND | wxALL, 5 );
+  s_sizer->Add( v_sizer, 0, wxEXPAND );
+  sizer->Add( s_sizer, 0, wxEXPAND );
+
+  // run path
+  v_sizer = new wxBoxSizer( wxVERTICAL );
+  s_sizer = new wxStaticBoxSizer
+    ( wxHORIZONTAL, this, _("Path to run configuration file") );
+
+  v_sizer->Add
+    ( new wxButton( this, IDC_BROWSE_RUN_PATH_BUTTON, wxT("+"),
+                    wxDefaultPosition, wxSize(30, -1) ), 0, wxALL, 5 );
+  
+  s_sizer->Add( m_run_path, 1, wxEXPAND | wxALL, 5 );
   s_sizer->Add( v_sizer, 0, wxEXPAND );
   sizer->Add( s_sizer, 0, wxEXPAND );
 
@@ -269,9 +287,30 @@ void bf::config_frame::on_erase_data_path( wxCommandEvent& WXUNUSED(event) )
  */
 void bf::config_frame::on_select_workspace( wxCommandEvent& WXUNUSED(event) )
 {
-  std::cout << "SELECT" << std::endl;
   fill_list_view();
 } // config_frame::on_select_workspace()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Answer to a click on the "Browse" button for the run file.
+ * \param event This event occured.
+ */
+void bf::config_frame::on_browse_run_path( wxCommandEvent& WXUNUSED(event) )
+{
+  wxDirDialog diag(this);
+
+  if ( diag.ShowModal() == wxID_OK )
+    {
+      if ( m_workspaces_choice->GetSelection() != wxNOT_FOUND )
+        {
+          m_run_path->Clear();
+          m_run_path->Append( diag.GetPath() );
+          std::string s = 
+            wx_to_std_string( m_workspaces_choice->GetStringSelection() );
+          m_workspaces[s].set_run_path( wx_to_std_string(diag.GetPath()) );
+        }
+    }
+} // config_frame::on_browse_data_path()
 
 /*----------------------------------------------------------------------------*/
 BEGIN_EVENT_TABLE(bf::config_frame, wxDialog)
@@ -285,5 +324,7 @@ BEGIN_EVENT_TABLE(bf::config_frame, wxDialog)
               bf::config_frame::on_browse_data_path )
   EVT_BUTTON( bf::config_frame::IDC_ERASE_DATA_PATH_BUTTON,
               bf::config_frame::on_erase_data_path )
+  EVT_BUTTON( bf::config_frame::IDC_BROWSE_RUN_PATH_BUTTON,
+              bf::config_frame::on_browse_run_path )
   EVT_CHOICE( IDC_CHOICE, bf::config_frame::on_select_workspace )
 END_EVENT_TABLE()

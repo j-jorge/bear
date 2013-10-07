@@ -18,6 +18,7 @@
 #include "bf/mark.hpp"
 #include "bf/model_snapshot_tweener.hpp"
 #include "bf/snapshot.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <wx/dcbuffer.h>
@@ -323,10 +324,13 @@ const wxCoord bf::model_view::s_grip_size = 10;
  * \param parent The parent window.
  * \param id Identifier of the window.
  * \param m The model displayed.
+ * \param env The workspace environment used.
  */
-bf::model_view::model_view( wxWindow& parent, wxWindowID id, gui_model& m )
+bf::model_view::model_view
+( wxWindow& parent, wxWindowID id, gui_model& m,
+  workspace_environment* env)
   : wxWindow(&parent, id), m_background_pattern( 20, 20 ),
-    m_model(m), m_delta(0, 0), m_image_cache(new sprite_image_cache),
+    m_model(m), m_delta(0, 0), m_image_cache(new sprite_image_cache(env)),
     m_zoom(100), m_wireframe_drawing(true), m_graphic_drawing(true),
     m_text_drawing(true), m_placements(NULL)
 {

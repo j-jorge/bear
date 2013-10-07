@@ -57,10 +57,11 @@ namespace bf
   class snapshot;
   class mark_placement;
   class model_snapshot_tweener;
+  class workspace_environment;
 
   /**
    * \brief Event sent when the value of a selected mark has changed.
-   * \author S�bastien Angibaud
+   * \author Sebastien Angibaud
    */
   class mark_event:
     public wxNotifyEvent
@@ -90,7 +91,7 @@ namespace bf
 
   /**
    * \brief Event sent when the placement of a mark changes.
-   * \author S�bastien Angibaud
+   * \author Sebastien Angibaud
    */
   class placement_event:
     public wxNotifyEvent
@@ -240,7 +241,9 @@ namespace bf
     }; // struct drag_info
 
   public:
-    model_view( wxWindow& parent, wxWindowID id, gui_model& m );
+    model_view
+    ( wxWindow& parent, wxWindowID id, gui_model& m, 
+      workspace_environment* env );
     ~model_view();
 
     void set_date( double d );

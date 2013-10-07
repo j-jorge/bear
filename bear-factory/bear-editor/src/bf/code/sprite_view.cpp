@@ -13,7 +13,7 @@
  */
 #include "bf/sprite_view.hpp"
 
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <wx/dcbuffer.h>
@@ -22,15 +22,16 @@
 /**
  * \brief Constructor.
  * \param parent The parent window.
- * \param pool The image poll to use.
+ * \param env The workspace environment to use.
  * \param id Window identifier.
  * \param spr The sprite to display.
  */
 bf::sprite_view::sprite_view
-( wxWindow& parent, const image_pool& pool, wxWindowID id, const sprite& spr )
+( wxWindow& parent, workspace_environment* env, wxWindowID id, 
+  const sprite& spr )
   : wxWindow(&parent, id), m_background_pattern( 20, 20 ),
     m_sprite_position(0, 0), m_sprite_delta(0, 0), 
-    m_image_cache(pool), m_zoom(100)
+    m_image_cache(env), m_zoom(100)
 {
   const wxColour dark_gray(127, 127, 127);
   const wxColour light_gray(192, 192, 192);

@@ -19,6 +19,7 @@
 namespace bf
 {
   class model;
+  class workspace_environment;
 
   /**
    * \brief The model_file_compiler class compiles a .mdl file into a .cm file.
@@ -27,7 +28,9 @@ namespace bf
   class model_file_compiler
   {
   public:
-    bool compile( const model& mdl, const std::string& model_file ) const;
+    bool compile
+    ( const model& mdl, const std::string& model_file, 
+      workspace_environment* env ) const;
 
   }; // class model_file_compiler
 } // namespace bf

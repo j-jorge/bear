@@ -13,6 +13,7 @@
  */
 #include "bf/xml/xml_to_value.hpp"
 
+#include "bf/image_pool.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/reader_tool.hpp"
 
@@ -64,10 +65,10 @@ bf::xml::bitmap_rendering_attributes_xml_to_value::load_rendering_attributes
  * \brief Read the value from a xml value node.
  * \param spr (out) The sprite we have read.
  * \param node The node from which we read the value.
- * \param pool The image_pool to use.
+ * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::sprite>::operator()
-  ( sprite& spr, const wxXmlNode* node, const image_pool& pool ) const
+  ( sprite& spr, const wxXmlNode* node, workspace_environment* env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -83,18 +84,20 @@ void bf::xml::xml_to_value<bf::sprite>::operator()
         ( xml::reader_tool::read_uint(node, wxT("clip_width")) );
       spr.set_clip_height
         ( xml::reader_tool::read_uint(node, wxT("clip_height")) );
-      spr.set_spritepos_entry
-        ( wx_to_std_string
-          ( pool.find_spritepos_name_from_size
-            ( std_to_wx_string(spr.get_image_name()),
-              spr.get_clip_rectangle() )) );
+      if ( env->pool )
+        spr.set_spritepos_entry
+          ( wx_to_std_string
+            ( env->pool->find_spritepos_name_from_size
+              ( std_to_wx_string(spr.get_image_name()),
+                spr.get_clip_rectangle() )) );
     }
   else
     {
-      spr.set_clip_rectangle
-        ( pool.get_spritepos_rectangle
-          ( std_to_wx_string(spr.get_image_name()),
-            std_to_wx_string(spritepos) ) );
+      if ( env->pool )
+        spr.set_clip_rectangle
+          ( env->pool->get_spritepos_rectangle
+            ( std_to_wx_string(spr.get_image_name()),
+              std_to_wx_string(spritepos) ) );
       spr.set_spritepos_entry( spritepos );
     }
 
@@ -126,10 +129,10 @@ bool bf::xml::xml_to_value<bf::animation>::supported_node
  * \brief Read the value from a xml value node.
  * \param anim (out) The animation we have read.
  * \param node The node from which we read the value.
- * \param pool The image pool to use.
+ * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation>::operator()
-  ( animation& anim, const wxXmlNode* node, const image_pool& pool ) const
+  ( animation& anim, const wxXmlNode* node, workspace_environment* env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -141,7 +144,7 @@ void bf::xml::xml_to_value<bf::animation>::operator()
   anim.set_loop_back
   ( xml::reader_tool::read_bool_opt(node, wxT("loop_back"), false));
 
-  load_frames(anim, node->GetChildren(), pool);
+  load_frames(anim, node->GetChildren(), env);
 
   load_rendering_attributes(anim, node);
 
@@ -159,14 +162,14 @@ void bf::xml::xml_to_value<bf::animation>::operator()
  * \brief Load the frames of an animation.
  * \param anim The animation in which we set a list of frames.
  * \param node The node to parse.
- * \param pool The image pool to use.
+ * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation>::load_frames
-( animation& anim, const wxXmlNode* node, const image_pool& pool ) const
+( animation& anim, const wxXmlNode* node, workspace_environment* env ) const
 {
   for ( ; node!=NULL; node=node->GetNext() )
     if ( node->GetName() == wxT("frame") )
-      load_frame(anim, node, pool);
+      load_frame(anim, node, env);
     else if ( node->GetName() != wxT("comment") )
       claw::logger << claw::log_warning << "Ignored node '"
                    << wx_to_std_string(node->GetName()) << "'" << std::endl;
@@ -177,10 +180,10 @@ void bf::xml::xml_to_value<bf::animation>::load_frames
  * \brief Load a frame of an animation.
  * \param anim The animation in which we add the frame.
  * \param node The node to parse.
- * \param pool The image pool to use.
+ * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation>::load_frame
-( animation& anim, const wxXmlNode* node, const image_pool& pool ) const
+( animation& anim, const wxXmlNode* node, workspace_environment* env ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("frame") );
 
@@ -200,7 +203,7 @@ void bf::xml::xml_to_value<bf::animation>::load_frame
       if ( children->GetName() == wxT("sprite") )
         {
           xml::xml_to_value<sprite> xml_conv;
-          xml_conv(spr, children, pool);
+          xml_conv(spr, children, env);
           frame.set_sprite(spr);
           anim.add_frame() = frame;
         }
@@ -229,11 +232,11 @@ bool bf::xml::xml_to_value<bf::animation_file_type>::supported_node
  * \brief Read the value from a xml value node.
  * \param anim (out) The animation we have read.
  * \param node The node from which we read the value.
- * \param pool The image pool from which we take the images of the animation.
+ * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation_file_type>::operator()
   ( animation_file_type& anim, const wxXmlNode* node,
-    const image_pool& pool ) const
+    workspace_environment* env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -242,7 +245,7 @@ void bf::xml::xml_to_value<bf::animation_file_type>::operator()
   if ( !node->GetPropVal( wxT("path"), &path ) )
     throw missing_property("path");
 
-  anim.set_path( wx_to_std_string(path), pool );
+  anim.set_path( wx_to_std_string(path), env );
 
   load_rendering_attributes(anim, node);
 
@@ -275,11 +278,11 @@ bool bf::xml::xml_to_value<bf::any_animation>::supported_node
  * \brief Read the value from a xml value node.
  * \param anim (out) The animation we have read.
  * \param node The node from which we read the value.
- * \param pool The image pool from which we take the images of the animation.
+ * \param env The workspace environment tu use.
  */
 void bf::xml::xml_to_value<bf::any_animation>::operator()
   ( any_animation& anim, const wxXmlNode* node,
-    const image_pool& pool ) const
+    workspace_environment* env ) const
 {
   wxString name = node->GetName();
 
@@ -287,14 +290,14 @@ void bf::xml::xml_to_value<bf::any_animation>::operator()
     {
       animation_file_type data;
       xml_to_value<animation_file_type> reader;
-      reader(data, node, pool);
+      reader(data, node, env);
       anim.set_animation_file(data);
     }
   else if ( xml_to_value<animation>::supported_node(name) )
     {
       animation data;
       xml_to_value<animation> reader;
-      reader(data, node, pool);
+      reader(data, node, env);
       anim.set_animation(data);
     }
   else

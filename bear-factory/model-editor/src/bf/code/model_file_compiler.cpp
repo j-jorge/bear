@@ -16,6 +16,7 @@
 #include "bf/compilation_context.hpp"
 #include "bf/compiled_file.hpp"
 #include "bf/model.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <fstream>
 #include <limits>
@@ -25,9 +26,10 @@
  * \brief Compile a .mdl file into a .cm file.
  * \param mdl The model to compile.
  * \param path The path to the .mdl file.
+ * \param env The workspace environment to use.
  */
 bool bf::model_file_compiler::compile
-( const model& mdl, const std::string& path ) const
+( const model& mdl, const std::string& path, workspace_environment* env ) const
 {
   std::string cm_path(path);
 
@@ -44,7 +46,8 @@ bool bf::model_file_compiler::compile
   if (f)
     {
       compiled_file cf(f);
-      compilation_context context( std::numeric_limits<unsigned int>::max() );
+      compilation_context context
+        ( std::numeric_limits<unsigned int>::max(), env );
       mdl.compile(cf, context);
       
       result = true;

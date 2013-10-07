@@ -29,7 +29,7 @@ wxString bf::image_selection_dialog::s_previous_pattern;
  * \param val The name of the current selected image.
  */
 bf::image_selection_dialog::image_selection_dialog
-( wxWindow& parent, const image_pool& pool, const wxString& val )
+( wxWindow& parent, image_pool* pool, const wxString& val )
   : wxDialog( &parent, wxID_ANY, _("Choose an image"), wxDefaultPosition,
               wxSize(640, 480), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ),
     m_image_pool(pool)
@@ -83,9 +83,6 @@ void bf::image_selection_dialog::fill_image_list()
   std::list<wxString> keep;
   wxString pat( m_pattern->GetValue() );
 
-  image_pool::const_iterator it = m_image_pool.begin();
-  image_pool::const_iterator eit = m_image_pool.end();
-
   if ( pat.IsEmpty() )
     pat = wxT("*");
 
@@ -96,9 +93,15 @@ void bf::image_selection_dialog::fill_image_list()
        && (pat[pat.length() - 1] != wxT('?')) )
     pat += wxT("*");
 
-  for (; it!=eit; ++it)
-    if ( it->Matches( pat ) )
-      keep.push_back( *it );
+  if ( m_image_pool )
+    {
+      image_pool::const_iterator it = m_image_pool->begin();
+      image_pool::const_iterator eit = m_image_pool->end();
+
+      for (; it!=eit; ++it)
+        if ( it->Matches( pat ) )
+          keep.push_back( *it );
+    }
 
   m_image_list->set_list(keep);
 } // image_selection_dialog::fill_image_list()

@@ -19,6 +19,7 @@
 
 #include "bf/item_instance.hpp"
 #include "bf/type_field.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <vector>
 
@@ -185,25 +186,25 @@ namespace bf
 
     /**
      * \brief Specialization of the field_editor class for the case where the
-     *        image pool is needed.
+     *        workspace environmment is needed.
      */
     template<typename Control, typename Type>
     struct field_editor<Control, Type, true>
     {
       static void open
       ( item_field_edit& self, const type_field& f, const wxString& type );
-    }; // struct field_editor [visual]
+    }; // struct field_editor [with workspace environment]
 
     /**
      * \brief Specialization of the field_editor class for the case where the
-     *        image pool is not needed.
+     *        workspace environment is not needed.
      */
     template<typename Control, typename Type>
     struct field_editor<Control, Type, false>
     {
       static void open
       ( item_field_edit& self, const type_field& f, const wxString& type );
-    }; // struct field_editor [not visual]
+    }; // struct field_editor [without workspace environment]
 
   public:
     typedef claw::wrapped_iterator
@@ -234,7 +235,7 @@ namespace bf
     bool get_field_name( unsigned int i, std::string& name ) const;
     void create_field_editor( const std::string& name );
 
-    void set_active_image_pool( image_pool* pool );
+    void set_workspace_environment( workspace_environment* env );
 
   private:
     void enumerate_properties();
@@ -298,8 +299,8 @@ namespace bf
     /** \brief The index of the last selected field. */
     int m_last_selected_field;
 
-    /** \brief The image pool from which the images are taken. */
-    image_pool* m_image_pool;
+    /** \brief The workspace environment. */
+    workspace_environment* m_workspace;
 
     /** \brief The backround color of the prefix of the fields. */
     static const wxColour s_field_prefix_colour;

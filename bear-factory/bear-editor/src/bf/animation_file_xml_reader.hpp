@@ -15,7 +15,7 @@
 #define __BF_ANIMATION_FILE_XML_READER_HPP__
 
 #include "bf/animation.hpp"
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <iostream>
@@ -30,8 +30,9 @@ namespace bf
   class BEAR_EDITOR_EXPORT animation_file_xml_reader
   {
   public:
-    animation load( const wxString& file_path, const image_pool& pool ) const;
-    animation load( wxXmlNode* node, const image_pool& pool ) const;
+    animation load
+      ( const wxString& file_path, workspace_environment* env ) const;
+    animation load( wxXmlNode* node, workspace_environment* env ) const;
 
   }; // class animation_file_xml_reader
 } // namespace bf

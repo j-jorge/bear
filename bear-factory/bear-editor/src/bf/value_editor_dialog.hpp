@@ -14,9 +14,10 @@
 #ifndef __BF_VALUE_EDITOR_DIALOG_HPP__
 #define __BF_VALUE_EDITOR_DIALOG_HPP__
 
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <list>
+#include <string>
 
 #include <wx/dialog.h>
 #include <wx/listbox.h>
@@ -48,7 +49,7 @@ namespace bf
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const value_type& v,
-      const image_pool& pool );
+      workspace_environment* env );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const wxArrayString& values,
@@ -102,7 +103,7 @@ namespace bf
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const value_type& v,
-      const image_pool& pool );
+      workspace_environment* env );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const wxArrayString& values,

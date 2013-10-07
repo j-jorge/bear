@@ -197,8 +197,10 @@ void bf::sprite::compile( compiled_file& f, compilation_context& c ) const
 {
   std::string image_path(m_image_name);
 
-  if ( path_configuration::get_instance().expand_file_name(image_path) )
-    path_configuration::get_instance().get_relative_path(image_path);
+  if ( path_configuration::get_instance().expand_file_name
+       ( image_path, c.get_workspace_name() ) )
+    path_configuration::get_instance().get_relative_path
+      ( image_path, c.get_workspace_name() );
 
   const compilation_context::rectangle r
     ( c.get_opaque_rectangle( *this, image_path ) );

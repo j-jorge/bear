@@ -13,6 +13,7 @@
  */
 #include "bf/sample.hpp"
 
+#include "bf/compilation_context.hpp"
 #include "bf/compiled_file.hpp"
 #include "bf/path_configuration.hpp"
 
@@ -114,13 +115,16 @@ bool bf::sample::operator!=( const sample& that ) const
 /**
  * \brief Compile the sample.
  * \param f The stream in which we write the compiled sample.
+ * \param c The context in which the compilation is done.
  */
-void bf::sample::compile( compiled_file& f ) const
+void bf::sample::compile( compiled_file& f, compilation_context& c ) const
 {
   std::string path(m_path);
 
-  if ( path_configuration::get_instance().expand_file_name(path) )
-    path_configuration::get_instance().get_relative_path(path);
+  if ( path_configuration::get_instance().expand_file_name
+       ( path, c.get_workspace_name() ) )
+    path_configuration::get_instance().get_relative_path
+      ( path, c.get_workspace_name() );
 
   f << path << m_loops << m_volume;
 } // sample::compile()

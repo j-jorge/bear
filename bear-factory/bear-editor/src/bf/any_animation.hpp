@@ -16,7 +16,7 @@
 #define __BF_ANY_ANIMATION_HPP__
 
 #include "bf/animation_file_type.hpp"
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 namespace bf
@@ -49,7 +49,7 @@ namespace bf
     void set_animation_file( const animation_file_type& a );
     void set_animation( const animation& a );
 
-    void reload(const image_pool& pool);
+    void reload(workspace_environment* env);
     const animation_file_type& get_animation_file() const;
     const animation& get_animation() const;
 

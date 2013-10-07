@@ -36,7 +36,6 @@ namespace bf
     const configuration& get_config() const;
 
     void configure();
-    void update_image_pool() const;
 
     void compile( const wxString& path ) const;
     void update( const wxString& path ) const;

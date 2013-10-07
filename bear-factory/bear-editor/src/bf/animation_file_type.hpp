@@ -15,7 +15,7 @@
 #define __BF_ANIMATION_FILE_TYPE_HPP__
 
 #include "bf/animation.hpp"
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 namespace bf
@@ -28,7 +28,7 @@ namespace bf
     public bitmap_rendering_attributes
   {
   public:
-    void set_path( const std::string& p, const image_pool& pool );
+    void set_path( const std::string& p, workspace_environment* env );
     const std::string& get_path() const;
 
     animation get_animation() const;
@@ -43,9 +43,11 @@ namespace bf
     /** \brief The path of the animation file. */
     std::string m_path;
 
+    /** \brief The relative_path of the animation file. */
+    std::string m_relative_path;
+
     /** \brief The animation returned by original_animation(). */
     animation m_animation;
-
   }; // class animation_file_type
 } // namespace bf
 

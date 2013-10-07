@@ -14,6 +14,7 @@
 #include "bf/sample_edit.hpp"
 
 #include "bf/path_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <limits>
@@ -22,10 +23,12 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this window.
+ * \param w The workspace name.
  * \param s The initial sample.
  */
-bf::sample_edit::sample_edit( wxWindow& parent, const sample& s )
-  : wxPanel(&parent, wxID_ANY), base_edit<sample>(s)
+bf::sample_edit::sample_edit
+( wxWindow& parent, workspace_environment* env, const sample& s )
+  : wxPanel(&parent, wxID_ANY), base_edit<sample>(s), m_workspace(env)
 {
   create_controls();
   Fit();
@@ -134,7 +137,8 @@ void bf::sample_edit::create_sizer_controls()
 void bf::sample_edit::on_file_select( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p = wx_to_std_string(m_sound_file->GetValue());
-  path_configuration::get_instance().get_full_path(p);
+  path_configuration::get_instance().get_full_path
+    (p, m_workspace->name);
 
   wxFileDialog dlg
     ( this, _("Choose a sound file"), wxEmptyString, std_to_wx_string(p),
@@ -144,7 +148,8 @@ void bf::sample_edit::on_file_select( wxCommandEvent& WXUNUSED(event) )
   if (dlg.ShowModal() == wxID_OK)
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
-      path_configuration::get_instance().get_relative_path(new_p);
+      path_configuration::get_instance().get_relative_path
+        (new_p, m_workspace->name);
 
       m_sound_file->SetValue( std_to_wx_string(new_p) );
     }

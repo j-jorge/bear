@@ -24,6 +24,7 @@ namespace bf
   class image_pool;
   class item_instance;
   class type_field;
+  class workspace_environment;
 
   namespace xml
   {
@@ -34,7 +35,7 @@ namespace bf
     class item_instance_field_node
     {
     public:
-      item_instance_field_node( const image_pool& pool );
+      item_instance_field_node( workspace_environment* pool );
 
       void read( item_instance& item, const wxXmlNode* node ) const;
       void write
@@ -82,9 +83,8 @@ namespace bf
         const item_instance& item, const std::string& node_name ) const;
 
     private:
-      /** \brief The pool from which we can access the images used by the
-          item. */
-      const image_pool& m_image_pool;
+      /** \brief The workspace environment used. */
+      workspace_environment* m_workspace;
 
     }; // class item_instance_field_node
   } // namespace xml

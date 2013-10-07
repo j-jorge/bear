@@ -21,6 +21,8 @@
 
 namespace bf
 {
+  class compilation_context;
+
   /**
    * \brief The value of a field of type "sample".
    * \author Julien Jorge
@@ -42,7 +44,7 @@ namespace bf
     bool operator==( const sample& that ) const;
     bool operator!=( const sample& that ) const;
 
-    void compile( compiled_file& f ) const;
+    void compile( compiled_file& f, compilation_context& c ) const;
 
   private:
     /** \brief The path to the resource to use. */

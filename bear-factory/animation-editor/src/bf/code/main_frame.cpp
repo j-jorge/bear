@@ -19,6 +19,8 @@
 #include "bf/image_pool.hpp"
 #include "bf/animation_file_xml_reader.hpp"
 #include "bf/animation_file_xml_writer.hpp"
+#include "bf/path_configuration.hpp"
+#include "bf/workspace.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include "bf/icon/compile.xpm"
@@ -33,9 +35,11 @@ DECLARE_APP(bf::animation_editor)
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Default constructor.
+ * \param w The workspace.
  */
-bf::main_frame::main_frame()
-  : wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Animation editor"))
+bf::main_frame::main_frame( const std::string & w )
+: wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Animation editor")),
+  m_workspace(w)
 {
   create_menu();
   create_toolbar();
@@ -56,7 +60,7 @@ void bf::main_frame::load_animation( const wxString& path )
   animation anim;
 
   if ( doc.Load(path) )
-    anim = reader.load( doc.GetRoot() );
+    anim = reader.load( doc.GetRoot(), &m_workspace );
 
   m_animation_edit->set_value(anim);
   m_last_saved_animation = m_animation_edit->get_value();
@@ -214,7 +218,7 @@ void bf::main_frame::create_toolbar()
 void bf::main_frame::create_controls()
 {
   wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-  m_animation_edit = new animation_edit(*this);
+  m_animation_edit = new animation_edit( *this, &m_workspace );
 
   sizer->Add(m_animation_edit, 1, wxEXPAND | wxALL, 5 );
 
@@ -354,7 +358,7 @@ void bf::main_frame::on_configuration_menu( wxCommandEvent& WXUNUSED(event) )
 void bf::main_frame::on_update_image_pool_menu
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  wxGetApp().update_image_pool();
+  // TO DO
 } // main_frame::on_update_image_pool_menu()
 
 /*----------------------------------------------------------------------------*/
@@ -364,7 +368,7 @@ void bf::main_frame::on_update_image_pool_menu
  */
 void bf::main_frame::on_new_animation( wxCommandEvent& WXUNUSED(event) )
 {
-  main_frame* frame = new main_frame;
+  main_frame* frame = new main_frame(m_workspace.name);
   frame->Show();
 } // main_frame::on_new_level()
 
@@ -385,7 +389,7 @@ void bf::main_frame::on_open_animation( wxCommandEvent& WXUNUSED(event) )
     {
       if ( is_changed() || !m_animation_file.empty() )
         {
-          main_frame* frm = new main_frame;
+          main_frame* frm = new main_frame(m_workspace.name);
           frm->load_animation( dlg.GetPath() );
           frm->Show();
         }

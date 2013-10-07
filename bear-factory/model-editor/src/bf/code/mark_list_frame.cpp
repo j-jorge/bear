@@ -16,6 +16,7 @@
 #include "bf/gui_model.hpp"
 #include "bf/model_frame.hpp"
 #include "bf/mark_properties_frame.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include "bf/history/action_add_mark.hpp"
@@ -26,11 +27,13 @@
 /**
  * \brief Constructor.
  * \param parent The frame owning this one.
+ * \param env The workspace environment to use.
  */
-bf::mark_list_frame::mark_list_frame( wxWindow* parent )
+bf::mark_list_frame::mark_list_frame
+( wxWindow* parent, workspace_environment* env )
   : wxPanel( parent ), m_model_frame(NULL), m_mark_list(NULL),
     m_new_mark_button(NULL), m_delete_mark_button(NULL),
-    m_properties_mark_button(NULL)
+    m_properties_mark_button(NULL), m_workspace(env)
 {
   create_controls();
   update_controls();
@@ -44,6 +47,9 @@ bf::mark_list_frame::mark_list_frame( wxWindow* parent )
 void bf::mark_list_frame::set_model_frame( model_frame* f )
 {
   m_model_frame = f;
+  if ( m_model_frame )
+    m_workspace = m_model_frame->get_workspace();
+
   fill();
   update_controls();
 } // mark_list_frame::set_model_frame()
@@ -196,7 +202,7 @@ void bf::mark_list_frame::on_new_mark(wxCommandEvent& WXUNUSED(event))
     if ( m_model_frame->get_model().has_active_action() )
       {
         const action& a = m_model_frame->get_model().get_active_action();
-        mark_properties_frame dlg(this, &a);
+        mark_properties_frame dlg(this, &a, m_workspace);
 
         if ( dlg.ShowModal() == wxID_OK )
           {
@@ -276,7 +282,7 @@ void bf::mark_list_frame::on_show_properties(wxCommandEvent& WXUNUSED(event))
             mark* m = a.get_mark
               (wx_to_std_string(m_mark_list->GetStringSelection()));
 
-            mark_properties_frame dlg(this, &a );
+            mark_properties_frame dlg(this, &a, m_workspace );
             dlg.fill_from( *m );
 
             if ( dlg.ShowModal() == wxID_OK )

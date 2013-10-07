@@ -24,6 +24,25 @@ bf::workspace::workspace()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set the run path.
+ * \param path The new run path.
+ */
+void bf::workspace::set_run_path(const std::string& path)
+{
+  m_run_path = path;
+} // workspace::set_run_path()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the run path.
+ */
+std::string bf::workspace::get_run_path() const
+{
+  return m_run_path;
+} // workspace::get_run_path()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Add a path on item class.
  * \param path The path to add.
  */

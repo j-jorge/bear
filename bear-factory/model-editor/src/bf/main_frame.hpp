@@ -22,6 +22,7 @@ namespace bf
   class model_frame;
   class model_properties_ctrl;
   class windows_layout;
+  class workspace_environment;
 
   /**
    * \brief The main window of our program.

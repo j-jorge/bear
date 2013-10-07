@@ -31,6 +31,24 @@ namespace bf
   };
 
   template<>
+  struct is_visual_type<font>
+  {
+    enum result
+      {
+        value = true
+      };
+  };
+
+  template<>
+  struct is_visual_type<sample>
+  {
+    enum result
+      {
+        value = true
+      };
+  };
+
+  template<>
   struct is_visual_type<sprite>
   {
     enum result

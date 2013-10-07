@@ -40,7 +40,7 @@ namespace bf
 
   public:
     image_selection_dialog
-      ( wxWindow& parent, const image_pool& pool, 
+      ( wxWindow& parent, image_pool* pool, 
         const wxString& val = wxEmptyString );
 
     wxString get_image_name() const;
@@ -60,7 +60,7 @@ namespace bf
     wxTextCtrl* m_pattern;
 
     /** \brief The image pool to use. */
-    const image_pool& m_image_pool;
+    image_pool* m_image_pool;
 
     /** \brief The last pattern used in this kind of dialog. */
     static wxString s_previous_pattern;

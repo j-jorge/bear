@@ -13,6 +13,7 @@
  */
 #include "bf/font.hpp"
 
+#include "bf/compilation_context.hpp"
 #include "bf/compiled_file.hpp"
 #include "bf/path_configuration.hpp"
 
@@ -68,13 +69,16 @@ double bf::font::get_size() const
 /**
  * \brief Compile the font.
  * \param f The stream in which we write the compiled font.
+ * \param c The context in which the compilation is done.
  */
-void bf::font::compile( compiled_file& f ) const
+void bf::font::compile( compiled_file& f, compilation_context& c ) const
 {
   std::string font_path(m_font_name);
 
-  if ( path_configuration::get_instance().expand_file_name(font_path) )
-    path_configuration::get_instance().get_relative_path(font_path);
+  if ( path_configuration::get_instance().expand_file_name
+       ( font_path, c.get_workspace_name() ) )
+    path_configuration::get_instance().get_relative_path
+      (font_path, c.get_workspace_name() );
 
   f << font_path << m_size;
 } // font::compile()

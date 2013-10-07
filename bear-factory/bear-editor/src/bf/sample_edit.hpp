@@ -29,6 +29,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief The window showing the properties of a sample.
    * \author Julien Jorge
@@ -46,7 +48,8 @@ namespace bf
 
   public:
     sample_edit
-    ( wxWindow& parent, const sample& s = default_value<sample>::get() );
+      ( wxWindow& parent, workspace_environment* env,
+        const sample& s = default_value<sample>::get() );
 
     bool validate();
 
@@ -68,6 +71,9 @@ namespace bf
 
     /** \brief The path to the sample file. */
     wxTextCtrl* m_sound_file;
+
+    /** \brief The workspace environment used. */
+    workspace_environment* m_workspace;
 
     DECLARE_EVENT_TABLE()
 

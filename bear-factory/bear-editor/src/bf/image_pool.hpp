@@ -72,6 +72,7 @@ namespace bf
 
   public:
     image_pool();
+    image_pool( const std::string& w );
 
     void clear();
     void scan_directory( const std::string& dir_path );
@@ -90,6 +91,8 @@ namespace bf
 
     const_iterator begin() const;
     const_iterator end() const;
+
+    std::string get_workspace_name() const;
 
   private:
     void load_spritepos_file( const std::string& image_path ) const;
@@ -110,6 +113,9 @@ namespace bf
 
     /** \brief The spritepos entries for each image. */
     mutable spritepos_map m_spritepos;
+
+    /** \brief The name of the workspace. */
+    std::string m_workspace;
   }; // class image_pool
 } // namespace bf
 

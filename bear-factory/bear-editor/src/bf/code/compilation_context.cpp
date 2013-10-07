@@ -23,13 +23,13 @@
  * \brief Constructor.
  * \param optimization_level The optimisation level during the compilation. If
  *        the value is less than 1 then the opaque boxes are not computed.
- * \param pool The image pool to use.
+ * \param env The compilation environemtn to use.
  */
  bf::compilation_context::compilation_context
- ( unsigned int optimization_level, const image_pool& pool )
-   : m_image_cache(pool), m_optimization_level(optimization_level)
+ ( unsigned int optimization_level, workspace_environment* env )
+   : m_image_cache(env), m_optimization_level(optimization_level), 
+     m_workspace(env)
 {
-
 } // compilation_context::compilation_context()
 
 /*----------------------------------------------------------------------------*/
@@ -97,6 +97,15 @@ void bf::compilation_context::clear_compiled_identifiers()
 {
   m_identifier.clear();
 } // compilation_context::clear_compiled_identifiers()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Return the workspace name to use.
+ */
+std::string bf::compilation_context::get_workspace_name() const
+{
+  return m_workspace->name;
+} // compilation_context::get_workspace_name()
 
 /*----------------------------------------------------------------------------*/
 /**

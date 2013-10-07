@@ -23,6 +23,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief Base control for editing a field whose value is a path to a file.
    * \author Julien Jorge
@@ -49,9 +51,11 @@ namespace bf
       }; // enum control_id
 
   public:
-    base_file_edit( wxWindow& parent, const file_type& v );
     base_file_edit
-    ( wxWindow& parent, const wxString& filter, const file_type& v );
+    ( wxWindow& parent, workspace_environment* env, const file_type& v );
+    base_file_edit
+    ( wxWindow& parent, workspace_environment* env, const wxString& filter, 
+      const file_type& v );
 
     bool validate();
 
@@ -73,6 +77,9 @@ namespace bf
 
     /** \brief A button that opens the file selection dialog. */
     wxButton* m_browse;
+    
+    /** \brief The workspace name. */
+    workspace_environment* m_workspace;
 
   }; // class base_file_edit
 } // namespace bf

@@ -47,7 +47,7 @@ namespace bf
 
   public:
     any_animation_edit
-      ( wxWindow& parent, const image_pool& pool,
+      ( wxWindow& parent, workspace_environment* env,
         const any_animation& v =
         default_value<any_animation>::get() );
 
@@ -75,8 +75,8 @@ namespace bf
     /** \brief The control used to edit the animation file. */
     animation_file_edit* m_animation_file_edit;
 
-    /** \brief The image pool to use. */
-    const image_pool& m_image_pool;
+    /** \brief The workspace environment to use. */
+    workspace_environment* m_workspace;
 
     DECLARE_EVENT_TABLE()
 

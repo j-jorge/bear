@@ -14,7 +14,7 @@
 #ifndef __BF_SPRITE_VIEW_CTRL_HPP__
 #define __BF_SPRITE_VIEW_CTRL_HPP__
 
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/sprite.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -48,7 +48,7 @@ namespace bf
 
   public:
     sprite_view_ctrl
-      ( wxWindow& parent, const image_pool& pool, 
+      ( wxWindow& parent, workspace_environment* env, 
         const sprite& spr = sprite() );
 
     void set_sprite( const sprite& spr );
@@ -86,8 +86,8 @@ namespace bf
     /** \brief A static text for mouse position. */
     wxStaticText* m_mouse_position;
 
-    /** \brief The image pool to use. */
-    const image_pool& m_image_pool;
+    /** \brief The workspace environment to use. */
+    workspace_environment* m_workspace;
 
     DECLARE_EVENT_TABLE()
 

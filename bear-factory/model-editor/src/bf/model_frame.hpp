@@ -21,6 +21,7 @@
 
 #include "bf/history/model_history.hpp"
 #include "bf/slider_with_ticks.hpp"
+#include "bf/workspace_environment.hpp"
 
 namespace bf
 {
@@ -32,7 +33,7 @@ namespace bf
   class mark_event;
   class placement_event;
   class bounding_box_event;
-
+  
   /**
    * \brief This window display the active action of the model currently edited.
    * \author Julien Jorge
@@ -89,6 +90,8 @@ namespace bf
 
     const gui_model& get_model() const;
     gui_model& get_model();
+
+    workspace_environment* get_workspace();
 
   private:
     void undo();
@@ -239,6 +242,9 @@ namespace bf
 
     /** \brief The timer, for the player. */
     wxTimer m_timer;
+
+    /** \brief The workspace environment. */
+    workspace_environment m_workspace;
 
     /** \brief The height of buttons. */
     static const unsigned int s_button_height;

@@ -20,6 +20,7 @@
 #include "bf/xml/reader_tool.hpp"
 #include "bf/xml/util.hpp"
 #include "bf/wx_facilities.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
@@ -29,11 +30,11 @@
  * \brief Constructs a node parser.
  * \param classes The pool from which we can access the item classes used by the
  *        item.
- * \param images The pool from which we can access the images used by the item.
+ * \param env The workspace environment used.
  */
 bf::xml::item_instance_node::item_instance_node
-( const item_class_pool& classes, const image_pool& images )
-  : m_item_class_pool( classes ), m_image_pool( images )
+( const item_class_pool& classes, workspace_environment* env )
+  : m_item_class_pool( classes ), m_workspace( env )
 {
 
 } // item_instance_node::item_instance_node()
@@ -101,7 +102,7 @@ void bf::xml::item_instance_node::write
 
   os << ">\n";
 
-  item_instance_fields_node field_node( m_image_pool );
+  item_instance_fields_node field_node( m_workspace );
   field_node.write(item, os);
 
   os << "    </item><!-- " << item.get_class().get_class_name() << " -->\n\n";
@@ -122,7 +123,7 @@ void bf::xml::item_instance_node::load_fields
     {
       if ( node->GetName() == wxT("fields") )
         {
-          xml::item_instance_fields_node reader( m_image_pool );
+          xml::item_instance_fields_node reader( m_workspace );
           reader.read(item, node);
         }
       else

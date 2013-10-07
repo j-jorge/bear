@@ -79,7 +79,7 @@ bf::item_field_edit::field_editor<Control, Type, true>::open
     v = default_value<Type>::get();
 
   dialog_type* const dlg =
-    dialog_maker_type::create( self, type, f, v, *self.m_image_pool );
+    dialog_maker_type::create( self, type, f, v, self.m_workspace );
   self.show_dialog(f.get_name(), *dlg);
   dlg->Destroy();
 } // item_field_edit::field_editor::open()
@@ -190,7 +190,7 @@ const std::string bf::item_field_edit::s_no_prefix("- no class -");
 bf::item_field_edit::item_field_edit( wxWindow* parent, wxWindowID id )
   : wxListView( parent, id, wxDefaultPosition, wxDefaultSize,
                 wxLC_REPORT | wxLC_VRULES | wxLC_SINGLE_SEL ),
-    m_last_selected_field(wxNOT_FOUND), m_image_pool(NULL)
+    m_last_selected_field(wxNOT_FOUND), m_workspace(NULL)
 {
   InsertColumn(0, _("Property"));
   InsertColumn(1, _("Value"));
@@ -512,13 +512,14 @@ void bf::item_field_edit::create_field_editor( const std::string& name )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Sets the image pool to use to access the images of the item.
- * \param pool The pool to use.
+ * \brief Sets the workspace environment.
+ * \param env The environment to use.
  */
-void bf::item_field_edit::set_active_image_pool( image_pool* pool )
+void bf::item_field_edit::set_workspace_environment
+( workspace_environment* env )
 {
-  m_image_pool = pool;
-} // item_field_edit::set_active_image_pool()
+  m_workspace = env;
+} // item_field_edit::set_workspace_environment()
 
 /*----------------------------------------------------------------------------*/
 /**

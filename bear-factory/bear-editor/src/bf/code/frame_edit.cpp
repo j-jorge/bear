@@ -21,15 +21,15 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this window.
- * \param pool The image_pool to use.
+ * \param env The workspace environment to use.
  * \param frame The initial frame.
  */
 bf::frame_edit::frame_edit
-( wxWindow& parent, const image_pool& pool, const animation_frame& frame )
+( wxWindow& parent, workspace_environment* env, const animation_frame& frame )
   : wxDialog( &parent, wxID_ANY, _("Frame"),
               wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_frame(frame),
-    m_image_pool(pool)
+    m_workspace(env)
 {
   create_controls();
 } // frame_edit::frame_edit()
@@ -54,7 +54,7 @@ void bf::frame_edit::create_controls()
 {
   m_duration =
     new free_edit<real_type>( *this, real_type(m_frame.get_duration()) );
-  m_sprite = new sprite_edit( *this, m_image_pool, m_frame.get_sprite() );
+  m_sprite = new sprite_edit( *this, m_workspace, m_frame.get_sprite() );
 
   create_sizer_controls();
 

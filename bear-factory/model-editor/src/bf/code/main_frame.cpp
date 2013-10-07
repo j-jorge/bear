@@ -37,7 +37,7 @@ DECLARE_APP(bf::model_editor)
  */
 bf::main_frame::main_frame()
   : wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Model editor")),
-    m_model_properties(NULL), m_windows_layout(NULL)
+  m_model_properties(NULL), m_windows_layout(NULL)
 {
   SetSize( wxGetApp().get_config().main_rect );
 
@@ -267,7 +267,7 @@ void bf::main_frame::on_configuration_menu(wxCommandEvent& WXUNUSED(event))
  */
 void bf::main_frame::on_update_image_pool_menu(wxCommandEvent& WXUNUSED(event))
 {
-  wxGetApp().update_image_pool();
+  // to do
 } // main_frame::on_update_image_pool_menu()
 
 /*----------------------------------------------------------------------------*/

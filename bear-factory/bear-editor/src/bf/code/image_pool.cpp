@@ -12,8 +12,8 @@
  * \author Julien Jorge
  */
 #include "bf/image_pool.hpp"
-
 #include "bf/path_configuration.hpp"
+#include "bf/workspace.hpp"
 #include "bf/scan_dir.hpp"
 #include "bf/wx_facilities.hpp"
 
@@ -98,6 +98,31 @@ bf::image_pool::image_pool()
   wxImage::AddHandler( new wxPNGHandler() );
   wxImage::AddHandler( new wxJPEGHandler() );
   wxImage::AddHandler( new wxTGAHandler() );
+} // image_pool::image_pool()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param w The workspace to load.
+ */
+bf::image_pool::image_pool( const std::string& w )
+{
+  m_workspace = w;
+  
+  wxImage::AddHandler( new wxPNGHandler() );
+  wxImage::AddHandler( new wxJPEGHandler() );
+  wxImage::AddHandler( new wxTGAHandler() );
+
+  if ( path_configuration::get_instance().has_workspace( w ) )
+    {
+      workspace::path_list_const_iterator it;
+      const workspace& work
+        ( path_configuration::get_instance().get_workspace( w ) );
+      
+      for ( it = work.data_begin(); 
+            it != work.data_end(); ++it )
+        scan_directory(*it);
+    }
 } // image_pool::image_pool()
 
 /*----------------------------------------------------------------------------*/
@@ -243,6 +268,15 @@ bf::image_pool::const_iterator bf::image_pool::end() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Return the name of the workspace.
+ */
+std::string bf::image_pool::get_workspace_name() const
+{
+  return m_workspace;
+} // image_pool::get_workspace_name()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Load the spritepos entries associated with an image.
  * \param image_path The path to the image.
  */
@@ -259,14 +293,15 @@ void bf::image_pool::load_spritepos_file( const std::string& image_path ) const
     {
       std::string std_name( image_path.substr(0, pos) + ".spritepos" );
 
-      if ( path_configuration::get_instance().expand_file_name(std_name, 1) )
+      if ( path_configuration::get_instance().expand_file_name
+           (std_name, 1, m_workspace) )
         {
           std::ifstream f( std_name.c_str() );
 
           if (f)
-            m_spritepos[key] = read_spritepos_file(f);
+              m_spritepos[key] = read_spritepos_file(f);
           else
-            m_spritepos[key] = spritepos_entries();
+              m_spritepos[key] = spritepos_entries();
         }
     }
 } // image_pool::load_spritepos_file()
@@ -312,7 +347,8 @@ void bf::image_pool::load_image_data( const wxString& name ) const
 {
   std::string std_name( wx_to_std_string(name) );
 
-  if ( path_configuration::get_instance().expand_file_name(std_name, 1) )
+  if ( path_configuration::get_instance().expand_file_name
+       (std_name, 1, m_workspace) )
     {
       if ( m_thumbnail.find(name) == m_thumbnail.end() )
         m_thumbnail[name] = load_thumb_func::load(std_name);

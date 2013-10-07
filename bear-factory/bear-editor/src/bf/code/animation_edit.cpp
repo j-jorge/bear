@@ -26,19 +26,19 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this window.
- * \param pool The image pool to use.
+ * \param env The workspace environment to use.
  * \param anim The initial animation.
  */
 bf::animation_edit::animation_edit
-( wxWindow& parent, const image_pool& pool, const animation& anim )
+( wxWindow& parent, workspace_environment* env, const animation& anim )
   : wxPanel(&parent, wxID_ANY), base_edit<animation>(anim),
-    m_image_pool(pool)
+    m_workspace(env)
 {
   create_controls();
   value_updated();
   Fit();
 } // animation_edit::animation_edit()
-
+   
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Check if the displayed value is correct and, if it is, set the
@@ -244,7 +244,7 @@ void bf::animation_edit::create_controls()
   m_rendering_attributes =
     new bitmap_rendering_attributes_edit(*this, get_value());
 
-  m_animation_view = new animation_view_ctrl(*this, m_image_pool, get_value());
+  m_animation_view = new animation_view_ctrl(*this, m_workspace, get_value());
 
   m_duration_label = new wxStaticText( this, wxID_ANY, wxEmptyString );
 
@@ -348,7 +348,7 @@ void bf::animation_edit::edit_frame( long index )
   animation anim = get_value();
   animation_frame& frm = anim.get_frame(index);
 
-  frame_edit dlg(*m_parent, m_image_pool, frm );
+  frame_edit dlg(*m_parent, m_workspace, frm );
 
   if ( dlg.ShowModal() == wxID_OK )
     {
@@ -416,7 +416,7 @@ void bf::animation_edit::on_down( wxCommandEvent& WXUNUSED(event) )
  */
 void bf::animation_edit::on_new( wxCommandEvent& WXUNUSED(event) )
 {
-  frame_edit dlg(*m_parent, m_image_pool);
+  frame_edit dlg(*m_parent, m_workspace);
 
   if (dlg.ShowModal() == wxID_OK )
     {

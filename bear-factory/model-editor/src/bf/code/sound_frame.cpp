@@ -16,6 +16,7 @@
 #include "bf/custom_type.hpp"
 #include "bf/value_editor_dialog.hpp"
 #include "bf/base_file_edit.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include "bf/wx_facilities.hpp"
 
@@ -54,8 +55,10 @@ wxEvent* bf::sound_description_event::Clone() const
  * \param parent The frame owning this one.
  * \param id The identifier of this window.
  */
-bf::sound_frame::sound_frame( wxWindow* parent, wxWindowID id )
-  : wxPanel( parent, id ), m_sound_files(NULL), m_play_globally(NULL)
+bf::sound_frame::sound_frame
+( wxWindow* parent, wxWindowID id, workspace_environment* env )
+  : wxPanel( parent, id ), m_sound_files(NULL), m_play_globally(NULL), 
+    m_workspace(env) 
 {
   create_controls();
 } // sound_frame::sound_frame()
@@ -163,7 +166,8 @@ void bf::sound_frame::on_new_sound( wxCommandEvent& WXUNUSED(event) )
   typedef custom_type<std::string> custom_string;
   typedef value_editor_dialog< base_file_edit<custom_string> > dialog_type;
 
-  dialog_type dialog( *this, _("Pick a sound file"), custom_string() );
+  dialog_type dialog
+    ( *this, _("Pick a sound file"), custom_string(), m_workspace );
   dialog.get_editor().set_filter( _("Sound files|*.ogg") );
 
   if ( dialog.ShowModal() == wxID_OK )

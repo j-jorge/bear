@@ -50,7 +50,7 @@ namespace bf
     }; // class list_view
 
   public:
-    image_list_ctrl( wxWindow& parent, const image_pool& pool );
+    image_list_ctrl( wxWindow& parent, image_pool* pool );
 
     void set_list( const std::list<wxString>& img );
     void set_selection( int i );
@@ -91,7 +91,7 @@ namespace bf
     int m_selection;
 
     /** \brief The image pool to use. */
-    const image_pool& m_image_pool;
+    image_pool* m_image_pool;
 
     /** \brief The margin between the thumnails. */
     static const wxSize s_margin;

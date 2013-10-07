@@ -13,6 +13,7 @@
  */
 
 #include "bf/path_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <wx/filedlg.h>
 #include <wx/sizer.h>
@@ -22,11 +23,13 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this one.
+ * \param env The workspace environment to use.
  * \param v The initial value.
  */
 template<typename T>
-bf::base_file_edit<T>::base_file_edit( wxWindow& parent, const file_type& v )
-  : super(v), wxPanel(&parent), m_filter(_("All files|*"))
+bf::base_file_edit<T>::base_file_edit
+( wxWindow& parent, workspace_environment* env, const file_type& v )
+  : super(v), wxPanel(&parent), m_filter(_("All files|*")), m_workspace(env)
 {
   create_controls();
   Fit();
@@ -37,13 +40,15 @@ bf::base_file_edit<T>::base_file_edit( wxWindow& parent, const file_type& v )
 /**
  * \brief Constructor.
  * \param parent The window owning this one.
+ * \param env The workspace environment to use.
  * \param filter The filter of the file selection dialog.
  * \param v The initial value.
  */
 template<typename T>
 bf::base_file_edit<T>::base_file_edit
-( wxWindow& parent, const wxString& filter, const file_type& v )
-  : super(v), wxPanel(&parent), m_filter(filter)
+( wxWindow& parent, workspace_environment* env, const wxString& filter, 
+  const file_type& v )
+  : super(v), wxPanel(&parent), m_filter(filter), m_workspace(env)
 {
   create_controls();
   Fit();
@@ -113,7 +118,7 @@ template<typename T>
 void bf::base_file_edit<T>::on_browse( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p = wx_to_std_string(m_path->GetValue());
-  path_configuration::get_instance().get_full_path(p);
+  path_configuration::get_instance().get_full_path(p, m_workspace->name);
 
   wxFileDialog dlg
     ( this, _("Choose a file"), wxEmptyString, std_to_wx_string(p), m_filter,
@@ -122,7 +127,8 @@ void bf::base_file_edit<T>::on_browse( wxCommandEvent& WXUNUSED(event) )
   if (dlg.ShowModal() == wxID_OK)
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
-      path_configuration::get_instance().get_relative_path(new_p);
+      path_configuration::get_instance().get_relative_path
+        (new_p, m_workspace->name);
 
       m_path->SetValue( std_to_wx_string(new_p) );
     }

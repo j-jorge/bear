@@ -94,10 +94,10 @@ unsigned int bf::sprite_image_cache::key_type::get_height() const
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
- * \param pool The image pool to use.
+ * \param env The workspace environment to use.
  */
-bf::sprite_image_cache::sprite_image_cache(const image_pool& pool)
-  : m_image_pool(pool)
+bf::sprite_image_cache::sprite_image_cache(workspace_environment* env)
+  : m_workspace(env)
 {
 
 } // sprite_image_cache::sprite_image_cache()
@@ -173,9 +173,10 @@ bf::sprite_image_cache::add_image( const key_type& k )
     ( k.get_sprite().get_left(), k.get_sprite().get_top(),
       k.get_sprite().get_clip_width(), k.get_sprite().get_clip_height() );
 
-  v.resulting_image.first =
-    m_image_pool.get_image(name).GetSubBitmap(sub_bmp);
-
+  if ( m_workspace->pool )
+    v.resulting_image.first =
+      m_workspace->pool->get_image(name).GetSubBitmap(sub_bmp);
+  
   if ( trinary_logic::to_bool(k.get_sprite().get_mirrored_status()) ||
        trinary_logic::to_bool(k.get_sprite().get_flipped_status())
        || (k.get_sprite().get_clip_width() != k.get_width())
