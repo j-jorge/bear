@@ -78,6 +78,9 @@ int bear::engine::android_system_event_manager::event_filter
       break;
 
     case SDL_APP_WILLENTERBACKGROUND:
+      claw::logger << claw::log_verbose
+                   << "Processing: SDL_APP_WILLENTERBACKGROUND"
+                   << std::endl;
       game::get_instance().sleep();
       break;
 
@@ -88,6 +91,9 @@ int bear::engine::android_system_event_manager::event_filter
       break;
 
     case SDL_APP_WILLENTERFOREGROUND:
+      claw::logger << claw::log_verbose
+                   << "Processing: SDL_APP_WILLENTERFOREGROUND"
+                   << std::endl;
       game::get_instance().wake_up();
       break;
 
