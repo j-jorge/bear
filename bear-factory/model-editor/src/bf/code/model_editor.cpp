@@ -183,9 +183,10 @@ bf::model_editor::compile_model
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Initialize the application.
+ * \brief Initialize the application. 
+ * \param default_env Default workspace_environment.
  */
-bool bf::model_editor::do_init_app(const workspace_environment & env)
+bool bf::model_editor::do_init_app(const workspace_environment & default_env)
 {
   bool result = false;
   init_config();

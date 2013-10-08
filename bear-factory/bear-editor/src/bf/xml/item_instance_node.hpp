@@ -32,8 +32,7 @@ namespace bf
     class item_instance_node
     {
     public:
-      item_instance_node
-      ( const item_class_pool& classes, workspace_environment* env );
+      item_instance_node( workspace_environment* env );
 
       item_instance* read( const wxXmlNode* node ) const;
       void write( const item_instance& item, std::ostream& os ) const;
@@ -42,9 +41,6 @@ namespace bf
       void load_fields( item_instance& item, const wxXmlNode* node ) const;
 
     private:
-      /** \brief The pool from which we can access the item classes. */
-      const item_class_pool& m_item_class_pool;
-
       /** \brief The workspace environment used. */
       workspace_environment* m_workspace;
 

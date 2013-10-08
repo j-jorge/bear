@@ -507,7 +507,7 @@ void bf::properties_frame::on_change_item_class
 ( wxCommandEvent& WXUNUSED(event) )
 {
   item_class_selection_dialog dlg
-    (m_windows_layout->get_item_class_pool(), this);
+    ( m_windows_layout->get_current_level_view()->get_workspace(), this);
 
   if ( dlg.ShowModal() != wxID_OK )
     return;
@@ -526,11 +526,13 @@ void bf::properties_frame::on_change_item_class
 
       if ( it->get_class().get_class_name() != dlg.get_class_name() )
         {
+          workspace_environment* env =
+            m_windows_layout->get_current_level_view()->get_workspace();
           empty_action = false;
           action->add_action
             ( new action_set_item_class
               (&(*it),
-               m_windows_layout->get_item_class_pool().get_item_class_ptr
+               env->get_item_class_pool().get_item_class_ptr
                (dlg.get_class_name()) ) );
         }
     }

@@ -25,8 +25,8 @@
 #include "bf/level_properties_frame.hpp"
 #include "bf/level_runner.hpp"
 #include "bf/main_frame.hpp"
-#include "bf/new_layer_from_image_dialog.hpp"
 #include "bf/offset_selection_dialog.hpp"
+#include "bf/path_configuration.hpp"
 #include "bf/properties_frame.hpp"
 #include "bf/windows_layout.hpp"
 #include "bf/wx_facilities.hpp"
@@ -105,10 +105,15 @@ bf::ingame_view_frame::ingame_view_frame
     m_layer_info(_("no layer")), m_changed(false), m_compile_changed(false),
     m_edit_mode_menu(NULL), m_align_menu(NULL), m_arrange_menu(NULL)
 {
+  std::string w =
+    path_configuration::get_instance().search_workspace
+    ( wx_to_std_string( level_file ) );
+  m_workspace = workspace_environment( w );
+
   create_controls(layout, lvl);
   m_layout.add_level_view(*this);
 
-  m_overview = new level_overview_frame(*this);
+  m_overview = new level_overview_frame(*this, &m_workspace);
   m_errors = new error_check_level_dialog(this, ID_ERROR_FRAME);
 
   set_changed(false);
@@ -286,6 +291,15 @@ const bf::ingame_view* bf::ingame_view_frame::get_ingame_view() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Get the workspace environment.
+ */
+bf::workspace_environment* bf::ingame_view_frame::get_workspace()
+{
+  return &m_workspace;
+} // ingame_view_frame::get_workspace()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the position of the view in the level.
  */
 wxPoint bf::ingame_view_frame::get_view_position() const
@@ -399,7 +413,7 @@ bf::ingame_view_frame::create_controls( windows_layout& layout, gui_level* lvl )
 void bf::ingame_view_frame::create_member_controls
 ( windows_layout& layout, gui_level* lvl )
 {
-  m_ingame_view = new ingame_view(*this, lvl, layout);
+  m_ingame_view = new ingame_view(*this, lvl, layout, &m_workspace);
   m_h_scrollbar = new wxScrollBar(this, wxID_ANY);
   m_v_scrollbar = new wxScrollBar
     ( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
@@ -1067,6 +1081,7 @@ bool bf::ingame_view_frame::check_level()
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Check the validity of current level.
+ * \param env The workspace environment used.
  * \return true if the level is ok.
  */
 void bf::ingame_view_frame::check_level_verbose()
@@ -1694,7 +1709,7 @@ void bf::ingame_view_frame::on_context_menu(wxContextMenuEvent& event)
 void bf::ingame_view_frame::on_level_properties
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  level_properties_frame dlg(this);
+  level_properties_frame dlg(this, &m_workspace);
   dlg.init_from( m_ingame_view->get_level() );
 
   if ( dlg.ShowModal() == wxID_OK )
@@ -1744,7 +1759,7 @@ void bf::ingame_view_frame::on_level_statistics
   for (it=image_set.begin(); it!=image_set.end(); ++it)
     {
       const wxBitmap img =
-        image_pool::get_instance().get_image(std_to_wx_string(*it));
+        m_workspace.get_image_pool().get_image(std_to_wx_string(*it));
       mem += img.GetWidth() * img.GetHeight() * 4;
     }
 
@@ -1905,7 +1920,8 @@ void bf::ingame_view_frame::on_run_level( wxCommandEvent& WXUNUSED(event) )
         ( m_layout.get_main_frame().get_run_configuration(),
           m_ingame_view->get_level(), m_ingame_view->get_active_index(),
           m_ingame_view->get_center_in_level().x,
-          m_ingame_view->get_center_in_level().y );
+          m_ingame_view->get_center_in_level().y,
+          &m_workspace);
       r.run();
     }
   catch( const std::exception& e )
@@ -2750,37 +2766,6 @@ void bf::ingame_view_frame::on_next_layer( wxCommandEvent& WXUNUSED(event) )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Create a decorative layer from a big image and generate the sprites.
- * \param event This event occured.
- */
-void bf::ingame_view_frame::on_new_layer_from_image
-( wxCommandEvent& WXUNUSED(event) )
-{
-  new_layer_from_image_dialog dlg
-    ( *this, m_ingame_view->get_level().layers_count(),
-      m_layout.get_item_class_pool() );
-
-  if ( dlg.ShowModal() == wxID_OK )
-    {
-      level_action* result =
-        new action_add_layer( dlg.drop_layer(), dlg.get_layer_index() );
-
-      if ( dlg.layer_replaces_previous()
-           && ( dlg.get_layer_index()
-                < m_ingame_view->get_level().layers_count() ) )
-        {
-          action_group* g = new action_group( result->get_description() );
-          g->add_action( new action_remove_layer( dlg.get_layer_index() ) );
-          g->add_action( result );
-          result = g;
-        }
-
-      m_ingame_view->do_action( result );
-    }
-} // ingame_view_frame::on_new_layer_from_image()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Opens the menu to select the edit mode.
  * \param event This event occured.
  */
@@ -2949,9 +2934,6 @@ BEGIN_EVENT_TABLE(bf::ingame_view_frame, wxFrame)
             bf::ingame_view_frame::on_previous_layer )
   EVT_TOOL( bf::ingame_view_frame::ID_NEXT_LAYER,
             bf::ingame_view_frame::on_next_layer )
-
-  EVT_MENU( bf::ingame_view_frame::ID_NEW_LAYER_FROM_IMAGE,
-            bf::ingame_view_frame::on_new_layer_from_image )
 
   EVT_MENU( bf::ingame_view_frame::ID_EDIT_MODE,
             bf::ingame_view_frame::on_edit_mode )

@@ -21,6 +21,7 @@ namespace bf
 {
   class level_thumbnail_ctrl;
   class ingame_view_frame;
+  class workspace_environment;
 
   /**
    * \brief This control displays a global view of the edited level and allows
@@ -39,7 +40,8 @@ namespace bf
       }; // enum control_id
 
   public:
-    level_overview_frame( ingame_view_frame& parent );
+    level_overview_frame
+    ( ingame_view_frame& parent, workspace_environment* env );
     ~level_overview_frame();
 
   private:

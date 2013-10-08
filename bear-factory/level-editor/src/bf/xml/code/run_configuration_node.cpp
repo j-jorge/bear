@@ -14,6 +14,7 @@
 #include "bf/xml/run_configuration_node.hpp"
 
 #include "bf/run_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/xml/run_arguments_node.hpp"
 #include "bf/xml/run_items_node.hpp"
 #include "bf/xml/reader_tool.hpp"
@@ -25,11 +26,11 @@
 /**
  * \brief Read an xml node "configuration".
  * \param config (out) The run configuration whose attributes are read.
- * \param pool The pool of the known item classes.
+ * \param env The workspace environment used.
  * \param node The item node.
  */
 void bf::xml::run_configuration_node::read
-( run_configuration& config, const item_class_pool& pool,
+( run_configuration& config, workspace_environment* env,
   const wxXmlNode* node ) const
 {
   CLAW_PRECOND( node!=NULL );
@@ -52,7 +53,7 @@ void bf::xml::run_configuration_node::read
     if ( node->GetName() == wxT("items") )
       {
         run_items_node items_node;
-        items_node.read( config, pool, node );
+        items_node.read( config, env, node );
         node = reader_tool::skip_comments(node->GetNext());
       }
 } // run_configuration_node::read()
@@ -61,10 +62,12 @@ void bf::xml::run_configuration_node::read
 /**
  * \brief Write an xml node "configuration".
  * \param config The configuration to write.
+ * \param env The workspace environment used. 
  * \param os The stream in which we write.
  */
 void bf::xml::run_configuration_node::write
-( const run_configuration& config, std::ostream& os ) const
+( const run_configuration& config, workspace_environment* env, 
+  std::ostream& os ) const
 {
   os << "<configuration program_path=\""
      << xml::util::replace_special_characters(config.get_program_path())
@@ -74,7 +77,7 @@ void bf::xml::run_configuration_node::write
   run_items_node items_node;
 
   arguments_node.write(config, os);
-  items_node.write(config, os);
+  items_node.write(config, env, os);
 
   os << "</configuration>\n";
 } // run_configuration_node::write()

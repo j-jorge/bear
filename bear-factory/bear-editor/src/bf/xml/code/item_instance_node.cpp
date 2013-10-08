@@ -28,13 +28,10 @@
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructs a node parser.
- * \param classes The pool from which we can access the item classes used by the
- *        item.
  * \param env The workspace environment used.
  */
-bf::xml::item_instance_node::item_instance_node
-( const item_class_pool& classes, workspace_environment* env )
-  : m_item_class_pool( classes ), m_workspace( env )
+bf::xml::item_instance_node::item_instance_node( workspace_environment* env )
+  : m_workspace( env )
 {
 
 } // item_instance_node::item_instance_node()
@@ -62,7 +59,8 @@ bf::item_instance* bf::xml::item_instance_node::read
   try
     {
       item =
-        new item_instance( m_item_class_pool.get_item_class_ptr(class_name) );
+        new item_instance
+        ( m_workspace->get_item_class_pool().get_item_class_ptr(class_name) );
       item->set_fixed
         ( xml::reader_tool::read_bool_opt(node, wxT("fixed"), false) );
       item->set_id

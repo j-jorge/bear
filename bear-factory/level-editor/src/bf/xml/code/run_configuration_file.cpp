@@ -14,6 +14,7 @@
 #include "bf/xml/run_configuration_file.hpp"
 
 #include "bf/run_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/exception.hpp"
 #include "bf/xml/run_configuration_node.hpp"
@@ -23,11 +24,11 @@
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load a run configuration.
- * \param pool The pool containing the known classes for the item instances.
+ * \param env The workspace environment used.
  * \param file_path The path to the run configuration file.
  */
 bf::run_configuration bf::xml::run_configuration_file::load
-( const item_class_pool& pool, const wxString& file_path ) const
+( workspace_environment* env, const wxString& file_path ) const
 {
   wxXmlDocument doc;
 
@@ -43,7 +44,7 @@ bf::run_configuration bf::xml::run_configuration_file::load
   run_configuration_node reader;
   run_configuration result;
 
-  reader.read( result, pool, node );
+  reader.read( result, env, node );
 
   return result;
 } // run_configuration_file::load()
@@ -52,13 +53,15 @@ bf::run_configuration bf::xml::run_configuration_file::load
 /**
  * \brief Save a run configuration.
  * \param config The run configuration to save.
+ * \param env The workspace environment used.
  * \param os The stream in which we save it.
  */
 void bf::xml::run_configuration_file::save
-( const run_configuration& config, std::ostream& os ) const
+( const run_configuration& config, workspace_environment* env, 
+  std::ostream& os ) const
 {
   os << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
   run_configuration_node node;
-  node.write( config, os );
+  node.write( config, env, os );
 } // run_configuration_file::save()

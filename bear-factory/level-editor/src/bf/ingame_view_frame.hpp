@@ -25,6 +25,7 @@
 
 #include "bf/accelerator_table.hpp"
 #include "bf/item_event.hpp"
+#include "bf/workspace_environment.hpp"
 
 namespace bf
 {
@@ -87,7 +88,6 @@ namespace bf
         ID_ZOOM,
         ID_PREVIOUS_LAYER,
         ID_NEXT_LAYER,
-        ID_NEW_LAYER_FROM_IMAGE,
         ID_ERROR_FRAME,
         ID_EDIT_MODE,
         ID_EDIT_ACTIVE_LAYER,
@@ -116,6 +116,7 @@ namespace bf
 
     ingame_view* get_ingame_view();
     const ingame_view* get_ingame_view() const;
+    workspace_environment* get_workspace();
 
     wxPoint get_view_position() const;
 
@@ -261,8 +262,6 @@ namespace bf
     void on_previous_layer(wxCommandEvent& event);
     void on_next_layer(wxCommandEvent& event);
 
-    void on_new_layer_from_image(wxCommandEvent& event);
-
     void on_edit_mode( wxCommandEvent& event );
     void on_edit_mode_active_layer( wxCommandEvent& event );
     void on_edit_mode_same_tag( wxCommandEvent& event );
@@ -354,6 +353,9 @@ namespace bf
 
     /** \brief The layer popup menu. */
     wxMenu* m_layer_popup_menu;
+
+    /** \brief The workspace environment. */
+    workspace_environment m_workspace;
 
     DECLARE_EVENT_TABLE()
 

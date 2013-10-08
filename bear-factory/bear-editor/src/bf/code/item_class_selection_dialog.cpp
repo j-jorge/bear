@@ -15,23 +15,24 @@
 
 #include "bf/class_tree_ctrl.hpp"
 #include "bf/wx_facilities.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <wx/sizer.h>
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
- * \param pool The classes to display in the tree.
+ * \param env The workspace environment used.
  * \param parent The parent class.
  * \param class_name The initial value.
  */
 bf::item_class_selection_dialog::item_class_selection_dialog
-( const item_class_pool& pool, wxWindow* parent, const std::string& class_name )
+( workspace_environment* env, wxWindow* parent, const std::string& class_name )
   : wxDialog(parent, wxID_ANY, _("Select an item class"), wxDefaultPosition,
              wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ),
     m_class_name(class_name)
 {
-  m_tree = new class_tree_ctrl(pool, this, wxID_ANY);
+  m_tree = new class_tree_ctrl(env, this, wxID_ANY);
 
   wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 

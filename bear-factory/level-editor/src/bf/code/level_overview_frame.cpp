@@ -20,6 +20,7 @@
 #include "bf/icon/adjust_horizontally.xpm"
 #include "bf/icon/adjust_vertically.xpm"
 #include "bf/icon/refresh.xpm"
+#include "bf/workspace_environment.hpp"
 
 #include <wx/artprov.h>
 #include <wx/toolbar.h>
@@ -28,11 +29,13 @@
 /**
  * \brief Constructor.
  * \param parent The level for which we want the view.
+ * \param env The workspace environment used.
  */
-bf::level_overview_frame::level_overview_frame( ingame_view_frame& parent )
+bf::level_overview_frame::level_overview_frame
+( ingame_view_frame& parent, workspace_environment* env )
   : wxFrame(&parent, wxID_ANY, _("Level overview"))
 {
-  m_thumbnail = new level_thumbnail_ctrl(this);
+  m_thumbnail = new level_thumbnail_ctrl(this, env);
   m_thumbnail->set_view(&parent);
 
   wxBoxSizer* s = new wxBoxSizer( wxVERTICAL );

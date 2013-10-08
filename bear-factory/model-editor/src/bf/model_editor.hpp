@@ -43,7 +43,7 @@ namespace bf
     bool compile_model( const model& mdl, const wxString& path ) const;
 
   private:
-    bool do_init_app(const workspace_environment & env);
+    bool do_init_app(const workspace_environment & default_env);
     bool do_command_line_init();
     void init_config();
 

@@ -17,6 +17,7 @@
 
 #include "bf/xml/item_instance_node.hpp"
 #include "bf/xml/reader_tool.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <claw/assert.hpp>
 
@@ -24,24 +25,24 @@
 /**
  * \brief Read an xml node "items".
  * \param config (out) The run configuration whose attributes are read.
- * \param pool The pool of known item classes.
+ * \param env workspace environment env.
  * \param node The item node.
  */
 void bf::xml::run_items_node::read
-( run_configuration& config, const item_class_pool& pool,
+( run_configuration& config, workspace_environment* env,
   const wxXmlNode* node ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("items") );
 
-  item_instance_node item_node;
+  item_instance_node item_node(env);
 
   node = reader_tool::skip_comments(node->GetChildren());
 
   while ( node != NULL )
     if ( node->GetName() == wxT("item") )
       {
-        const item_instance* item = item_node.read(pool, node);
+        const item_instance* item = item_node.read(node);
 
         if ( item != NULL ) 
           {
@@ -60,11 +61,12 @@ void bf::xml::run_items_node::read
  * \param os The stream in which we write.
  */
 void bf::xml::run_items_node::write
-( const run_configuration& config, std::ostream& os ) const
+( const run_configuration& config, workspace_environment* env, 
+  std::ostream& os ) const
 {
   os << "<items>\n";
 
-  item_instance_node item_node;
+  item_instance_node item_node(env);
 
   for ( std::size_t i=0; i!=config.get_items_count(); ++i )
     item_node.write( config.get_item(i), os );

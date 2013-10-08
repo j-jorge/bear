@@ -16,6 +16,7 @@
 #include "bf/gui_level.hpp"
 #include "bf/item_class_pool.hpp"
 #include "bf/layer.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/exception.hpp"
 #include "bf/xml/item_instance_node.hpp"
@@ -26,11 +27,11 @@
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load a level.
- * \param pool The pool of item classes in which we take the item classes.
  * \param file_path The path to the level file.
+ * \param env The workspace environment used.
  */
 bf::gui_level* bf::level_file_xml_reader::load
-( const item_class_pool& pool, const wxString& file_path ) const
+( const wxString& file_path, workspace_environment* env ) const
 {
   wxXmlDocument doc;
 
@@ -43,17 +44,17 @@ bf::gui_level* bf::level_file_xml_reader::load
   if ( node == NULL )
     throw xml::missing_node("level");
 
-  return load_level( pool, node );
+  return load_level( node, env );
 } // level_file_xml_reader::load()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load a node of type "level".
- * \param pool The pool of item classes in which we take the item classes.
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
 bf::gui_level* bf::level_file_xml_reader::load_level
-( const item_class_pool& pool, const wxXmlNode* node ) const
+( const wxXmlNode* node, workspace_environment* env ) const
 {
   if ( node->GetName() != wxT("level") )
     throw xml::bad_node( wx_to_std_string(node->GetName()) );
@@ -73,7 +74,7 @@ bf::gui_level* bf::level_file_xml_reader::load_level
     {
       lvl = new gui_level
         ( wx_to_std_string(name), width, height, wx_to_std_string(music) );
-      load_layers( pool, *lvl, node->GetChildren() );
+      load_layers( *lvl, node->GetChildren(), env );
     }
   catch( std::exception& e )
     {
@@ -90,14 +91,15 @@ bf::gui_level* bf::level_file_xml_reader::load_level
  * \param pool The pool of item classes in which we take the item classes.
  * \param lvl The level in which we store the layers.
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_layers
-( const item_class_pool& pool, gui_level& lvl, const wxXmlNode* node ) const
+( gui_level& lvl, const wxXmlNode* node, workspace_environment* env ) const
 {
   for ( node=xml::reader_tool::skip_comments(node); node!=NULL;
         node=xml::reader_tool::skip_comments(node->GetNext()) )
     if ( node->GetName() == wxT("layer") )
-      load_layer(pool, lvl, node);
+      load_layer(lvl, node, env);
     else
       claw::logger << claw::log_warning << "Ignored node '"
                    << wx_to_std_string(node->GetName()) << "'" << std::endl;
@@ -106,12 +108,12 @@ void bf::level_file_xml_reader::load_layers
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load one layer.
- * \param pool The pool of item classes in which we take the item classes.
  * \param lvl The level in which we store the layer.
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_layer
-( const item_class_pool& pool, gui_level& lvl, const wxXmlNode* node ) const
+( gui_level& lvl, const wxXmlNode* node, workspace_environment* env ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("layer") );
 
@@ -139,25 +141,25 @@ void bf::level_file_xml_reader::load_layer
   if ( ! tag.empty() )
     lay.set_tag(tag);
 
-  load_layer_content( pool, lay, node->GetChildren() );
+  load_layer_content( lay, node->GetChildren(), env );
 } // level_file_xml_reader::load_layer()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load the content of a layer.
- * \param pool The pool of item classes in which we take the item classes.
  * \param lay The layer in which we store the instances.
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_layer_content
-( const item_class_pool& pool, layer& lay, const wxXmlNode* node ) const
+( layer& lay, const wxXmlNode* node, workspace_environment* env ) const
 {
   node=xml::reader_tool::skip_comments(node);
 
   if ( node != NULL )
     {
       if ( node->GetName() == wxT("items") )
-        load_items( pool, lay, node->GetChildren() );
+        load_items( lay, node->GetChildren(), env );
 
       node=xml::reader_tool::skip_comments(node->GetNext());
 
@@ -170,17 +172,17 @@ void bf::level_file_xml_reader::load_layer_content
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load the items of a layer.
- * \param pool The pool of item classes in which we take the item classes.
  * \param lay The layer in which we store the instances.
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_items
-( const item_class_pool& pool, layer& lay, const wxXmlNode* node ) const
+( layer& lay, const wxXmlNode* node, workspace_environment* env ) const
 {
   for ( node=xml::reader_tool::skip_comments(node); node!=NULL;
         node=xml::reader_tool::skip_comments(node->GetNext()) )
     if ( node->GetName() == wxT("item") )
-      load_item(pool, lay, node);
+      load_item(lay, node, env);
     else
       claw::logger << claw::log_warning << "Ignored node '"
                    << wx_to_std_string(node->GetName()) << "'" << std::endl;
@@ -216,17 +218,17 @@ void bf::level_file_xml_reader::load_priorities
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load an item of a layer.
- * \param pool The pool of item classes in which we take the item classes.
  * \param lay The layer in which we store the item.
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_item
-( const item_class_pool& pool, layer& lay, const wxXmlNode* node ) const
+( layer& lay, const wxXmlNode* node, workspace_environment* env ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("item") );
 
-  xml::item_instance_node item_node;
-  item_instance* item = item_node.read( pool, node );
+  xml::item_instance_node item_node(env);
+  item_instance* item = item_node.read( node );
 
   if ( item != NULL )
     lay.add_item(item);
