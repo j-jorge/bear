@@ -55,11 +55,7 @@ void bear::engine::balloon_layer::progress( universe::time_type elapsed_time )
 
   for ( it = m_speakers.begin(); it != m_speakers.end(); )
     if ( (*it) == (speaker_item*)(NULL) )
-      {
-        speaker_list::iterator it2 = it;
-        ++it;
-        m_speakers.erase(it2);
-      }
+      it = m_speakers.erase(it);
     else
       {
         placement.add_speaker( **it, get_bounding_box_on_screen(*it) );

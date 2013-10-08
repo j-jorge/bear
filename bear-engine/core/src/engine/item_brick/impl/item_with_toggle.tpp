@@ -474,14 +474,10 @@ void bear::engine::item_with_toggle<Base>::toggle_linked
 ( base_item* activator )
 {
   handle_list::iterator it;
-  std::list<handle_list::iterator> dead;
 
   for (it=m_linked.begin(); it!=m_linked.end(); ++it)
     if ( *it == (with_toggle*)NULL )
-      dead.push_back(it);
+      it = m_linked.erase(it);
     else
       (*it)->toggle( m_is_on, activator );
-
-  for ( ; !dead.empty(); dead.pop_front() )
-    m_linked.erase(dead.front());
 } // item_with_toggle::toggle_linked()

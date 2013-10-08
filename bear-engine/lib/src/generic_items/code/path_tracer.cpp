@@ -94,11 +94,7 @@ void bear::path_tracer::progress( universe::time_type elapsed_time )
 
   while ( it != m_traces.end() )
     if ( *it == (universe::physical_item*)NULL )
-      {
-        handle_list_type::iterator tmp(it);
-        ++it;
-        m_traces.erase(tmp);
-      }
+      it = m_traces.erase(it);
     else
       ++it;
 } // path_tracer::progress()

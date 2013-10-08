@@ -1144,11 +1144,7 @@ void bear::engine::base_item::clean_life_chain()
 
   while ( it != m_life_chain.end() )
     if ( *it == (universe::physical_item*)NULL )
-      {
-        life_chain_list::iterator tmp(it);
-        ++it;
-        m_life_chain.erase( tmp );
-      }
+      it = m_life_chain.erase( it );
     else
       ++it;
 } // base_item::clean_life_chain()

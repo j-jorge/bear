@@ -239,11 +239,7 @@ void bear::rolling_credits::progress( universe::time_type elapsed_time )
       it->turn_on();
 
       if ( p.y + it->get_size().y > get_top() )
-        {
-          std::list<credit_line>::iterator tmp=it;
-          ++it;
-          m_lines.erase(tmp);
-        }
+        it = m_lines.erase(it);
       else
         ++it;
 

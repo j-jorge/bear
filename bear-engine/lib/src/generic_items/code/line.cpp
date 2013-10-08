@@ -167,11 +167,7 @@ void bear::line::adjust_position_and_size()
 
   for ( point_list_type::iterator it=m_points.begin(); it!=m_points.end(); )
     if ( *it == NULL )
-      {
-        point_list_type::iterator tmp(it);
-        ++it;
-        m_points.erase(tmp);
-      }
+      it = m_points.erase(it);
     else
       {
         left = std::min(left, (*it)->get_left());
