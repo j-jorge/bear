@@ -331,13 +331,12 @@ bear::universe::world_progress_structure::pick_next_neighbor()
  */
 bool bear::universe::world_progress_structure::update_collision_penetration()
 {
-  const item_list::iterator eit( m_collision_neighborhood.end() );
-  item_list::iterator it = m_collision_neighborhood.begin();
-
   m_collision_mass = 0;
   m_collision_area = 0;
 
-  while ( it != eit )
+  item_list::iterator it = m_collision_neighborhood.begin();
+
+  while ( it != m_collision_neighborhood.end() )
     {
       bool collision(false);
 
@@ -369,11 +368,7 @@ bool bear::universe::world_progress_structure::update_collision_penetration()
       if ( collision )
         ++it;
       else
-        {
-          item_list::iterator rit(it);
-          ++it;
-          m_collision_neighborhood.erase(rit);
-        }
+        it = m_collision_neighborhood.erase( it );
     }
 
   return !m_collision_neighborhood.empty();
