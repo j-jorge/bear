@@ -56,47 +56,6 @@ bf::base_editor_application::~base_editor_application()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Method called when the application is initializing.
- */
-bool bf::base_editor_application::OnInit()
-{
-  bool result = false;
-
-  if ( !show_help() )
-    if ( !show_version() )
-      {
-        const bool compile_f
-          ( find_and_erase_option( wxT("--compile"), wxT("-c") ) );
-        const bool update_f
-          ( find_and_erase_option( wxT("--update"), wxT("-u") ) );
-
-        if ( compile_f || update_f )
-          {
-            command_line_init();
-
-            if ( update_f )
-              update_arguments();
-
-            if ( compile_f )
-              compile_arguments();
-          }
-        else
-          {
-            workspace_environment env;
-            // TO DO : lecture de l'argument workspace
-            
-            // si pas d'environment
-            // ouverture d'une boite de sélection de workspace
-
-            result = init_app(env);
-          }
-      }
-
-  return result;
-} // base_editor_application::OnInit()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Compile a file.
  * \param path The path to the file.
  */
@@ -132,6 +91,71 @@ bool bf::base_editor_application::do_command_line_init()
 {
   return true;
 } // base_editor_application::do_command_line_init()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Method called when the application is initializing.
+ */
+bool bf::base_editor_application::OnInit()
+{
+  bool result = false;
+
+  if ( show_help() )
+    return result;
+
+  if ( show_version() )
+    return result;
+
+  const bool compile_f
+    ( find_and_erase_option( wxT("--compile"), wxT("-c") ) );
+  const bool update_f
+    ( find_and_erase_option( wxT("--update"), wxT("-u") ) );
+
+  if ( compile_f || update_f )
+    {
+      command_line_init();
+
+      if ( update_f )
+        update_arguments();
+
+      if ( compile_f )
+        compile_arguments();
+    }
+  else
+    {
+      std::string workspace_name;
+
+      get_worspace_name( workspace_name );
+
+      result = init_app( workspace_environment( workspace_name ) );
+    }
+      
+  return result;
+} // base_editor_application::OnInit()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the name of the worspace if the user has given one.
+ * \param result The name of the workspace, as provided by the user.
+ * \return true if a workspace has been given.
+ */
+bool bf::base_editor_application::get_worspace_name( std::string& result )
+{
+  std::string workspace_name;
+  bool result_is_set( false );
+
+  const bool has_workspace
+    ( find_and_erase_option_value
+      ( wxT("--workspace"), wxT("-w"), workspace_name ) );
+
+  if ( has_workspace )
+    {
+      result = workspace_name;
+      result_is_set = true;
+    }
+
+  return result_is_set;
+} // base_editor_application::get_worspace_name()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -219,10 +243,12 @@ bool bf::base_editor_application::show_help()
       std::cout << "usage:\n" << wx_to_std_string(argv[0])
                 << " [option] [file...]\n"
         "Where the options are:\n\n"
-        "\t--compile, -c\tCompile the files and exit, \n"
-        "\t--update, -u\tUpdate the files and exit, \n"
-        "\t--help, -h\tDisplay this help and exit, \n"
-        "\t--version, -v\tDisplay the version of the program and exit."
+        "\t--compile, -c\n\t\tCompile the files and exit, \n"
+        "\t--update, -u\n\t\tUpdate the files and exit, \n"
+        "\t--workspace, -w string\n\t\tWhen no file is provided, "
+        "create a new editor in this workspace, \n"
+        "\t--help, -h\n\t\tDisplay this help and exit, \n"
+        "\t--version, -v\n\t\tDisplay the version of the program and exit."
                 << std::endl;
       return true;
     }
@@ -255,23 +281,78 @@ bool bf::base_editor_application::show_version()
 bool bf::base_editor_application::find_and_erase_option
 ( const wxString& long_name, const wxString& short_name )
 {
-  int index(0);
+  const int index( find_option_index(long_name, short_name) );
+
+  if ( index != argc )
+    {
+      remove_options_at( index, 1 );
+      return true;
+    }
+
+  return false;
+} // base_editor_application::find_and_erase_option()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Check if an option is present on the command line and has an
+ *        associated value, then remove it.
+ * \param long_name The long name of the option.
+ * \param short_name The short name of the option.
+ * \param result The value associated with the option.
+ * \return true if the option and its value has been found.
+ */
+bool bf::base_editor_application::find_and_erase_option_value
+( const wxString& long_name, const wxString& short_name, std::string& result )
+{
+  const int index( find_option_index(long_name, short_name) );
+
+  if ( (index + 1 < argc) )
+    {
+      result = wx_to_std_string( argv[index + 1] );
+
+      remove_options_at( index, 2 );
+
+      return true;
+    }
+
+  return false;
+} // base_editor_application::find_and_erase_option_value()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Finds the index of a given program option in the program options.
+ * \param long_name The long name of the option.
+ * \param short_name The short name of the option.
+ * \return The index of the option if it has been found, argc otherwise.
+ */
+int bf::base_editor_application::find_option_index
+( const wxString& long_name, const wxString& short_name ) const
+{
   bool stop(false);
 
-  for (int i=1; !stop && (index==0) && (i<argc); ++i)
+  for (int i=1; !stop && (i<argc); ++i)
     if ( (argv[i] == long_name) || (argv[i] == short_name))
-      index = i;
+      return i;
     else
       stop = wxString(argv[i]) == wxT("--");
 
-  if ( index != 0 )
-    {
-      for ( int i=index; (i+1 != argc); ++i )
-        argv[i] = argv[i+1];
+  return argc;
+} // base_editor_application::find_option_index()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Removes some program options starting from a given position.
+ * \param index The index of the first option to remove.
+ * \param count The number of options to remove.
+ */
+void bf::base_editor_application::remove_options_at( int index, int count )
+{
+  for ( int i=index; (i+count <= argc); ++i )
+    argv[i] = argv[i + count];
+
+  for ( int i=0; i <= count; ++i )
+    {
       --argc;
       argv[argc] = NULL;
     }
-
-  return index != 0;
-} // base_editor_application::find_and_erase_option()
+} // base_editor_application::remove_options_at()
