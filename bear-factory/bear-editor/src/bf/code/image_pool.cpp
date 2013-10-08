@@ -127,40 +127,6 @@ bf::image_pool::image_pool( const std::string& w )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Remove all thumbnails and images.
- */
-void bf::image_pool::clear()
-{
-  m_image.clear();
-  m_thumbnail.clear();
-} // image_pool::clear()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Read all item files from a given directory and in its subdirectories.
- * \param dir_path The path to the directory to scan.
- */
-void bf::image_pool::scan_directory( const std::string& dir_path )
-{
-  std::vector<std::string> ext(4);
-  ext[0] = ".png";
-  ext[1] = ".jpg";
-  ext[2] = ".tga";
-  ext[3] = ".bmp";
-
-  std::string root( dir_path );
-  if ( !root.empty() )
-    if ( root[root.size() - 1] != '/' )
-      root += '/';
-
-  load_thumb_func f(m_thumbnail, root);
-  scan_dir<load_thumb_func> scan;
-
-  scan( root, f, ext.begin(), ext.end() );
-} // image_pool::scan_directory()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Get the image with a given name.
  * \param image_name The name of the image we want.
  */
@@ -265,6 +231,40 @@ bf::image_pool::const_iterator bf::image_pool::end() const
 {
   return const_iterator( m_thumbnail.end() );
 } // image_pool::end()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Remove all thumbnails and images.
+ */
+void bf::image_pool::clear()
+{
+  m_image.clear();
+  m_thumbnail.clear();
+} // image_pool::clear()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Read all item files from a given directory and in its subdirectories.
+ * \param dir_path The path to the directory to scan.
+ */
+void bf::image_pool::scan_directory( const std::string& dir_path )
+{
+  std::vector<std::string> ext(4);
+  ext[0] = ".png";
+  ext[1] = ".jpg";
+  ext[2] = ".tga";
+  ext[3] = ".bmp";
+
+  std::string root( dir_path );
+  if ( !root.empty() )
+    if ( root[root.size() - 1] != '/' )
+      root += '/';
+
+  load_thumb_func f(m_thumbnail, root);
+  scan_dir<load_thumb_func> scan;
+
+  scan( root, f, ext.begin(), ext.end() );
+} // image_pool::scan_directory()
 
 /*----------------------------------------------------------------------------*/
 /**

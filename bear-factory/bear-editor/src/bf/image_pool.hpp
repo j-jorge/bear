@@ -74,9 +74,6 @@ namespace bf
     image_pool();
     image_pool( const std::string& w );
 
-    void clear();
-    void scan_directory( const std::string& dir_path );
-
     wxBitmap get_image( const wxString& image_name ) const;
     wxBitmap get_thumbnail( const wxString& image_name ) const;
 
@@ -92,9 +89,10 @@ namespace bf
     const_iterator begin() const;
     const_iterator end() const;
 
-    std::string get_workspace_name() const;
-
   private:
+    void clear();
+    void scan_directory( const std::string& dir_path );
+    
     void load_spritepos_file( const std::string& image_path ) const;
     spritepos_entries read_spritepos_file( std::istream& f ) const;
 

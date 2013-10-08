@@ -13,14 +13,12 @@
  */
 #include "bf/workspace_environment.hpp"
 
-#include "bf/image_pool.hpp"
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  */
 bf::workspace_environment::workspace_environment()
-  : name(""), pool("")
+  : m_name(""), m_image_pool("")
 {
 } // workspace_environment::workspace_environment()
 
@@ -29,8 +27,36 @@ bf::workspace_environment::workspace_environment()
  * \brief Constructor.
  * \param n The name of the workspace.
  */
-bf::workspace_environment::workspace_environment( const std::string& n )
-  : pool(n)
+bf::workspace_environment::workspace_environment( const std::string& name )
+  : m_image_pool(name)
 {
-  name = n;
+  m_name = name;
 } // workspace_environment::workspace_environment()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the name of the workspace.
+ */
+const std::string& bf::workspace_environment::get_name() const
+{
+  return m_name;
+} // workspace_environment::get_name()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the image pool.
+ */
+const bf::image_pool& bf::workspace_environment::get_image_pool() const
+{
+  return m_image_pool;
+} // workspace_environment::get_image_pool()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the item class pool.
+ */
+const bf::item_class_pool& 
+bf::workspace_environment::get_item_class_pool() const
+{
+  return m_item_class_pool;
+} // workspace_environment::get_item_class_pool()

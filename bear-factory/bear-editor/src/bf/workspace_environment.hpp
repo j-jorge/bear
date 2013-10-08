@@ -15,6 +15,7 @@
 #define __BF_WORKSPACE_ENVIRONMENT_HPP__
 
 #include "bf/image_pool.hpp"
+#include "bf/item_class_pool.hpp"
 #include <string>
 
 namespace bf
@@ -29,13 +30,20 @@ namespace bf
   public:
     workspace_environment();
     workspace_environment( const std::string& n );
+    
+    const std::string& get_name() const;
+    const image_pool& get_image_pool() const;
+    const item_class_pool& get_item_class_pool() const;      
 
-  public:
+  private:
     /** \brief The name of the workspace. */
     std::string name;
 
     /** \brief The image pool. */
-    image_pool pool;
+    image_pool m_image_pool;
+
+    /** \brief The item class pool. */
+    item_class_pool m_item_class_pool;
   }; // workspace_environment
 } // namespace bf
 
