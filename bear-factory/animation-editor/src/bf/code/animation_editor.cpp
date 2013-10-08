@@ -187,7 +187,7 @@ bool bf::animation_editor::do_init_app
             result = true;
           }
         else
-          std::cout << "Error. No workspace is available for animation" 
+          std::cout << "Error. No workspace is available for animation " 
                     << wx_to_std_string( argv[i] ) << std::endl;
       }
   else

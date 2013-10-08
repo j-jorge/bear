@@ -44,7 +44,7 @@ namespace bf
     ~main_frame();
 
     void new_model( const wxString& path );
-    void load_model( const wxString& path );
+    bool load_model( const wxString& path );
     void set_active_model( model_frame* m );
 
     void update_action();

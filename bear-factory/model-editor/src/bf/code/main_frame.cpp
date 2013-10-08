@@ -84,11 +84,12 @@ void bf::main_frame::new_model( const wxString& path )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Load a model.
+ * \brief Load a model. Return true if the model has been loaded.
  * \param path The path to the model to load.
  */
-void bf::main_frame::load_model( const wxString& path )
+bool bf::main_frame::load_model( const wxString& path )
 {
+  bool result = false;
   wxLogNull no_log;
 
   gui_model* mdl(NULL);
@@ -107,13 +108,19 @@ void bf::main_frame::load_model( const wxString& path )
           mdl = reader.load(path, &env);
 
           add_model_view( new model_frame(*m_windows_layout, mdl, path) );
+          result = true;
         }
+      else
+        std::cout << "Error. No workspace is available for model " 
+                  << wx_to_std_string( path ) << std::endl;
     }
   catch( std::exception& e )
     {
       delete mdl;
       throw;
     }
+
+  return result;
 } // main_frame::load_model()
 
 /*----------------------------------------------------------------------------*/

@@ -185,16 +185,20 @@ bf::model_editor::compile_model
 /**
  * \brief Initialize the application.
  */
-bool bf::model_editor::do_init_app()
+bool bf::model_editor::do_init_app(const workspace_environment & env)
 {
+  bool result = false;
   init_config();
 
   m_main_frame = new main_frame;
   m_main_frame->Show();
 
-  load_models();
+  result = load_models();
+  
+  if ( ! result )
+    m_main_frame->Close();
 
-  return true;
+  return result;
 } // model_editor::do_init_app()
 
 /*----------------------------------------------------------------------------*/
@@ -242,14 +246,20 @@ bool bf::model_editor::check_model( const model& mdl ) const
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load the models passed on the command line.
+ * return true if a model has been loaded.
  */
-void bf::model_editor::load_models()
+bool bf::model_editor::load_models()
 {
+  bool result = false;
+  unsigned int models_count = 0;
+
   for (int i=1; i<argc; ++i)
     if ( wxString(argv[i]) != wxT("--") )
       try
         {
-          m_main_frame->load_model( argv[i] );
+          models_count++;
+          if ( m_main_frame->load_model( argv[i] ) )
+            result = true;
         }
       catch( std::ios_base::failure& e )
         {
@@ -261,4 +271,6 @@ void bf::model_editor::load_models()
         {
           claw::logger << claw::log_error << e.what() << std::endl;
         }
+
+  return result || models_count == 0;
 } // level_editor::load_levels()
