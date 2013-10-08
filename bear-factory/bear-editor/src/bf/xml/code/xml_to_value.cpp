@@ -87,7 +87,7 @@ void bf::xml::xml_to_value<bf::sprite>::operator()
       if ( env )
         spr.set_spritepos_entry
           ( wx_to_std_string
-            ( env->pool.find_spritepos_name_from_size
+            ( env->get_image_pool().find_spritepos_name_from_size
               ( std_to_wx_string(spr.get_image_name()),
                 spr.get_clip_rectangle() )) );
     }
@@ -95,7 +95,7 @@ void bf::xml::xml_to_value<bf::sprite>::operator()
     {
       if ( env )
         spr.set_clip_rectangle
-          ( env->pool.get_spritepos_rectangle
+          ( env->get_image_pool().get_spritepos_rectangle
             ( std_to_wx_string(spr.get_image_name()),
               std_to_wx_string(spritepos) ) );
       spr.set_spritepos_entry( spritepos );

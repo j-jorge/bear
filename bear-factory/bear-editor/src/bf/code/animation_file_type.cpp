@@ -31,9 +31,9 @@ void bf::animation_file_type::set_path
   m_relative_path = p;
 
   if ( path_configuration::get_instance().expand_file_name
-       (m_relative_path, env->name ) )
+       (m_relative_path, env->get_name() ) )
     path_configuration::get_instance().get_relative_path
-      (m_relative_path, env->name );
+      (m_relative_path, env->get_name() );
   
   std::string::size_type pos = m_path.rfind(".canim");
   m_animation.clear();
@@ -43,7 +43,7 @@ void bf::animation_file_type::set_path
       std::string p( m_path.substr(0, pos) + ".anim" );
 
       if ( path_configuration::get_instance().expand_file_name
-           (p, 1, env->name ) )
+           (p, 1, env->get_name() ) )
         {
           animation_file_xml_reader reader;
           m_animation = reader.load( std_to_wx_string(p), env );

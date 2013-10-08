@@ -14,6 +14,7 @@
 #include "bf/image_list_ctrl.hpp"
 
 #include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <wx/dcbuffer.h>
 #include <wx/image.h>
@@ -61,10 +62,11 @@ END_EVENT_TABLE()
 /**
  * \brief Constructor.
  * \param parent The window containing this list.
- * \param pool The image pool to use.
+ * \param env The workspace environment used.
  */
-bf::image_list_ctrl::image_list_ctrl( wxWindow& parent, image_pool* pool )
-: wxPanel(&parent), m_selection(0), m_image_pool(pool)
+bf::image_list_ctrl::image_list_ctrl
+( wxWindow& parent, workspace_environment* env )
+: wxPanel(&parent), m_selection(0), m_workspace(env)
 {
   create_controls();
 } // image_list_ctrl::image_list_ctrl()
@@ -246,8 +248,9 @@ void bf::image_list_ctrl::render_list( wxDC& dc )
   for ( ; (it!=eit) && (pos.y < m_image_list->GetSize().y); ++it, ++i )
     {
       render_name(dc, *it, pos, i);
-      if ( m_image_pool )
-        render_thumb(dc, m_image_pool->get_thumbnail(*it), pos, i);
+      if ( m_workspace )
+        render_thumb
+          (dc, m_workspace->get_image_pool().get_thumbnail(*it), pos, i);
     }
 } // image_list_ctrl::render_list()
 

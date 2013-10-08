@@ -30,6 +30,9 @@ namespace bf
   public:
     workspace_environment();
     workspace_environment( const std::string& n );
+    workspace_environment( const workspace_environment& n );
+    
+    workspace_environment& operator=(const workspace_environment& env);
     
     const std::string& get_name() const;
     const image_pool& get_image_pool() const;
@@ -37,7 +40,7 @@ namespace bf
 
   private:
     /** \brief The name of the workspace. */
-    std::string name;
+    std::string m_name;
 
     /** \brief The image pool. */
     image_pool m_image_pool;

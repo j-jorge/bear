@@ -125,7 +125,7 @@ bool bf::main_frame::save_as()
         path_configuration::get_instance().search_workspace
         ( wx_to_std_string( dlg.GetPath() ) );
       
-      if ( w == m_workspace.name )
+      if ( w == m_workspace.get_name() )
         {
           m_animation_file = dlg.GetPath();
           result = effective_save();
@@ -383,7 +383,7 @@ void bf::main_frame::on_update_image_pool_menu
  */
 void bf::main_frame::on_new_animation( wxCommandEvent& WXUNUSED(event) )
 {
-  main_frame* frame = new main_frame(m_workspace.name);
+  main_frame* frame = new main_frame( m_workspace.get_name() );
   frame->Show();
 } // main_frame::on_new_level()
 

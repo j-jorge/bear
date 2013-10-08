@@ -231,7 +231,8 @@ void bf::sprite_edit::fill_spritepos()
   m_spritepos_combo->Clear();
 
   image_pool::spritepos_entries e =
-    m_workspace->pool.get_spritepos_entries(m_image_name_text->GetValue());
+    m_workspace->get_image_pool().get_spritepos_entries
+    ( m_image_name_text->GetValue() );
   
   image_pool::spritepos_entries::const_iterator it;
 
@@ -246,7 +247,7 @@ void bf::sprite_edit::fill_spritepos()
 void bf::sprite_edit::control_sprite_size()
 {
   wxBitmap bmp =
-    m_workspace->pool.get_image(m_image_name_text->GetValue());
+    m_workspace->get_image_pool().get_image(m_image_name_text->GetValue());
 
   if ( bmp.IsOk() )
     {
@@ -273,7 +274,7 @@ void bf::sprite_edit::check_sprite_pos()
   for ( unsigned int i=0; (i < m_spritepos_combo->GetCount()) && !found; ++i )
     {
       const claw::math::rectangle<unsigned int> r =
-        m_workspace->pool.get_spritepos_entries
+        m_workspace->get_image_pool().get_spritepos_entries
         ( m_image_name_text->GetValue())[m_spritepos_combo->GetString(i)];
       
       if ( ( r.position.x == (unsigned int)m_left_text->GetValue() )
@@ -300,15 +301,14 @@ void bf::sprite_edit::check_sprite_pos()
  */
 void bf::sprite_edit::on_image_select( wxCommandEvent& WXUNUSED(event) )
 {
-  image_selection_dialog dlg
-    (*this, &m_workspace->pool, m_image_name_text->GetValue());
+  image_selection_dialog dlg(*this, m_workspace, m_image_name_text->GetValue());
 
   if ( dlg.ShowModal() == wxID_OK )
     {
       m_image_name_text->SetValue( dlg.get_image_name() );
 
       wxBitmap bmp =
-        m_workspace->pool.get_image(dlg.get_image_name());
+        m_workspace->get_image_pool().get_image(dlg.get_image_name());
 
       if ( bmp.IsOk() )
         {
@@ -387,7 +387,7 @@ void bf::sprite_edit::on_select_sprite_pos( wxCommandEvent& WXUNUSED(event) )
   m_top_text->SetValue(0);
   
   const claw::math::rectangle<unsigned int> r =
-    m_workspace->pool.get_spritepos_entries
+    m_workspace->get_image_pool().get_spritepos_entries
     ( m_image_name_text->GetValue())
     [m_spritepos_combo->GetStringSelection()];
   

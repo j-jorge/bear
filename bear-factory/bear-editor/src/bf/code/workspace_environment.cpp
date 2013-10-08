@@ -18,7 +18,7 @@
  * \brief Constructor.
  */
 bf::workspace_environment::workspace_environment()
-  : m_name(""), m_image_pool("")
+  : m_name(""), m_image_pool(""), m_item_class_pool("")
 {
 } // workspace_environment::workspace_environment()
 
@@ -28,10 +28,36 @@ bf::workspace_environment::workspace_environment()
  * \param n The name of the workspace.
  */
 bf::workspace_environment::workspace_environment( const std::string& name )
-  : m_image_pool(name)
+  : m_name(name), m_image_pool(name), m_item_class_pool(name)
 {
-  m_name = name;
+
 } // workspace_environment::workspace_environment()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor by copy.
+ * \param env The workspace environment copied.
+ */
+bf::workspace_environment::workspace_environment
+( const workspace_environment& env )
+  : m_name(env.m_name), m_image_pool(env.m_name), m_item_class_pool(env.m_name)
+{
+} // workspace_environment::workspace_environment()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Assignment operator.
+ * \param env The workspace environment copied.
+ */
+bf::workspace_environment& 
+bf::workspace_environment::operator=(const workspace_environment& env)
+{
+  m_name = env.m_name;
+  m_image_pool = image_pool(env.m_name);
+  m_item_class_pool = item_class_pool(env.m_name);
+
+  return *this;
+} // workspace_environment::operator=()
 
 /*----------------------------------------------------------------------------*/
 /**

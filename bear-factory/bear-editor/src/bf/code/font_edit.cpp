@@ -152,7 +152,7 @@ void bf::font_edit::on_font_select( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p( wx_to_std_string( m_font_name_text->GetValue() ) );
   path_configuration::get_instance().get_full_path
-    ( p, m_workspace->name );
+    ( p, m_workspace->get_name() );
 
   wxFileDialog dlg
     ( this, _("Choose a font file"), wxEmptyString, std_to_wx_string(p),
@@ -162,7 +162,7 @@ void bf::font_edit::on_font_select( wxCommandEvent& WXUNUSED(event) )
     {
       std::string new_p( wx_to_std_string( dlg.GetPath() ) );
       path_configuration::get_instance().get_relative_path
-        ( new_p, m_workspace->name );
+        ( new_p, m_workspace->get_name() );
 
       m_font_name_text->SetValue( std_to_wx_string( new_p ) );
     }

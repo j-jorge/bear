@@ -104,7 +104,7 @@ void bf::compilation_context::clear_compiled_identifiers()
  */
 std::string bf::compilation_context::get_workspace_name() const
 {
-  return m_workspace->name;
+  return m_workspace->get_name();
 } // compilation_context::get_workspace_name()
 
 /*----------------------------------------------------------------------------*/

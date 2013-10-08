@@ -67,7 +67,7 @@ namespace bf
     const_iterator end() const;
 
   private:
-    void scan_directory( const std::list<std::string>& dir_path );
+    void scan_directory( const std::string& dir_path );
 
     void load_class
     ( const std::string& name, std::map<std::string, std::string>& files );

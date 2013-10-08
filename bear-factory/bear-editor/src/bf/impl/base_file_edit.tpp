@@ -118,7 +118,8 @@ template<typename T>
 void bf::base_file_edit<T>::on_browse( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p = wx_to_std_string(m_path->GetValue());
-  path_configuration::get_instance().get_full_path(p, m_workspace->name);
+  path_configuration::get_instance().get_full_path
+    ( p, m_workspace->get_name() );
 
   wxFileDialog dlg
     ( this, _("Choose a file"), wxEmptyString, std_to_wx_string(p), m_filter,
@@ -128,7 +129,7 @@ void bf::base_file_edit<T>::on_browse( wxCommandEvent& WXUNUSED(event) )
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
       path_configuration::get_instance().get_relative_path
-        (new_p, m_workspace->name);
+        (new_p, m_workspace->get_name() );
 
       m_path->SetValue( std_to_wx_string(new_p) );
     }

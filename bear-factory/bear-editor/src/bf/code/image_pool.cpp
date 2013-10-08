@@ -268,15 +268,6 @@ void bf::image_pool::scan_directory( const std::string& dir_path )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Return the name of the workspace.
- */
-std::string bf::image_pool::get_workspace_name() const
-{
-  return m_workspace;
-} // image_pool::get_workspace_name()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Load the spritepos entries associated with an image.
  * \param image_path The path to the image.
  */
