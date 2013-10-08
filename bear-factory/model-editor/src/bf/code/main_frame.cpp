@@ -95,10 +95,19 @@ void bf::main_frame::load_model( const wxString& path )
 
   try
     {
-      xml::model_file reader;
-      mdl = reader.load(path);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+      
+          xml::model_file reader;
+          mdl = reader.load(path, &env);
 
-      add_model_view( new model_frame(*m_windows_layout, mdl, path) );
+          add_model_view( new model_frame(*m_windows_layout, mdl, path) );
+        }
     }
   catch( std::exception& e )
     {

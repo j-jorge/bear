@@ -20,6 +20,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief The class representing the application.
    * \author Julien Jorge
@@ -36,7 +38,7 @@ namespace bf
     void compile_animation( const animation& anim, const wxString& path ) const;
 
   private:
-    bool do_init_app();
+    bool do_init_app(const workspace_environment& default_env);
     void init_config();
 
   private:

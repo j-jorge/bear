@@ -20,6 +20,7 @@
 #include "bf/model_frame.hpp"
 #include "bf/snapshot.hpp"
 #include "bf/snapshot_date_frame.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include "bf/history/action_modify_placement.hpp"
@@ -59,6 +60,10 @@ bf::snapshot_frame::snapshot_frame( wxWindow* parent )
 void bf::snapshot_frame::set_model_frame( model_frame* f )
 {
   m_model_frame = f;
+
+  if ( m_model_frame )
+    m_sound_frame->set_workspace( m_model_frame->get_workspace() );
+  
   fill();
 } // snapshot_frame::set_model_frame()
 

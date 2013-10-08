@@ -84,18 +84,18 @@ void bf::xml::xml_to_value<bf::sprite>::operator()
         ( xml::reader_tool::read_uint(node, wxT("clip_width")) );
       spr.set_clip_height
         ( xml::reader_tool::read_uint(node, wxT("clip_height")) );
-      if ( env->pool )
+      if ( env )
         spr.set_spritepos_entry
           ( wx_to_std_string
-            ( env->pool->find_spritepos_name_from_size
+            ( env->pool.find_spritepos_name_from_size
               ( std_to_wx_string(spr.get_image_name()),
                 spr.get_clip_rectangle() )) );
     }
   else
     {
-      if ( env->pool )
+      if ( env )
         spr.set_clip_rectangle
-          ( env->pool->get_spritepos_rectangle
+          ( env->pool.get_spritepos_rectangle
             ( std_to_wx_string(spr.get_image_name()),
               std_to_wx_string(spritepos) ) );
       spr.set_spritepos_entry( spritepos );

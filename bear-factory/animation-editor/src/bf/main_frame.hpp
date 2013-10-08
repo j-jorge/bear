@@ -40,12 +40,12 @@ namespace bf
       }; // enum control_id
 
   public:
-    main_frame(const std::string & w);
+    main_frame(const workspace_environment& w);
 
     void load_animation( const wxString& path );
 
 private:
-    void search_workspace( const std::string& path );
+    void search_workspace( const std::string& env );
     void make_title();
     bool is_changed() const;
 

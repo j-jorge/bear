@@ -68,10 +68,11 @@ namespace bf
 
   public:
     sound_frame
-    ( wxWindow* parent, wxWindowID id = wxID_ANY, workspace_environment* env );
+    ( wxWindow* parent, wxWindowID id = wxID_ANY );
 
     void set_sound_description( sound_description d );
     sound_description get_sound_description() const;
+    void set_workspace(workspace_environment* env);
 
   private:
     void create_controls();

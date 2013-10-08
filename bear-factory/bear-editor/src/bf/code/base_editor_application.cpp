@@ -15,6 +15,7 @@
 
 #include "bf/path_configuration.hpp"
 #include "bf/version.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <wx/tooltip.h>
@@ -80,7 +81,15 @@ bool bf::base_editor_application::OnInit()
               compile_arguments();
           }
         else
-          result = init_app();
+          {
+            workspace_environment env;
+            // TO DO : lecture de l'argument workspace
+            
+            // si pas d'environment
+            // ouverture d'une boite de sélection de workspace
+
+            result = init_app(env);
+          }
       }
 
   return result;
@@ -110,7 +119,7 @@ void bf::base_editor_application::update( const wxString& path ) const
 /**
  * \brief Application-defined initialisation.
  */
-bool bf::base_editor_application::do_init_app()
+bool bf::base_editor_application::do_init_app(const workspace_environment& env)
 {
   return true;
 } // base_editor_application::do_init_app()
@@ -128,12 +137,13 @@ bool bf::base_editor_application::do_command_line_init()
 /**
  * \brief Initialise the application. minimal_init() is not called
  *        automatically.
+ * \param env The workspace environment. 
  */
-bool bf::base_editor_application::init_app()
+bool bf::base_editor_application::init_app(const workspace_environment& env)
 {
   wxToolTip::Enable(true);
 
-  return do_init_app();
+  return do_init_app(env);
 } // base_editor_application::init_app()
 
 /*----------------------------------------------------------------------------*/

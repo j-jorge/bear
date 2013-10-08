@@ -14,6 +14,7 @@
 #include "bf/xml/model_file.hpp"
 
 #include "bf/gui_model.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/exception.hpp"
 #include "bf/xml/model_action_node.hpp"
@@ -25,8 +26,10 @@
 /**
  * \brief Load a model.
  * \param file_path The path to the model file.
+ * \param env The workspace environment used.
  */
-bf::gui_model* bf::xml::model_file::load( const wxString& file_path ) const
+bf::gui_model* bf::xml::model_file::load
+( const wxString& file_path, workspace_environment * env ) const
 {
   wxXmlDocument doc;
 
@@ -39,7 +42,7 @@ bf::gui_model* bf::xml::model_file::load( const wxString& file_path ) const
   if ( node == NULL )
     throw xml::missing_node("model");
 
-  return load_model( node );
+  return load_model( node, env );
 } // model_file::load()
 
 /*----------------------------------------------------------------------------*/
@@ -66,8 +69,10 @@ void bf::xml::model_file::save( const gui_model& mdl, std::ostream& os ) const
 /**
  * \brief Load a node of type "model".
  * \param node The node to parse.
+ * \param env The workspace environment used.
  */
-bf::gui_model* bf::xml::model_file::load_model( const wxXmlNode* node ) const
+bf::gui_model* bf::xml::model_file::load_model
+( const wxXmlNode* node, workspace_environment * env ) const
 {
   if ( node->GetName() != wxT("model") )
     throw xml::bad_node( wx_to_std_string(node->GetName()) );
@@ -79,7 +84,7 @@ bf::gui_model* bf::xml::model_file::load_model( const wxXmlNode* node ) const
   while ( node!=NULL )
     {
       if ( node->GetName() == wxT("action") )
-        action.read(*mdl, node);
+        action.read(*mdl, node, env);
 
       node = reader_tool::skip_comments(node->GetNext());
     }

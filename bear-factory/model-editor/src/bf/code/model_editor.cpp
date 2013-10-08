@@ -81,18 +81,27 @@ void bf::model_editor::compile( const wxString& path ) const
 
   try
     {
-      xml::model_file reader;
-      mdl = reader.load(path);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
 
-      if ( check_model(*mdl) )
-        {
-          compile_model(*mdl, path);
-          delete mdl;
-        }
-      else
-        {
-          delete mdl;
-          claw::exception("Invalid model.");
+          xml::model_file reader;
+          mdl = reader.load(path, &env);
+          
+          if ( check_model(*mdl) )
+            {
+              compile_model(*mdl, path);
+              delete mdl;
+            }
+          else
+            {
+              delete mdl;
+              claw::exception("Invalid model.");
+            }
         }
     }
   catch(...)
@@ -113,12 +122,21 @@ void bf::model_editor::update( const wxString& path ) const
 
   try
     {
-      xml::model_file mf;
-      mdl = mf.load(path);
-
-      std::ofstream f( wx_to_std_string(path).c_str() );
-      mf.save(*mdl, f);
-
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          
+          xml::model_file mf;
+          mdl = mf.load(path, &env);
+          
+          std::ofstream f( wx_to_std_string(path).c_str() );
+          mf.save(*mdl, f);
+        }
+         
       delete mdl;
     }
   catch(...)

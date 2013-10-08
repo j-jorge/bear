@@ -15,6 +15,7 @@
 
 #include "bf/action.hpp"
 #include "bf/mark.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/model_mark_node.hpp"
 #include "bf/xml/reader_tool.hpp"
@@ -27,8 +28,10 @@
  * \brief Read an xml node "marks".
  * \param a (out) The action in which we add the marks.
  * \param node The item node.
+ * \param env The workspace environment used.
  */
-void bf::xml::model_marks_node::read( action& a, const wxXmlNode* node ) const
+void bf::xml::model_marks_node::read
+( action& a, const wxXmlNode* node, workspace_environment * env ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("marks") );
@@ -45,7 +48,7 @@ void bf::xml::model_marks_node::read( action& a, const wxXmlNode* node ) const
         try
           {
             m = new mark;
-            mark_reader.read(*m, node);
+            mark_reader.read(*m, node, env);
             a.add_mark(m);
           }
         catch( std::exception& e )

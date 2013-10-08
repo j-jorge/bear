@@ -19,7 +19,6 @@
 #include <claw/configuration_file.hpp>
 
 #include <boost/filesystem/convenience.hpp>
-#include <boost/filesystem/path.hpp>
 #include <fstream>
 #include <sstream>
 #include <limits>
@@ -286,7 +285,8 @@ bf::path_configuration::get_workspaces() const
 std::string 
 bf::path_configuration::search_workspace( const std::string& path ) const
 {
-  std::string result("");
+  std::string result;
+  boost::filesystem::path p_file = resolve_path( path );
 
   workspace::path_list_const_iterator it;
   workspaces_const_iterator it_map;
@@ -296,13 +296,12 @@ bf::path_configuration::search_workspace( const std::string& path ) const
     for ( it = it_map->second.data_begin(); 
           it != it_map->second.data_end() && result.empty(); ++it )
       {
-        boost::filesystem::path p_anim( boost::filesystem::canonical(path) );
-        boost::filesystem::path p_data( boost::filesystem::canonical(*it) );
+        boost::filesystem::path p_data( boost::filesystem::absolute(*it) );
         
-        if ( p_anim.string().find( p_data.string() ) == 0 )
+        if ( p_file.string().find( p_data.string() ) == 0 )
           result = it_map->first;
       }
-
+  
   return result;
 } // path_configuration::search_workspace()
 
@@ -581,3 +580,41 @@ bool bf::path_configuration::glob_potential_match
     ( pattern.begin(), pattern.end(), text.begin() + offset, text.end(),
       '*', '?', '#' );
 } // path_configuration::glob_potential_match()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Return a path without /../ .
+ * \param path The path to resolve.
+ */
+boost::filesystem::path bf::path_configuration::resolve_path
+( const std::string& path ) const
+{
+  // http://stackoverflow.com/questions/1746136/how-do-i-normalize-a-pathname-using-boostfilesystem
+  boost::filesystem::path abs_p( boost::filesystem::absolute(path) );
+  boost::filesystem::path result;
+  
+  for( boost::filesystem::path::iterator it = abs_p.begin();
+       it != abs_p.end(); ++it )
+    {
+      if ( *it == ".." )
+        {
+          // /a/b/.. is not necessarily /a if b is a symbolic link
+          if(boost::filesystem::is_symlink(result) )
+            result /= *it;
+          // /a/b/../.. is not /a/b/.. under most circumstances
+          // We can end up with ..s in our result because of symbolic links
+          else if(result.filename() == "..")
+            result /= *it;
+          // Otherwise it should be safe to resolve the parent
+          else
+            result = result.parent_path();
+        }
+      else if( *it != "." )
+        {
+          // Just cat other path entries
+          result /= *it;
+        }   
+    }
+
+    return result;
+} // path_configuration::resolve_path()

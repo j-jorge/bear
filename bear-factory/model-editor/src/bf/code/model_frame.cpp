@@ -84,7 +84,7 @@ bf::model_frame::model_frame
   std::string w =
     path_configuration::get_instance().search_workspace
     ( wx_to_std_string( model_file ) );
-  m_workspace.set_name( w );
+  m_workspace = workspace_environment( w );
 
   m_layout.add_model_frame(*this);
 

@@ -27,6 +27,8 @@
 #include <claw/logger.hpp>
 
 #include <limits>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/path.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -100,7 +102,7 @@ void bf::animation_editor::update( const wxString& path ) const
       workspace_environment env;
       
       if ( ! w.empty() )
-        env.set_name(w);
+        env = workspace_environment( w );
 
       animation_file_xml_reader reader;
       anim = reader.load( doc.GetRoot(), &env );
@@ -141,7 +143,7 @@ void bf::animation_editor::compile_animation
       workspace_environment env;
       
       if ( ! w.empty() )
-        env.set_name(w);
+        env = workspace_environment( w );
 
       compiled_file cf(f);
       cf << BF_MAJOR_VERSION << BF_MINOR_VERSION << BF_RELEASE_NUMBER;
@@ -157,9 +159,13 @@ void bf::animation_editor::compile_animation
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Initialize the application.
+ * \param default_env Default workspace_environment.
  */
-bool bf::animation_editor::do_init_app()
+bool bf::animation_editor::do_init_app
+( const workspace_environment& default_env )
 {
+  bool result = false;
+
   init_config();
 
   main_frame* frame = NULL;
@@ -171,19 +177,29 @@ bool bf::animation_editor::do_init_app()
           path_configuration::get_instance().search_workspace
           ( wx_to_std_string( argv[i] ) );
         
-        frame = new main_frame(w);
-        frame->load_animation( argv[i] );
-        frame->Show();
+        workspace_environment env(w);
+
+        if ( ! w.empty() )
+          {
+            frame = new main_frame(env);
+            frame->load_animation( argv[i] );
+            frame->Show();
+            result = true;
+          }
+        else
+          std::cout << "Error. No workspace is available for animation" 
+                    << wx_to_std_string( argv[i] ) << std::endl;
       }
   else
     {
-      frame = new main_frame( "" );
+      frame = new main_frame( default_env );
       frame->SetSize( m_config.main_rect );
       frame->Show();
+      result = true;
     }
 
-  return true;
-} // animation_editor::init_app()
+  return result;
+} // animation_editor::do_init_app()
 
 /*----------------------------------------------------------------------------*/
 /**

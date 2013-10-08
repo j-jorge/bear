@@ -173,9 +173,8 @@ bf::sprite_image_cache::add_image( const key_type& k )
     ( k.get_sprite().get_left(), k.get_sprite().get_top(),
       k.get_sprite().get_clip_width(), k.get_sprite().get_clip_height() );
 
-  if ( m_workspace->pool )
-    v.resulting_image.first =
-      m_workspace->pool->get_image(name).GetSubBitmap(sub_bmp);
+  v.resulting_image.first =
+    m_workspace->pool.get_image(name).GetSubBitmap(sub_bmp);
   
   if ( trinary_logic::to_bool(k.get_sprite().get_mirrored_status()) ||
        trinary_logic::to_bool(k.get_sprite().get_flipped_status())

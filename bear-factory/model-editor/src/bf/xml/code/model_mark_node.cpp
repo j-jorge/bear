@@ -14,6 +14,7 @@
 #include "bf/xml/model_mark_node.hpp"
 
 #include "bf/mark.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/xml/reader_tool.hpp"
 #include "bf/xml/util.hpp"
 #include "bf/xml/value_to_xml.hpp"
@@ -27,8 +28,10 @@
  * \brief Read an xml node "mark".
  * \param m (out) The mark to read.
  * \param node The item node.
+ * \param env The workspace environment used.
  */
-void bf::xml::model_mark_node::read( mark& m, const wxXmlNode* node ) const
+void bf::xml::model_mark_node::read
+( mark& m, const wxXmlNode* node, workspace_environment * env ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("mark") );
@@ -55,8 +58,8 @@ void bf::xml::model_mark_node::read( mark& m, const wxXmlNode* node ) const
           any_animation a;
           xml_to_value<any_animation> reader;
 
-          reader( a, child );
-          a.reload();
+          reader( a, child, env );
+          a.reload(env);
           m.set_animation( a );
           child = reader_tool::skip_comments(child);
         }

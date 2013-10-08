@@ -18,6 +18,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief The class representing the application.
    * \author Julien Jorge
@@ -32,12 +34,12 @@ namespace bf
   protected:
     virtual void compile( const wxString& path ) const;
     virtual void update( const wxString& path ) const;
-    virtual bool do_init_app();
+    virtual bool do_init_app(const workspace_environment& env);
     virtual bool do_command_line_init();
 
   private:
     bool OnInit();
-    bool init_app();
+    bool init_app(const workspace_environment& env);
     bool command_line_init();
 
     bool compile_arguments() const;

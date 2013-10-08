@@ -35,11 +35,11 @@ DECLARE_APP(bf::animation_editor)
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Default constructor.
- * \param w The workspace.
+ * \param env The workspace environment.
  */
-bf::main_frame::main_frame( const std::string & w )
+bf::main_frame::main_frame( const workspace_environment& env )
 : wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Animation editor")),
-  m_workspace(w)
+  m_workspace(env)
 {
   create_menu();
   create_toolbar();
@@ -121,8 +121,23 @@ bool bf::main_frame::save_as()
 
   if ( dlg.ShowModal() == wxID_OK )
     {
-      m_animation_file = dlg.GetPath();
-      result = effective_save();
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string( dlg.GetPath() ) );
+      
+      if ( w == m_workspace.name )
+        {
+          m_animation_file = dlg.GetPath();
+          result = effective_save();
+        }
+      else
+        {
+           wxMessageDialog dlg_err
+            ( this, 
+              _("Error. This path does not contain required ressources."), 
+              _("Error"), wxCANCEL );
+           dlg_err.ShowModal();
+        }
     }
 
   return result;
@@ -153,7 +168,7 @@ bool bf::main_frame::effective_save()
       else
         {
           wxMessageDialog dlg
-            ( this, _("Error"), _("Can't open the animation file."), wxOK );
+            ( this, _("Can't open the animation file."), _("Error"), wxOK );
 
           dlg.ShowModal();
         }
@@ -387,14 +402,21 @@ void bf::main_frame::on_open_animation( wxCommandEvent& WXUNUSED(event) )
 
   if ( dlg.ShowModal() == wxID_OK )
     {
-      if ( is_changed() || !m_animation_file.empty() )
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(dlg.GetPath()) );
+      
+      if ( ! w.empty() )
         {
-          main_frame* frm = new main_frame(m_workspace.name);
-          frm->load_animation( dlg.GetPath() );
-          frm->Show();
+          if ( is_changed() || !m_animation_file.empty() )
+            {
+              main_frame* frm = new main_frame(w);
+              frm->load_animation( dlg.GetPath() );
+              frm->Show();
+            }
+          else
+            load_animation( dlg.GetPath() );
         }
-      else
-        load_animation( dlg.GetPath() );
     }
 } // main_frame::on_open_animation()
 

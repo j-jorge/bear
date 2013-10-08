@@ -22,6 +22,7 @@
 #include <map>
 #include <set>
 #include <claw/basic_singleton.hpp>
+#include <boost/filesystem/path.hpp>
 
 namespace bf
 {
@@ -106,6 +107,7 @@ namespace bf
     bool glob_potential_match
       ( const std::string& pattern, const std::string& text,
         std::size_t offset ) const;
+    boost::filesystem::path resolve_path( const std::string& path ) const;
 
   public:
     /** \brief Map of workspaces. */
