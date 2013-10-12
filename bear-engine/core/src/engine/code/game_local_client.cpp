@@ -166,6 +166,8 @@ void bear::engine::game_local_client::wake_up()
     m_current_level->unset_pause();
 
   m_status = m_sleep_status;
+
+  set_last_progress_date();
 } // game_local_client::wake_up()
 
 /*----------------------------------------------------------------------------*/
@@ -765,6 +767,15 @@ std::string bear::engine::game_local_client::get_formatted_game_name() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Assigns the current date to m_last_progress.
+ */
+void bear::engine::game_local_client::set_last_progress_date()
+{
+  m_last_progress = systime::get_date_ms();
+} // game_local_client::set_last_progress_date()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Run the current_level.
  */
 void bear::engine::game_local_client::run_level()
@@ -773,7 +784,7 @@ void bear::engine::game_local_client::run_level()
 
   while (m_status != status_quit)
     {
-      m_last_progress = systime::get_date_ms();
+      set_last_progress_date();
       m_last_render = m_last_progress;
 
       do
@@ -799,7 +810,9 @@ void bear::engine::game_local_client::one_step_beyond()
 
   if ( dt >= m_time_step )
     {
-      if ( m_status != status_sleep )
+      if ( m_status == status_sleep )
+        set_last_progress_date();
+      else
         {
           progress( current_time, dt, time_range, time_scale );
           render();

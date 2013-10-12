@@ -180,6 +180,8 @@ namespace bear
 
       std::string get_formatted_game_name() const;
 
+      void set_last_progress_date();
+
       void run_level();
       void one_step_beyond();
 
