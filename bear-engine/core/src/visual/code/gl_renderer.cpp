@@ -456,7 +456,7 @@ void bear::visual::gl_renderer::ensure_window_exists()
   if ( m_fullscreen )
     flags |= SDL_WINDOW_FULLSCREEN;
 
-  claw::logger << "Setting video mode to "
+  claw::logger << claw::log_verbose << "Setting video mode to "
                << m_window_size.x << 'x' << m_window_size.y
                << ' ' << (m_fullscreen ? "fullscreen" : "windowed")
                << std::endl;
@@ -475,6 +475,11 @@ void bear::visual::gl_renderer::ensure_window_exists()
 
   if ( m_gl_context == NULL )
     VISUAL_SDL_ERROR_THROW();
+
+  claw::logger << claw::log_verbose << "OpenGL version is "
+               << glGetString( GL_VERSION )
+               << ", vendor is " << glGetString(GL_VENDOR)
+               << std::endl;
 
   delete[] m_screenshot_buffer;
   m_screenshot_buffer =
