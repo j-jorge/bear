@@ -48,6 +48,9 @@ namespace bear
       virtual void render( scene_element_list& e ) const;
 
       const claw::math::coordinate_2d<unsigned int>& get_size() const;
+      claw::math::coordinate_2d<unsigned int>
+        adjust_screen_position
+        ( const claw::math::coordinate_2d<unsigned int>& pos ) const;
 
       void set_root_component( gui::visual_component* c );
 

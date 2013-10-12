@@ -78,6 +78,23 @@ bear::engine::gui_layer::get_size() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Converts screen coordinates to layer coordinates.
+ */
+claw::math::coordinate_2d<unsigned int>
+bear::engine::gui_layer::adjust_screen_position
+( const claw::math::coordinate_2d<unsigned int>& pos ) const
+{
+  return claw::math::coordinate_2d<unsigned int>
+    ( get_size().x
+      * pos.x
+      / game::get_instance().get_window_size().x,
+      get_size().y
+      * pos.y
+      / game::get_instance().get_window_size().y );
+} // gui_layer::adjust_screen_position()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Sets the component rendered by default and to which the inputs are
  *        sent.
  */
@@ -138,7 +155,9 @@ bool bear::engine::gui_layer::mouse_pressed
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_pressed( key, pos - m_root->get_position() );
+    return
+      m_root->mouse_pressed
+      ( key, adjust_screen_position(pos) - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_pressed()
@@ -154,7 +173,9 @@ bool bear::engine::gui_layer::mouse_released
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_released( key, pos - m_root->get_position() );
+    return
+      m_root->mouse_released
+      ( key, adjust_screen_position(pos) - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_released()
@@ -170,7 +191,9 @@ bool bear::engine::gui_layer::mouse_maintained
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_maintained( key, pos - m_root->get_position() );
+    return
+      m_root->mouse_maintained
+      ( key, adjust_screen_position(pos) - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_maintained()
@@ -184,7 +207,9 @@ bool bear::engine::gui_layer::mouse_move
 ( const claw::math::coordinate_2d<unsigned int>& pos )
 {
   if ( m_root != NULL )
-    return m_root->mouse_move( pos - m_root->get_position() );
+    return
+      m_root->mouse_move
+      ( adjust_screen_position(pos) - m_root->get_position() );
   else
     return false;
 } // gui_layer::mouse_move()
@@ -199,7 +224,9 @@ bool bear::engine::gui_layer::finger_action
 {
   if ( m_root != NULL )
     return m_root->finger_action
-      ( event.at_position( event.get_position() - m_root->get_position() ) );
+      ( event.at_position
+        ( adjust_screen_position(event.get_position())
+          - m_root->get_position() ) );
   else
     return false;
 } // gui_layer::finger_action()
