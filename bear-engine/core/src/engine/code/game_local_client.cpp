@@ -789,7 +789,13 @@ void bear::engine::game_local_client::run_level()
 
       do
         {
-          one_step_beyond();
+          if ( m_status == status_sleep )
+            {
+              systime::sleep( 1000 );
+              set_last_progress_date();
+            }
+          else
+            one_step_beyond();
         }
       while ( !do_post_actions() && (m_status != status_quit) );
     }
@@ -810,13 +816,8 @@ void bear::engine::game_local_client::one_step_beyond()
 
   if ( dt >= m_time_step )
     {
-      if ( m_status == status_sleep )
-        set_last_progress_date();
-      else
-        {
-          progress( current_time, dt, time_range, time_scale );
-          render();
-        }
+      progress( current_time, dt, time_range, time_scale );
+      render();
 
       current_time = systime::get_date_ms();
     }
