@@ -115,6 +115,23 @@ void bear::visual::gl_state::variables_are_included::operator()
 
 
 /*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs the range of elements for a given texture.
+ * \param t The texture to use when rendering the vertices.
+ * \param i The index of the first vertex to render.
+ * \param c The count of vertices to render.
+ */
+bear::visual::gl_state::element_range::element_range
+( GLuint t, std::size_t i, std::size_t c )
+  : texture_id(t), vertex_index(i), count(c)
+{
+
+} // gl_state::element_range::element_range()
+
+
+
+
+/*----------------------------------------------------------------------------*/
 const std::size_t bear::visual::gl_state::gl_state::s_vertex_size(2);
 
 /*----------------------------------------------------------------------------*/
@@ -127,7 +144,7 @@ const std::size_t bear::visual::gl_state::gl_state::s_vertex_size(2);
 bear::visual::gl_state::gl_state
 ( const shader_program& shader, const position_vector& vertices,
   const color_type& c )
-  : m_mode( render_triangles ), m_texture_id( 0 ), m_shader( shader ),
+  : m_mode( render_triangles ), m_shader( shader ),
     m_line_width( 0 )
 {
   const position_vector v( polygon_to_triangles( vertices ) );
@@ -147,7 +164,7 @@ bear::visual::gl_state::gl_state
 bear::visual::gl_state::gl_state
 ( const shader_program& shader, const position_vector& vertices,
   const color_type& c, double line_width )
-  : m_mode( render_lines ), m_texture_id( 0 ), m_shader( shader ),
+  : m_mode( render_lines ), m_shader( shader ),
     m_line_width( line_width )
 {
   push_vertices( vertices );
@@ -167,7 +184,7 @@ bear::visual::gl_state::gl_state
 ( GLuint texture_id, const shader_program& shader,
   const position_vector& texture_coordinates, const position_vector& vertices,
   const color_type& c )
-  : m_mode( render_triangles ), m_texture_id( texture_id ),
+  : m_mode( render_triangles ),
     m_shader( shader ), m_line_width( 0 )
 {
   const position_vector v( polygon_to_triangles( vertices ) );
@@ -175,6 +192,8 @@ bear::visual::gl_state::gl_state
   push_vertices( v );
   push_texture_coordinates( polygon_to_triangles(texture_coordinates) );
   push_colors( c, v.size() );
+
+  m_elements.push_back( element_range( texture_id, 0, get_vertex_count() ) );
 } // gl_state::gl_state()
 
 /*----------------------------------------------------------------------------*/
@@ -186,7 +205,7 @@ bool bear::visual::gl_state::is_compatible_with( const gl_state& state ) const
 {
   if ( (m_mode == render_triangles)
        && ( m_mode == state.m_mode )
-       && ( m_texture_id == state.m_texture_id ) )
+       && ( m_elements.empty() == state.m_elements.empty() ) )
     {
       if ( m_shader.is_valid() != state.m_shader.is_valid() )
         return false;
@@ -231,6 +250,21 @@ void bear::visual::gl_state::merge( const gl_state& state )
 {
   CLAW_PRECOND( is_compatible_with( state ) );
 
+  const std::size_t index( get_vertex_count() );
+
+  for ( element_range_list::const_iterator it( state.m_elements.begin() );
+        it != state.m_elements.end(); ++it )
+    {
+      element_range& back( m_elements.back() );
+
+      if ( it->texture_id == back.texture_id )
+        back.count += it->count;
+      else
+        m_elements.push_back
+          ( element_range
+            ( it->texture_id, it->vertex_index + index, it->count ) );
+    }
+
   m_vertices.insert
     ( m_vertices.end(), state.m_vertices.begin(), state.m_vertices.end() );
   m_colors.insert
@@ -246,19 +280,20 @@ void bear::visual::gl_state::merge( const gl_state& state )
  */
 void bear::visual::gl_state::draw() const
 {
+  if ( m_elements.empty() )
+    draw_shape();
+  else
+    draw_textured();
+} // gl_state::draw()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Draws the vertices in the case where there is no texture.
+ */
+void bear::visual::gl_state::draw_shape() const
+{
   if ( m_vertices.empty() )
     return;
-
-  glBindTexture( GL_TEXTURE_2D, m_texture_id );
-  VISUAL_GL_ERROR_THROW();
-
-  if ( m_texture_id != 0 )
-    {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-      VISUAL_GL_ERROR_THROW();
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      VISUAL_GL_ERROR_THROW();
-    }
 
   enable_shader();
 
@@ -268,27 +303,93 @@ void bear::visual::gl_state::draw() const
       VISUAL_GL_ERROR_THROW();
     }
 
+  set_colors();
+  set_vertices();
+
+  glBindTexture( GL_TEXTURE_2D, 0 );
+  VISUAL_GL_ERROR_THROW();
+
+  glDrawArrays( get_gl_render_mode(), 0, get_vertex_count() );
+
+  disable_states();
+} // gl_state::draw_shape()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Draws the vertices in the case where there are textures.
+ */
+void bear::visual::gl_state::draw_textured() const
+{
+  if ( m_vertices.empty() )
+    return;
+
+  enable_shader();
+
+  set_colors();
+  set_vertices();
+  set_texture_coordinates();
+
+  for ( element_range_list::const_iterator it(m_elements.begin());
+        it!=m_elements.end(); ++it )
+    {
+      glBindTexture( GL_TEXTURE_2D, it->texture_id );
+      VISUAL_GL_ERROR_THROW();
+
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      VISUAL_GL_ERROR_THROW();
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      VISUAL_GL_ERROR_THROW();
+
+      glDrawArrays( get_gl_render_mode(), it->vertex_index, it->count );
+      VISUAL_GL_ERROR_THROW();
+    }
+
+  disable_states();
+} // gl_state::draw_textured()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Passes the color pointer to OpenGL.
+ */
+void bear::visual::gl_state::set_colors() const
+{
   glEnableClientState( GL_COLOR_ARRAY );
   VISUAL_GL_ERROR_THROW();
   glColorPointer( 4, GL_FLOAT, 0, m_colors.data() );
   VISUAL_GL_ERROR_THROW();
+} // gl_state::set_colors()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Passes the vertex pointer to OpenGL.
+ */
+void bear::visual::gl_state::set_vertices() const
+{
   glEnableClientState( GL_VERTEX_ARRAY );
   VISUAL_GL_ERROR_THROW();
   glVertexPointer( 2, GL_FLOAT, 0, m_vertices.data() );
   VISUAL_GL_ERROR_THROW();
+} // gl_state::set_vertices()
 
-  if ( m_texture_id != 0 )
-    {
-      glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-      VISUAL_GL_ERROR_THROW();
-      glTexCoordPointer( 2, GL_FLOAT, 0, m_texture_coordinates.data() );
-      VISUAL_GL_ERROR_THROW();
-    }
-
-  glDrawArrays( get_gl_render_mode(), 0, m_vertices.size() / s_vertex_size );
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Passes the pointer on the texture coordinates to OpenGL.
+ */
+void bear::visual::gl_state::set_texture_coordinates() const
+{
+  glEnableClientState( GL_TEXTURE_COORD_ARRAY );
   VISUAL_GL_ERROR_THROW();
+  glTexCoordPointer( 2, GL_FLOAT, 0, m_texture_coordinates.data() );
+  VISUAL_GL_ERROR_THROW();
+} // gl_state::set_texture_coordinates()
 
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Tells OpenGL to disable the texture coordinates, the vertices and the
+ *        colors.
+ */
+void bear::visual::gl_state::disable_states() const
+{
   glDisableClientState( GL_TEXTURE_COORD_ARRAY );
   VISUAL_GL_ERROR_THROW();
 
@@ -297,7 +398,16 @@ void bear::visual::gl_state::draw() const
 
   glDisableClientState( GL_COLOR_ARRAY );
   VISUAL_GL_ERROR_THROW();
-} // gl_state::draw()
+} // gl_state::draw_textured()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Returns the number of vertices in the drawing.
+ */
+std::size_t bear::visual::gl_state::get_vertex_count() const
+{
+  return m_vertices.size() / s_vertex_size;
+} // gl_state::get_vertex_count()
 
 /*----------------------------------------------------------------------------*/
 /**

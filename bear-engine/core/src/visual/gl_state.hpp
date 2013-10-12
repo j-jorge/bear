@@ -83,6 +83,27 @@ namespace bear
 
       }; // class variables_are_included
 
+      /**
+       * \brief The element_range class describes how to render a given range
+       *        of vertices from the state.
+       */
+      struct element_range
+      {
+        element_range( GLuint t, std::size_t i, std::size_t c );
+
+        /** \brief The texture to use when rendering the vertices. */
+        GLuint texture_id;
+
+        /** \brief The index of the first vertex to render. */
+        std::size_t vertex_index;
+
+        /** \brief The count of vertices to render. */
+        std::size_t count;
+
+      }; // struct element_range
+
+      typedef std::vector<element_range> element_range_list;
+
     public:
       gl_state
         ( const shader_program& shader, const position_vector& vertices,
@@ -105,6 +126,16 @@ namespace bear
       void draw() const;
 
     private:
+      void draw_shape() const;
+      void draw_textured() const;
+
+      void set_colors() const;
+      void set_vertices() const;
+      void set_texture_coordinates() const;
+
+      void disable_states() const;
+
+      std::size_t get_vertex_count() const;
       GLenum get_gl_render_mode() const;
       
       void push_vertices( const position_vector& v );
@@ -122,9 +153,6 @@ namespace bear
       /** \brief Tells how to render the vertices. */
       render_mode m_mode;
 
-      /** \brief OpenGL texture identifier. */
-      GLuint m_texture_id;
-
       /** \brief The identifier of the shader in use. */
       shader_program m_shader;
 
@@ -139,6 +167,9 @@ namespace bear
 
       /** \brief The width of the line to draw. */
       double m_line_width;
+
+      /** \brief How to render the vertices in the state. */
+      element_range_list m_elements;
 
     }; // class gl_state
   } // namespace visual
