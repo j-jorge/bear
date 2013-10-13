@@ -124,21 +124,20 @@ std::string bear::engine::android_gettext_translator::make_translation_file_path
  */
 std::string bear::engine::android_gettext_translator::get_user_locale() const
 {
-  const char* user_locale( SDL_AndroidGetLocale() );
+  char* user_locale( SDL_AndroidGetLocale() );
+  std::string result;
 
   if ( user_locale == NULL )
-    {
-      claw::logger << claw::log_warning << "Can't get user's locale."
-                   << std::endl;
-      return std::string();
-    }
+    claw::logger << claw::log_warning << "Can't get user's locale."<< std::endl;
   else
     {
       claw::logger << claw::log_verbose << "User's locale is '" << user_locale
                    << "'." << std::endl;
-
-      return user_locale;
+      result = user_locale;
+      SDL_free( user_locale );
     }
+
+  return result;
 } // android_gettext_translator::get_user_locale()
 
 /*----------------------------------------------------------------------------*/
