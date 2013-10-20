@@ -45,8 +45,6 @@ void bear::input::mouse_status::read()
   m_maintained.join(m_pressed).intersection(current);
   (m_pressed = current).difference(m_maintained);
 
-  m_forget_button.difference( m_released );
-
   if ( m_cursor_position_is_set )
     {
       m_previous_cursor_pos = m_cursor_pos;
