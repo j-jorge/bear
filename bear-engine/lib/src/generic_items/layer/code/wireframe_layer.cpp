@@ -126,7 +126,6 @@ void bear::wireframe_layer::draw_system
   std::vector<bear::visual::position_type> points(3);
 
   bear::universe::vector_type x_axis(item.get_x_axis());
-  x_axis.y = -x_axis.y;
 
   points[1].x = (item.get_center_of_mass().x - delta.x) * ratio.x;
   points[1].y = (item.get_center_of_mass().y - delta.y) * ratio.y;
