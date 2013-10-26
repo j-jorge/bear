@@ -474,6 +474,29 @@ bear::universe::world::add_density_rectangle
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Returns the force applied to an item. The result is the sum of the
+ *        forces of the world (gravity, environments…) plus the force inherent
+ *        to the item.
+ * \param item The item for which we compute the force.
+ */
+bear::universe::force_type
+bear::universe::world::get_total_force_on_item
+( const physical_item_state& item ) const
+{
+  force_type result
+    ( item.get_force() + get_average_force( item.get_bounding_box() ) );
+
+  if ( (item.get_density() != 0)
+       && ( item.get_mass() != std::numeric_limits<double>::infinity() )  )
+    result -= get_gravity() * item.get_mass()
+      * get_average_density( item.get_bounding_box() )
+      / item.get_density();
+
+  return result;
+} // world::get_total_force_on_item()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the environments in an area of the world.
  * \param r The area to search in.
  * \param environments The list of environment

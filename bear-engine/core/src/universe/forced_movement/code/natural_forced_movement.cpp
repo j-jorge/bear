@@ -102,18 +102,8 @@ void bear::universe::natural_forced_movement::update_position
   physical_item& item( get_item() );
   const world *const w( item.has_owner() ? &item.get_owner() : NULL );
 
-  force_type force( item.get_force() );
-
-  if ( w != NULL )
-    {
-      force += w->get_average_force( item.get_bounding_box() );
-
-      if ( (item.get_density() != 0)
-           && ( item.get_mass() != std::numeric_limits<double>::infinity() )  )
-        force -= w->get_gravity() * item.get_mass()
-          * w->get_average_density( item.get_bounding_box() )
-          / item.get_density();
-    }
+  const force_type force
+    ( (w == NULL) ? item.get_force() : w->get_total_force_on_item(item) );
 
   force_type a( force / item.get_mass() );
   double f = item.get_friction() * item.get_contact_friction();
