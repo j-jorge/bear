@@ -32,28 +32,28 @@ namespace bear
 
   private:
     void render
-    ( scene_element_list& e, const bear::visual::position_type& delta ) const;
+    ( scene_element_list& e, const visual::position_type& delta ) const;
 
     void progress
-    ( const item_list& items, bear::universe::time_type elapsed_time );
+    ( const item_list& items, universe::time_type elapsed_time );
 
   private:
     void draw_box
-    ( scene_element_list& e, const bear::visual::position_type& delta,
-      const bear::universe::physical_item& item,
-      const bear::visual::color_type& color ) const;
+    ( scene_element_list& e, const visual::position_type& delta,
+      const universe::physical_item& item,
+      const visual::color_type& color ) const;
     void draw_internal_forces
-    ( scene_element_list& e, const bear::visual::position_type& delta,
-      const bear::universe::physical_item& item,
-      const bear::visual::color_type& color ) const;
+    ( scene_element_list& e, const visual::position_type& delta,
+      const universe::physical_item& item,
+      const visual::color_type& color ) const;
     void draw_system
-    ( scene_element_list& e, const bear::visual::position_type& delta,
-      const bear::universe::physical_item& item,
-      const bear::visual::color_type& color ) const;
+    ( scene_element_list& e, const visual::position_type& delta,
+      const universe::physical_item& item,
+      const visual::color_type& color ) const;
     void draw_slope
-    ( scene_element_list& e, const bear::visual::position_type& delta,
-      const bear::universe::physical_item& item,
-      const bear::visual::color_type& color ) const;
+    ( scene_element_list& e, const visual::position_type& delta,
+      const universe::physical_item& item,
+      const visual::color_type& color ) const;
 
   private:
     /** \brief The items to render. */
