@@ -42,6 +42,10 @@ namespace bear
     ( scene_element_list& e, const bear::visual::position_type& delta,
       const bear::universe::physical_item& item,
       const bear::visual::color_type& color ) const;
+    void draw_internal_forces
+    ( scene_element_list& e, const bear::visual::position_type& delta,
+      const bear::universe::physical_item& item,
+      const bear::visual::color_type& color ) const;
     void draw_system
     ( scene_element_list& e, const bear::visual::position_type& delta,
       const bear::universe::physical_item& item,

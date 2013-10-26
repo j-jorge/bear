@@ -54,6 +54,7 @@ void bear::wireframe_layer::render
           color.components.blue = (~addr & 0xFF0000) >> 16;
           
           draw_box(e, delta, **it, color);
+          draw_internal_forces( e, delta, **it, color );
           draw_system(e, delta, **it, color);
           draw_slope(e, delta, **it, color);
         }
@@ -105,6 +106,48 @@ void bear::wireframe_layer::draw_box
 
   e.push_back( bear::visual::scene_line(0, 0, color, points, 1) );
 } // wireframe_layer::draw_box()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Render the internal forces of an item.
+ * \param e (out) The scene elements.
+ * \param delta The delta to apply to the position of the item.
+ * \param item The item to render.
+ * \param color The color of the system.
+ */
+void bear::wireframe_layer::draw_internal_forces
+( scene_element_list& e, const bear::visual::position_type& delta,
+  const bear::universe::physical_item& item,
+  const bear::visual::color_type& color ) const
+{
+  universe::force_type scaled_force( item.get_internal_force() );
+
+  if ( scaled_force.x != 0 )
+    scaled_force.x =
+      boost::math::sign( scaled_force.x )
+      * std::log( std::abs( scaled_force.x ) );
+
+  if ( scaled_force.y != 0 )
+    scaled_force.y =
+      boost::math::sign( scaled_force.y )
+      * std::log( std::abs( scaled_force.y ) );
+
+  bear::universe::size_box_type camera_size(get_level().get_camera_size());
+  claw::math::coordinate_2d<double> ratio
+    ( get_size().x / camera_size.x, get_size().y / camera_size.y);
+
+  std::vector<bear::visual::position_type> points(3);
+
+  bear::universe::vector_type x_axis(item.get_x_axis());
+
+  points[1].x = (item.get_center_of_mass().x - delta.x) * ratio.x;
+  points[1].y = (item.get_center_of_mass().y - delta.y) * ratio.y;
+  points[0] = points[1] + scaled_force.x * x_axis;
+  points[2] =
+    points[1] + scaled_force.y * x_axis.get_orthonormal_anticlockwise();
+
+  e.push_back( bear::visual::scene_line(0, 0, color, points, 3) );
+} // wireframe_layer::draw_internal_forces()
 
 /*----------------------------------------------------------------------------*/
 /**
