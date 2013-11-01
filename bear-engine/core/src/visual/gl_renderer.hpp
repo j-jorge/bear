@@ -23,7 +23,7 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 namespace bear
 {

@@ -19,7 +19,7 @@
 
 #include "engine/system/base_system_event_manager.hpp"
 
-#include <SDL/SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 namespace bear
 {

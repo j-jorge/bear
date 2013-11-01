@@ -18,7 +18,7 @@
 #include "input/keyboard.hpp"
 #include "input/mouse.hpp"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <claw/exception.hpp>
 #include <claw/assert.hpp>
 

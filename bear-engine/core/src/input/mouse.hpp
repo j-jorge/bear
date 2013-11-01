@@ -56,7 +56,7 @@ namespace bear
 
     public:
 #include "input/mouse_codes.hpp"
-
+      
     private:
       void update_position();
       mouse_code sdl_button_to_local( unsigned int sdl_val ) const;

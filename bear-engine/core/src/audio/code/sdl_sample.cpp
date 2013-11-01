@@ -16,7 +16,7 @@
 #include "audio/sdl_sound.hpp"
 #include "audio/sound_manager.hpp"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <claw/assert.hpp>
 #include <claw/exception.hpp>
 #include <claw/logger.hpp>

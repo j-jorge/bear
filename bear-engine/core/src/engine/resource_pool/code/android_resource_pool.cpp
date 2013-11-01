@@ -19,7 +19,7 @@
 #include <claw/exception.hpp>
 #include <claw/logger.hpp>
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 /*----------------------------------------------------------------------------*/
 /**

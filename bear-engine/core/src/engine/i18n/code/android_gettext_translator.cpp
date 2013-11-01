@@ -21,7 +21,7 @@
 #include <stdioext.h>
 #include <sstream>
 
-#include <SDL/SDL_system.h>
+#include <SDL2/SDL_system.h>
 
 #include <claw/logger.hpp>
 

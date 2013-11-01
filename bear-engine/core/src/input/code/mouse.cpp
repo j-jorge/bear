@@ -15,7 +15,7 @@
 
 #include "bear_gettext.hpp"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <algorithm>
 #include <claw/assert.hpp>
 

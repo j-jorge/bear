@@ -17,7 +17,7 @@
 #include "visual/base_screen.hpp"
 #include "visual/shader_program.hpp"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "visual/gl.hpp"
 #include "visual/gl_state.hpp"

@@ -15,7 +15,7 @@
 
 #include "engine/system/android_game_filesystem.hpp"
 
-#include <SDL/SDL_system.h>
+#include <SDL2/SDL_system.h>
 
 #include <claw/logger.hpp>
 

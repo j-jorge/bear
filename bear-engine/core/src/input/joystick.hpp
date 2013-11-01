@@ -18,7 +18,7 @@
 #include <vector>
 #include <list>
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include <claw/non_copyable.hpp>
 
