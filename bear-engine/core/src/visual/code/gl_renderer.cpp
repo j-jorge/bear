@@ -464,13 +464,11 @@ void bear::visual::gl_renderer::ensure_window_exists()
 
   m_window =
     SDL_CreateWindow
-    ( "Bear", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    ( m_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
       m_window_size.x, m_window_size.y, flags );
 
   if ( m_window == NULL )
     VISUAL_SDL_ERROR_THROW();
-
-  SDL_SetWindowTitle( m_window, m_title.c_str() );
 
   m_gl_context = SDL_GL_CreateContext( m_window );
 
