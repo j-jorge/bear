@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <claw/assert.hpp>
 
+/*----------------------------------------------------------------------------*/
 const bear::input::mouse::mouse_code bear::input::mouse::mc_left_button;
 const bear::input::mouse::mouse_code bear::input::mouse::mc_middle_button;
 const bear::input::mouse::mouse_code bear::input::mouse::mc_right_button;
@@ -202,5 +203,4 @@ bear::input::mouse::mouse_code bear::input::mouse::sdl_button_to_local
     case SDL_BUTTON_RIGHT : return mc_right_button; break;
     default: return mc_invalid;
     }
-
 } // mouse::sdl_mouse_to_local()
