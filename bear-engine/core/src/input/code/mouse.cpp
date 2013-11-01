@@ -19,6 +19,14 @@
 #include <algorithm>
 #include <claw/assert.hpp>
 
+const bear::input::mouse::mouse_code bear::input::mouse::mc_left_button;
+const bear::input::mouse::mouse_code bear::input::mouse::mc_middle_button;
+const bear::input::mouse::mouse_code bear::input::mouse::mc_right_button;
+const bear::input::mouse::mouse_code bear::input::mouse::mc_wheel_up;
+const bear::input::mouse::mouse_code bear::input::mouse::mc_wheel_down;
+const bear::input::mouse::mouse_code bear::input::mouse::mc_invalid;
+const unsigned int bear::input::mouse::c_mouse_codes_count;
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
