@@ -59,7 +59,7 @@ void bear::visual::gl_renderer::terminate()
 GLuint bear::visual::gl_renderer::create_texture( screen_size_type& size )
 {
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
-
+ 
   unsigned int v;
   for ( v=1; (v < size.x) && /* overflow */ (v != 0); v *= 2 ) { }
 
@@ -154,6 +154,7 @@ void bear::visual::gl_renderer::delete_texture( GLuint texture_id )
 void bear::visual::gl_renderer::shot( claw::graphic::image& img )
 {
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
+
   make_current();
 
   GLint p[4];
@@ -213,7 +214,8 @@ void bear::visual::gl_renderer::set_title( const std::string& title )
 {
   boost::mutex::scoped_lock lock( m_mutex.window );
 
-  SDL_SetWindowTitle( m_window, title.c_str() );
+  m_title = title;
+  SDL_SetWindowTitle( m_window, m_title.c_str() );
 } // gl_renderer::set_title()
 
 /*----------------------------------------------------------------------------*/
@@ -329,7 +331,7 @@ void bear::visual::gl_renderer::render_loop()
     {
       // lock m_stop to ensure that stop() will block if called during the loop.
       boost::mutex::scoped_lock lock( m_mutex.loop_state );
-      
+
       if ( m_stop )
         break;
 
@@ -353,16 +355,15 @@ void bear::visual::gl_renderer::render_loop()
  */
 void bear::visual::gl_renderer::render_states()
 {
-  boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
-
-  if ( m_gl_context == NULL )
-    return;
-    
   boost::mutex::scoped_lock states_lock( m_mutex.gl_set_states );
 
   if ( m_states.empty() )
     return;
 
+  if ( m_gl_context == NULL )
+    return;
+
+  boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
   make_current();
 
   set_background_color();
@@ -461,8 +462,6 @@ void bear::visual::gl_renderer::ensure_window_exists()
                << ' ' << (m_fullscreen ? "fullscreen" : "windowed")
                << std::endl;
 
-  SDL_EventState( SDL_QUIT, SDL_DISABLE );
-
   m_window =
     SDL_CreateWindow
     ( "Bear", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -470,6 +469,8 @@ void bear::visual::gl_renderer::ensure_window_exists()
 
   if ( m_window == NULL )
     VISUAL_SDL_ERROR_THROW();
+
+  SDL_SetWindowTitle( m_window, m_title.c_str() );
 
   m_gl_context = SDL_GL_CreateContext( m_window );
 

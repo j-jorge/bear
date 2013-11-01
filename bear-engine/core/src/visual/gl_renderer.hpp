@@ -129,7 +129,10 @@ namespace bear
 
       /** \brief The size of the view on the rendered elements. */
       screen_size_type m_view_size;
-      
+
+      /** \brief The title of the window. */
+      std::string m_title;
+
       /** \brief Tells if we are displaying a fullscreen window.*/
       bool m_fullscreen;
 
