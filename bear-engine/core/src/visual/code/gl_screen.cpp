@@ -117,7 +117,7 @@ void bear::visual::gl_screen::unset_pause()
  */
 void bear::visual::gl_screen::fullscreen( bool b )
 {
-  //  gl_renderer::get_instance().set_fullscreen(b);
+  gl_renderer::get_instance().set_fullscreen(b);
 } // gl_screen::fullscreen()
 
 /*----------------------------------------------------------------------------*/

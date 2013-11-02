@@ -202,7 +202,13 @@ bear::visual::gl_renderer::get_container_size()
 {
   boost::mutex::scoped_lock lock( m_mutex.window );
 
-  return m_window_size;
+  if ( m_window == NULL )
+    return m_window_size;
+
+  int w, h;
+  SDL_GetWindowSize( m_window, &w, &h );
+
+  return screen_size_type( w, h );
 } //gl_renderer::get_container_size()
 
 /*----------------------------------------------------------------------------*/
@@ -215,7 +221,9 @@ void bear::visual::gl_renderer::set_title( const std::string& title )
   boost::mutex::scoped_lock lock( m_mutex.window );
 
   m_title = title;
-  SDL_SetWindowTitle( m_window, m_title.c_str() );
+
+  if ( m_window != NULL )
+    SDL_SetWindowTitle( m_window, m_title.c_str() );
 } // gl_renderer::set_title()
 
 /*----------------------------------------------------------------------------*/
@@ -236,6 +244,35 @@ void bear::visual::gl_renderer::set_video_mode
 
   m_video_mode_is_set = true;
 } // gl_renderer::set_video_mode()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Turns the fullscreen mode on or off.
+ * \param f Tell if we want a fullscreen mode.
+ */
+void bear::visual::gl_renderer::set_fullscreen( bool f )
+{
+  boost::mutex::scoped_lock lock( m_mutex.window );
+
+  if ( m_fullscreen == f )
+    return;
+
+  m_fullscreen = f;
+
+  if ( m_window != NULL )
+    {
+      if ( f )
+        SDL_SetWindowFullscreen( m_window, SDL_WINDOW_FULLSCREEN );
+      else
+        SDL_SetWindowFullscreen( m_window, 0 );
+
+      int w, h;
+      SDL_GetWindowSize( m_window, &w, &h );
+
+      boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
+      resize_view( screen_size_type(w, h) );
+    }
+} // gl_renderer::set_fullscreen()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -408,10 +445,12 @@ void bear::visual::gl_renderer::set_background_color()
 /**
  * \brief Sets a new dimension for the resulting projection to match the size of
  *        the screen.
+ * \param viewport_size The size of the viewport.
  */
-void bear::visual::gl_renderer::resize_view()
+void bear::visual::gl_renderer::resize_view
+( const screen_size_type& viewport_size )
 {
-  glViewport( 0, 0, m_window_size.x, m_window_size.y );
+  glViewport( 0, 0, viewport_size.x, viewport_size.y );
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho( 0, m_view_size.x, 0, m_view_size.y, -1, 0 );
@@ -507,7 +546,7 @@ void bear::visual::gl_renderer::ensure_window_exists()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
 
-  resize_view();
+  resize_view( m_window_size );
 
   release_context();
 

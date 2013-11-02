@@ -66,7 +66,8 @@ namespace bear
       screen_size_type get_container_size();
 
       void set_title( const std::string& title );
-      void set_video_mode( const screen_size_type& size, bool full );
+      void set_video_mode( const screen_size_type& size, bool f );
+      void set_fullscreen( bool f );
 
       void set_gl_states( state_list& states );
 
@@ -84,7 +85,7 @@ namespace bear
       void render_states();
       void set_background_color();
 
-      void resize_view();
+      void resize_view( const screen_size_type& viewport_size );
 
       void make_current();
       void release_context();
