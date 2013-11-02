@@ -51,7 +51,7 @@ namespace bear
 
       virtual void begin_render() {}
       virtual void render( const position_type& pos, const sprite& s ) = 0;
-      virtual bool end_render() { return true; }
+      virtual void end_render() { }
 
       virtual void draw_line
       ( const color_type& color,

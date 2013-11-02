@@ -253,17 +253,15 @@ void bear::visual::screen::render( const scene_element& e )
  * \brief Stop the rendering process.
  * \return false if this screen has been closed by the user.
  */
-bool bear::visual::screen::end_render()
+void bear::visual::screen::end_render()
 {
   CLAW_PRECOND(m_mode == SCREEN_RENDER);
 
   render_elements();
 
-  bool result = m_impl->end_render();
+  m_impl->end_render();
 
   m_mode = SCREEN_IDLE;
-
-  return result;
 } // screen::end_render()
 
 /*----------------------------------------------------------------------------*/

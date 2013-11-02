@@ -53,6 +53,15 @@ bear::engine::android_system_event_manager::~android_system_event_manager()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Processes the pending events.
+ */
+void bear::engine::android_system_event_manager::refresh()
+{
+  SDL_PumpEvents();
+} // android_system_event_manager::refresh()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Processes an event prepared by the sdl. We handle the application
  *        events and let the SDL to process the others.
  * \param g The running instance of rp::game.

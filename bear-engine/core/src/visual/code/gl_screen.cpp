@@ -186,14 +186,9 @@ void bear::visual::gl_screen::render
  * \brief Stop the rendering process.
  * \return false if this screen has been closed by the user.
  */
-bool bear::visual::gl_screen::end_render()
+void bear::visual::gl_screen::end_render()
 {
   gl_renderer::get_instance().set_gl_states( m_gl_state );
-
-  if ( is_closed() )
-    return false;
-  else
-    return true;
 } // gl_screen::end_render()
 
 /*----------------------------------------------------------------------------*/
@@ -442,22 +437,6 @@ bear::visual::position_type bear::visual::gl_screen::rotate
   result.rotate(center, a);
   return result;
 } // gl_screen::rotate()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tell if the user wants to close this screen.
- */
-bool bear::visual::gl_screen::is_closed()
-{
-  SDL_PumpEvents();
-
-  SDL_Event e;
-  
-  const SDL_EventType event_min( SDL_QUIT );
-  const SDL_EventType event_max( event_min );
-
-  return SDL_PeepEvents(&e, 1, SDL_GETEVENT, event_min, event_max) == 1;
-} // gl_screen::is_closed()
 
 /*----------------------------------------------------------------------------*/
 /**

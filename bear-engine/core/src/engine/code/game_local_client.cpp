@@ -27,9 +27,10 @@
 #include "engine/resource_pool.hpp"
 #include "engine/version.hpp"
 
-#include "engine/system/android_system_event_manager.hpp"
 #include "engine/system/android_game_filesystem.hpp"
+#include "engine/system/android_system_event_manager.hpp"
 #include "engine/system/default_game_filesystem.hpp"
+#include "engine/system/default_system_event_manager.hpp"
 #include "engine/system/freedesktop_game_filesystem.hpp"
 
 #include "engine/variable/base_variable.hpp"
@@ -160,6 +161,9 @@ void bear::engine::game_local_client::sleep()
  */
 void bear::engine::game_local_client::wake_up()
 {
+  if ( m_status != status_sleep )
+    return;
+
   m_screen->unset_pause();
 
   if ( m_current_level != NULL )
@@ -789,6 +793,9 @@ void bear::engine::game_local_client::run_level()
 
       do
         {
+          if ( m_event_manager != NULL )
+            m_event_manager->refresh();
+
           if ( m_status == status_sleep )
             {
               systime::sleep( 1000 );
@@ -979,9 +986,7 @@ void bear::engine::game_local_client::render()
   // effective procedure
   m_screen->begin_render();
   m_current_level->render( *m_screen );
-
-  if ( !m_screen->end_render() )
-    end();
+  m_screen->end_render();
 
   m_last_render = systime::get_date_ms();
 } // game_local_client::render()
@@ -1071,7 +1076,7 @@ void bear::engine::game_local_client::init_event_manager()
 #ifdef __ANDROID__
   m_event_manager = event_manager_ptr( new android_system_event_manager() );
 #else
-  m_event_manager = event_manager_ptr( NULL );
+  m_event_manager = event_manager_ptr( new default_system_event_manager() );
 #endif
 } // game_local_client::init_event_manager()
 

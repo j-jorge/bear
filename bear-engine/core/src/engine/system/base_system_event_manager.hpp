@@ -33,6 +33,8 @@ namespace bear
     public:
       virtual ~base_system_event_manager() {};
 
+      virtual void refresh() = 0;
+
     }; // class base_system_event_manager
   } // namespace engine
 } // namespace bear

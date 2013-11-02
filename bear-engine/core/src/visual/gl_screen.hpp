@@ -56,7 +56,7 @@ namespace bear
 
       void begin_render();
       void render( const position_type& pos, const sprite& s );
-      bool end_render();
+      void end_render();
 
       void draw_line
       ( const color_type& color,
@@ -87,8 +87,6 @@ namespace bear
       position_type
       rotate( const position_type& pos, GLdouble a,
               const position_type& center ) const;
-
-      bool is_closed();
 
       std::vector<position_type>
         get_texture_coordinates

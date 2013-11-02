@@ -330,7 +330,7 @@ void bear::visual::gl_renderer::render_loop()
   while ( true )
     {
       // lock m_stop to ensure that stop() will block if called during the loop.
-      boost::mutex::scoped_lock lock( m_mutex.loop_state );
+      m_mutex.loop_state.lock();
 
       if ( m_stop )
         break;
@@ -343,6 +343,10 @@ void bear::visual::gl_renderer::render_loop()
         render_states();
 
       const systime::milliseconds_type end_date( systime::get_date_ms() );
+
+      // Release the mutex while we sleep so other threads can request to stop
+      // the loop.
+      m_mutex.loop_state.unlock();
 
       if ( end_date - start_date < render_delta )
         systime::sleep( render_delta - (end_date - start_date) );

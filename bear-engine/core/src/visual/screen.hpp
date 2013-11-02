@@ -77,7 +77,7 @@ namespace bear
 
       void begin_render();
       void render( const scene_element& e );
-      bool end_render();
+      void end_render();
 
       void shot( const std::string& bitmap_name ) const;
       void shot( claw::graphic::image& img ) const;
