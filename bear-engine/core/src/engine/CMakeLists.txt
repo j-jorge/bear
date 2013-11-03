@@ -142,6 +142,20 @@ set( ENGINE_SOURCE_FILES
   variable/code/variable_saver.cpp
   )
 
+if( _WIN32 )
+  set(
+    ENGINE_SOURCE_FILES
+    ${ENGINE_SOURCE_FILES}
+    system/code/system_api_windows.cpp
+    )
+else()
+  set(
+    ENGINE_SOURCE_FILES
+    ${ENGINE_SOURCE_FILES}
+    system/code/system_api_default.cpp
+    )
+endif()
+
 add_library(
   ${ENGINE_TARGET_NAME}
   ${BEAR_ENGINE_CORE_LINK_TYPE}

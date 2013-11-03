@@ -13,12 +13,7 @@
  */
 #include "generic_items/browser_launcher_toggle.hpp"
 
-#ifdef _WIN32
-#include <windef.h>
-#include <objbase.h>
-#include <winuser.h>
-#include <shellapi.h>
-#endif
+#include "engine/system/system_api.hpp"
 
 BASE_ITEM_EXPORT( browser_launcher_toggle, bear )
 
@@ -58,17 +53,5 @@ bool bear::browser_launcher_toggle::set_string_field
 void bear::browser_launcher_toggle::on_toggle_on
 ( engine::base_item* activator )
 {
-#ifdef _WIN32
-  CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-  ShellExecute(NULL, "open", m_url.c_str(), NULL, NULL, SW_SHOWDEFAULT);
-#else // _WIN32
-  std::string command("xdg-open ");
-  command += m_url;
-  
-  const int exec_result = system(command.c_str());
-
-  if ( exec_result == -1 )
-    claw::logger << claw::log_error << "Failed to start the web browser."
-                 << std::endl;
-#endif
+  engine::system_api::open( m_url );
 } // browser_launcher_toggle::on_toggle_on()
