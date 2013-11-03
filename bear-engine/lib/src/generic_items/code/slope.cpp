@@ -391,7 +391,11 @@ bool bear::slope::align_on_ground
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_up_down(that, info) )
     {
-      const universe::position_type pos( that.get_left(), get_y_at_x( pos_x ) );
+      const universe::position_type pos
+        ( that.get_left(),
+          get_ground_intersection
+          ( info.other_previous_state().get_horizontal_middle(),
+            that.get_horizontal_middle() ).y );
 
       const universe::collision_align_policy policy
         ( get_top_contact_mode(info, pos) );
@@ -512,36 +516,17 @@ void bear::slope::apply_angle_to
   universe::coordinate_type g_force(0);
 
   if ( get_layer().has_world() )
-    g_force = std::abs(get_layer().get_world().get_gravity().y
-                       * info.other_previous_state().get_mass()
-                       + info.other_previous_state().get_force().y);
+    g_force =
+      std::abs( get_layer().get_world().get_total_force_on_item( that ).y );
 
-  const universe::coordinate_type normal_length
-    ( g_force * std::cos(angle) );
-  const universe::coordinate_type acceleration_length_on_surface
-    ( g_force * std::sin(angle) );
+  const universe::coordinate_type normal_length( g_force * std::cos(angle) );
   const universe::coordinate_type friction_length
     ( normal_length * m_tangent_friction );
 
-  if ( acceleration_length_on_surface > friction_length )
-    {
-      // the other item slides on the slope
-      const universe::coordinate_type d
-        ( acceleration_length_on_surface - friction_length );
+  that.add_internal_force( universe::force_type(friction_length, 0) );
 
-      if ( get_steepness() > 0 )
-        that.add_internal_force( universe::force_type(-d, 0) );
-      else
-        that.add_internal_force( universe::force_type(d, 0) );
-    }
-
-  const universe::vector_type mvt
-    ( that.get_bottom_middle()
-      - info.other_previous_state().get_bottom_middle() );
-
-  if ( mvt.length() > 1 )
-    info.get_collision_repair().set_contact_normal
-      ( that, that.get_x_axis().get_orthonormal_anticlockwise() );
+  info.get_collision_repair().set_contact_normal
+    ( that, that.get_x_axis().get_orthonormal_anticlockwise() );
 } // slope::apply_angle_to()
 
 /*----------------------------------------------------------------------------*/
