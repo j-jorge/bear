@@ -352,6 +352,11 @@ void bear::visual::gl_renderer::stop()
   }
 
   m_render_thread.join();
+
+  delete[] m_screenshot_buffer;
+
+  SDL_GL_DeleteContext( m_gl_context );
+  SDL_DestroyWindow( m_window );
 } // gl_renderer::stop()
 
 /*----------------------------------------------------------------------------*/
