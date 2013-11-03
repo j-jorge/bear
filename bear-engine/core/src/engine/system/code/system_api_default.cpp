@@ -14,6 +14,8 @@
  */
 #include "engine/system/system_api.hpp"
 
+#include <boost/algorithm/string/replace.hpp>
+
 #include <claw/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
@@ -23,11 +25,15 @@
  */
 void bear::engine::system_api::open( const std::string& object )
 {
-  const std::string command("xdg-open " + object);
+  const std::string argument
+    ( boost::algorithm::replace_all_copy( object, "'", "'\"'\"'" ) );
+
+  const std::string command("xdg-open '" + argument + "'");
   
   const int exec_result( system(command.c_str()) );
 
   if ( exec_result == -1 )
-    claw::logger << claw::log_error << "Failed to open '" << object << "'."
+    claw::logger << claw::log_error << "Failed to open '" << object
+                 << "' with command: " << command
                  << std::endl;
 } // system_api::open()
