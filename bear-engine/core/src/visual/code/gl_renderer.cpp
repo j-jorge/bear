@@ -351,7 +351,7 @@ void bear::visual::gl_renderer::stop()
     m_stop = true;
   }
 
-  m_render_thread.detach();
+  m_render_thread.join();
 } // gl_renderer::stop()
 
 /*----------------------------------------------------------------------------*/

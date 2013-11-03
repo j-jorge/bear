@@ -61,6 +61,10 @@ namespace bear
       /** \brief The thread loading the sound. */
       boost::thread* m_loader;
 
+      /** \brief The raw audio data passed to the SDL mixer functions,
+          eventually. */
+      Uint8* m_raw_audio;
+
       /** \brief Output audio rate. */
       static unsigned int s_audio_rate;
 

@@ -24,6 +24,7 @@
 bear::base_ground::base_ground()
   : m_top_sets_contact(true), m_bottom_sets_contact(true),
     m_right_sets_contact(true), m_left_sets_contact(true),
+    m_middle_sets_contact(true),
     m_top_left_contact_mode( universe::contact_mode::no_contact ),
     m_top_right_contact_mode( universe::contact_mode::no_contact ),
     m_bottom_left_contact_mode( universe::contact_mode::no_contact ),

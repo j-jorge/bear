@@ -36,7 +36,7 @@ unsigned int bear::audio::sdl_sound::s_audio_mix_channels = 256;
  */
 bear::audio::sdl_sound::sdl_sound
 ( std::istream& file, const std::string& name, sound_manager& owner )
-  : sound(name, owner), m_sound(NULL)
+  : sound(name, owner), m_sound(NULL), m_raw_audio(NULL)
 {
   file.seekg( 0, std::ios::end );
   std::streamoff file_size = file.tellg();
@@ -61,16 +61,16 @@ bear::audio::sdl_sound::sdl_sound
   : sound(that.get_sound_name(), owner), m_sound(NULL), m_loader(NULL)
 {
   const Uint32 buffer_length( that.m_sound->alen );
-  Uint8* const buffer( new Uint8[buffer_length] );
+  m_raw_audio = new Uint8[buffer_length];
   
   std::copy
-    ( that.m_sound->abuf, that.m_sound->abuf + buffer_length, buffer );
+    ( that.m_sound->abuf, that.m_sound->abuf + buffer_length, m_raw_audio );
   
-  m_sound = Mix_QuickLoad_RAW( buffer, buffer_length );
+  m_sound = Mix_QuickLoad_RAW( m_raw_audio, buffer_length );
 
   if (!m_sound)
     {
-      delete[] buffer;
+      delete[] m_raw_audio;
       throw claw::exception( Mix_GetError() );
     }
 } // sdl_sound::sdl_sound()
@@ -86,6 +86,8 @@ bear::audio::sdl_sound::~sdl_sound()
   delete m_loader;
 
   Mix_FreeChunk( m_sound );
+
+  delete[] m_raw_audio;
 } // sdl_sound::~sdl_sound()
 
 /*----------------------------------------------------------------------------*/
@@ -172,6 +174,7 @@ void bear::audio::sdl_sound::load_sound
 
   if (rw)
     m_sound = Mix_LoadWAV_RW( rw, 1 );
+
   delete[] buffer;
 
   if (!m_sound)
