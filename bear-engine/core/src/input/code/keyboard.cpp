@@ -315,12 +315,13 @@ void bear::input::keyboard::refresh_keys()
   m_pressed_keys.clear();
 
   for (unsigned int i=0; i!=(unsigned int)num_codes; ++i)
-    if ( scan_codes[i] )
+    if ( scan_codes[i] == 1 )
       {
         const SDL_Keymod mod( SDL_GetModState() );
         const key_code k
           ( sdl_key_to_local
-            ( SDL_SCANCODE_TO_KEYCODE(i), mod & KMOD_SHIFT, mod & KMOD_ALT) );
+            ( SDL_GetKeyFromScancode( static_cast<SDL_Scancode>(i) ),
+              mod & KMOD_SHIFT, mod & KMOD_ALT) );
 
         if ( (k != kc_not_a_key) &&
              (k != kc_num_lock) &&
