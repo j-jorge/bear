@@ -391,12 +391,14 @@ bool bear::slope::align_on_ground
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_up_down(that, info) )
     {
-      const universe::position_type pos
-        ( that.get_left(),
-          get_ground_intersection
-          ( info.other_previous_state().get_horizontal_middle(),
-            that.get_horizontal_middle() ).y );
+      const universe::position_type bottom_middle
+        ( get_ground_intersection
+          ( info.other_previous_state().get_bottom_middle(),
+            that.get_bottom_middle() ) );
 
+      const universe::position_type pos
+        ( bottom_middle.x - that.get_width() / 2, bottom_middle.y );
+          
       const universe::collision_align_policy policy
         ( get_top_contact_mode(info, pos) );
 
@@ -548,3 +550,57 @@ bear::universe::curved_box* bear::slope::get_curved_box() const
 
   return c;
 } // slope::get_curved_box()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Gets the position where a given segment crosses the curve.
+ * \param begin The beginning of the segment.
+ * \param end The end of the segment.
+ */
+bear::universe::position_type
+bear::slope::get_ground_intersection
+( universe::position_type begin, universe::position_type end ) const
+{
+  universe::curved_box* const c( get_curved_box() );
+
+  CLAW_PRECOND( c != NULL );
+
+  universe::position_type middle( ( begin + end ) / 2 );
+  universe::coordinate_type delta( middle.y - c->get_y_at_x(middle.x) );
+
+  int begin_above( boost::math::sign( begin.y - c->get_y_at_x(begin.x) ) );
+  int middle_above( boost::math::sign( delta ) );
+
+  if ( end.y == c->get_y_at_x( end.x ) )
+    {
+      delete c;
+      return end;
+    }
+  else if ( begin.y == c->get_y_at_x( begin.x ) )
+    {
+      delete c;
+      return begin;
+    }
+
+  while ( (std::abs( delta ) > 0.001)
+          && ( std::abs( end.x - begin.x ) > 0.001 ) )
+    {
+      CLAW_PRECOND( begin_above
+                    != boost::math::sign( end.y - c->get_y_at_x(end.x) ) );
+
+      if ( begin_above == middle_above )
+        begin = middle;
+      else
+        end = middle;
+
+      middle = ( begin + end ) / 2;
+      delta = middle.y - c->get_y_at_x(middle.x);
+      middle_above = boost::math::sign( delta );
+    }
+
+  const universe::position_type result( middle.x, c->get_y_at_x( middle.x ) );
+
+  delete c;
+
+  return result;
+} // slope::get_ground_intersection()
