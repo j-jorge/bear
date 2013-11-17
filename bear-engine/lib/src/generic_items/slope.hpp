@@ -138,10 +138,6 @@ namespace bear
 
     universe::curved_box* get_curved_box() const;
 
-    universe::position_type get_ground_intersection
-      ( universe::position_type begin,
-        universe::position_type end ) const;
-
   private:
     /** \brief The coefficient for tangent friction. */
     double m_tangent_friction;
