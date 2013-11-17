@@ -391,11 +391,7 @@ bool bear::slope::align_on_ground
   if ( (pos_x >= get_left()) && (pos_x <= get_right())
        && item_crossed_up_down(that, info) )
     {
-      const universe::position_type pos
-        ( that.get_left(),
-          get_ground_intersection
-          ( info.other_previous_state().get_horizontal_middle(),
-            that.get_horizontal_middle() ).y );
+      const universe::position_type pos( that.get_left(), get_y_at_x( pos_x ) );
 
       const universe::collision_align_policy policy
         ( get_top_contact_mode(info, pos) );
