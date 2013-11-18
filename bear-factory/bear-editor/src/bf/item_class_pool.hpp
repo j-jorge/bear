@@ -74,6 +74,10 @@ namespace bf
 
     void field_unicity_test();
 
+    // not implemented
+    item_class_pool& operator=( const item_class_pool& that );
+    item_class_pool( const item_class_pool& that );
+
   private:
     /** \brief The item classes. */
     item_class_map m_item_class;
