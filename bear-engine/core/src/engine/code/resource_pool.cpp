@@ -45,7 +45,7 @@ bear::engine::resource_pool::~resource_pool()
  */
 void bear::engine::resource_pool::add_path( const std::string& path )
 {
-  m_pool.push_back( new directory_resource_pool( path ) );
+  add_pool( new directory_resource_pool( path ) );
 } // resource_pool::add_path()
 
 /*----------------------------------------------------------------------------*/
@@ -58,7 +58,7 @@ void bear::engine::resource_pool::add_pool( base_resource_pool* pool )
 {
   CLAW_PRECOND( pool != NULL );
 
-  m_pool.push_back( pool );
+  m_pool.insert( m_pool.begin(), pool );
 } // resource_pool::add_pool()
 
 /*----------------------------------------------------------------------------*/
