@@ -67,32 +67,32 @@ if( NOT BUILD_PLATFORM STREQUAL "android" )
 endif()
 
 #-------------------------------------------------------------------------------
-# check SDL
-include( FindSDL )
+# check SDL2
+include( FindSDL2 )
 
-if( NOT SDL_FOUND )
-  message( FATAL_ERROR "SDL lbrary must be installed." )
-else( NOT SDL_FOUND )
+if( NOT SDL2_FOUND )
+  message( FATAL_ERROR "SDL2 library must be installed." )
+else( NOT SDL2_FOUND )
   #-----------------------------------------------------------------------------
   # Include directories for SDL
   include_directories(
-    ${SDL_INCLUDE_DIR}
+    ${SDL2_INCLUDE_DIR}
     )
-endif( NOT SDL_FOUND )
+endif( NOT SDL2_FOUND )
 
 #-------------------------------------------------------------------------------
-# check SDL::mixer
-include( FindSDL_mixer )
+# check SDL2_mixer
+include( FindSDL2_mixer )
 
-if( NOT SDLMIXER_FOUND )
-  message( FATAL_ERROR "SDL_mixer lbrary must be installed." )
-else( NOT SDLMIXER_FOUND )
+if( NOT SDL2MIXER_FOUND )
+  message( FATAL_ERROR "SDL2_mixer lbrary must be installed." )
+else( NOT SDL2MIXER_FOUND )
   #-----------------------------------------------------------------------------
   # Include directories for all these libraries
   include_directories(
-    ${SDLMIXER_INCLUDE_DIR}
+    ${SDL2MIXER_INCLUDE_DIR}
     )
-endif( NOT SDLMIXER_FOUND )
+endif( NOT SDL2MIXER_FOUND )
 
 #-------------------------------------------------------------------------------
 # Link directories for the game

@@ -39,7 +39,7 @@ install(
 
 set(
   INPUT_LINK_LIBRARIES
-  ${SDL_LIBRARY}
+  ${SDL2_LIBRARY}
   ${CLAW_LOGGER_LIBRARIES}
 )
 

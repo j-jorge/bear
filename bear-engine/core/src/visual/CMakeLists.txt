@@ -82,7 +82,7 @@ install(
 
 target_link_libraries(
   ${VISUAL_TARGET_NAME}
-  ${SDL_LIBRARY}
+  ${SDL2_LIBRARY}
   ${OPENGL_LIBRARIES}
   ${CLAW_GRAPHIC_LIBRARIES}
   ${CLAW_LOGGER_LIBRARIES}

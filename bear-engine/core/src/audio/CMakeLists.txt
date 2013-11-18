@@ -31,8 +31,8 @@ install(
 
 target_link_libraries(
   ${AUDIO_TARGET_NAME}
-  ${SDLMIXER_LIBRARY}
-  ${SDL_LIBRARY}
+  ${SDL2MIXER_LIBRARY}
+  ${SDL2_LIBRARY}
   ${CLAW_LOGGER_LIBRARIES}
   ${Boost_THREAD_LIBRARY}
   )

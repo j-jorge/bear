@@ -200,7 +200,7 @@ install(
 
 set(
   ENGINE_LINK_LIBRARIES
-  ${SDLMIXER_LIBRARY}
+  ${SDL2MIXER_LIBRARY}
   ${OPENGL_LIBRARIES}
   bear_audio
   bear_communication

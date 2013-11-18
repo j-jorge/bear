@@ -42,7 +42,7 @@ if(WIN32)
   set(
     RUNNING_BEAR_LINK_LIBRARIES
     ${RUNNING_BEAR_LINK_LIBRARIES}
-    ${SDL_LIBRARY}
+    ${SDL2_LIBRARY}
     intl )
 endif(WIN32)
 
@@ -51,7 +51,7 @@ if(APPLE)
   set(
     RUNNING_BEAR_LINK_LIBRARIES
     ${RUNNING_BEAR_LINK_LIBRARIES}
-    ${SDL_LIBRARY}
+    ${SDL2_LIBRARY}
     SDLmain
     intl )
 endif(APPLE)
