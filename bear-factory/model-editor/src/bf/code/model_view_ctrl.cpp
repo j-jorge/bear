@@ -14,7 +14,6 @@
 #include "bf/model_view_ctrl.hpp"
 
 #include "bf/model_view.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include <wx/sizer.h>
 
@@ -27,7 +26,7 @@
  */
 bf::model_view_ctrl::model_view_ctrl
 ( wxWindow& parent, wxWindowID id, gui_model& m, 
-  workspace_environment* env )
+  workspace_environment& env )
   : wxPanel(&parent, id), m_workspace(env)
 {
   create_controls(m);

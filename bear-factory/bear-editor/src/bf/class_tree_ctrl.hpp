@@ -83,8 +83,9 @@ namespace bf
       }; // enum control_id
 
   public:
+    class_tree_ctrl( wxWindow* parent, int id = wxID_ANY );
     class_tree_ctrl
-    ( workspace_environment* env, wxWindow* parent, int id = wxID_ANY );
+      ( wxWindow* parent, workspace_environment& env, int id = wxID_ANY );
 
     wxTreeItemId GetSelection() const;
     bool ItemHasChildren( const wxTreeItemId& item ) const;

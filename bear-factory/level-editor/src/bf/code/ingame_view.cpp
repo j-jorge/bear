@@ -92,7 +92,7 @@ bool bf::ingame_view::item_drop_target::OnDropText
  */
 bf::ingame_view::ingame_view
 ( ingame_view_frame& parent, gui_level* lvl, windows_layout& layout, 
-  workspace_environment* env )
+  workspace_environment& env )
   : super( &parent, wxID_ANY ), m_parent(parent), m_layout(layout),
     m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_renderer( *lvl, env ),
     m_selection_manager( *lvl, layout.get_properties_frame() ),
@@ -586,11 +586,11 @@ bool bf::ingame_view::add_item
   bool result = false;
 
   if ( !empty() )
-    if ( m_workspace->get_item_class_pool().has_item_class(class_name) )
+    if ( m_workspace.get_item_class_pool().has_item_class(class_name) )
       {
         item_instance* item =
           new item_instance
-          ( m_workspace->get_item_class_pool().get_item_class_ptr(class_name) );
+          ( m_workspace.get_item_class_pool().get_item_class_ptr(class_name) );
          
         wxPoint pos_view = compute_local_view_position();
         item->get_rendering_parameters().set_position

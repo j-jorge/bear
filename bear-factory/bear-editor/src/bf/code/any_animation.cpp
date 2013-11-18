@@ -91,7 +91,7 @@ void bf::any_animation::set_animation( const animation& a )
  * \brief Reload the animation.
  * \param env The workspace environment to use.
  */
-void bf::any_animation::reload(workspace_environment* env)
+void bf::any_animation::reload(workspace_environment& env)
 {
   if ( m_content_type == content_file )
     m_animation_file.set_path( m_animation_file.get_path(), env );

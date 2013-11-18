@@ -79,7 +79,7 @@ bf::item_field_edit::field_editor<Control, Type, true>::open
     v = default_value<Type>::get();
 
   dialog_type* const dlg =
-    dialog_maker_type::create( self, type, f, v, self.m_workspace );
+    dialog_maker_type::create( self, type, f, v, *self.m_workspace );
   self.show_dialog(f.get_name(), *dlg);
   dlg->Destroy();
 } // item_field_edit::field_editor::open()

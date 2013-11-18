@@ -14,7 +14,6 @@
 #ifndef __BF_SPRITE_VIEW_CTRL_HPP__
 #define __BF_SPRITE_VIEW_CTRL_HPP__
 
-#include "bf/workspace_environment.hpp"
 #include "bf/sprite.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -26,6 +25,7 @@
 namespace bf
 {
   class sprite_view;
+  class workspace_environment;
 
   /**
    * \brief This control displays a sprite and some buttons to adjust its size.
@@ -48,7 +48,7 @@ namespace bf
 
   public:
     sprite_view_ctrl
-      ( wxWindow& parent, workspace_environment* env, 
+      ( wxWindow& parent, workspace_environment& env,
         const sprite& spr = sprite() );
 
     void set_sprite( const sprite& spr );
@@ -87,7 +87,7 @@ namespace bf
     wxStaticText* m_mouse_position;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

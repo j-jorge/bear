@@ -16,7 +16,6 @@
 #include "bf/custom_type.hpp"
 #include "bf/value_editor_dialog.hpp"
 #include "bf/base_file_edit.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include "bf/wx_facilities.hpp"
 
@@ -103,9 +102,9 @@ bf::sound_description bf::sound_frame::get_sound_description() const
  * \brief Fills the workspace environment.
  * \param env The workspace environment used.
  */
-void bf::sound_frame::set_workspace(workspace_environment* env)
+void bf::sound_frame::set_workspace(workspace_environment& env)
 {
-  m_workspace = env;
+  m_workspace = &env;
 } // sound_frame::set_workspace()
 
 /*----------------------------------------------------------------------------*/
@@ -177,7 +176,7 @@ void bf::sound_frame::on_new_sound( wxCommandEvent& WXUNUSED(event) )
   typedef value_editor_dialog< base_file_edit<custom_string> > dialog_type;
 
   dialog_type dialog
-    ( *this, _("Pick a sound file"), custom_string(), m_workspace );
+    ( *this, _("Pick a sound file"), custom_string(), *m_workspace );
   dialog.get_editor().set_filter( _("Sound files|*.ogg") );
 
   if ( dialog.ShowModal() == wxID_OK )
@@ -210,7 +209,7 @@ void bf::sound_frame::on_edit_sound( wxCommandEvent& WXUNUSED(event) )
 
   const custom_string prev
     ( wx_to_std_string( m_sound_files->GetString( index ) ) );
-  dialog_type dialog( *this, _("Pick a sound file"), prev, m_workspace );
+  dialog_type dialog( *this, _("Pick a sound file"), prev, *m_workspace );
   dialog.get_editor().set_filter( _("Sound files|*.ogg") );
 
   if ( dialog.ShowModal() == wxID_OK )

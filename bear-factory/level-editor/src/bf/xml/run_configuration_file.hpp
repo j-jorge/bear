@@ -33,10 +33,10 @@ namespace bf
     {
     public:
       run_configuration
-      load( workspace_environment* env, const wxString& file_path ) const;
+      load( workspace_environment& env, const wxString& file_path ) const;
 
       void save
-      ( const run_configuration& config, workspace_environment* env, 
+      ( const run_configuration& config, workspace_environment& env, 
         std::ostream& os ) const;
 
     }; // class run_configuration_file

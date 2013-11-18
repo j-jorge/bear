@@ -15,7 +15,6 @@
 #ifndef __BF_COMPILATION_CONTEXT_HPP__
 #define __BF_COMPILATION_CONTEXT_HPP__
 
-#include "bf/workspace_environment.hpp"
 #include "bf/sprite_image_cache.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -27,6 +26,7 @@
 namespace bf
 {
   class sprite;
+  class workspace_environment;
 
   /**
    * \brief The compilation context keep some data used during the compilation
@@ -50,7 +50,7 @@ namespace bf
 
   public:
     compilation_context
-      ( unsigned int optimization_level, workspace_environment* env );
+      ( unsigned int optimization_level, workspace_environment& env );
 
     rectangle get_opaque_rectangle
       ( const sprite& s, const std::string& image_name );
@@ -78,7 +78,8 @@ namespace bf
     unsigned int m_optimization_level;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
+
   }; // class compilation_context
 } // namespace bf
 

@@ -41,7 +41,7 @@ namespace bf
 
   public:
     mark_properties_frame
-    ( wxWindow* parent, const action* a, workspace_environment* env );
+    ( wxWindow* parent, const action* a, workspace_environment& env );
 
     const std::string& get_mark_name() const;
     const bf::any_animation& get_mark_animation() const;
@@ -99,7 +99,7 @@ namespace bf
     wxCheckBox* m_reset_with_action_box;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

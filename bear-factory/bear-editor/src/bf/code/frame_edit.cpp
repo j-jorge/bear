@@ -25,7 +25,7 @@
  * \param frame The initial frame.
  */
 bf::frame_edit::frame_edit
-( wxWindow& parent, workspace_environment* env, const animation_frame& frame )
+( wxWindow& parent, workspace_environment& env, const animation_frame& frame )
   : wxDialog( &parent, wxID_ANY, _("Frame"),
               wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_frame(frame),

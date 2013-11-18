@@ -17,7 +17,6 @@
 #include "bf/free_edit.hpp"
 #include "bf/animation_frame.hpp"
 #include "bf/custom_type.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <wx/wx.h>
@@ -27,6 +26,7 @@
 namespace bf
 {
   class sprite_edit;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a frame.
@@ -45,7 +45,7 @@ namespace bf
 
   public:
     frame_edit
-      ( wxWindow& parent, workspace_environment* env,
+      ( wxWindow& parent, workspace_environment& env,
         const animation_frame& frame = default_value<animation_frame>::get());
 
     const animation_frame& get_frame() const;
@@ -72,7 +72,7 @@ namespace bf
     sprite_edit* m_sprite;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     // DECLARE_EVENT_TABLE()
 

@@ -16,7 +16,6 @@
 #include "bf/item_class_pool.hpp"
 #include "bf/item_comparator.hpp"
 #include "bf/level.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/xml/item_instance_node.hpp"
 #include "bf/xml/util.hpp"
 
@@ -30,7 +29,7 @@
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_writer::save
-( std::ostream& os, const level& lvl, workspace_environment* env) const
+( std::ostream& os, const level& lvl, workspace_environment& env) const
 {
   os << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
      << "<level name='" << lvl.get_name() << "' width='" << lvl.get_width()
@@ -51,7 +50,7 @@ void bf::level_file_xml_writer::save
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_writer::save_layer
-( std::ostream& os, const layer& the_layer, workspace_environment* env) const
+( std::ostream& os, const layer& the_layer, workspace_environment& env) const
 {
   os << "  <layer class_name='" << the_layer.get_class_name()
      << "' name='"
@@ -75,7 +74,7 @@ void bf::level_file_xml_writer::save_layer
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_writer::save_items
-( std::ostream& os, const layer& the_layer, workspace_environment* env) const
+( std::ostream& os, const layer& the_layer, workspace_environment& env) const
 {
   os << "<items>\n";
 
@@ -144,7 +143,7 @@ void bf::level_file_xml_writer::save_priority
  */
 void bf::level_file_xml_writer::save_item
 ( std::ostream& os, const item_instance& item, 
-  workspace_environment* env ) const
+  workspace_environment& env ) const
 {
   xml::item_instance_node item_node(env);
   item_node.write(item, os);

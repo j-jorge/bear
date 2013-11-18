@@ -65,7 +65,7 @@ END_EVENT_TABLE()
  * \param env The workspace environment used.
  */
 bf::image_list_ctrl::image_list_ctrl
-( wxWindow& parent, workspace_environment* env )
+( wxWindow& parent, workspace_environment& env )
 : wxPanel(&parent), m_selection(0), m_workspace(env)
 {
   create_controls();
@@ -248,9 +248,8 @@ void bf::image_list_ctrl::render_list( wxDC& dc )
   for ( ; (it!=eit) && (pos.y < m_image_list->GetSize().y); ++it, ++i )
     {
       render_name(dc, *it, pos, i);
-      if ( m_workspace )
-        render_thumb
-          (dc, m_workspace->get_image_pool().get_thumbnail(*it), pos, i);
+      render_thumb
+        (dc, m_workspace.get_image_pool().get_thumbnail(*it), pos, i);
     }
 } // image_list_ctrl::render_list()
 

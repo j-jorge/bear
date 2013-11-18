@@ -91,7 +91,7 @@ namespace bf
     const gui_model& get_model() const;
     gui_model& get_model();
 
-    workspace_environment* get_workspace();
+    workspace_environment& get_workspace();
 
   private:
     void undo();

@@ -105,7 +105,7 @@ bool bf::main_frame::load_model( const wxString& path )
           workspace_environment env(w);
       
           xml::model_file reader;
-          mdl = reader.load(path, &env);
+          mdl = reader.load(path, env);
 
           add_model_view( new model_frame(*m_windows_layout, mdl, path) );
           result = true;

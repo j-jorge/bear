@@ -14,7 +14,6 @@
 #include "bf/xml/run_configuration_file.hpp"
 
 #include "bf/run_configuration.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/exception.hpp"
 #include "bf/xml/run_configuration_node.hpp"
@@ -28,7 +27,7 @@
  * \param file_path The path to the run configuration file.
  */
 bf::run_configuration bf::xml::run_configuration_file::load
-( workspace_environment* env, const wxString& file_path ) const
+( workspace_environment& env, const wxString& file_path ) const
 {
   wxXmlDocument doc;
 
@@ -57,7 +56,7 @@ bf::run_configuration bf::xml::run_configuration_file::load
  * \param os The stream in which we save it.
  */
 void bf::xml::run_configuration_file::save
-( const run_configuration& config, workspace_environment* env, 
+( const run_configuration& config, workspace_environment& env, 
   std::ostream& os ) const
 {
   os << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";

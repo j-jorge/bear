@@ -15,7 +15,6 @@
 #define __BF_ANIMATION_FILE_XML_READER_HPP__
 
 #include "bf/animation.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <iostream>
@@ -23,6 +22,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief A class for reading source animation files.
    * \author Julien Jorge
@@ -31,8 +32,8 @@ namespace bf
   {
   public:
     animation load
-      ( const wxString& file_path, workspace_environment* env ) const;
-    animation load( wxXmlNode* node, workspace_environment* env ) const;
+      ( const wxString& file_path, workspace_environment& env ) const;
+    animation load( wxXmlNode* node, workspace_environment& env ) const;
 
   }; // class animation_file_xml_reader
 } // namespace bf

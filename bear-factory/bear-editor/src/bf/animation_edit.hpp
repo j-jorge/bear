@@ -18,7 +18,6 @@
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
 #include "bf/spin_ctrl.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include <wx/wx.h>
 #include <wx/spinctrl.h>
@@ -29,6 +28,7 @@ namespace bf
   class animation_view_ctrl;
   class bitmap_rendering_attributes_edit;
   class image_pool;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a animation.
@@ -49,7 +49,7 @@ namespace bf
 
   public:
     animation_edit
-    ( wxWindow& parent, workspace_environment* env,
+    ( wxWindow& parent, workspace_environment& env,
       const animation& anim = default_value<animation>::get() );
 
     bool validate();
@@ -133,7 +133,7 @@ namespace bf
     animation_view_ctrl* m_animation_view;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

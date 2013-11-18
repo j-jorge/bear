@@ -28,7 +28,7 @@
  */
 template<typename T>
 bf::base_file_edit<T>::base_file_edit
-( wxWindow& parent, workspace_environment* env, const file_type& v )
+( wxWindow& parent, workspace_environment& env, const file_type& v )
   : super(v), wxPanel(&parent), m_filter(_("All files|*")), m_workspace(env)
 {
   create_controls();
@@ -46,7 +46,7 @@ bf::base_file_edit<T>::base_file_edit
  */
 template<typename T>
 bf::base_file_edit<T>::base_file_edit
-( wxWindow& parent, workspace_environment* env, const wxString& filter, 
+( wxWindow& parent, workspace_environment& env, const wxString& filter, 
   const file_type& v )
   : super(v), wxPanel(&parent), m_filter(filter), m_workspace(env)
 {
@@ -119,7 +119,7 @@ void bf::base_file_edit<T>::on_browse( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p = wx_to_std_string(m_path->GetValue());
   path_configuration::get_instance().get_full_path
-    ( p, m_workspace->get_name() );
+    ( p, m_workspace.get_name() );
 
   wxFileDialog dlg
     ( this, _("Choose a file"), wxEmptyString, std_to_wx_string(p), m_filter,
@@ -129,7 +129,7 @@ void bf::base_file_edit<T>::on_browse( wxCommandEvent& WXUNUSED(event) )
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
       path_configuration::get_instance().get_relative_path
-        (new_p, m_workspace->get_name() );
+        (new_p, m_workspace.get_name() );
 
       m_path->SetValue( std_to_wx_string(new_p) );
     }

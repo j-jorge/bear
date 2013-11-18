@@ -65,7 +65,7 @@ namespace bf
   public:
     ingame_view
     ( ingame_view_frame& parent, gui_level* lvl, windows_layout& layout,
-      workspace_environment* env );
+      workspace_environment& env );
 
     bool empty() const;
 
@@ -244,7 +244,7 @@ namespace bf
     selection_manager m_selection_manager;
 
     /** \brief The workspace environment. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     /** \brief The items copied in the clipboard. */
     static level_clipboard s_clipboard;

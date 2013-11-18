@@ -28,7 +28,6 @@
 #include "bf/history/action_group.hpp"
 #include "bf/history/action_modify_placement.hpp"
 #include "bf/history/action_modify_snapshot_size.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/xml/model_file.hpp"
 
 #include "bf/icon/compile.xpm"
@@ -295,9 +294,9 @@ bf::gui_model& bf::model_frame::get_model()
 /**
  * \brief Get the workspace environment.
  */
-bf::workspace_environment* bf::model_frame::get_workspace()
+bf::workspace_environment& bf::model_frame::get_workspace()
 {
-  return & m_workspace;
+  return m_workspace;
 } // model_frame::get_workspace()
 
 /*----------------------------------------------------------------------------*/
@@ -438,7 +437,7 @@ void bf::model_frame::create_member_controls()
     (this, ID_PLAY_STOP, wxBitmap(player_play_xpm));
 
   m_model_view = 
-    new model_view_ctrl(*this, ID_MODEL_VIEW, get_model(), &m_workspace);
+    new model_view_ctrl(*this, ID_MODEL_VIEW, get_model(), m_workspace);
 } // model_frame::create_member_controls()
 
 /*----------------------------------------------------------------------------*/
@@ -778,7 +777,7 @@ void bf::model_frame::compile_model_no_check()
 {
   model_file_compiler c;
 
-  if ( !c.compile( get_model(), wx_to_std_string(m_model_file), &m_workspace ) )
+  if ( !c.compile( get_model(), wx_to_std_string(m_model_file), m_workspace ) )
     {
       wxMessageDialog dlg
         ( this, _("Error"), _("Can't open the model file."), wxOK );

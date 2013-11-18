@@ -52,9 +52,9 @@ namespace bf
 
   public:
     base_file_edit
-    ( wxWindow& parent, workspace_environment* env, const file_type& v );
+    ( wxWindow& parent, workspace_environment& env, const file_type& v );
     base_file_edit
-    ( wxWindow& parent, workspace_environment* env, const wxString& filter, 
+    ( wxWindow& parent, workspace_environment& env, const wxString& filter, 
       const file_type& v );
 
     bool validate();
@@ -79,7 +79,7 @@ namespace bf
     wxButton* m_browse;
     
     /** \brief The workspace name. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
   }; // class base_file_edit
 } // namespace bf

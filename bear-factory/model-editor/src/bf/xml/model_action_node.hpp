@@ -34,7 +34,7 @@ namespace bf
     public:
       void read
       ( gui_model& mdl, const wxXmlNode* node, 
-        workspace_environment * env ) const;
+        workspace_environment& env ) const;
       void write( const action& a, std::ostream& os ) const;
 
     }; // class model_action_node

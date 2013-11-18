@@ -30,7 +30,7 @@ namespace bf
   {
   public:
     sprite_view
-      ( wxWindow& parent, workspace_environment* env, wxWindowID id, 
+      ( wxWindow& parent, workspace_environment& env, wxWindowID id, 
         const sprite& spr = sprite() );
 
     void set_sprite( const sprite& spr );

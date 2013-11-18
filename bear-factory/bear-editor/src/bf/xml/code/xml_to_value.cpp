@@ -14,6 +14,7 @@
 #include "bf/xml/xml_to_value.hpp"
 
 #include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/reader_tool.hpp"
 
@@ -68,7 +69,7 @@ bf::xml::bitmap_rendering_attributes_xml_to_value::load_rendering_attributes
  * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::sprite>::operator()
-  ( sprite& spr, const wxXmlNode* node, workspace_environment* env ) const
+  ( sprite& spr, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -84,20 +85,18 @@ void bf::xml::xml_to_value<bf::sprite>::operator()
         ( xml::reader_tool::read_uint(node, wxT("clip_width")) );
       spr.set_clip_height
         ( xml::reader_tool::read_uint(node, wxT("clip_height")) );
-      if ( env )
-        spr.set_spritepos_entry
-          ( wx_to_std_string
-            ( env->get_image_pool().find_spritepos_name_from_size
-              ( std_to_wx_string(spr.get_image_name()),
-                spr.get_clip_rectangle() )) );
+      spr.set_spritepos_entry
+        ( wx_to_std_string
+          ( env.get_image_pool().find_spritepos_name_from_size
+            ( std_to_wx_string(spr.get_image_name()),
+              spr.get_clip_rectangle() )) );
     }
   else
     {
-      if ( env )
-        spr.set_clip_rectangle
-          ( env->get_image_pool().get_spritepos_rectangle
-            ( std_to_wx_string(spr.get_image_name()),
-              std_to_wx_string(spritepos) ) );
+      spr.set_clip_rectangle
+        ( env.get_image_pool().get_spritepos_rectangle
+          ( std_to_wx_string(spr.get_image_name()),
+            std_to_wx_string(spritepos) ) );
       spr.set_spritepos_entry( spritepos );
     }
 
@@ -132,7 +131,7 @@ bool bf::xml::xml_to_value<bf::animation>::supported_node
  * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation>::operator()
-  ( animation& anim, const wxXmlNode* node, workspace_environment* env ) const
+  ( animation& anim, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -165,7 +164,7 @@ void bf::xml::xml_to_value<bf::animation>::operator()
  * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation>::load_frames
-( animation& anim, const wxXmlNode* node, workspace_environment* env ) const
+( animation& anim, const wxXmlNode* node, workspace_environment& env ) const
 {
   for ( ; node!=NULL; node=node->GetNext() )
     if ( node->GetName() == wxT("frame") )
@@ -183,7 +182,7 @@ void bf::xml::xml_to_value<bf::animation>::load_frames
  * \param env The workspace environment to use.
  */
 void bf::xml::xml_to_value<bf::animation>::load_frame
-( animation& anim, const wxXmlNode* node, workspace_environment* env ) const
+( animation& anim, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("frame") );
 
@@ -236,7 +235,7 @@ bool bf::xml::xml_to_value<bf::animation_file_type>::supported_node
  */
 void bf::xml::xml_to_value<bf::animation_file_type>::operator()
   ( animation_file_type& anim, const wxXmlNode* node,
-    workspace_environment* env ) const
+    workspace_environment& env ) const
 {
   CLAW_PRECOND( node != NULL );
 
@@ -282,7 +281,7 @@ bool bf::xml::xml_to_value<bf::any_animation>::supported_node
  */
 void bf::xml::xml_to_value<bf::any_animation>::operator()
   ( any_animation& anim, const wxXmlNode* node,
-    workspace_environment* env ) const
+    workspace_environment& env ) const
 {
   wxString name = node->GetName();
 

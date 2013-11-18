@@ -39,7 +39,7 @@ namespace bf
   class level_renderer
   {
   public:
-    explicit level_renderer( const gui_level& lvl, workspace_environment* env );
+    explicit level_renderer( const gui_level& lvl, workspace_environment& env );
     ~level_renderer();
 
     wxCoord get_grip_size() const;

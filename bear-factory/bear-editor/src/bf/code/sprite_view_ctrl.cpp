@@ -18,8 +18,8 @@
 #include "bf/icon/zoom_original.xpm"
 #include "bf/icon/zoom_in.xpm"
 #include "bf/icon/zoom_out.xpm"
-#include "bf/icon/zoom_fit.xpm"
 #include "bf/wx_facilities.hpp"
+#include "bf/icon/zoom_fit.xpm"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -29,7 +29,7 @@
  * \param spr The sprite to display.
  */
 bf::sprite_view_ctrl::sprite_view_ctrl
-( wxWindow& parent, workspace_environment* env, const sprite& spr )
+( wxWindow& parent, workspace_environment& env, const sprite& spr )
   : wxPanel(&parent), m_sprite_view(NULL), m_workspace(env)
 {
   create_controls();

@@ -25,7 +25,7 @@
  */
 bf::animation
 bf::animation_file_xml_reader::load
-( const wxString& file_path, workspace_environment* env ) const
+( const wxString& file_path, workspace_environment& env ) const
 {
   wxXmlDocument doc;
 
@@ -48,7 +48,7 @@ bf::animation_file_xml_reader::load
  * \param env The workspace environment to use.
  */
 bf::animation bf::animation_file_xml_reader::load
-( wxXmlNode* node, workspace_environment* env ) const
+( wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node != NULL );
 

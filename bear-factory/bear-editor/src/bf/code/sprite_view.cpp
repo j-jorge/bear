@@ -27,7 +27,7 @@
  * \param spr The sprite to display.
  */
 bf::sprite_view::sprite_view
-( wxWindow& parent, workspace_environment* env, wxWindowID id, 
+( wxWindow& parent, workspace_environment& env, wxWindowID id, 
   const sprite& spr )
   : wxWindow(&parent, id), m_background_pattern( 20, 20 ),
     m_sprite_position(0, 0), m_sprite_delta(0, 0), 

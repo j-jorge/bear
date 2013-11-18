@@ -33,18 +33,18 @@ namespace bf
   {
   public:
     void save
-    ( std::ostream& f, const level& lvl, workspace_environment* env ) const;
+    ( std::ostream& f, const level& lvl, workspace_environment& env ) const;
 
   private:
     void save_layer
     ( std::ostream& os, const layer& the_layer, 
-      workspace_environment* env ) const;
+      workspace_environment& env ) const;
     void save_items( std::ostream& os, const layer& item, 
-                     workspace_environment* env ) const;
+                     workspace_environment& env ) const;
     void save_priority( std::ostream& os, const layer& item ) const;
     void save_item
     ( std::ostream& os, const item_instance& item, 
-      workspace_environment* env ) const;
+      workspace_environment& env ) const;
 
   }; // class level_file_xml_writer
 } // namespace bf

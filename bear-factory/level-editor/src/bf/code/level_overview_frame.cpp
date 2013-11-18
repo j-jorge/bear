@@ -20,7 +20,6 @@
 #include "bf/icon/adjust_horizontally.xpm"
 #include "bf/icon/adjust_vertically.xpm"
 #include "bf/icon/refresh.xpm"
-#include "bf/workspace_environment.hpp"
 
 #include <wx/artprov.h>
 #include <wx/toolbar.h>
@@ -32,7 +31,7 @@
  * \param env The workspace environment used.
  */
 bf::level_overview_frame::level_overview_frame
-( ingame_view_frame& parent, workspace_environment* env )
+( ingame_view_frame& parent, workspace_environment& env )
   : wxFrame(&parent, wxID_ANY, _("Level overview"))
 {
   m_thumbnail = new level_thumbnail_ctrl(this, env);

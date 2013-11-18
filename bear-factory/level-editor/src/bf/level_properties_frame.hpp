@@ -38,7 +38,7 @@ namespace bf
       }; // enum control_id
 
   public:
-    level_properties_frame( wxWindow* parent, workspace_environment* env );
+    level_properties_frame( wxWindow* parent, workspace_environment& env );
 
     unsigned int get_width() const;
     unsigned int get_height() const;
@@ -88,7 +88,7 @@ namespace bf
     wxTextCtrl* m_name_text;
     
     /** \brief The workspace environment. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     /** \brief Minimum width of the level. */
     static const unsigned int s_min_width;

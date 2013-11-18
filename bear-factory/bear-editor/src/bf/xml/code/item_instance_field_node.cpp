@@ -16,7 +16,6 @@
 #include "bf/human_readable.hpp"
 #include "bf/item_class.hpp"
 #include "bf/item_instance.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include "bf/xml/reader_tool.hpp"
 #include "bf/xml/value_to_xml.hpp"
@@ -32,7 +31,7 @@
  * \param env The workspace environment used.
  */
 bf::xml::item_instance_field_node::item_instance_field_node
-( workspace_environment* env )
+( workspace_environment& env )
   : m_workspace( env )
 {
 

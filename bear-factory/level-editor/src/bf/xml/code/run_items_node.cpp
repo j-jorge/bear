@@ -17,7 +17,6 @@
 
 #include "bf/xml/item_instance_node.hpp"
 #include "bf/xml/reader_tool.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include <claw/assert.hpp>
 
@@ -29,7 +28,7 @@
  * \param node The item node.
  */
 void bf::xml::run_items_node::read
-( run_configuration& config, workspace_environment* env,
+( run_configuration& config, workspace_environment& env,
   const wxXmlNode* node ) const
 {
   CLAW_PRECOND( node!=NULL );
@@ -61,7 +60,7 @@ void bf::xml::run_items_node::read
  * \param os The stream in which we write.
  */
 void bf::xml::run_items_node::write
-( const run_configuration& config, workspace_environment* env, 
+( const run_configuration& config, workspace_environment& env, 
   std::ostream& os ) const
 {
   os << "<items>\n";

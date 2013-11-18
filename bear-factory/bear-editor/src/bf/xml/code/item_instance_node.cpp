@@ -30,7 +30,7 @@
  * \brief Constructs a node parser.
  * \param env The workspace environment used.
  */
-bf::xml::item_instance_node::item_instance_node( workspace_environment* env )
+bf::xml::item_instance_node::item_instance_node( workspace_environment& env )
   : m_workspace( env )
 {
 
@@ -60,7 +60,7 @@ bf::item_instance* bf::xml::item_instance_node::read
     {
       item =
         new item_instance
-        ( m_workspace->get_item_class_pool().get_item_class_ptr(class_name) );
+        ( m_workspace.get_item_class_pool().get_item_class_ptr(class_name) );
       item->set_fixed
         ( xml::reader_tool::read_bool_opt(node, wxT("fixed"), false) );
       item->set_id

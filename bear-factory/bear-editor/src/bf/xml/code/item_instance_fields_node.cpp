@@ -18,7 +18,6 @@
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/item_instance_field_node.hpp"
 #include "bf/xml/reader_tool.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
@@ -29,7 +28,7 @@
  * \param env The workspace environment used.
  */
 bf::xml::item_instance_fields_node::item_instance_fields_node
-( workspace_environment* env )
+( workspace_environment& env )
   : m_workspace( env )
 {
 

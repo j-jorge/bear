@@ -15,11 +15,12 @@
 #define __BF_ANIMATION_FILE_TYPE_HPP__
 
 #include "bf/animation.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief The file of an animation, associated with some rendering attributes.
    * \author Julien Jorge
@@ -28,7 +29,7 @@ namespace bf
     public bitmap_rendering_attributes
   {
   public:
-    void set_path( const std::string& p, workspace_environment* env );
+    void set_path( const std::string& p, workspace_environment& env );
     const std::string& get_path() const;
 
     animation get_animation() const;

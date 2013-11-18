@@ -16,6 +16,7 @@
 #include "bf/animation_file_xml_reader.hpp"
 #include "bf/compiled_file.hpp"
 #include "bf/path_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 /*----------------------------------------------------------------------------*/
@@ -25,15 +26,15 @@
  * \param env The worksapce environment to use.
  */
 void bf::animation_file_type::set_path
-( const std::string& p, workspace_environment* env )
+( const std::string& p, workspace_environment& env )
 {
   m_path = p;
   m_relative_path = p;
 
   if ( path_configuration::get_instance().expand_file_name
-       (m_relative_path, env->get_name() ) )
+       (m_relative_path, env.get_name() ) )
     path_configuration::get_instance().get_relative_path
-      (m_relative_path, env->get_name() );
+      (m_relative_path, env.get_name() );
   
   std::string::size_type pos = m_path.rfind(".canim");
   m_animation.clear();
@@ -43,7 +44,7 @@ void bf::animation_file_type::set_path
       std::string p( m_path.substr(0, pos) + ".anim" );
 
       if ( path_configuration::get_instance().expand_file_name
-           (p, 1, env->get_name() ) )
+           (p, 1, env.get_name() ) )
         {
           animation_file_xml_reader reader;
           m_animation = reader.load( std_to_wx_string(p), env );

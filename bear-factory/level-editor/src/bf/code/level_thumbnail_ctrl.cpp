@@ -18,7 +18,6 @@
 #include "bf/ingame_view.hpp"
 #include "bf/ingame_view_frame.hpp"
 #include "bf/sprite_with_position.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <wx/dcbuffer.h>
@@ -30,7 +29,7 @@
  * \param env The workspace environment used.
  */
 bf::level_thumbnail_ctrl::level_thumbnail_ctrl
-( wxWindow* parent, workspace_environment* env )
+( wxWindow* parent, workspace_environment& env )
   : wxWindow(parent, wxID_ANY), m_level(NULL),
     m_image_cache(new sprite_image_cache(env))
 {

@@ -40,7 +40,7 @@ namespace bf
 
   public:
     image_selection_dialog
-      ( wxWindow& parent, workspace_environment* env, 
+      ( wxWindow& parent, workspace_environment& env, 
         const wxString& val = wxEmptyString );
 
     wxString get_image_name() const;
@@ -60,7 +60,7 @@ namespace bf
     wxTextCtrl* m_pattern;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     /** \brief The last pattern used in this kind of dialog. */
     static wxString s_previous_pattern;

@@ -33,10 +33,10 @@ namespace bf
     {
     public:
       void read
-      ( run_configuration& config, workspace_environment* env,
+      ( run_configuration& config, workspace_environment& env,
         const wxXmlNode* node ) const;
       void write
-      ( const run_configuration& config, workspace_environment* env, 
+      ( const run_configuration& config, workspace_environment& env, 
         std::ostream& os ) const;
 
     }; // class run_items_node

@@ -16,6 +16,7 @@
 #include "bf/animation_view_ctrl.hpp"
 #include "bf/bitmap_rendering_attributes_edit.hpp"
 #include "bf/path_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 /*----------------------------------------------------------------------------*/
@@ -26,7 +27,7 @@
  * \param v The initial animation.
  */
 bf::animation_file_edit::animation_file_edit
-( wxWindow& parent, workspace_environment* env, const animation_file_type& v )
+( wxWindow& parent, workspace_environment& env, const animation_file_type& v )
   : wxPanel(&parent, wxID_ANY), base_edit<animation_file_type>(v), 
     m_workspace(env)
 {
@@ -57,7 +58,7 @@ bool bf::animation_file_edit::validate()
  * \param env The workspace environment to use.
  */
 bf::animation_file_type 
-bf::animation_file_edit::make_animation_file( workspace_environment* env ) const
+bf::animation_file_edit::make_animation_file( workspace_environment& env ) const
 {
   animation_file_type result;
 
@@ -173,7 +174,7 @@ void bf::animation_file_edit::on_browse_animation
 {
   std::string p = wx_to_std_string(m_path_text->GetValue());
   path_configuration::get_instance().get_full_path
-    ( p, m_workspace->get_name() );
+    ( p, m_workspace.get_name() );
 
   wxFileDialog dlg
     ( this, _("Choose a file"), wxEmptyString, std_to_wx_string(p),
@@ -184,7 +185,7 @@ void bf::animation_file_edit::on_browse_animation
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
       path_configuration::get_instance().get_relative_path
-        ( new_p, m_workspace->get_name() );
+        ( new_p, m_workspace.get_name() );
 
       m_path_text->SetValue( std_to_wx_string(new_p) );
       animation_file_type v( get_value() );

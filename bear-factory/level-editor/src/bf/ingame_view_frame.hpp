@@ -97,6 +97,7 @@ namespace bf
 
   public:
     ingame_view_frame( windows_layout& layout, gui_level* lvl,
+                       workspace_environment& env,
                        const wxString& level_file = wxEmptyString );
 
     const wxString& get_level_file() const;
@@ -116,7 +117,7 @@ namespace bf
 
     ingame_view* get_ingame_view();
     const ingame_view* get_ingame_view() const;
-    workspace_environment* get_workspace();
+    workspace_environment& get_workspace();
 
     wxPoint get_view_position() const;
 

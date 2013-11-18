@@ -14,7 +14,6 @@
 #include "bf/xml/run_configuration_node.hpp"
 
 #include "bf/run_configuration.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/xml/run_arguments_node.hpp"
 #include "bf/xml/run_items_node.hpp"
 #include "bf/xml/reader_tool.hpp"
@@ -30,7 +29,7 @@
  * \param node The item node.
  */
 void bf::xml::run_configuration_node::read
-( run_configuration& config, workspace_environment* env,
+( run_configuration& config, workspace_environment& env,
   const wxXmlNode* node ) const
 {
   CLAW_PRECOND( node!=NULL );
@@ -66,7 +65,7 @@ void bf::xml::run_configuration_node::read
  * \param os The stream in which we write.
  */
 void bf::xml::run_configuration_node::write
-( const run_configuration& config, workspace_environment* env, 
+( const run_configuration& config, workspace_environment& env, 
   std::ostream& os ) const
 {
   os << "<configuration program_path=\""

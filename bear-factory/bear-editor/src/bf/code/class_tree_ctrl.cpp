@@ -62,14 +62,29 @@ const std::string& bf::class_selected_event::get_class_name() const
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
- * \param env The workspace environment used.
  * \param parent Pointer to the owner.
  * \param id Identifier of the control.
  * \remark \a pool must live longer than this instance of class_tree_ctrl.
  */
+bf::class_tree_ctrl::class_tree_ctrl( wxWindow* parent, int id )
+  : wxPanel( parent, id, wxDefaultPosition, wxDefaultSize ), m_workspace(NULL)
+{
+  create_controls();
+  fill_tree();
+  fill_recent_used_classes_list();
+} // class_tree_ctrl::class_tree_ctrl()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param parent Pointer to the owner.
+ * \param env The workspace environment used.
+ * \param id Identifier of the control.
+ * \remark \a pool must live longer than this instance of class_tree_ctrl.
+ */
 bf::class_tree_ctrl::class_tree_ctrl
-( workspace_environment* env, wxWindow* parent, int id )
-  : wxPanel( parent, id, wxDefaultPosition, wxDefaultSize ), m_workspace(env)
+( wxWindow* parent, workspace_environment& env, int id )
+  : wxPanel( parent, id, wxDefaultPosition, wxDefaultSize ), m_workspace(&env)
 {
   create_controls();
   fill_tree();
@@ -213,8 +228,8 @@ void bf::class_tree_ctrl::fill_tree()
 
   tree_builder tb;
   
-  if ( m_workspace )
-    create_categories_tree(tb);
+  create_categories_tree(tb);
+
   tb.create_wxTree( *m_tree );
   m_tree->ExpandAll();
 } // class_tree_ctrl::fill_tree()
@@ -242,6 +257,9 @@ void bf::class_tree_ctrl::fill_recent_used_classes_list()
  */
 void bf::class_tree_ctrl::create_categories_tree( tree_builder& tb ) const
 {
+  if ( m_workspace == NULL )
+    return;
+
   const wxString pattern( make_pattern() );
 
   item_class_pool::const_iterator it = 
@@ -391,7 +409,7 @@ void bf::class_tree_ctrl::unselect_recent_class()
  */
 void bf::class_tree_ctrl::show_class_description()
 {
-  if ( ! m_selected_class.GetText().IsEmpty() && m_workspace )
+  if ( ! m_selected_class.GetText().IsEmpty()  )
     {
       std::string class_name( wx_to_std_string( m_selected_class.GetText() ) );
       const item_class* cl = 
@@ -502,7 +520,7 @@ void bf::class_tree_ctrl::on_mouse_move( wxMouseEvent& event )
 
       if ( item.IsOk() )
         {
-          if ( !m_tree->ItemHasChildren(item) && m_workspace )
+          if ( !m_tree->ItemHasChildren(item)  )
             {
               const wxString wx_class_name( m_tree->GetItemText(item) );
               const std::string class_name( wx_to_std_string(wx_class_name) );

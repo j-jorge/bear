@@ -18,7 +18,6 @@
 #include "bf/color.hpp"
 #include "bf/custom_type.hpp"
 #include "bf/font.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/sample.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -26,6 +25,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   namespace xml
   {
     /**
@@ -63,7 +64,7 @@ namespace bf
     {
     public:
       void operator()
-        ( sprite& v, const wxXmlNode* node, workspace_environment* env ) const;
+        ( sprite& v, const wxXmlNode* node, workspace_environment& env ) const;
 
     }; // class xml_to_value [sprite]
 
@@ -79,15 +80,15 @@ namespace bf
       static bool supported_node( const wxString& node_name );
       void operator()
         ( animation& v, const wxXmlNode* node, 
-          workspace_environment* env ) const;
+          workspace_environment& env ) const;
 
     private:
       void load_frames
         ( animation& anim, const wxXmlNode* node, 
-          workspace_environment* env ) const;
+          workspace_environment& env ) const;
       void load_frame
         ( animation& anim, const wxXmlNode* node, 
-          workspace_environment* env ) const;
+          workspace_environment& env ) const;
 
     }; // class xml_to_value [animation]
 
@@ -104,7 +105,7 @@ namespace bf
 
       void operator()
         ( animation_file_type& v, const wxXmlNode* node,
-          workspace_environment* env ) const;
+          workspace_environment& env ) const;
 
     }; // class xml_to_value [animation_file_type]
 
@@ -120,7 +121,7 @@ namespace bf
 
       void operator()
         ( any_animation& v, const wxXmlNode* node,
-          workspace_environment* env ) const;
+          workspace_environment& env ) const;
 
     }; // class xml_to_value [any_animation]
 

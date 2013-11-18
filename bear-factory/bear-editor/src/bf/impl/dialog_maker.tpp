@@ -45,7 +45,7 @@ template<typename Control, typename Type>
 typename bf::dialog_maker<Control, Type>::dialog_type*
 bf::dialog_maker<Control, Type>::create
 ( wxWindow& parent, const wxString& type, const type_field& f,
-  const value_type& v, workspace_environment* env )
+  const value_type& v, workspace_environment& env )
 {
   return new dialog_type
     ( parent, std_to_wx_string(f.get_name()) + wxT(" (") + type + wxT(")"), v,

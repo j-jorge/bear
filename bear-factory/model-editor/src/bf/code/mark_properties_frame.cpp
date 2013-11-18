@@ -16,7 +16,6 @@
 #include "bf/action.hpp"
 #include "bf/any_animation_edit.hpp"
 #include "bf/value_editor_dialog.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 /*----------------------------------------------------------------------------*/
@@ -27,7 +26,7 @@
  * \param env The workspace environment to use.
  */
 bf::mark_properties_frame::mark_properties_frame
-( wxWindow* parent, const action* a, workspace_environment* env )
+( wxWindow* parent, const action* a, workspace_environment& env )
   : wxDialog(parent, wxID_ANY, wxString(_("Mark properties"))), m_action(a),
     m_apply_angle_to_animation(false), m_pause_animation_when_hidden(false),
     m_reset_animation_with_action(true), m_workspace(env)

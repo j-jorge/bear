@@ -30,7 +30,7 @@ namespace bf
   public:
     bool compile
     ( const model& mdl, const std::string& model_file, 
-      workspace_environment* env ) const;
+      workspace_environment& env ) const;
 
   }; // class model_file_compiler
 } // namespace bf

@@ -17,6 +17,7 @@
 
 #include "bf/opaque_rectangle/ler_problem.hpp"
 #include "bf/opaque_rectangle/ler_solver.hpp"
+#include "bf/workspace_environment.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -26,7 +27,7 @@
  * \param env The compilation environemtn to use.
  */
  bf::compilation_context::compilation_context
- ( unsigned int optimization_level, workspace_environment* env )
+ ( unsigned int optimization_level, workspace_environment& env )
    : m_image_cache(env), m_optimization_level(optimization_level), 
      m_workspace(env)
 {
@@ -104,7 +105,7 @@ void bf::compilation_context::clear_compiled_identifiers()
  */
 std::string bf::compilation_context::get_workspace_name() const
 {
-  return m_workspace->get_name();
+  return m_workspace.get_name();
 } // compilation_context::get_workspace_name()
 
 /*----------------------------------------------------------------------------*/

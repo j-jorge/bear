@@ -90,7 +90,7 @@ void bf::model_editor::compile( const wxString& path ) const
           workspace_environment env(w);
 
           xml::model_file reader;
-          mdl = reader.load(path, &env);
+          mdl = reader.load(path, env);
           
           if ( check_model(*mdl) )
             {
@@ -131,7 +131,7 @@ void bf::model_editor::update( const wxString& path ) const
           workspace_environment env(w);
           
           xml::model_file mf;
-          mdl = mf.load(path, &env);
+          mdl = mf.load(path, env);
           
           std::ofstream f( wx_to_std_string(path).c_str() );
           mf.save(*mdl, f);
@@ -170,7 +170,7 @@ bf::model_editor::compile_model
       if ( ! w.empty() )
         {
           workspace_environment env(w);
-          c.compile( mdl, wx_to_std_string(path), &env );
+          c.compile( mdl, wx_to_std_string(path), env );
         }
     }
   catch(...)

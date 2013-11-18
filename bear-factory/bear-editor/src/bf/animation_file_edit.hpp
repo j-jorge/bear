@@ -17,7 +17,6 @@
 #include "bf/animation_file_type.hpp"
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/libeditor_export.hpp"
 
 #include <wx/wx.h>
@@ -26,6 +25,7 @@ namespace bf
 {
   class bitmap_rendering_attributes_edit;
   class animation_view_ctrl;
+  class workspace_environment;
 
   /**
    * \brief Control for editing a field whose value is a path to an animation.
@@ -47,14 +47,14 @@ namespace bf
 
   public:
     animation_file_edit
-      ( wxWindow& parent, workspace_environment* env,
+      ( wxWindow& parent, workspace_environment& env,
         const animation_file_type& v =
         default_value<animation_file_type>::get() );
 
     bool validate();
 
   private:
-    animation_file_type make_animation_file(workspace_environment* env) const;
+    animation_file_type make_animation_file(workspace_environment& env) const;
 
     void value_updated();
     void fill_controls();
@@ -79,7 +79,7 @@ namespace bf
     animation_view_ctrl* m_animation_view;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

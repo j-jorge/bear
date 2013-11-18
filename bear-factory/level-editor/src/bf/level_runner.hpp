@@ -33,7 +33,7 @@ namespace bf
     level_runner
     ( const run_configuration& config, const level& lvl,
       std::size_t layer_index, double x, double y, 
-      workspace_environment* env );
+      workspace_environment& env );
 
     void run();
 
@@ -68,7 +68,7 @@ namespace bf
     const double m_y;
     
     /** \brief The workspace environment. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
   }; // class level_runner
 } // namespace bf

@@ -16,7 +16,6 @@
 #include "bf/gui_level.hpp"
 #include "bf/item_class_pool.hpp"
 #include "bf/layer.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/exception.hpp"
 #include "bf/xml/item_instance_node.hpp"
@@ -31,7 +30,7 @@
  * \param env The workspace environment used.
  */
 bf::gui_level* bf::level_file_xml_reader::load
-( const wxString& file_path, workspace_environment* env ) const
+( const wxString& file_path, workspace_environment& env ) const
 {
   wxXmlDocument doc;
 
@@ -54,7 +53,7 @@ bf::gui_level* bf::level_file_xml_reader::load
  * \param env The workspace environment used.
  */
 bf::gui_level* bf::level_file_xml_reader::load_level
-( const wxXmlNode* node, workspace_environment* env ) const
+( const wxXmlNode* node, workspace_environment& env ) const
 {
   if ( node->GetName() != wxT("level") )
     throw xml::bad_node( wx_to_std_string(node->GetName()) );
@@ -94,7 +93,7 @@ bf::gui_level* bf::level_file_xml_reader::load_level
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_layers
-( gui_level& lvl, const wxXmlNode* node, workspace_environment* env ) const
+( gui_level& lvl, const wxXmlNode* node, workspace_environment& env ) const
 {
   for ( node=xml::reader_tool::skip_comments(node); node!=NULL;
         node=xml::reader_tool::skip_comments(node->GetNext()) )
@@ -113,7 +112,7 @@ void bf::level_file_xml_reader::load_layers
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_layer
-( gui_level& lvl, const wxXmlNode* node, workspace_environment* env ) const
+( gui_level& lvl, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("layer") );
 
@@ -152,7 +151,7 @@ void bf::level_file_xml_reader::load_layer
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_layer_content
-( layer& lay, const wxXmlNode* node, workspace_environment* env ) const
+( layer& lay, const wxXmlNode* node, workspace_environment& env ) const
 {
   node=xml::reader_tool::skip_comments(node);
 
@@ -177,7 +176,7 @@ void bf::level_file_xml_reader::load_layer_content
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_items
-( layer& lay, const wxXmlNode* node, workspace_environment* env ) const
+( layer& lay, const wxXmlNode* node, workspace_environment& env ) const
 {
   for ( node=xml::reader_tool::skip_comments(node); node!=NULL;
         node=xml::reader_tool::skip_comments(node->GetNext()) )
@@ -223,7 +222,7 @@ void bf::level_file_xml_reader::load_priorities
  * \param env The workspace environment used.
  */
 void bf::level_file_xml_reader::load_item
-( layer& lay, const wxXmlNode* node, workspace_environment* env ) const
+( layer& lay, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node->GetName() == wxT("item") );
 

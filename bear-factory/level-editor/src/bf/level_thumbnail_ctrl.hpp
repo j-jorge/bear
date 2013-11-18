@@ -31,7 +31,7 @@ namespace bf
     : public wxWindow
   {
   public:
-    level_thumbnail_ctrl( wxWindow* parent, workspace_environment* env );
+    level_thumbnail_ctrl( wxWindow* parent, workspace_environment& env );
     ~level_thumbnail_ctrl();
 
     void set_view( ingame_view_frame* view );

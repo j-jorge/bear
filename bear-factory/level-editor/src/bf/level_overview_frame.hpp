@@ -41,7 +41,7 @@ namespace bf
 
   public:
     level_overview_frame
-    ( ingame_view_frame& parent, workspace_environment* env );
+    ( ingame_view_frame& parent, workspace_environment& env );
     ~level_overview_frame();
 
   private:

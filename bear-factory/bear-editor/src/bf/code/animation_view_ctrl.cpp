@@ -33,7 +33,7 @@
  * \param anim The animation displayed.
  */
 bf::animation_view_ctrl::animation_view_ctrl
-( wxWindow& parent, workspace_environment* env, const animation& anim )
+( wxWindow& parent, workspace_environment& env, const animation& anim )
   : wxPanel(&parent, wxID_ANY), m_workspace(env), 
     m_animation(anim), m_player(m_animation),
     m_timer(this, ID_TIMER)

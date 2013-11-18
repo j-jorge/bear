@@ -19,7 +19,6 @@
 
 #include "bf/item_instance.hpp"
 #include "bf/type_field.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include <vector>
 
@@ -64,6 +63,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief Event sent when the value of a field is cleared.
    * \author Julien Jorge

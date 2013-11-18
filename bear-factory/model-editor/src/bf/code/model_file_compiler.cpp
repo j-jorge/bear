@@ -16,7 +16,6 @@
 #include "bf/compilation_context.hpp"
 #include "bf/compiled_file.hpp"
 #include "bf/model.hpp"
-#include "bf/workspace_environment.hpp"
 
 #include <fstream>
 #include <limits>
@@ -29,7 +28,7 @@
  * \param env The workspace environment to use.
  */
 bool bf::model_file_compiler::compile
-( const model& mdl, const std::string& path, workspace_environment* env ) const
+( const model& mdl, const std::string& path, workspace_environment& env ) const
 {
   std::string cm_path(path);
 

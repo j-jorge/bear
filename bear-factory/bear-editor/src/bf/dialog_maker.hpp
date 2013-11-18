@@ -45,7 +45,7 @@ namespace bf
 
     static dialog_type*
     create( wxWindow& parent, const wxString& type, const type_field& f,
-            const value_type& v, workspace_environment* env );
+            const value_type& v, workspace_environment& env );
 
   }; // class dialog_maker
 

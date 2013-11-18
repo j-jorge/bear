@@ -30,7 +30,7 @@
  * \param anim The initial animation.
  */
 bf::animation_edit::animation_edit
-( wxWindow& parent, workspace_environment* env, const animation& anim )
+( wxWindow& parent, workspace_environment& env, const animation& anim )
   : wxPanel(&parent, wxID_ANY), base_edit<animation>(anim),
     m_workspace(env)
 {

@@ -16,7 +16,6 @@
 
 #include "bf/base_edit.hpp"
 #include "bf/default_value.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/sprite.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -29,6 +28,7 @@ namespace bf
 {
   class bitmap_rendering_attributes_edit;
   class sprite_view_ctrl;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a sprite.
@@ -49,7 +49,7 @@ namespace bf
 
   public:
     sprite_edit
-      ( wxWindow& parent, workspace_environment* env, 
+      ( wxWindow& parent, workspace_environment& env, 
         const sprite& spr = default_value<sprite>::get() );
 
     bool validate();
@@ -106,7 +106,7 @@ namespace bf
     sprite_view_ctrl* m_sprite_view;
 
     /** \brief The image pool to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

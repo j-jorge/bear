@@ -32,7 +32,7 @@ const unsigned int bf::level_properties_frame::s_min_height(600);
  * \param env The workspace environment used.
  */
 bf::level_properties_frame::level_properties_frame
-( wxWindow* parent, workspace_environment* env )
+( wxWindow* parent, workspace_environment& env )
   : wxDialog(parent, wxID_ANY, wxString(_("Level properties"))),
     m_width(s_min_width), m_height(s_min_height), m_workspace(env)
 {
@@ -223,7 +223,7 @@ void bf::level_properties_frame::on_browse( wxCommandEvent& WXUNUSED(event) )
   wxString full_path;
 
   if ( path_configuration::get_instance().get_full_path
-       ( p, m_workspace->get_name() ) )
+       ( p, m_workspace.get_name() ) )
     full_path = std_to_wx_string(p);
 
   wxFileDialog dlg
@@ -235,7 +235,7 @@ void bf::level_properties_frame::on_browse( wxCommandEvent& WXUNUSED(event) )
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
       path_configuration::get_instance().get_relative_path
-        ( new_p, m_workspace->get_name() );
+        ( new_p, m_workspace.get_name() );
 
       m_music_text->SetValue( std_to_wx_string(new_p) );
     }

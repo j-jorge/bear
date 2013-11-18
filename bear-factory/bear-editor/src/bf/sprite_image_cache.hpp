@@ -14,7 +14,6 @@
 #ifndef __BF_SPRITE_IMAGE_CACHE_HPP__
 #define __BF_SPRITE_IMAGE_CACHE_HPP__
 
-#include "bf/workspace_environment.hpp"
 #include "bf/sprite.hpp"
 #include "bf/libeditor_export.hpp"
 
@@ -23,6 +22,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief A cache of resized or rotated sprites.
    * \author Julien Jorge
@@ -74,7 +75,7 @@ namespace bf
     }; // struct value_type
 
   public:
-    sprite_image_cache(workspace_environment* env);
+    sprite_image_cache(workspace_environment& env);
     std::pair<wxBitmap, wxPoint> get_image( const sprite& s );
     std::pair<wxBitmap, wxPoint> get_image
     ( const sprite& s, unsigned int w, unsigned int h );
@@ -91,7 +92,7 @@ namespace bf
     std::map<key_type, value_type> m_cache;
 
     /** \brief The workspace to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
   }; // class sprite_image_cache
 } // namespace bf
 

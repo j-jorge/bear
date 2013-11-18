@@ -14,8 +14,6 @@
 #ifndef __BF_VALUE_EDITOR_DIALOG_HPP__
 #define __BF_VALUE_EDITOR_DIALOG_HPP__
 
-#include "bf/workspace_environment.hpp"
-
 #include <list>
 #include <string>
 
@@ -49,7 +47,7 @@ namespace bf
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const value_type& v,
-      workspace_environment* env );
+      workspace_environment& env );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const wxArrayString& values,
@@ -103,7 +101,7 @@ namespace bf
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const value_type& v,
-      workspace_environment* env );
+      workspace_environment& env );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const wxArrayString& values,

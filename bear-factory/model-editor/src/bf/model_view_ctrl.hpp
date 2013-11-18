@@ -43,7 +43,7 @@ namespace bf
   public:
     model_view_ctrl
     ( wxWindow& parent, wxWindowID id, gui_model& m, 
-      workspace_environment* env );
+      workspace_environment& env );
 
     void reload_action();
 
@@ -90,7 +90,7 @@ namespace bf
     wxScrollBar* m_v_scrollbar;
 
     /** \brief The workspace environment to use. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
     
     DECLARE_EVENT_TABLE()
 

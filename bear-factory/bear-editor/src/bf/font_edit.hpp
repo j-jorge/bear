@@ -45,7 +45,7 @@ namespace bf
 
   public:
     font_edit
-      ( wxWindow& parent, workspace_environment* env, 
+      ( wxWindow& parent, workspace_environment& env, 
         const font& v = default_value<font>::get() );
 
     bool validate();
@@ -71,7 +71,7 @@ namespace bf
     wxTextCtrl* m_font_name_text;
 
     /** \brief The workspace name. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

@@ -24,6 +24,8 @@
 #include "bf/main_frame.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/splash_screen.hpp"
+#include "bf/level_editor.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <wx/tooltip.h>
@@ -96,7 +98,7 @@ void bf::level_editor::compile( const wxString& path ) const
         {
           workspace_environment env(w);
 
-          lvl = reader.load( path, &env );
+          lvl = reader.load( path, env );
 
           if ( check_level(*lvl) )
             {
@@ -138,10 +140,10 @@ void bf::level_editor::update( const wxString& path ) const
         {
           workspace_environment env(w);
           
-          lvl = reader.load( path, &env );
+          lvl = reader.load( path, env );
 
           std::ofstream f( wx_to_std_string(path).c_str() );
-          writer.save( f, *lvl, &env );
+          writer.save( f, *lvl, env );
           delete lvl;
         }
     }
@@ -184,7 +186,7 @@ void bf::level_editor::compile_level
           
           compiled_file cf(f);
           compilation_context context
-            ( std::numeric_limits<unsigned int>::max(), &env );
+            ( std::numeric_limits<unsigned int>::max(), env );
           lvl.compile(cf, context);
         }
     }

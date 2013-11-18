@@ -15,7 +15,6 @@
 #define __BF_ANIMATION_VIEW_CTRL_HPP__
 
 #include "bf/animation_player.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/spin_ctrl.hpp"
 
 #include "bf/libeditor_export.hpp"
@@ -23,6 +22,7 @@
 namespace bf
 {
   class sprite_view_ctrl;
+  class workspace_environment;
 
   /**
    * \brief This control displays a animation and some buttons to play it.
@@ -47,7 +47,7 @@ namespace bf
 
   public:
     animation_view_ctrl
-    ( wxWindow& parent, workspace_environment* env,
+    ( wxWindow& parent, workspace_environment& env,
       const animation& anim = animation() );
 
     void set_animation( const animation& anim );
@@ -72,7 +72,7 @@ namespace bf
 
   private:
     /** \brief The workspace environment used. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     /** \brief The control that displays the current sprite of the animation. */
     sprite_view_ctrl* m_sprite_view;

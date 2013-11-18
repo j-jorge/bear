@@ -14,7 +14,6 @@
 #include "bf/xml/model_file.hpp"
 
 #include "bf/gui_model.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/exception.hpp"
 #include "bf/xml/model_action_node.hpp"
@@ -29,7 +28,7 @@
  * \param env The workspace environment used.
  */
 bf::gui_model* bf::xml::model_file::load
-( const wxString& file_path, workspace_environment * env ) const
+( const wxString& file_path, workspace_environment& env ) const
 {
   wxXmlDocument doc;
 
@@ -72,7 +71,7 @@ void bf::xml::model_file::save( const gui_model& mdl, std::ostream& os ) const
  * \param env The workspace environment used.
  */
 bf::gui_model* bf::xml::model_file::load_model
-( const wxXmlNode* node, workspace_environment * env ) const
+( const wxXmlNode* node, workspace_environment& env ) const
 {
   if ( node->GetName() != wxT("model") )
     throw xml::bad_node( wx_to_std_string(node->GetName()) );

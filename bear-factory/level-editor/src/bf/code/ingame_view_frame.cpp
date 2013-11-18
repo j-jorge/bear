@@ -96,24 +96,22 @@
  * \param layout The windows of the program.
  * \param lvl The level.
  * \param level_file The path of the file from which \a lvl was read.
+ * \param env The workspace in which the level is opened.
  * The level will be deleted in the destructor.
  */
 bf::ingame_view_frame::ingame_view_frame
-( windows_layout& layout, gui_level* lvl, const wxString& level_file )
+( windows_layout& layout, gui_level* lvl, workspace_environment& env,
+  const wxString& level_file )
   : wxFrame( &layout.get_main_frame(), wxID_ANY, _("New level") ),
     m_accelerator(*this), m_layout(layout), m_level_file(level_file),
     m_layer_info(_("no layer")), m_changed(false), m_compile_changed(false),
-    m_edit_mode_menu(NULL), m_align_menu(NULL), m_arrange_menu(NULL)
+    m_edit_mode_menu(NULL), m_align_menu(NULL), m_arrange_menu(NULL),
+    m_workspace( env )
 {
-  std::string w =
-    path_configuration::get_instance().search_workspace
-    ( wx_to_std_string( level_file ) );
-  m_workspace = workspace_environment( w );
-
   create_controls(layout, lvl);
   m_layout.add_level_view(*this);
 
-  m_overview = new level_overview_frame(*this, &m_workspace);
+  m_overview = new level_overview_frame(*this, m_workspace);
   m_errors = new error_check_level_dialog(this, ID_ERROR_FRAME);
 
   set_changed(false);
@@ -293,9 +291,9 @@ const bf::ingame_view* bf::ingame_view_frame::get_ingame_view() const
 /**
  * \brief Get the workspace environment.
  */
-bf::workspace_environment* bf::ingame_view_frame::get_workspace()
+bf::workspace_environment& bf::ingame_view_frame::get_workspace()
 {
-  return &m_workspace;
+  return m_workspace;
 } // ingame_view_frame::get_workspace()
 
 /*----------------------------------------------------------------------------*/
@@ -413,7 +411,7 @@ bf::ingame_view_frame::create_controls( windows_layout& layout, gui_level* lvl )
 void bf::ingame_view_frame::create_member_controls
 ( windows_layout& layout, gui_level* lvl )
 {
-  m_ingame_view = new ingame_view(*this, lvl, layout, &m_workspace);
+  m_ingame_view = new ingame_view(*this, lvl, layout, m_workspace);
   m_h_scrollbar = new wxScrollBar(this, wxID_ANY);
   m_v_scrollbar = new wxScrollBar
     ( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
@@ -1709,7 +1707,7 @@ void bf::ingame_view_frame::on_context_menu(wxContextMenuEvent& event)
 void bf::ingame_view_frame::on_level_properties
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  level_properties_frame dlg(this, &m_workspace);
+  level_properties_frame dlg(this, m_workspace);
   dlg.init_from( m_ingame_view->get_level() );
 
   if ( dlg.ShowModal() == wxID_OK )
@@ -1921,7 +1919,7 @@ void bf::ingame_view_frame::on_run_level( wxCommandEvent& WXUNUSED(event) )
           m_ingame_view->get_level(), m_ingame_view->get_active_index(),
           m_ingame_view->get_center_in_level().x,
           m_ingame_view->get_center_in_level().y,
-          &m_workspace);
+          m_workspace);
       r.run();
     }
   catch( const std::exception& e )

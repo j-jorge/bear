@@ -34,7 +34,7 @@
  */
 void
 bf::xml::model_action_node::read
-( gui_model& mdl, const wxXmlNode* node, workspace_environment * env ) const
+( gui_model& mdl, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("action") );

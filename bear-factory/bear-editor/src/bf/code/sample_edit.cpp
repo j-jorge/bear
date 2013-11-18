@@ -27,7 +27,7 @@
  * \param s The initial sample.
  */
 bf::sample_edit::sample_edit
-( wxWindow& parent, workspace_environment* env, const sample& s )
+( wxWindow& parent, workspace_environment& env, const sample& s )
   : wxPanel(&parent, wxID_ANY), base_edit<sample>(s), m_workspace(env)
 {
   create_controls();
@@ -138,7 +138,7 @@ void bf::sample_edit::on_file_select( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p = wx_to_std_string(m_sound_file->GetValue());
   path_configuration::get_instance().get_full_path
-    (p, m_workspace->get_name() );
+    (p, m_workspace.get_name() );
 
   wxFileDialog dlg
     ( this, _("Choose a sound file"), wxEmptyString, std_to_wx_string(p),
@@ -149,7 +149,7 @@ void bf::sample_edit::on_file_select( wxCommandEvent& WXUNUSED(event) )
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
       path_configuration::get_instance().get_relative_path
-        (new_p, m_workspace->get_name() );
+        (new_p, m_workspace.get_name() );
 
       m_sound_file->SetValue( std_to_wx_string(new_p) );
     }

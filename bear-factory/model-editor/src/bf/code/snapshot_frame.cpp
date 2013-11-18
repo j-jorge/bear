@@ -20,7 +20,6 @@
 #include "bf/model_frame.hpp"
 #include "bf/snapshot.hpp"
 #include "bf/snapshot_date_frame.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include "bf/history/action_modify_placement.hpp"

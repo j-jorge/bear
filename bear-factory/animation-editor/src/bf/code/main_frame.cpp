@@ -21,6 +21,7 @@
 #include "bf/animation_file_xml_writer.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/workspace.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include "bf/icon/compile.xpm"
@@ -60,7 +61,7 @@ void bf::main_frame::load_animation( const wxString& path )
   animation anim;
 
   if ( doc.Load(path) )
-    anim = reader.load( doc.GetRoot(), &m_workspace );
+    anim = reader.load( doc.GetRoot(), m_workspace );
 
   m_animation_edit->set_value(anim);
   m_last_saved_animation = m_animation_edit->get_value();
@@ -233,7 +234,7 @@ void bf::main_frame::create_toolbar()
 void bf::main_frame::create_controls()
 {
   wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-  m_animation_edit = new animation_edit( *this, &m_workspace );
+  m_animation_edit = new animation_edit( *this, m_workspace );
 
   sizer->Add(m_animation_edit, 1, wxEXPAND | wxALL, 5 );
 

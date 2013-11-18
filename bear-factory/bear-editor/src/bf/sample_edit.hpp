@@ -48,7 +48,7 @@ namespace bf
 
   public:
     sample_edit
-      ( wxWindow& parent, workspace_environment* env,
+      ( wxWindow& parent, workspace_environment& env,
         const sample& s = default_value<sample>::get() );
 
     bool validate();
@@ -73,7 +73,7 @@ namespace bf
     wxTextCtrl* m_sound_file;
 
     /** \brief The workspace environment used. */
-    workspace_environment* m_workspace;
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

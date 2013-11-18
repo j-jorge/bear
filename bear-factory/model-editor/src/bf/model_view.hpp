@@ -243,7 +243,7 @@ namespace bf
   public:
     model_view
     ( wxWindow& parent, wxWindowID id, gui_model& m, 
-      workspace_environment* env );
+      workspace_environment& env );
     ~model_view();
 
     void set_date( double d );

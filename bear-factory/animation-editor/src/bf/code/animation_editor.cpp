@@ -76,7 +76,7 @@ void bf::animation_editor::compile( const wxString& path ) const
           workspace_environment env(w);
           
           animation_file_xml_reader reader;
-          animation anim( reader.load( doc.GetRoot(), &env ) );
+          animation anim( reader.load( doc.GetRoot(), env ) );
           compile_animation(anim, path);
         }
     }
@@ -105,7 +105,7 @@ void bf::animation_editor::update( const wxString& path ) const
         env = workspace_environment( w );
 
       animation_file_xml_reader reader;
-      anim = reader.load( doc.GetRoot(), &env );
+      anim = reader.load( doc.GetRoot(), env );
     }
   else
     throw claw::exception("Can't load XML file.");
@@ -149,7 +149,7 @@ void bf::animation_editor::compile_animation
       cf << BF_MAJOR_VERSION << BF_MINOR_VERSION << BF_RELEASE_NUMBER;
 
       compilation_context context
-        ( std::numeric_limits<unsigned int>::max(), &env );
+        ( std::numeric_limits<unsigned int>::max(), env );
       anim.compile(cf, context);
     }
   else

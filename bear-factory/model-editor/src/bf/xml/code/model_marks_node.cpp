@@ -31,7 +31,7 @@
  * \param env The workspace environment used.
  */
 void bf::xml::model_marks_node::read
-( action& a, const wxXmlNode* node, workspace_environment * env ) const
+( action& a, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("marks") );

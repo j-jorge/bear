@@ -18,6 +18,7 @@
 #include "bf/image_selection_dialog.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/sprite_view_ctrl.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <limits>
@@ -32,7 +33,7 @@
  * \param spr The initial sprite.
  */
 bf::sprite_edit::sprite_edit
-( wxWindow& parent, workspace_environment* env, const sprite& spr )
+( wxWindow& parent, workspace_environment& env, const sprite& spr )
   : wxPanel(&parent, wxID_ANY), base_edit<sprite>(spr), 
     m_workspace(env)
 {
@@ -231,7 +232,7 @@ void bf::sprite_edit::fill_spritepos()
   m_spritepos_combo->Clear();
 
   image_pool::spritepos_entries e =
-    m_workspace->get_image_pool().get_spritepos_entries
+    m_workspace.get_image_pool().get_spritepos_entries
     ( m_image_name_text->GetValue() );
   
   image_pool::spritepos_entries::const_iterator it;
@@ -247,7 +248,7 @@ void bf::sprite_edit::fill_spritepos()
 void bf::sprite_edit::control_sprite_size()
 {
   wxBitmap bmp =
-    m_workspace->get_image_pool().get_image(m_image_name_text->GetValue());
+    m_workspace.get_image_pool().get_image(m_image_name_text->GetValue());
 
   if ( bmp.IsOk() )
     {
@@ -274,7 +275,7 @@ void bf::sprite_edit::check_sprite_pos()
   for ( unsigned int i=0; (i < m_spritepos_combo->GetCount()) && !found; ++i )
     {
       const claw::math::rectangle<unsigned int> r =
-        m_workspace->get_image_pool().get_spritepos_entries
+        m_workspace.get_image_pool().get_spritepos_entries
         ( m_image_name_text->GetValue())[m_spritepos_combo->GetString(i)];
       
       if ( ( r.position.x == (unsigned int)m_left_text->GetValue() )
@@ -308,7 +309,7 @@ void bf::sprite_edit::on_image_select( wxCommandEvent& WXUNUSED(event) )
       m_image_name_text->SetValue( dlg.get_image_name() );
 
       wxBitmap bmp =
-        m_workspace->get_image_pool().get_image(dlg.get_image_name());
+        m_workspace.get_image_pool().get_image(dlg.get_image_name());
 
       if ( bmp.IsOk() )
         {
@@ -387,7 +388,7 @@ void bf::sprite_edit::on_select_sprite_pos( wxCommandEvent& WXUNUSED(event) )
   m_top_text->SetValue(0);
   
   const claw::math::rectangle<unsigned int> r =
-    m_workspace->get_image_pool().get_spritepos_entries
+    m_workspace.get_image_pool().get_spritepos_entries
     ( m_image_name_text->GetValue())
     [m_spritepos_combo->GetStringSelection()];
   

@@ -26,7 +26,7 @@
  * \param v The initial animation.
  */
 bf::any_animation_edit::any_animation_edit
-( wxWindow& parent, workspace_environment* env, const any_animation& v )
+( wxWindow& parent, workspace_environment& env, const any_animation& v )
   : wxPanel(&parent, wxID_ANY), base_edit<any_animation>(v), 
     m_workspace(env)
 {

@@ -35,7 +35,7 @@ namespace bf
     class item_instance_field_node
     {
     public:
-      item_instance_field_node( workspace_environment* pool );
+      item_instance_field_node( workspace_environment& pool );
 
       void read( item_instance& item, const wxXmlNode* node ) const;
       void write
@@ -84,7 +84,7 @@ namespace bf
 
     private:
       /** \brief The workspace environment used. */
-      workspace_environment* m_workspace;
+      workspace_environment& m_workspace;
 
     }; // class item_instance_field_node
   } // namespace xml

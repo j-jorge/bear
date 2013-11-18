@@ -49,7 +49,7 @@ bf::value_editor_dialog<Editor, Type>::value_editor_dialog
 template<typename Editor, typename Type>
 bf::value_editor_dialog<Editor, Type>::value_editor_dialog
 ( wxWindow& parent, const wxString& title, const value_type& v,
-  workspace_environment* env )
+  workspace_environment& env )
   : wxDialog( &parent, wxID_ANY, title,
               wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
@@ -220,7 +220,7 @@ bf::value_editor_dialog< Editor, std::list<T> >::value_editor_dialog
 template<typename Editor, typename T>
 bf::value_editor_dialog< Editor, std::list<T> >::value_editor_dialog
 ( wxWindow& parent, const wxString& type, const value_type& v,
-  workspace_environment* env )
+  workspace_environment& env )
   : wxDialog( &parent, wxID_ANY, _("List of '") + type + wxT("'"),
               wxDefaultPosition, wxDefaultSize,
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)

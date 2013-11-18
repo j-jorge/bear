@@ -19,7 +19,6 @@
 #include "bf/item_instance.hpp"
 #include "bf/slope.hpp"
 #include "bf/sprite_image_cache.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/wx_type_cast.hpp"
 
@@ -36,7 +35,7 @@ const wxCoord bf::level_renderer::s_grip_size = 10;
  * \param env The workspace environment
  */
 bf::level_renderer::level_renderer
-( const gui_level& lvl, workspace_environment* env )
+( const gui_level& lvl, workspace_environment& env )
   : m_level( lvl ), m_view(0, 0, 1, 1), m_drag_info(NULL),
     m_wireframe_drawing(true), m_graphic_drawing(true), m_display_grid(false),
     m_display_id(true), m_display_relationship(true),

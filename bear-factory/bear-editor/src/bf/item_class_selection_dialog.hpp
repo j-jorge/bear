@@ -33,7 +33,7 @@ namespace bf
   {
   public:
     item_class_selection_dialog
-    ( workspace_environment* env, wxWindow* parent,
+    ( wxWindow* parent, workspace_environment& env,
       const std::string& class_name = std::string() );
 
     const std::string& get_class_name() const;

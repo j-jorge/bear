@@ -107,7 +107,7 @@ void bf::main_frame::new_level( const wxString& path )
    if ( ! w.empty() )
      {
        workspace_environment env(w);
-       level_properties_frame dlg(this, &env);
+       level_properties_frame dlg(this, env);
 
        if ( dlg.ShowModal() == wxID_OK )
          {
@@ -117,7 +117,7 @@ void bf::main_frame::new_level( const wxString& path )
                dlg.get_music() );
 
            add_level_view
-             ( new ingame_view_frame(*m_windows_layout, lvl, path) );
+             ( new ingame_view_frame(*m_windows_layout, lvl, env, path) );
          }
      }
 } // main_frame::new_level()
@@ -135,14 +135,14 @@ void bf::main_frame::load_level( const wxString& path )
    
    if ( ! w.empty() )
      {
-       std::cout << "main_frame::load_level : " << w << std::endl;
        workspace_environment env(w);
        
        wxLogNull no_log;
 
        level_file_xml_reader reader;
-       gui_level* lvl = reader.load(path, &env);
-       add_level_view( new ingame_view_frame(*m_windows_layout, lvl, path) );
+       gui_level* lvl = reader.load(path, env);
+       add_level_view
+         ( new ingame_view_frame(*m_windows_layout, lvl, env, path) );
      }
 } // main_frame::load_level()
 
@@ -271,9 +271,7 @@ void bf::main_frame::create_controls()
   // class tree
   m_tree_frame = 
     new wxFrame( this, ID_SELECT_CLASS_DIALOG, _("Select an item class") );
-  m_tree_ctrl = 
-    new class_tree_ctrl 
-    (NULL, m_tree_frame, ID_TREE_FRAME);
+  m_tree_ctrl =  new class_tree_ctrl( m_tree_frame, ID_TREE_FRAME );
 
   wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 

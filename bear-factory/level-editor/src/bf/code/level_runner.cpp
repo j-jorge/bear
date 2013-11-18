@@ -17,7 +17,6 @@
 #include "bf/level_check_result.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/run_configuration.hpp"
-#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <fstream>
@@ -38,7 +37,7 @@
  */
 bf::level_runner::level_runner
 ( const run_configuration& config, const level& lvl, std::size_t layer_index,
-  double x, double y, workspace_environment* env )
+  double x, double y, workspace_environment& env )
   : m_config(config), m_level(lvl), m_layer_index(layer_index), m_x(x), m_y(y),
     m_workspace(env)
 {
