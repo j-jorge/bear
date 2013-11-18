@@ -16,6 +16,9 @@
 
 #include "bf/image_pool.hpp"
 #include "bf/item_class_pool.hpp"
+
+#include <claw/smart_ptr.hpp>
+
 #include <string>
 
 namespace bf
@@ -27,12 +30,13 @@ namespace bf
    */
   class workspace_environment
   {
+  private:
+    typedef claw::memory::smart_ptr<image_pool> image_pool_ptr;
+    typedef claw::memory::smart_ptr<item_class_pool> item_class_pool_ptr;
+
   public:
     workspace_environment();
-    workspace_environment( const std::string& n );
-    workspace_environment( const workspace_environment& n );
-    
-    workspace_environment& operator=(const workspace_environment& env);
+    explicit workspace_environment( const std::string& n );
     
     const std::string& get_name() const;
     const image_pool& get_image_pool() const;
@@ -43,10 +47,11 @@ namespace bf
     std::string m_name;
 
     /** \brief The image pool. */
-    image_pool m_image_pool;
+    image_pool_ptr m_image_pool;
 
     /** \brief The item class pool. */
-    item_class_pool m_item_class_pool;
+    item_class_pool_ptr m_item_class_pool;
+
   }; // workspace_environment
 } // namespace bf
 

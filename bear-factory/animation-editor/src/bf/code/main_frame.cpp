@@ -383,7 +383,7 @@ void bf::main_frame::on_update_image_pool_menu
  */
 void bf::main_frame::on_new_animation( wxCommandEvent& WXUNUSED(event) )
 {
-  main_frame* frame = new main_frame( m_workspace.get_name() );
+  main_frame* frame = new main_frame( m_workspace );
   frame->Show();
 } // main_frame::on_new_level()
 
@@ -410,7 +410,7 @@ void bf::main_frame::on_open_animation( wxCommandEvent& WXUNUSED(event) )
         {
           if ( is_changed() || !m_animation_file.empty() )
             {
-              main_frame* frm = new main_frame(w);
+              main_frame* frm = new main_frame( workspace_environment(w) );
               frm->load_animation( dlg.GetPath() );
               frm->Show();
             }
