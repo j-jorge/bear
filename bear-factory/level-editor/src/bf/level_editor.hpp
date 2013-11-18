@@ -48,7 +48,7 @@ namespace bf
     void compile_level( const level& lvl, const wxString& path ) const;
 
   private:
-    bool do_init_app();
+    bool do_init_app(const workspace_environment & default_env);
     bool do_command_line_init();
     void init_config();
 

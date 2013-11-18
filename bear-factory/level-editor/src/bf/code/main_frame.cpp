@@ -135,6 +135,7 @@ void bf::main_frame::load_level( const wxString& path )
    
    if ( ! w.empty() )
      {
+       std::cout << "main_frame::load_level : " << w << std::endl;
        workspace_environment env(w);
        
        wxLogNull no_log;

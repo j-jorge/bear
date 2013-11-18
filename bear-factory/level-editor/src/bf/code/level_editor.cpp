@@ -195,8 +195,9 @@ void bf::level_editor::compile_level
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Method called when the application is initializing.
+ * \param default_env Default workspace_environment.
  */
-bool bf::level_editor::do_init_app()
+bool bf::level_editor::do_init_app(const workspace_environment & default_env)
 {
   splash_screen* splash = splash_screen::create(wxT("level-splash.png"));
 
