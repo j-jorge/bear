@@ -52,9 +52,6 @@ namespace bear
       /** \brief The set of the keys that are actually pressed. */
       set_type m_maintained;
 
-      /** \brief Buttons that must not be taken into account. */
-      set_type m_forget_button;
-
       /** \brief The position of the cursor. */
       claw::math::coordinate_2d<unsigned int> m_cursor_pos;
 
