@@ -93,6 +93,29 @@ bf::class_tree_ctrl::class_tree_ctrl
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Removes the environment from which we list the classes.
+ */
+void bf::class_tree_ctrl::unset_workspace()
+{
+  m_workspace = NULL;
+  fill_tree();
+  fill_recent_used_classes_list();
+} // class_tree_ctrl::unset_workspace()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the environment from which we list the classes.
+ * \param env The workspace environment used.
+ */
+void bf::class_tree_ctrl::set_workspace( workspace_environment& env )
+{
+  m_workspace = &env;
+  fill_tree();
+  fill_recent_used_classes_list();
+} // class_tree_ctrl::set_workspace()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the selected item in the tree.
  */
 wxTreeItemId bf::class_tree_ctrl::GetSelection() const
@@ -245,9 +268,16 @@ void bf::class_tree_ctrl::fill_recent_used_classes_list()
 
   m_recent_used_classes_list->DeleteAllItems();
 
+  if ( m_workspace == NULL )
+    return;
+
   for ( it = m_recent_used_classes.begin(); 
         it != m_recent_used_classes.end(); ++i, ++it )
-    m_recent_used_classes_list->InsertItem(i, std_to_wx_string(*it));
+    if ( m_workspace->get_item_class_pool().has_item_class( *it ) )
+      {
+        const wxString class_name(std_to_wx_string(*it));
+        m_recent_used_classes_list->InsertItem(i, class_name);
+      }
 } // class_tree_ctrl::fill_recent_used_classes_list()
 
 /*----------------------------------------------------------------------------*/

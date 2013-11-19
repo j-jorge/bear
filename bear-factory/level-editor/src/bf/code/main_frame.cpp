@@ -154,6 +154,11 @@ void bf::main_frame::load_level( const wxString& path )
 void bf::main_frame::set_active_level( ingame_view_frame* view )
 {
   turn_level_entries(view!=NULL);
+  
+  if ( view == NULL )
+    m_tree_ctrl->unset_workspace();
+  else
+    m_tree_ctrl->set_workspace( view->get_workspace() );
 } // main_frame::set_active_level()
 
 /*----------------------------------------------------------------------------*/
