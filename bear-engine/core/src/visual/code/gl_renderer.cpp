@@ -593,7 +593,13 @@ bear::visual::gl_renderer::get_best_screen_size() const
   claw::logger << claw::log_verbose << "Requested screen resolution is "
                << result.x << 'x' << result.y << '.' << std::endl;
 
-  if ( m_fullscreen )
+#ifdef __ANDROID__
+  const bool use_fullscreen(true);
+#else
+  const bool use_fullscreen(m_fullscreen);
+#endif
+
+  if ( use_fullscreen )
     {
       claw::logger << claw::log_verbose << "Available screen resolutions:"
                    << std::endl;
