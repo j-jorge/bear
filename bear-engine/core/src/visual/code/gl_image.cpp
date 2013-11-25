@@ -22,8 +22,6 @@
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
 
-#include "debug/scoped_time_measure.hpp"
-
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructs an image of a given size.
@@ -46,7 +44,9 @@ bear::visual::gl_image::gl_image(const claw::graphic::image& data)
     m_has_transparency(false)
 {
   create_texture();
-  copy_scanlines(data);
+
+  boost::thread t( boost::bind( &gl_image::copy_scanlines, this, data ) );
+  t.detach();
 } // gl_image::gl_image() [claw::graphic::gl_image]
 
 /*----------------------------------------------------------------------------*/
