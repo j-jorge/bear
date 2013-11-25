@@ -98,12 +98,6 @@ bool bear::visual::gl_renderer::draw_texture
 ( GLuint texture_id, const claw::graphic::image& data,
   const screen_position_type& pos )
 {
-  boost::mutex::scoped_lock lock( m_mutex.gl_access );
-
-  make_current();
-
-  glBindTexture(GL_TEXTURE_2D, texture_id);
-
   const claw::graphic::rgba_pixel_8::component_type opaque =
     std::numeric_limits<claw::graphic::rgba_pixel_8::component_type>::max();
 
@@ -112,11 +106,9 @@ bool bear::visual::gl_renderer::draw_texture
     new claw::graphic::rgba_pixel_8[ pixels_count ];
 
   std::copy( data.begin(), data.end(), pixels );
-  glTexSubImage2D
-    ( GL_TEXTURE_2D, 0, pos.x, pos.y, data.width(), data.height(), GL_RGBA,
-      GL_UNSIGNED_BYTE, pixels );
 
-  release_context();
+  copy_texture_pixels
+    ( texture_id, pixels, pos.x, pos.y, data.width(), data.height() );
 
   bool has_transparency( false );
 
@@ -486,6 +478,34 @@ void bear::visual::gl_renderer::release_context()
     claw::logger << claw::log_error
                  << SDL_GetError() << std::endl;
 } // gl_renderer::release_context()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the pixel of a part of an existing texture.
+ * \param texture_id The identifier of the texture.
+ * \param pixels The pixels to copy into the texture.
+ * \param x The x-coordinate of the top-left region where the pixels are copied
+ *        in the texture.
+ * \param y The y-coordinate of the top-left region where the pixels are copied
+ *        in the texture.
+ * \param w The width of the region where the pixels are copied in the texture.
+ * \param h The height of the region where the pixels are copied in the texture.
+ */
+void bear::visual::gl_renderer::copy_texture_pixels
+( GLuint texture_id, claw::graphic::rgba_pixel_8* pixels, std::size_t x,
+  std::size_t y, std::size_t w, std::size_t h )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+
+  make_current();
+
+  glBindTexture(GL_TEXTURE_2D, texture_id);
+    
+  glTexSubImage2D
+    ( GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels );
+
+  release_context();
+} // gl_renderer::copy_texture_pixels()
 
 /*----------------------------------------------------------------------------*/
 /**

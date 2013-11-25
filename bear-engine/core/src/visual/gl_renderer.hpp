@@ -90,6 +90,10 @@ namespace bear
       void make_current();
       void release_context();
       
+      void copy_texture_pixels
+      ( GLuint texture_id, claw::graphic::rgba_pixel_8* pixels, std::size_t x,
+        std::size_t y, std::size_t w, std::size_t h );
+
       void ensure_window_exists();
 
       screen_size_type get_best_screen_size() const;
