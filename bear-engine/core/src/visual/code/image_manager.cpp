@@ -71,7 +71,7 @@ void bear::visual::image_manager::add_image
  */
 void bear::visual::image_manager::clear_images()
 {
-  std::map<std::string, image>::iterator it;
+  image_map_type::iterator it;
 
   for (it=m_images.begin(); it!=m_images.end(); ++it)
     it->second.clear();

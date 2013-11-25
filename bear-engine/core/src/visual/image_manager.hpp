@@ -33,6 +33,9 @@ namespace bear
      */
     class VISUAL_EXPORT image_manager
     {
+    private:
+      typedef std::map<std::string, image> image_map_type;
+
     public:
       void clear();
       void load_image( std::string name, std::istream& file );
@@ -58,7 +61,7 @@ namespace bear
       
     private:
       /** \brief All the images. */
-      std::map<std::string, image> m_images;
+      image_map_type m_images;
 
       /** \brief All the shader programs. */
       std::map<std::string, shader_program> m_shader_program;
