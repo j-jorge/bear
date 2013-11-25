@@ -34,6 +34,15 @@ namespace bear
      */
     class ENGINE_EXPORT level_globals
     {
+    private:
+      /** \brief The type of the key identifying a sprite loaded from a
+          spritepos file. */
+      typedef std::pair<std::string, std::string> spritepos_entry;
+
+      /** \brief The type of the map storing the sprites loaded from the
+          spritepos files. */
+      typedef std::map<spritepos_entry, visual::sprite> auto_sprite_cache;
+
     public:
       level_globals();
       level_globals
@@ -161,6 +170,9 @@ namespace bear
 
       /** \brief The animations in the level. */
       std::map<std::string, visual::animation> m_animation;
+
+      /** \brief This map stores the sprites read from spritepos files. */
+      auto_sprite_cache m_auto_sprite_cache;
 
       /** \brief Tells if no more resources are supposed to be created. */
       bool m_frozen;

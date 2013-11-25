@@ -446,6 +446,13 @@ std::string bear::engine::level_globals::get_spritepos_path
 bear::visual::sprite bear::engine::level_globals::auto_sprite
 ( const std::string& image_name, const std::string& sprite_name )
 {
+  const spritepos_entry entry(image_name, sprite_name);
+  const auto_sprite_cache::const_iterator it
+    ( m_auto_sprite_cache.find( entry ) );
+
+  if ( it != m_auto_sprite_cache.end() )
+    return it->second;
+
   const std::string spritepos_file( get_spritepos_path(image_name) );
   visual::sprite result;
 
@@ -474,6 +481,8 @@ bear::visual::sprite bear::engine::level_globals::auto_sprite
                      << image_name << "'." << std::endl;
     }
 
+  m_auto_sprite_cache[ entry ] = result;
+  
   return result;
 } // level_globals::auto_sprite()
 
