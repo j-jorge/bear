@@ -13,11 +13,7 @@
  */
 #include "visual/gl_fragment_shader.hpp"
 
-#include "visual/gl_error.hpp"
-
-#include <string>
-#include <sstream>
-#include <claw/logger.hpp>
+#include "visual/gl_renderer.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -26,19 +22,7 @@
  */
 bear::visual::gl_fragment_shader::gl_fragment_shader( std::istream& p )
 {
-  m_fragment_shader = glCreateShader( GL_FRAGMENT_SHADER );
-
-  std::ostringstream oss;
-  oss << p.rdbuf();
-
-  const std::string code( oss.str() );
-  const char *fragmentText = code.c_str();
-
-  glShaderSource( m_fragment_shader, 1, &fragmentText, 0 );
-  VISUAL_GL_ERROR_THROW();
-
-  glCompileShader( m_fragment_shader );
-  log_errors();
+  m_fragment_shader = gl_renderer::get_instance().create_fragment_shader( p );
 } // gl_fragment_shader::gl_fragment_shader()
 
 /*----------------------------------------------------------------------------*/
@@ -47,10 +31,7 @@ bear::visual::gl_fragment_shader::gl_fragment_shader( std::istream& p )
  */
 bear::visual::gl_fragment_shader::~gl_fragment_shader()
 {
-  if ( !glIsShader( m_fragment_shader ) )
-    return;
-
-  glDeleteShader( m_fragment_shader );
+  gl_renderer::get_instance().delete_fragment_shader( m_fragment_shader );
 } // gl_fragment_shader::~gl_fragment_shader()
 
 /*----------------------------------------------------------------------------*/
@@ -61,25 +42,3 @@ GLuint bear::visual::gl_fragment_shader::shader_id() const
 {
   return m_fragment_shader;
 } // gl_fragment_shader::shader_id()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Logs the compilation errors of the shader.
- */
-void bear::visual::gl_fragment_shader::log_errors() const
-{
-  GLint buffer_size;
-  glGetShaderiv( m_fragment_shader, GL_INFO_LOG_LENGTH, &buffer_size );
-
-  if ( buffer_size <= 1 )
-    return;
-
-  char* buffer = new char[ buffer_size ];
-
-  glGetShaderInfoLog( m_fragment_shader, buffer_size, NULL, buffer );
-
-  claw::logger << claw::log_error << "Shader " << m_fragment_shader
-               << " compile error: " << buffer << std::endl;
-
-  delete[] buffer;
-} // gl_fragment_shader::log_errors()

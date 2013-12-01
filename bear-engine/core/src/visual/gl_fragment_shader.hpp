@@ -36,9 +36,6 @@ namespace bear
       GLuint shader_id() const;
 
     private:
-      void log_errors() const;
-    
-    private:
       /** \brief The OpenGL identifier of the fragment shader. */
       GLuint m_fragment_shader;
     

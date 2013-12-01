@@ -18,8 +18,9 @@
 
 #include <string>
 
-#define VISUAL_SDL_ERROR_THROW() \
-  bear::visual::sdl_error::throw_on_error( __FUNCTION__, __LINE__ )
+#define VISUAL_SDL_ERROR_THROW()                                \
+  bear::visual::sdl_error::throw_on_error                       \
+  ( std::string(__FILE__) + ':' + __FUNCTION__, __LINE__ )
 
 namespace bear
 {

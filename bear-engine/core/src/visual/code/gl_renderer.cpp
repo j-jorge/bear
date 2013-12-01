@@ -14,6 +14,8 @@
 #include "visual/gl_renderer.hpp"
 
 #include "visual/gl_error.hpp"
+#include "visual/gl_fragment_shader_loader.hpp"
+#include "visual/gl_shader_program_creator.hpp"
 #include "visual/sdl_error.hpp"
 
 #include "time/time.hpp"
@@ -137,6 +139,94 @@ void bear::visual::gl_renderer::delete_texture( GLuint texture_id )
 
   release_context();
 } // gl_renderer::delete_texture()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Creates a new fragment shader.
+ * \param p The stream from which we read the shader's code.
+ */
+GLuint bear::visual::gl_renderer::create_fragment_shader( std::istream& p )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+  make_current();
+
+  gl_fragment_shader_loader loader;
+  const GLuint result( loader.load( p ) );
+
+  release_context();
+
+  return result;
+} // gl_renderer::create_fragment_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Deletes a fragment shader previously created with
+ *        create_fragment_shader().
+ * \param shader_id The identifier of the shader to delete.
+ */
+void bear::visual::gl_renderer::delete_fragment_shader( GLuint shader_id )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+  make_current();
+
+  if ( glIsShader( shader_id ) )
+    glDeleteShader( shader_id );
+
+  release_context();
+} // gl_renderer::delete_fragment_shader()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Creates a new shader program from an existing fragment shader.
+ * \param shader The shader to link in the program.
+ */
+GLuint bear::visual::gl_renderer::create_shader_program
+( const gl_fragment_shader& shader )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+  make_current();
+
+  gl_shader_program_creator creator;
+  const GLuint result( creator.create( shader ) );
+
+  release_context();
+
+  return result;
+} // gl_renderer::create_shader_program()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Deletes a shader program previously created with
+ *        create_shader_program().
+ * \param program_id The identifier of the program to delete.
+ */
+void bear::visual::gl_renderer::delete_shader_program( GLuint program_id )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+  make_current();
+
+  if ( glIsProgram( program_id ) )
+    {
+      GLint shader_count;
+
+      glGetProgramiv( program_id, GL_ATTACHED_SHADERS, &shader_count );
+
+      if ( shader_count != 0 )
+        {
+          GLuint* shaders = new GLuint[ shader_count ];
+          glGetAttachedShaders( program_id, shader_count, NULL, shaders );
+
+          for ( GLint i(0); i != shader_count; ++i )
+            glDetachShader( program_id, shaders[i] );
+
+          delete[] shaders;
+        }
+    }
+
+  glDeleteProgram( program_id );
+
+  release_context();
+} // gl_renderer::delete_shader_program()
 
 /*----------------------------------------------------------------------------*/
 /**

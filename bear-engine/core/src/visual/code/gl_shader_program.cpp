@@ -13,10 +13,7 @@
  */
 #include "visual/gl_shader_program.hpp"
 
-#include "visual/gl_error.hpp"
-
-#include <string>
-#include <claw/logger.hpp>
+#include "visual/gl_renderer.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -26,17 +23,8 @@
 bear::visual::gl_shader_program::gl_shader_program( std::istream& program_code )
   : m_fragment_shader(program_code)
 {
-  m_program_id = glCreateProgram();
-
-  VISUAL_GL_ERROR_THROW();
-  glAttachShader( m_program_id, m_fragment_shader.shader_id() );
-  VISUAL_GL_ERROR_THROW();
-
-  glLinkProgram( m_program_id );
-  log_errors( "link" );
-
-  glValidateProgram( m_program_id );
-  log_errors( "validation" );
+  m_program_id =
+    gl_renderer::get_instance().create_shader_program( m_fragment_shader );
 } // gl_shader_program::gl_shader_program()
 
 /*----------------------------------------------------------------------------*/
@@ -45,23 +33,7 @@ bear::visual::gl_shader_program::gl_shader_program( std::istream& program_code )
  */
 bear::visual::gl_shader_program::~gl_shader_program()
 {
-  if ( !glIsProgram( m_program_id ) )
-    return;
-
-  GLint shader_count;
-
-  glGetProgramiv( m_program_id, GL_ATTACHED_SHADERS, &shader_count );
-
-  if ( shader_count != 0 )
-    {
-      GLuint* shaders = new GLuint[ shader_count ];
-      glGetAttachedShaders( m_program_id, shader_count, NULL, shaders );
-
-      for ( GLint i(0); i != shader_count; ++i )
-        glDetachShader( m_program_id, shaders[i] );
-    }
-
-  glDeleteProgram( m_program_id );
+  gl_renderer::get_instance().delete_shader_program( m_program_id );
 } // gl_shader_program::~gl_shader_program()
 
 /*----------------------------------------------------------------------------*/
@@ -72,24 +44,3 @@ GLuint bear::visual::gl_shader_program::program_id() const
 {
   return m_program_id;
 } // gl_shader_program::program_id()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Logs the validation errors of the shader.
- * \param step The name of the step that has generated the logs.
- */
-void bear::visual::gl_shader_program::log_errors( std::string step ) const
-{
-  GLint buffer_size;
-  glGetProgramiv( m_program_id, GL_INFO_LOG_LENGTH, &buffer_size );
-
-  if ( buffer_size <= 1 )
-    return;
-
-  char* buffer = new char[ buffer_size ];
-
-  glGetProgramInfoLog( m_program_id, buffer_size, NULL, buffer );
-
-  claw::logger << claw::log_error << "Program " << m_program_id << ' ' << step
-               << " errors: " << buffer << std::endl;
-} // gl_shader_program::log_errors()

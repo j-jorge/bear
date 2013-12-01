@@ -29,6 +29,8 @@ namespace bear
 {
   namespace visual
   {
+    class gl_fragment_shader;
+
     /**
      * \brief The gl_renderer class manages the process of rendering with
      *        OpenGL.
@@ -59,6 +61,12 @@ namespace bear
       ( GLuint texture_id, const claw::graphic::image& data,
         const screen_position_type& pos );
       void delete_texture( GLuint texture_id );
+
+      GLuint create_fragment_shader( std::istream& p );
+      void delete_fragment_shader( GLuint shader_id );
+
+      GLuint create_shader_program( const gl_fragment_shader& shader );
+      void delete_shader_program( GLuint program_id );
 
       void shot( claw::graphic::image& img );
 

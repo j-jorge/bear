@@ -18,8 +18,9 @@
 
 #include <string>
 
-#define VISUAL_GL_ERROR_THROW() \
-  bear::visual::gl_error::throw_on_error( __LINE__, __FUNCTION__ )
+#define VISUAL_GL_ERROR_THROW()                                 \
+  bear::visual::gl_error::throw_on_error                        \
+  ( __LINE__, std::string(__FILE__) + ':' + __FUNCTION__ )
 
 namespace bear
 {
