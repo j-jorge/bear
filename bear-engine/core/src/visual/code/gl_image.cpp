@@ -44,9 +44,7 @@ bear::visual::gl_image::gl_image(const claw::graphic::image& data)
     m_has_transparency(false)
 {
   create_texture();
-
-  boost::thread t( boost::bind( &gl_image::copy_scanlines, this, data ) );
-  t.detach();
+  copy_scanlines(data);
 } // gl_image::gl_image() [claw::graphic::gl_image]
 
 /*----------------------------------------------------------------------------*/
