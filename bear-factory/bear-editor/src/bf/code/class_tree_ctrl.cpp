@@ -93,6 +93,21 @@ bf::class_tree_ctrl::class_tree_ctrl
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Set the workspace environment.
+ * \param env The workspace environment used.
+ */
+void bf::class_tree_ctrl::set_environment( workspace_environment& env )
+{
+  if ( m_workspace )
+    delete m_workspace;
+
+  m_workspace = new workspace_environment(env);
+  fill_tree();
+  fill_recent_used_classes_list();
+} // class_tree_ctrl::set_environment()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get the selected item in the tree.
  */
 wxTreeItemId bf::class_tree_ctrl::GetSelection() const

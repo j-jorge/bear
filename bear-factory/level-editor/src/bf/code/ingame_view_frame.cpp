@@ -739,6 +739,15 @@ wxMenu* bf::ingame_view_frame::create_reference_item_field_menu()
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Get the workspace environment.
+ */
+bf::workspace_environment& bf::ingame_view_frame::get_workspace_environement()
+{
+  return m_workspace;
+} // ingame_view_frame::get_workspace_environement()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Create the layer menu.
  * \param layer_menu The layer menu.
  */

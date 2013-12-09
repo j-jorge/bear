@@ -145,6 +145,7 @@ namespace bf
     wxMenu* create_layer_menu(wxMenu* layer_menu);
     wxMenu* create_reference_item_field_menu();
 
+    workspace_environment& get_workspace_environement();
     void create_toolbar();
 
     void create_accelerators();
