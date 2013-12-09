@@ -121,7 +121,6 @@ bear::input::mouse::get_position() const
 void bear::input::mouse::refresh()
 {
   update_position();
-  m_pressed_buttons.clear();
 
   SDL_Event e;
 
@@ -129,8 +128,10 @@ void bear::input::mouse::refresh()
     {
       SDL_MouseButtonEvent* evt = reinterpret_cast<SDL_MouseButtonEvent*>(&e);
 
-      if ( (evt->type == SDL_MOUSEBUTTONDOWN) && (evt->state == SDL_PRESSED) )
-        m_pressed_buttons.push_back( sdl_button_to_local( evt->button ) );
+      if ( evt->type == SDL_MOUSEBUTTONDOWN )
+        m_pressed_buttons.insert( sdl_button_to_local( evt->button ) );
+      else if ( evt->type == SDL_MOUSEBUTTONUP )
+        m_pressed_buttons.erase( sdl_button_to_local( evt->button ) );
     }
 } // mouse::refresh()
 

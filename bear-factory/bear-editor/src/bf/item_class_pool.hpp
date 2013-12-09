@@ -81,6 +81,7 @@ namespace bf
   private:
     /** \brief The item classes. */
     item_class_map m_item_class;
+
   }; // class item_class_pool
 } // namespace bf
 

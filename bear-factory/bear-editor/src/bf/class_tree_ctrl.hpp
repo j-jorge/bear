@@ -87,7 +87,9 @@ namespace bf
     class_tree_ctrl
       ( wxWindow* parent, workspace_environment& env, int id = wxID_ANY );
 
-    void set_environment( workspace_environment& env );
+    void unset_workspace();
+    void set_workspace( workspace_environment& env );
+
     wxTreeItemId GetSelection() const;
     bool ItemHasChildren( const wxTreeItemId& item ) const;
     wxString GetItemText( const wxTreeItemId& item ) const;

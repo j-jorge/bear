@@ -16,7 +16,7 @@
 
 #include <string>
 #include <vector>
-#include <list>
+#include <set>
 
 #include <claw/math.hpp>
 
@@ -36,7 +36,7 @@ namespace bear
       typedef unsigned char mouse_code;
 
       /** \brief Iterator on the pressed buttons. */
-      typedef std::list<mouse_code>::const_iterator const_iterator;
+      typedef std::set<mouse_code>::const_iterator const_iterator;
 
     public:
       mouse();
@@ -63,7 +63,7 @@ namespace bear
 
     private:
       /** \brief Pressed buttons. */
-      std::list<mouse_code> m_pressed_buttons;
+      std::set<mouse_code> m_pressed_buttons;
 
       /** \brief Position of the cursor. */
       claw::math::coordinate_2d<unsigned int> m_position;

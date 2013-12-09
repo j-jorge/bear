@@ -24,7 +24,7 @@
  * \brief Constructor.
  */
 bear::wireframe_layer::wireframe_layer()
-  : base_debugging_layer(bear::input::keyboard::kc_F3)
+  : base_debugging_layer(input::keyboard::kc_F3)
 {
 
 } // wireframe_layer::wireframe_layer()
@@ -36,10 +36,10 @@ bear::wireframe_layer::wireframe_layer()
  * \param delta The delta to apply to the position of the items.
  */
 void bear::wireframe_layer::render
-( scene_element_list& e, const bear::visual::position_type& delta ) const
+( scene_element_list& e, const visual::position_type& delta ) const
 {
   item_list::const_iterator it;
-  bear::visual::color_type color;
+  visual::color_type color;
 
   color.components.alpha = 255;
 
@@ -54,6 +54,7 @@ void bear::wireframe_layer::render
           color.components.blue = (~addr & 0xFF0000) >> 16;
           
           draw_box(e, delta, **it, color);
+          draw_internal_forces( e, delta, **it, color );
           draw_system(e, delta, **it, color);
           draw_slope(e, delta, **it, color);
         }
@@ -67,7 +68,7 @@ void bear::wireframe_layer::render
  * \param elapsed_time Elapsed time since the last call.
  */
 void bear::wireframe_layer::progress
-( const item_list& items, bear::universe::time_type elapsed_time )
+( const item_list& items, universe::time_type elapsed_time )
 {
   m_items = items;
 } // wireframe_layer::progress()
@@ -81,16 +82,16 @@ void bear::wireframe_layer::progress
  * \param color The color of the box.
  */
 void bear::wireframe_layer::draw_box
-( scene_element_list& e, const bear::visual::position_type& delta,
-  const bear::universe::physical_item& item,
-  const bear::visual::color_type& color ) const
+( scene_element_list& e, const visual::position_type& delta,
+  const universe::physical_item& item,
+  const visual::color_type& color ) const
 {
-  bear::universe::size_box_type camera_size(get_level().get_camera_size());
+  universe::size_box_type camera_size(get_level().get_camera_size());
   claw::math::coordinate_2d<double> ratio
     ( get_size().x / camera_size.x, get_size().y / camera_size.y);
 
-  std::vector<bear::visual::position_type> points(5);
-  const bear::visual::position_type pos( item.get_bottom_left() - delta );
+  std::vector<visual::position_type> points(5);
+  const visual::position_type pos( item.get_bottom_left() - delta );
 
   points[0] = pos;
   points[0].x = points[0].x * ratio.x;
@@ -103,8 +104,50 @@ void bear::wireframe_layer::draw_box
   points[3].y += item.get_height() * ratio.y;
   points[4] = points[0];
 
-  e.push_back( bear::visual::scene_line(0, 0, color, points, 1) );
+  e.push_back( visual::scene_line(0, 0, color, points, 1) );
 } // wireframe_layer::draw_box()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Render the internal forces of an item.
+ * \param e (out) The scene elements.
+ * \param delta The delta to apply to the position of the item.
+ * \param item The item to render.
+ * \param color The color of the system.
+ */
+void bear::wireframe_layer::draw_internal_forces
+( scene_element_list& e, const visual::position_type& delta,
+  const universe::physical_item& item,
+  const visual::color_type& color ) const
+{
+  universe::force_type scaled_force( item.get_internal_force() );
+
+  if ( scaled_force.x != 0 )
+    scaled_force.x =
+      boost::math::sign( scaled_force.x )
+      * std::log( std::abs( scaled_force.x ) );
+
+  if ( scaled_force.y != 0 )
+    scaled_force.y =
+      boost::math::sign( scaled_force.y )
+      * std::log( std::abs( scaled_force.y ) );
+
+  universe::size_box_type camera_size(get_level().get_camera_size());
+  claw::math::coordinate_2d<double> ratio
+    ( get_size().x / camera_size.x, get_size().y / camera_size.y);
+
+  std::vector<visual::position_type> points(3);
+
+  universe::vector_type x_axis(item.get_x_axis());
+
+  points[1].x = (item.get_center_of_mass().x - delta.x) * ratio.x;
+  points[1].y = (item.get_center_of_mass().y - delta.y) * ratio.y;
+  points[0] = points[1] + scaled_force.x * x_axis;
+  points[2] =
+    points[1] + scaled_force.y * x_axis.get_orthonormal_anticlockwise();
+
+  e.push_back( visual::scene_line(0, 0, color, points, 3) );
+} // wireframe_layer::draw_internal_forces()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -115,25 +158,24 @@ void bear::wireframe_layer::draw_box
  * \param color The color of the system.
  */
 void bear::wireframe_layer::draw_system
-( scene_element_list& e, const bear::visual::position_type& delta,
-  const bear::universe::physical_item& item,
-  const bear::visual::color_type& color ) const
+( scene_element_list& e, const visual::position_type& delta,
+  const universe::physical_item& item,
+  const visual::color_type& color ) const
 {
-  bear::universe::size_box_type camera_size(get_level().get_camera_size());
+  universe::size_box_type camera_size(get_level().get_camera_size());
   claw::math::coordinate_2d<double> ratio
     ( get_size().x / camera_size.x, get_size().y / camera_size.y);
 
-  std::vector<bear::visual::position_type> points(3);
+  std::vector<visual::position_type> points(3);
 
-  bear::universe::vector_type x_axis(item.get_x_axis());
-  x_axis.y = -x_axis.y;
+  universe::vector_type x_axis(item.get_x_axis());
 
   points[1].x = (item.get_center_of_mass().x - delta.x) * ratio.x;
   points[1].y = (item.get_center_of_mass().y - delta.y) * ratio.y;
   points[0] = points[1] + 20 * x_axis;
   points[2] = points[1] + 20 * x_axis.get_orthonormal_anticlockwise();
 
-  e.push_back( bear::visual::scene_line(0, 0, color, points, 1) );
+  e.push_back( visual::scene_line(0, 0, color, points, 1) );
 } // wireframe_layer::draw_system()
 
 /*----------------------------------------------------------------------------*/
@@ -145,19 +187,19 @@ void bear::wireframe_layer::draw_system
  * \param color The color of the system.
  */
 void bear::wireframe_layer::draw_slope
-( scene_element_list& e, const bear::visual::position_type& delta,
-  const bear::universe::physical_item& item,
-  const bear::visual::color_type& color ) const
+( scene_element_list& e, const visual::position_type& delta,
+  const universe::physical_item& item,
+  const visual::color_type& color ) const
 {
-  bear::universe::size_box_type camera_size(get_level().get_camera_size());
+  universe::size_box_type camera_size(get_level().get_camera_size());
   claw::math::coordinate_2d<double> ratio
     ( get_size().x / camera_size.x, get_size().y / camera_size.y);
 
-  const bear::slope* p = dynamic_cast<const bear::slope*>(&item);
+  const slope* p = dynamic_cast<const slope*>(&item);
 
   if ( p != NULL )
     {
-      std::vector<bear::visual::position_type> pts;
+      std::vector<visual::position_type> pts;
 
       const slope::curve_type c( p->get_curve() );
 
@@ -182,15 +224,15 @@ void bear::wireframe_layer::draw_slope
           pts.back().y *= ratio.y;
         }
 
-      e.push_back( bear::visual::scene_line(0, 0, color, pts, 1) );
+      e.push_back( visual::scene_line(0, 0, color, pts, 1) );
     }
 
-  const bear::descending_ceiling* d =
-    dynamic_cast<const bear::descending_ceiling*>(&item);
+  const descending_ceiling* d =
+    dynamic_cast<const descending_ceiling*>(&item);
 
   if ( d != NULL )
     {
-      std::vector<bear::visual::position_type> pts(2);
+      std::vector<visual::position_type> pts(2);
       pts[0].x = (item.get_left() - delta.x) * ratio.x;
       pts[0].y = (item.get_bottom() - delta.y) * ratio.y;
 
@@ -203,6 +245,6 @@ void bear::wireframe_layer::draw_slope
       pts[1].x = (item.get_right() - delta.x) * ratio.x;
       pts[1].y = pts[0].y + d->get_steepness() * ratio.y;
 
-      e.push_back( bear::visual::scene_line(0, 0, color, pts, 1) );
+      e.push_back( visual::scene_line(0, 0, color, pts, 1) );
     }
 } // wireframe_layer::draw_slope()
