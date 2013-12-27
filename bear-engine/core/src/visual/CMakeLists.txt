@@ -84,9 +84,12 @@ install(
 
 target_link_libraries(
   ${VISUAL_TARGET_NAME}
+  bear_time
   ${SDL2_LIBRARY}
   ${OPENGL_LIBRARIES}
   ${CLAW_GRAPHIC_LIBRARIES}
   ${CLAW_LOGGER_LIBRARIES}
   ${FREETYPE_LIBRARIES}
+  ${Boost_THREAD_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
   )

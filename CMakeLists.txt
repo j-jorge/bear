@@ -26,6 +26,7 @@ option(
 
 subdirs(
   bear-engine
+  cmake-module
   )
 
 if( BEAR_EDITORS_ENABLED )
