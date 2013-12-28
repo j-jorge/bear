@@ -155,6 +155,9 @@ namespace bear
       /** \brief The next elements to render. */
       state_list m_states;
 
+      /** \brief Tells if a rendering must be done. */
+      bool m_render_ready;
+
       /** \brief A buffer in which we do the screenshots, to avoid an allocation
           at each call. */
       claw::graphic::rgba_pixel_8* m_screenshot_buffer;

@@ -366,6 +366,7 @@ void bear::visual::gl_renderer::set_gl_states( state_list& states )
 {
   boost::mutex::scoped_lock lock( m_mutex.gl_set_states );
 
+  m_render_ready = true;
   m_states.clear();
   m_states.swap( states );
 } // gl_renderer::set_gl_states()
@@ -485,8 +486,10 @@ void bear::visual::gl_renderer::render_states()
 {
   boost::mutex::scoped_lock states_lock( m_mutex.gl_set_states );
 
-  if ( m_states.empty() )
+  if ( !m_render_ready )
     return;
+
+  m_render_ready = false;
 
   if ( m_gl_context == NULL )
     return;
