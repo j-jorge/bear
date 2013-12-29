@@ -14,7 +14,6 @@
 #include "visual/font/font_manager.hpp"
 
 #include "visual/font/base_font.hpp"
-#include "visual/font/bitmap_charmap.hpp"
 #include "visual/font/bitmap_font.hpp"
 #include "visual/font/true_type_font.hpp"
 #include "visual/font/true_type_memory_file.hpp"

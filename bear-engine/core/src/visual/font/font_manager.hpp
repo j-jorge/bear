@@ -15,6 +15,7 @@
 #define __VISUAL_FONT_MANAGER_HPP__
 
 #include "visual/font/font.hpp"
+#include "visual/font/bitmap_charmap.hpp"
 #include "visual/font/true_type_memory_file.hpp"
 
 #include <iostream>
@@ -29,8 +30,6 @@ namespace bear
 {
   namespace visual
   {
-    class bitmap_charmap;
-
     /**
      * \brief A class to manage font resources.
      * \author Julien Jorge
