@@ -8,5 +8,6 @@ subdirs(
   1-screen
   2-display
   3-sprite
+  4-text
   5-keyboard
 )
