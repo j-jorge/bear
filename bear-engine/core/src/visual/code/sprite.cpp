@@ -34,7 +34,7 @@ bear::visual::sprite::sprite()
  */
 bear::visual::sprite::sprite
 ( const image& img,
-  const claw::math::rectangle<coordinate_type>& clip_rectangle )
+  const clip_rectangle_type& clip_rectangle )
   : bitmap_rendering_attributes( clip_rectangle.size() ), m_image(img),
     m_clip_rectangle(clip_rectangle), m_opaque_rectangle(0, 0, 0, 0)
 {
@@ -54,7 +54,7 @@ bear::visual::sprite::sprite
  */
 bear::visual::sprite::sprite
 ( const image& img,
-  const claw::math::rectangle<coordinate_type>& clip_rectangle,
+  const clip_rectangle_type& clip_rectangle,
   const rectangle_type& opaque_rectangle )
   : bitmap_rendering_attributes( clip_rectangle.size() ), m_image(img),
     m_clip_rectangle(clip_rectangle), m_opaque_rectangle( opaque_rectangle )
@@ -95,7 +95,7 @@ bool bear::visual::sprite::has_transparency() const
 /**
  * \brief Get the rectangular region of the picture used by this sprite.
  */
-const claw::math::rectangle<bear::visual::coordinate_type>&
+const bear::visual::sprite::clip_rectangle_type&
 bear::visual::sprite::clip_rectangle() const
 {
   return m_clip_rectangle;
@@ -106,7 +106,7 @@ bear::visual::sprite::clip_rectangle() const
  * \brief Set the rectangular region of the picture used by this sprite.
  */
 void bear::visual::sprite::set_clip_rectangle
-( const claw::math::rectangle<coordinate_type>& clip )
+( const clip_rectangle_type& clip )
 {
   CLAW_PRECOND( clip.position.x + clip.width <= m_image.width() );
   CLAW_PRECOND( clip.position.y + clip.height <= m_image.height() );

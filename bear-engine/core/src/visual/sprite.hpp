@@ -33,19 +33,23 @@ namespace bear
       public bitmap_rendering_attributes
     {
     public:
+      /** \brief The type of the clip rectangle describing the part of the
+          source image to use for the sprite.*/
+      typedef claw::math::rectangle<coordinate_type> clip_rectangle_type;
+
+    public:
       sprite();
       sprite( const image& img,
-              const claw::math::rectangle<coordinate_type>& clip_rectangle );
+              const clip_rectangle_type& clip_rectangle );
       sprite( const image& img,
-              const claw::math::rectangle<coordinate_type>& clip_rectangle,
+              const clip_rectangle_type& clip_rectangle,
               const rectangle_type& opaque_rectangle );
       sprite( const image& img );
 
       bool has_transparency() const;
 
-      const claw::math::rectangle<coordinate_type>& clip_rectangle() const;
-      void
-      set_clip_rectangle( const claw::math::rectangle<coordinate_type>& clip );
+      const clip_rectangle_type& clip_rectangle() const;
+      void set_clip_rectangle( const clip_rectangle_type& clip );
 
       const rectangle_type& get_opaque_rectangle() const;
       void set_opaque_rectangle( const rectangle_type& r );
@@ -59,7 +63,7 @@ namespace bear
       image m_image;
 
       /** \brief The sprite is this part of the image. */
-      claw::math::rectangle<coordinate_type> m_clip_rectangle;
+      clip_rectangle_type m_clip_rectangle;
 
       /** \brief A part of the sprite that is fully opaque. */
       rectangle_type m_opaque_rectangle;
