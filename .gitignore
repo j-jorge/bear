@@ -21,3 +21,7 @@ bin
 
 # Documentation
 bear-engine/doc/html
+
+# Examples
+bear-engine/doc/examples/*/ex-*
+
