@@ -18,3 +18,6 @@ bin
 # Man pages
 *.1
 *.6
+
+# Documentation
+bear-engine/doc/html
