@@ -61,7 +61,15 @@ void init()
   SDL_SetEventFilter( &event_filter, NULL );
 }
 
-bear::visual::sprite load_sprite( const std::string& file_name )
+/**
+ * Creates a sprite given an image file name and a region in this image.
+ * \param file_name The path to the image use for the sprite.
+ * \param clip The part of the image to use for the sprite, relatively to the
+ *        top-left corner of the texture.
+ */
+bear::visual::sprite load_sprite
+( const std::string& file_name,
+  const bear::visual::sprite::clip_rectangle_type& clip )
 {
   // Open the image file.
   std::ifstream f( file_name.c_str() );
@@ -82,9 +90,8 @@ bear::visual::sprite load_sprite( const std::string& file_name )
   return bear::visual::sprite
     ( /* The texture of which the sprite is part of. */
       texture,
-      /* The part of the image to use for the sprite, relatively to the top-left
-         corner of the texture. Values are: left, top, width, height. */
-      bear::visual::sprite::clip_rectangle_type(0, 0, 57, 65) );
+      /* The part of the image to use for the sprite. */
+      clip );
 }
 
 /**
@@ -101,7 +108,14 @@ int main( int argc, char* argv[] )
   // As soon as the screen is created, a render thread is created 
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
-  const bear::visual::sprite sprite( load_sprite( "hourglass.png" ) );
+  const bear::visual::sprite sprite
+    ( load_sprite
+      ( /* The path to the image of which the sprite is a part. */
+       "hourglass.png",
+        /* The part of the image to use for the sprite, relatively to the
+           top-left corner of the texture. Values are: left, top, width,
+           height. */
+        bear::visual::sprite::clip_rectangle_type(0, 0, 57, 65) ) );
 
   bear::visual::scene_sprite element
     ( 320 - sprite.width() / 2, 240 - sprite.height() / 2, sprite );
