@@ -56,7 +56,8 @@ also need a C++ compiler and the following libraries in order to build
 the engine and its tools:
 
 - Boost: http://www.boost.org,
-- SDL: http://www.libsdl.org,
+- SDL 2: http://www.libsdl.org,
+- SDL Mixer 2: http://www.libsdl.org/projects/SDL_mixer/,
 - Claw: http://libclaw.sourceforge.net,
 - Gettext: http://www.gnu.org/software/gettext/,
 - FreeType: http://www.freetype.org/,
