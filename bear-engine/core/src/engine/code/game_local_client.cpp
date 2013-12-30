@@ -90,7 +90,7 @@ bear::engine::game_local_client::game_local_client
   load_libraries( m_game_description.libraries() );
   init_resource_pool( m_game_description.resources_path() );
 
-  constructor_common_init_members();
+  constructor_common_init();
 } // game_local_client::game_local_client()
 
 /*----------------------------------------------------------------------------*/
