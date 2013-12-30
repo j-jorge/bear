@@ -88,6 +88,8 @@ namespace bear
       static void print_help();
 
       game_local_client( int& argc, char** &argv );
+      explicit game_local_client( const game_description& description );
+
       ~game_local_client();
 
       void run();
@@ -173,6 +175,9 @@ namespace bear
         ( std::string operation, std::list<stat_variable> vars ) const;
 
     private:
+      void constructor_common_init_members();
+      void constructor_common_init();
+
       void init_stats();
 
       void init_game() const;

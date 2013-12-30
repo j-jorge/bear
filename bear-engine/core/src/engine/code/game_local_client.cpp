@@ -62,40 +62,30 @@ void bear::engine::game_local_client::print_help()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Constructor.
+ * \brief Constructs the game from the command line arguments.
  * \param argc Number of program arguments.
  * \param argv Program arguments.
  */
 bear::engine::game_local_client::game_local_client( int& argc, char** &argv )
-  : m_status(status_init), m_screen(NULL), m_fullscreen(false),
-    m_current_level(NULL), m_level_in_abeyance(NULL), m_time_step(15),
-    m_time_scale(1), m_frames_per_second(60), m_synchronized_render(false),
-    m_level_paused_sync(false), m_event_manager(NULL)
 {
+  constructor_common_init_members();
+
   if ( !check_arguments(argc, argv) )
     m_status = status_quit;
   else
-    {
-      init_environment();
-      init_game_filesystem();
+    constructor_common_init();
+} // game_local_client::game_local_client()
 
-      try
-        {
-          m_screen = new visual::screen
-            ( m_game_description.screen_size(),
-              m_game_description.game_name(), m_fullscreen );
-
-          init_event_manager();
-
-          set_dumb_rendering( m_game_description.dumb_rendering() );
-        }
-      catch(...)
-        {
-          clear();
-          close_environment();
-          throw;
-        }
-    }
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs the game from a pre built description.
+ * \param descripton The description of the game to run.
+ */
+bear::engine::game_local_client::game_local_client
+( const game_description& description )
+{
+  constructor_common_init_members();
+  m_game_description = description;
 } // game_local_client::game_local_client()
 
 /*----------------------------------------------------------------------------*/
@@ -701,6 +691,53 @@ void bear::engine::game_local_client::send_data
 {
   m_stats.send_data(operation, vars);
 } // game_local_client::send_data()
+
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Assigns their default value to the members of this instance.
+ */
+void bear::engine::game_local_client::constructor_common_init_members()
+{
+  m_status = status_init;
+  m_screen = NULL;
+  m_fullscreen = false;
+  m_current_level = NULL;
+  m_level_in_abeyance = NULL;
+  m_time_step = 15;
+  m_time_scale = 1;
+  m_frames_per_second = 60;
+  m_synchronized_render = false;
+  m_level_paused_sync = false;
+  m_event_manager = NULL;
+} // game_local_client::constructor_common_init_members()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs the game according to the description m_game_description.
+ */
+void bear::engine::game_local_client::constructor_common_init()
+{
+  init_environment();
+  init_game_filesystem();
+
+  try
+    {
+      m_screen = new visual::screen
+        ( m_game_description.screen_size(),
+          m_game_description.game_name(), m_fullscreen );
+
+      init_event_manager();
+
+      set_dumb_rendering( m_game_description.dumb_rendering() );
+    }
+  catch(...)
+    {
+      clear();
+      close_environment();
+      throw;
+    }
+} // game_local_client::constructor_common_init()
 
 /*----------------------------------------------------------------------------*/
 /**

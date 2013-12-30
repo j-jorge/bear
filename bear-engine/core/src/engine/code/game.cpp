@@ -44,7 +44,7 @@ void bear::engine::game::print_help()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Constructor.
+ * \brief Constructs the game from the command line arguments.
  * \param argc Number of program arguments.
  * \param argv Program arguments.
  */
@@ -54,6 +54,19 @@ bear::engine::game::game( int& argc, char** &argv )
   s_instance = this;
 
   m_game = new game_local_client(argc, argv);
+} // game::game()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs the game from a pre built description.
+ * \param descripton The description of the game to run.
+ */
+bear::engine::game::game( const game_description& description )
+{
+  CLAW_PRECOND( s_instance == NULL );
+  s_instance = this;
+
+  m_game = new game_local_client( description );
 } // game::game()
 
 /*----------------------------------------------------------------------------*/

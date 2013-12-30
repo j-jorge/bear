@@ -30,6 +30,7 @@ namespace bear
   namespace engine
   {
     class base_variable;
+    class game_description;
     class game_filesystem;
     class game_local_client;
     class game_network;
@@ -48,6 +49,8 @@ namespace bear
       static void print_help();
 
       game( int& argc, char** &argv );
+      explicit game( const game_description& description );
+
       ~game();
 
       void run();
