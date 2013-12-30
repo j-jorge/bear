@@ -41,7 +41,7 @@ set(
   YourProjectName
 )
 
-file( GLOB SOURCES *.cpp )
+set( SOURCES launcher/main.cpp )
 
 add_executable( ${TARGET_NAME} ${SOURCES} )
 target_link_libraries( ${TARGET_NAME} ${BEAR_ENGINE_LIBRARIES} )

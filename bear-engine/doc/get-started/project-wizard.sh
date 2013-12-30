@@ -63,5 +63,11 @@ cp --recursive --no-clobber "$SCRIPT_ORIGIN_DIR/project-sample/"* \
 # The path to the Bear Engine and the name of the project must be updated in
 # the CMake file.
 sed --in-place \
-    "s:YourProjectName:$PROJECT_NAME:;s:path/to/bear/repository:$(pwd)/bear:" \
+    "s:YourProjectName:$PROJECT_NAME:;s:path/to/bear/repository:$BEAR_ROOT:" \
     "$PROJECT_NAME/CMakeLists.txt"
+
+pushd "$PROJECT_NAME" > /dev/null
+
+cmake . -DCMAKE_BUILD_TYPE=debug
+make
+./"$PROJECT_NAME"
