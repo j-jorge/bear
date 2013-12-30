@@ -86,6 +86,11 @@ bear::engine::game_local_client::game_local_client
 {
   constructor_common_init_members();
   m_game_description = description;
+
+  load_libraries( m_game_description.libraries() );
+  init_resource_pool( m_game_description.resources_path() );
+
+  constructor_common_init_members();
 } // game_local_client::game_local_client()
 
 /*----------------------------------------------------------------------------*/

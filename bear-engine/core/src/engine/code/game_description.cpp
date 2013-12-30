@@ -150,6 +150,28 @@ void bear::engine::game_description::set_active_area_margin
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Adds a path to a directory where the game's resources can be found.
+ * \param value The path to the resources' directory.
+ */
+void bear::engine::game_description::add_resources_path
+( const std::string& value )
+{
+  m_resources_path.push_back( value );
+} // game_description::add_resources_path()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a library that must be loaded to launch the game.
+ * \param value The name of the library.
+ */
+void bear::engine::game_description::add_item_library
+( const std::string& value )
+{
+  m_libraries.push_back( value );
+} // game_description::add_item_library()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Set the name of the first level.
  * \param value The name of the first level.
  */
