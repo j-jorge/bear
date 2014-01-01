@@ -13,12 +13,15 @@
  */
 #include "engine/game_description.hpp"
 
+#include "bear_gettext.hpp"
+
 #include <string>
 #include <vector>
 
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
 #include <claw/string_algorithm.hpp>
+#include <claw/exception.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -29,7 +32,102 @@ bear::engine::game_description::game_description()
     m_active_area_margin(500), m_use_dumb_rendering(false)
 {
 
-} // game_description()
+} // game_description::game_description()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs the description from the command line arguments.
+ * \param arg The arguments received on the command line.
+ * \throws claw::exception if an argument could not be parsed. The message of
+ *         the exception tells which argument has a bad value.
+ */
+bear::engine::game_description::game_description
+( const claw::arguments_table& arg )
+  : m_game_name("Anonymous game"), m_screen_size(640, 480),
+    m_active_area_margin(500), m_use_dumb_rendering(false)
+{
+  if ( arg.has_value("--game-name") )
+    set_game_name( arg.get_string("--game-name") );
+
+  if ( arg.has_value("--active-area") )
+    {
+      if ( arg.only_integer_values("--active-area") )
+        set_active_area_margin( arg.get_integer("--active-area") );
+      else
+        throw claw::exception
+          ( "--active-area=" + arg.get_string("--active-area" ));
+    }
+
+  set_dumb_rendering
+    ( arg.get_bool( "--dumb-rendering" )
+      && !arg.get_bool( "--no-dumb-rendering" ) );
+
+  if ( arg.has_value("--screen-height") )
+    {
+      if ( arg.only_integer_values("--screen-height") )
+        set_screen_height( arg.get_integer("--screen-height") );
+      else
+        throw claw::exception
+          ( "--screen-height=" + arg.get_string("--screen-height") );
+    }
+
+  if ( arg.has_value("--screen-width") )
+    {
+      if ( arg.only_integer_values("--screen-width") )
+        set_screen_width( arg.get_integer("--screen-width") );
+      else
+        throw claw::exception
+          ( "--screen-width=" + arg.get_string("--screen-width") );
+    }
+  
+  if ( arg.has_value("--start-level") )
+    set_start_level( arg.get_string("--start-level") );
+
+  add_item_library( arg.get_all_of_string("--item-library") );
+  add_resources_path( arg.get_all_of_string("--data-path") );
+} // game_description::game_description()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Fills a command line argument table with the argument supported by the
+ *        constructors of this class.
+ * \param arg The argument table in which we add the arguments.
+ */
+void bear::engine::game_description::get_valid_command_line_arguments
+( claw::arguments_table& arg )
+{
+  arg.add_long
+    ( "--game-name", bear_gettext("The name of the game."), true,
+      bear_gettext("string") );
+  arg.add_long
+    ( "--active-area",
+      bear_gettext
+      ("The margin around the camera in which we check for activity."), true,
+      bear_gettext("integer") );
+  arg.add_long
+    ( "--screen-width", bear_gettext("The width of the screen."), true,
+      bear_gettext("integer") );
+  arg.add_long
+    ( "--screen-height", bear_gettext("The height of the screen."), true,
+      bear_gettext("integer") );
+  arg.add_long
+    ( "--data-path",
+      bear_gettext("Path to the directory containing the data of the game."),
+      true, bear_gettext("path") );
+  arg.add_long
+    ( "--dumb-rendering",
+      bear_gettext("Tells to use the dumbest rendering procedure."), true );
+  arg.add_long
+    ( "--no-dumb-rendering",
+      bear_gettext("Tells not to use the dumbest rendering procedure."), true );
+  arg.add_long
+    ( "--item-library",
+      bear_gettext("Path to a library containing items for the game."), true,
+      bear_gettext("path") );
+  arg.add_long
+    ( "--start-level", bear_gettext("The path of the first level to run."),
+      true, bear_gettext("string") );
+} // game_description::get_valid_command_line_arguments()
 
 /*----------------------------------------------------------------------------*/
 /**

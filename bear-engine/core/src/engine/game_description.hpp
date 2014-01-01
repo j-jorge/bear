@@ -19,6 +19,7 @@
 #include <list>
 
 #include <claw/math.hpp>
+#include <claw/arguments_table.hpp>
 
 #include "engine/class_export.hpp"
 
@@ -38,6 +39,10 @@ namespace bear
 
     public:
       game_description();
+      explicit game_description( const claw::arguments_table& arg );
+
+      static void get_valid_command_line_arguments
+        ( claw::arguments_table& arg );
 
       const std::string& start_level() const;
       const std::string& game_name() const;

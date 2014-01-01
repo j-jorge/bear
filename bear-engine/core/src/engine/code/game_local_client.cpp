@@ -1363,14 +1363,20 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
 
   arg.parse( argc, argv );
 
+  try
+    {
+      m_game_description = game_description( arg );
+    }
+  catch( std::exception& e )
+    {
+      help = e.what();
+    }
+
   if ( arg.get_bool("--version") )
     {
       std::cout << BEAR_VERSION_STRING << std::endl;
       auto_exit = true;
     }
-
-  if ( arg.has_value("--game-name") )
-    m_game_description.set_game_name( arg.get_string("--game-name") );
 
   if ( arg.has_value( "--stats-destination" ) )
     m_stats.set_destination( arg.get_string("--stats-destination") );
@@ -1378,39 +1384,8 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
   if ( arg.has_value("--tag") )
     m_stats.set_tag( arg.get_string("--tag") );
 
-  if ( arg.has_value("--active-area") )
-    {
-      if ( arg.only_integer_values("--active-area") )
-        m_game_description.set_active_area_margin
-          ( arg.get_integer("--active-area") );
-      else
-        help = "--active-area=" + arg.get_string("--active-area");
-    }
-
   m_fullscreen = arg.get_bool("--fullscreen") && !arg.get_bool("--windowed");
   
-  m_game_description.set_dumb_rendering
-    ( arg.get_bool( "--dumb-rendering" )
-      && !arg.get_bool( "--no-dumb-rendering" ) );
-
-  if ( arg.has_value("--screen-height") )
-    {
-      if ( arg.only_integer_values("--screen-height") )
-        m_game_description.set_screen_height
-          ( arg.get_integer("--screen-height") );
-      else
-        help = "--screen-height=" + arg.get_string("--screen-height");
-    }
-
-  if ( arg.has_value("--screen-width") )
-    {
-      if ( arg.only_integer_values("--screen-width") )
-        m_game_description.set_screen_width
-          ( arg.get_integer("--screen-width") );
-      else
-        help = "--screen-width=" + arg.get_string("--screen-width");
-    }
-
   if ( arg.has_value("--network-horizon") )
     {
       if ( arg.only_integer_values("--network-horizon") )
@@ -1453,11 +1428,6 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
     set_game_variable_from_arg<std::string>
       ( arg.get_all_of_string("--set-game-var-string"), game_var_assignment );
 
-  if ( arg.has_value("--start-level") )
-    m_game_description.set_start_level( arg.get_string("--start-level") );
-  else
-    help = "--start-level";
-
   m_synchronized_render = arg.get_bool("--sync-render");
 
   if ( arg.has_value("--fps") )
@@ -1479,10 +1449,6 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
       if ( arg.get_bool( "--auto-load-symbols" ) )
         m_symbols.add_library( std::string(), true );
 
-      m_game_description.add_item_library
-        ( arg.get_all_of_string("--item-library") );
-      m_game_description.add_resources_path
-        ( arg.get_all_of_string("--data-path") );
       result = true;
     }
 
@@ -1554,48 +1520,19 @@ claw::arguments_table bear::engine::game_local_client::get_arguments_table()
 {
   claw::arguments_table arg( bear_gettext("Engine's options:") );
 
-  arg.add_long
-    ( "--game-name", bear_gettext("The name of the game."), true,
-      bear_gettext("string") );
-  arg.add_long
-    ( "--active-area",
-      bear_gettext
-      ("The margin around the camera in which we check for activity."), true,
-      bear_gettext("integer") );
-  arg.add_long
-    ( "--screen-width", bear_gettext("The width of the screen."), true,
-      bear_gettext("integer") );
-  arg.add_long
-    ( "--screen-height", bear_gettext("The height of the screen."), true,
-      bear_gettext("integer") );
+  game_description::get_valid_command_line_arguments( arg );
+
   arg.add_long
     ( "--fullscreen", bear_gettext("Runs the game in fullscreen mode."), true );
   arg.add_long( "--windowed", bear_gettext("Run the game in a window."), true );
   arg.add_long
-    ( "--data-path",
-      bear_gettext("Path to the directory containing the data of the game."),
-      false, bear_gettext("path") );
-  arg.add_long
-    ( "--dumb-rendering",
-      bear_gettext("Tells to use the dumbest rendering procedure."), true );
-  arg.add_long
-    ( "--no-dumb-rendering",
-      bear_gettext("Tells not to use the dumbest rendering procedure."), true );
-  arg.add_long
-    ( "--item-library",
-      bear_gettext("Path to a library containing items for the game."), false,
-      bear_gettext("path") );
-  arg.add_long
     ( "--auto-load-symbols",
       bear_gettext("Search the items in the game launcher."), true );
-  arg.add_long
-    ( "--start-level", bear_gettext("The path of the first level to run."),
-      false, bear_gettext("string") );
   arg.add_long
     ( "--network-horizon",
       bear_gettext("The delay to apply to the network messages in term of game"
                    " iterations. Default is 1."),
-      false, bear_gettext("value") );
+      true, bear_gettext("value") );
   arg.add_long
     ( "--set-game-var-int",
       bear_gettext("Sets the value of an integer game variable."), true,
