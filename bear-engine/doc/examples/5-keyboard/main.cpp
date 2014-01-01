@@ -196,5 +196,7 @@ int main( int argc, char* argv[] )
       bear::systime::sleep( 15 );
     }
 
+  release();
+
   return 0;
 }

@@ -1,0 +1,27 @@
+Beginner
+
+- joystick
+- sounds
+- stars
+- animations
+- shaders
+- engine
+- editor files
+  - animations
+  - models
+  - levels
+- gui
+- physics
+
+Intermediate
+
+- music: play, stop, pause, resume
+- sound: position, ears.
+- shaders: uniforms
+
+Sample games
+
+- bomberman
+- breakout
+- platformer
+- boulder dash

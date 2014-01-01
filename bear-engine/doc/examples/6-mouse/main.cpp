@@ -201,5 +201,7 @@ int main( int argc, char* argv[] )
       s.end_render();
     }
 
+  release();
+
   return 0;
 }

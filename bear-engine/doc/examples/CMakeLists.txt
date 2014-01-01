@@ -11,4 +11,5 @@ subdirs(
   4-text
   5-keyboard
   6-mouse
+  8-music
 )
