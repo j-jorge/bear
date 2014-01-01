@@ -161,6 +161,18 @@ void bear::engine::game_description::add_resources_path
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Adds the paths to the directory where the game's resources can be
+ *        found.
+ * \param value The paths to the resources' directories.
+ */
+void bear::engine::game_description::add_resources_path
+( const string_list& value )
+{
+  m_resources_path.insert( m_resources_path.end(), value.begin(), value.end() );
+} // game_description::add_resources_path()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Adds a library that must be loaded to launch the game.
  * \param value The name of the library.
  */
@@ -168,6 +180,17 @@ void bear::engine::game_description::add_item_library
 ( const std::string& value )
 {
   m_libraries.push_back( value );
+} // game_description::add_item_library()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds the libraries that must be loaded to launch the game.
+ * \param value The names of the libraries.
+ */
+void bear::engine::game_description::add_item_library
+( const string_list& value )
+{
+  m_libraries.insert( m_libraries.end(), value.begin(), value.end() );
 } // game_description::add_item_library()
 
 /*----------------------------------------------------------------------------*/

@@ -52,10 +52,13 @@ namespace bear
       void set_screen_height( unsigned int value );
       void set_dumb_rendering( bool v );
       void set_active_area_margin( unsigned int value );
+
       void add_resources_path( const std::string& value );
       void add_resources_path( const string_list& value );
+
       void add_item_library( const std::string& value );
       void add_item_library( const string_list& value );
+
       void set_start_level( const std::string& value );
 
     private:

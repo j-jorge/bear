@@ -87,9 +87,6 @@ bear::engine::game_local_client::game_local_client
   constructor_common_init_members();
   m_game_description = description;
 
-  load_libraries( m_game_description.libraries() );
-  init_resource_pool( m_game_description.resources_path() );
-
   constructor_common_init();
 } // game_local_client::game_local_client()
 
@@ -723,6 +720,9 @@ void bear::engine::game_local_client::constructor_common_init_members()
  */
 void bear::engine::game_local_client::constructor_common_init()
 {
+  load_libraries( m_game_description.libraries() );
+  init_resource_pool( m_game_description.resources_path() );
+
   init_environment();
   init_game_filesystem();
 
@@ -1479,8 +1479,10 @@ bool bear::engine::game_local_client::check_arguments( int& argc, char** &argv )
       if ( arg.get_bool( "--auto-load-symbols" ) )
         m_symbols.add_library( std::string(), true );
 
-      load_libraries( arg.get_all_of_string("--item-library") );
-      init_resource_pool( arg.get_all_of_string("--data-path") );
+      m_game_description.add_item_library
+        ( arg.get_all_of_string("--item-library") );
+      m_game_description.add_resources_path
+        ( arg.get_all_of_string("--data-path") );
       result = true;
     }
 
