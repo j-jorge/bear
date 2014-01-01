@@ -33,6 +33,7 @@ namespace bf
   class request_item_id_event;
   template<typename T>
   class set_field_value_event;
+  class workspace_environment;
 
   /**
    * \brief The properties window of our program.
@@ -70,6 +71,8 @@ namespace bf
     void add_items( const std::vector<item_instance*>& items );
     void remove_item( item_instance* item );
     void edit_field(const std::string& field_name);
+
+    void set_workspace_environment( workspace_environment* env );
 
     void refresh();
 

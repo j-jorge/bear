@@ -70,6 +70,8 @@ void
 bf::item_field_edit::field_editor<Control, Type, true>::open
 ( item_field_edit& self, const type_field& f, const wxString& type )
 {
+  CLAW_PRECOND( self.m_workspace != NULL );
+
   typedef dialog_maker<Control, Type> dialog_maker_type;
   typedef typename dialog_maker_type::dialog_type dialog_type;
 

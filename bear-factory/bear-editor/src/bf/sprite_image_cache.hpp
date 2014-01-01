@@ -75,7 +75,7 @@ namespace bf
     }; // struct value_type
 
   public:
-    sprite_image_cache(workspace_environment& env);
+    explicit sprite_image_cache(workspace_environment& env);
     std::pair<wxBitmap, wxPoint> get_image( const sprite& s );
     std::pair<wxBitmap, wxPoint> get_image
     ( const sprite& s, unsigned int w, unsigned int h );

@@ -85,6 +85,8 @@ bool bf::windows_layout::set_current_level_view( ingame_view_frame& view )
       {
         m_current_level_view = &view;
         m_main_frame.set_active_level(m_current_level_view);
+        m_properties_frame.set_workspace_environment
+          ( &m_current_level_view->get_workspace() );
         result = true;
       }
 
@@ -117,6 +119,7 @@ void bf::windows_layout::remove_level_view( ingame_view_frame& view )
     {
       m_current_level_view = NULL;
       m_main_frame.set_active_level(m_current_level_view);
+      m_properties_frame.set_workspace_environment( NULL );
     }
 } // windows_layout::remove_level_view()
 

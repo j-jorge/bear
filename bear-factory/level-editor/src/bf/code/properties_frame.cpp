@@ -130,10 +130,21 @@ void bf::properties_frame::remove_item( item_instance* item )
  * \brief Edit a field.
  * \param field_name The name of the field to edit.
  */
-void  bf::properties_frame::edit_field(const std::string& field_name)
+void bf::properties_frame::edit_field(const std::string& field_name)
 {
   m_prop->create_field_editor(field_name);
 } // properties_frame::edit_field()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Sets the workspace environment.
+ * \param env The environment to use.
+ */
+void bf::properties_frame::set_workspace_environment
+( workspace_environment* env )
+{
+  m_prop->set_workspace_environment( env );
+} // properties_frame::set_workspace_environment()
 
 /*----------------------------------------------------------------------------*/
 /**
