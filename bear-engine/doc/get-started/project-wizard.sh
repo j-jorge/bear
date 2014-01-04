@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# The project is initialized with the files of the sample project provided with
+# this script.
+SCRIPT_ORIGIN_DIR="$(dirname $(readlink --canonicalize ${BASH_SOURCE[0]}))"
+
 # Builds and install the Bear Engine.
 # \param $1 The path to the engine's repository.
 #
@@ -40,7 +44,7 @@ else
 
     pushd "$PROJECT_ROOT" > /dev/null
 
-    git clone https://github.com/j-jorge/bear.git
+    git clone --branch sdl2-port https://github.com/j-jorge/bear.git
     BEAR_ROOT="$PWD/bear"
 
     build_engine "$BEAR_ROOT"
@@ -52,10 +56,6 @@ fi
 pushd "$PROJECT_ROOT" > /dev/null
 
 mkdir --parents "$PROJECT_NAME"
-
-# The project is initialized with the files of the sample project provided with
-# this script.
-SCRIPT_ORIGIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cp --recursive --no-clobber "$SCRIPT_ORIGIN_DIR/project-sample/"* \
     "$PROJECT_NAME/"

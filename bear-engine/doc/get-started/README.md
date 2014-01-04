@@ -33,7 +33,7 @@ Creating your project step by step
 
 First of all, you need to get the source of the engine:
 
-    git clone https://github.com/j-jorge/bear.git
+    git clone --branch sdl2-port https://github.com/j-jorge/bear.git
 
 Ensure that you have all the dependencies installed, then enter the
 loned repository in order to build and install the engine:
