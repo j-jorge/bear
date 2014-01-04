@@ -1,6 +1,5 @@
 Beginner
 
-- joystick
 - sounds
 - stars
 - animations
