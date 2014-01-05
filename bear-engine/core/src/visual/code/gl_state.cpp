@@ -335,9 +335,9 @@ void bear::visual::gl_state::draw_textured() const
       glBindTexture( GL_TEXTURE_2D, it->texture_id );
       VISUAL_GL_ERROR_THROW();
 
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
       VISUAL_GL_ERROR_THROW();
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
       VISUAL_GL_ERROR_THROW();
 
       glDrawArrays( get_gl_render_mode(), it->vertex_index, it->count );
