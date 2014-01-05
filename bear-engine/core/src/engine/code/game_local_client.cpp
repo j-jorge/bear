@@ -115,7 +115,9 @@ void bear::engine::game_local_client::run()
       init_stats();
       init_game();
 
-      load_level( m_game_description.start_level() );
+      if ( m_current_level == NULL )
+        load_level( m_game_description.start_level() );
+
       m_screen->unset_pause();
 
       run_level();
@@ -436,7 +438,10 @@ void bear::engine::game_local_client::set_waiting_level( level* the_level )
 {
   CLAW_PRECOND( the_level != NULL );
 
-  m_post_actions.push( new game_action_set_current_level(the_level) );
+  if ( m_status == status_init )
+    set_current_level( the_level );
+  else
+    m_post_actions.push( new game_action_set_current_level(the_level) );
 } // game_local_client::set_waiting_level()
 
 /*----------------------------------------------------------------------------*/
