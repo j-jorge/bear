@@ -14,4 +14,5 @@ subdirs(
   7-joystick
   8-music
   9-sound
+  10-stars
 )

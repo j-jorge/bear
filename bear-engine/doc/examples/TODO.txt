@@ -1,6 +1,5 @@
 Beginner
 
-- stars
 - animations
 - shaders
 - engine
