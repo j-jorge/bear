@@ -69,6 +69,14 @@ void init()
 }
 
 /**
+ * Releases the visual and input modules of the engine.
+ */
+void release()
+{
+  bear::visual::screen::release();
+}
+
+/**
  * Creates a writing given a font file name, a text and the size at which the
  * text must be rendered.
  * \param font_file_name The path to the font.
@@ -105,10 +113,8 @@ bear::visual::writing create_writing
 /**
  * Creates a window and draws a text in it until the quit signal is received.
  */
-int main( int argc, char* argv[] )
+void run_example()
 {
-  init();
-
   // Here we create the window; it will be immediately visible.
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
@@ -139,6 +145,19 @@ int main( int argc, char* argv[] )
 
       SDL_PumpEvents();
     }
+}
+
+/**
+ * Initializes the engine then runs the example. The engine's modules will be
+ * released before leaving.
+ */
+int main( int argc, char* argv[] )
+{
+  init();
+
+  run_example();
+
+  release();
 
   return 0;
 }

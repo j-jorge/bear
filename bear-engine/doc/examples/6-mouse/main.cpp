@@ -156,10 +156,8 @@ void transform_sprite_with_mouse( bear::visual::sprite& sprite )
  * Creates a window and draws a sprite in it until the quit signal is received.
  * The sprite is transformed in response to the mouse events.
  */
-int main( int argc, char* argv[] )
+void run_example()
 {
-  init();
-
   // Here we create the window; it will be immediately visible.
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
@@ -200,6 +198,17 @@ int main( int argc, char* argv[] )
       s.render( element );
       s.end_render();
     }
+}
+
+/**
+ * Initializes the engine then runs the example. The engine's modules will be
+ * released before leaving.
+ */
+int main( int argc, char* argv[] )
+{
+  init();
+
+  run_example();
 
   release();
 

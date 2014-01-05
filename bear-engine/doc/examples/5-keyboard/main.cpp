@@ -151,10 +151,8 @@ bear::visual::position_type read_sprite_movement()
 /**
  * Creates a window and draws a sprite in it until the quit signal is received.
  */
-int main( int argc, char* argv[] )
+void run_example()
 {
-  init();
-
   // Here we create the window; it will be immediately visible.
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
@@ -195,6 +193,17 @@ int main( int argc, char* argv[] )
       // the sprite to move too fast, in this example.
       bear::systime::sleep( 15 );
     }
+}
+
+/**
+ * Initializes the engine then runs the example. The engine's modules will be
+ * released before leaving.
+ */
+int main( int argc, char* argv[] )
+{
+  init();
+
+  run_example();
 
   release();
 

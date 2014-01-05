@@ -62,6 +62,14 @@ void init()
 }
 
 /**
+ * Releases the visual and input modules of the engine.
+ */
+void release()
+{
+  bear::visual::screen::release();
+}
+
+/**
  * Creates a sprite given an image file name and a region in this image.
  * \param file_name The path to the image use for the sprite.
  * \param clip The part of the image to use for the sprite, relatively to the
@@ -97,10 +105,8 @@ bear::visual::sprite load_sprite
 /**
  * Creates a window and draws a sprite in it until the quit signal is received.
  */
-int main( int argc, char* argv[] )
+void run_example()
 {
-  init();
-
   // Here we create the window; it will be immediately visible.
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
@@ -128,6 +134,19 @@ int main( int argc, char* argv[] )
 
       SDL_PumpEvents();
     }
+}
+
+/**
+ * Initializes the engine then runs the example. The engine's modules will be
+ * released before leaving.
+ */
+int main( int argc, char* argv[] )
+{
+  init();
+
+  run_example();
+
+  release();
 
   return 0;
 }
