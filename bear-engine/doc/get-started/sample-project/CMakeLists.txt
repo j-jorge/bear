@@ -32,6 +32,7 @@ include( "bear-config" )
 find_package( bear )
 
 include_directories( ${BEAR_ENGINE_INCLUDE_DIRECTORY} )
+include_directories( ${BEAR_ITEMS_INCLUDE_DIRECTORY} )
 
 #-------------------------------------------------------------------------------
 # Now we can describe our project.

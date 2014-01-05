@@ -44,10 +44,10 @@ loned repository in order to build and install the engine:
     make install # as root
 
 Create a directory for your project then copy the content of the
-`project-sample` directory provided with this document into your
+`sample-project` directory provided with this document into your
 project's root directory. Edit this file to set the path to the
 directory of the cloned repository of the bear engine (line 6) and
-optionally to set your program's executable name (line 41).
+optionally to set your program's executable name (line 42).
 
 Building your project
 ====

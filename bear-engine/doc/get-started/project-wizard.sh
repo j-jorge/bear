@@ -57,7 +57,7 @@ pushd "$PROJECT_ROOT" > /dev/null
 
 mkdir --parents "$PROJECT_NAME"
 
-cp --recursive --no-clobber "$SCRIPT_ORIGIN_DIR/project-sample/"* \
+cp --recursive --no-clobber "$SCRIPT_ORIGIN_DIR/sample-project/"* \
     "$PROJECT_NAME/"
 
 # The path to the Bear Engine and the name of the project must be updated in
