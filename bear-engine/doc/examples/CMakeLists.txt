@@ -13,4 +13,5 @@ subdirs(
   6-mouse
   7-joystick
   8-music
+  9-sound
 )

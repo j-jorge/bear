@@ -1,6 +1,5 @@
 Beginner
 
-- sounds
 - stars
 - animations
 - shaders
