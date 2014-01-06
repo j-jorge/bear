@@ -15,4 +15,5 @@ subdirs(
   08-music
   09-sound
   10-stars
+  11-animation
 )
