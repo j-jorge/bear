@@ -16,4 +16,5 @@ subdirs(
   09-sound
   10-stars
   11-animation
+  12-shader
 )

@@ -1,6 +1,5 @@
 Beginner
 
-- shaders
 - engine
 - editor files
   - animations
