@@ -91,6 +91,8 @@ namespace bear
       void render_loop();
 
       void render_states();
+      void draw_scene();
+
       void set_background_color();
 
       void resize_view( const screen_size_type& viewport_size );

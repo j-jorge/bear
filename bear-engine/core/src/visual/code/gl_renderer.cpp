@@ -480,7 +480,7 @@ void bear::visual::gl_renderer::render_loop()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Render the elements of m_states.
+ * \brief Renders the elements of m_states then removes them.
  */
 void bear::visual::gl_renderer::render_states()
 {
@@ -494,25 +494,36 @@ void bear::visual::gl_renderer::render_states()
   if ( m_gl_context == NULL )
     return;
 
+  draw_scene();
+
+  // The destruction of the states may call a delete_something() which will need
+  // the gl_access mutex. Thus we have to ensure it is unlocked here.
+  m_states.clear();
+} // gl_renderer::render_states()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Clears the view and calls draw() on each state of m_states.
+ */
+void bear::visual::gl_renderer::draw_scene()
+{
   boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
   make_current();
 
   set_background_color();
 
   glClear( GL_COLOR_BUFFER_BIT );
-
+  
   for ( state_list::const_iterator it( m_states.begin() );
         it != m_states.end(); ++it )
     it->draw();
   VISUAL_GL_ERROR_THROW();
-
+  
   SDL_GL_SwapWindow( m_window );
   VISUAL_GL_ERROR_THROW();
 
-  m_states.clear();
-
   release_context();
-} // gl_renderer::render_states()
+} // gl_renderer::draw_scene()
 
 /*----------------------------------------------------------------------------*/
 /**
