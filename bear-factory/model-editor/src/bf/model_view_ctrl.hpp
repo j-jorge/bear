@@ -24,6 +24,7 @@ namespace bf
   class mark_event;
   class placement_event;
   class bounding_box_event;
+  class workspace_environment;
 
   /**
    * \brief This control displays an action.
@@ -40,7 +41,9 @@ namespace bf
       }; // enum control_id
 
   public:
-    model_view_ctrl( wxWindow& parent, wxWindowID id, gui_model& m );
+    model_view_ctrl
+    ( wxWindow& parent, wxWindowID id, gui_model& m, 
+      workspace_environment& env );
 
     void reload_action();
 
@@ -86,6 +89,9 @@ namespace bf
     /** \brief Vertical scrollbar to scroll the model. */
     wxScrollBar* m_v_scrollbar;
 
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
+    
     DECLARE_EVENT_TABLE()
 
   }; // class model_view_ctrl

@@ -30,6 +30,7 @@ bear::item_information_layer::info_box::info_box
   : m_item(&item), m_delta( 0, 0 ), m_text( font )
 {
   m_text.set_auto_size(true);
+  m_text.set_background_color( bear::gui::color_type( "#000000" ) );
 
   get_informations();
 } // item_information_layer::info_box::info_box()

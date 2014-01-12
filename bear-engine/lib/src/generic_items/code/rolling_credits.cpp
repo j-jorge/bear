@@ -134,7 +134,7 @@ bear::visual::writing bear::rolling_credits::credit_line::create_writing
   if ( s.y < font.get_line_spacing() )
     s.y = font.get_line_spacing();
 
-  return visual::writing( font, text, s, a );
+  return visual::writing( font, text, visual::size_box_type( width, s.y ), a );
 } // rolling_credits::credit_line::create_writing()
 
 

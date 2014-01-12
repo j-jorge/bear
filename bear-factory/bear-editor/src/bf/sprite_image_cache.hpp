@@ -22,6 +22,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief A cache of resized or rotated sprites.
    * \author Julien Jorge
@@ -73,6 +75,7 @@ namespace bf
     }; // struct value_type
 
   public:
+    explicit sprite_image_cache(workspace_environment& env);
     std::pair<wxBitmap, wxPoint> get_image( const sprite& s );
     std::pair<wxBitmap, wxPoint> get_image
     ( const sprite& s, unsigned int w, unsigned int h );
@@ -88,6 +91,8 @@ namespace bf
     /** \brief The cache of images. */
     std::map<key_type, value_type> m_cache;
 
+    /** \brief The workspace to use. */
+    workspace_environment& m_workspace;
   }; // class sprite_image_cache
 } // namespace bf
 

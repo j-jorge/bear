@@ -21,6 +21,7 @@ namespace bf
 {
   class ingame_view;
   class model_frame;
+  class workspace_environment;
 
   /**
    * \brief The window displaying the list of marks of an action.
@@ -37,7 +38,7 @@ namespace bf
       }; // enum control_id
 
   public:
-    mark_list_frame( wxWindow* parent);
+    mark_list_frame( wxWindow* parent, workspace_environment* env);
 
     void set_model_frame( model_frame* f );
     void update_action();
@@ -76,6 +77,9 @@ namespace bf
 
     /** \brief The button to edit the properties of a mark. */
     wxButton* m_properties_mark_button;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment* m_workspace;
 
     DECLARE_EVENT_TABLE()
 

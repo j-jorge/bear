@@ -26,6 +26,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief Control for editing a field whose value is a a font.
    * \author Sébastien Angibaud
@@ -43,7 +45,8 @@ namespace bf
 
   public:
     font_edit
-    ( wxWindow& parent, const font& v = default_value<font>::get() );
+      ( wxWindow& parent, workspace_environment& env, 
+        const font& v = default_value<font>::get() );
 
     bool validate();
 
@@ -66,6 +69,9 @@ namespace bf
 
     /** \brief The control in which we display the file name. */
     wxTextCtrl* m_font_name_text;
+
+    /** \brief The workspace name. */
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

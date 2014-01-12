@@ -15,12 +15,14 @@
 #define __BF_PATH_CONFIGURATION_HPP__
 
 #include "bf/libeditor_export.hpp"
+#include "bf/workspace.hpp"
 
 #include <string>
 #include <list>
 #include <map>
 #include <set>
 #include <claw/basic_singleton.hpp>
+#include <boost/filesystem/path.hpp>
 
 namespace bf
 {
@@ -52,6 +54,16 @@ namespace bf
     /** \brief The type of the container in which we store the results of the
         calls to find_random_file_name_on_disk(). */
     typedef std::list<random_file_result> cached_random_file_list_type;
+ 
+  public:
+    /** \brief Map of workspace. */
+    typedef std::map< std::string, workspace > workspaces_map;
+    
+    /** \brief Const iterator on map of workspace. */
+    typedef workspaces_map::const_iterator workspaces_const_iterator;
+    
+    /** \brief Itrator on map of workspace. */
+    typedef workspaces_map::iterator workspaces_iterator;
 
   public:
     path_configuration();
@@ -60,15 +72,17 @@ namespace bf
 
     std::string get_config_directory() const;
 
-    bool get_full_path( std::string& p ) const;
-    bool expand_file_name( std::string& p ) const;
-    bool expand_file_name( std::string& p, std::size_t m ) const;
-    bool get_relative_path( std::string& p ) const;
-    void get_workspace_names( std::set< std::string >& workspaces ) const;
-    void set_item_class_path
-      (const std::map< std::string, std::list<std::string> >& path);
-    void set_data_path
-      (const std::map< std::string, std::list<std::string> >& path);
+    bool get_full_path( std::string& p, const std::string& w ) const;
+    bool expand_file_name( std::string& p, const std::string& w ) const;
+    bool expand_file_name
+      ( std::string& p, std::size_t m, const std::string& w ) const;
+    bool get_relative_path( std::string& p, const std::string& w ) const;
+
+    void set_workspaces(const workspaces_map& w);
+    bool has_workspace( const std::string& w ) const;
+    const workspace& get_workspace( const std::string& w ) const;
+    const workspaces_map& get_workspaces() const;
+    std::string search_workspace( const std::string& path ) const;
 
   private:
     void load();
@@ -76,10 +90,12 @@ namespace bf
     bool create_config_directory() const;
     bool create_config_file() const;
 
-    bool find_random_file_name( std::string& name, std::size_t m ) const;
+    bool find_random_file_name
+      ( std::string& name, std::size_t m, const std::string& w ) const;
     bool find_cached_random_file_name( std::string& name, std::size_t m ) const;
     bool
-      find_random_file_name_on_disk( std::string& name, std::size_t m ) const;
+      find_random_file_name_on_disk
+      ( std::string& name, std::size_t m, const std::string& w ) const;
 
     void find_all_files_in_dir
       ( const std::string& dirname, const std::string& pattern,
@@ -91,14 +107,11 @@ namespace bf
     bool glob_potential_match
       ( const std::string& pattern, const std::string& text,
         std::size_t offset ) const;
+    boost::filesystem::path resolve_path( const std::string& path ) const;
 
   public:
-    /** \brief Path to the directory containing the XML files for item
-        classes. */
-    std::map< std::string, std::list<std::string> > item_class_path;
-
-    /** \brief Path to the data directory of the game. */
-    std::map< std::string, std::list<std::string> > data_path;
+    /** \brief Map of workspaces. */
+    workspaces_map m_workspaces;
 
   private:
     /** \brief Recent results obtained with find_random_file_name. */

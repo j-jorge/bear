@@ -54,8 +54,10 @@ wxEvent* bf::sound_description_event::Clone() const
  * \param parent The frame owning this one.
  * \param id The identifier of this window.
  */
-bf::sound_frame::sound_frame( wxWindow* parent, wxWindowID id )
-  : wxPanel( parent, id ), m_sound_files(NULL), m_play_globally(NULL)
+bf::sound_frame::sound_frame
+( wxWindow* parent, wxWindowID id )
+  : wxPanel( parent, id ), m_sound_files(NULL), m_play_globally(NULL), 
+    m_workspace(NULL) 
 {
   create_controls();
 } // sound_frame::sound_frame()
@@ -94,6 +96,16 @@ bf::sound_description bf::sound_frame::get_sound_description() const
 
   return result;
 } // sound_frame::get_sound_description()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Fills the workspace environment.
+ * \param env The workspace environment used.
+ */
+void bf::sound_frame::set_workspace(workspace_environment& env)
+{
+  m_workspace = &env;
+} // sound_frame::set_workspace()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -163,7 +175,8 @@ void bf::sound_frame::on_new_sound( wxCommandEvent& WXUNUSED(event) )
   typedef custom_type<std::string> custom_string;
   typedef value_editor_dialog< base_file_edit<custom_string> > dialog_type;
 
-  dialog_type dialog( *this, _("Pick a sound file"), custom_string() );
+  dialog_type dialog
+    ( *this, _("Pick a sound file"), custom_string(), *m_workspace );
   dialog.get_editor().set_filter( _("Sound files|*.ogg") );
 
   if ( dialog.ShowModal() == wxID_OK )
@@ -196,7 +209,7 @@ void bf::sound_frame::on_edit_sound( wxCommandEvent& WXUNUSED(event) )
 
   const custom_string prev
     ( wx_to_std_string( m_sound_files->GetString( index ) ) );
-  dialog_type dialog( *this, _("Pick a sound file"), prev );
+  dialog_type dialog( *this, _("Pick a sound file"), prev, *m_workspace );
   dialog.get_editor().set_filter( _("Sound files|*.ogg") );
 
   if ( dialog.ShowModal() == wxID_OK )

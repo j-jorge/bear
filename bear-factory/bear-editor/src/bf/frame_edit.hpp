@@ -26,6 +26,7 @@
 namespace bf
 {
   class sprite_edit;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a frame.
@@ -44,8 +45,8 @@ namespace bf
 
   public:
     frame_edit
-    ( wxWindow& parent,
-      const animation_frame& frame = default_value<animation_frame>::get());
+      ( wxWindow& parent, workspace_environment& env,
+        const animation_frame& frame = default_value<animation_frame>::get());
 
     const animation_frame& get_frame() const;
 
@@ -69,6 +70,9 @@ namespace bf
 
     /** \brief The control in which we display the sprite. */
     sprite_edit* m_sprite;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
     // DECLARE_EVENT_TABLE()
 

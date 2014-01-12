@@ -43,6 +43,26 @@ bf::value_editor_dialog<Editor, Type>::value_editor_dialog
  * \brief Constructor.
  * \param parent The parent window.
  * \param title The title of the dialog.
+ * \param v The initial value.
+ * \param env The workspace environment to use.
+ */
+template<typename Editor, typename Type>
+bf::value_editor_dialog<Editor, Type>::value_editor_dialog
+( wxWindow& parent, const wxString& title, const value_type& v,
+  workspace_environment& env )
+  : wxDialog( &parent, wxID_ANY, title,
+              wxDefaultPosition, wxDefaultSize,
+              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
+{
+  m_editor = new editor_type( *this, env, m_value );
+  init();
+} // value_editor_dialog::value_editor_dialog()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param parent The parent window.
+ * \param title The title of the dialog.
  * \param values The valid values for the field.
  * \param v The initial value.
  */
@@ -184,6 +204,28 @@ bf::value_editor_dialog< Editor, std::list<T> >::value_editor_dialog
               wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
 {
   m_dialog = new dialog_type( *this, type, default_value<T>::get() );
+
+  init();
+  fill();
+} // value_editor_dialog::value_editor_dialog()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param parent The parent window.
+ * \param type The name of the edited type.
+ * \param v The initial value.
+ * \param env The workspace environment to use.
+ */
+template<typename Editor, typename T>
+bf::value_editor_dialog< Editor, std::list<T> >::value_editor_dialog
+( wxWindow& parent, const wxString& type, const value_type& v,
+  workspace_environment& env )
+  : wxDialog( &parent, wxID_ANY, _("List of '") + type + wxT("'"),
+              wxDefaultPosition, wxDefaultSize,
+              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ), m_value(v)
+{
+  m_dialog = new dialog_type( *this, type, default_value<T>::get(), env );
 
   init();
   fill();

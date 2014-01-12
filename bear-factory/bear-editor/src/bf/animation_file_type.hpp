@@ -19,6 +19,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief The file of an animation, associated with some rendering attributes.
    * \author Julien Jorge
@@ -27,7 +29,7 @@ namespace bf
     public bitmap_rendering_attributes
   {
   public:
-    void set_path( const std::string& p );
+    void set_path( const std::string& p, workspace_environment& env );
     const std::string& get_path() const;
 
     animation get_animation() const;
@@ -42,9 +44,11 @@ namespace bf
     /** \brief The path of the animation file. */
     std::string m_path;
 
+    /** \brief The relative_path of the animation file. */
+    std::string m_relative_path;
+
     /** \brief The animation returned by original_animation(). */
     animation m_animation;
-
   }; // class animation_file_type
 } // namespace bf
 

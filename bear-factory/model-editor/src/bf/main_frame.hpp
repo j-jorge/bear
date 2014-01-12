@@ -22,6 +22,7 @@ namespace bf
   class model_frame;
   class model_properties_ctrl;
   class windows_layout;
+  class workspace_environment;
 
   /**
    * \brief The main window of our program.
@@ -43,7 +44,7 @@ namespace bf
     ~main_frame();
 
     void new_model( const wxString& path );
-    void load_model( const wxString& path );
+    bool load_model( const wxString& path );
     void set_active_model( model_frame* m );
 
     void update_action();

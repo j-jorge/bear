@@ -23,12 +23,13 @@
  * \brief Constructor.
  * \param parent The window owning this window.
  * \param a The edited action.
+ * \param env The workspace environment to use.
  */
 bf::mark_properties_frame::mark_properties_frame
-( wxWindow* parent, const action* a )
+( wxWindow* parent, const action* a, workspace_environment& env )
   : wxDialog(parent, wxID_ANY, wxString(_("Mark properties"))), m_action(a),
     m_apply_angle_to_animation(false), m_pause_animation_when_hidden(false),
-    m_reset_animation_with_action(true)
+    m_reset_animation_with_action(true), m_workspace(env)
 {
   create_controls();
   Fit();
@@ -90,7 +91,7 @@ void bf::mark_properties_frame::fill_from( const mark& a )
 {
   m_mark_label = a.get_label();
   m_mark_animation = a.get_animation();
-  m_mark_animation.reload();
+  m_mark_animation.reload(m_workspace);
   m_apply_angle_to_animation = a.apply_angle_to_animation();
   m_pause_animation_when_hidden = a.pause_animation_when_hidden();
   m_reset_animation_with_action = a.reset_animation_with_action();
@@ -212,7 +213,7 @@ void bf::mark_properties_frame::on_edit_animation
 (wxCommandEvent& WXUNUSED(event))
 {
   value_editor_dialog<any_animation_edit> dlg
-    (*this, _("Animation"), m_mark_animation);
+    (*this, _("Animation"), m_mark_animation, m_workspace);
 
   if ( dlg.ShowModal() == wxID_OK )
     m_mark_animation = dlg.get_value();

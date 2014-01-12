@@ -36,6 +36,7 @@ namespace bf
 {
   class item_class_pool;
   class tree_builder;
+  class workspace_environment;
 
   /**
    * \brief Event sent when an item class is selected.
@@ -82,8 +83,12 @@ namespace bf
       }; // enum control_id
 
   public:
+    class_tree_ctrl( wxWindow* parent, int id = wxID_ANY );
     class_tree_ctrl
-    ( const item_class_pool& pool, wxWindow* parent, int id = wxID_ANY );
+      ( wxWindow* parent, workspace_environment& env, int id = wxID_ANY );
+
+    void unset_workspace();
+    void set_workspace( workspace_environment& env );
 
     wxTreeItemId GetSelection() const;
     bool ItemHasChildren( const wxTreeItemId& item ) const;
@@ -125,8 +130,8 @@ namespace bf
     /** \brief The control in which we show the description of current class. */
     wxStaticText* m_class_description;
 
-    /** \brief The classes for which we build the tree. */
-    const item_class_pool& m_pool;
+    /** \brief The workspace used. */
+    workspace_environment* m_workspace;
 
      /** \brief The control in which we show recent used classes. */
     wxListView* m_recent_used_classes_list;

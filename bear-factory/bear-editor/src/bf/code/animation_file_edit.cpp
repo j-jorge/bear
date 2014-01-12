@@ -16,17 +16,20 @@
 #include "bf/animation_view_ctrl.hpp"
 #include "bf/bitmap_rendering_attributes_edit.hpp"
 #include "bf/path_configuration.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  * \param parent The window owning this window.
+ * \param env The workspace environment to use.
  * \param v The initial animation.
  */
 bf::animation_file_edit::animation_file_edit
-( wxWindow& parent, const animation_file_type& v )
-  : wxPanel(&parent, wxID_ANY), base_edit<animation_file_type>(v)
+( wxWindow& parent, workspace_environment& env, const animation_file_type& v )
+  : wxPanel(&parent, wxID_ANY), base_edit<animation_file_type>(v), 
+    m_workspace(env)
 {
   create_controls();
   value_updated();
@@ -42,7 +45,7 @@ bool bf::animation_file_edit::validate()
 {
   if ( m_rendering_attributes->validate() )
     {
-      set_value(make_animation_file());
+      set_value(make_animation_file(m_workspace));
       return true;
     }
   else
@@ -52,14 +55,17 @@ bool bf::animation_file_edit::validate()
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Get the animation_file corresponding to the values in the control.
+ * \param env The workspace environment to use.
  */
-bf::animation_file_type bf::animation_file_edit::make_animation_file() const
+bf::animation_file_type 
+bf::animation_file_edit::make_animation_file( workspace_environment& env ) const
 {
   animation_file_type result;
 
   if ( m_rendering_attributes->validate() )
     {
-      result.set_path( wx_to_std_string(m_path_text->GetValue()) );
+      result.set_path
+        ( wx_to_std_string(m_path_text->GetValue()), env );
       result.assign(m_rendering_attributes->get_value());
     }
 
@@ -98,7 +104,7 @@ void bf::animation_file_edit::create_controls()
 
   m_path_text = new wxTextCtrl( this, wxID_ANY );
 
-  m_animation_view = new animation_view_ctrl(*this);
+  m_animation_view = new animation_view_ctrl(*this, m_workspace);
 
   create_sizer_controls();
   fill_controls();
@@ -167,7 +173,8 @@ void bf::animation_file_edit::on_browse_animation
 ( wxCommandEvent& WXUNUSED(event) )
 {
   std::string p = wx_to_std_string(m_path_text->GetValue());
-  path_configuration::get_instance().get_full_path(p);
+  path_configuration::get_instance().get_full_path
+    ( p, m_workspace.get_name() );
 
   wxFileDialog dlg
     ( this, _("Choose a file"), wxEmptyString, std_to_wx_string(p),
@@ -177,11 +184,12 @@ void bf::animation_file_edit::on_browse_animation
   if (dlg.ShowModal() == wxID_OK)
     {
       std::string new_p = wx_to_std_string( dlg.GetPath() );
-      path_configuration::get_instance().get_relative_path(new_p);
+      path_configuration::get_instance().get_relative_path
+        ( new_p, m_workspace.get_name() );
 
       m_path_text->SetValue( std_to_wx_string(new_p) );
       animation_file_type v( get_value() );
-      v.set_path(new_p);
+      v.set_path(new_p, m_workspace);
       set_value(v);
 
       fill_controls();

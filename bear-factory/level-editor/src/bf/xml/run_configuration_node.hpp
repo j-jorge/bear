@@ -19,7 +19,7 @@
 
 namespace bf
 {
-  class item_class_pool;
+  class workspace_environment;
   class run_configuration;
 
   namespace xml
@@ -32,9 +32,11 @@ namespace bf
     {
     public:
       void read
-      ( run_configuration& config, const item_class_pool& pool,
+      ( run_configuration& config, workspace_environment& env,
         const wxXmlNode* node ) const;
-      void write( const run_configuration& config, std::ostream& os ) const;
+      void write
+      ( const run_configuration& config, workspace_environment& env, 
+        std::ostream& os ) const;
 
     }; // class run_configuration_node
   } // namespace xml

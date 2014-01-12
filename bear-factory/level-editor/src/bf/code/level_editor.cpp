@@ -24,6 +24,8 @@
 #include "bf/main_frame.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/splash_screen.hpp"
+#include "bf/level_editor.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <wx/tooltip.h>
@@ -69,35 +71,12 @@ void bf::level_editor::configure()
   config_frame dlg(NULL);
 
   if ( dlg.ShowModal() == wxID_OK )
-    update_image_pool();
+    {
+      //TO DO
+      // inform that the application must be reloaded
+      ;
+    }
 } // level_editor::configure()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Update the image pool.
- */
-void bf::level_editor::update_image_pool() const
-{
-  image_pool::get_instance().clear();
-
-  std::list<std::string>::const_iterator it;
-
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
-      image_pool::get_instance().scan_directory(*it);
-} // level_editor::update_image_pool()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the item classes pool.
- */
-const bf::item_class_pool& bf::level_editor::get_item_class_pool() const
-{
-  return m_class_pool;
-} // level_editor::get_item_class_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -111,17 +90,26 @@ void bf::level_editor::compile( const wxString& path ) const
 
   try
     {
-      lvl = reader.load( get_item_class_pool(), path );
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
 
-      if ( check_level(*lvl) )
-        {
-          compile_level(*lvl, path);
-          delete lvl;
-        }
-      else
-        {
-          delete lvl;
-          claw::exception("Invalid level.");
+          lvl = reader.load( path, env );
+
+          if ( check_level(*lvl) )
+            {
+              compile_level(*lvl, path);
+              delete lvl;
+            }
+          else
+            {
+              delete lvl;
+              claw::exception("Invalid level.");
+            }
         }
     }
   catch(...)
@@ -144,11 +132,20 @@ void bf::level_editor::update( const wxString& path ) const
 
   try
     {
-      lvl = reader.load( get_item_class_pool(), path );
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          
+          lvl = reader.load( path, env );
 
-      std::ofstream f( wx_to_std_string(path).c_str() );
-      writer.save( f, *lvl );
-      delete lvl;
+          std::ofstream f( wx_to_std_string(path).c_str() );
+          writer.save( f, *lvl, env );
+          delete lvl;
+        }
     }
   catch(...)
     {
@@ -179,9 +176,19 @@ void bf::level_editor::compile_level
 
   if (f)
     {
-      compiled_file cf(f);
-      compilation_context context( std::numeric_limits<unsigned int>::max() );
-      lvl.compile(cf, context);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          
+          compiled_file cf(f);
+          compilation_context context
+            ( std::numeric_limits<unsigned int>::max(), env );
+          lvl.compile(cf, context);
+        }
     }
   else
     throw claw::exception("Can't open the level file.");
@@ -190,8 +197,9 @@ void bf::level_editor::compile_level
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Method called when the application is initializing.
+ * \param default_env Default workspace_environment.
  */
-bool bf::level_editor::do_init_app()
+bool bf::level_editor::do_init_app(const workspace_environment & default_env)
 {
   splash_screen* splash = splash_screen::create(wxT("level-splash.png"));
 
@@ -210,8 +218,6 @@ bool bf::level_editor::do_init_app()
       splash->get_status_label().SetLabel(_("Loading images..."));
       wxYield();
     }
-
-  update_image_pool();
 
   m_main_frame = new main_frame;
   m_main_frame->Show();
@@ -238,13 +244,7 @@ bool bf::level_editor::do_command_line_init()
 {
   init_config();
 
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    return ! it_map->second.empty();
-  else
-    return false;
+  return true;
 } // level_editor::do_command_line_init()
 
 /*----------------------------------------------------------------------------*/
@@ -254,31 +254,6 @@ bool bf::level_editor::do_command_line_init()
 void bf::level_editor::init_config()
 {
   m_config.load();
-
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    {
-      if ( it_map->second.empty() )
-        configure();
-      else
-        {
-          it_map = 
-            path_configuration::get_instance().item_class_path.find
-            ("default");
-          
-          if ( it_map != 
-               path_configuration::get_instance().item_class_path.end() )
-            if ( it_map->second.empty() )
-              configure();
-        }
-    }
-
-  it_map = 
-    path_configuration::get_instance().item_class_path.find("default");
-  if ( it_map != path_configuration::get_instance().item_class_path.end() )
-    m_class_pool.scan_directory( it_map->second );
 } // level_editor::init_config()
 
 /*----------------------------------------------------------------------------*/

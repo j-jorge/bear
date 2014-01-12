@@ -19,6 +19,7 @@
 
 namespace bf
 {
+  class workspace_environment;
   class item_instance;
   class item_class_pool;
 
@@ -31,12 +32,17 @@ namespace bf
     class item_instance_node
     {
     public:
-      item_instance*
-      read( const item_class_pool& pool, const wxXmlNode* node ) const;
+      item_instance_node( workspace_environment& env );
+
+      item_instance* read( const wxXmlNode* node ) const;
       void write( const item_instance& item, std::ostream& os ) const;
 
     private:
       void load_fields( item_instance& item, const wxXmlNode* node ) const;
+
+    private:
+      /** \brief The workspace environment used. */
+      workspace_environment& m_workspace;
 
     }; // class item_instance_node
   } // namespace xml

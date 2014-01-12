@@ -19,6 +19,9 @@
 #include "bf/image_pool.hpp"
 #include "bf/animation_file_xml_reader.hpp"
 #include "bf/animation_file_xml_writer.hpp"
+#include "bf/path_configuration.hpp"
+#include "bf/workspace.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include "bf/icon/compile.xpm"
@@ -33,9 +36,11 @@ DECLARE_APP(bf::animation_editor)
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Default constructor.
+ * \param env The workspace environment.
  */
-bf::main_frame::main_frame()
-  : wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Animation editor"))
+bf::main_frame::main_frame( const workspace_environment& env )
+: wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Animation editor")),
+  m_workspace(env)
 {
   create_menu();
   create_toolbar();
@@ -56,7 +61,7 @@ void bf::main_frame::load_animation( const wxString& path )
   animation anim;
 
   if ( doc.Load(path) )
-    anim = reader.load( doc.GetRoot() );
+    anim = reader.load( doc.GetRoot(), m_workspace );
 
   m_animation_edit->set_value(anim);
   m_last_saved_animation = m_animation_edit->get_value();
@@ -117,8 +122,23 @@ bool bf::main_frame::save_as()
 
   if ( dlg.ShowModal() == wxID_OK )
     {
-      m_animation_file = dlg.GetPath();
-      result = effective_save();
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string( dlg.GetPath() ) );
+      
+      if ( w == m_workspace.get_name() )
+        {
+          m_animation_file = dlg.GetPath();
+          result = effective_save();
+        }
+      else
+        {
+           wxMessageDialog dlg_err
+            ( this, 
+              _("Error. This path does not contain required ressources."), 
+              _("Error"), wxCANCEL );
+           dlg_err.ShowModal();
+        }
     }
 
   return result;
@@ -149,7 +169,7 @@ bool bf::main_frame::effective_save()
       else
         {
           wxMessageDialog dlg
-            ( this, _("Error"), _("Can't open the animation file."), wxOK );
+            ( this, _("Can't open the animation file."), _("Error"), wxOK );
 
           dlg.ShowModal();
         }
@@ -214,7 +234,7 @@ void bf::main_frame::create_toolbar()
 void bf::main_frame::create_controls()
 {
   wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-  m_animation_edit = new animation_edit(*this);
+  m_animation_edit = new animation_edit( *this, m_workspace );
 
   sizer->Add(m_animation_edit, 1, wxEXPAND | wxALL, 5 );
 
@@ -354,7 +374,7 @@ void bf::main_frame::on_configuration_menu( wxCommandEvent& WXUNUSED(event) )
 void bf::main_frame::on_update_image_pool_menu
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  wxGetApp().update_image_pool();
+  // TO DO
 } // main_frame::on_update_image_pool_menu()
 
 /*----------------------------------------------------------------------------*/
@@ -364,7 +384,7 @@ void bf::main_frame::on_update_image_pool_menu
  */
 void bf::main_frame::on_new_animation( wxCommandEvent& WXUNUSED(event) )
 {
-  main_frame* frame = new main_frame;
+  main_frame* frame = new main_frame( m_workspace );
   frame->Show();
 } // main_frame::on_new_level()
 
@@ -383,14 +403,21 @@ void bf::main_frame::on_open_animation( wxCommandEvent& WXUNUSED(event) )
 
   if ( dlg.ShowModal() == wxID_OK )
     {
-      if ( is_changed() || !m_animation_file.empty() )
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(dlg.GetPath()) );
+      
+      if ( ! w.empty() )
         {
-          main_frame* frm = new main_frame;
-          frm->load_animation( dlg.GetPath() );
-          frm->Show();
+          if ( is_changed() || !m_animation_file.empty() )
+            {
+              main_frame* frm = new main_frame( workspace_environment(w) );
+              frm->load_animation( dlg.GetPath() );
+              frm->Show();
+            }
+          else
+            load_animation( dlg.GetPath() );
         }
-      else
-        load_animation( dlg.GetPath() );
     }
 } // main_frame::on_open_animation()
 

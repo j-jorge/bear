@@ -38,7 +38,6 @@ set( BF_LE_SOURCE_FILES
   code/level_thumbnail_ctrl.cpp
   code/main.cpp
   code/main_frame.cpp
-  code/new_layer_from_image_dialog.cpp
   code/offset_selection_dialog.cpp
   code/properties_frame.cpp
   code/run_configuration.cpp

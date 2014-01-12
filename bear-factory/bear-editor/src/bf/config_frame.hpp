@@ -20,6 +20,7 @@
 #include <list>
 
 #include "bf/libeditor_export.hpp"
+#include "bf/path_configuration.hpp"
 
 namespace bf
 {
@@ -38,6 +39,7 @@ namespace bf
         IDC_ERASE_ITEM_CLASSES_BUTTON,
         IDC_BROWSE_DATA_PATH_BUTTON,
         IDC_ERASE_DATA_PATH_BUTTON,
+        IDC_BROWSE_RUN_PATH_BUTTON,
         IDC_CHOICE
       }; // enum control_id
 
@@ -60,23 +62,23 @@ namespace bf
     void on_browse_data_path(wxCommandEvent& event);
     void on_erase_data_path(wxCommandEvent& event);
     void on_select_workspace(wxCommandEvent& event);
+    void on_browse_run_path(wxCommandEvent& event);
 
   private:
     /** \brief The list of workspaces. */
-    wxChoice* m_workspaces;
+    wxChoice* m_workspaces_choice;
 
     /** \brief The list of paths to the item classes files. */
     wxListBox* m_item_classes_list;
 
     /** \brief The list of paths to the data of the game. */
-    wxListBox* m_data_path_list;
+    wxListBox* m_data_path_list; 
 
-    /** \brief Path to the directory containing the XML files for item
-        classes. */
-    std::map< std::string, std::list<std::string> > m_item_class_path;
+    /** \brief The path to the run configuration. */
+    wxListBox* m_run_path;
 
-    /** \brief Path to the data directory of the game. */
-    std::map< std::string, std::list<std::string> > m_data_path;
+    /** \brief Map of workspaces. */
+    path_configuration::workspaces_map m_workspaces;
 
     DECLARE_EVENT_TABLE()
 

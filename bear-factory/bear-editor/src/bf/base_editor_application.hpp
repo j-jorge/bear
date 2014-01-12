@@ -18,6 +18,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief The class representing the application.
    * \author Julien Jorge
@@ -32,12 +34,14 @@ namespace bf
   protected:
     virtual void compile( const wxString& path ) const;
     virtual void update( const wxString& path ) const;
-    virtual bool do_init_app();
+    virtual bool do_init_app(const workspace_environment& env);
     virtual bool do_command_line_init();
 
   private:
     bool OnInit();
-    bool init_app();
+    bool get_worspace_name( std::string& result );
+
+    bool init_app(const workspace_environment& env);
     bool command_line_init();
 
     bool compile_arguments() const;
@@ -46,6 +50,13 @@ namespace bf
     bool show_version();
     bool find_and_erase_option
     ( const wxString& long_name, const wxString& short_name );
+    bool find_and_erase_option_value
+    ( const wxString& long_name, const wxString& short_name,
+      std::string& result );
+
+    int find_option_index
+    ( const wxString& long_name, const wxString& short_name ) const;
+    void remove_options_at( int index, int count );
 
   private:
     /** \brief The locale, for internationalization. */

@@ -22,7 +22,7 @@ namespace bf
 {
   class class_tree_ctrl;
   class class_selected_event;
-  class item_class_pool;
+  class workspace_environment;
 
   /**
    * \brief A dialog to select an item class.
@@ -33,7 +33,7 @@ namespace bf
   {
   public:
     item_class_selection_dialog
-    ( const item_class_pool& pool, wxWindow* parent,
+    ( wxWindow* parent, workspace_environment& env,
       const std::string& class_name = std::string() );
 
     const std::string& get_class_name() const;

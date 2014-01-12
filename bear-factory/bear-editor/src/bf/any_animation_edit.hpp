@@ -25,6 +25,7 @@ namespace bf
 {
   class animation_edit;
   class animation_file_edit;
+  class image_pool;
 
   /**
    * \brief Control for editing a field whose value is any animation.
@@ -46,9 +47,9 @@ namespace bf
 
   public:
     any_animation_edit
-    ( wxWindow& parent,
-      const any_animation& v =
-      default_value<any_animation>::get() );
+      ( wxWindow& parent, workspace_environment& env,
+        const any_animation& v =
+        default_value<any_animation>::get() );
 
     bool validate();
 
@@ -73,6 +74,9 @@ namespace bf
 
     /** \brief The control used to edit the animation file. */
     animation_file_edit* m_animation_file_edit;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

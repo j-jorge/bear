@@ -20,6 +20,7 @@
 namespace bf
 {
   class gui_model;
+  class workspace_environment;
 
   namespace xml
   {
@@ -30,11 +31,13 @@ namespace bf
     class model_file
     {
     public:
-      gui_model* load( const wxString& file_path ) const;
+      gui_model* load
+      ( const wxString& file_path, workspace_environment& env ) const;
       void save( const gui_model& mdl, std::ostream& os ) const;
 
     private:
-      gui_model* load_model( const wxXmlNode* node ) const;
+      gui_model* load_model
+      ( const wxXmlNode* node, workspace_environment& env ) const;
 
     }; // class model_file
   } // namespace xml

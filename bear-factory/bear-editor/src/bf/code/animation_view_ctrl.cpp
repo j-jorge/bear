@@ -29,11 +29,13 @@
 /**
  * \brief Constructor.
  * \param parent The parent window.
+ * \param env The workspace environment to use.
  * \param anim The animation displayed.
  */
 bf::animation_view_ctrl::animation_view_ctrl
-( wxWindow& parent, const animation& anim )
-  : wxPanel(&parent, wxID_ANY), m_animation(anim), m_player(m_animation),
+( wxWindow& parent, workspace_environment& env, const animation& anim )
+  : wxPanel(&parent, wxID_ANY), m_workspace(env), 
+    m_animation(anim), m_player(m_animation),
     m_timer(this, ID_TIMER)
 {
   create_controls();
@@ -74,7 +76,7 @@ void bf::animation_view_ctrl::set_animation( const animation& anim )
  */
 void bf::animation_view_ctrl::create_controls()
 {
-  m_sprite_view = new sprite_view_ctrl(*this);
+  m_sprite_view = new sprite_view_ctrl(*this, m_workspace);
   m_slider = new wxSlider(this, ID_SLIDER, 0, 0, 1);
   m_factor = new spin_ctrl<double>(this, wxID_ANY);
 

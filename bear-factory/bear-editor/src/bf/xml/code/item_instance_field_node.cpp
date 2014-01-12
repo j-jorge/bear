@@ -16,6 +16,7 @@
 #include "bf/human_readable.hpp"
 #include "bf/item_class.hpp"
 #include "bf/item_instance.hpp"
+
 #include "bf/xml/reader_tool.hpp"
 #include "bf/xml/value_to_xml.hpp"
 #include "bf/xml/xml_to_value.hpp"
@@ -23,6 +24,18 @@
 
 #include <claw/assert.hpp>
 #include <claw/logger.hpp>
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructs a node parser.
+ * \param env The workspace environment used.
+ */
+bf::xml::item_instance_field_node::item_instance_field_node
+( workspace_environment& env )
+  : m_workspace( env )
+{
+
+} // item_instance_field_node::item_instance_field_node()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -262,15 +275,12 @@ void bf::xml::item_instance_field_node::load_value
 ( item_instance& item, const std::string& field_name,
   const wxXmlNode* node ) const
 {
-  Type v;
-
   node = reader_tool::skip_comments(node);
 
   if ( node == NULL )
     throw xml::missing_node( "Content for field '" + field_name  + '\'' );
 
-  xml::xml_to_value<Type> xml_conv;
-  xml_conv( v, node );
+  Type v( load_value_from_xml<Type>( node ) );
 
   if ( wx_to_std_string( human_readable<Type>::convert(v) )
        != item.get_class().get_default_value(field_name) )
@@ -290,22 +300,76 @@ void bf::xml::item_instance_field_node::load_value_list
   const wxXmlNode* node ) const
 {
   std::list<Type> v;
-
-  xml::xml_to_value<Type> xml_conv;
-
+  
   node = reader_tool::skip_comments(node);
 
   while ( node!=NULL )
     {
-      Type tmp;
-      xml_conv( tmp, node );
-      v.push_back(tmp);
-
+      v.push_back( load_value_from_xml<Type>(node) );
       node = reader_tool::skip_comments(node->GetNext());
     }
 
   item.set_value( field_name, v );
 } // item_instance_field_node::load_value_list()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Loads the object described by a given XML node.
+ * \param node The node to read
+ */
+template<typename Type>
+Type bf::xml::item_instance_field_node::load_value_from_xml
+( const wxXmlNode* node ) const
+{
+  xml::xml_to_value<Type> xml_conv;
+
+  Type result;
+  xml_conv( result, node );
+
+  return result;
+} // item_instance_field_node::load_value_from_xml()
+
+namespace bf
+{
+  namespace xml
+  {
+    /*------------------------------------------------------------------------*/
+    /**
+     * \brief Loads a sprite described by a given XML node.
+     * \param node The node to read
+     */
+    template<>
+    sprite item_instance_field_node::load_value_from_xml<sprite>
+    ( const wxXmlNode* node ) const
+    {
+      xml_to_value<sprite> xml_conv;
+    
+      sprite result;
+      xml_conv( result, node, m_workspace );
+    
+      return result;
+    } // item_instance_field_node::load_value_from_xml()
+
+    /*------------------------------------------------------------------------*/
+    /**
+     * \brief Loads the animation described by a given XML node.
+     * \param node The node to read
+     */
+    template<>
+    any_animation
+    item_instance_field_node::load_value_from_xml<any_animation>
+    ( const wxXmlNode* node ) const
+    {
+      xml_to_value<any_animation> xml_conv;
+    
+      any_animation result;
+      xml_conv( result, node, m_workspace );
+    
+      return result;
+    } // item_instance_field_node::load_value_from_xml()
+
+  } // namspace xml
+} // namespace bf
 
 /*----------------------------------------------------------------------------*/
 /**

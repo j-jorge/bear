@@ -17,7 +17,6 @@
 #include "bf/animation_file_xml_writer.hpp"
 #include "bf/compilation_context.hpp"
 #include "bf/config_frame.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/main_frame.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/version.hpp"
@@ -28,6 +27,8 @@
 #include <claw/logger.hpp>
 
 #include <limits>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/path.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -38,24 +39,12 @@ void bf::animation_editor::configure()
   config_frame dlg(NULL);
 
   if ( dlg.ShowModal() == wxID_OK )
-    update_image_pool();
+    {
+      // TO DO :
+      // Call update_image_pool() for each main_frame
+      ;
+    }
 } // animation_editor::configure()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Update the image pool.
- */
-void bf::animation_editor::update_image_pool() const
-{
-  image_pool::get_instance().clear();
-
-  std::list<std::string>::const_iterator it;
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    for ( it = it_map->second.begin(); it != it_map->second.end(); ++it )
-      image_pool::get_instance().scan_directory(*it);
-} // animation_editor::update_image_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -78,9 +67,18 @@ void bf::animation_editor::compile( const wxString& path ) const
 
   if ( doc.Load(path) )
     {
-      animation_file_xml_reader reader;
-      animation anim( reader.load( doc.GetRoot() ) );
-      compile_animation(anim, path);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          
+          animation_file_xml_reader reader;
+          animation anim( reader.load( doc.GetRoot(), env ) );
+          compile_animation(anim, path);
+        }
     }
   else
     throw claw::exception("Can't load XML file.");
@@ -98,8 +96,16 @@ void bf::animation_editor::update( const wxString& path ) const
 
   if ( doc.Load(path) )
     {
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      workspace_environment env;
+      
+      if ( ! w.empty() )
+        env = workspace_environment( w );
+
       animation_file_xml_reader reader;
-      anim = reader.load( doc.GetRoot() );
+      anim = reader.load( doc.GetRoot(), env );
     }
   else
     throw claw::exception("Can't load XML file.");
@@ -131,10 +137,19 @@ void bf::animation_editor::compile_animation
 
   if (f)
     {
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      workspace_environment env;
+      
+      if ( ! w.empty() )
+        env = workspace_environment( w );
+
       compiled_file cf(f);
       cf << BF_MAJOR_VERSION << BF_MINOR_VERSION << BF_RELEASE_NUMBER;
 
-      compilation_context context( std::numeric_limits<unsigned int>::max() );
+      compilation_context context
+        ( std::numeric_limits<unsigned int>::max(), env );
       anim.compile(cf, context);
     }
   else
@@ -144,30 +159,47 @@ void bf::animation_editor::compile_animation
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Initialize the application.
+ * \param default_env Default workspace_environment.
  */
-bool bf::animation_editor::do_init_app()
+bool bf::animation_editor::do_init_app
+( const workspace_environment& default_env )
 {
+  bool result = false;
+
   init_config();
-  update_image_pool();
 
   main_frame* frame = NULL;
 
   if (argc > 1)
     for (int i=1; i<argc; ++i)
       {
-        frame = new main_frame();
-        frame->load_animation( argv[i] );
-        frame->Show();
+        std::string w =
+          path_configuration::get_instance().search_workspace
+          ( wx_to_std_string( argv[i] ) );
+        
+        workspace_environment env(w);
+
+        if ( ! w.empty() )
+          {
+            frame = new main_frame(env);
+            frame->load_animation( argv[i] );
+            frame->Show();
+            result = true;
+          }
+        else
+          std::cout << "Error. No workspace is available for animation " 
+                    << wx_to_std_string( argv[i] ) << std::endl;
       }
   else
     {
-      frame = new main_frame();
+      frame = new main_frame( default_env );
       frame->SetSize( m_config.main_rect );
       frame->Show();
+      result = true;
     }
 
-  return true;
-} // animation_editor::init_app()
+  return result;
+} // animation_editor::do_init_app()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -176,13 +208,4 @@ bool bf::animation_editor::do_init_app()
 void bf::animation_editor::init_config()
 {
   m_config.load();
-
-  std::map< std::string, std::list<std::string> >::const_iterator it_map;
-  it_map = path_configuration::get_instance().data_path.find("default");
-  if ( it_map != path_configuration::get_instance().data_path.end() )
-    if ( it_map->second.empty() )
-      {
-        config_frame dlg(NULL);
-        dlg.ShowModal();
-      }
 } // animation_editor::init_config()

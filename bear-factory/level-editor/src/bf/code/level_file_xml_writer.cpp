@@ -26,8 +26,10 @@
  * \brief Save a level.
  * \param os The stream in which we write.
  * \param lvl The level to save.
+ * \param env The workspace environment used.
  */
-void bf::level_file_xml_writer::save( std::ostream& os, const level& lvl ) const
+void bf::level_file_xml_writer::save
+( std::ostream& os, const level& lvl, workspace_environment& env) const
 {
   os << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
      << "<level name='" << lvl.get_name() << "' width='" << lvl.get_width()
@@ -35,7 +37,7 @@ void bf::level_file_xml_writer::save( std::ostream& os, const level& lvl ) const
      << "' music='" << lvl.get_music() << "'>\n";
 
   for (unsigned int i=0; i!=lvl.layers_count(); ++i)
-    save_layer( os, lvl.get_layer(i) );
+    save_layer( os, lvl.get_layer(i), env );
 
   os << "</level>\n";
 } // level_file_xml_writer::save()
@@ -45,9 +47,10 @@ void bf::level_file_xml_writer::save( std::ostream& os, const level& lvl ) const
  * \brief Save a layer.
  * \param os The stream in which we write.
  * \param the_layer The layer to save.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_writer::save_layer
-( std::ostream& os, const layer& the_layer ) const
+( std::ostream& os, const layer& the_layer, workspace_environment& env) const
 {
   os << "  <layer class_name='" << the_layer.get_class_name()
      << "' name='"
@@ -57,7 +60,7 @@ void bf::level_file_xml_writer::save_layer
      << "' fit_level='" << the_layer.fits_level()
      << "' tag='" << the_layer.get_tag() << "'>\n\n";
 
-  save_items(os, the_layer);
+  save_items(os, the_layer, env);
   save_priority(os, the_layer);
 
   os << "  </layer><!-- " << the_layer.get_class_name() << " -->\n\n";
@@ -68,9 +71,10 @@ void bf::level_file_xml_writer::save_layer
  * \brief Save the items of a layer.
  * \param os The stream in which we write.
  * \param the_layer The layer to save.
+ * \param env The workspace environment used.
  */
 void bf::level_file_xml_writer::save_items
-( std::ostream& os, const layer& the_layer ) const
+( std::ostream& os, const layer& the_layer, workspace_environment& env) const
 {
   os << "<items>\n";
 
@@ -96,7 +100,7 @@ void bf::level_file_xml_writer::save_items
                      << " is outside layer '" << the_layer.get_class_name()
                      << "' and will not be saved." << std::endl;
       else
-        save_item( os, items.front() );
+        save_item( os, items.front(), env );
     }
 
   os << "</items>\n\n";
@@ -135,10 +139,12 @@ void bf::level_file_xml_writer::save_priority
  * \brief Save an item.
  * \param os The stream in which we write.
  * \param item The item to save.
+ * \param env The workspace environment used. 
  */
 void bf::level_file_xml_writer::save_item
-( std::ostream& os, const item_instance& item ) const
+( std::ostream& os, const item_instance& item, 
+  workspace_environment& env ) const
 {
-  xml::item_instance_node item_node;
+  xml::item_instance_node item_node(env);
   item_node.write(item, os);
 } // level_file_xml_writer::save_item()

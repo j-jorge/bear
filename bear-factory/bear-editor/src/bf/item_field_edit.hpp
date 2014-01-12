@@ -63,6 +63,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief Event sent when the value of a field is cleared.
    * \author Julien Jorge
@@ -177,6 +179,34 @@ namespace bf
   private:
     typedef std::set<item_instance*> item_set;
 
+    /**
+     * \brief The field_editor class opens a dialog to edit a field.
+     */
+    template<typename Control, typename Type, bool IsVisual>
+    struct field_editor;
+
+    /**
+     * \brief Specialization of the field_editor class for the case where the
+     *        workspace environmment is needed.
+     */
+    template<typename Control, typename Type>
+    struct field_editor<Control, Type, true>
+    {
+      static void open
+      ( item_field_edit& self, const type_field& f, const wxString& type );
+    }; // struct field_editor [with workspace environment]
+
+    /**
+     * \brief Specialization of the field_editor class for the case where the
+     *        workspace environment is not needed.
+     */
+    template<typename Control, typename Type>
+    struct field_editor<Control, Type, false>
+    {
+      static void open
+      ( item_field_edit& self, const type_field& f, const wxString& type );
+    }; // struct field_editor [without workspace environment]
+
   public:
     typedef claw::wrapped_iterator
     < item_instance,
@@ -205,6 +235,8 @@ namespace bf
     const type_field& get_common_field( const std::string& name ) const;
     bool get_field_name( unsigned int i, std::string& name ) const;
     void create_field_editor( const std::string& name );
+
+    void set_workspace_environment( workspace_environment* env );
 
   private:
     void enumerate_properties();
@@ -242,9 +274,6 @@ namespace bf
 
     template<typename Control>
     void show_property_dialog( const type_field& f, const wxString& type );
-
-    template<typename Control, typename Type>
-    void edit_field( const type_field& f, const wxString& type );
     template<typename Control, typename Type>
     void edit_field
     ( const type_field& f, const wxString& type, const wxArrayString& values );
@@ -270,6 +299,9 @@ namespace bf
 
     /** \brief The index of the last selected field. */
     int m_last_selected_field;
+
+    /** \brief The workspace environment. */
+    workspace_environment* m_workspace;
 
     /** \brief The backround color of the prefix of the fields. */
     static const wxColour s_field_prefix_colour;

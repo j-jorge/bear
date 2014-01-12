@@ -21,6 +21,7 @@ namespace bf
 {
   class action;
   class gui_model;
+  class workspace_environment;
 
   namespace xml
   {
@@ -31,7 +32,9 @@ namespace bf
     class model_action_node
     {
     public:
-      void read( gui_model& mdl, const wxXmlNode* node ) const;
+      void read
+      ( gui_model& mdl, const wxXmlNode* node, 
+        workspace_environment& env ) const;
       void write( const action& a, std::ostream& os ) const;
 
     }; // class model_action_node

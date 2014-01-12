@@ -43,6 +43,9 @@ void bear::input::system::initialize()
   SDL_EventState( SDL_FINGERUP, SDL_ENABLE );
   SDL_EventState( SDL_FINGERMOTION, SDL_ENABLE );
 
+  SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
+  SDL_EventState( SDL_MOUSEBUTTONUP, SDL_ENABLE );
+
   // force the creation of the instance
   get_instance().refresh();
 } // system::initialize()

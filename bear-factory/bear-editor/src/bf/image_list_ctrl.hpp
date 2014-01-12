@@ -23,6 +23,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief A dialog to select one of the images in bf::image_pool.
    * \author Julien Jorge
@@ -49,7 +51,7 @@ namespace bf
     }; // class list_view
 
   public:
-    image_list_ctrl( wxWindow& parent );
+    image_list_ctrl( wxWindow& parent, workspace_environment& pool );
 
     void set_list( const std::list<wxString>& img );
     void set_selection( int i );
@@ -88,6 +90,9 @@ namespace bf
 
     /** \brief The index, in m_image, of the selected image. */
     int m_selection;
+
+    /** \brief The image pool to use. */
+    workspace_environment& m_workspace;
 
     /** \brief The margin between the thumnails. */
     static const wxSize s_margin;

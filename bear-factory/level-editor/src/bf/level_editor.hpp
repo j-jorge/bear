@@ -42,15 +42,13 @@ namespace bf
     const configuration& get_config() const;
 
     void configure();
-    void update_image_pool() const;
-    const item_class_pool& get_item_class_pool() const;
 
     void compile( const wxString& path ) const;
     void update( const wxString& path ) const;
     void compile_level( const level& lvl, const wxString& path ) const;
 
   private:
-    bool do_init_app();
+    bool do_init_app(const workspace_environment & default_env);
     bool do_command_line_init();
     void init_config();
 
@@ -69,9 +67,6 @@ namespace bf
 
     /** \brief The configuration of the program. */
     configuration m_config;
-
-    /** \brief All the item classes. */
-    item_class_pool m_class_pool;
 
   }; // class level_editor
 } // namespace bf

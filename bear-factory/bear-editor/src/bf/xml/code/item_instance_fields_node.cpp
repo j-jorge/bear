@@ -24,6 +24,18 @@
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Constructs a node parser.
+ * \param env The workspace environment used.
+ */
+bf::xml::item_instance_fields_node::item_instance_fields_node
+( workspace_environment& env )
+  : m_workspace( env )
+{
+
+} // item_instance_fields_node::item_instance_fields_node()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Read an xml node "fields".
  * \param item (out) The item class for we read the hierarchy.
  * \param node The node.
@@ -34,7 +46,7 @@ void bf::xml::item_instance_fields_node::read
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("fields") );
 
-  item_instance_field_node field_node;
+  item_instance_field_node field_node( m_workspace );
   node = reader_tool::skip_comments(node->GetChildren());
 
   while ( node!=NULL )
@@ -83,7 +95,7 @@ void bf::xml::item_instance_fields_node::save_item_by_class
     save_item_by_class(item, *itc, os);
 
   item_class::field_iterator it;
-  xml::item_instance_field_node field_node;
+  xml::item_instance_field_node field_node( m_workspace );
 
   for ( it=the_class.field_begin(); it!=the_class.field_end(); ++it )
     if ( item.has_value(*it) )

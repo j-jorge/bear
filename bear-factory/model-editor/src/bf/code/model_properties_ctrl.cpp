@@ -80,7 +80,7 @@ void bf::model_properties_ctrl::create_controls()
   wxPanel* properties = new wxPanel( this );
   
   m_actions_frame = new action_list_frame( properties );
-  m_marks_frame = new mark_list_frame( properties );
+  m_marks_frame = new mark_list_frame( properties, NULL );
 
   wxBoxSizer* sizer = new wxBoxSizer( wxVERTICAL );
   sizer->Add

@@ -27,6 +27,8 @@ namespace bf
 {
   class animation_view_ctrl;
   class bitmap_rendering_attributes_edit;
+  class image_pool;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a animation.
@@ -47,7 +49,7 @@ namespace bf
 
   public:
     animation_edit
-    ( wxWindow& parent,
+    ( wxWindow& parent, workspace_environment& env,
       const animation& anim = default_value<animation>::get() );
 
     bool validate();
@@ -129,6 +131,9 @@ namespace bf
 
     /** \brief The control in which we display the animation. */
     animation_view_ctrl* m_animation_view;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

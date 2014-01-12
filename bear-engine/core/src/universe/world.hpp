@@ -34,6 +34,7 @@ namespace bear
     class force_rectangle;
     class friction_rectangle;
     class physical_item;
+    class physical_item_state;
 
     /**
      * \brief This is the representation of the world.
@@ -102,6 +103,9 @@ namespace bear
       double get_average_density( const rectangle_type& r ) const;
       density_rectangle*
       add_density_rectangle( const rectangle_type& r, double f );
+
+      force_type
+        get_total_force_on_item( const physical_item_state& item ) const;
 
       void get_environments
       ( const rectangle_type& r,

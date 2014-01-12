@@ -59,6 +59,10 @@ bf::snapshot_frame::snapshot_frame( wxWindow* parent )
 void bf::snapshot_frame::set_model_frame( model_frame* f )
 {
   m_model_frame = f;
+
+  if ( m_model_frame )
+    m_sound_frame->set_workspace( m_model_frame->get_workspace() );
+  
   fill();
 } // snapshot_frame::set_model_frame()
 

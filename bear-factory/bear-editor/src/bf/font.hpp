@@ -21,6 +21,7 @@
 namespace bf
 {
   class compiled_file;
+  class compilation_context;
 
   /**
    * \brief Font type.
@@ -37,7 +38,7 @@ namespace bf
     void set_size( double s );
     double get_size() const;
 
-    void compile( compiled_file& f ) const;
+    void compile( compiled_file& f, compilation_context& c ) const;
 
     bool operator==( const font& that ) const;
     bool operator!=( const font& that ) const;

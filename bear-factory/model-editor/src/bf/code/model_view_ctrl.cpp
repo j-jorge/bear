@@ -25,8 +25,9 @@
  * \param m The model to display.
  */
 bf::model_view_ctrl::model_view_ctrl
-( wxWindow& parent, wxWindowID id, gui_model& m )
-  : wxPanel(&parent, id)
+( wxWindow& parent, wxWindowID id, gui_model& m, 
+  workspace_environment& env )
+  : wxPanel(&parent, id), m_workspace(env)
 {
   create_controls(m);
   create_sizers();
@@ -170,7 +171,7 @@ bool bf::model_view_ctrl::get_text_drawing() const
  */
 void bf::model_view_ctrl::create_controls( gui_model& m )
 {
-  m_model_view = new model_view(*this, ID_MODEL_VIEW, m);
+  m_model_view = new model_view(*this, ID_MODEL_VIEW, m, m_workspace);
 
   m_h_scrollbar = new wxScrollBar(this, wxID_ANY);
   m_v_scrollbar = new wxScrollBar
