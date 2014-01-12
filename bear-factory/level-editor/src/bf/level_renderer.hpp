@@ -30,6 +30,7 @@ namespace bf
   class item_instance;
   class layer;
   class sprite_image_cache;
+  class workspace_environment;
 
   /**
    * \brief This control display the items of the level.
@@ -38,7 +39,7 @@ namespace bf
   class level_renderer
   {
   public:
-    explicit level_renderer( const gui_level& lvl );
+    explicit level_renderer( const gui_level& lvl, workspace_environment& env );
     ~level_renderer();
 
     wxCoord get_grip_size() const;

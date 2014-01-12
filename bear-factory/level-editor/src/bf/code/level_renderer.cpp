@@ -32,13 +32,15 @@ const wxCoord bf::level_renderer::s_grip_size = 10;
 /**
  * \brief Constructor.
  * \param lvl The level.
+ * \param env The workspace environment
  */
-bf::level_renderer::level_renderer( const gui_level& lvl )
+bf::level_renderer::level_renderer
+( const gui_level& lvl, workspace_environment& env )
   : m_level( lvl ), m_view(0, 0, 1, 1), m_drag_info(NULL),
     m_wireframe_drawing(true), m_graphic_drawing(true), m_display_grid(false),
     m_display_id(true), m_display_relationship(true),
     m_bright_background(false), m_display_continuity_hint(false),
-    m_image_cache(new sprite_image_cache),
+    m_image_cache( new sprite_image_cache(env) ),
     m_zoom(100)
 {
 

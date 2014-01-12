@@ -20,6 +20,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief A class that contains an animation or an animation_file_type, only
    *        one at once.
@@ -48,7 +50,7 @@ namespace bf
     void set_animation_file( const animation_file_type& a );
     void set_animation( const animation& a );
 
-    void reload();
+    void reload(workspace_environment& env);
     const animation_file_type& get_animation_file() const;
     const animation& get_animation() const;
 

@@ -18,7 +18,6 @@
 
 namespace bf
 {
-  class item_class_pool;
   class main_frame;
   class properties_frame;
   class layer_list_frame;
@@ -39,10 +38,7 @@ namespace bf
 
   public:
     windows_layout
-    ( const item_class_pool& class_pool, main_frame& mf, properties_frame& pf,
-      layer_list_frame& llf );
-
-    const item_class_pool& get_item_class_pool() const;
+    ( main_frame& mf, properties_frame& pf, layer_list_frame& llf );
 
     main_frame& get_main_frame();
     properties_frame& get_properties_frame();
@@ -57,9 +53,6 @@ namespace bf
     iterator end();
 
   private:
-    /** \brief The classes of the items. */
-    const item_class_pool& m_class_pool;
-
     /** \brief The main window of the program. */
     main_frame& m_main_frame;
 

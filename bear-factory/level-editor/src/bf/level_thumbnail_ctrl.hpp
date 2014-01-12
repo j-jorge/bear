@@ -21,6 +21,7 @@
 namespace bf
 {
   class ingame_view_frame;
+  class workspace_environment;
 
   /**
    * \brief This control display a small global view of the edited level.
@@ -30,7 +31,7 @@ namespace bf
     : public wxWindow
   {
   public:
-    level_thumbnail_ctrl( wxWindow* parent );
+    level_thumbnail_ctrl( wxWindow* parent, workspace_environment& env );
     ~level_thumbnail_ctrl();
 
     void set_view( ingame_view_frame* view );

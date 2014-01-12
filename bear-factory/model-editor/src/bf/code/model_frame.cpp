@@ -18,6 +18,7 @@
 #include "bf/model_file_compiler.hpp"
 #include "bf/model_view.hpp"
 #include "bf/model_view_ctrl.hpp"
+#include "bf/path_configuration.hpp"
 #include "bf/error_check_model_dialog.hpp"
 #include "bf/windows_layout.hpp"
 #include "bf/wx_facilities.hpp"
@@ -78,6 +79,11 @@ bf::model_frame::model_frame
     m_timer(this, ID_TIMER)
 {
   CLAW_PRECOND(mdl != NULL);
+
+  std::string w =
+    path_configuration::get_instance().search_workspace
+    ( wx_to_std_string( model_file ) );
+  m_workspace = workspace_environment( w );
 
   m_layout.add_model_frame(*this);
 
@@ -283,6 +289,16 @@ bf::gui_model& bf::model_frame::get_model()
   return m_history.get_model();
 } // model_frame::get_model()
 
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Get the workspace environment.
+ */
+bf::workspace_environment& bf::model_frame::get_workspace()
+{
+  return m_workspace;
+} // model_frame::get_workspace()
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Undo the last change.
@@ -420,7 +436,8 @@ void bf::model_frame::create_member_controls()
   m_play_button = new wxBitmapButton
     (this, ID_PLAY_STOP, wxBitmap(player_play_xpm));
 
-  m_model_view = new model_view_ctrl(*this, ID_MODEL_VIEW, get_model());
+  m_model_view = 
+    new model_view_ctrl(*this, ID_MODEL_VIEW, get_model(), m_workspace);
 } // model_frame::create_member_controls()
 
 /*----------------------------------------------------------------------------*/
@@ -760,7 +777,7 @@ void bf::model_frame::compile_model_no_check()
 {
   model_file_compiler c;
 
-  if ( !c.compile( get_model(), wx_to_std_string(m_model_file) ) )
+  if ( !c.compile( get_model(), wx_to_std_string(m_model_file), m_workspace ) )
     {
       wxMessageDialog dlg
         ( this, _("Error"), _("Can't open the model file."), wxOK );

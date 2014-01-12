@@ -25,6 +25,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   namespace xml
   {
     /**
@@ -61,7 +63,8 @@ namespace bf
       public bitmap_rendering_attributes_xml_to_value
     {
     public:
-      void operator()( sprite& v, const wxXmlNode* node ) const;
+      void operator()
+        ( sprite& v, const wxXmlNode* node, workspace_environment& env ) const;
 
     }; // class xml_to_value [sprite]
 
@@ -75,11 +78,17 @@ namespace bf
     {
     public:
       static bool supported_node( const wxString& node_name );
-      void operator()( animation& v, const wxXmlNode* node ) const;
+      void operator()
+        ( animation& v, const wxXmlNode* node, 
+          workspace_environment& env ) const;
 
     private:
-      void load_frames( animation& anim, const wxXmlNode* node ) const;
-      void load_frame( animation& anim, const wxXmlNode* node ) const;
+      void load_frames
+        ( animation& anim, const wxXmlNode* node, 
+          workspace_environment& env ) const;
+      void load_frame
+        ( animation& anim, const wxXmlNode* node, 
+          workspace_environment& env ) const;
 
     }; // class xml_to_value [animation]
 
@@ -94,7 +103,9 @@ namespace bf
     public:
       static bool supported_node( const wxString& node_name );
 
-      void operator()( animation_file_type& v, const wxXmlNode* node ) const;
+      void operator()
+        ( animation_file_type& v, const wxXmlNode* node,
+          workspace_environment& env ) const;
 
     }; // class xml_to_value [animation_file_type]
 
@@ -108,7 +119,9 @@ namespace bf
     public:
       static bool supported_node( const wxString& node_name );
 
-      void operator()( any_animation& v, const wxXmlNode* node ) const;
+      void operator()
+        ( any_animation& v, const wxXmlNode* node,
+          workspace_environment& env ) const;
 
     }; // class xml_to_value [any_animation]
 

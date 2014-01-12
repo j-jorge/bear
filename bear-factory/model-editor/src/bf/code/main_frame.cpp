@@ -37,7 +37,7 @@ DECLARE_APP(bf::model_editor)
  */
 bf::main_frame::main_frame()
   : wxFrame(NULL, wxID_ANY, wxT("Bear Factory - Model editor")),
-    m_model_properties(NULL), m_windows_layout(NULL)
+  m_model_properties(NULL), m_windows_layout(NULL)
 {
   SetSize( wxGetApp().get_config().main_rect );
 
@@ -84,27 +84,43 @@ void bf::main_frame::new_model( const wxString& path )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Load a model.
+ * \brief Load a model. Return true if the model has been loaded.
  * \param path The path to the model to load.
  */
-void bf::main_frame::load_model( const wxString& path )
+bool bf::main_frame::load_model( const wxString& path )
 {
+  bool result = false;
   wxLogNull no_log;
 
   gui_model* mdl(NULL);
 
   try
     {
-      xml::model_file reader;
-      mdl = reader.load(path);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+      
+          xml::model_file reader;
+          mdl = reader.load(path, env);
 
-      add_model_view( new model_frame(*m_windows_layout, mdl, path) );
+          add_model_view( new model_frame(*m_windows_layout, mdl, path) );
+          result = true;
+        }
+      else
+        std::cout << "Error. No workspace is available for model " 
+                  << wx_to_std_string( path ) << std::endl;
     }
   catch( std::exception& e )
     {
       delete mdl;
       throw;
     }
+
+  return result;
 } // main_frame::load_model()
 
 /*----------------------------------------------------------------------------*/
@@ -267,7 +283,7 @@ void bf::main_frame::on_configuration_menu(wxCommandEvent& WXUNUSED(event))
  */
 void bf::main_frame::on_update_image_pool_menu(wxCommandEvent& WXUNUSED(event))
 {
-  wxGetApp().update_image_pool();
+  // to do
 } // main_frame::on_update_image_pool_menu()
 
 /*----------------------------------------------------------------------------*/

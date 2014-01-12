@@ -15,6 +15,7 @@
 
 #include "bf/class_not_found.hpp"
 #include "bf/item_class_xml_parser.hpp"
+#include "bf/path_configuration.hpp"
 #include "bf/scan_dir.hpp"
 
 #include <claw/assert.hpp>
@@ -30,7 +31,6 @@ bf::item_class_pool::open_item_class_file::open_item_class_file
 ( std::map<std::string, std::string>& c )
   : class_files(c)
 {
-
 } // item_class_pool::open_item_class_file::open_item_class_file()
 
 /*----------------------------------------------------------------------------*/
@@ -59,7 +59,15 @@ void bf::item_class_pool::open_item_class_file::operator()
 } // item_class_pool::open_item_class_file::operator()()
 
 
-
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Constructor.
+ * \param w The name of workspace. 
+ */
+bf::item_class_pool::item_class_pool( const std::string& w )
+{
+  scan_directory( w );
+} // item_class_pool::item_class_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -72,34 +80,6 @@ bf::item_class_pool::~item_class_pool()
   for ( it=m_item_class.begin(); it!=m_item_class.end(); ++it )
     delete it->second;
 } // item_class_pool::~item_class_pool()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Read all item files from a given directory and in its subdirectories.
- * \param dir_path The paths to the directores to scan.
- */
-void
-bf::item_class_pool::scan_directory( const std::list<std::string>& dir_path )
-{
-  std::list<std::string>::const_iterator it;
-  std::vector<std::string> ext(1);
-  ext[0] = ".xml";
-
-  for (it=dir_path.begin(); it!=dir_path.end(); ++it)
-    {
-      std::map<std::string, std::string> files;
-
-      open_item_class_file f(files);
-      scan_dir<open_item_class_file> scan;
-
-      scan( *it, f, ext.begin(), ext.end() );
-
-      while ( !files.empty() )
-        load_class( files.begin()->first, files );
-    }
-
-  field_unicity_test();
-} // item_class_pool::scan_directory()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -160,6 +140,40 @@ bf::item_class_pool::const_iterator bf::item_class_pool::end() const
 {
   return const_iterator( m_item_class.end() );
 } // item_class_pool::end()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Read all item files from a given directory and in its subdirectories.
+ * \param w The workspace used.
+ */
+void bf::item_class_pool::scan_directory( const std::string& w )
+{
+  std::vector<std::string> ext(1);
+  ext[0] = ".xml";
+
+  if ( path_configuration::get_instance().has_workspace( w ) )
+    {
+      workspace::path_list_const_iterator it;
+      const workspace& work
+        ( path_configuration::get_instance().get_workspace( w ) );
+      
+      for ( it = work.item_class_begin(); 
+            it != work.item_class_end(); ++it )
+        {
+          std::map<std::string, std::string> files;
+          
+          open_item_class_file f(files);
+          scan_dir<open_item_class_file> scan;
+          
+          scan( *it, f, ext.begin(), ext.end() );
+          
+          while ( !files.empty() )
+            load_class( files.begin()->first, files );
+        }
+    }
+
+  field_unicity_test();
+} // item_class_pool::scan_directory()
 
 /*----------------------------------------------------------------------------*/
 /**

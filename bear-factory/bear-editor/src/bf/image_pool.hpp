@@ -31,7 +31,6 @@ namespace bf
    * \author Julien Jorge
    */
   class BEAR_EDITOR_EXPORT image_pool
-    : public claw::pattern::basic_singleton<image_pool>
   {
   private:
     typedef std::map<wxString, wxBitmap> image_map;
@@ -73,9 +72,7 @@ namespace bf
 
   public:
     image_pool();
-
-    void clear();
-    void scan_directory( const std::string& dir_path );
+    image_pool( const std::string& w );
 
     wxBitmap get_image( const wxString& image_name ) const;
     wxBitmap get_thumbnail( const wxString& image_name ) const;
@@ -93,6 +90,9 @@ namespace bf
     const_iterator end() const;
 
   private:
+    void clear();
+    void scan_directory( const std::string& dir_path );
+    
     void load_spritepos_file( const std::string& image_path ) const;
     spritepos_entries read_spritepos_file( std::istream& f ) const;
 
@@ -112,6 +112,8 @@ namespace bf
     /** \brief The spritepos entries for each image. */
     mutable spritepos_map m_spritepos;
 
+    /** \brief The name of the workspace. */
+    std::string m_workspace;
   }; // class image_pool
 } // namespace bf
 

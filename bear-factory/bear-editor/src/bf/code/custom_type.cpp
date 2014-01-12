@@ -13,6 +13,7 @@
  */
 #include "bf/custom_type.hpp"
 
+#include "bf/compilation_context.hpp"
 #include "bf/compiled_file.hpp"
 #include "bf/path_configuration.hpp"
 
@@ -20,13 +21,17 @@
 /**
  * \brief Output the value in the compiled file.
  * \param cf The file to write in.
+ * \param c The context in which the compilation is done.
  */
-void bf::base_file_type::compile( compiled_file& cf ) const
+void bf::base_file_type::compile
+( compiled_file& cf, compilation_context& c ) const
 {
   std::string p(get_value());
 
-  if ( path_configuration::get_instance().expand_file_name(p) )
-    path_configuration::get_instance().get_relative_path(p);
+  if ( path_configuration::get_instance().expand_file_name
+       ( p, c.get_workspace_name() ) )
+    path_configuration::get_instance().get_relative_path
+      ( p, c.get_workspace_name() );
 
   cf << p;
 } // base_file_type::compile()

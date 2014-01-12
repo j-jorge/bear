@@ -26,10 +26,12 @@
 /**
  * \brief Constructor.
  * \param parent The window owning this one.
+ * \param env The workspace environment used.
  */
-bf::level_thumbnail_ctrl::level_thumbnail_ctrl( wxWindow* parent )
+bf::level_thumbnail_ctrl::level_thumbnail_ctrl
+( wxWindow* parent, workspace_environment& env )
   : wxWindow(parent, wxID_ANY), m_level(NULL),
-    m_image_cache(new sprite_image_cache)
+    m_image_cache(new sprite_image_cache(env))
 {
 
 } // level_thumbnail_ctrl::level_thumbnail_ctrl()

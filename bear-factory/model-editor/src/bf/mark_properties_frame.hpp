@@ -23,6 +23,7 @@ namespace bf
 {
   class action;
   class any_animation_edit;
+  class workspace_environment;
 
   /**
    * \brief The mark_properties window of our program.
@@ -39,7 +40,8 @@ namespace bf
       }; // enum control_id
 
   public:
-    mark_properties_frame( wxWindow* parent, const action* a );
+    mark_properties_frame
+    ( wxWindow* parent, const action* a, workspace_environment& env );
 
     const std::string& get_mark_name() const;
     const bf::any_animation& get_mark_animation() const;
@@ -95,6 +97,9 @@ namespace bf
     /** \brief The control to check if the animation is reset when the action
         containing the mark begins. */
     wxCheckBox* m_reset_with_action_box;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

@@ -21,6 +21,7 @@
 namespace bf
 {
   class run_configuration;
+  class workspace_environment;
 
   /**
    * \brief This class runs a level.
@@ -31,7 +32,8 @@ namespace bf
   public:
     level_runner
     ( const run_configuration& config, const level& lvl,
-      std::size_t layer_index, double x, double y );
+      std::size_t layer_index, double x, double y, 
+      workspace_environment& env );
 
     void run();
 
@@ -64,6 +66,9 @@ namespace bf
 
     /** \brief The y-origin of the items to insert. */
     const double m_y;
+    
+    /** \brief The workspace environment. */
+    workspace_environment& m_workspace;
 
   }; // class level_runner
 } // namespace bf

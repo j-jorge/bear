@@ -21,8 +21,10 @@
 
 namespace bf
 {
+  class image_pool;
   class item_instance;
   class type_field;
+  class workspace_environment;
 
   namespace xml
   {
@@ -33,6 +35,8 @@ namespace bf
     class item_instance_field_node
     {
     public:
+      item_instance_field_node( workspace_environment& pool );
+
       void read( item_instance& item, const wxXmlNode* node ) const;
       void write
       ( const item_instance& item, const type_field& f,
@@ -55,6 +59,9 @@ namespace bf
       ( item_instance& item, const std::string& field_name,
         const wxXmlNode* node ) const;
 
+      template<typename Type>
+      Type load_value_from_xml( const wxXmlNode* node ) const;
+
       template<typename T>
       void save_value
       ( std::ostream& os, const std::string& field_name,
@@ -74,6 +81,10 @@ namespace bf
       void save_value_list
       ( std::ostream& os, const std::string& field_name,
         const item_instance& item, const std::string& node_name ) const;
+
+    private:
+      /** \brief The workspace environment used. */
+      workspace_environment& m_workspace;
 
     }; // class item_instance_field_node
   } // namespace xml

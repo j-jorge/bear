@@ -20,10 +20,10 @@
 namespace bf
 {
   class gui_level;
-  class item_class_pool;
   class item_instance;
   class layer;
   class type_field;
+  class workspace_environment;
 
   /**
    * \brief A class for reading source level files.
@@ -33,27 +33,26 @@ namespace bf
   {
   public:
     gui_level* load
-    ( const item_class_pool& pool, const wxString& file_path ) const;
+    ( const wxString& file_path, workspace_environment& env ) const;
 
   private:
     gui_level*
-    load_level( const item_class_pool& pool, const wxXmlNode* node ) const;
+    load_level( const wxXmlNode* node,
+      workspace_environment& env ) const;
     void load_layers
-    ( const item_class_pool& pool, gui_level& lvl,
-      const wxXmlNode* node ) const;
+    ( gui_level& lvl, const wxXmlNode* node, workspace_environment& env ) const;
     void load_layer
-    ( const item_class_pool& pool, gui_level& lvl,
-      const wxXmlNode* node ) const;
+    ( gui_level& lvl, const wxXmlNode* node, workspace_environment& env ) const;
 
     void load_layer_content
-    ( const item_class_pool& pool, layer& lay, const wxXmlNode* node ) const;
+    ( layer& lay, const wxXmlNode* node, workspace_environment& env ) const;
 
     void load_items
-    ( const item_class_pool& pool, layer& lay, const wxXmlNode* node ) const;
+    ( layer& lay, const wxXmlNode* node, workspace_environment& env ) const;
     void load_priorities( layer& lay, const wxXmlNode* node ) const;
 
     void load_item
-    ( const item_class_pool& pool, layer& lay, const wxXmlNode* node ) const;
+    ( layer& lay, const wxXmlNode* node, workspace_environment& env ) const;
     void load_fields( item_instance& item, const wxXmlNode* node ) const;
 
   }; // class level_file_xml_reader

@@ -12,8 +12,8 @@
  * \author Julien Jorge
  */
 #include "bf/image_pool.hpp"
-
 #include "bf/path_configuration.hpp"
+#include "bf/workspace.hpp"
 #include "bf/scan_dir.hpp"
 #include "bf/wx_facilities.hpp"
 
@@ -102,37 +102,28 @@ bf::image_pool::image_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Remove all thumbnails and images.
+ * \brief Constructor.
+ * \param w The workspace to load.
  */
-void bf::image_pool::clear()
+bf::image_pool::image_pool( const std::string& w )
 {
-  m_image.clear();
-  m_thumbnail.clear();
-} // image_pool::clear()
+  m_workspace = w;
+  
+  wxImage::AddHandler( new wxPNGHandler() );
+  wxImage::AddHandler( new wxJPEGHandler() );
+  wxImage::AddHandler( new wxTGAHandler() );
 
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Read all item files from a given directory and in its subdirectories.
- * \param dir_path The path to the directory to scan.
- */
-void bf::image_pool::scan_directory( const std::string& dir_path )
-{
-  std::vector<std::string> ext(4);
-  ext[0] = ".png";
-  ext[1] = ".jpg";
-  ext[2] = ".tga";
-  ext[3] = ".bmp";
-
-  std::string root( dir_path );
-  if ( !root.empty() )
-    if ( root[root.size() - 1] != '/' )
-      root += '/';
-
-  load_thumb_func f(m_thumbnail, root);
-  scan_dir<load_thumb_func> scan;
-
-  scan( root, f, ext.begin(), ext.end() );
-} // image_pool::scan_directory()
+  if ( path_configuration::get_instance().has_workspace( w ) )
+    {
+      workspace::path_list_const_iterator it;
+      const workspace& work
+        ( path_configuration::get_instance().get_workspace( w ) );
+      
+      for ( it = work.data_begin(); 
+            it != work.data_end(); ++it )
+        scan_directory(*it);
+    }
+} // image_pool::image_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -243,6 +234,40 @@ bf::image_pool::const_iterator bf::image_pool::end() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Remove all thumbnails and images.
+ */
+void bf::image_pool::clear()
+{
+  m_image.clear();
+  m_thumbnail.clear();
+} // image_pool::clear()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Read all item files from a given directory and in its subdirectories.
+ * \param dir_path The path to the directory to scan.
+ */
+void bf::image_pool::scan_directory( const std::string& dir_path )
+{
+  std::vector<std::string> ext(4);
+  ext[0] = ".png";
+  ext[1] = ".jpg";
+  ext[2] = ".tga";
+  ext[3] = ".bmp";
+
+  std::string root( dir_path );
+  if ( !root.empty() )
+    if ( root[root.size() - 1] != '/' )
+      root += '/';
+
+  load_thumb_func f(m_thumbnail, root);
+  scan_dir<load_thumb_func> scan;
+
+  scan( root, f, ext.begin(), ext.end() );
+} // image_pool::scan_directory()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Load the spritepos entries associated with an image.
  * \param image_path The path to the image.
  */
@@ -259,14 +284,15 @@ void bf::image_pool::load_spritepos_file( const std::string& image_path ) const
     {
       std::string std_name( image_path.substr(0, pos) + ".spritepos" );
 
-      if ( path_configuration::get_instance().expand_file_name(std_name, 1) )
+      if ( path_configuration::get_instance().expand_file_name
+           (std_name, 1, m_workspace) )
         {
           std::ifstream f( std_name.c_str() );
 
           if (f)
-            m_spritepos[key] = read_spritepos_file(f);
+              m_spritepos[key] = read_spritepos_file(f);
           else
-            m_spritepos[key] = spritepos_entries();
+              m_spritepos[key] = spritepos_entries();
         }
     }
 } // image_pool::load_spritepos_file()
@@ -312,7 +338,8 @@ void bf::image_pool::load_image_data( const wxString& name ) const
 {
   std::string std_name( wx_to_std_string(name) );
 
-  if ( path_configuration::get_instance().expand_file_name(std_name, 1) )
+  if ( path_configuration::get_instance().expand_file_name
+       (std_name, 1, m_workspace) )
     {
       if ( m_thumbnail.find(name) == m_thumbnail.end() )
         m_thumbnail[name] = load_thumb_func::load(std_name);

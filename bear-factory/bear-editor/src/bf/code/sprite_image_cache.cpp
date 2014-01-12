@@ -14,6 +14,7 @@
 #include "bf/sprite_image_cache.hpp"
 
 #include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 
 #include <claw/assert.hpp>
@@ -93,6 +94,17 @@ unsigned int bf::sprite_image_cache::key_type::get_height() const
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Constructor.
+ * \param env The workspace environment to use.
+ */
+bf::sprite_image_cache::sprite_image_cache(workspace_environment& env)
+  : m_workspace(env)
+{
+
+} // sprite_image_cache::sprite_image_cache()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Get an image.
  * \param s The sprite of which we want the image.
  * \return get_image( s, s.get_clip_width(), s.get_clip_height() )
@@ -163,8 +175,8 @@ bf::sprite_image_cache::add_image( const key_type& k )
       k.get_sprite().get_clip_width(), k.get_sprite().get_clip_height() );
 
   v.resulting_image.first =
-    image_pool::get_instance().get_image(name).GetSubBitmap(sub_bmp);
-
+    m_workspace.get_image_pool().get_image(name).GetSubBitmap(sub_bmp);
+  
   if ( trinary_logic::to_bool(k.get_sprite().get_mirrored_status()) ||
        trinary_logic::to_bool(k.get_sprite().get_flipped_status())
        || (k.get_sprite().get_clip_width() != k.get_width())

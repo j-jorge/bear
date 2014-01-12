@@ -21,6 +21,7 @@
 namespace bf
 {
   class level;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a level.
@@ -37,7 +38,7 @@ namespace bf
       }; // enum control_id
 
   public:
-    level_properties_frame( wxWindow* parent );
+    level_properties_frame( wxWindow* parent, workspace_environment& env );
 
     unsigned int get_width() const;
     unsigned int get_height() const;
@@ -85,6 +86,9 @@ namespace bf
 
     /** \brief The control in which we display the name of the level. */
     wxTextCtrl* m_name_text;
+    
+    /** \brief The workspace environment. */
+    workspace_environment& m_workspace;
 
     /** \brief Minimum width of the level. */
     static const unsigned int s_min_width;

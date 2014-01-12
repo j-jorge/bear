@@ -56,9 +56,8 @@ namespace bf
     ::iterator_type const_iterator;
 
   public:
+    item_class_pool(const std::string& w);
     ~item_class_pool();
-
-    void scan_directory( const std::list<std::string>& dir_path );
 
     bool has_item_class( const std::string& class_name ) const;
     const item_class& get_item_class( const std::string& class_name ) const;
@@ -68,10 +67,16 @@ namespace bf
     const_iterator end() const;
 
   private:
+    void scan_directory( const std::string& dir_path );
+
     void load_class
     ( const std::string& name, std::map<std::string, std::string>& files );
 
     void field_unicity_test();
+
+    // not implemented
+    item_class_pool& operator=( const item_class_pool& that );
+    item_class_pool( const item_class_pool& that );
 
   private:
     /** \brief The item classes. */

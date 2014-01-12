@@ -71,7 +71,7 @@ bf::main_frame::main_frame()
   tabs->AddPage( prop, _("Properties") );
 
   m_windows_layout =
-    new windows_layout( wxGetApp().get_item_class_pool(), *this, *prop, *lay );
+    new windows_layout( *this, *prop, *lay );
 
   create_menu();
   create_controls();
@@ -95,21 +95,31 @@ bf::main_frame::~main_frame()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Create an emty level.
+ * \brief Create an empty level.
  * \param path The path of the level file in which it will be saved.
  */
 void bf::main_frame::new_level( const wxString& path )
 {
-  level_properties_frame dlg(this);
+   std::string w = 
+     path_configuration::get_instance().search_workspace
+     ( wx_to_std_string(path) );
+   
+   if ( ! w.empty() )
+     {
+       workspace_environment env(w);
+       level_properties_frame dlg(this, env);
 
-  if ( dlg.ShowModal() == wxID_OK )
-    {
-      gui_level* lvl =
-        new gui_level
-        ( dlg.get_name(), dlg.get_width(), dlg.get_height(), dlg.get_music() );
+       if ( dlg.ShowModal() == wxID_OK )
+         {
+           gui_level* lvl =
+             new gui_level
+             ( dlg.get_name(), dlg.get_width(), dlg.get_height(), 
+               dlg.get_music() );
 
-      add_level_view( new ingame_view_frame(*m_windows_layout, lvl, path) );
-    }
+           add_level_view
+             ( new ingame_view_frame(*m_windows_layout, lvl, env, path) );
+         }
+     }
 } // main_frame::new_level()
 
 /*----------------------------------------------------------------------------*/
@@ -119,11 +129,21 @@ void bf::main_frame::new_level( const wxString& path )
  */
 void bf::main_frame::load_level( const wxString& path )
 {
-  wxLogNull no_log;
+  std::string w = 
+     path_configuration::get_instance().search_workspace
+     ( wx_to_std_string(path) );
+   
+   if ( ! w.empty() )
+     {
+       workspace_environment env(w);
+       
+       wxLogNull no_log;
 
-  level_file_xml_reader reader;
-  gui_level* lvl = reader.load(wxGetApp().get_item_class_pool(), path);
-  add_level_view( new ingame_view_frame(*m_windows_layout, lvl, path) );
+       level_file_xml_reader reader;
+       gui_level* lvl = reader.load(path, env);
+       add_level_view
+         ( new ingame_view_frame(*m_windows_layout, lvl, env, path) );
+     }
 } // main_frame::load_level()
 
 /*----------------------------------------------------------------------------*/
@@ -134,6 +154,11 @@ void bf::main_frame::load_level( const wxString& path )
 void bf::main_frame::set_active_level( ingame_view_frame* view )
 {
   turn_level_entries(view!=NULL);
+  
+  if ( view == NULL )
+    m_tree_ctrl->unset_workspace();
+  else
+    m_tree_ctrl->set_workspace( view->get_workspace() );
 } // main_frame::set_active_level()
 
 /*----------------------------------------------------------------------------*/
@@ -162,12 +187,15 @@ void bf::main_frame::use_class( const std::string& c )
  */
 void bf::main_frame::save_run_configuration() const
 {
+  // TO DO
+  /*
   const std::string path =
     path_configuration::get_instance().get_config_directory() + "/run.xml";
   const xml::run_configuration_file writer = xml::run_configuration_file();
   std::ofstream output(path.c_str());
-
+  
   writer.save( m_run_configuration, output );
+  */
 } // main_frame::save_run_configuration()
 
 /*----------------------------------------------------------------------------*/
@@ -178,13 +206,14 @@ void bf::main_frame::load_run_configuration()
 {
   const std::string path =
     path_configuration::get_instance().get_config_directory() + "/run.xml";
-  const xml::run_configuration_file reader = xml::run_configuration_file();
+  //  const xml::run_configuration_file reader = xml::run_configuration_file();
   const wxLogNull no_log;
 
   try
     {
-      m_run_configuration =
-        reader.load( wxGetApp().get_item_class_pool(), std_to_wx_string(path) );
+      // TO DO
+      //m_run_configuration =
+      //  reader.load( wxGetApp().get_item_class_pool(), std_to_wx_string(path) );
     }
   catch( const std::exception& e )
     {
@@ -247,9 +276,7 @@ void bf::main_frame::create_controls()
   // class tree
   m_tree_frame = 
     new wxFrame( this, ID_SELECT_CLASS_DIALOG, _("Select an item class") );
-  m_tree_ctrl = 
-    new class_tree_ctrl 
-    (m_windows_layout->get_item_class_pool(), m_tree_frame, ID_TREE_FRAME);
+  m_tree_ctrl =  new class_tree_ctrl( m_tree_frame, ID_TREE_FRAME );
 
   wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
@@ -391,7 +418,7 @@ bf::main_frame::on_run_configuration_menu( wxCommandEvent& WXUNUSED(event) )
 void bf::main_frame::on_update_image_pool_menu
 ( wxCommandEvent& WXUNUSED(event) )
 {
-  wxGetApp().update_image_pool();
+
 } // main_frame::on_update_image_pool_menu()
 
 /*----------------------------------------------------------------------------*/

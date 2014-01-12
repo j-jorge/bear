@@ -22,6 +22,8 @@
 
 namespace bf
 {
+  class workspace_environment;
+
   /**
    * \brief A class for reading source animation files.
    * \author Julien Jorge
@@ -29,8 +31,9 @@ namespace bf
   class BEAR_EDITOR_EXPORT animation_file_xml_reader
   {
   public:
-    animation load( const wxString& file_path ) const;
-    animation load( wxXmlNode* node ) const;
+    animation load
+      ( const wxString& file_path, workspace_environment& env ) const;
+    animation load( wxXmlNode* node, workspace_environment& env ) const;
 
   }; // class animation_file_xml_reader
 } // namespace bf

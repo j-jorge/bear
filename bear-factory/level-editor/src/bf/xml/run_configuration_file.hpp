@@ -17,11 +17,12 @@
 #include <iostream>
 #include <wx/xml/xml.h>
 
-#include "bf/item_class_pool.hpp"
 #include "bf/run_configuration.hpp"
 
 namespace bf
 {
+  class workspace_environment;
+
   namespace xml
   {
     /**
@@ -32,9 +33,11 @@ namespace bf
     {
     public:
       run_configuration
-      load( const item_class_pool& pool, const wxString& file_path ) const;
+      load( workspace_environment& env, const wxString& file_path ) const;
 
-      void save( const run_configuration& config, std::ostream& os ) const;
+      void save
+      ( const run_configuration& config, workspace_environment& env, 
+        std::ostream& os ) const;
 
     }; // class run_configuration_file
   } // namespace xml

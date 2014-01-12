@@ -23,6 +23,7 @@ namespace bf
   class item_instance;
   class layer;
   class level;
+  class workspace_environment;
 
   /**
    * \brief A class for writing source level files.
@@ -31,13 +32,19 @@ namespace bf
   class level_file_xml_writer
   {
   public:
-    void save( std::ostream& f, const level& lvl ) const;
+    void save
+    ( std::ostream& f, const level& lvl, workspace_environment& env ) const;
 
   private:
-    void save_layer( std::ostream& os, const layer& the_layer ) const;
-    void save_items( std::ostream& os, const layer& item ) const;
+    void save_layer
+    ( std::ostream& os, const layer& the_layer, 
+      workspace_environment& env ) const;
+    void save_items( std::ostream& os, const layer& item, 
+                     workspace_environment& env ) const;
     void save_priority( std::ostream& os, const layer& item ) const;
-    void save_item( std::ostream& os, const item_instance& item ) const;
+    void save_item
+    ( std::ostream& os, const item_instance& item, 
+      workspace_environment& env ) const;
 
   }; // class level_file_xml_writer
 } // namespace bf

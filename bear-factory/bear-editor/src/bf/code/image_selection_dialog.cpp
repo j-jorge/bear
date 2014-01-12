@@ -14,7 +14,7 @@
 #include "bf/image_selection_dialog.hpp"
 
 #include "bf/image_list_ctrl.hpp"
-#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -26,12 +26,14 @@ wxString bf::image_selection_dialog::s_previous_pattern;
 /**
  * \brief Constructor.
  * \param parent The parent window.
+ * \param env The workspace environment  to use.
  * \param val The name of the current selected image.
  */
 bf::image_selection_dialog::image_selection_dialog
-( wxWindow& parent, const wxString& val )
+( wxWindow& parent, workspace_environment& env, const wxString& val )
   : wxDialog( &parent, wxID_ANY, _("Choose an image"), wxDefaultPosition,
-              wxSize(640, 480), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER )
+              wxSize(640, 480), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER ),
+    m_workspace(env)
 {
   create_controls();
   fill_image_list();
@@ -54,7 +56,7 @@ wxString bf::image_selection_dialog::get_image_name() const
  */
 void bf::image_selection_dialog::create_controls()
 {
-  m_image_list = new image_list_ctrl( *this );
+  m_image_list = new image_list_ctrl( *this, m_workspace );
   m_pattern = new wxTextCtrl( this, IDC_PATTERN_TEXT );
   m_pattern->SetValue(s_previous_pattern);
 
@@ -82,9 +84,6 @@ void bf::image_selection_dialog::fill_image_list()
   std::list<wxString> keep;
   wxString pat( m_pattern->GetValue() );
 
-  image_pool::const_iterator it = image_pool::get_instance().begin();
-  image_pool::const_iterator eit = image_pool::get_instance().end();
-
   if ( pat.IsEmpty() )
     pat = wxT("*");
 
@@ -95,6 +94,9 @@ void bf::image_selection_dialog::fill_image_list()
        && (pat[pat.length() - 1] != wxT('?')) )
     pat += wxT("*");
 
+  image_pool::const_iterator it = m_workspace.get_image_pool().begin();
+  image_pool::const_iterator eit = m_workspace.get_image_pool().end();
+  
   for (; it!=eit; ++it)
     if ( it->Matches( pat ) )
       keep.push_back( *it );

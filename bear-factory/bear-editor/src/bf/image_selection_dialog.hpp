@@ -22,6 +22,7 @@
 namespace bf
 {
   class image_list_ctrl;
+  class workspace_environment;
 
   /**
    * \brief A dialog to select one of the images in bf::image_pool.
@@ -39,7 +40,8 @@ namespace bf
 
   public:
     image_selection_dialog
-    ( wxWindow& parent, const wxString& val = wxEmptyString );
+      ( wxWindow& parent, workspace_environment& env, 
+        const wxString& val = wxEmptyString );
 
     wxString get_image_name() const;
 
@@ -56,6 +58,9 @@ namespace bf
 
     /** \brief A text in which the user can enter a part of an image name. */
     wxTextCtrl* m_pattern;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
     /** \brief The last pattern used in this kind of dialog. */
     static wxString s_previous_pattern;

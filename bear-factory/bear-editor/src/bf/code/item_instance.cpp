@@ -633,10 +633,10 @@ void bf::item_instance::compile_field_single
         ( m_item_reference.find(field_name)->second.get_value() );
       break;
     case type_field::font_field_type:
-      m_font.find(field_name)->second.compile(f);
+      m_font.find(field_name)->second.compile(f,c);
       break;
     case type_field::sample_field_type:
-      m_sample.find(field_name)->second.compile(f);
+      m_sample.find(field_name)->second.compile(f,c);
       break; 
     case type_field::color_field_type:
       m_color.find(field_name)->second.compile(f);
@@ -698,10 +698,10 @@ void bf::item_instance::compile_field_list
         break;
       }
     case type_field::font_field_type:
-      compile_list( f, m_font_list.find(field_name)->second );
+      compile_list( f, c, m_font_list.find(field_name)->second );
       break;
     case type_field::sample_field_type:
-      compile_list( f, m_sample_list.find(field_name)->second );
+      compile_list( f, c, m_sample_list.find(field_name)->second );
       break;
     case type_field::color_field_type:
       compile_list( f, m_color_list.find(field_name)->second );

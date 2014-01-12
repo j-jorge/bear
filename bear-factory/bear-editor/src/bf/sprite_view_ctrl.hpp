@@ -25,6 +25,7 @@
 namespace bf
 {
   class sprite_view;
+  class workspace_environment;
 
   /**
    * \brief This control displays a sprite and some buttons to adjust its size.
@@ -46,7 +47,9 @@ namespace bf
       }; // enum control_id
 
   public:
-    sprite_view_ctrl( wxWindow& parent, const sprite& spr = sprite() );
+    sprite_view_ctrl
+      ( wxWindow& parent, workspace_environment& env,
+        const sprite& spr = sprite() );
 
     void set_sprite( const sprite& spr );
 
@@ -82,6 +85,9 @@ namespace bf
 
     /** \brief A static text for mouse position. */
     wxStaticText* m_mouse_position;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

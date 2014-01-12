@@ -25,6 +25,7 @@
 #include "bf/main_frame.hpp"
 #include "bf/slope.hpp"
 #include "bf/windows_layout.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/wx_type_cast.hpp"
 
@@ -85,14 +86,17 @@ bool bf::ingame_view::item_drop_target::OnDropText
  * \param parent The window owning this window.
  * \param lvl The level.
  * \param layout The window layout of the program.
+ * \param env The workspace environment used.
  *
  * The level will be deleted in the destructor.
  */
 bf::ingame_view::ingame_view
-( ingame_view_frame& parent, gui_level* lvl, windows_layout& layout )
+( ingame_view_frame& parent, gui_level* lvl, windows_layout& layout, 
+  workspace_environment& env )
   : super( &parent, wxID_ANY ), m_parent(parent), m_layout(layout),
-    m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_renderer( *lvl ),
-    m_selection_manager( *lvl, layout.get_properties_frame() )
+    m_history(lvl), m_view(0, 0), m_drag_info(NULL), m_renderer( *lvl, env ),
+    m_selection_manager( *lvl, layout.get_properties_frame() ),
+    m_workspace(env)
 {
   CLAW_PRECOND(lvl != NULL);
   SetDropTarget( new item_drop_target(*this) );
@@ -582,11 +586,11 @@ bool bf::ingame_view::add_item
   bool result = false;
 
   if ( !empty() )
-    if ( m_layout.get_item_class_pool().has_item_class(class_name) )
+    if ( m_workspace.get_item_class_pool().has_item_class(class_name) )
       {
         item_instance* item =
           new item_instance
-          ( m_layout.get_item_class_pool().get_item_class_ptr(class_name) );
+          ( m_workspace.get_item_class_pool().get_item_class_ptr(class_name) );
          
         wxPoint pos_view = compute_local_view_position();
         item->get_rendering_parameters().set_position
@@ -643,7 +647,7 @@ const bf::level_check_result& bf::ingame_view::get_check_result() const
 void bf::ingame_view::save( std::ostream& os )
 {
   level_file_xml_writer lvl;
-  lvl.save( os, get_level() );
+  lvl.save( os, get_level(), m_workspace );
   m_history.set_saved();
 } // ingame_view::save()
 
@@ -653,9 +657,9 @@ void bf::ingame_view::save( std::ostream& os )
  * \param f The file in which we compile.
  * \param o The level of optimization during the compilation.
  */
-void bf::ingame_view::compile(compiled_file& f, unsigned int o)
+void bf::ingame_view::compile( compiled_file& f, unsigned int o )
 {
-  compilation_context context(o);
+  compilation_context context(o, m_workspace);
   get_level().compile(f, context);
   m_history.set_compiled();
 } // ingame_view::save()

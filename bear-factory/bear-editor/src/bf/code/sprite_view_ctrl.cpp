@@ -18,17 +18,19 @@
 #include "bf/icon/zoom_original.xpm"
 #include "bf/icon/zoom_in.xpm"
 #include "bf/icon/zoom_out.xpm"
-#include "bf/icon/zoom_fit.xpm"
 #include "bf/wx_facilities.hpp"
+#include "bf/icon/zoom_fit.xpm"
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  * \param parent The parent window.
+ * \param env The workspace environment to use.
  * \param spr The sprite to display.
  */
-bf::sprite_view_ctrl::sprite_view_ctrl( wxWindow& parent, const sprite& spr )
-  : wxPanel(&parent), m_sprite_view(NULL)
+bf::sprite_view_ctrl::sprite_view_ctrl
+( wxWindow& parent, workspace_environment& env, const sprite& spr )
+  : wxPanel(&parent), m_sprite_view(NULL), m_workspace(env)
 {
   create_controls();
   create_sizers();
@@ -66,7 +68,7 @@ void bf::sprite_view_ctrl::create_controls()
   choices.Add( wxT("200") );
   choices.Add( wxT("400") );
 
-  m_sprite_view = new sprite_view(*this, ID_SPRITE_VIEW);
+  m_sprite_view = new sprite_view(*this, m_workspace, ID_SPRITE_VIEW);
   m_sprite_view->Connect
     ( ID_SPRITE_VIEW, wxEVT_MOTION,
       wxMouseEventHandler(sprite_view_ctrl::on_mouse_move), NULL, this );

@@ -16,7 +16,9 @@
 
 #include <wx/wx.h>
 
+#include "bf/image_pool.hpp"
 #include "bf/animation_edit.hpp"
+#include "bf/workspace_environment.hpp"
 
 namespace bf
 {
@@ -38,12 +40,12 @@ namespace bf
       }; // enum control_id
 
   public:
-    main_frame();
+    main_frame(const workspace_environment& w);
 
     void load_animation( const wxString& path );
-    void update_image_pool() const;
 
-  private:
+private:
+    void search_workspace( const std::string& env );
     void make_title();
     bool is_changed() const;
 
@@ -90,6 +92,9 @@ namespace bf
 
     /** \brief The path to the animation file. */
     wxString m_animation_file;
+
+    /** \brief The workspace environment. */
+    workspace_environment m_workspace;
 
     DECLARE_EVENT_TABLE()
 

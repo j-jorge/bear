@@ -20,6 +20,7 @@
 namespace bf
 {
   class mark;
+  class workspace_environment;
 
   namespace xml
   {
@@ -31,7 +32,7 @@ namespace bf
     {
     public:
       void
-      read( mark& m, const wxXmlNode* node ) const;
+      read( mark& m, const wxXmlNode* node, workspace_environment& env ) const;
       void write( const mark& m, std::ostream& os ) const;
 
     }; // class model_mark_node

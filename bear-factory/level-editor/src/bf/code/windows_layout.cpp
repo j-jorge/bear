@@ -23,28 +23,17 @@
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
- * \param class_pool All the item classes.
  * \param mf The main window.
  * \param pf The window displaying informations on an item.
  * \param llf The windows displayong the list of layers in the current level.
  */
 bf::windows_layout::windows_layout
-( const item_class_pool& class_pool, main_frame& mf, properties_frame& pf,
-  layer_list_frame& llf )
-  : m_class_pool(class_pool), m_main_frame(mf), m_properties_frame(pf),
+( main_frame& mf, properties_frame& pf, layer_list_frame& llf )
+  : m_main_frame(mf), m_properties_frame(pf),
     m_layer_list(llf), m_current_level_view(NULL)
 {
 
 } // windows_layout::windows_layout()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Get the item_class_pool.
- */
-const bf::item_class_pool& bf::windows_layout::get_item_class_pool() const
-{
-  return m_class_pool;
-} // windows_layout::get_item_class_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -96,6 +85,8 @@ bool bf::windows_layout::set_current_level_view( ingame_view_frame& view )
       {
         m_current_level_view = &view;
         m_main_frame.set_active_level(m_current_level_view);
+        m_properties_frame.set_workspace_environment
+          ( &m_current_level_view->get_workspace() );
         result = true;
       }
 
@@ -128,6 +119,7 @@ void bf::windows_layout::remove_level_view( ingame_view_frame& view )
     {
       m_current_level_view = NULL;
       m_main_frame.set_active_level(m_current_level_view);
+      m_properties_frame.set_workspace_environment( NULL );
     }
 } // windows_layout::remove_level_view()
 

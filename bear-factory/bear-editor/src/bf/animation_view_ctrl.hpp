@@ -22,6 +22,7 @@
 namespace bf
 {
   class sprite_view_ctrl;
+  class workspace_environment;
 
   /**
    * \brief This control displays a animation and some buttons to play it.
@@ -46,7 +47,8 @@ namespace bf
 
   public:
     animation_view_ctrl
-    ( wxWindow& parent, const animation& anim = animation() );
+    ( wxWindow& parent, workspace_environment& env,
+      const animation& anim = animation() );
 
     void set_animation( const animation& anim );
 
@@ -69,6 +71,9 @@ namespace bf
     void on_timer( wxTimerEvent& event );
 
   private:
+    /** \brief The workspace environment used. */
+    workspace_environment& m_workspace;
+
     /** \brief The control that displays the current sprite of the animation. */
     sprite_view_ctrl* m_sprite_view;
 

@@ -15,6 +15,7 @@
 #define __BF_VALUE_EDITOR_DIALOG_HPP__
 
 #include <list>
+#include <string>
 
 #include <wx/dialog.h>
 #include <wx/listbox.h>
@@ -43,6 +44,10 @@ namespace bf
   public:
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const value_type& v );
+
+    value_editor_dialog
+    ( wxWindow& parent, const wxString& title, const value_type& v,
+      workspace_environment& env );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& title, const wxArrayString& values,
@@ -93,6 +98,10 @@ namespace bf
   public:
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const value_type& v );
+
+    value_editor_dialog
+    ( wxWindow& parent, const wxString& type, const value_type& v,
+      workspace_environment& env );
 
     value_editor_dialog
     ( wxWindow& parent, const wxString& type, const wxArrayString& values,

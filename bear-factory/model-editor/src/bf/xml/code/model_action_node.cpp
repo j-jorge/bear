@@ -30,9 +30,11 @@
  * \brief Read an xml node "action".
  * \param mdl (out) The model for which we read the item.
  * \param node The item node.
+ * \param env The workspace environment used.
  */
 void
-bf::xml::model_action_node::read( gui_model& mdl, const wxXmlNode* node ) const
+bf::xml::model_action_node::read
+( gui_model& mdl, const wxXmlNode* node, workspace_environment& env ) const
 {
   CLAW_PRECOND( node!=NULL );
   CLAW_PRECOND( node->GetName() == wxT("action") );
@@ -64,7 +66,7 @@ bf::xml::model_action_node::read( gui_model& mdl, const wxXmlNode* node ) const
       if ( node != NULL )
         if ( node->GetName() == wxT("marks") )
           {
-            marks_node.read(*a, node);
+            marks_node.read(*a, node, env);
             node = reader_tool::skip_comments(node->GetNext());
           }
 

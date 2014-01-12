@@ -21,6 +21,7 @@ namespace bf
 {
   class main_frame;
   class model;
+  class workspace_environment;
 
   /**
    * \brief The class representing the application.
@@ -36,20 +37,19 @@ namespace bf
     const configuration& get_config() const;
 
     void configure();
-    void update_image_pool() const;
 
     void compile( const wxString& path ) const;
     void update( const wxString& path ) const;
     bool compile_model( const model& mdl, const wxString& path ) const;
 
   private:
-    bool do_init_app();
+    bool do_init_app(const workspace_environment & default_env);
     bool do_command_line_init();
     void init_config();
 
     bool check_model( const model& mdl ) const;
 
-    void load_models();
+    bool load_models();
 
   private:
     /** \brief The main window of our program. */

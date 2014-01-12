@@ -16,10 +16,10 @@
 #include "bf/model_file_compiler.hpp"
 #include "bf/config_frame.hpp"
 #include "bf/gui_model.hpp"
-#include "bf/image_pool.hpp"
 #include "bf/main_frame.hpp"
 #include "bf/path_configuration.hpp"
 #include "bf/version.hpp"
+#include "bf/workspace_environment.hpp"
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/model_file.hpp"
 
@@ -63,26 +63,12 @@ void bf::model_editor::configure()
   config_frame dlg(NULL);
 
   if ( dlg.ShowModal() == wxID_OK )
-    update_image_pool();
+    {
+      // TO DO
+      // Call update_image_pool() for each main_frame 
+      ; 
+    }
 } // model_editor::configure()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Update the image pool.
- */
-void bf::model_editor::update_image_pool() const
-{
-  image_pool::get_instance().clear();
-
-  std::list<std::string>::const_iterator it;
-  path_configuration::workspaces_const_iterator it_map;
-  it_map = path_configuration::get_instance().workspaces.find("default");
-
-  if ( it_map != path_configuration::get_instance().workspaces.end() )
-    for ( it = it_map->second.data_begin(); 
-          it != it_map->second.data_end(); ++it )
-    image_pool::get_instance().scan_directory(*it);
-} // model_editor::update_image_pool()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -95,18 +81,27 @@ void bf::model_editor::compile( const wxString& path ) const
 
   try
     {
-      xml::model_file reader;
-      mdl = reader.load(path);
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
 
-      if ( check_model(*mdl) )
-        {
-          compile_model(*mdl, path);
-          delete mdl;
-        }
-      else
-        {
-          delete mdl;
-          claw::exception("Invalid model.");
+          xml::model_file reader;
+          mdl = reader.load(path, env);
+          
+          if ( check_model(*mdl) )
+            {
+              compile_model(*mdl, path);
+              delete mdl;
+            }
+          else
+            {
+              delete mdl;
+              claw::exception("Invalid model.");
+            }
         }
     }
   catch(...)
@@ -127,12 +122,21 @@ void bf::model_editor::update( const wxString& path ) const
 
   try
     {
-      xml::model_file mf;
-      mdl = mf.load(path);
-
-      std::ofstream f( wx_to_std_string(path).c_str() );
-      mf.save(*mdl, f);
-
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          
+          xml::model_file mf;
+          mdl = mf.load(path, env);
+          
+          std::ofstream f( wx_to_std_string(path).c_str() );
+          mf.save(*mdl, f);
+        }
+         
       delete mdl;
     }
   catch(...)
@@ -150,14 +154,24 @@ void bf::model_editor::update( const wxString& path ) const
  * \return true if the compilation went ok.
  */
 bool
-bf::model_editor::compile_model( const model& mdl, const wxString& path ) const
+bf::model_editor::compile_model
+( const model& mdl, const wxString& path ) const
 {
   bool result(true);
 
   try
     {
       model_file_compiler c;
-      c.compile( mdl, wx_to_std_string(path) );
+
+      std::string w = 
+        path_configuration::get_instance().search_workspace
+        ( wx_to_std_string(path) );
+      
+      if ( ! w.empty() )
+        {
+          workspace_environment env(w);
+          c.compile( mdl, wx_to_std_string(path), env );
+        }
     }
   catch(...)
     {
@@ -169,19 +183,23 @@ bf::model_editor::compile_model( const model& mdl, const wxString& path ) const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Initialize the application.
+ * \brief Initialize the application. 
+ * \param default_env Default workspace_environment.
  */
-bool bf::model_editor::do_init_app()
+bool bf::model_editor::do_init_app(const workspace_environment & default_env)
 {
+  bool result = false;
   init_config();
-  update_image_pool();
 
   m_main_frame = new main_frame;
   m_main_frame->Show();
 
-  load_models();
+  result = load_models();
+  
+  if ( ! result )
+    m_main_frame->Close();
 
-  return true;
+  return result;
 } // model_editor::do_init_app()
 
 /*----------------------------------------------------------------------------*/
@@ -202,13 +220,6 @@ bool bf::model_editor::do_command_line_init()
 void bf::model_editor::init_config()
 {
   m_config.load();
-
-  path_configuration::workspaces_const_iterator it_map;
-  it_map = path_configuration::get_instance().workspaces.find("default");
-
-  if ( it_map != path_configuration::get_instance().workspaces.end() )
-    if ( it_map->second.data_begin() == it_map->second.data_end() )
-      configure();
 } // model_editor::init_config()
 
 /*----------------------------------------------------------------------------*/
@@ -236,14 +247,20 @@ bool bf::model_editor::check_model( const model& mdl ) const
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load the models passed on the command line.
+ * return true if a model has been loaded.
  */
-void bf::model_editor::load_models()
+bool bf::model_editor::load_models()
 {
+  bool result = false;
+  unsigned int models_count = 0;
+
   for (int i=1; i<argc; ++i)
     if ( wxString(argv[i]) != wxT("--") )
       try
         {
-          m_main_frame->load_model( argv[i] );
+          models_count++;
+          if ( m_main_frame->load_model( argv[i] ) )
+            result = true;
         }
       catch( std::ios_base::failure& e )
         {
@@ -255,4 +272,6 @@ void bf::model_editor::load_models()
         {
           claw::logger << claw::log_error << e.what() << std::endl;
         }
+
+  return result || models_count == 0;
 } // level_editor::load_levels()

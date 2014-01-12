@@ -30,7 +30,8 @@ namespace bf
   {
   public:
     sprite_view
-      ( wxWindow& parent, wxWindowID id, const sprite& spr = sprite() );
+      ( wxWindow& parent, workspace_environment& env, wxWindowID id, 
+        const sprite& spr = sprite() );
 
     void set_sprite( const sprite& spr );
     void set_zoom( unsigned int z );

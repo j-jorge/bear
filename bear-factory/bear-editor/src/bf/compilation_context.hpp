@@ -26,6 +26,7 @@
 namespace bf
 {
   class sprite;
+  class workspace_environment;
 
   /**
    * \brief The compilation context keep some data used during the compilation
@@ -48,7 +49,8 @@ namespace bf
     typedef std::map<std::string, unsigned int> identifier_map;
 
   public:
-    compilation_context( unsigned int optimization_level );
+    compilation_context
+      ( unsigned int optimization_level, workspace_environment& env );
 
     rectangle get_opaque_rectangle
       ( const sprite& s, const std::string& image_name );
@@ -56,6 +58,7 @@ namespace bf
     unsigned int get_compiled_identifier( const std::string& item ) const;
     void set_compiled_identifier( const std::string& item, unsigned int id );
     void clear_compiled_identifiers();
+    std::string get_workspace_name() const;
 
   private:
     rectangle compute_opaque_rectangle( const sprite& s );
@@ -73,6 +76,9 @@ namespace bf
 
     /** \brief The optimisation level during the compilation. */
     unsigned int m_optimization_level;
+
+    /** \brief The workspace environment to use. */
+    workspace_environment& m_workspace;
 
   }; // class compilation_context
 } // namespace bf

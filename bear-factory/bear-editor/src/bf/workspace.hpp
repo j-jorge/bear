@@ -35,6 +35,9 @@ namespace bf
   public:
     workspace();
 
+    void set_run_path(const std::string& path);
+    std::string get_run_path() const;
+
     void add_item_class_path( const std::string& path );
     void clear_item_class_path();
     void add_data_path( const std::string& path );
@@ -58,6 +61,9 @@ namespace bf
 
     /** \brief Path to the data directory of the game. */
     path_list m_data_path;
+
+    /** \brier The path of the run configuration. */
+    std::string m_run_path;
   }; // class workspace
 } // namespace bf
 

@@ -28,6 +28,7 @@ namespace bf
 {
   class bitmap_rendering_attributes_edit;
   class sprite_view_ctrl;
+  class workspace_environment;
 
   /**
    * \brief The window showing the properties of a sprite.
@@ -48,7 +49,8 @@ namespace bf
 
   public:
     sprite_edit
-    ( wxWindow& parent, const sprite& spr = default_value<sprite>::get() );
+      ( wxWindow& parent, workspace_environment& env, 
+        const sprite& spr = default_value<sprite>::get() );
 
     bool validate();
 
@@ -102,6 +104,9 @@ namespace bf
 
     /** \brief The control in which we display the sprite. */
     sprite_view_ctrl* m_sprite_view;
+
+    /** \brief The image pool to use. */
+    workspace_environment& m_workspace;
 
     DECLARE_EVENT_TABLE()
 

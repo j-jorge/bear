@@ -22,6 +22,7 @@
 #include <map>
 #include <set>
 #include <claw/basic_singleton.hpp>
+#include <boost/filesystem/path.hpp>
 
 namespace bf
 {
@@ -71,11 +72,17 @@ namespace bf
 
     std::string get_config_directory() const;
 
-    bool get_full_path( std::string& p ) const;
-    bool expand_file_name( std::string& p ) const;
-    bool expand_file_name( std::string& p, std::size_t m ) const;
-    bool get_relative_path( std::string& p ) const;
+    bool get_full_path( std::string& p, const std::string& w ) const;
+    bool expand_file_name( std::string& p, const std::string& w ) const;
+    bool expand_file_name
+      ( std::string& p, std::size_t m, const std::string& w ) const;
+    bool get_relative_path( std::string& p, const std::string& w ) const;
+
     void set_workspaces(const workspaces_map& w);
+    bool has_workspace( const std::string& w ) const;
+    const workspace& get_workspace( const std::string& w ) const;
+    const workspaces_map& get_workspaces() const;
+    std::string search_workspace( const std::string& path ) const;
 
   private:
     void load();
@@ -83,10 +90,12 @@ namespace bf
     bool create_config_directory() const;
     bool create_config_file() const;
 
-    bool find_random_file_name( std::string& name, std::size_t m ) const;
+    bool find_random_file_name
+      ( std::string& name, std::size_t m, const std::string& w ) const;
     bool find_cached_random_file_name( std::string& name, std::size_t m ) const;
     bool
-      find_random_file_name_on_disk( std::string& name, std::size_t m ) const;
+      find_random_file_name_on_disk
+      ( std::string& name, std::size_t m, const std::string& w ) const;
 
     void find_all_files_in_dir
       ( const std::string& dirname, const std::string& pattern,
@@ -98,10 +107,11 @@ namespace bf
     bool glob_potential_match
       ( const std::string& pattern, const std::string& text,
         std::size_t offset ) const;
+    boost::filesystem::path resolve_path( const std::string& path ) const;
 
   public:
     /** \brief Map of workspaces. */
-    workspaces_map workspaces;
+    workspaces_map m_workspaces;
 
   private:
     /** \brief Recent results obtained with find_random_file_name. */
