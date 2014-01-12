@@ -326,7 +326,7 @@ bear::visual::gl_screen::get_render_coord
   result[2] = rotate( coord_double(right, bottom), a, center );
   result[3] = rotate( coord_double(left, bottom), a, center );
 
-  for ( std::size_t i(0); i!=4; ++i ) {
+  for ( std::size_t i(0); i!=result.size(); ++i ) {
     result[i].x = (int)( result[i].x + 0.5 );
     result[i].y = (int)( result[i].y + 0.5 );
   }
@@ -355,50 +355,32 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
   const GLdouble half_pixel_height( 1.0 / tex_size.y / 2 );
 
   result.first_point.x =
-    std::max
-    ( half_pixel_width,
-      std::min
-      ( GLdouble(1.0) - half_pixel_width,
-        clip_rectangle.position.x / tex_size.x ) );
+    clip_rectangle.position.x / tex_size.x + half_pixel_width;
 
   result.second_point.x =
-    std::max
-    ( half_pixel_width,
-      std::min
-      ( GLdouble(1.0) - half_pixel_width,
-        clip_rectangle.right() / tex_size.x ) );
+    clip_rectangle.right() / tex_size.x - half_pixel_width;
 
   result.first_point.y =
-    std::max
-    ( half_pixel_height,
-      std::min
-      ( GLdouble(1.0) - half_pixel_height,
-        clip_rectangle.position.y / tex_size.y ) );
+    clip_rectangle.position.y / tex_size.y + half_pixel_height;
 
   result.second_point.y =
-    std::max
-    ( half_pixel_height,
-      std::min
-      ( GLdouble(1.0) - half_pixel_height,
-        clip_rectangle.bottom() / tex_size.y ) );
+    clip_rectangle.bottom() / tex_size.y - half_pixel_height;
 
-  if ( result.first_point.x > result.second_point.x )
-    result = empty_clip;
-  else if ( result.first_point.y > result.second_point.y )
-    result = empty_clip;
-  else
-    {
-      CLAW_POSTCOND( result.first_point.x > 0 );
-      CLAW_POSTCOND( result.first_point.x < 1 );
-      CLAW_POSTCOND( result.first_point.y > 0 );
-      CLAW_POSTCOND( result.first_point.y < 1 );
+  if ( result.second_point.x < result.first_point.x )
+    result.second_point.x = result.first_point.x;
 
-      CLAW_POSTCOND( result.second_point.x > 0 );
-      CLAW_POSTCOND( result.second_point.x < 1 );
+  if ( result.second_point.y < result.first_point.y )
+    result.second_point.y = result.first_point.y;
 
-      CLAW_POSTCOND( result.second_point.y > 0 );
-      CLAW_POSTCOND( result.second_point.y < 1 );
-    }
+  CLAW_POSTCOND( result.first_point.x > 0 );
+  CLAW_POSTCOND( result.first_point.x < 1 );
+  CLAW_POSTCOND( result.first_point.y > 0 );
+  CLAW_POSTCOND( result.first_point.y < 1 );
+
+  CLAW_POSTCOND( result.second_point.x > 0 );
+  CLAW_POSTCOND( result.second_point.x < 1 );
+  CLAW_POSTCOND( result.second_point.y > 0 );
+  CLAW_POSTCOND( result.second_point.y < 1 );
 
   return result;
 } // gl_screen::get_texture_clip()
