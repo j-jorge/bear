@@ -106,6 +106,10 @@ namespace bear
         /** \brief The placement of each character. */
         character_to_placement m_placement;
 
+        /** \brief The margin around the glyphes in the texture. The value is
+            applied on each side, vertically and horizontally. */
+        static const bear::visual::size_box_type s_margin;
+
       }; // class glyph_sheet
       
       /** \brief The type of the collection in which the glyph_sheets are

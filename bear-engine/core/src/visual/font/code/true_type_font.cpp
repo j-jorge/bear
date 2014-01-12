@@ -18,12 +18,16 @@
 #include <claw/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
+const bear::visual::size_box_type
+bear::visual::true_type_font::glyph_sheet::s_margin(1, 1);
+
+/*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  */
 bear::visual::true_type_font::glyph_sheet::glyph_sheet()
   : m_image_size( 512, 512 ), m_image( m_image_size.x, m_image_size.y ),
-    m_next_position( 1, 1 ),
+    m_next_position( 0, 0 ),
     m_current_line_height(0)
 {
 
@@ -41,10 +45,10 @@ bear::visual::true_type_font::glyph_sheet::can_draw
 {
   const size_box_type glyph_size( face.get_glyph_size(c) );
 
-  if ( m_next_position.x + glyph_size.x < m_image.width() )
-    return m_next_position.y + glyph_size.y < m_image.height();
+  if ( m_next_position.x + glyph_size.x + 2 * s_margin.x < m_image.width() )
+    return m_next_position.y + glyph_size.y + 2 * s_margin.y < m_image.height();
   else
-    return m_next_position.y + m_current_line_height + 1 < m_image.height();
+    return m_next_position.y + m_current_line_height < m_image.height();
 } // true_type_font::glyph_sheet::can_draw()
 
 /*----------------------------------------------------------------------------*/
@@ -60,23 +64,30 @@ void bear::visual::true_type_font::glyph_sheet::draw_character
 
   const size_box_type glyph_size( face.get_glyph_size(c) );
 
-  if ( m_next_position.x + glyph_size.x >= m_image.width() )
+  if ( m_next_position.x + glyph_size.x + 2 * s_margin.x >= m_image.width() )
     {
-      m_next_position.x = 1;
-      m_next_position.y += m_current_line_height + 1;
+      m_next_position.x = 0;
+      m_next_position.y += m_current_line_height;
       m_current_line_height = 0;
     }
 
-  m_image.draw( face.get_glyph( c ), m_next_position );
+  m_image.draw( face.get_glyph( c ), m_next_position + s_margin );
 
   character_placement placement;
-  placement.clip = clip_rectangle( m_next_position, glyph_size );
+  placement.clip = clip_rectangle( m_next_position, glyph_size + 2 * s_margin );
   placement.metrics = face.get_glyph_metrics( c );
+  
+  placement.metrics =
+    glyph_metrics
+    ( placement.metrics.get_advance() - s_margin,
+      placement.metrics.get_bearing() - s_margin );
 
   m_placement[ c ] = placement;
 
-  m_next_position.x += glyph_size.x;
-  m_current_line_height = std::max( m_current_line_height, glyph_size.y );
+  m_next_position.x += glyph_size.x + 2 * s_margin.x;
+  m_current_line_height =
+    std::max
+    ( m_current_line_height, (unsigned int)( glyph_size.y + 2 * s_margin.y ) );
 } // true_type_font::glyph_sheet::draw_character()
 
 /*----------------------------------------------------------------------------*/
