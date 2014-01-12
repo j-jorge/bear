@@ -2,7 +2,7 @@
  * \file
  *
  * This example program creates a window and displays some sprites, with a
- * fragment shader applied to shome of them.
+ * fragment shader applied to some of them.
  *
  * In order to make this example minimalistic, it will not use most of the
  * functionalities of the Bear Engine. Consequently, we will have manage the
