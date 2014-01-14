@@ -271,7 +271,8 @@ bool bear::input::key_info::is_function(unsigned int f) const
 
   return result;
 } // key_info::is_function()
-
+#include <iomanip>
+#include <iostream>
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Tell the key represents a printable symbol.

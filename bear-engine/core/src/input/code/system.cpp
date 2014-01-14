@@ -37,6 +37,7 @@ void bear::input::system::initialize()
     throw claw::exception( SDL_GetError() );
 
   SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
+  SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE );
   SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
   SDL_EventState( SDL_MOUSEWHEEL, SDL_ENABLE );
   SDL_EventState( SDL_FINGERDOWN, SDL_ENABLE );

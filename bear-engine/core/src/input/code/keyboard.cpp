@@ -295,10 +295,14 @@ void bear::input::keyboard::refresh_events()
     {
       const SDL_TextInputEvent* const evt
         ( reinterpret_cast<SDL_TextInputEvent*>(&e) );
-      
-      for ( const char* c( evt->text ); *c != '\0'; ++c )
+
+      const charset::string_type text( charset::convert_string( evt->text ) );
+
+      for ( std::wstring::const_iterator it( text.begin() ); it != text.end();
+            ++it )
         m_key_events.push_back
-          ( key_event( key_event::key_event_character, key_info( *c ) ) );
+          ( key_event
+            ( key_event::key_event_character, key_info::from_char( *it ) ) );
     }
 
 } // keyboard::refresh_events()
