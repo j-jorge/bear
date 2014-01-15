@@ -17,4 +17,5 @@ subdirs(
   10-stars
   11-animation
   12-shader
+  14-gui
 )
