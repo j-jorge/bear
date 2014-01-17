@@ -6,6 +6,7 @@
  */
 
 #include "gui/button.hpp"
+#include "gui/checkbox.hpp"
 #include "gui/callback_function.hpp"
 #include "gui/horizontal_flow.hpp"
 
@@ -59,14 +60,14 @@ void release()
 
 /**
  * Creates a sprite given an image file name and a region in this image.
- * \param file_name The path to the image used for the sprite.
  * \param clip The part of the image to use for the sprite, relatively to the
  *        top-left corner of the texture.
  */
 bear::visual::sprite load_sprite
-( const std::string& file_name,
-  const bear::visual::sprite::clip_rectangle_type& clip )
+( const bear::visual::sprite::clip_rectangle_type& clip )
 {
+  const std::string file_name( "sprites.png" );
+  
   // Open the image file.
   std::ifstream f( file_name.c_str() );
 
@@ -159,6 +160,31 @@ bear::gui::visual_component* create_quit_button()
 }
 
 /**
+ * Creates a box with a tick mark which can be toggled. Also known as a
+ * "checkbox".
+ */
+bear::gui::visual_component* create_checkbox()
+{
+  const bear::visual::sprite sprite_on
+    ( load_sprite
+      ( /* The part of the image to use for the sprite, relatively to the
+           top-left corner of the texture. Values are: left, top, width,
+           height. */
+       bear::visual::sprite::clip_rectangle_type(55, 0, 23, 20) ) );
+
+  const bear::visual::sprite sprite_off
+    ( load_sprite
+      ( bear::visual::sprite::clip_rectangle_type(32, 0, 23, 20) ) );
+
+  bear::gui::checkbox* result
+    ( new bear::gui::checkbox( sprite_off, sprite_on, get_default_font() ) );
+
+  result->set_text("Click me!");
+
+  return result;
+}
+
+/**
  * Creates a window with the widgets, then call the game loop.
  */
 void run_example()
@@ -172,9 +198,7 @@ void run_example()
 
   bear::visual::sprite cursor
     ( load_sprite
-      ( /* The path to the image of which the sprite is a part. */
-       "sprites.png",
-        /* The part of the image to use for the sprite, relatively to the
+      ( /* The part of the image to use for the sprite, relatively to the
            top-left corner of the texture. Values are: left, top, width,
            height. */
        bear::visual::sprite::clip_rectangle_type(0, 0, 32, 32) ) );
@@ -186,6 +210,7 @@ void run_example()
   apply_skin( frame );
 
   frame.insert( create_quit_button() );
+  frame.insert( create_checkbox() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
   // notify instances of bear::input::input_listener of the changes.
