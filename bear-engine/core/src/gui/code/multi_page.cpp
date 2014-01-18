@@ -85,39 +85,21 @@ void bear::gui::multi_page::set_text( const std::string& text )
  */
 void bear::gui::multi_page::on_resized()
 {
-  size_box_type size;
-  position_type pos(0, 0);
-  const size_type font_height
-    ( m_static_text->get_font().get_line_spacing() );
+  const bool large_enough
+    ( ( width() >= m_dots_text->width() )
+      && ( height() >= 2 * m_dots_text->height() ) );
 
-  size.x = width();
+  m_dots_text->set_visible( large_enough );
+  m_static_text->set_visible( large_enough );
 
-  // be sure that we can see the longest text possible
-  m_dots_text->set_position(pos);
-  m_dots_text->set_auto_size(true);
-
-  if ( width() > m_dots_text->width() )
-    pos.x = width() - m_dots_text->width();
-
-  if ( height() >= 2 * font_height )
+  if ( large_enough )
     {
-      size.y = height() - font_height;
-      m_static_text->set_size( size );
+      m_dots_text->set_position
+        ( position_type( width() - m_dots_text->width() - 1, 1 ) );
 
-      size.y = font_height;
-      pos.y = height() - size.y;
-      m_dots_text->set_position( pos );
-      m_dots_text->set_size( size );
-    }
-  else
-    {
-      size.y = std::min( font_height, height() );
-      pos.y = height() - size.y;
-      m_dots_text->set_position( pos );
-      m_dots_text->set_size( size );
-
-      size.y = height() - size.y;
-      m_static_text->set_size( size );
+      m_static_text->set_size
+        ( size_box_type( width(), height() - m_dots_text->height() ) );
+      m_static_text->set_position( position_type( 0, m_dots_text->height() ) );
     }
 
   create_indices();
@@ -154,7 +136,13 @@ void bear::gui::multi_page::create_indices()
 
   while ( it != m_text.end() )
     {
-      it += m_static_text->get_longest_text( m_text, it - m_text.begin() );
+      const std::string text( it, std::string::const_iterator(m_text.end()) );
+      const std::size_t text_length( m_static_text->get_longest_text( text ) );
+
+      if ( text_length == 0 )
+        break;
+
+      it += text_length;
       m_bookmark.push_back( it );
     }
 } // multi_page::create_indices()

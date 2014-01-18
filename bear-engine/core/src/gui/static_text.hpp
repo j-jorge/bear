@@ -69,8 +69,7 @@ namespace bear
 
       void expand_vertically();
 
-      std::size_t
-      get_longest_text( const std::string& text, std::size_t i ) const;
+      std::size_t get_longest_text( const std::string& text ) const;
 
       void set_margin( coordinate_type x, coordinate_type y );
       void set_margin( const size_box_type& m );

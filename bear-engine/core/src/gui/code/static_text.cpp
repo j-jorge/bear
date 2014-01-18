@@ -166,18 +166,17 @@ void bear::gui::static_text::expand_vertically()
  * \brief Gets the length of the longest text that can be displayed in this
  *        component.
  * \param text The text on which we work.
- * \param i The position in \a text
  * \return the position of the first character out of the component.
  */
 std::size_t bear::gui::static_text::get_longest_text
-( const std::string& text, std::size_t i ) const
+( const std::string& text ) const
 {
-  std::size_t result;
+  std::size_t result(0);
 
   arrange_longest_text func(result);
-  visual::text_layout layout( m_font, text, get_size() - 2 * m_margin );
 
-  layout.arrange_text( func );
+  visual::text_layout layout( m_font, text, get_size() - 2 * m_margin );
+  layout.arrange_text<arrange_longest_text&>( func );
 
   return result;
 } // static_text::get_longest_text()
