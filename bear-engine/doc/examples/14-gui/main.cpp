@@ -9,6 +9,7 @@
 #include "gui/checkbox.hpp"
 #include "gui/callback_function.hpp"
 #include "gui/horizontal_flow.hpp"
+#include "gui/multi_page.hpp"
 
 #include "input/input_status.hpp"
 #include "input/mouse.hpp"
@@ -102,6 +103,17 @@ void apply_skin( bear::gui::visual_component& widget )
 }
 
 /**
+ * Applies the border and fill colors to a widget such that it appears with a
+ * hollow effect.
+ */
+void apply_hollow_skin( bear::gui::visual_component& widget )
+{
+  widget.set_top_left_border_color( bear::gui::color_type( "#1b1b1b" ) );
+  widget.set_bottom_right_border_color( bear::gui::color_type( "#a0a0a0" ) );
+  widget.set_background_color( bear::gui::color_type( "#3b3b3b" ) );
+}
+
+/**
  * Loads a font given its name.
  * \param font_file_name The patht to the true type font file to load.
  */
@@ -134,9 +146,10 @@ bear::visual::font get_default_font()
 }
 
 /**
- * Creates a button which sets g_quit to true when it is clicked.
+ * Creates a button with a given label.
+ * \param label The label to display in the button.
  */
-bear::gui::visual_component* create_quit_button()
+bear::gui::button* create_button( const std::string& label )
 {
   // The widgets must be dynamically allocated when they are inserted into
   // another widget.
@@ -145,12 +158,22 @@ bear::gui::visual_component* create_quit_button()
       ( // The font to use to display the label of the button.
         get_default_font(),
         // The label in the button.
-        "Quit" ) );
+        label ) );
 
   // This sets the spacing between the label and the edges of the button.
   result->set_margin( 10 );
 
   apply_skin( *result );
+
+  return result;
+}
+
+/**
+ * Creates a button which sets g_quit to true when it is clicked.
+ */
+bear::gui::visual_component* create_quit_button()
+{
+  bear::gui::button* const result( create_button( "Quit" ) );
 
   // When the button is clicked, it calls the callbacks passed to
   // bear::gui::button::add_callback(). Here we tell him to call quit().
@@ -185,6 +208,87 @@ bear::gui::visual_component* create_checkbox()
 }
 
 /**
+ * This function object calls bear::gui::multi_page::next() on a given
+ * multi_page instance.
+ */
+class next_page
+{
+private:
+  /** The instance on which we call the function. */
+  bear::gui::multi_page& multi_page;
+
+public:
+  explicit next_page( bear::gui::multi_page& m )
+    : multi_page(m)
+  {}
+
+  void operator()() { multi_page.next(); }
+};
+
+/**
+ * This function object calls bear::gui::multi_page::previous() on a given
+ * multi_page instance.
+ */
+struct previous_page
+{
+private:
+  /** The instance on which we call the function. */
+  bear::gui::multi_page& multi_page;
+
+public:
+  explicit previous_page( bear::gui::multi_page& m )
+    : multi_page(m)
+  {}
+
+  void operator()() { multi_page.previous(); }
+};
+
+/**
+ * Creates an object which displays a long text and which can be scrolled up and
+ * down with two buttons.
+ */
+bear::gui::visual_component* create_multi_page()
+{
+  const bear::gui::size_type margin( 10 );
+
+  bear::gui::button* const previous( create_button( "Previous" ) );
+  previous->set_bottom_left( 0, 0 );
+
+  bear::gui::button* const next( create_button( "Next" ) );
+  next->set_bottom_left( previous->right() + margin, previous->bottom() );
+
+  bear::gui::visual_component* const result( new bear::gui::visual_component );
+  result->set_size
+    ( previous->width() + next->width() + margin, 800 );
+  
+  result->insert( previous );
+  result->insert( next );
+
+  bear::gui::multi_page* const multi_page
+    ( new bear::gui::multi_page( get_default_font() ) );
+
+  apply_hollow_skin( *multi_page );
+  multi_page->set_bottom_left( previous->left(), previous->top() + margin );
+  const bear::gui::size_type page_size( next->right() - previous->left() );
+
+  multi_page->set_size( page_size, page_size / 2 );
+  multi_page->set_text
+    ( "Click the buttons below to scroll this very long text. "
+      "This component will help you to present long textual descriptions to the"
+      " player." );
+  
+  result->insert( multi_page );
+  result->fit();
+
+  previous->add_callback
+    ( bear::gui::callback_function_maker( previous_page( *multi_page ) ) );
+  next->add_callback
+    ( bear::gui::callback_function_maker( next_page( *multi_page ) ) );
+
+  return result;
+}
+
+/**
  * Creates a window with the widgets, then call the game loop.
  */
 void run_example()
@@ -211,6 +315,7 @@ void run_example()
 
   frame.insert( create_quit_button() );
   frame.insert( create_checkbox() );
+  frame.insert( create_multi_page() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
   // notify instances of bear::input::input_listener of the changes.
