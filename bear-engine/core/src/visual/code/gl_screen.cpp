@@ -351,20 +351,32 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
 
   claw::math::box_2d<GLdouble> result;
 
-  const GLdouble half_pixel_width( 1.0 / tex_size.x / 2 );
-  const GLdouble half_pixel_height( 1.0 / tex_size.y / 2 );
+  const GLdouble min_distance_to_pixel_border
+    ( std::numeric_limits<GLdouble>::epsilon() );
+  GLdouble horizontal_shift;
+  GLdouble vertical_shift;
+
+  if ( clip_rectangle.width == s.width() )
+    horizontal_shift = min_distance_to_pixel_border;
+  else
+    horizontal_shift = 1.0 / tex_size.x / 2;
+
+  if ( clip_rectangle.height == s.height() )
+    vertical_shift = min_distance_to_pixel_border;
+  else
+    vertical_shift = 1.0 / tex_size.y / 2;
 
   result.first_point.x =
-    clip_rectangle.position.x / tex_size.x + half_pixel_width;
+    clip_rectangle.position.x / tex_size.x + horizontal_shift;
 
   result.second_point.x =
-    clip_rectangle.right() / tex_size.x - half_pixel_width;
+    clip_rectangle.right() / tex_size.x - horizontal_shift;
 
   result.first_point.y =
-    clip_rectangle.position.y / tex_size.y + half_pixel_height;
+    clip_rectangle.position.y / tex_size.y + vertical_shift;
 
   result.second_point.y =
-    clip_rectangle.bottom() / tex_size.y - half_pixel_height;
+    clip_rectangle.bottom() / tex_size.y - vertical_shift;
 
   if ( result.second_point.x < result.first_point.x )
     result.second_point.x = result.first_point.x;
