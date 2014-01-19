@@ -53,6 +53,8 @@ namespace bear
         ( const claw::graphic::image& data,
           claw::math::coordinate_2d<unsigned int> pos );
 
+      claw::graphic::image read() const;
+
       const base_image* get_impl() const;
 
     private:

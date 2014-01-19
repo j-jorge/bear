@@ -125,6 +125,47 @@ bool bear::visual::gl_renderer::draw_texture
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Reads the content of a texture in an image.
+ * \param texture_id The identifier of the texture to read.
+ * \return An image made from the texture's data.
+ */
+claw::graphic::image
+bear::visual::gl_renderer::read_texture( GLuint texture_id )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+
+  make_current();
+
+  glBindTexture( GL_TEXTURE_2D, texture_id );
+  VISUAL_GL_ERROR_THROW();
+
+  GLint width;
+  glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width );
+  VISUAL_GL_ERROR_THROW();
+
+  GLint height;
+  glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height );
+  VISUAL_GL_ERROR_THROW();
+
+  const std::size_t pixels_count( width * height );
+  claw::graphic::rgba_pixel_8* const pixels =
+    new claw::graphic::rgba_pixel_8[ pixels_count ];
+
+  glGetTexImage( GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels );
+
+  release_context();
+
+  claw::graphic::image result( width, height );
+  std::copy( pixels, pixels + pixels_count, result.begin() );
+
+  delete[] pixels;
+
+  release_context();
+  return result;
+} // gl_renderer::read_texture()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Deletes a texture.
  * \param texture_id The identifier of the texture to delete.
  */

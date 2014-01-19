@@ -41,6 +41,7 @@ namespace bear
       void draw
         ( const claw::graphic::image& data,
           claw::math::coordinate_2d<unsigned int> pos );
+      claw::graphic::image read() const;
 
     private:
       void create_texture();

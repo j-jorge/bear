@@ -43,6 +43,8 @@ namespace bear
         ( const claw::graphic::image& data,
           claw::math::coordinate_2d<unsigned int> pos ) = 0;
 
+      virtual claw::graphic::image read() const = 0;
+
     }; // class base_image
   } // namespace visual
 } // namespace bear

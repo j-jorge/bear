@@ -99,6 +99,16 @@ void bear::visual::gl_image::draw
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Reads the pixel colors of the textures.
+ * \return An image of the texture.
+ */
+claw::graphic::image bear::visual::gl_image::read() const
+{
+  return gl_renderer::get_instance().read_texture( m_texture_id );
+} // gl_image::read()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Create an empty OpenGL texture.
  */
 void bear::visual::gl_image::create_texture()

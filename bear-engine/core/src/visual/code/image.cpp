@@ -165,6 +165,19 @@ void bear::visual::image::draw
 
 /*----------------------------------------------------------------------------*/
 /**
+ * \brief Reads the pixel colors of the textures.
+ * \return An image of the texture.
+ */
+claw::graphic::image bear::visual::image::read() const
+{
+  if ( is_valid() )
+    return (*m_impl)->read();
+  else
+    return claw::graphic::image();
+} // image::read()
+
+/*----------------------------------------------------------------------------*/
+/**
  * \brief Assigment operator.
  */
 const bear::visual::base_image* bear::visual::image::get_impl() const
