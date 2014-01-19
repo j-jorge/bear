@@ -31,6 +31,7 @@ bear::visual::true_type_font::glyph_sheet::glyph_sheet()
     m_current_line_height(0)
 {
   claw::graphic::image img( m_image_size.x, m_image_size.y );
+  std::fill( img.begin(), img.end(), claw::graphic::transparent_pixel );
   m_image.draw( img, position_type(0, 0) );
 } // true_type_font::glyph_sheet::glyph_sheet()
 
