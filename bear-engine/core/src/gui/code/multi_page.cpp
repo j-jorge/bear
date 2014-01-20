@@ -26,12 +26,15 @@ bear::gui::multi_page::multi_page( font_type f )
   m_static_text = new static_text(f);
   m_dots_text = new static_text(f);
 
-  insert( m_static_text );
-  insert( m_dots_text );
-
   m_dots_text->set_auto_size(true);
   m_dots_text->set_text("[...]");
   m_dots_text->set_visible(false);
+
+  // The multipage must at least contain the dots. */
+  set_size( m_dots_text->get_size() );
+
+  insert( m_static_text );
+  insert( m_dots_text );
 
   set_text("");
 } // multi_page::multi_page()
