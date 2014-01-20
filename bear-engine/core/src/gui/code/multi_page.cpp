@@ -145,7 +145,15 @@ void bear::gui::multi_page::create_indices()
       if ( text_length == 0 )
         break;
 
-      it += text_length;
+      const std::string::size_type next_position
+        ( m_text.find_first_not_of
+          ( ' ', (it - m_text.begin()) + text_length ) );
+
+      if ( next_position == std::string::npos )
+        it = m_text.end();
+      else
+        it = m_text.begin() + next_position;
+
       m_bookmark.push_back( it );
     }
 } // multi_page::create_indices()
