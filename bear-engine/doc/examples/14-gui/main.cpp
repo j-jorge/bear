@@ -10,6 +10,8 @@
 #include "gui/callback_function.hpp"
 #include "gui/horizontal_flow.hpp"
 #include "gui/multi_page.hpp"
+#include "gui/radio_button.hpp"
+#include "gui/radio_group.hpp"
 
 #include "input/input_status.hpp"
 #include "input/mouse.hpp"
@@ -208,6 +210,50 @@ bear::gui::visual_component* create_checkbox()
 }
 
 /**
+ * 
+ */
+bear::gui::radio_button* create_radio_button( std::string label )
+{
+  const bear::visual::sprite sprite_on
+    ( load_sprite
+      ( /* The part of the image to use for the sprite, relatively to the
+           top-left corner of the texture. Values are: left, top, width,
+           height. */
+       bear::visual::sprite::clip_rectangle_type(88, 15, 15, 15) ) );
+
+  const bear::visual::sprite sprite_off
+    ( load_sprite
+      ( bear::visual::sprite::clip_rectangle_type(88, 0, 15, 15) ) );
+
+  bear::gui::radio_button* result
+    ( new bear::gui::radio_button
+      ( sprite_off, sprite_on, get_default_font() ) );
+
+  result->set_text(label);
+
+  return result;
+}
+
+bear::gui::visual_component* create_radio_group()
+{
+  bear::gui::radio_group* result( new bear::gui::radio_group );
+  result->set_size
+    ( std::numeric_limits<bear::gui::size_type>::max(),
+      std::numeric_limits<bear::gui::size_type>::max() );
+  
+  const bear::gui::size_type margin(10);
+
+  result->add_button( create_radio_button("Option 3"), margin );
+  result->add_button( create_radio_button("Option 2"), margin );
+  result->add_button( create_radio_button("Option 1"), margin );
+
+  result->fit( 10 );
+  apply_skin( *result );
+
+  return result;
+}
+
+/**
  * This function object calls bear::gui::multi_page::next() on a given
  * multi_page instance.
  */
@@ -307,7 +353,7 @@ void run_example()
            height. */
        bear::visual::sprite::clip_rectangle_type(0, 0, 32, 32) ) );
 
-  bear::gui::horizontal_flow frame( 2, 2 );
+  bear::gui::horizontal_flow frame( 20, 20 );
   frame.set_bottom_left(10, 10);
   frame.set_size( s.get_size() - 2 * bear::visual::size_box_type(10, 10) );
 
@@ -316,6 +362,7 @@ void run_example()
   frame.insert( create_quit_button() );
   frame.insert( create_checkbox() );
   frame.insert( create_multi_page() );
+  frame.insert( create_radio_group() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
   // notify instances of bear::input::input_listener of the changes.
