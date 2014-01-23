@@ -36,6 +36,8 @@ void bear::gui::radio_group::add_button
     ( callback_function_maker
       ( boost::bind( &radio_group::on_check, this, m_buttons.size() ) ) );
   m_buttons.push_back(b);
+
+  insert( b );
 } // radio_group::add_button()
 
 /*----------------------------------------------------------------------------*/
