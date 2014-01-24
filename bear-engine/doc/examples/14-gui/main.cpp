@@ -10,6 +10,7 @@
 #include "gui/callback_function.hpp"
 #include "gui/horizontal_flow.hpp"
 #include "gui/multi_page.hpp"
+#include "gui/picture.hpp"
 #include "gui/radio_button.hpp"
 #include "gui/radio_group.hpp"
 
@@ -63,14 +64,13 @@ void release()
 
 /**
  * Creates a sprite given an image file name and a region in this image.
+ * \param file_name The path to the image file of which the sprite is a part.
  * \param clip The part of the image to use for the sprite, relatively to the
  *        top-left corner of the texture.
  */
 bear::visual::sprite load_sprite
-( const bear::visual::sprite::clip_rectangle_type& clip )
+( std::string file_name, const bear::visual::sprite::clip_rectangle_type& clip )
 {
-  const std::string file_name( "sprites.png" );
-  
   // Open the image file.
   std::ifstream f( file_name.c_str() );
 
@@ -92,6 +92,18 @@ bear::visual::sprite load_sprite
       texture,
       /* The part of the image to use for the sprite. */
       clip );
+}
+
+
+/**
+ * Creates a sprite from the widgets sprite sheed given a region in this image.
+ * \param clip The part of the image to use for the sprite, relatively to the
+ *        top-left corner of the texture.
+ */
+bear::visual::sprite load_widget_sprite
+( const bear::visual::sprite::clip_rectangle_type& clip )
+{
+  return load_sprite( "sprites.png", clip );
 }
 
 /**
@@ -191,14 +203,14 @@ bear::gui::visual_component* create_quit_button()
 bear::gui::visual_component* create_checkbox()
 {
   const bear::visual::sprite sprite_on
-    ( load_sprite
+    ( load_widget_sprite
       ( /* The part of the image to use for the sprite, relatively to the
            top-left corner of the texture. Values are: left, top, width,
            height. */
        bear::visual::sprite::clip_rectangle_type(55, 0, 23, 20) ) );
 
   const bear::visual::sprite sprite_off
-    ( load_sprite
+    ( load_widget_sprite
       ( bear::visual::sprite::clip_rectangle_type(32, 0, 23, 20) ) );
 
   bear::gui::checkbox* result
@@ -210,22 +222,25 @@ bear::gui::visual_component* create_checkbox()
 }
 
 /**
- * 
+ * \brief Creates radio button: a box with a tick mark which can be exclusively
+ *        selected among the radio buttons of the group in which it will be
+ *        inserted.
+ * \param label The label to display next to the button.
  */
 bear::gui::radio_button* create_radio_button( std::string label )
 {
   const bear::visual::sprite sprite_on
-    ( load_sprite
+    ( load_widget_sprite
       ( /* The part of the image to use for the sprite, relatively to the
            top-left corner of the texture. Values are: left, top, width,
            height. */
        bear::visual::sprite::clip_rectangle_type(88, 15, 15, 15) ) );
 
   const bear::visual::sprite sprite_off
-    ( load_sprite
+    ( load_widget_sprite
       ( bear::visual::sprite::clip_rectangle_type(88, 0, 15, 15) ) );
 
-  bear::gui::radio_button* result
+  bear::gui::radio_button* const result
     ( new bear::gui::radio_button
       ( sprite_off, sprite_on, get_default_font() ) );
 
@@ -234,6 +249,9 @@ bear::gui::radio_button* create_radio_button( std::string label )
   return result;
 }
 
+/**
+ * \brief Creates a group of mutually exclusive choices.
+ */
 bear::gui::visual_component* create_radio_group()
 {
   bear::gui::radio_group* result( new bear::gui::radio_group );
@@ -248,6 +266,26 @@ bear::gui::visual_component* create_radio_group()
   result->add_button( create_radio_button("Option 1"), margin );
 
   result->fit( 10 );
+  apply_skin( *result );
+
+  return result;
+}
+
+/**
+ * \brief Creates a component which displays a sprite.
+ */
+bear::gui::visual_component* create_picture()
+{
+    const bear::visual::sprite sprite
+    ( load_sprite
+      ( "hourglass.png",
+        /* The part of the image to use for the sprite, relatively to the
+           top-left corner of the texture. Values are: left, top, width,
+           height. */
+        bear::visual::sprite::clip_rectangle_type(0, 0, 57, 65) ) );
+
+  bear::gui::picture* const result( new bear::gui::picture( sprite ) );
+
   apply_skin( *result );
 
   return result;
@@ -347,7 +385,7 @@ void run_example()
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   bear::visual::sprite cursor
-    ( load_sprite
+    ( load_widget_sprite
       ( /* The part of the image to use for the sprite, relatively to the
            top-left corner of the texture. Values are: left, top, width,
            height. */
@@ -359,10 +397,11 @@ void run_example()
 
   apply_skin( frame );
 
-  frame.insert( create_quit_button() );
-  frame.insert( create_checkbox() );
   frame.insert( create_multi_page() );
   frame.insert( create_radio_group() );
+  frame.insert( create_picture() );
+  frame.insert( create_checkbox() );
+  frame.insert( create_quit_button() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
   // notify instances of bear::input::input_listener of the changes.
