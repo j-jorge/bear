@@ -13,6 +13,7 @@
 #include "gui/picture.hpp"
 #include "gui/radio_button.hpp"
 #include "gui/radio_group.hpp"
+#include "gui/slider.hpp"
 
 #include "input/input_status.hpp"
 #include "input/mouse.hpp"
@@ -373,6 +374,33 @@ bear::gui::visual_component* create_multi_page()
 }
 
 /**
+ * \brief Creates radio button: a box with a tick mark which can be exclusively
+ *        selected among the radio buttons of the group in which it will be
+ *        inserted.
+ * \param label The label to display next to the button.
+ */
+bear::gui::visual_component* create_slider()
+{
+  const bear::visual::sprite bar
+    ( load_widget_sprite
+      ( /* The part of the image to use for the sprite, relatively to the
+           top-left corner of the texture. Values are: left, top, width,
+           height. */
+       bear::visual::sprite::clip_rectangle_type(78, 22, 1, 3) ) );
+
+  const bear::visual::sprite marker
+    ( load_widget_sprite
+      ( bear::visual::sprite::clip_rectangle_type(78, 0, 10, 22) ) );
+
+  bear::gui::slider<double>* const result
+    ( new bear::gui::slider<double>( bar, marker, -1, 2, 0 ) );
+
+  result->set_size( 100, 24 );
+
+  return result;
+}
+
+/**
  * Creates a window with the widgets, then call the game loop.
  */
 void run_example()
@@ -401,6 +429,7 @@ void run_example()
   frame.insert( create_radio_group() );
   frame.insert( create_picture() );
   frame.insert( create_checkbox() );
+  frame.insert( create_slider() );
   frame.insert( create_quit_button() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
