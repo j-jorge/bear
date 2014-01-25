@@ -419,18 +419,23 @@ void run_example()
            height. */
        bear::visual::sprite::clip_rectangle_type(0, 0, 32, 32) ) );
 
-  bear::gui::horizontal_flow frame( 20, 20 );
-  frame.set_bottom_left(10, 10);
-  frame.set_size( s.get_size() - 2 * bear::visual::size_box_type(10, 10) );
+  bear::gui::visual_component root;
+  root.set_size( s.get_size() );
 
-  apply_skin( frame );
+  bear::gui::horizontal_flow* frame( new bear::gui::horizontal_flow( 20, 20 ) );
+  root.insert( frame );
 
-  frame.insert( create_multi_page() );
-  frame.insert( create_radio_group() );
-  frame.insert( create_picture() );
-  frame.insert( create_checkbox() );
-  frame.insert( create_slider() );
-  frame.insert( create_quit_button() );
+  frame->set_bottom_left(10, 10);
+  frame->set_size( s.get_size() - 2 * bear::visual::size_box_type(10, 10) );
+
+  apply_skin( *frame );
+
+  frame->insert( create_multi_page() );
+  frame->insert( create_radio_group() );
+  frame->insert( create_picture() );
+  frame->insert( create_checkbox() );
+  frame->insert( create_slider() );
+  frame->insert( create_quit_button() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
   // notify instances of bear::input::input_listener of the changes.
@@ -447,14 +452,14 @@ void run_example()
       input.read();
 
       // notify the frame about the state of the inputs.
-      input.scan_inputs( frame );
+      input.scan_inputs( root );
 
       s.begin_render();
       {
         // bear::gui::visual_component::render builds the
         // bear::visual::scene_elements to display the widgets on the screen.
         bear::gui::visual_component::scene_element_list widget_display;
-        frame.render( widget_display );
+        root.render( widget_display );
 
         // Once we have these elements, we can render them individually.
         for ( bear::gui::visual_component::scene_element_list::const_iterator it
