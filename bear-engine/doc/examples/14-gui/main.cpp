@@ -14,6 +14,7 @@
 #include "gui/radio_button.hpp"
 #include "gui/radio_group.hpp"
 #include "gui/slider.hpp"
+#include "gui/static_text.hpp"
 
 #include "input/input_status.hpp"
 #include "input/mouse.hpp"
@@ -401,6 +402,20 @@ bear::gui::visual_component* create_slider()
 }
 
 /**
+ * \brief Creates a component displaying a non editable text.
+ */
+bear::gui::visual_component* create_label()
+{
+  bear::gui::static_text* const result
+    ( new bear::gui::static_text( get_default_font() ) );
+
+  result->set_auto_size( true );
+  result->set_text( "This text cannot be edited" );
+
+  return result;
+}
+
+/**
  * Creates a window with the widgets, then call the game loop.
  */
 void run_example()
@@ -435,6 +450,7 @@ void run_example()
   frame->insert( create_picture() );
   frame->insert( create_checkbox() );
   frame->insert( create_slider() );
+  frame->insert( create_label() );
   frame->insert( create_quit_button() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
