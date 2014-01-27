@@ -44,7 +44,7 @@ else
 
     pushd "$PROJECT_ROOT" > /dev/null
 
-    git clone --branch sdl2-port https://github.com/j-jorge/bear.git
+    git clone https://github.com/j-jorge/bear.git
     BEAR_ROOT="$PWD/bear"
 
     build_engine "$BEAR_ROOT"
