@@ -15,6 +15,7 @@
 #include "gui/radio_group.hpp"
 #include "gui/slider.hpp"
 #include "gui/static_text.hpp"
+#include "gui/text_input.hpp"
 
 #include "input/input_status.hpp"
 #include "input/mouse.hpp"
@@ -218,7 +219,7 @@ bear::gui::visual_component* create_checkbox()
   bear::gui::checkbox* result
     ( new bear::gui::checkbox( sprite_off, sprite_on, get_default_font() ) );
 
-  result->set_text("Click me!");
+  result->set_text("You can click me!");
 
   return result;
 }
@@ -416,6 +417,23 @@ bear::gui::visual_component* create_label()
 }
 
 /**
+ * \brief Creates a component in which the user can enter some text.
+ */
+bear::gui::visual_component* create_text_input()
+{
+  bear::gui::text_input* const result
+    ( new bear::gui::text_input
+      ( get_default_font(), bear::gui::color_type("#C00000") ) );
+
+  result->set_width( 200 );
+  result->set_text( "Enter some text here" );
+
+  apply_hollow_skin( *result );
+
+  return result;
+}
+
+/**
  * Creates a window with the widgets, then call the game loop.
  */
 void run_example()
@@ -440,8 +458,8 @@ void run_example()
   bear::gui::horizontal_flow* frame( new bear::gui::horizontal_flow( 20, 20 ) );
   root.insert( frame );
 
-  frame->set_bottom_left(10, 10);
-  frame->set_size( s.get_size() - 2 * bear::visual::size_box_type(10, 10) );
+  frame->set_bottom_left(40, 115);
+  frame->set_size( s.get_size() - 2 * bear::visual::size_box_type(40, 115) );
 
   apply_skin( *frame );
 
@@ -451,6 +469,7 @@ void run_example()
   frame->insert( create_checkbox() );
   frame->insert( create_slider() );
   frame->insert( create_label() );
+  frame->insert( create_text_input() );
   frame->insert( create_quit_button() );
 
   // The bear::input::input_status class maintains a state of the inputs and can
