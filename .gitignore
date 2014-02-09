@@ -6,6 +6,8 @@ cmake_uninstall.cmake
 CMakeCache.txt
 install_manifest.txt
 
+cmake-module/bear-config-version.cmake
+
 # Binaries
 bin
 

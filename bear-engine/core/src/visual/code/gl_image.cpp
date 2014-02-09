@@ -104,7 +104,7 @@ void bear::visual::gl_image::draw
  */
 claw::graphic::image bear::visual::gl_image::read() const
 {
-  return gl_renderer::get_instance().read_texture( m_texture_id );
+  return gl_renderer::get_instance().read_texture( m_texture_id, m_size );
 } // gl_image::read()
 
 /*----------------------------------------------------------------------------*/

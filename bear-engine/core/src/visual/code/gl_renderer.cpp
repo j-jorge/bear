@@ -127,11 +127,18 @@ bool bear::visual::gl_renderer::draw_texture
 /**
  * \brief Reads the content of a texture in an image.
  * \param texture_id The identifier of the texture to read.
+ * \param size The size of the texture. On systems where the texture's size
+ *        cannot be retrieved from the texture itself (i.e. when using GLES),
+ *        this value is used to allocate the buffer receiving the
+ *        image. Otherwise it is ignored.
  * \return An image made from the texture's data.
  */
 claw::graphic::image
-bear::visual::gl_renderer::read_texture( GLuint texture_id )
+bear::visual::gl_renderer::read_texture
+( GLuint texture_id, const screen_size_type& size )
 {
+#ifdef GL_TEXTURE_WIDTH
+
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
 
   make_current();
@@ -139,11 +146,12 @@ bear::visual::gl_renderer::read_texture( GLuint texture_id )
   glBindTexture( GL_TEXTURE_2D, texture_id );
   VISUAL_GL_ERROR_THROW();
 
-  GLint width;
+  GLint width(size.x);
+  GLint height(size.y);
+
   glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width );
   VISUAL_GL_ERROR_THROW();
 
-  GLint height;
   glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height );
   VISUAL_GL_ERROR_THROW();
 
@@ -162,6 +170,10 @@ bear::visual::gl_renderer::read_texture( GLuint texture_id )
 
   release_context();
   return result;
+
+#else
+  return claw::graphic::image( size.x, size.y );
+#endif
 } // gl_renderer::read_texture()
 
 /*----------------------------------------------------------------------------*/

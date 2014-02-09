@@ -60,7 +60,10 @@ namespace bear
       bool draw_texture
       ( GLuint texture_id, const claw::graphic::image& data,
         const screen_position_type& pos );
-      claw::graphic::image read_texture( GLuint texture_id );
+
+      claw::graphic::image
+      read_texture( GLuint texture_id, const screen_size_type& size );
+
       void delete_texture( GLuint texture_id );
 
       GLuint create_fragment_shader( std::istream& p );
