@@ -36,8 +36,13 @@ void bear::input::system::initialize()
   if ( SDL_InitSubSystem(SDL_INIT_JOYSTICK) != 0 )
     throw claw::exception( SDL_GetError() );
 
-  SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
+#ifndef __ANDROID__
+  // Disable keyboard events on Android because SDL_TEXTINPUT makes the keyboard
+  // visible.
   SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE );
+  SDL_EventState( SDL_KEYDOWN, SDL_ENABLE );
+#endif
+
   SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
   SDL_EventState( SDL_MOUSEWHEEL, SDL_ENABLE );
   SDL_EventState( SDL_FINGERDOWN, SDL_ENABLE );
