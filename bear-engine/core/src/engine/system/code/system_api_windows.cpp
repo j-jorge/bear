@@ -1,3 +1,4 @@
+#ifdef _WIN32
 /*
   Copyright (C) 2012 Stuffomatic Ltd. <contact@stuff-o-matic.com>
 
@@ -29,3 +30,4 @@ void bear::engine::system_api::open( const std::string& object )
   CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
   ShellExecute(NULL, "open", object.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 } // system_api::open()
+#endif
