@@ -1,4 +1,5 @@
-#ifdef _WIN32
+#ifdef WIN32
+
 /*
   Copyright (C) 2012 Stuffomatic Ltd. <contact@stuff-o-matic.com>
 

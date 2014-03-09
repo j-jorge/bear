@@ -35,4 +35,12 @@ target_link_libraries(
   ${SDL2_LIBRARY}
   ${CLAW_LOGGER_LIBRARIES}
   ${Boost_THREAD_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
   )
+
+if( WIN32 )
+  target_link_libraries(
+    ${AUDIO_TARGET_NAME}
+    winmm
+    )
+endif()

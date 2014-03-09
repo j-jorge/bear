@@ -371,13 +371,18 @@ void bear::visual::gl_renderer::set_title( const std::string& title )
 void bear::visual::gl_renderer::set_video_mode
 ( const screen_size_type& size, bool f )
 {
-  boost::mutex::scoped_lock lock( m_mutex.window );
+  {
+    boost::mutex::scoped_lock lock( m_mutex.window );
 
-  m_view_size = size;
-  m_window_size = size;
-  m_fullscreen = f;
+    m_view_size = size;
+    m_window_size = size;
+    m_fullscreen = f;
 
-  m_video_mode_is_set = true;
+    m_video_mode_is_set = true;
+  }
+
+  if ( m_render_thread == NULL )
+    ensure_window_exists();
 } // gl_renderer::set_video_mode()
 
 /*----------------------------------------------------------------------------*/
@@ -396,6 +401,8 @@ void bear::visual::gl_renderer::set_fullscreen( bool f )
 
   if ( m_window != NULL )
     {
+      make_current();
+
       if ( f )
         SDL_SetWindowFullscreen( m_window, SDL_WINDOW_FULLSCREEN );
       else
@@ -406,6 +413,8 @@ void bear::visual::gl_renderer::set_fullscreen( bool f )
 
       boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
       resize_view( screen_size_type(w, h) );
+
+      release_context();
     }
 } // gl_renderer::set_fullscreen()
 
@@ -417,11 +426,16 @@ void bear::visual::gl_renderer::set_fullscreen( bool f )
  */
 void bear::visual::gl_renderer::set_gl_states( state_list& states )
 {
-  boost::mutex::scoped_lock lock( m_mutex.gl_set_states );
+  {
+    boost::mutex::scoped_lock lock( m_mutex.gl_set_states );
 
-  m_render_ready = true;
-  m_states.clear();
-  m_states.swap( states );
+    m_render_ready = true;
+    m_states.clear();
+    m_states.swap( states );
+  }
+
+  if ( m_render_thread == NULL )
+    render_states();
 } // gl_renderer::set_gl_states()
 
 /*----------------------------------------------------------------------------*/
@@ -486,8 +500,12 @@ void bear::visual::gl_renderer::stop()
     boost::mutex::scoped_lock lock( m_mutex.loop_state );
     m_stop = true;
   }
-
-  m_render_thread.join();
+  
+  if ( m_render_thread != NULL )
+    {
+      m_render_thread->join();
+      delete m_render_thread;
+    }
 
   delete[] m_screenshot_buffer;
 
@@ -869,6 +887,10 @@ bear::visual::gl_renderer::gl_renderer()
 {
   m_mutex.gl_access.lock();
 
+#ifdef WIN32
+  m_render_thread = NULL;
+#else
   m_render_thread =
-    boost::thread( boost::bind(&gl_renderer::render_loop, this) );
+    new boost::thread( boost::bind(&gl_renderer::render_loop, this) );
+#endif
 } // gl_renderer::gl_renderer()

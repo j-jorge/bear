@@ -35,4 +35,5 @@ target_link_libraries(
   ${CLAW_NET_LIBRARIES}
   ${Boost_THREAD_LIBRARY}
   ${Boost_SIGNALS_LIBRARY}
-  )
+  ${Boost_SYSTEM_LIBRARY}
+)

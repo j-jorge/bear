@@ -194,7 +194,7 @@ namespace bear
       } m_mutex;
 
       /** \brief The thread running the render loop of this instance. */
-      boost::thread m_render_thread;
+      boost::thread* m_render_thread;
 
     }; // class gl_renderer
 

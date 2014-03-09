@@ -142,7 +142,7 @@ set( ENGINE_SOURCE_FILES
   variable/code/variable_saver.cpp
   )
 
-if( _WIN32 )
+if( WIN32 )
   set(
     ENGINE_SOURCE_FILES
     ${ENGINE_SOURCE_FILES}

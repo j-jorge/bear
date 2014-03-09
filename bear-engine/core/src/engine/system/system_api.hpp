@@ -15,6 +15,8 @@
 #ifndef __ENGINE_SYSTEM_API_HPP__
 #define __ENGINE_SYSTEM_API_HPP__
 
+#include "engine/class_export.hpp"
+
 #include <string>
 
 namespace bear
@@ -25,7 +27,7 @@ namespace bear
      * \brief The system_api class provides functions to do operations in the
      *        system running the game.
      */
-    class system_api
+    class ENGINE_EXPORT system_api
     {
     public:
       static void open( const std::string& object );
