@@ -37,11 +37,11 @@ link_directories(
 include(FindBoost)
 
 find_package(
-  Boost 1.42 REQUIRED COMPONENTS filesystem regex signals system thread
+  Boost 1.42 REQUIRED COMPONENTS filesystem regex system thread
   )
 if( NOT Boost_FOUND )
   message( FATAL_ERROR 
-    "You must have boost::filesystem, boost::signals, boost::thread and boost::regex libraries installed (at least 1.42)" )
+    "You must have boost::filesystem, boost::thread and boost::regex libraries installed (at least 1.42)" )
 endif( NOT Boost_FOUND )
 
 #-------------------------------------------------------------------------------
