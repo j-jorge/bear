@@ -19,6 +19,8 @@
 #include "generic_items/slope.hpp"
 #include "generic_items/descending_ceiling.hpp"
 
+#include <boost/math/special_functions/sign.hpp>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
