@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plee the Bear 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-14 17:47+0200\n"
+"POT-Creation-Date: 2014-03-09 15:44+0100\n"
 "PO-Revision-Date: 2010-11-15 22:44+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -18,125 +18,170 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 1.1\n"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1288
+#: ../../../core/src/engine/code/game_local_client.cpp:1449
 msgid "'\n"
 msgstr "»\n"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1251
+#: ../../../core/src/engine/code/game_local_client.cpp:1409
 msgid "--game-var-assignment: not a character."
 msgstr "--game-var-assignment: ikkje ein teiknstreng"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1267
+#: ../../../core/src/engine/code/game_local_client.cpp:1425
 msgid "--set-game-var-bool: not a boolean"
 msgstr "--set-game-var-bool: ikkje ein boolsk verdi"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1257
+#: ../../../core/src/engine/code/game_local_client.cpp:1415
 msgid "--set-game-var-int: not an integer"
 msgstr "--set-game-var-int: ikkje eit heiltal"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1272
+#: ../../../core/src/engine/code/game_local_client.cpp:1430
 msgid "--set-game-var-real: not a real number"
 msgstr "--set-game-var-real: ikkje eit flyttal"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1262
+#: ../../../core/src/engine/code/game_local_client.cpp:1420
 msgid "--set-game-var-uint: not an unsigned integer"
 msgstr "--set-game-var-uint: ikkje eit ikkje-negativt heiltal"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1287
+#: ../../../core/src/engine/code/game_local_client.cpp:1576
+msgid "Associates an identifier with this game."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1448
 msgid "Bad argument value: '"
 msgstr "Ugyldig argumentsverdi: «"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1422
+#: ../../../core/src/engine/code/game_local_client.cpp:1564
+#, fuzzy
+#| msgid ""
+#| "Change the delimiter used in --set-game-var-<type> to separate the name "
+#| "and the value of the variable."
 msgid ""
-"Change the delimiter used in --set-game-var-<type> to separate the name and "
+"Changes the delimiter used in --set-game-var-<type> to separate the name and "
 "the value of the variable."
 msgstr ""
 "Endra skiljeteikn brukt i «--set-game-var-<type>» for å skilja namn og verdi "
 "til variablar."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1364
+#: ../../../core/src/engine/code/game_local_client.cpp:1526
 msgid "Engine's options:"
 msgstr "Val for spelmotor:"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1389
+#: ../../../core/src/engine/code/game_description.cpp:125
 msgid "Path to a library containing items for the game."
 msgstr "Adressa til biblioteket som inneheld spelelementa."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1385
+#: ../../../core/src/engine/code/game_description.cpp:115
 msgid "Path to the directory containing the data of the game."
 msgstr "Adressa til mappa som inneheld speldataa."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1437
-msgid "Print the version of the engine and exit."
-msgstr "Vis spelmotor-versjon, og så avslutt."
-
-#: ../../../running_bear/code/running_bear.cpp:53
+#: ../../../running_bear/code/running_bear.cpp:38
 msgid "Print this help screen and exit."
 msgstr "Vis denne hjelpeteksten, og så avslutt."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1382
+#: ../../../core/src/engine/code/game_local_client.cpp:1591
+#, fuzzy
+#| msgid "Print the version of the engine and exit."
+msgid "Prints the version of the engine and exit."
+msgstr "Vis spelmotor-versjon, og så avslutt."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1532
 msgid "Run the game in a window."
 msgstr "Køyr spelet i eit vindauge."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1381
-msgid "Run the game in fullscreen mode."
+#: ../../../core/src/engine/code/game_local_client.cpp:1531
+#, fuzzy
+#| msgid "Run the game in fullscreen mode."
+msgid "Runs the game in fullscreen mode."
 msgstr "Køyr spelet i fullskjermmodus."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1409
-msgid "Set the value of a boolean game variable."
-msgstr "Definer verdien av ein boolsk spelvariabel."
-
-#: ../../../core/src/engine/code/game_local_client.cpp:1405
-msgid "Set the value of a non negative integer game variable."
-msgstr "Definer verdien av ein ikkje-negativ heiltalsvariabel."
-
-#: ../../../core/src/engine/code/game_local_client.cpp:1413
-msgid "Set the value of a real number game variable."
-msgstr "Definer verdien av ein flyttalsvariabel."
-
-#: ../../../core/src/engine/code/game_local_client.cpp:1417
-msgid "Set the value of a string game variable."
-msgstr "Definer verdien av ein tekstvariabel."
-
-#: ../../../core/src/engine/code/game_local_client.cpp:1401
-msgid "Set the value of an integer game variable."
-msgstr "Definer verdien av ein heiltalsvariabel."
-
-#: ../../../core/src/engine/code/game_local_client.cpp:1428
-#, fuzzy
-#| msgid "Set the value of a string game variable."
-msgid "Set the value of the destination to which game statistics are sent."
-msgstr "Definer verdien av ein tekstvariabel."
-
-#: ../../../core/src/engine/code/game_local_client.cpp:1433
-msgid "Tell to do a rendering of the scene for each progress of the game."
+#: ../../../core/src/engine/code/game_local_client.cpp:1535
+msgid "Search the items in the game launcher."
 msgstr ""
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1396
+#: ../../../core/src/engine/code/game_local_client.cpp:1581
+#, fuzzy
+#| msgid "Set the value of a real number game variable."
+msgid "Sets the limit of the number of frames per second."
+msgstr "Definer verdien av ein flyttalsvariabel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1551
+#, fuzzy
+#| msgid "Set the value of a boolean game variable."
+msgid "Sets the value of a boolean game variable."
+msgstr "Definer verdien av ein boolsk spelvariabel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1547
+#, fuzzy
+#| msgid "Set the value of a non negative integer game variable."
+msgid "Sets the value of a non negative integer game variable."
+msgstr "Definer verdien av ein ikkje-negativ heiltalsvariabel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1555
+#, fuzzy
+#| msgid "Set the value of a real number game variable."
+msgid "Sets the value of a real number game variable."
+msgstr "Definer verdien av ein flyttalsvariabel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1559
+#, fuzzy
+#| msgid "Set the value of a string game variable."
+msgid "Sets the value of a string game variable."
+msgstr "Definer verdien av ein tekstvariabel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1543
+#, fuzzy
+#| msgid "Set the value of an integer game variable."
+msgid "Sets the value of an integer game variable."
+msgstr "Definer verdien av ein heiltalsvariabel."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1571
+#, fuzzy
+#| msgid "Set the value of a string game variable."
+msgid "Sets the value of the destination to which game statistics are sent."
+msgstr "Definer verdien av ein tekstvariabel."
+
+#: ../../../core/src/engine/code/game_description.cpp:122
+msgid "Tells not to use the dumbest rendering procedure."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1587
+msgid "Tells to do a rendering of the scene for each progress of the game."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_description.cpp:119
+msgid "Tells to use the dumbest rendering procedure."
+msgstr ""
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1538
 msgid ""
 "The delay to apply to the network messages in term of game iterations. "
 "Default is 1."
 msgstr ""
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1378
+#: ../../../core/src/engine/code/game_description.cpp:111
 msgid "The height of the screen."
 msgstr "Høgda på skjermbiletet."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1372
+#: ../../../core/src/engine/code/game_description.cpp:105
 msgid "The margin around the camera in which we check for activity."
 msgstr "Margen rundt kamera der spelet skal sjå etter aktivitet."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1367
+#: ../../../core/src/engine/code/game_description.cpp:100
 msgid "The name of the game."
 msgstr "Namnet på spelet."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1392
+#: ../../../core/src/engine/code/game_description.cpp:128
 msgid "The path of the first level to run."
 msgstr "Adressa til det første brettet å køyra."
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1375
+#: ../../../core/src/engine/code/game_description.cpp:108
 msgid "The width of the screen."
 msgstr "Breidda på skjermbiletet."
+
+#, fuzzy
+#| msgid "backspace"
+msgid "back"
+msgstr "rettetast"
 
 msgid "backspace"
 msgstr "rettetast"
@@ -144,14 +189,14 @@ msgstr "rettetast"
 msgid "break"
 msgstr "break"
 
-#: ../../../core/src/input/code/joystick.cpp:119
+#: ../../../core/src/input/code/joystick.cpp:108
 msgid "button"
 msgstr "knapp"
 
 msgid "capslock"
 msgstr "caps lock"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1424
+#: ../../../core/src/engine/code/game_local_client.cpp:1566
 msgid "character"
 msgstr "teikn"
 
@@ -170,7 +215,7 @@ msgstr "ned høgre"
 msgid "end"
 msgstr "end"
 
-#: ../../../running_bear/code/running_bear.cpp:123
+#: ../../../running_bear/code/running_bear.cpp:108
 msgid "engine_options"
 msgstr "spelmotorval"
 
@@ -183,16 +228,16 @@ msgstr "home"
 msgid "insert"
 msgstr "insert"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1373
-#: ../../../core/src/engine/code/game_local_client.cpp:1376
-#: ../../../core/src/engine/code/game_local_client.cpp:1379
+#: ../../../core/src/engine/code/game_description.cpp:106
+#: ../../../core/src/engine/code/game_description.cpp:109
+#: ../../../core/src/engine/code/game_description.cpp:112
 msgid "integer"
 msgstr "heiltal"
 
 msgid "invalid mouse code"
 msgstr "ugyldig musekode"
 
-#: ../../../core/src/input/code/joystick_button.cpp:111
+#: ../../../core/src/input/code/joystick_button.cpp:96
 msgid "joystick"
 msgstr "styrespak"
 
@@ -271,11 +316,11 @@ msgstr "meny"
 msgid "middle click"
 msgstr "midtklikk"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1402
-#: ../../../core/src/engine/code/game_local_client.cpp:1406
-#: ../../../core/src/engine/code/game_local_client.cpp:1410
-#: ../../../core/src/engine/code/game_local_client.cpp:1414
-#: ../../../core/src/engine/code/game_local_client.cpp:1418
+#: ../../../core/src/engine/code/game_local_client.cpp:1544
+#: ../../../core/src/engine/code/game_local_client.cpp:1548
+#: ../../../core/src/engine/code/game_local_client.cpp:1552
+#: ../../../core/src/engine/code/game_local_client.cpp:1556
+#: ../../../core/src/engine/code/game_local_client.cpp:1560
 msgid "name=value"
 msgstr "namn=verdi"
 
@@ -291,8 +336,8 @@ msgstr "page down"
 msgid "page up"
 msgstr "page up"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1386
-#: ../../../core/src/engine/code/game_local_client.cpp:1390
+#: ../../../core/src/engine/code/game_description.cpp:116
+#: ../../../core/src/engine/code/game_description.cpp:126
 msgid "path"
 msgstr "adresse"
 
@@ -326,8 +371,8 @@ msgstr "scroll lock"
 msgid "space"
 msgstr "mellomrom"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1368
-#: ../../../core/src/engine/code/game_local_client.cpp:1393
+#: ../../../core/src/engine/code/game_description.cpp:101
+#: ../../../core/src/engine/code/game_description.cpp:129
 msgid "string"
 msgstr "streng"
 
@@ -347,7 +392,7 @@ msgstr "opp venstre"
 msgid "up right"
 msgstr "opp høgre"
 
-#: ../../../core/src/engine/code/game_local_client.cpp:1398
+#: ../../../core/src/engine/code/game_local_client.cpp:1540
 #, fuzzy
 #| msgid "name=value"
 msgid "value"
