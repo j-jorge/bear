@@ -85,7 +85,7 @@ void bear::engine::level::start()
  * \brief Adds a function to call when the start of the level is done.
  * \param f The function to call.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::level::on_started( boost::function<void ()> f )
 {
   return m_started_signal.connect( f );
@@ -140,7 +140,7 @@ void bear::engine::level::progress( universe::time_type elapsed_time )
  * \brief Adds a function to call when the progress of the level is over.
  * \param f The function to call.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::level::on_progress_done( boost::function<void ()> f )
 {
   return m_progress_done_signal.connect( f );

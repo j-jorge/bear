@@ -22,10 +22,10 @@
  * \param name The name of the variable to listen.
  */
 template<typename T>
-boost::signal<void (T)>&
+boost::signals2::signal<void (T)>&
 bear::engine::var_map::variable_changed( const std::string& name )
 {
-  typedef boost::signal<void (T)> signal_type;
+  typedef boost::signals2::signal<void (T)> signal_type;
 
   if ( !m_signals.exists<signal_type*>(name) )
     m_signals.set<signal_type*>( name, new signal_type() );
@@ -54,7 +54,7 @@ void bear::engine::var_map::set( const std::string& k, const T& v )
   else
     super::set<T>(k, v);
 
-  typedef boost::signal<void (T)> signal_type;
+  typedef boost::signals2::signal<void (T)> signal_type;
 
   if ( signal && m_signals.exists<signal_type*>(k) )
     (*m_signals.get<signal_type*>(k))(v);

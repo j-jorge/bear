@@ -19,7 +19,7 @@
 #include <list>
 #include <claw/non_copyable.hpp>
 #include <claw/socket_server.hpp>
-#include <boost/signal.hpp>
+#include <boost/signals2.hpp>
 
 namespace bear
 {
@@ -53,7 +53,7 @@ namespace bear
       void dispatch_message( const message& m );
       void send_message( std::size_t client_id, const message& m );
 
-      boost::signal<void (std::size_t)> on_new_client;
+      boost::signals2::signal<void (std::size_t)> on_new_client;
 
       void check_for_new_clients();
 

@@ -21,7 +21,7 @@
  */
 template<typename T>
 void bear::engine::var_map::delete_signal::operator()
-  ( const std::string& name, boost::signal<void (T)>* value ) const
+  ( const std::string& name, boost::signals2::signal<void (T)>* value ) const
 {
   delete value;
 } // var_map::delete_signal::operator()()
@@ -50,7 +50,7 @@ template<typename T>
 void bear::engine::var_map::trigger_signal::operator()
   ( const std::string& name, const T& value ) const
 {
-  typedef boost::signal<void (T)>* signal_type;
+  typedef boost::signals2::signal<void (T)>* signal_type;
 
   if ( m_signals.exists<signal_type>(name) )
     (*m_signals.get<signal_type>(name))(value);
@@ -87,7 +87,7 @@ void bear::engine::var_map::delete_signal_not_in::operator()
 {
   if ( !m_map.exists<T>(name) )
     {
-      typedef boost::signal<void (T)>* signal_type;
+      typedef boost::signals2::signal<void (T)>* signal_type;
 
       if ( m_signals.exists<signal_type>(name) )
         {

@@ -605,7 +605,7 @@ bear::engine::game_local_client::get_all_game_variables( var_map& vars ) const
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game_local_client::listen_int_variable_change
 ( const std::string& name, const boost::function<void (int)>& f )
 {
@@ -619,7 +619,7 @@ bear::engine::game_local_client::listen_int_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game_local_client::listen_uint_variable_change
 ( const std::string& name, const boost::function<void (unsigned int)>& f )
 {
@@ -632,7 +632,7 @@ bear::engine::game_local_client::listen_uint_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game_local_client::listen_bool_variable_change
 ( const std::string& name, const boost::function<void (bool)>& f )
 {
@@ -645,7 +645,7 @@ bear::engine::game_local_client::listen_bool_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game_local_client::listen_double_variable_change
 ( const std::string& name, const boost::function<void (double)>& f )
 {
@@ -658,7 +658,7 @@ bear::engine::game_local_client::listen_double_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game_local_client::listen_string_variable_change
 ( const std::string& name, const boost::function<void (std::string)>& f )
 {
@@ -1510,7 +1510,7 @@ bool bear::engine::game_local_client::set_game_variable_from_arg
  * \param f The function to call when the value of the variable change.
  */
 template<typename T>
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game_local_client::listen_variable_change
 ( const std::string& name, boost::function<void (T)> f )
 {

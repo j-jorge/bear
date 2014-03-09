@@ -24,6 +24,7 @@
 #include <claw/coordinate_2d.hpp>
 
 #include <boost/function.hpp>
+#include <boost/signals2.hpp>
 
 namespace bear
 {
@@ -117,20 +118,20 @@ namespace bear
       void save_game_variables
         ( std::ostream& os, const std::string& pattern = ".*" );
 
-      boost::signals::connection
+      boost::signals2::connection
         listen_int_variable_change
         ( const std::string& name, const boost::function<void (int)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_uint_variable_change
         ( const std::string& name,
           const boost::function<void (unsigned int)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_bool_variable_change
         ( const std::string& name, const boost::function<void (bool)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_double_variable_change
         ( const std::string& name, const boost::function<void (double)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_string_variable_change
         ( const std::string& name,
           const boost::function<void (const std::string)>& f );

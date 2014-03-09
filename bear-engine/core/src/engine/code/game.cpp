@@ -537,7 +537,7 @@ void bear::engine::game::save_game_variables
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game::listen_int_variable_change
 ( const std::string& name, const boost::function<void (int)>& f )
 {
@@ -551,7 +551,7 @@ bear::engine::game::listen_int_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game::listen_uint_variable_change
 ( const std::string& name, const boost::function<void (unsigned int)>& f )
 {
@@ -564,7 +564,7 @@ bear::engine::game::listen_uint_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game::listen_bool_variable_change
 ( const std::string& name, const boost::function<void (bool)>& f )
 {
@@ -577,7 +577,7 @@ bear::engine::game::listen_bool_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game::listen_double_variable_change
 ( const std::string& name, const boost::function<void (double)>& f )
 {
@@ -590,7 +590,7 @@ bear::engine::game::listen_double_variable_change
  * \param name The name of the variable.
  * \param f The listener.
  */
-boost::signals::connection
+boost::signals2::connection
 bear::engine::game::listen_string_variable_change
 ( const std::string& name, const boost::function<void (std::string)>& f )
 {

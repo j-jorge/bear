@@ -34,6 +34,7 @@
 #include <claw/arguments_table.hpp>
 
 #include <boost/function.hpp>
+#include <boost/signals2.hpp>
 
 namespace bear
 {
@@ -149,20 +150,20 @@ namespace bear
       bool game_variable_exists( const base_variable& val ) const;
       void get_all_game_variables( var_map& vars ) const;
 
-      boost::signals::connection
+      boost::signals2::connection
         listen_int_variable_change
         ( const std::string& name, const boost::function<void (int)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_uint_variable_change
         ( const std::string& name,
           const boost::function<void (unsigned int)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_bool_variable_change
         ( const std::string& name, const boost::function<void (bool)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_double_variable_change
         ( const std::string& name, const boost::function<void (double)>& f );
-      boost::signals::connection
+      boost::signals2::connection
         listen_string_variable_change
         ( const std::string& name,
           const boost::function<void (std::string)>& f );
@@ -233,7 +234,7 @@ namespace bear
         ( const std::list<std::string>& args, const char sep );
 
       template<typename T>
-        boost::signals::connection
+        boost::signals2::connection
         listen_variable_change
         ( const std::string& name, boost::function<void (T)> f );
 

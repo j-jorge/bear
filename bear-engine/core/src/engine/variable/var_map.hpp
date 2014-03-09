@@ -21,7 +21,7 @@
 #include <claw/meta/type_list.hpp>
 
 #include <string>
-#include <boost/signal.hpp>
+#include <boost/signals2.hpp>
 
 namespace bear
 {
@@ -44,9 +44,11 @@ namespace bear
 
       /** \brief The types of the signals used to observe the variables. */
       typedef claw::meta::type_list_maker
-      < boost::signal<void (int)>*, boost::signal<void (unsigned int)>*,
-        boost::signal<void (bool)>*, boost::signal<void (double)>*,
-        boost::signal<void (std::string)>* >::result signal_types;
+      < boost::signals2::signal<void (int)>*,
+        boost::signals2::signal<void (unsigned int)>*,
+        boost::signals2::signal<void (bool)>*,
+        boost::signals2::signal<void (double)>*,
+        boost::signals2::signal<void (std::string)>* >::result signal_types;
 
       /**
        * \brief The map containing the signals associated with the variables.
@@ -63,7 +65,8 @@ namespace bear
       public:
         template<typename T>
         void operator()
-        ( const std::string& name, boost::signal<void (T)>* value ) const;
+        ( const std::string& name,
+          boost::signals2::signal<void (T)>* value ) const;
 
       }; // class delete_signal
 
@@ -118,7 +121,8 @@ namespace bear
       var_map& operator=( const var_map& that );
 
       template<typename T>
-      boost::signal<void (T)>& variable_changed( const std::string& name );
+      boost::signals2::signal<void (T)>&
+        variable_changed( const std::string& name );
 
       template<typename T>
       void set( const std::string& k, const T& v );

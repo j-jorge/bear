@@ -28,7 +28,7 @@
 #include <claw/functional.hpp>
 #include <claw/iterator.hpp>
 
-#include <boost/signals.hpp>
+#include <boost/signals2.hpp>
 
 namespace bear
 {
@@ -77,11 +77,12 @@ namespace bear
       ~level();
 
       void start();
-      boost::signals::connection on_started( boost::function<void ()> f );
+      boost::signals2::connection on_started( boost::function<void ()> f );
       void stop();
 
       void progress( universe::time_type elapsed_time );
-      boost::signals::connection on_progress_done( boost::function<void ()> f );
+      boost::signals2::connection
+        on_progress_done( boost::function<void ()> f );
 
       void render( visual::screen& screen ) const;
       visual::scene_element
@@ -207,11 +208,11 @@ namespace bear
       universe::item_handle m_ears;
 
       /** \brief The signal emitted when the level starts. */
-      boost::signal<void ()> m_started_signal;
+      boost::signals2::signal<void ()> m_started_signal;
 
       /** \brief The signal emitted when the progress of the whole level is
           done. */
-      boost::signal<void ()> m_progress_done_signal;
+      boost::signals2::signal<void ()> m_progress_done_signal;
 
     }; // class level
   } // namespace engine
