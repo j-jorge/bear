@@ -342,8 +342,7 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
 
   claw::math::box_2d<GLdouble> result;
 
-  const GLdouble min_distance_to_pixel_border
-    ( std::numeric_limits<GLdouble>::epsilon() );
+  const GLdouble min_distance_to_pixel_border( 1.0 / 1000 );
   GLdouble horizontal_shift;
   GLdouble vertical_shift;
 
