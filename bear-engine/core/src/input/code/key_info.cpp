@@ -54,7 +54,10 @@ bear::input::key_info::key_info( key_code c, charset::char_type s )
  */
 bear::input::key_info bear::input::key_info::from_char( charset::char_type s )
 {
-  return key_info( 0, s );
+  if ( sizeof( charset::char_type ) <= sizeof( key_code ) )
+    return key_info( (charset::char_type)s, s );
+  else
+    return key_info( 0, s );
 } // key_info::from_char()
 
 /*----------------------------------------------------------------------------*/
@@ -271,8 +274,7 @@ bool bear::input::key_info::is_function(unsigned int f) const
 
   return result;
 } // key_info::is_function()
-#include <iomanip>
-#include <iostream>
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Tell the key represents a printable symbol.
