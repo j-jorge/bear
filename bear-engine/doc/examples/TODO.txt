@@ -1,7 +1,5 @@
 Beginner
 
-- input_status
-- gui
 - physics
 - engine
 
