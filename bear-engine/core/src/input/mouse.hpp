@@ -16,7 +16,9 @@
 
 #include <string>
 #include <vector>
-#include <list>
+#include <set>
+
+#include <SDL2/SDL.h>
 
 #include <claw/math.hpp>
 
@@ -36,7 +38,7 @@ namespace bear
       typedef unsigned char mouse_code;
 
       /** \brief Iterator on the pressed buttons. */
-      typedef std::list<mouse_code>::const_iterator const_iterator;
+      typedef std::set<mouse_code>::const_iterator const_iterator;
 
     public:
       mouse();
@@ -58,12 +60,19 @@ namespace bear
 #include "input/mouse_codes.hpp"
       
     private:
+      void process_button_down_event( const SDL_MouseButtonEvent* evt );
+      void process_button_up_event( const SDL_MouseButtonEvent* evt );
+      void process_wheel_event( const SDL_MouseWheelEvent* evt );
+
       void update_position();
       mouse_code sdl_button_to_local( unsigned int sdl_val ) const;
 
     private:
-      /** \brief Pressed buttons. */
-      std::list<mouse_code> m_pressed_buttons;
+      /** \brief The last result of refresh(). */
+      std::set<mouse_code> m_current_state;
+
+      /** \brief Pressed buttons, does not include the wheel. */
+      std::set<mouse_code> m_pressed_buttons;
 
       /** \brief Position of the cursor. */
       claw::math::coordinate_2d<unsigned int> m_position;

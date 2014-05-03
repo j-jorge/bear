@@ -15,7 +15,6 @@
 
 #include "bear_gettext.hpp"
 
-#include <SDL2/SDL.h>
 #include <algorithm>
 #include <claw/assert.hpp>
 
@@ -91,7 +90,7 @@ bear::input::mouse::get_button_named( const std::string& n )
  */
 bear::input::mouse::const_iterator bear::input::mouse::begin() const
 {
-  return m_pressed_buttons.begin();
+  return m_current_state.begin();
 } // mouse::begin()
 
 /*----------------------------------------------------------------------------*/
@@ -100,7 +99,7 @@ bear::input::mouse::const_iterator bear::input::mouse::begin() const
  */
 bear::input::mouse::const_iterator bear::input::mouse::end() const
 {
-  return m_pressed_buttons.end();
+  return m_current_state.end();
 } // mouse::end()
 
 /*----------------------------------------------------------------------------*/
@@ -109,7 +108,7 @@ bear::input::mouse::const_iterator bear::input::mouse::end() const
  */
 bool bear::input::mouse::empty() const
 {
-  return m_pressed_buttons.empty();
+  return m_current_state.empty();
 } // mouse::empty()
 
 /*----------------------------------------------------------------------------*/
@@ -130,7 +129,7 @@ bear::input::mouse::get_position() const
 void bear::input::mouse::refresh()
 {
   update_position();
-  m_pressed_buttons.clear();
+  m_current_state.clear();
 
   SDL_Event e;
 
@@ -140,28 +139,58 @@ void bear::input::mouse::refresh()
   
   while ( SDL_PeepEvents(&e, 1, SDL_GETEVENT, event_min, event_max ) == 1 )
     if ( e.type == SDL_MOUSEBUTTONDOWN )
-      {
-        const SDL_MouseButtonEvent* const evt =
-          reinterpret_cast<SDL_MouseButtonEvent*>(&e);
-
-        if ( evt->state == SDL_PRESSED )
-          m_pressed_buttons.push_back( sdl_button_to_local( evt->button ) );
-      }
+      process_button_down_event( reinterpret_cast<SDL_MouseButtonEvent*>(&e) );
+    else if ( e.type == SDL_MOUSEBUTTONUP )
+      process_button_up_event( reinterpret_cast<SDL_MouseButtonEvent*>(&e) );
     else if ( e.type == SDL_MOUSEWHEEL )
-      {
-        const SDL_MouseWheelEvent* const evt =
-          reinterpret_cast<SDL_MouseWheelEvent*>(&e);
+      process_wheel_event( reinterpret_cast<SDL_MouseWheelEvent*>(&e) );
 
-        if ( evt->y > 0 )
-          m_pressed_buttons.push_back( mc_wheel_up );
-        else
-          m_pressed_buttons.push_back( mc_wheel_down );
-      }
+  m_current_state.insert( m_pressed_buttons.begin(), m_pressed_buttons.end() );
 
 #ifdef __ANDROID__
-  m_pressed_buttons.clear();
+  m_current_state.clear();
 #endif
 } // mouse::refresh()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a button in m_pressed_buttons in response to a mouse button down
+ *        event.
+ * \param evt The event dispatched by the SDL.
+ */
+void
+bear::input::mouse::process_button_down_event( const SDL_MouseButtonEvent* evt )
+{
+  if ( evt->state == SDL_PRESSED )
+    m_pressed_buttons.insert( sdl_button_to_local( evt->button ) );
+} // mouse::process_button_down_event()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a button in m_pressed_buttons in response to a mouse button up
+ *        event.
+ * \param evt The event dispatched by the SDL.
+ */
+void
+bear::input::mouse::process_button_up_event( const SDL_MouseButtonEvent* evt )
+{
+  if ( evt->state == SDL_RELEASED )
+    m_pressed_buttons.erase( sdl_button_to_local( evt->button ) );
+} // mouse::process_button_up_event()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Adds a button in m_pressed_buttons in response to a mouse wheel event.
+ * \param evt The event dispatched by the SDL.
+ */
+void
+bear::input::mouse::process_wheel_event( const SDL_MouseWheelEvent* evt )
+{
+  if ( evt->y > 0 )
+    m_current_state.insert( mc_wheel_up );
+  else
+    m_current_state.insert( mc_wheel_down );
+} // mouse::process_wheel_event()
 
 /*----------------------------------------------------------------------------*/
 /**
