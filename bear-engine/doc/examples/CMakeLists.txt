@@ -19,4 +19,5 @@ subdirs(
   12-shader
   13-input
   14-gui
+  15-physics
 )

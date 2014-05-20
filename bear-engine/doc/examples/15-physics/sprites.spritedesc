@@ -1,0 +1,7 @@
+sprite_sheet "sprites" 512 x 512 margin 1
+
+sprites_img "sprites.xcf"
+
+"ship" autosize * 0.5 with sprites_img
+  "ship"
+  ;
