@@ -10,6 +10,7 @@
 #include "input/mouse.hpp"
 #include "input/system.hpp"
 #include "time/time.hpp"
+#include "universe/derived_item_handle.hpp"
 #include "universe/physical_item.hpp"
 #include "universe/world.hpp"
 #include "visual/scene_sprite.hpp"
@@ -44,84 +45,176 @@ bear::visual::sprite load_sprite
       clip );
 }
 
+class game_item:
+  public bear::universe::physical_item
+{
+public:
+  bear::visual::sprite get_display() const
+  {
+    bear::visual::sprite result( get_display_sprite() );
+    result.set_angle( get_system_angle() );
+    return result;
+  }
+
+private:
+  virtual bear::visual::sprite get_display_sprite() const = 0;
+};
+
 class ship:
-  public bear::universe::physical_item,
+  public game_item,
   public bear::input::input_listener
 {
 private:
-  bear::visual::sprite _ship_sprite;
+  bear::visual::sprite m_ship_sprite;
 
-  bool _engine_is_activated;
+  bool m_engine_is_activated;
 
-  bool _left_jet_is_activated;
-  bool _right_jet_is_activated;
+  bool m_left_jet_is_activated;
+  bool m_right_jet_is_activated;
 
 public:
   ship()
-    : _engine_is_activated( false ), _left_jet_is_activated( false ),
-      _right_jet_is_activated( false )
+    : m_engine_is_activated( false ), m_left_jet_is_activated( false ),
+      m_right_jet_is_activated( false )
   {
     set_size( 45, 45 );
     set_mass( 1000 /* kg */ );
     set_friction( 1 );
 
-    _ship_sprite =
-      load_sprite( bear::visual::sprite::clip_rectangle_type( 0, 0, 38, 56 ) );
+    m_ship_sprite =
+      load_sprite
+      ( bear::visual::sprite::clip_rectangle_type( 412, 0, 38, 56 ) );
   }
 
+private:
   void time_step( bear::universe::time_type time_in_seconds ) override
   {
-    if ( _engine_is_activated )
+    if ( m_engine_is_activated )
       {
         const bear::universe::force_type force_in_newtons( 5000000, 0 );
         add_internal_force( force_in_newtons * time_in_seconds );
       }
 
-    if ( _left_jet_is_activated )
+    if ( m_left_jet_is_activated )
       add_angular_speed( -0.05 );
 
-    if ( _right_jet_is_activated )
+    if ( m_right_jet_is_activated )
       add_angular_speed( 0.05 );
   }
- 
-  bear::visual::sprite get_display() const
+
+  bear::visual::sprite get_display_sprite() const override
   {
-    bear::visual::sprite result( _ship_sprite );
-    result.set_angle( get_system_angle() );
-    return result;
+    return m_ship_sprite;
   }
 
   bool key_pressed( const bear::input::key_info& key ) override
   {
     if ( key.is_up() )
-      _engine_is_activated = true;
+      m_engine_is_activated = true;
     else if ( key.is_left() )
-      _right_jet_is_activated = true;
+      m_right_jet_is_activated = true;
     else if ( key.is_right() )
-      _left_jet_is_activated = true;
+      m_left_jet_is_activated = true;
   }
 
   bool key_released( const bear::input::key_info& key ) override
   {
     if ( key.is_up() )
-      _engine_is_activated = false;
+      m_engine_is_activated = false;
     else if ( key.is_left() )
-      _right_jet_is_activated = false;
+      m_right_jet_is_activated = false;
     else if ( key.is_right() )
-      _left_jet_is_activated = false;
+      m_left_jet_is_activated = false;
   }
 
 };
 
 class asteroid:
-  public bear::universe::physical_item
+  public game_item
 {
+private:
+  bear::visual::sprite m_asteroid_sprite;
+
+public:
+  asteroid()
+  {
+    pick_random_sprite();
+
+    const bear::universe::size_type size
+      ( std::min( m_asteroid_sprite.width(), m_asteroid_sprite.height() )
+        - 20 );
+
+    set_size( size, size );
+    set_mass( 10000 /* kg */ );
+    set_friction( 1 );
+
+    set_speed
+      ( -200 + (double)rand() / RAND_MAX * 500,
+        -200 + (double)rand() / RAND_MAX * 500 );
+  }
+
+private:
+  bear::visual::sprite get_display_sprite() const override
+  {
+    return m_asteroid_sprite;
+  }
+
+  void pick_random_sprite()
+  {
+    bear::visual::sprite::clip_rectangle_type clip_rectangle;
+
+    switch( std::rand() % 4 )
+      {
+      case 0:
+        clip_rectangle =
+          bear::visual::sprite::clip_rectangle_type( 0, 0, 120, 97 );
+        break;
+      case 1:
+        clip_rectangle =
+          bear::visual::sprite::clip_rectangle_type( 121, 0, 98, 95 );
+        break;
+      case 2:
+        clip_rectangle =
+          bear::visual::sprite::clip_rectangle_type( 220, 0, 101, 83 );
+        break;
+      case 3:
+        clip_rectangle =
+          bear::visual::sprite::clip_rectangle_type( 322, 0, 89, 81 );
+        break;
+      }
+
+    m_asteroid_sprite = load_sprite( clip_rectangle );
+  }
 
 };
 
 class game:
   public bear::input::input_listener
 {
+private:
+  typedef bear::universe::derived_item_handle<game_item> item_handle;
+
+  typedef std::vector<item_handle> item_collection;
+
+private:
+  bool m_quit;
+
+  const claw::math::coordinate_2d<unsigned int> m_screen_size;
+
+  bear::visual::screen m_screen;
+
+  const bear::universe::size_box_type m_camera_position;
+
+  bear::input::input_status m_input;
+
+  const bear::universe::size_box_type m_world_size;
+
+  bear::universe::world m_world;
+
+  ship m_player_ship;
+
+  item_collection m_game_items;
+
 public:
   game()
     : m_quit( false ), m_screen_size( 1024, 575 ), m_screen( m_screen_size ),
@@ -133,6 +226,14 @@ public:
 
     m_player_ship.set_center_of_mass( m_camera_position + m_screen_size / 2 );
     m_world.register_item( &m_player_ship );
+
+    add_asteroids();
+  }
+
+  ~game()
+  {
+    for ( item_handle item : m_game_items )
+      delete item.get();
   }
 
   void run()
@@ -159,6 +260,24 @@ public:
   }
 
 private:
+  void add_asteroids()
+  {
+    for ( std::size_t i(0); i != 4; ++i )
+      add_asteroid();
+  }
+
+  void add_asteroid()
+  {
+    asteroid* item( new asteroid );
+
+    item->set_center_of_mass
+      ( (double)std::rand() / RAND_MAX * m_world.get_size().x,
+        (double)std::rand() / RAND_MAX * m_world.get_size().y );
+
+    m_game_items.push_back( item );
+    m_world.register_item( item );
+  }
+
   bool key_pressed( const bear::input::key_info& key ) override
   {
     if ( key.is_escape() )
@@ -199,58 +318,56 @@ private:
 
   void loop_entities_out_of_region( bear::universe::rectangle_type region )
   {
+    loop_entity_out_of_region( m_player_ship, region );
+
+    for ( item_handle item : m_game_items )
+      if ( item != (game_item*)NULL )
+        loop_entity_out_of_region( *item, region );
+  }
+
+  void loop_entity_out_of_region
+  ( game_item& item, bear::universe::rectangle_type region )
+  {
     const bear::universe::size_box_type offset
       ( ( m_world_size - region.size() ) / 2 );
 
-    if ( m_player_ship.get_horizontal_middle() < region.left() )
-      m_player_ship.set_horizontal_middle
-        ( region.right() - offset.x
-          + m_player_ship.get_horizontal_middle() );
-    else if ( m_player_ship.get_horizontal_middle() > region.right() )
-      m_player_ship.set_horizontal_middle
-        ( offset.x + m_player_ship.get_horizontal_middle() - region.right() );
+    if ( item.get_horizontal_middle() < region.left() )
+      item.set_horizontal_middle
+        ( region.right() - offset.x + item.get_horizontal_middle() );
+    else if ( item.get_horizontal_middle() > region.right() )
+      item.set_horizontal_middle
+        ( offset.x + item.get_horizontal_middle() - region.right() );
 
-    if ( m_player_ship.get_vertical_middle() < region.bottom() )
-      m_player_ship.set_vertical_middle
-        ( region.top() - offset.y
-          + m_player_ship.get_vertical_middle() );
-    else if ( m_player_ship.get_vertical_middle() > region.top() )
-      m_player_ship.set_vertical_middle
-        ( offset.y + m_player_ship.get_vertical_middle() - region.top() );
+    if ( item.get_vertical_middle() < region.bottom() )
+      item.set_vertical_middle
+        ( region.top() - offset.y + item.get_vertical_middle() );
+    else if ( item.get_vertical_middle() > region.top() )
+      item.set_vertical_middle
+        ( offset.y + item.get_vertical_middle() - region.top() );
   }
 
   void render()
   {
     m_screen.begin_render();
-    {
-      const bear::visual::sprite ship_sprite( m_player_ship.get_display() );
-      const bear::visual::position_type ship_position
-        ( m_player_ship.get_center_of_mass() - m_camera_position
-          - ship_sprite.get_size() / 2 );
 
-      m_screen.render
-        ( bear::visual::scene_sprite
-          ( ship_position.x, ship_position.y, ship_sprite ) );
-    }
+    for ( item_handle item : m_game_items )
+      if ( item != (game_item*)NULL )
+        render_item( *item );
+
+    render_item( m_player_ship );
+
     m_screen.end_render();
   }
 
-private:
-  bool m_quit;
+  void render_item( const game_item& item )
+  {
+    const bear::visual::sprite sprite( item.get_display() );
+    const bear::visual::position_type position
+      ( item.get_center_of_mass() - m_camera_position - sprite.get_size() / 2 );
 
-  const claw::math::coordinate_2d<unsigned int> m_screen_size;
-
-  bear::visual::screen m_screen;
-
-  const bear::universe::size_box_type m_camera_position;
-
-  bear::input::input_status m_input;
-
-  const bear::universe::size_box_type m_world_size;
-
-  bear::universe::world m_world;
-
-  ship m_player_ship;
+    m_screen.render
+      ( bear::visual::scene_sprite ( position.x, position.y, sprite ) );
+  }
 
 }; // class game
 
@@ -287,6 +404,8 @@ void run_example()
  */
 int main( int argc, char* argv[] )
 {
+  std::srand( std::time( NULL ) );
+
   init();
 
   run_example();

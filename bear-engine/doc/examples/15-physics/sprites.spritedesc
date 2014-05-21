@@ -5,3 +5,19 @@ sprites_img "sprites.xcf"
 "ship" autosize * 0.5 with sprites_img
   "ship"
   ;
+
+"asteroid 1" autosize * 0.5 with sprites_img
+  "asteroid 1"
+  ;
+
+"asteroid 2" autosize * 0.5 with sprites_img
+  "asteroid 2"
+  ;
+
+"asteroid 3" autosize * 0.5 with sprites_img
+  "asteroid 3"
+  ;
+
+"asteroid 4" autosize * 0.5 with sprites_img
+  "asteroid 4"
+  ;
