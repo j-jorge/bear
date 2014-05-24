@@ -120,7 +120,7 @@ namespace bear
       void adjust_cinetic();
 
       bool has_owner() const;
-      const world& get_owner() const;
+      world& get_owner() const;
 
       bool default_collision( const collision_info& info );
       bool default_collision

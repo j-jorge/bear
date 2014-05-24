@@ -475,7 +475,7 @@ bool bear::universe::physical_item::has_owner() const
  * \brief Get the world that owns this item.
  * \pre has_owner() == true
  */
-const bear::universe::world& bear::universe::physical_item::get_owner() const
+bear::universe::world& bear::universe::physical_item::get_owner() const
 {
   CLAW_PRECOND( has_owner() );
   return *m_owner;

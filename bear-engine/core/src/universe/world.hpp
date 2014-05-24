@@ -59,7 +59,7 @@ namespace bear
       typedef std::vector<physical_item*> item_list;
 
     public:
-      world( const size_box_type& size );
+      explicit world( const size_box_type& size );
       ~world();
 
       void progress_entities
@@ -196,6 +196,11 @@ namespace bear
 
       bool interesting_collision
         ( const physical_item& a, const physical_item& b ) const;
+
+    private:
+      // not implemented.
+      world( const world& );
+      world& operator=( world );
 
     private:
       /** \brief Size of the parts of m_static_surfaces. */
