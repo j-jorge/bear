@@ -18,6 +18,11 @@
 
 #include <fstream>
 
+double random_number()
+{
+  return (double)std::rand() / RAND_MAX;
+}
+
 /**
  * Creates a sprite given an image file name and a region in this image.
  * \param clip The part of the image to use for the sprite, relatively to the
@@ -133,27 +138,36 @@ class asteroid:
   public game_item
 {
 private:
+  const double m_scale;
+
   bear::visual::sprite m_asteroid_sprite;
 
 public:
   asteroid()
+    : asteroid( 1 )
+  {
+    
+  }
+
+private:
+  explicit asteroid( double scale )
+    : m_scale( scale )
   {
     pick_random_sprite();
+
+    m_asteroid_sprite.set_size( m_asteroid_sprite.get_size() * scale );
 
     const bear::universe::size_type size
       ( std::min( m_asteroid_sprite.width(), m_asteroid_sprite.height() )
         - 20 );
 
     set_size( size, size );
-    set_mass( 10000 /* kg */ );
+    set_mass( scale * 10000 /* kg */ );
     set_friction( 1 );
 
-    set_speed
-      ( -200 + (double)rand() / RAND_MAX * 500,
-        -200 + (double)rand() / RAND_MAX * 500 );
+    set_speed( -200 + random_number() * 500, -200 + random_number() * 500 );
   }
 
-private:
   bear::visual::sprite get_display_sprite() const override
   {
     return m_asteroid_sprite;
@@ -186,15 +200,54 @@ private:
     m_asteroid_sprite = load_sprite( clip_rectangle );
   }
 
+  void time_step( bear::universe::time_type time_in_seconds ) override
+  {
+    game_item::time_step( time_in_seconds );
+
+    if ( ( m_scale <= 0.5 ) && ( get_age() > 2 ) )
+      {
+        if ( m_asteroid_sprite.get_opacity() == 0 )
+          get_owner().release_item( this );
+        else
+          m_asteroid_sprite.set_opacity( ( 10 - get_age() ) / 8 );
+      }
+  }
+
+  void collision( bear::universe::collision_info& info ) override
+  {
+    if ( get_age() < 1 )
+      return;
+
+    bear::universe::world& world( get_owner() );
+
+    if ( m_scale > 0.5 )
+      {
+        world.register_item( create_small_asteroid() );
+        world.register_item( create_small_asteroid() );
+        world.release_item( this );
+      }
+    else
+      default_collision( info );
+  }
+
+  asteroid* create_small_asteroid() const
+  {
+    asteroid* const result( new asteroid( 0.75 * m_scale ) );
+    const bear::universe::position_type center
+      ( get_left() + random_number() * get_width(),
+        get_bottom() + random_number() * get_height() );
+        
+    result->set_center_of_mass( center ); 
+
+    return result;
+  }
 };
 
 class game:
   public bear::input::input_listener
 {
 private:
-  typedef bear::universe::derived_item_handle<game_item> item_handle;
-
-  typedef std::vector<item_handle> item_collection;
+  typedef std::vector<game_item*> item_collection;
 
 private:
   bool m_quit;
@@ -211,29 +264,27 @@ private:
 
   bear::universe::world m_world;
 
-  ship m_player_ship;
-
-  item_collection m_game_items;
+  ship* m_player_ship;
 
 public:
   game()
     : m_quit( false ), m_screen_size( 1024, 575 ), m_screen( m_screen_size ),
       m_camera_position( 50, 50 ),
       m_world_size( m_screen_size + 2 * m_camera_position ),
-      m_world( m_world_size )
+      m_world( m_world_size ), m_player_ship( new ship )
   {
     m_world.set_gravity( bear::universe::force_type( 0, 0 ) );
 
-    m_player_ship.set_center_of_mass( m_camera_position + m_screen_size / 2 );
-    m_world.register_item( &m_player_ship );
+    m_player_ship->set_center_of_mass( m_camera_position + m_screen_size / 2 );
+    m_world.register_item( m_player_ship );
 
     add_asteroids();
   }
 
   ~game()
   {
-    for ( item_handle item : m_game_items )
-      delete item.get();
+    for ( game_item* item : get_game_items() )
+      delete item;
   }
 
   void run()
@@ -271,10 +322,8 @@ private:
     asteroid* item( new asteroid );
 
     item->set_center_of_mass
-      ( (double)std::rand() / RAND_MAX * m_world.get_size().x,
-        (double)std::rand() / RAND_MAX * m_world.get_size().y );
+      ( random_number() * m_world_size.x, random_number() * m_world_size.y );
 
-    m_game_items.push_back( item );
     m_world.register_item( item );
   }
 
@@ -293,7 +342,7 @@ private:
     m_input.read();
 
     // notify the listeners about the changes in the inputs.
-    m_input.scan_inputs( m_player_ship );
+    m_input.scan_inputs( *m_player_ship );
     m_input.scan_inputs( *this );
   }
 
@@ -318,11 +367,8 @@ private:
 
   void loop_entities_out_of_region( bear::universe::rectangle_type region )
   {
-    loop_entity_out_of_region( m_player_ship, region );
-
-    for ( item_handle item : m_game_items )
-      if ( item != (game_item*)NULL )
-        loop_entity_out_of_region( *item, region );
+    for ( game_item* item : get_game_items() )
+      loop_entity_out_of_region( *item, region );
   }
 
   void loop_entity_out_of_region
@@ -350,11 +396,9 @@ private:
   {
     m_screen.begin_render();
 
-    for ( item_handle item : m_game_items )
+    for ( game_item* item : get_game_items() )
       if ( item != (game_item*)NULL )
         render_item( *item );
-
-    render_item( m_player_ship );
 
     m_screen.end_render();
   }
@@ -367,6 +411,27 @@ private:
 
     m_screen.render
       ( bear::visual::scene_sprite ( position.x, position.y, sprite ) );
+  }
+
+  item_collection get_game_items()
+  {
+    bear::universe::world::item_list items;
+    const bear::universe::rectangle_type region
+      ( 0, 0, m_world_size.x, m_world_size.y );
+
+    m_world.pick_items_in_rectangle( items, region );
+
+    item_collection result;
+
+    for ( bear::universe::physical_item* item : items )
+      {
+        game_item* casted_item( dynamic_cast<game_item*>( item ) );
+
+        if ( casted_item != NULL )
+          result.push_back( casted_item );
+      }
+
+    return result;
   }
 
 }; // class game
