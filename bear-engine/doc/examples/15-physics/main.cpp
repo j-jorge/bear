@@ -10,6 +10,7 @@
 #include "input/mouse.hpp"
 #include "input/system.hpp"
 #include "time/time.hpp"
+#include "universe/collision_info.hpp"
 #include "universe/derived_item_handle.hpp"
 #include "universe/physical_item.hpp"
 #include "universe/world.hpp"
@@ -80,6 +81,44 @@ public:
 
 private:
   virtual bear::visual::sprite get_display_sprite() const = 0;
+};
+
+class laser:
+  public game_item
+{
+public:
+  bear::visual::sprite m_laser_sprite;
+
+public:
+  laser()
+  {
+    set_size( 8, 8 );
+    set_mass( 1 /* kg */ );
+    set_friction( 1 );
+
+    m_laser_sprite =
+      load_sprite
+      ( bear::visual::sprite::clip_rectangle_type( 412, 57, 28, 8 ) );
+  }
+
+private:
+  bear::visual::sprite get_display_sprite() const override
+  {
+    return m_laser_sprite;
+  }
+
+  void time_step( bear::universe::time_type time_in_seconds ) override
+  {
+    game_item::time_step( time_in_seconds );
+
+    if ( get_age() > 2 )
+      kill();
+  }
+
+  void collision( bear::universe::collision_info& info ) override
+  {
+    kill();
+  }
 };
 
 class ship:
@@ -166,6 +205,19 @@ private:
     stop_in_world_center();
   }
 
+  void shoot() const
+  {
+    laser* laser_shot( new laser );
+
+    laser_shot->set_system_angle( get_system_angle() );
+    laser_shot->set_center_of_mass
+      ( get_center_of_mass() + get_x_axis() * get_height() );
+    laser_shot->set_speed
+      ( get_x_axis() * std::max( 200.0, 2 * get_speed().length() ) );
+    
+    get_owner().register_item( laser_shot );
+  }
+
   bear::visual::sprite get_display_sprite() const override
   {
     return m_ship_sprite;
@@ -179,6 +231,8 @@ private:
       m_right_jet_is_activated = true;
     else if ( key.is_right() )
       m_left_jet_is_activated = true;
+    else if ( key.get_code() == bear::input::keyboard::kc_space )
+      shoot();
   }
 
   bool key_released( const bear::input::key_info& key ) override
@@ -284,7 +338,8 @@ private:
 
   void collision( bear::universe::collision_info& info ) override
   {
-    if ( get_age() < 3 )
+    if ( ( get_age() < 3 )
+         && ( dynamic_cast<asteroid*>( &info.other_item() ) != NULL ) )
       return;
 
     bear::universe::world& world( get_owner() );

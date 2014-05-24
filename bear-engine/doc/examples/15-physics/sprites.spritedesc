@@ -21,3 +21,7 @@ sprites_img "sprites.xcf"
 "asteroid 4" autosize * 0.5 with sprites_img
   "asteroid 4"
   ;
+
+"laser" autosize * 0.5 with sprites_img
+  "laser"
+  ;
