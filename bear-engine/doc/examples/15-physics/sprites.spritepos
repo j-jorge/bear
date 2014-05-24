@@ -3,4 +3,4 @@ asteroid 4: 121 0 98 95
 asteroid 1: 220 0 101 83
 asteroid 2: 322 0 89 81
 ship: 412 0 38 56
-laser: 412 57 28 8
+laser: 412 57 7 8

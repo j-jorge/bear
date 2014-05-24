@@ -97,7 +97,7 @@ public:
 
     m_laser_sprite =
       load_sprite
-      ( bear::visual::sprite::clip_rectangle_type( 412, 57, 28, 8 ) );
+      ( bear::visual::sprite::clip_rectangle_type( 412, 57, 7, 8 ) );
   }
 
 private:
