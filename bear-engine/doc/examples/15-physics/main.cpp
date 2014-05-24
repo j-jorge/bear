@@ -11,7 +11,6 @@
 #include "input/system.hpp"
 #include "time/time.hpp"
 #include "universe/collision_info.hpp"
-#include "universe/derived_item_handle.hpp"
 #include "universe/physical_item.hpp"
 #include "universe/world.hpp"
 #include "visual/scene_sprite.hpp"
