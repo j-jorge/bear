@@ -54,11 +54,28 @@ class game_item:
   public bear::universe::physical_item
 {
 public:
+  bool m_dead;
+
+public:
+  game_item()
+    : m_dead( false )
+  { }
+
   bear::visual::sprite get_display() const
   {
     bear::visual::sprite result( get_display_sprite() );
     result.set_angle( get_system_angle() );
     return result;
+  }
+
+  bool is_dead() const
+  {
+    return m_dead;
+  }
+
+  void kill()
+  {
+    m_dead = true;
   }
 
 private:
@@ -91,8 +108,42 @@ public:
       ( bear::visual::sprite::clip_rectangle_type( 412, 0, 38, 56 ) );
   }
 
+  void stop_in_world_center()
+  {
+    if ( !has_owner() )
+      return;
+
+    set_center_of_mass( get_owner().get_size() / 2 );
+    set_speed( 0, 0 );
+    set_system_angle( 3.14159 / 2 );
+    set_angular_speed( 0 );
+  }
+
 private:
   void time_step( bear::universe::time_type time_in_seconds ) override
+  {
+    if ( is_artificial() )
+      restore_if_no_collision();
+    else
+      update_cinetics( time_in_seconds );
+  }
+
+  void restore_if_no_collision()
+  {
+    const bear::universe::rectangle_type region
+      ( get_center_of_mass() - get_size(), get_center_of_mass() + get_size() );
+
+    bear::universe::world::item_list items;
+    get_owner().pick_items_in_rectangle( items, region );
+
+    if ( items.size() == 1 )
+      {
+        set_artificial( false );
+        m_ship_sprite.set_opacity( 1 );
+      }
+  }
+
+  void update_cinetics( bear::universe::time_type time_in_seconds )
   {
     if ( m_engine_is_activated )
       {
@@ -105,6 +156,14 @@ private:
 
     if ( m_right_jet_is_activated )
       add_angular_speed( 0.05 );
+  }
+
+  void collision( bear::universe::collision_info& info ) override
+  {
+    m_ship_sprite.set_opacity( 0 );
+    set_artificial( true );
+    
+    stop_in_world_center();
   }
 
   bear::visual::sprite get_display_sprite() const override
@@ -140,6 +199,8 @@ class asteroid:
 private:
   const double m_scale;
 
+  static constexpr double m_decoration_scale_max = 0.5;
+
   bear::visual::sprite m_asteroid_sprite;
 
 public:
@@ -162,10 +223,10 @@ private:
         - 20 );
 
     set_size( size, size );
-    set_mass( scale * 10000 /* kg */ );
+    set_mass( scale * scale * 10000 /* kg */ );
     set_friction( 1 );
 
-    set_speed( -200 + random_number() * 500, -200 + random_number() * 500 );
+    set_speed( -100 + random_number() * 200, -100 + random_number() * 200 );
   }
 
   bear::visual::sprite get_display_sprite() const override
@@ -204,30 +265,34 @@ private:
   {
     game_item::time_step( time_in_seconds );
 
-    if ( ( m_scale <= 0.5 ) && ( get_age() > 2 ) )
+    const float fadeout_age_in_seconds(2);
+
+    if ( ( m_scale <= m_decoration_scale_max )
+         && ( get_age() > fadeout_age_in_seconds ) )
       {
         if ( m_asteroid_sprite.get_opacity() == 0 )
           get_owner().release_item( this );
         else
-          m_asteroid_sprite.set_opacity( ( 10 - get_age() ) / 8 );
+          {
+            const float fadeout_duration_in_seconds(1);
+            m_asteroid_sprite.set_opacity
+              ( ( ( fadeout_age_in_seconds + fadeout_duration_in_seconds )
+                  - get_age() ) / fadeout_duration_in_seconds );
+          }
       }
   }
 
   void collision( bear::universe::collision_info& info ) override
   {
-    if ( get_age() < 1 )
+    if ( get_age() < 3 )
       return;
 
     bear::universe::world& world( get_owner() );
 
-    if ( m_scale > 0.5 )
-      {
-        world.register_item( create_small_asteroid() );
-        world.register_item( create_small_asteroid() );
-        world.release_item( this );
-      }
-    else
-      default_collision( info );
+    world.register_item( create_small_asteroid() );
+    world.register_item( create_small_asteroid() );
+
+    kill();
   }
 
   asteroid* create_small_asteroid() const
@@ -275,8 +340,8 @@ public:
   {
     m_world.set_gravity( bear::universe::force_type( 0, 0 ) );
 
-    m_player_ship->set_center_of_mass( m_camera_position + m_screen_size / 2 );
     m_world.register_item( m_player_ship );
+    m_player_ship->stop_in_world_center();
 
     add_asteroids();
   }
@@ -321,8 +386,15 @@ private:
   {
     asteroid* item( new asteroid );
 
-    item->set_center_of_mass
-      ( random_number() * m_world_size.x, random_number() * m_world_size.y );
+    do
+      {
+        item->set_center_of_mass
+          ( random_number() * m_world_size.x,
+            random_number() * m_world_size.y );
+
+      }
+    while( item->get_bounding_box().intersects
+           ( m_player_ship->get_bounding_box() ) );
 
     m_world.register_item( item );
   }
@@ -354,9 +426,23 @@ private:
         ( 0, 0, m_world.get_size().x, m_world.get_size().y ) );
     m_world.progress_entities( region, time_step );
 
+    remove_dead_items();
     loop_entities_over_world();
+
+    if ( get_game_items().size() == 1 )
+      add_asteroids();
   }
 
+  void remove_dead_items()
+  {
+    for ( game_item* item : get_game_items() )
+      if ( item->is_dead() )
+        {
+          m_world.release_item( item );
+          delete item;
+        }
+        
+  }
   void loop_entities_over_world()
   {
     const bear::universe::rectangle_type inside
