@@ -17,11 +17,13 @@
 /**
  * \brief Creates a pressed event.
  * \param p The position where the finger has been pressed.
+ * \param finger_id The identifier of the finger emitting this event.
  */
 bear::input::finger_event
-bear::input::finger_event::create_pressed_event( const position_type& p )
+bear::input::finger_event::create_pressed_event
+( const position_type& p, int finger_id )
 {
-  finger_event e( finger_event_pressed );
+  finger_event e( finger_event_pressed, finger_id );
   e.m_position = p;
 
   return e;
@@ -31,11 +33,13 @@ bear::input::finger_event::create_pressed_event( const position_type& p )
 /**
  * \brief Creates a released event.
  * \param p The position where the finger has been released.
+ * \param finger_id The identifier of the finger emitting this event.
  */
 bear::input::finger_event
-bear::input::finger_event::create_released_event( const position_type& p )
+bear::input::finger_event::create_released_event
+( const position_type& p, int finger_id )
 {
-  finger_event e( finger_event_released );
+  finger_event e( finger_event_released, finger_id );
   e.m_position = p;
 
   return e;
@@ -46,17 +50,27 @@ bear::input::finger_event::create_released_event( const position_type& p )
  * \brief Creates a motion event.
  * \param p The position where the event occurred.
  * \param d The distance of the motion.
+ * \param finger_id The identifier of the finger emitting this event.
  */
 bear::input::finger_event
 bear::input::finger_event::create_motion_event
-( const position_type& p, const position_type& d )
+( const position_type& p, int finger_id, const position_type& d )
 {
-  finger_event e( finger_event_motion );
+  finger_event e( finger_event_motion, finger_id );
   e.m_position = p;
   e.m_distance = d;
 
   return e;
 } // finger_event::create_motion_event()
+
+/*----------------------------------------------------------------------------*/
+/**
+ * \brief Returns the identifier of the finger emitting this event.
+ */
+int bear::input::finger_event::get_finger_id() const
+{
+  return m_finger_id;
+} // finger_event::get_finger_id()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -80,7 +94,7 @@ bear::input::finger_event::get_position() const
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Returns a copy of this event as if it occured at a given position.
+ * \brief Returns a copy of this event as if it occurred at a given position.
  * \param p The position of the returned event.
  */
 bear::input::finger_event
@@ -106,9 +120,10 @@ bear::input::finger_event::get_distance() const
 /**
  * \brief Constructs an event of an unknown type.
  * \param t The type of the event.
+ * \param finger_id The identifier of the finger emitting this event.
  */
-bear::input::finger_event::finger_event( event_type t )
-  : m_type(t), m_position(0, 0), m_distance(0, 0)
+bear::input::finger_event::finger_event( event_type t, int finger_id )
+  : m_type(t), m_finger_id( finger_id ), m_position(0, 0), m_distance(0, 0)
 {
   
 } // finger_event::finger_event()

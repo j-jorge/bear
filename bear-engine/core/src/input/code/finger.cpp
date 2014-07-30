@@ -47,14 +47,14 @@ void bear::input::finger::refresh()
 
       if ( e.type == SDL_FINGERDOWN )
         m_events.push_back
-          ( finger_event::create_pressed_event( position ) );
+          ( finger_event::create_pressed_event( position, evt->fingerId ) );
       else if ( e.type == SDL_FINGERUP )
         m_events.push_back
-          ( finger_event::create_released_event( position ) );
+          ( finger_event::create_released_event( position, evt->fingerId ) );
       else if ( e.type == SDL_FINGERMOTION )
         m_events.push_back
           ( finger_event::create_motion_event
-            ( position, convert_delta( evt->dx, evt->dy ) ) );
+            ( position, evt->fingerId, convert_delta( evt->dx, evt->dy ) ) );
     }
 } // finger::refresh()
 
