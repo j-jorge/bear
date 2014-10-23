@@ -1,8 +1,13 @@
 /**
  * \file
  *
- * This example program creates a window and displays an instance of each widget
- * available in bear::gui.
+ * This example program demonstrates the physics part of the Bear Engine in an
+ * Asteroid clone.
+ *
+ * A spaceship is controlled by the player and several asteroids are floating
+ * around. The player can accelerate by pressing the up arrow and can rotate by
+ * pressing the left and right arrows. Pressing the space bar will make the
+ * space ship to shoot lasers that can break the asteroids.
  */
 
 #include "input/input_listener.hpp"
@@ -18,13 +23,17 @@
 
 #include <fstream>
 
+/**
+ * \brief Returns a random number in range [0, 1].
+ */
 double random_number()
 {
   return (double)std::rand() / RAND_MAX;
 }
 
 /**
- * Creates a sprite given an image file name and a region in this image.
+ * Creates a sprite from the file sprites.png located in the current directory
+ * and from a region in this image.
  * \param clip The part of the image to use for the sprite, relatively to the
  *        top-left corner of the texture.
  */
@@ -50,29 +59,57 @@ bear::visual::sprite load_sprite
       clip );
 }
 
+/**
+ * \brief The game items are the items living in the world.
+ *
+ * The class extends bear::universe::physical_item, thus having a mass, a
+ * position and dynamic properties (speed, acceleration, angular speed, etc.).
+ * Physical items evolve in a bear::universe::world.
+ */
 class game_item:
   public bear::universe::physical_item
 {
 public:
+  /** \brief Teels if this item is flagged as dead. */
   bool m_dead;
 
 public:
+  /**
+   * \brief Constructs the item with the default values.
+   */
   game_item()
     : m_dead( false )
   { }
 
+  /**
+   * \brief Returns the sprite to use to display this item.
+   * \return A sprite whose rotation matches the physical angle of the item.
+   */
   bear::visual::sprite get_display() const
   {
     bear::visual::sprite result( get_display_sprite() );
+
+    // bear::universe::physical_item::get_system_angle() returns the angle
+    // between the x-axis of the world and the local x-axis of the item.
     result.set_angle( get_system_angle() );
     return result;
   }
 
+  /**
+   * \brief Tells if this item is dead.
+   *
+   * Dead items are removed from the world between two iterations.
+   */
   bool is_dead() const
   {
     return m_dead;
   }
 
+  /**
+   * \brief Flag this item as dead.
+   *
+   * Dead items are removed from the world between two iterations.
+   */
   void kill()
   {
     m_dead = true;
@@ -82,17 +119,34 @@ private:
   virtual bear::visual::sprite get_display_sprite() const = 0;
 };
 
+/**
+ * \brief The laser is the projectile thrown by the ship.
+ *
+ * It lives up to 2 seconds and dies on any collision.
+ */
 class laser:
   public game_item
 {
 public:
+  /** \brief The sprite to use to display the laser. */
   bear::visual::sprite m_laser_sprite;
 
 public:
+  /**
+   * \brief Constructs the laser with the default values.
+   */
   laser()
   {
+    // The laser is a small square. Since physical items have their bounding
+    // boxes aligned with the axis, even if the item has a rotation, having a
+    // square laser leads to better game results.
     set_size( 8, 8 );
     set_mass( 1 /* kg */ );
+
+    // The friction of the physical item represents the energy kept by the item
+    // when moving in an empty area. It is a factor applied to its speed. Since
+    // we do not want the laser to slow down in space, we set the factor to one
+    // to keep the speed.
     set_friction( 1 );
 
     m_laser_sprite =
@@ -106,29 +160,53 @@ private:
     return m_laser_sprite;
   }
 
+  /**
+   * This function is called by the world to tell the items that a given amount
+   * of time has elapsed since the last call.
+   */
   void time_step( bear::universe::time_type time_in_seconds ) override
   {
     game_item::time_step( time_in_seconds );
 
+    // bear::universe::physical_item::get_age() returns the duration in seconds
+    // since the item has been added in the world.
     if ( get_age() > 2 )
       kill();
   }
 
+  /**
+   * This function is called by the world after the movement of the items, for
+   * each other item intersecting this one.
+   * \param info The details about the collision and the other item.
+   */
   void collision( bear::universe::collision_info& info ) override
   {
     kill();
   }
 };
 
+/**
+ * \brief The ship is the item controlled by the player.
+ *
+ * It is controlled using the keyboard, as follows: the up arrow adds a force
+ * pushing toward the front of the ship; left and right arrows make the ship to
+ * turn in the corresponding direction. Pressing the space bar make the ship to
+ * shoot a laser.
+ */
 class ship:
   public game_item,
   public bear::input::input_listener
 {
 private:
+  /** The sprite to use to display the ship. */
   bear::visual::sprite m_ship_sprite;
 
+  /** Tells if the main engine is activated, in which case the ship is pushed
+      forward. */
   bool m_engine_is_activated;
 
+  /** Tells if the left and right jets are activated, in which case the ship
+      rotates respectively to the right or to the left. */
   bool m_left_jet_is_activated;
   bool m_right_jet_is_activated;
 
@@ -160,6 +238,11 @@ public:
 private:
   void time_step( bear::universe::time_type time_in_seconds ) override
   {
+    // items with the is_artificial() property set to true do not interact with
+    // the other items in the collision detection. Here we turn it on for the
+    // ship when it has been destroyed, until the center of the screen becomes
+    // asteroid-free and we can safely make it appear without causing a new
+    // collision.
     if ( is_artificial() )
       restore_if_no_collision();
     else
@@ -171,9 +254,12 @@ private:
     const bear::universe::rectangle_type region
       ( get_center_of_mass() - get_size(), get_center_of_mass() + get_size() );
 
+    // Get all items of the world overlaping the area of the ship.
     bear::universe::world::item_list items;
     get_owner().pick_items_in_rectangle( items, region );
 
+    // If there is a single item there, it is the ship. We can safely restore
+    // it.
     if ( items.size() == 1 )
       {
         set_artificial( false );
@@ -208,9 +294,14 @@ private:
   {
     laser* laser_shot( new laser );
 
+    // The laser must go in the direction toward the ship.
     laser_shot->set_system_angle( get_system_angle() );
+
+    // Its position is initially just in front of the ship.
     laser_shot->set_center_of_mass
       ( get_center_of_mass() + get_x_axis() * get_height() );
+
+    // And it goes a little bit faster than the ship.
     laser_shot->set_speed
       ( get_x_axis() * std::max( 200.0, 2 * get_speed().length() ) );
     
@@ -497,6 +588,7 @@ private:
         }
         
   }
+
   void loop_entities_over_world()
   {
     const bear::universe::rectangle_type inside
