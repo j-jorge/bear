@@ -34,7 +34,7 @@ bear::universe::static_map<ItemType>::static_map
 ( unsigned int width, unsigned int height, unsigned int box_size )
   : m_box_size(box_size),
     m_size(width / m_box_size + 1, height / m_box_size + 1),
-    m_map( m_size.x, column(m_size.y) )
+    m_map( m_size.x * m_size.y )
 {
   CLAW_PRECOND( width > 0 );
   CLAW_PRECOND( height > 0 );
@@ -75,9 +75,13 @@ void bear::universe::static_map<ItemType>::insert( const item_type& item )
   if ( left < 0 )
     left = 0;
 
+  const std::size_t id( m_items.size() );
+  m_items.push_back( item );
+  m_bounding_boxes.push_back( box );
+
   for ( int col = left; col <= right; ++col )
     for ( int line = bottom; line <= top; ++line )
-      m_map[col][line].push_back(item);
+      m_map[ col * m_size.y + line ].push_back( id );
 } // static_map::insert()
 
 /*----------------------------------------------------------------------------*/
@@ -141,9 +145,6 @@ template<class ItemType>
 void bear::universe::static_map<ItemType>::get_area
 ( const area_type& area, item_list& items ) const
 {
-  unsigned int x, y;
-  typename item_box::const_iterator it;
-
   unsigned int min_x = (unsigned int)area.left() / m_box_size;
   unsigned int max_x = (unsigned int)area.right() / m_box_size;
   unsigned int min_y = (unsigned int)area.bottom() / m_box_size;
@@ -155,11 +156,23 @@ void bear::universe::static_map<ItemType>::get_area
   if ( max_y >= m_size.y )
     max_y = m_size.y - 1;
 
-  for (x=min_x; x<=max_x; ++x)
-    for (y=min_y; y<=max_y; ++y)
-      for (it=m_map[x][y].begin(); it!=m_map[x][y].end(); ++it)
-        if ( (*it)->get_bounding_box().intersects(area) )
-          items.push_back( *it );
+  std::vector<std::size_t> ids_in_area;
+
+  for ( unsigned int x( min_x ); x<=max_x; ++x )
+    for ( unsigned int y( min_y ); y<=max_y; ++y )
+      {
+        const unsigned int cell( x * m_size.y + y );
+        ids_in_area.insert
+          ( ids_in_area.end(), m_map[ cell ].begin(), m_map[ cell ].end() );
+      }
+
+  items.reserve( items.size() + ids_in_area.size() );
+
+  for ( typename std::vector<std::size_t>::const_iterator it
+          ( ids_in_area.begin() );
+        it != ids_in_area.end(); ++it )
+    if ( m_bounding_boxes[ *it ].intersects(area) )
+      items.push_back( m_items[ *it ] );
 } // static_map::get_area()
 
 /*----------------------------------------------------------------------------*/
@@ -172,12 +185,11 @@ void
 bear::universe::static_map<ItemType>::get_all_unique( item_list& items ) const
 {
   item_list result;
-  unsigned int x, y;
-  typename item_box::const_iterator it;
 
-  for (x=0; x!=m_map.size(); ++x)
-    for (y=0; y!=m_map[x].size(); ++y)
-      result.insert( result.end(), m_map[x][y].begin(), m_map[x][y].end() );
+  for (typename map::const_iterator it(m_map.begin()); it!=m_map.end(); ++it)
+    for ( typename item_box::const_iterator it_id( it->begin() );
+          it_id != it->end(); ++it_id )
+      result.push_back( m_items[ *it_id ] );
 
   make_set(result);
   items.insert( items.end(), result.begin(), result.end() );
@@ -191,12 +203,10 @@ template<class ItemType>
 unsigned int bear::universe::static_map<ItemType>::empty_cells() const
 {
   unsigned int cells=0;
-  unsigned int x, y;
 
-  for (x=0; x!=m_map.size(); ++x)
-    for (y=0; y!=m_map[x].size(); ++y)
-      if ( m_map[x][y].empty() )
-        ++cells;
+  for (typename map::const_iterator it(m_map.begin()); it!=m_map.end(); ++it)
+    if ( it->empty() )
+      ++cells;
 
   return cells;
 } // static_map::empty_cells()
@@ -220,23 +230,22 @@ void bear::universe::static_map<ItemType>::cells_load
   max = 0;
   avg = 0;
 
-  for (x=0; x!=m_map.size(); ++x)
-    for (y=0; y!=m_map[x].size(); ++y)
-      {
-        const std::size_t size( m_map[x][y].size() );
+  for (typename map::const_iterator it(m_map.begin()); it!=m_map.end(); ++it)
+    {
+      const std::size_t size( it->size() );
 
-        if ( size > max )
-          max = size;
+      if ( size > max )
+        max = size;
 
-        if ( size < min )
-          min = size;
+      if ( size < min )
+        min = size;
 
-        if (size != 0)
-          {
-            load += size;
-            ++not_empty_cells;
-          }
-      }
+      if (size != 0)
+        {
+          load += size;
+          ++not_empty_cells;
+        }
+    }
 
   if ( (load != 0) && (not_empty_cells!=0) )
     avg = (double)load / (double)not_empty_cells;

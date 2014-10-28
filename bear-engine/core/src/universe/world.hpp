@@ -23,6 +23,9 @@
 
 #include "universe/class_export.hpp"
 
+#include <boost/bimap.hpp>
+#include <boost/graph/adjacency_list.hpp>
+
 #include <vector>
 
 namespace bear
@@ -57,6 +60,12 @@ namespace bear
 
       /** \brief A list of items. */
       typedef std::vector<physical_item*> item_list;
+
+    private:
+      typedef boost::adjacency_list<> dependency_graph_type;
+      typedef
+        boost::bimap< physical_item*, dependency_graph_type::vertex_descriptor >
+        dependency_vertex_map;
 
     public:
       explicit world( const size_box_type& size );
@@ -135,18 +144,30 @@ namespace bear
         const item_picking_filter& filter = item_picking_filter() ) const;
 
     private:
+      struct candidate_collision
+      {
+        explicit candidate_collision( physical_item* i );
+
+        physical_item* item;
+        rectangle_type bounding_box;
+      };
+
+      typedef std::vector<candidate_collision> candidate_collisions;
+
+    private:
       void detect_collision_all
-        ( item_list& items, const item_list& potential_collision );
+        ( item_list& items, const candidate_collisions& potential_collision );
       physical_item* pick_next_collision( item_list& pending ) const;
 
       void detect_collision
       ( physical_item* item, item_list& pending, item_list& all_items,
-        const item_list& potential_collision ) const;
+        const candidate_collisions& potential_collision ) const;
 
       bool process_collision( physical_item& self, physical_item& that ) const;
 
       void search_items_for_collision
-        ( const physical_item& item, const item_list& potential_collision,
+        ( const physical_item& item,
+          const candidate_collisions& potential_collision,
           item_list& colliding, double& mass, double& area ) const;
 
       void item_found_in_collision
@@ -159,9 +180,26 @@ namespace bear
 
       void search_interesting_items
       ( const region_type& regions, item_list& items,
-        item_list& potential_collision ) const;
+        candidate_collisions& potential_collision ) const;
 
       void stabilize_dependent_items( item_list& items ) const;
+      void find_dependency_links
+        ( item_list& pending, dependency_graph_type& graph,
+          dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+          physical_item* item ) const;
+      void add_dependency_edge
+        ( item_list& pending, dependency_graph_type& graph,
+          dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+          physical_item* tail, physical_item* head ) const;
+      void add_dependency_vertex
+        ( item_list& pending, dependency_graph_type& graph,
+          dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+          physical_item* v ) const;
+      void make_sorted_dependency_list
+        ( const dependency_graph_type& graph,
+          const dependency_vertex_map& vertex,
+          const std::set<physical_item*>& single_items,
+          item_list& items ) const;
 
       void progress_items
       ( const item_list& items, time_type elapsed_time ) const;
@@ -188,11 +226,12 @@ namespace bear
 
       void add_to_collision_queue
         ( item_list& items, physical_item* item,
-          const item_list& potential_collision ) const;
+          const candidate_collisions& potential_collision ) const;
       void add_to_collision_queue_no_neighborhood
       ( item_list& items, physical_item* item ) const;
       bool create_neighborhood
-        ( physical_item& item, const item_list& potential_collision ) const;
+        ( physical_item& item,
+          const candidate_collisions& potential_collision ) const;
 
       bool interesting_collision
         ( const physical_item& a, const physical_item& b ) const;

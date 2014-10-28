@@ -25,8 +25,34 @@
 #include <algorithm>
 #include <cassert>
 #include <claw/avl.hpp>
-#include <claw/graph.hpp>
-#include <claw/graph_algorithm.hpp>
+#include <boost/graph/depth_first_search.hpp>
+
+template <typename OutputIterator>
+struct item_graph_visitor:
+  public boost::dfs_visitor<>
+{
+  item_graph_visitor(OutputIterator _iter)
+    : m_iter(_iter) { }
+    
+  template <typename Vertex, typename Graph> 
+  void finish_vertex(const Vertex& u, Graph&) { *m_iter++ = u; }
+
+private:    
+  OutputIterator m_iter;
+};
+
+template <typename OutputIterator>
+item_graph_visitor<OutputIterator> make_item_graph_visitor( OutputIterator it )
+{
+  return item_graph_visitor<OutputIterator>( it );
+}
+
+bear::universe::world::candidate_collision::candidate_collision
+( physical_item* i )
+  : item( i )
+{
+
+}
 
 /*----------------------------------------------------------------------------*/
 const unsigned int bear::universe::world::s_map_compression = 256;
@@ -81,7 +107,7 @@ void bear::universe::world::progress_entities
 ( const region_type& regions, time_type elapsed_time )
 {
   item_list items;
-  item_list potential_collision;
+  candidate_collisions potential_collision;
 
   lock();
 
@@ -96,6 +122,10 @@ void bear::universe::world::progress_entities
 
   // move the item and apply the links
   progress_physic( elapsed_time, items );
+
+  for ( candidate_collisions::iterator it( potential_collision.begin() );
+        it != potential_collision.end(); ++it )
+    it->bounding_box = it->item->get_bounding_box();
 
   // collision detection
   detect_collision_all( items, potential_collision );
@@ -773,7 +803,7 @@ void bear::universe::world::list_active_items
  *        collisions.
  */
 void bear::universe::world::detect_collision_all
-( item_list& items, const item_list& potential_collision )
+( item_list& items, const candidate_collisions& potential_collision )
 {
   item_list pending;
 
@@ -842,7 +872,7 @@ bear::universe::world::pick_next_collision( item_list& pending ) const
  */
 void bear::universe::world::detect_collision
 ( physical_item* item, item_list& pending, item_list& all_items,
-  const item_list& potential_collision ) const
+  const candidate_collisions& potential_collision ) const
 {
   physical_item* it = item->get_world_progress_structure().pick_next_neighbor();
 
@@ -920,7 +950,7 @@ bool bear::universe::world::process_collision
  *        \a mass.
  */
 void bear::universe::world::search_items_for_collision
-( const physical_item& item, const item_list& potential_collision,
+( const physical_item& item, const candidate_collisions& potential_collision,
   item_list& colliding, double& mass, double& area ) const
 {
   const rectangle_type r(item.get_bounding_box());
@@ -934,13 +964,13 @@ void bear::universe::world::search_items_for_collision
     if ( interesting_collision( item, **its ) )
       item_found_in_collision( item, *its, colliding, mass, area );
 
-  item_list::const_iterator it;
+  candidate_collisions::const_iterator it;
 
-  // add living item
+   // add living item
   for ( it=potential_collision.begin(); it!=potential_collision.end(); ++it )
-    if ( (*it!=&item) && (*it)->get_bounding_box().intersects(r)
-         && interesting_collision( item, **it ) )
-      item_found_in_collision( item, *it, colliding, mass, area );
+    if ( (it->item!=&item) && it->bounding_box.intersects(r)
+         && interesting_collision( item, *it->item ) )
+      item_found_in_collision( item, it->item, colliding, mass, area );
 } // world::search_items_for_collision()
 
 /*----------------------------------------------------------------------------*/
@@ -1015,7 +1045,7 @@ void bear::universe::world::search_pending_items_for_collision
  */
 void bear::universe::world::search_interesting_items
 ( const region_type& regions, item_list& items,
-  item_list& potential_collision ) const
+  candidate_collisions& potential_collision ) const
 {
   item_list::const_iterator it;
 
@@ -1037,7 +1067,7 @@ void bear::universe::world::search_interesting_items
         select_item(items, *it);
 
       if ( !(*it)->is_artificial() )
-        potential_collision.push_back(*it);
+        potential_collision.push_back( candidate_collision( *it ) );
     }
 
   // add dependent item
@@ -1052,53 +1082,101 @@ void bear::universe::world::search_interesting_items
  */
 void bear::universe::world::stabilize_dependent_items( item_list& items ) const
 {
-  typedef claw::graph<physical_item*> graph_type;
+  dependency_graph_type g;
+  dependency_vertex_map vertex;
+  std::set<physical_item*> single_items( items.begin(), items.end() );
 
-  graph_type g;
   item_list pending;
-  std::swap(items, pending);
+  std::swap( items, pending );
 
   while ( !pending.empty() )
     {
       physical_item* const src( pending.back() );
       pending.pop_back();
-      g.add_vertex(src);
 
-      // get the item relatively to which I move
-      physical_item* const ref
-        ( const_cast<physical_item*>( src->get_movement_reference() ) );
-
-      if ( ref != NULL )
-        {
-          select_item( pending, ref );
-          g.add_edge(ref, src);
-        }
-
-      // get the items depending on me
-      item_list dep_items;
-      src->get_dependent_items(dep_items);
-
-      // check if there is any new item in dep_items
-      for ( item_list::const_iterator it = dep_items.begin();
-            it != dep_items.end(); ++it )
-        {
-          physical_item* dep( *it );
-
-          if ( dep == NULL )
-            claw::logger << claw::log_warning << "Dependent item is NULL"
-                         << std::endl;
-          else
-            {
-              select_item( pending, dep );
-              g.add_edge(src, dep);
-            }
-        }
+      find_dependency_links( pending, g, vertex, single_items, src );
     }
 
-  claw::topological_sort<graph_type> sort;
-  sort(g);
-  items = item_list( sort.begin(), sort.end() );
-} // world::stabilize_dependent_items()
+  make_sorted_dependency_list( g, vertex, single_items, items );
+}
+
+void bear::universe::world::find_dependency_links
+( item_list& pending, dependency_graph_type& graph,
+  dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+  physical_item* item ) const
+{
+  // get the item relatively to which I move
+  physical_item* const ref
+    ( const_cast<physical_item*>( item->get_movement_reference() ) );
+
+  if ( ref != NULL )
+    add_dependency_edge( pending, graph, vertex, single_items, ref, item );
+
+  // get the items depending on me
+  item_list dep_items;
+  item->get_dependent_items(dep_items);
+
+  // check if there is any new item in dep_items
+  for ( item_list::const_iterator it = dep_items.begin();
+        it != dep_items.end(); ++it )
+    {
+      physical_item* dep( *it );
+
+      if ( dep == NULL )
+        claw::logger << claw::log_warning << "Dependent item is NULL"
+                     << std::endl;
+      else
+        add_dependency_edge( pending, graph, vertex, single_items, item, dep );
+    }
+}
+
+void bear::universe::world::add_dependency_edge
+  ( item_list& pending, dependency_graph_type& graph,
+    dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+    physical_item* tail, physical_item* head ) const
+{
+  add_dependency_vertex( pending, graph, vertex, single_items, tail );
+  add_dependency_vertex( pending, graph, vertex, single_items, head );
+
+  boost::add_edge( vertex.left.at( tail ), vertex.left.at( head ), graph );
+}
+
+void bear::universe::world::add_dependency_vertex
+  ( item_list& pending, dependency_graph_type& graph,
+    dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+    physical_item* v ) const
+{
+  select_item( pending, v );
+
+  if ( vertex.left.find( v ) == vertex.left.end() )
+    {
+      single_items.erase( v );
+      vertex.insert
+        ( dependency_vertex_map::value_type( v, boost::add_vertex( graph ) ) );
+    }
+}
+
+void bear::universe::world::make_sorted_dependency_list
+( const dependency_graph_type& graph, const dependency_vertex_map& vertex,
+  const std::set<physical_item*>& single_items, item_list& items ) const
+{
+  typedef std::vector<dependency_graph_type::vertex_descriptor> vertex_list;
+  vertex_list sorted;
+  sorted.reserve( boost::num_vertices( graph ) );
+
+  boost::bgl_named_params<int, boost::buffer_param_t> params(0);
+  boost::depth_first_search
+    ( graph,
+      params.visitor
+      ( make_item_graph_visitor( std::back_inserter( sorted ) ) ) );
+
+  items.reserve( single_items.size() + sorted.size() );
+  items.insert( items.end(), single_items.begin(), single_items.end() );
+
+  for ( vertex_list::const_reverse_iterator it( sorted.rbegin() );
+        it != sorted.rend(); ++it )
+    items.push_back( vertex.right.at( *it ) );
+}
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -1324,7 +1402,7 @@ void bear::universe::world::unselect_item
  */
 void bear::universe::world::add_to_collision_queue
 ( item_list& pending, physical_item* item,
-  const item_list& potential_collision ) const
+  const candidate_collisions& potential_collision ) const
 {
   if ( !item->has_weak_collisions() && !item->is_artificial() )
     if ( create_neighborhood(*item, potential_collision) )
@@ -1362,7 +1440,7 @@ void bear::universe::world::add_to_collision_queue_no_neighborhood
  *        collisions.
  */
 bool bear::universe::world::create_neighborhood
-( physical_item& item, const item_list& potential_collision ) const
+( physical_item& item, const candidate_collisions& potential_collision ) const
 {
   item_list n;
   double area(0);

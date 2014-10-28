@@ -15,12 +15,44 @@
 
 #include "universe/shape/shape_base.hpp"
 
+namespace bear
+{
+  namespace universe
+  {
+    class dummy_shape:
+      public shape_base
+    {
+      dummy_shape* clone() const { return const_cast<dummy_shape*>( this ); }
+
+      bool intersects( const rectangle& that ) const { return false; }
+      bool intersects( const curved_box& that ) const { return false; }
+
+      coordinate_type do_get_bottom() const { return 0; }
+      void do_set_bottom( coordinate_type p ) {}
+
+      coordinate_type do_get_left() const { return 0; }
+      void do_set_left( coordinate_type p ) {}
+
+      size_type do_get_width() const { return 0; }
+      void do_set_width( size_type s ) {}
+
+      size_type do_get_height() const { return 0; }
+      void do_set_height( size_type s ) {}
+
+      bool do_intersects( const shape_base& that ) const { return false; }
+
+    };
+
+    static dummy_shape g_dummy_shape;
+  }
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
  */
 bear::universe::shape::shape()
-  : m_impl( NULL )
+  : m_impl( &g_dummy_shape )
 {
 
 } // shape::shape()
@@ -53,7 +85,8 @@ bear::universe::shape::shape( const shape& that )
  */
 bear::universe::shape::~shape()
 {
-  delete m_impl;
+  if ( m_impl != &g_dummy_shape )
+    delete m_impl;
 } // shape::shape()
 
 /*----------------------------------------------------------------------------*/
@@ -75,10 +108,7 @@ bear::universe::shape& bear::universe::shape::operator=( shape that )
  */
 bool bear::universe::shape::intersects( const shape& that ) const
 {
-  if ( (m_impl == NULL) || (that.m_impl == NULL) )
-    return false;
-  else
-    return m_impl->intersects( *that.m_impl );
+  return m_impl->intersects( *that.m_impl );
 } // shape::intersects()
 
 /*----------------------------------------------------------------------------*/
@@ -87,10 +117,7 @@ bool bear::universe::shape::intersects( const shape& that ) const
  */
 bear::universe::size_type bear::universe::shape::get_width() const
 {
-  if ( m_impl == NULL )
-    return 0;
-  else
-    return m_impl->get_width();
+  return m_impl->get_width();
 } // shape::get_width()
 
 /*----------------------------------------------------------------------------*/
@@ -100,8 +127,7 @@ bear::universe::size_type bear::universe::shape::get_width() const
  */
 void bear::universe::shape::set_width( size_type width )
 {
-  if ( m_impl != NULL )
-    m_impl->set_width( width );
+  m_impl->set_width( width );
 } // shape::set_width()
 
 /*----------------------------------------------------------------------------*/
@@ -111,10 +137,7 @@ void bear::universe::shape::set_width( size_type width )
 bear::universe::size_type
 bear::universe::shape::get_height() const
 {
-  if ( m_impl == NULL )
-    return 0;
-  else
-    return m_impl->get_height();
+  return m_impl->get_height();
 } // shape::get_height()
 
 /*----------------------------------------------------------------------------*/
@@ -124,8 +147,7 @@ bear::universe::shape::get_height() const
  */
 void bear::universe::shape::set_height( size_type height )
 {
-  if ( m_impl != NULL )
-    m_impl->set_height( height );
+  m_impl->set_height( height );
 } // shape::set_height()
 
 /*----------------------------------------------------------------------------*/
@@ -135,10 +157,7 @@ void bear::universe::shape::set_height( size_type height )
  */
 bear::universe::coordinate_type bear::universe::shape::get_bottom() const
 {
-  if ( m_impl == NULL )
-    return 0;
-  else
-    return m_impl->get_bottom();
+  return m_impl->get_bottom();
 } // shape::get_bottom()
 
 /*----------------------------------------------------------------------------*/
@@ -148,8 +167,7 @@ bear::universe::coordinate_type bear::universe::shape::get_bottom() const
  */
 void bear::universe::shape::set_bottom( coordinate_type pos )
 {
-  if ( m_impl != NULL )
-    m_impl->set_bottom( pos );
+  m_impl->set_bottom( pos );
 } // shape::set_bottom()
 
 /*----------------------------------------------------------------------------*/
@@ -159,10 +177,7 @@ void bear::universe::shape::set_bottom( coordinate_type pos )
  */
 bear::universe::coordinate_type bear::universe::shape::get_left() const
 {
-  if ( m_impl == NULL )
-    return 0;
-  else
-    return m_impl->get_left();
+  return m_impl->get_left();
 } // shape::get_left()
 
 /*----------------------------------------------------------------------------*/
@@ -172,8 +187,7 @@ bear::universe::coordinate_type bear::universe::shape::get_left() const
  */
 void bear::universe::shape::set_left( coordinate_type pos )
 {
-  if ( m_impl != NULL )
-    m_impl->set_left( pos );
+  m_impl->set_left( pos );
 } // shape::set_left()
 
 /*----------------------------------------------------------------------------*/
@@ -183,8 +197,5 @@ void bear::universe::shape::set_left( coordinate_type pos )
  */
 bear::universe::shape_base* bear::universe::shape::clone_impl() const
 {
-  if ( m_impl == NULL )
-    return NULL;
-  else
-    return m_impl->clone();
+  return m_impl->clone();
 } // shape::clone_impl()

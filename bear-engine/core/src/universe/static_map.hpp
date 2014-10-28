@@ -57,13 +57,10 @@ namespace bear
 
     private:
       /** \brief Items in a cell. */
-      typedef std::vector<item_type> item_box;
-
-      /** \brief A column of the map. */
-      typedef std::vector<item_box> column;
+      typedef std::vector<std::size_t> item_box;
 
       /** \brief The whole map. */
-      typedef std::vector<column> map;
+      typedef std::vector<item_box> map;
 
     public:
       static_map
@@ -79,7 +76,9 @@ namespace bear
       ( AreaIterator first, AreaIterator last, item_list& items ) const;
 
       void get_area_unique( const area_type& area, item_list& items ) const;
+    private:
       void get_area( const area_type& area, item_list& items ) const;
+    public:
       void get_all_unique( item_list& items ) const;
 
       unsigned int empty_cells() const;
@@ -98,6 +97,9 @@ namespace bear
 
       /** \brief The whole map. */
       map m_map;
+
+      item_list m_items;
+      std::vector<rectangle_type> m_bounding_boxes;
 
     }; // class static_map
 
