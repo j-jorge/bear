@@ -23,6 +23,11 @@
 
 #include <claw/logger.hpp>
 
+#include "bf/image_pool.hpp"
+#include "bf/workspace_environment.hpp"
+void migrate( bf::level& lvl );
+const bf::image_pool* g_image_pool( NULL );
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load a level.
@@ -32,6 +37,7 @@
 bf::gui_level* bf::level_file_xml_reader::load
 ( const wxString& file_path, workspace_environment& env ) const
 {
+  g_image_pool = &env.get_image_pool();
   wxXmlDocument doc;
 
   if ( !doc.Load(file_path) )
@@ -74,6 +80,8 @@ bf::gui_level* bf::level_file_xml_reader::load_level
       lvl = new gui_level
         ( wx_to_std_string(name), width, height, wx_to_std_string(music) );
       load_layers( *lvl, node->GetChildren(), env );
+
+      migrate( *lvl );
     }
   catch( std::exception& e )
     {
@@ -232,3 +240,208 @@ void bf::level_file_xml_reader::load_item
   if ( item != NULL )
     lay.add_item(item);
 } // level_file_xml_reader::load_item()
+
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
+
+std::string random( const std::string& a, const std::string& b )
+{
+  static bool init( true );
+  if ( init )
+    {
+      srand( time( NULL ) );
+      init = false;
+    }
+  
+  if ( rand() < RAND_MAX / 2 )
+    return a;
+  else
+    return b;
+}
+
+void migrate_slope_sprite( const std::string& theme, bf::sprite& s )
+{
+  const std::string name( s.get_image_name() );
+
+  std::vector< std::string > parts;
+  std::string slope_type
+    ( boost::algorithm::split( parts, name, boost::is_any_of( "/" ) )[ 2 ] );
+  std::string slope_name
+    ( boost::algorithm::split
+      ( parts,
+        boost::algorithm::split
+        ( parts, name, boost::is_any_of( "/" ) )[ 3 ],
+        boost::is_any_of( "." ) )[ 0 ] );
+
+  if ( slope_type == "ground" )
+    return;
+  
+  if ( slope_type == "bump" )
+    {
+      s.set_image_name( "gfx/" + theme + "/ground/ground-1.png" );
+      s.set_spritepos_entry( slope_name );
+    }
+  else if ( slope_type == "gentle-slope" )
+    {
+      s.set_image_name( "gfx/" + theme + "/ground/ground-1.png" );
+
+      if ( slope_name == "gentle-slope-3*" )
+        s.set_spritepos_entry
+          ( random( "gentle-slope-3", "gentle-slope-3-alt" ) );
+      else if ( slope_name == "gentle-slope-5*" )
+        s.set_spritepos_entry
+          ( random( "gentle-slope-5", "gentle-slope-5-alt" ) );
+      else        
+        s.set_spritepos_entry( slope_name );
+    }
+  else if ( slope_type == "sin-slope" )
+    {
+      s.set_image_name( "gfx/" + theme + "/ground/ground-2.png" );
+
+      if ( slope_name == "sin-slope-4*" )
+        s.set_spritepos_entry
+          ( random( "sin-slope-4", "sin-slope-4-alt" ) );
+      else        
+        s.set_spritepos_entry( slope_name );
+    }
+  else if ( slope_type == "steep-slope" )
+    {
+      s.set_image_name( "gfx/" + theme + "/ground/ground-3.png" );
+
+      if ( slope_name == "steep-slope-4*" )
+        s.set_spritepos_entry
+          ( random( "steep-slope-4", "steep-slope-4-alt" ) );
+      else if ( slope_name == "steep-slope-5*" )
+        s.set_spritepos_entry
+          ( random( "steep-slope-5", "steep-slope-5-alt" ) );
+      else        
+        s.set_spritepos_entry( slope_name );
+    }
+  else
+    std::cout << "Ignoring slope " << slope_type << ' ' << slope_name << '\n';
+}
+
+void migrate_wall_fill_sprite( const std::string& theme, bf::sprite& s )
+{
+  const std::string name( s.get_image_name() );
+
+  std::vector< std::string > parts;
+  std::string type
+    ( boost::algorithm::split( parts, name, boost::is_any_of( "/" ) )[ 2 ] );
+
+  if ( type == theme )
+    return;
+
+  if ( type == "wall-fill-*.png" )
+    {
+      s.set_image_name( "gfx/wall-fill/" + theme + "/wall-fill*.png" );
+      s.set_spritepos_entry( "wall-fill" );
+    }
+  else if ( boost::starts_with( type, "wall-fill-" ) )
+    {
+      s.set_image_name( "gfx/wall-fill/" + theme + "/" + type );
+      s.set_spritepos_entry( "wall-fill" );
+    }
+  else
+    std::cout << "Ignoring wall fill " << type << '\n';
+}
+
+void migrate_rail_sprite( const std::string& theme, bf::sprite& s )
+{
+  const std::string name( s.get_image_name() );
+
+  std::vector< std::string > parts;
+  std::string type
+    ( boost::algorithm::split( parts, name, boost::is_any_of( "/" ) )[ 2 ] );
+
+  if ( type == "ground" )
+    return;
+
+  if ( ( type == "rail.png" ) || ( type == "rail-end.png" )
+       || ( type == "broken-rail.png" ) )
+      s.set_image_name( "gfx/" + theme + "/ground/ground-2.png" );
+  else
+    std::cout << "Ignoring rail " << type << '\n';
+}
+
+void migrate_sprite
+( const std::string& theme, bf::item_instance& item, const std::string& field )
+{
+  if ( !item.has_value( field ) )
+    return;
+  
+  bf::sprite s;
+  item.get_value( field, s );
+
+  const std::string name( s.get_image_name() );
+  
+  if ( boost::starts_with( name, "gfx/slope/" ) )
+    migrate_slope_sprite( theme, s );
+  else if ( boost::starts_with( name, "gfx/rail/" ) )
+    migrate_rail_sprite( theme, s );
+  else if ( boost::starts_with( name, "gfx/wall-fill/" ) )
+    migrate_wall_fill_sprite( theme, s );
+
+  if ( !s.get_spritepos_entry().empty() )
+    s.set_clip_rectangle
+      ( g_image_pool->get_spritepos_rectangle
+        ( bf::std_to_wx_string( s.get_image_name() ),
+          bf::std_to_wx_string( s.get_spritepos_entry() ) ) );
+  
+  item.set_value( field, s );
+}
+
+void migrate( const std::string& theme, bf::item_instance& item )
+{
+  const bf::item_class& c( item.get_class() );
+  
+  std::list< std::string > fields;
+  c.get_field_names_in_hierarchy( fields );
+
+  for ( std::list< std::string >::const_iterator it( fields.begin() );
+        it != fields.end(); ++it )
+    if ( c.get_field( *it ).get_field_type()
+         == bf::type_field::sprite_field_type )
+      migrate_sprite( theme, item, *it );
+}
+
+void migrate( const std::string& theme, bf::layer& layer )
+{
+  for ( bf::layer::item_iterator it( layer.item_begin_no_filter() );
+        it != layer.item_end_no_filter();
+        ++it )
+    migrate( theme, *it );
+}
+
+void migrate( const std::string& theme, bf::level& lvl )
+{
+  for ( std::size_t i( 0 ); i != lvl.layers_count(); ++i )
+    migrate( theme, lvl.get_layer( i ) );
+}
+
+std::string get_theme( const std::string& m )
+{
+  const std::string::size_type slash( m.find_last_of( '/' ) );
+
+  if ( slash == std::string::npos )
+    return "";
+  
+  const std::string::size_type dot( m.find_first_of( '.', slash ) );
+
+  if ( dot == std::string::npos )
+    return "";
+
+  return m.substr( slash + 1, dot - slash - 1 );
+}
+
+void migrate( bf::level& lvl )
+{
+  const std::string theme( get_theme( lvl.get_music() ) );
+
+  if ( theme == "aquatic" )
+    migrate( theme, lvl );
+  else
+    std::cout << "Unknown theme '" << theme << "''\n";
+}
+

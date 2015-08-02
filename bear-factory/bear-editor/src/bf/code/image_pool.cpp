@@ -189,7 +189,12 @@ bf::image_pool::get_spritepos_rectangle
   const spritepos_entries::const_iterator it = r.find(entry);
 
   if ( it == r.end() )
-    return claw::math::rectangle<unsigned int>(0, 0, 0, 0);
+    {
+      std::clog << "Unknown spritepos entry '" << wx_to_std_string( entry )
+                << "' in '" << wx_to_std_string( image_name ) << "'.\n";
+      
+      return claw::math::rectangle<unsigned int>(0, 0, 0, 0);
+    }
   else
     return it->second;
 } // image_pool::get_spritepos_rectangle()

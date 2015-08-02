@@ -476,12 +476,18 @@ bool bf::path_configuration::find_random_file_name_on_disk
           ++it )
       {
         const boost::filesystem::path dirpath( *it );
-        
+
         if ( boost::filesystem::exists( dirpath ) )
           if ( boost::filesystem::is_directory( dirpath ) )
-            // plus 1 for the trailing slash of the root directory
-            find_all_files_in_dir
-              (*it, name, it->length() + 1, m, candidates);
+            {
+              std::string dirname( *it );
+              
+              if ( *dirname.rbegin() == '/' )
+                dirname.erase( dirname.size() - 1 );
+              
+              find_all_files_in_dir
+                ( dirname, name, dirname.length() + 1, m, candidates );
+            }
       }
 
   if ( !candidates.empty() )
