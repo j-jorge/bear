@@ -529,7 +529,10 @@ void bear::visual::gl_renderer::render_loop()
       m_mutex.loop_state.lock();
 
       if ( m_stop )
-        break;
+        {
+          m_mutex.loop_state.unlock();
+          break;
+        }
 
       ensure_window_exists();
 
