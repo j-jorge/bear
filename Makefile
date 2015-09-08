@@ -1,5 +1,5 @@
 CFLAGS=-Wall -Wno-sign-compare -fdiagnostics-color=always
-CXXFLAGS= $(CFLAGS) --std=c++11
+CXXFLAGS= $(CFLAGS) -std=c++11
 LDFLAGS=
 
 CMAKE_BUILD_TYPE=
@@ -16,6 +16,10 @@ else
   BUILD_DIR=build/debug
 endif
 
+ifeq ($(VERBOSE),)
+  VERBOSE=0
+endif
+
 CMAKE_ARGS=-DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE)
 
 all: test
@@ -24,7 +28,7 @@ test: target
 	cd $(BUILD_DIR) && CTEST_OUTPUT_ON_FAILURE=1 ctest
 
 target: .cmake
-	cd $(BUILD_DIR) && $(MAKE)
+	cd $(BUILD_DIR) && $(MAKE) VERBOSE=$(VERBOSE)
 
 .cmake: $(BUILD_DIR)
 	cd $(BUILD_DIR) \

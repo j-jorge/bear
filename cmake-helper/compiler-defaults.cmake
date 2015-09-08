@@ -2,7 +2,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   if(NOT WIN32 AND NOT APPLE)
     add_definitions(
       -Wall
-      -ansi
+      -std=c++11
       -pedantic
       -Wmissing-field-initializers
       -Wuninitialized

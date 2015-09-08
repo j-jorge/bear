@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
+enable_testing()
+
 set( BEAR_ROOT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" )
 
 set(
