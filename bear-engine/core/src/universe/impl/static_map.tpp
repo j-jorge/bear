@@ -223,7 +223,6 @@ void bear::universe::static_map<ItemType>::cells_load
 ( unsigned int& min, unsigned int& max, double& avg ) const
 {
   unsigned int not_empty_cells=0;
-  unsigned int x, y;
   unsigned int load=0;
 
   min = std::numeric_limits<unsigned int>::max();
