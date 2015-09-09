@@ -11,18 +11,19 @@ else ifeq ($(BUILD),profile)
   CMAKE_BUILD_TYPE=release
   CXXFLAGS += -pg
   BUILD_DIR=build/profile
+  CMAKE_ARGS=-DBEAR_ENGINE_CORE_LINK_TYPE=STATIC
 else
   CMAKE_BUILD_TYPE=debug
   BUILD_DIR=build/debug
 endif
 
-ifeq ($(VERBOSE),)
-  VERBOSE=0
-endif
-
-CMAKE_ARGS=-DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE)
+CMAKE_ARGS += -DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) \
+        -DCMAKE_INSTALL_PREFIX=/usr
 
 all: test
+
+install: test
+	cd $(BUILD_DIR) && $(MAKE) install
 
 test: target
 	cd $(BUILD_DIR) && CTEST_OUTPUT_ON_FAILURE=1 ctest

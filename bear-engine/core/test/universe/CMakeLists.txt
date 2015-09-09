@@ -4,6 +4,7 @@ add_library(
   bear_test_universe
   STATIC
   helpers/item_call_tracker.cpp
+  helpers/item_mockup.cpp
   )
 target_include_directories(
   bear_test_universe
@@ -13,11 +14,16 @@ target_include_directories(
 include(BoostTestHelpers)
 
 add_boost_test(
-  SOURCE test-cases/world_update.cpp
+  SOURCE test-cases/world_collisions.cpp
   LINK bear_test_universe bear_universe
   )
 
 add_boost_test(
   SOURCE test-cases/world_items.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
+  SOURCE test-cases/world_update.cpp
   LINK bear_test_universe bear_universe
   )

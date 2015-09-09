@@ -22,7 +22,7 @@ include_directories( ${BEAR_ENGINE_INCLUDE_DIRECTORY} )
 
 #-------------------------------------------------------------------------------
 # Now we can describe our project.
-set( TARGET_NAME ex-physics )
+set( TARGET_NAME entity-count )
 file( GLOB SOURCES *.cpp )
 
 add_executable( ${TARGET_NAME} ${SOURCES} )

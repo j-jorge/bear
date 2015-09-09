@@ -966,9 +966,9 @@ void bear::universe::world::search_items_for_collision
 
   candidate_collisions::const_iterator it;
 
-   // add living item
+  // add living item
   for ( it=potential_collision.begin(); it!=potential_collision.end(); ++it )
-    if ( (it->item!=&item) && it->bounding_box.intersects(r)
+    if ( (it->item!=&item) && it->item->get_bounding_box().intersects(r)
          && interesting_collision( item, *it->item ) )
       item_found_in_collision( item, it->item, colliding, mass, area );
 } // world::search_items_for_collision()
