@@ -3,7 +3,7 @@
 
 #include "test/universe/item_call_tracker.hpp"
 
-#define BOOST_TEST_MODULE bear::universe::world
+#define BOOST_TEST_MODULE bear::universe::world/update
 #include <boost/test/included/unit_test.hpp>
 
 #include <array>

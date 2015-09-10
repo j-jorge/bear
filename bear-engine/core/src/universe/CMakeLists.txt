@@ -49,6 +49,8 @@ set( UNIVERSE_SOURCE_FILES
   forced_movement/code/reference_point.cpp
   forced_movement/code/sinus_speed_generator.cpp
 
+  internal/code/item_selection.cpp
+  
   link/code/base_link.cpp
   link/code/chain_link.cpp
   link/code/link.cpp

@@ -19,6 +19,7 @@
 #include "universe/environment_rectangle.hpp"
 #include "universe/force_rectangle.hpp"
 #include "universe/friction_rectangle.hpp"
+#include "universe/internal/item_selection.hpp"
 #include "universe/link/base_link.hpp"
 #include "universe/shape/rectangle.hpp"
 
@@ -134,7 +135,7 @@ void bear::universe::world::progress_entities
   active_region_traffic( items );
 
   while ( !items.empty() )
-    unselect_item( items, items.begin() );
+    internal::unselect_item( items, items.begin() );
 
   unlock();
 
@@ -887,7 +888,7 @@ void bear::universe::world::detect_collision
 
       if ( process_collision(*item, *it) )
         {
-          select_item( all_items, it );
+          internal::select_item( all_items, it );
           item->get_world_progress_structure().meet(it);
 
           if ( it->get_bounding_box() != it_box )
@@ -1054,17 +1055,17 @@ void bear::universe::world::search_interesting_items
   m_static_surfaces.get_areas( regions.begin(), regions.end(), static_items );
 
   for( it=static_items.begin(); it!=static_items.end(); ++it)
-    select_item(items, *it);
+    internal::select_item(items, *it);
 
   // add global static items
   for (it=m_global_static_items.begin(); it!=m_global_static_items.end(); ++it)
-    select_item(items, *it);
+    internal::select_item(items, *it);
 
   // add living item of the active zone and global living item
   for ( it=m_entities.begin(); it!=m_entities.end(); ++it )
     {
       if ( (*it)->is_global() || item_in_regions(**it, regions) )
-        select_item(items, *it);
+        internal::select_item(items, *it);
 
       if ( !(*it)->is_artificial() )
         potential_collision.push_back( candidate_collision( *it ) );
@@ -1146,7 +1147,7 @@ void bear::universe::world::add_dependency_vertex
     dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
     physical_item* v ) const
 {
-  select_item( pending, v );
+  internal::select_item( pending, v );
 
   if ( vertex.left.find( v ) == vertex.left.end() )
     {
@@ -1353,44 +1354,6 @@ void bear::universe::world::remove(physical_item* const& who)
   if ( it != eit )
     m_last_interesting_items.erase(it);
 } // world::remove()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Select an item if not already selected.
- * \param items (out) List of items to which is added the item.
- * \param it The item to select.
- * \return true if the item is selected.
- */
-bool
-bear::universe::world::select_item( item_list& items, physical_item* it ) const
-{
-  bool result = false;
-
-  if ( !it->get_world_progress_structure().is_selected() )
-    {
-      items.push_back(it);
-      it->get_world_progress_structure().init();
-      it->get_world_progress_structure().select();
-      result = true;
-    }
-
-  return result;
-} // world::select_item()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Unselect an item.
- * \param items (out) List of items to which is removed the item.
- * \param it An iterator on the item to unselect.
- */
-void bear::universe::world::unselect_item
-( item_list& items, item_list::iterator it ) const
-{
-  CLAW_PRECOND( (*it)->get_world_progress_structure().is_selected() );
-
-  (*it)->get_world_progress_structure().deinit();
-  items.erase(it);
-} // world::unselect_item()
 
 /*----------------------------------------------------------------------------*/
 /**

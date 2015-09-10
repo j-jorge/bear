@@ -14,6 +14,11 @@ target_include_directories(
 include(BoostTestHelpers)
 
 add_boost_test(
+  SOURCE test-cases/item_selection.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
   SOURCE test-cases/world_collisions.cpp
   LINK bear_test_universe bear_universe
   )

@@ -221,9 +221,6 @@ namespace bear
       void add( physical_item* const& who );
       void remove( physical_item* const& who );
 
-      bool select_item( item_list& items, physical_item* it ) const;
-      void unselect_item( item_list& items, item_list::iterator it ) const;
-
       void add_to_collision_queue
         ( item_list& items, physical_item* item,
           const candidate_collisions& potential_collision ) const;
