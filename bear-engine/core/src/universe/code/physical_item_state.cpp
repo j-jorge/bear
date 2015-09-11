@@ -38,7 +38,8 @@ bear::universe::physical_item_state::physical_item_state()
 bear::universe::physical_item_state::physical_item_state
 ( const physical_item_state& that )
   : m_attributes(that.m_attributes), m_fixed(false),
-    m_bounding_box_is_dirty(false), m_bounding_box(that.m_bounding_box)
+    m_bounding_box_is_dirty(that.m_bounding_box_is_dirty),
+    m_bounding_box(that.m_bounding_box)
 {
 
 } // physical_item_state::physical_item_state()
