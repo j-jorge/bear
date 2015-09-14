@@ -19,6 +19,11 @@ add_boost_test(
   )
 
 add_boost_test(
+  SOURCE test-cases/physical_item.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
   SOURCE test-cases/physical_item_state.cpp
   LINK bear_test_universe bear_universe
   )

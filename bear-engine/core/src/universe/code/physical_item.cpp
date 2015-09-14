@@ -273,6 +273,7 @@ bear::universe::physical_item::collides_with( const physical_item& that ) const
  */
 void bear::universe::physical_item::set_owner(world& owner)
 {
+  CLAW_PRECOND( !has_owner() );
   m_owner = &owner;
 } // physical_item::set_owner()
 
