@@ -75,7 +75,7 @@ void bear::visual::gl_error::throw_on_error
           err_string << "unknow error code " << err << '.';
         }
 
-      claw::logger << claw::log_error << err_string << std::endl;
+      claw::logger << claw::log_error << err_string.str() << std::endl;
 
       throw claw::exception( err_string.str() );
     }

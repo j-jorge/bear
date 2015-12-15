@@ -31,7 +31,7 @@ void bear::visual::sdl_error::throw_on_error
   std::ostringstream err_string;
   err_string << function << ":" << line << ": " << SDL_GetError();
 
-  claw::logger << claw::log_error << err_string << std::endl;
+  claw::logger << claw::log_error << err_string.str() << std::endl;
 
   throw claw::exception( err_string.str() );
 } // sdl_error::throw_on_error()
