@@ -696,6 +696,10 @@ void bear::visual::gl_renderer::ensure_window_exists()
   if ( !m_video_mode_is_set || (m_gl_context != NULL) )
     return;
 
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 1 );
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES );
+  
   Uint32 flags = SDL_WINDOW_OPENGL;
 
   m_window_size = get_best_screen_size();
