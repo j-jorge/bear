@@ -6,6 +6,8 @@ set( BEAR_ENGINE_INCLUDE
   ${BEAR_ITEMS_INCLUDE_DIRECTORY}
 )
 
+find_library( BEAR_GENERIC_ITEMS_LIBRARY "bear_generic_items" )
+
 set( BEAR_ENGINE_LIBRARIES
   bear_generic_items
   bear_engine
