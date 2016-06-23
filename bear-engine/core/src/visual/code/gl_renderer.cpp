@@ -626,11 +626,18 @@ void bear::visual::gl_renderer::resize_view
 ( const screen_size_type& viewport_size )
 {
   glViewport( 0, 0, viewport_size.x, viewport_size.y );
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho( 0, m_view_size.x, 0, m_view_size.y, -1, 0 );
-  glMatrixMode(GL_MODELVIEW);
+  VISUAL_GL_ERROR_THROW();
 
+  glMatrixMode(GL_PROJECTION);
+  VISUAL_GL_ERROR_THROW();
+
+  glLoadIdentity();
+  VISUAL_GL_ERROR_THROW();
+
+  glOrtho( 0, m_view_size.x, 0, m_view_size.y, -1, 0 );
+  VISUAL_GL_ERROR_THROW();
+
+  glMatrixMode(GL_MODELVIEW);
   VISUAL_GL_ERROR_THROW();
 } // gl_renderer::resize_view()
 
@@ -696,9 +703,11 @@ void bear::visual::gl_renderer::ensure_window_exists()
   if ( !m_video_mode_is_set || (m_gl_context != NULL) )
     return;
 
+#ifdef __ANDROID__
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 1 );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES );
+#endif
   
   Uint32 flags = SDL_WINDOW_OPENGL;
 
@@ -744,6 +753,8 @@ void bear::visual::gl_renderer::ensure_window_exists()
                  << glewGetErrorString(err) << std::endl;
 #endif
   
+  resize_view( m_window_size );
+
   glEnable(GL_TEXTURE_2D);
   VISUAL_GL_ERROR_THROW();
   
@@ -752,8 +763,6 @@ void bear::visual::gl_renderer::ensure_window_exists()
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
-
-  resize_view( m_window_size );
 
   release_context();
 
@@ -894,7 +903,7 @@ bear::visual::gl_renderer::gl_renderer()
 {
   m_mutex.gl_access.lock();
 
-#ifdef WIN32
+#ifndef WIN32
   m_render_thread = NULL;
 #else
   m_render_thread =
