@@ -185,20 +185,23 @@ namespace bear
       void stabilize_dependent_items( item_list& items ) const;
       void find_dependency_links
         ( item_list& pending, dependency_graph_type& graph,
-          dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+          dependency_vertex_map& vertex,
+          std::unordered_set<physical_item*>& single_items,
           physical_item* item ) const;
       void add_dependency_edge
         ( item_list& pending, dependency_graph_type& graph,
-          dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+          dependency_vertex_map& vertex,
+          std::unordered_set<physical_item*>& single_items,
           physical_item* tail, physical_item* head ) const;
       void add_dependency_vertex
         ( item_list& pending, dependency_graph_type& graph,
-          dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+          dependency_vertex_map& vertex,
+          std::unordered_set<physical_item*>& single_items,
           physical_item* v ) const;
       void make_sorted_dependency_list
         ( const dependency_graph_type& graph,
           const dependency_vertex_map& vertex,
-          const std::set<physical_item*>& single_items,
+          const std::unordered_set<physical_item*>& single_items,
           item_list& items ) const;
 
       void progress_items

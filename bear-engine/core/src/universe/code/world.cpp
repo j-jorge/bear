@@ -115,7 +115,7 @@ void bear::universe::world::progress_entities
   // search each item in the active zone and global item
   search_interesting_items(regions, items, potential_collision);
   assert
-    ( std::set<physical_item*>(items.begin(), items.end()).size()
+    ( std::unordered_set<physical_item*>(items.begin(), items.end()).size()
       == items.size() );
 
   // call progress for each interesting item
@@ -1085,7 +1085,7 @@ void bear::universe::world::stabilize_dependent_items( item_list& items ) const
 {
   dependency_graph_type g;
   dependency_vertex_map vertex;
-  std::set<physical_item*> single_items( items.begin(), items.end() );
+  std::unordered_set<physical_item*> single_items( items.begin(), items.end() );
 
   item_list pending;
   std::swap( items, pending );
@@ -1103,7 +1103,8 @@ void bear::universe::world::stabilize_dependent_items( item_list& items ) const
 
 void bear::universe::world::find_dependency_links
 ( item_list& pending, dependency_graph_type& graph,
-  dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+  dependency_vertex_map& vertex,
+  std::unordered_set<physical_item*>& single_items,
   physical_item* item ) const
 {
   // get the item relatively to which I move
@@ -1133,7 +1134,8 @@ void bear::universe::world::find_dependency_links
 
 void bear::universe::world::add_dependency_edge
   ( item_list& pending, dependency_graph_type& graph,
-    dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+    dependency_vertex_map& vertex,
+    std::unordered_set<physical_item*>& single_items,
     physical_item* tail, physical_item* head ) const
 {
   add_dependency_vertex( pending, graph, vertex, single_items, tail );
@@ -1144,7 +1146,8 @@ void bear::universe::world::add_dependency_edge
 
 void bear::universe::world::add_dependency_vertex
   ( item_list& pending, dependency_graph_type& graph,
-    dependency_vertex_map& vertex, std::set<physical_item*>& single_items,
+    dependency_vertex_map& vertex,
+    std::unordered_set<physical_item*>& single_items,
     physical_item* v ) const
 {
   internal::select_item( pending, v );
@@ -1159,7 +1162,8 @@ void bear::universe::world::add_dependency_vertex
 
 void bear::universe::world::make_sorted_dependency_list
 ( const dependency_graph_type& graph, const dependency_vertex_map& vertex,
-  const std::set<physical_item*>& single_items, item_list& items ) const
+  const std::unordered_set<physical_item*>& single_items,
+  item_list& items ) const
 {
   typedef std::vector<dependency_graph_type::vertex_descriptor> vertex_list;
   vertex_list sorted;
