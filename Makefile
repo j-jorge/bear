@@ -1,4 +1,4 @@
-CFLAGS=-Wall -Wno-sign-compare -fdiagnostics-color=always
+CFLAGS=-Wall -Wno-sign-compare -fdiagnostics-color=always -fext-numeric-literals
 CXXFLAGS= $(CFLAGS) -std=c++11
 LDFLAGS=
 
@@ -24,6 +24,9 @@ all: test
 
 install: test
 	cd $(BUILD_DIR) && $(MAKE) install
+
+uninstall:
+	[ ! -d $(BUILD_DIR) ] || cd $(BUILD_DIR) && $(MAKE) uninstall
 
 test: target
 	cd $(BUILD_DIR) && CTEST_OUTPUT_ON_FAILURE=1 ctest
