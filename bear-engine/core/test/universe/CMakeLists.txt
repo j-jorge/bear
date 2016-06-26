@@ -34,6 +34,26 @@ add_boost_test(
   )
 
 add_boost_test(
+  SOURCE test-cases/world_environment.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
+  SOURCE test-cases/world_density.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
+  SOURCE test-cases/world_force.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
+  SOURCE test-cases/world_friction.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
   SOURCE test-cases/world_items.cpp
   LINK bear_test_universe bear_universe
   )

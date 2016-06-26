@@ -83,18 +83,17 @@ bear::universe::world::~world()
 {
   unlock();
 
-  for ( ; !m_friction_rectangle.empty(); m_friction_rectangle.pop_front() )
-    delete m_friction_rectangle.front();
+  for ( auto e : m_friction_rectangle )
+    delete e;
 
-  for ( ; !m_force_rectangle.empty(); m_force_rectangle.pop_front() )
-    delete m_force_rectangle.front();
+  for ( auto e : m_force_rectangle )
+    delete e;
 
-  for ( ; !m_density_rectangle.empty(); m_density_rectangle.pop_front() )
-    delete m_density_rectangle.front();
+  for ( auto e : m_density_rectangle )
+    delete e;
 
-  for ( ; !m_environment_rectangle.empty();
-        m_environment_rectangle.pop_front() )
-    delete m_environment_rectangle.front();
+  for ( auto e : m_environment_rectangle )
+    delete e;
 } // world::~world()
 
 /*----------------------------------------------------------------------------*/
@@ -365,7 +364,7 @@ bear::universe::world::get_average_friction( const rectangle_type& r ) const
 
   if (r_area != 0)
     {
-      std::list<friction_rectangle*>::const_iterator it;
+      std::vector<friction_rectangle*>::const_iterator it;
       double sum_area(0);
 
       for ( it=m_friction_rectangle.begin(); it!=m_friction_rectangle.end();
@@ -397,8 +396,8 @@ bear::universe::friction_rectangle*
 bear::universe::world::add_friction_rectangle
 ( const rectangle_type& r, double f )
 {
-  m_friction_rectangle.push_front( new friction_rectangle(r, f) );
-  return m_friction_rectangle.front();
+  m_friction_rectangle.push_back( new friction_rectangle(r, f) );
+  return m_friction_rectangle.back();
 } // world::add_friction_rectangle()
 
 /*----------------------------------------------------------------------------*/
@@ -414,7 +413,7 @@ bear::universe::world::get_average_force( const rectangle_type& r ) const
 
   if (r_area != 0)
     {
-      std::list<force_rectangle*>::const_iterator it;
+      std::vector<force_rectangle*>::const_iterator it;
 
       for ( it=m_force_rectangle.begin(); it!=m_force_rectangle.end();
             ++it )
@@ -440,8 +439,8 @@ bear::universe::force_rectangle*
 bear::universe::world::add_force_rectangle
 ( const rectangle_type& r, universe::force_type f )
 {
-  m_force_rectangle.push_front( new force_rectangle(r, f) );
-  return m_force_rectangle.front();
+  m_force_rectangle.push_back( new force_rectangle(r, f) );
+  return m_force_rectangle.back();
 } // world::add_force_rectangle()
 
 /*----------------------------------------------------------------------------*/
@@ -467,7 +466,7 @@ bear::universe::world::get_average_density( const rectangle_type& r ) const
 
   if (r_area != 0)
     {
-      std::list<density_rectangle*>::const_iterator it;
+      std::vector<density_rectangle*>::const_iterator it;
       double sum_area(0);
 
       for ( it=m_density_rectangle.begin(); it!=m_density_rectangle.end();
@@ -499,8 +498,8 @@ bear::universe::density_rectangle*
 bear::universe::world::add_density_rectangle
 ( const rectangle_type& r, double f )
 {
-  m_density_rectangle.push_front( new density_rectangle(r, f) );
-  return m_density_rectangle.front();
+  m_density_rectangle.push_back( new density_rectangle(r, f) );
+  return m_density_rectangle.back();
 } // world::add_density_rectangle()
 
 /*----------------------------------------------------------------------------*/
@@ -540,7 +539,7 @@ void bear::universe::world::get_environments
 
   if (r_area != 0)
     {
-      std::list<environment_rectangle*>::const_iterator it;
+      std::vector<environment_rectangle*>::const_iterator it;
       double sum_area(0);
 
       for ( it=m_environment_rectangle.begin();
@@ -570,7 +569,7 @@ bool bear::universe::world::is_in_environment
 {
   bool result = false;
 
-  std::list<environment_rectangle*>::const_iterator it;
+  std::vector<environment_rectangle*>::const_iterator it;
 
   for ( it=m_environment_rectangle.begin();
         (it!=m_environment_rectangle.end()) && !result;
@@ -606,8 +605,8 @@ bear::universe::environment_rectangle*
 bear::universe::world::add_environment_rectangle
 ( const rectangle_type& r, const universe::environment_type e )
 {
-  m_environment_rectangle.push_front( new environment_rectangle(r, e) );
-  return m_environment_rectangle.front();
+  m_environment_rectangle.push_back( new environment_rectangle(r, e) );
+  return m_environment_rectangle.back();
 } // world::add_environment_rectangle()
 
 /*----------------------------------------------------------------------------*/
@@ -1010,30 +1009,6 @@ void bear::universe::world::item_found_in_collision
         }
     }
 } // world::item_found_in_collision()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Search all items in the pending items interesting for a collision
- *        with an other item.
- * \param item The item for which we search the collisions.
- * \param pending The pending items.
- * \param colliding (out) The colliding items.
- */
-void bear::universe::world::search_pending_items_for_collision
-( const physical_item& item, item_list& pending,
-  std::list<item_list::iterator>& colliding ) const
-{
-  const rectangle_type r(item.get_bounding_box());
-
-  for( item_list::iterator it=pending.begin(); it!=pending.end(); ++it )
-    {
-      CLAW_ASSERT
-        ( !(*it)->is_artificial(), "artificial item in pending items." );
-
-      if ( (*it)->get_bounding_box().intersects(r) )
-        colliding.push_front(it);
-    }
-} // world::search_pending_items_for_collision()
 
 /*----------------------------------------------------------------------------*/
 /**

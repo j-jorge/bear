@@ -174,10 +174,6 @@ namespace bear
       ( const physical_item& item, physical_item* it, item_list& colliding,
         double& mass, double& area ) const;
 
-      void search_pending_items_for_collision
-      ( const physical_item& item, item_list& pending,
-        std::list<item_list::iterator>& colliding ) const;
-
       void search_interesting_items
       ( const region_type& regions, item_list& items,
         candidate_collisions& potential_collision ) const;
@@ -274,13 +270,13 @@ namespace bear
 
       /** \brief A set of regions where the friction of the environment differs
           from m_default_friction. */
-      std::list<friction_rectangle*> m_friction_rectangle;
+      std::vector<friction_rectangle*> m_friction_rectangle;
 
       /** \brief A set of regions where the force is applied. */
-      std::list<force_rectangle*> m_force_rectangle;
+      std::vector<force_rectangle*> m_force_rectangle;
 
       /** \brief A set of regions with environment. */
-      std::list<environment_rectangle*> m_environment_rectangle;
+      std::vector<environment_rectangle*> m_environment_rectangle;
 
       /** \brief Default environment of the world. */
       environment_type m_default_environment;
@@ -290,7 +286,7 @@ namespace bear
 
       /** \brief A set of regions where the density of the environment differs
           from m_default_density. */
-      std::list<density_rectangle*> m_density_rectangle;
+      std::vector<density_rectangle*> m_density_rectangle;
 
       /** \brief Value under which a coordinate is considered as zero. */
       coordinate_type m_position_epsilon;
