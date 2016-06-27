@@ -17,6 +17,21 @@
 
 #include <algorithm>
 
+namespace bear
+{
+  namespace universe
+  {
+    namespace detail
+    {
+      static constexpr std::uint32_t initialized( 1 << 0 );
+      static constexpr std::uint32_t is_selected( 1 << 1 );
+      static constexpr std::uint32_t was_selected( 1 << 2 );
+      static constexpr std::uint32_t move_is_done( 1 << 3 );
+      static constexpr std::uint32_t is_waiting_for_collision( 1 << 4 );
+    }
+  }
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -71,9 +86,7 @@ bool bear::universe::world_progress_structure::lt_collision::operator()
  */
 bear::universe::world_progress_structure::world_progress_structure
 ( physical_item& item )
-  : m_item(item), m_initial_state(NULL), m_is_selected(false),
-    m_was_selected(false), m_move_is_done(false),
-    m_is_waiting_for_collision(false), m_collision_mass(0), m_collision_area(0)
+  : m_item(item), m_collision_mass(0), m_collision_area(0), m_flags( 0 )
 {
 
 } // world_progress_structure::world_progress_structure()
@@ -84,19 +97,17 @@ bear::universe::world_progress_structure::world_progress_structure
  */
 void bear::universe::world_progress_structure::init()
 {
-  if ( m_initial_state == NULL )
-    {
-      m_initial_state = new physical_item_state(m_item);
-      m_is_selected = false;
-      m_move_is_done = false;
-      m_is_waiting_for_collision = false;
+  if ( m_flags & detail::initialized )
+    return;
+  
+  m_initial_state = m_item;
+  m_flags = detail::initialized;
 
-      m_collision_neighborhood.clear();
-      m_collision_mass = 0;
-      m_collision_area = 0;
+  m_collision_neighborhood.clear();
+  m_collision_mass = 0;
+  m_collision_area = 0;
 
-      m_already_met.clear();
-    }
+  m_already_met.clear();
 } // world_progress_structure::init()
 
 /*----------------------------------------------------------------------------*/
@@ -105,15 +116,9 @@ void bear::universe::world_progress_structure::init()
  */
 void bear::universe::world_progress_structure::deinit()
 {
-  CLAW_PRECOND( m_initial_state != NULL );
+  CLAW_PRECOND( m_flags & detail::initialized );
 
-  delete m_initial_state;
-  m_initial_state = NULL;
-
-  m_was_selected = m_is_selected;
-  m_is_selected = false;
-  m_move_is_done = false;
-  m_is_waiting_for_collision = false;
+  m_flags = detail::was_selected;
 
   m_collision_neighborhood.clear();
   m_collision_mass = 0;
@@ -128,8 +133,8 @@ void bear::universe::world_progress_structure::deinit()
  */
 void bear::universe::world_progress_structure::select()
 {
-  CLAW_PRECOND( m_initial_state != NULL );
-  m_is_selected = true;
+  CLAW_PRECOND( m_flags & detail::initialized );
+  m_flags |= detail::is_selected;
 } // world_progress_structure::select()
 
 /*----------------------------------------------------------------------------*/
@@ -138,8 +143,7 @@ void bear::universe::world_progress_structure::select()
  */
 void bear::universe::world_progress_structure::unselect()
 {
-  m_is_selected = false;
-  m_was_selected = false;
+  m_flags &= ~( detail::is_selected | detail::was_selected );
 } // world_progress_structure::select()
 
 /*----------------------------------------------------------------------------*/
@@ -148,8 +152,9 @@ void bear::universe::world_progress_structure::unselect()
  */
 bool bear::universe::world_progress_structure::is_selected() const
 {
-  CLAW_PRECOND( !m_is_selected || (m_initial_state != NULL) );
-  return m_is_selected;
+  CLAW_PRECOND( !( m_flags & detail::is_selected )
+                || ( m_flags & detail::initialized ) );
+  return m_flags & detail::is_selected;
 } // world_progress_structure::is_selected()
 
 /*----------------------------------------------------------------------------*/
@@ -158,7 +163,7 @@ bool bear::universe::world_progress_structure::is_selected() const
  */
 bool bear::universe::world_progress_structure::was_selected() const
 {
-  return m_was_selected;
+  return m_flags & detail::was_selected;
 } // world_progress_structure::was_selected()
 
 /*----------------------------------------------------------------------------*/
@@ -167,7 +172,7 @@ bool bear::universe::world_progress_structure::was_selected() const
  */
 void bear::universe::world_progress_structure::set_waiting_for_collision()
 {
-  m_is_waiting_for_collision = true;
+  m_flags |= detail::is_waiting_for_collision;
 } // world_progress_structure::set_waiting_for_collision()
 
 /*----------------------------------------------------------------------------*/
@@ -176,7 +181,7 @@ void bear::universe::world_progress_structure::set_waiting_for_collision()
  */
 void bear::universe::world_progress_structure::unset_waiting_for_collision()
 {
-  m_is_waiting_for_collision = false;
+  m_flags &= ~detail::is_waiting_for_collision;
 } // world_progress_structure::unset_waiting_for_collision()
 
 /*----------------------------------------------------------------------------*/
@@ -185,7 +190,7 @@ void bear::universe::world_progress_structure::unset_waiting_for_collision()
  */
 bool bear::universe::world_progress_structure::is_waiting_for_collision() const
 {
-  return m_is_waiting_for_collision;
+  return m_flags & detail::is_waiting_for_collision;
 } // world_progress_structure::is_waiting_for_collision()
 
 /*----------------------------------------------------------------------------*/
@@ -194,7 +199,7 @@ bool bear::universe::world_progress_structure::is_waiting_for_collision() const
  */
 void bear::universe::world_progress_structure::set_move_done()
 {
-  m_move_is_done = true;
+  m_flags |= detail::move_is_done;
 } // world_progress_structure::set_move_done()
 
 /*----------------------------------------------------------------------------*/
@@ -203,7 +208,7 @@ void bear::universe::world_progress_structure::set_move_done()
  */
 bool bear::universe::world_progress_structure::move_is_done() const
 {
-  return m_move_is_done;
+  return m_flags & detail::move_is_done;
 } // world_progress_structure::move_is_done()
 
 /*----------------------------------------------------------------------------*/
@@ -213,9 +218,9 @@ bool bear::universe::world_progress_structure::move_is_done() const
 const bear::universe::physical_item_state&
 bear::universe::world_progress_structure::get_initial_state() const
 {
-  CLAW_PRECOND( m_initial_state != NULL );
+  CLAW_PRECOND( m_flags & detail::initialized );
 
-  return *m_initial_state;
+  return m_initial_state;
 } // world_progress_structure::get_initial_state()
 
 /*----------------------------------------------------------------------------*/

@@ -16,8 +16,11 @@
 #define __UNIVERSE_WORLD_PROGRESS_STRUCTURE_HPP__
 
 #include "universe/class_export.hpp"
+#include "universe/physical_item_state.hpp"
 
 #include <claw/non_copyable.hpp>
+
+#include <cstdint>
 #include <vector>
 
 namespace bear
@@ -95,19 +98,7 @@ namespace bear
       physical_item& m_item;
 
       /** \brief The initial state of the item. */
-      physical_item_state* m_initial_state;
-
-      /** \brief Tell if the item is selected. */
-      bool m_is_selected;
-
-      /** \brief Tell if the item was previously selected. */
-      bool m_was_selected;
-
-      /** \brief Tell if the move of the item has been done. */
-      bool m_move_is_done;
-
-      /** \brief Tell if the item is in the queue for collision detection. */
-      bool m_is_waiting_for_collision;
+      physical_item_state m_initial_state;
 
       /** \brief The list of items colliding with this one. */
       item_list m_collision_neighborhood;
@@ -125,6 +116,8 @@ namespace bear
           processed. */
       const_item_list m_already_met;
 
+      std::uint32_t m_flags;
+      
     }; // class world_progress_structure
   } // namespace universe
 } // namespace bear
