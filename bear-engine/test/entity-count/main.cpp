@@ -94,6 +94,7 @@ private:
 
 private:
   bool m_quit;
+  const bool m_unlimited;
   const claw::math::coordinate_2d<unsigned int> m_screen_size;
   bear::visual::screen m_screen;
   const bear::universe::size_box_type m_camera_position;
@@ -105,8 +106,11 @@ private:
   bear::systime::milliseconds_type m_last_spawn;
   
 public:
-  game()
-    : m_quit( false ), m_screen_size( 1024, 575 ), m_screen( m_screen_size ),
+  explicit game( bool unlimited )
+    : m_quit( false ),
+      m_unlimited( unlimited ),
+      m_screen_size( 1024, 575 ),
+      m_screen( m_screen_size ),
       m_camera_position( 50, 50 ),
       m_world_size( m_screen_size + 2 * m_camera_position ),
       m_world( m_world_size ),
@@ -162,7 +166,7 @@ public:
           {
             std::cout << "physics timeout: " << m_items.size() << " items, "
                       << end - start << " > " << time_step << " ms.\n";
-            m_quit = true;
+            m_quit = !m_unlimited;
           }
         else if ( end - start > time_step / 2 )
           std::cout << "physics half timeout: " << m_items.size() << " items, "
@@ -285,9 +289,9 @@ void release()
 /**
  * Launches the game.
  */
-void run_example()
+void run_example( bool unlimited )
 {
-  game game_instance;
+  game game_instance( unlimited );
   game_instance.run();
 }
 
@@ -301,7 +305,9 @@ int main( int argc, char* argv[] )
 
   init();
 
-  run_example();
+  const bool unlimited
+    ( ( argc == 2 ) && std::string( argv[ 1 ] ) == "--unlimited" );
+  run_example( unlimited );
 
   release();
 
