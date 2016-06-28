@@ -206,7 +206,13 @@ namespace bear
       virtual void to_string( std::string& str ) const;
 
     private:
-      void refresh_bounding_box() const;
+      typedef
+        const rectangle_type&
+        ( physical_item_state::*bounding_box_getter )() const;
+      
+    private:
+      const rectangle_type& get_cached_bounding_box() const;
+      const rectangle_type& refresh_bounding_box() const;
 
     private:
       /** The attributes that define the physical state. */
@@ -220,7 +226,7 @@ namespace bear
        */
       bool m_fixed;
 
-      mutable bool m_bounding_box_is_dirty;
+      mutable bounding_box_getter m_bounding_box_getter;
       mutable universe::rectangle_type m_bounding_box;
 
     }; // class physical_item_state

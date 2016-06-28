@@ -23,7 +23,9 @@
  * \brief Constructor.
  */
 bear::universe::physical_item_state::physical_item_state()
-  : m_fixed(false), m_bounding_box_is_dirty(false), m_bounding_box( 0, 0, 0, 0 )
+  : m_fixed(false),
+    m_bounding_box_getter( &physical_item_state::get_cached_bounding_box ),
+    m_bounding_box( 0, 0, 0, 0 )
 {
 
 } // physical_item_state::physical_item_state()
@@ -38,7 +40,7 @@ bear::universe::physical_item_state::physical_item_state()
 bear::universe::physical_item_state::physical_item_state
 ( const physical_item_state& that )
   : m_attributes(that.m_attributes), m_fixed(false),
-    m_bounding_box_is_dirty(that.m_bounding_box_is_dirty),
+    m_bounding_box_getter(that.m_bounding_box_getter),
     m_bounding_box(that.m_bounding_box)
 {
 
@@ -60,8 +62,7 @@ bear::universe::physical_item_state::~physical_item_state()
 bear::universe::size_box_type
 bear::universe::physical_item_state::get_size() const
 {
-  refresh_bounding_box();
-  return m_bounding_box.size();
+  return ( this->*m_bounding_box_getter )().size();
 } // physical_item_state::get_size()
 
 /*----------------------------------------------------------------------------*/
@@ -70,8 +71,7 @@ bear::universe::physical_item_state::get_size() const
  */
 bear::universe::size_type bear::universe::physical_item_state::get_width() const
 {
-  refresh_bounding_box();
-  return m_bounding_box.width();
+  return ( this->*m_bounding_box_getter )().width();
 } // physical_item_state::get_width()
 
 /*----------------------------------------------------------------------------*/
@@ -81,8 +81,7 @@ bear::universe::size_type bear::universe::physical_item_state::get_width() const
 bear::universe::size_type
 bear::universe::physical_item_state::get_height() const
 {
-  refresh_bounding_box();
-  return m_bounding_box.height();
+  return ( this->*m_bounding_box_getter )().height();
 } // physical_item_state::get_height()
 
 /*----------------------------------------------------------------------------*/
@@ -104,8 +103,7 @@ void bear::universe::physical_item_state::set_bounding_box
 bear::universe::rectangle_type
 bear::universe::physical_item_state::get_bounding_box() const
 {
-  refresh_bounding_box();
-  return m_bounding_box;
+  return ( this->*m_bounding_box_getter )();
 } // physical_item_state::get_bounding_box()
 
 /*----------------------------------------------------------------------------*/
@@ -482,7 +480,7 @@ void bear::universe::physical_item_state::set_bottom( coordinate_type pos )
 {
   if (!m_fixed && (m_attributes.m_y_fixed == 0))
     {
-      m_bounding_box_is_dirty = true;
+      m_bounding_box_getter = &physical_item_state::refresh_bounding_box;
       shape_traits<shape>::set_bottom( m_attributes.m_shape, pos );
     }
 } // physical_item_state::set_bottom()
@@ -496,7 +494,7 @@ void bear::universe::physical_item_state::set_left( coordinate_type pos )
 {
   if (!m_fixed && (m_attributes.m_x_fixed == 0))
     {
-      m_bounding_box_is_dirty = true;
+      m_bounding_box_getter = &physical_item_state::refresh_bounding_box;
       shape_traits<shape>::set_left( m_attributes.m_shape, pos );
     }
 } // physical_item_state::set_left()
@@ -740,8 +738,7 @@ void bear::universe::physical_item_state::set_right_middle
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_left() const
 {
-  refresh_bounding_box();
-  return m_bounding_box.left();
+  return ( this->*m_bounding_box_getter )().left();
 } // physical_item_state::get_left()
 
 /*----------------------------------------------------------------------------*/
@@ -771,8 +768,7 @@ bear::universe::physical_item_state::get_right() const
 bear::universe::coordinate_type
 bear::universe::physical_item_state::get_bottom() const
 {
-  refresh_bounding_box();
-  return m_bounding_box.bottom();
+  return ( this->*m_bounding_box_getter )().bottom();
 } // physical_item_state::get_bottom()
 
 /*----------------------------------------------------------------------------*/
@@ -1374,7 +1370,7 @@ void bear::universe::physical_item_state::set_width( size_type width )
 {
   if (!m_fixed && (m_attributes.m_x_fixed == 0))
     {
-      m_bounding_box_is_dirty = true;
+      m_bounding_box_getter = &physical_item_state::refresh_bounding_box;
       shape_traits<shape>::set_width( m_attributes.m_shape, width );
     }
 } // physical_item_state::set_width()
@@ -1388,7 +1384,7 @@ void bear::universe::physical_item_state::set_height( size_type height )
 {
   if (!m_fixed && (m_attributes.m_y_fixed == 0))
     {
-      m_bounding_box_is_dirty = true;
+      m_bounding_box_getter = &physical_item_state::refresh_bounding_box;
       shape_traits<shape>::set_height( m_attributes.m_shape, height );
     }
 } // physical_item_state::set_height()
@@ -1412,7 +1408,7 @@ void bear::universe::physical_item_state::set_shape( const shape& s )
         ( m_attributes.m_shape, bounding_box.width() );
     }
   else
-    m_bounding_box_is_dirty = true;
+      m_bounding_box_getter = &physical_item_state::refresh_bounding_box;
 
   if ( m_fixed || (m_attributes.m_y_fixed != 0) )
     {
@@ -1422,7 +1418,7 @@ void bear::universe::physical_item_state::set_shape( const shape& s )
         ( m_attributes.m_shape, bounding_box.height() );
     }
   else
-    m_bounding_box_is_dirty = true;
+      m_bounding_box_getter = &physical_item_state::refresh_bounding_box;
 } // physical_item_state::set_shape()
 
 /*----------------------------------------------------------------------------*/
@@ -1466,10 +1462,7 @@ void bear::universe::physical_item_state::set_physical_state
     return;
 
   m_attributes = s.m_attributes;
-  m_bounding_box_is_dirty = true;
-
-  m_attributes.m_x_fixed = s.m_attributes.m_x_fixed;
-  m_attributes.m_y_fixed = s.m_attributes.m_y_fixed;
+  m_bounding_box_getter = s.m_bounding_box_getter;
 
   if ( s.is_fixed() )
     fix();
@@ -1527,14 +1520,20 @@ void bear::universe::physical_item_state::to_string( std::string& str ) const
   str += oss.str();
 } // physical_item_state::to_string()
 
-void bear::universe::physical_item_state::refresh_bounding_box() const
+const bear::universe::rectangle_type&
+bear::universe::physical_item_state::get_cached_bounding_box() const
 {
-  if ( !m_bounding_box_is_dirty )
-    return;
+  return m_bounding_box;
+}
 
+const bear::universe::rectangle_type&
+bear::universe::physical_item_state::refresh_bounding_box() const
+{
   m_bounding_box =
     shape_traits<shape>::get_bounding_box( m_attributes.m_shape );
-  m_bounding_box_is_dirty = false;
+  m_bounding_box_getter = &physical_item_state::get_cached_bounding_box;
+
+  return m_bounding_box;
 }
 
 /*----------------------------------------------------------------------------*/
