@@ -301,8 +301,6 @@ void run_example( bool unlimited )
  */
 int main( int argc, char* argv[] )
 {
-  std::srand( std::time( NULL ) );
-
   init();
 
   const bool unlimited
