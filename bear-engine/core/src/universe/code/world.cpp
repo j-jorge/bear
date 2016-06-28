@@ -513,13 +513,14 @@ bear::universe::force_type
 bear::universe::world::get_total_force_on_item
 ( const physical_item_state& item ) const
 {
-  force_type result
-    ( item.get_force() + get_average_force( item.get_bounding_box() ) );
+  const rectangle_type& bounding_box( item.get_bounding_box() );
+  
+  force_type result( item.get_force() + get_average_force( bounding_box ) );
 
   if ( (item.get_density() != 0)
        && ( item.get_mass() != std::numeric_limits<double>::infinity() )  )
     result -= get_gravity() * item.get_mass()
-      * get_average_density( item.get_bounding_box() )
+      * get_average_density( bounding_box )
       / item.get_density();
 
   return result;
@@ -716,7 +717,7 @@ bear::universe::physical_item* bear::universe::world::pick_item_in_direction
       }
     else
       {
-        const rectangle_type item_box( (*it)->get_bounding_box() );
+        const rectangle_type& item_box( (*it)->get_bounding_box() );
 
         line_type item_line(0, 0, 0, 0);
 
@@ -953,7 +954,7 @@ void bear::universe::world::search_items_for_collision
 ( const physical_item& item, const candidate_collisions& potential_collision,
   item_list& colliding, double& mass, double& area ) const
 {
-  const rectangle_type r(item.get_bounding_box());
+  const rectangle_type& r( item.get_bounding_box() );
 
   // add static items
   item_list static_items;

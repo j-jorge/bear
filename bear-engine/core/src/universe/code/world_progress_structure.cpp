@@ -60,13 +60,16 @@ bool bear::universe::world_progress_structure::lt_collision::operator()
       double area_a(0);
       double area_b(0);
 
-      const rectangle_type r(m_item.get_bounding_box());
+      const rectangle_type& r( m_item.get_bounding_box() );
+      const rectangle_type& a_box( a->get_bounding_box() );
 
-      if ( a->get_bounding_box().intersects(r) )
-        area_a = a->get_bounding_box().intersection(r).area();
+      if ( a_box.intersects(r) )
+        area_a = a_box.intersection(r).area();
 
-      if ( b->get_bounding_box().intersects(r) )
-        area_b = b->get_bounding_box().intersection(r).area();
+      const rectangle_type& b_box( b->get_bounding_box() );
+      
+      if ( b_box.intersects(r) )
+        area_b = b_box.intersection(r).area();
 
       result = area_a < area_b;
     }
@@ -340,16 +343,16 @@ bool bear::universe::world_progress_structure::update_collision_penetration()
   m_collision_area = 0;
 
   item_list::iterator it = m_collision_neighborhood.begin();
-
+  const rectangle_type& item_box( m_item.get_bounding_box() );
+  
   while ( it != m_collision_neighborhood.end() )
     {
       bool collision(false);
-
-      if ( m_item.get_bounding_box().intersects((*it)->get_bounding_box()) )
+      const rectangle_type& box( ( *it )->get_bounding_box() );
+      
+      if ( item_box.intersects( box ) )
         {
-          const double a =
-            m_item.get_bounding_box().intersection
-            ( (*it)->get_bounding_box() ).area();
+          const double a( item_box.intersection( box ).area() );
 
           if ( a != 0 )
             {

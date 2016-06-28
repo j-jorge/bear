@@ -110,11 +110,9 @@ bear::universe::collision_info::get_collision_repair() const
 bear::universe::alignment*
 bear::universe::collision_info::find_alignment() const
 {
-  rectangle_type self_previous_box;
-  rectangle_type that_previous_box;
-
-  self_previous_box = m_previous_self.get_bounding_box();
-  that_previous_box = m_previous_other.get_bounding_box();
+  const rectangle_type& self_previous_box( m_previous_self.get_bounding_box() );
+  const rectangle_type& that_previous_box
+    ( m_previous_other.get_bounding_box() );
 
   zone::position z = zone::find(that_previous_box, self_previous_box );
   alignment* result(NULL);

@@ -38,7 +38,7 @@ namespace bear
       size_type get_height() const;
 
       void set_bounding_box( const universe::rectangle_type& r );
-      universe::rectangle_type get_bounding_box() const;
+      const universe::rectangle_type& get_bounding_box() const;
 
       const force_type& get_acceleration() const;
       void set_acceleration( const force_type& a );

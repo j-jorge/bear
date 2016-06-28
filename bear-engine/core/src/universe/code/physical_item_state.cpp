@@ -100,7 +100,7 @@ void bear::universe::physical_item_state::set_bounding_box
 /**
  * \brief Get the bouding box of this item.
  */
-bear::universe::rectangle_type
+const bear::universe::rectangle_type&
 bear::universe::physical_item_state::get_bounding_box() const
 {
   return ( this->*m_bounding_box_getter )();
@@ -1396,7 +1396,7 @@ void bear::universe::physical_item_state::set_height( size_type height )
  */
 void bear::universe::physical_item_state::set_shape( const shape& s )
 {
-  const rectangle_type bounding_box( get_bounding_box() );
+  const rectangle_type& bounding_box( get_bounding_box() );
 
   m_attributes.m_shape = s;
 
