@@ -38,8 +38,8 @@ public:
   bear::visual::sprite m_display;
   
 public:
-  game_item()
-    : m_display( create_box_sprite() )
+  game_item( const bear::visual::sprite& visual )
+    : m_display( visual )
   {
     set_size( 20, 20 );
     set_mass( 500 + 1000 * random_number() );
@@ -58,6 +58,18 @@ public:
   const bear::visual::sprite& get_display() const
   {
     return m_display;
+  }
+
+private:
+  void time_step( double elapsed_time ) override
+  {
+    bear::universe::physical_item::time_step( elapsed_time );
+    m_display.set_opacity( 0.1 );
+  }
+  
+  void collision( bear::universe::collision_info& info ) override
+  {
+    m_display.set_opacity( 1 );
   }
 };
 
@@ -104,6 +116,7 @@ private:
   item_collection m_items;
   std::vector< arena_bound > m_bounds;
   bear::systime::milliseconds_type m_last_spawn;
+  bear::visual::sprite m_item_visual;
   
 public:
   explicit game( bool unlimited )
@@ -115,7 +128,8 @@ public:
       m_world_size( m_screen_size + 2 * m_camera_position ),
       m_world( m_world_size ),
       m_bounds( 4 ),
-      m_last_spawn( 0 )
+      m_last_spawn( 0 ),
+      m_item_visual( create_box_sprite() )
   {
     m_world.set_gravity( bear::universe::force_type( 0, 0 ) );
 
@@ -209,7 +223,7 @@ private:
 
     m_last_spawn = now;
     const double margin( m_camera_position.x * 2 );
-    game_item* item( new game_item() );
+    game_item* item( new game_item( m_item_visual ) );
 
     item->set_center_of_mass
       ( margin + random_number() * ( m_world_size.x - 2 * margin ),
