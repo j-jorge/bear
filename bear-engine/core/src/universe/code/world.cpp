@@ -70,7 +70,7 @@ bear::universe::world::world( const size_box_type& size )
     m_size(size), m_unit(50), m_gravity(0, -9.81*m_unit), m_default_friction(1),
     m_default_environment(air_environment), m_default_density(0),
     m_position_epsilon(0.001), m_speed_epsilon(1, 1),
-    m_angular_speed_epsilon(0.01), m_acceleration_epsilon(0.01, 0.01)
+    m_angular_speed_epsilon(0.01)
 {
 
 } // world::world()

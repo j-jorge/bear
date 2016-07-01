@@ -23,7 +23,6 @@ namespace bear
   {
     class alignment;
     class collision_repair;
-    class physical_item;
     class physical_item_state;
 
     /**
@@ -36,7 +35,7 @@ namespace bear
     public:
       collision_info( const physical_item_state& previous_self,
                       const physical_item_state& previous_that,
-                      physical_item& self, physical_item& that,
+                      physical_item_state& self, physical_item_state& that,
                       collision_repair& repair );
 
       zone::position get_collision_side() const;
@@ -45,14 +44,15 @@ namespace bear
       const physical_item_state& other_previous_state() const;
       const physical_item_state& reference_previous_state() const;
 
-      physical_item& other_item() const;
+      physical_item_state& other_item() const;
 
       collision_repair& get_collision_repair() const;
 
     private:
       alignment* find_alignment() const;
 
-      void apply_alignment( const alignment& align, const physical_item& self );
+      void apply_alignment
+        ( const alignment& align, const physical_item_state& self );
 
     private:
       /** \brief The previous state of the item considered as reference in the
@@ -63,7 +63,7 @@ namespace bear
       const physical_item_state& m_previous_other;
 
       /** \brief The other item in the collision. */
-      physical_item& m_other;
+      physical_item_state& m_other;
 
       /** \brief Position of the bottom-left corner of the other item when the
           collision occured. */

@@ -14,7 +14,7 @@
 #include "universe/collision_repair.hpp"
 
 #include "universe/collision_info.hpp"
-#include "universe/physical_item.hpp"
+#include "universe/physical_item_state.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -23,7 +23,7 @@
  * \param second_item The second item in the collision.
  */
 bear::universe::collision_repair::collision_repair
-( physical_item& first_item, physical_item& second_item )
+( physical_item_state& first_item, physical_item_state& second_item )
   : m_first_item(first_item), m_second_item(second_item),
     m_contact_normal(0, 0), m_contact_reference(NULL)
 {
@@ -37,7 +37,7 @@ bear::universe::collision_repair::collision_repair
  * \param normal The normal of the contact.
  */
 void bear::universe::collision_repair::set_contact_normal
-( const physical_item& ref, const vector_type& normal )
+( const physical_item_state& ref, const vector_type& normal )
 {
   CLAW_PRECOND( (&ref == &m_first_item) || (&ref == &m_second_item) );
 
@@ -65,7 +65,7 @@ void bear::universe::collision_repair::apply()
  */
 void bear::universe::collision_repair::apply_force_transfert()
 {
-  physical_item* other;
+  physical_item_state* other;
 
   if( m_contact_reference == &m_first_item )
     other = &m_second_item;

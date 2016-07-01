@@ -729,7 +729,7 @@ bool bear::universe::physical_item::collision_middle
 {
   bool result = false;
 
-  physical_item& that( info.other_item() );
+  physical_item_state& that( info.other_item() );
 
   if ( !that.is_phantom() && can_move_items() )
     {
@@ -816,7 +816,7 @@ bool bear::universe::physical_item::collision_align_left
     {
       result = true;
     
-      physical_item& that = info.other_item();
+      physical_item_state& that = info.other_item();
 
       switch ( policy.get_contact_mode() )
         {
@@ -857,7 +857,7 @@ bool bear::universe::physical_item::collision_align_right
     {
       result = true;
 
-      physical_item& that = info.other_item();
+      physical_item_state& that = info.other_item();
 
       switch ( policy.get_contact_mode() )
         {
@@ -898,7 +898,7 @@ bool bear::universe::physical_item::collision_align_top
     {
       result = true;
 
-      physical_item& that = info.other_item();
+      physical_item_state& that = info.other_item();
 
       switch ( policy.get_contact_mode() )
         {
@@ -939,7 +939,7 @@ bool bear::universe::physical_item::collision_align_bottom
     {
       result = true;
 
-      physical_item& that = info.other_item();
+      physical_item_state& that = info.other_item();
 
       switch ( policy.get_contact_mode() )
         {
@@ -1011,7 +1011,7 @@ bool bear::universe::physical_item::is_in_environment
  * \param pos The bottom left position to put the other item at.
  */
 bool bear::universe::physical_item::collision_align_at
-( physical_item& that, const position_type& pos ) const
+( physical_item_state& that, const position_type& pos ) const
 {
   bool result(true);
 

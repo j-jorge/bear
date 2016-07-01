@@ -176,7 +176,7 @@ namespace bear
     private:
       bool
       collision_align_at
-      ( physical_item& that, const position_type& pos ) const;
+      ( physical_item_state& that, const position_type& pos ) const;
 
       void remove_all_handles() const;
 

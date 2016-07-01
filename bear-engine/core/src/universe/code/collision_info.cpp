@@ -17,7 +17,7 @@
 #include "universe/alignment/align_top_left.hpp"
 #include "universe/alignment/align_top_right.hpp"
 #include "universe/collision_repair.hpp"
-#include "universe/physical_item.hpp"
+#include "universe/physical_item_state.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -31,7 +31,8 @@
 bear::universe::collision_info::collision_info
 ( const physical_item_state& previous_self,
   const physical_item_state& previous_that,
-  physical_item& self, physical_item& that, collision_repair& repair )
+  physical_item_state& self, physical_item_state& that,
+  collision_repair& repair )
   : m_previous_self( previous_self ), m_previous_other( previous_that ),
     m_other(that), m_repair(repair)
 {
@@ -86,7 +87,7 @@ bear::universe::collision_info::reference_previous_state() const
 /**
  * \brief Get the other item.
  */
-bear::universe::physical_item&
+bear::universe::physical_item_state&
 bear::universe::collision_info::other_item() const
 {
   return m_other;
@@ -144,7 +145,7 @@ bear::universe::collision_info::find_alignment() const
  * \param self The reference item.
  */
 void bear::universe::collision_info::apply_alignment
-( const alignment& align, const physical_item& self )
+( const alignment& align, const physical_item_state& self )
 {
   rectangle_type self_new_box;
   rectangle_type that_new_box;
