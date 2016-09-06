@@ -300,8 +300,15 @@ bf::sprite bf::animation::get_sprite(unsigned int index) const
 
   sprite result( get_frame(index).get_sprite() );
   result.combine(*this);
-  result.set_size( result.width() * width() / get_max_size().x,
-                   result.height() * height() / get_max_size().y );
+
+  const double w
+    ( get_max_size().x == 0 ? 0 : result.width() * width() / get_max_size().x );
+  const double h
+    ( get_max_size().y == 0
+      ? 0
+      : result.height() * height() / get_max_size().y );
+
+  result.set_size( w, h );
 
   return result;
 } // animation::get_sprite()
