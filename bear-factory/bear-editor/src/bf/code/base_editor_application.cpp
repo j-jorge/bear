@@ -350,7 +350,7 @@ void bf::base_editor_application::remove_options_at( int index, int count )
   for ( int i=index; (i+count <= argc); ++i )
     argv[i] = argv[i + count];
 
-  for ( int i=0; i <= count; ++i )
+  for ( int i=0; i != count; ++i )
     {
       --argc;
       argv[argc] = NULL;
