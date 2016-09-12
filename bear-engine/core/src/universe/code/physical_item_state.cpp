@@ -434,7 +434,7 @@ void bear::universe::physical_item_state::set_contact_angle( double a )
  */
 bool bear::universe::physical_item_state::has_free_system() const
 {
-  return m_attributes.m_free_system_angle;
+  return m_attributes.m_flags & physical_item_flags::free_system_angle;
 } // physical_item_state::has_free_system();
 
 /*----------------------------------------------------------------------------*/
@@ -446,7 +446,10 @@ bool bear::universe::physical_item_state::has_free_system() const
  */
 void bear::universe::physical_item_state::set_free_system( bool b )
 {
-  m_attributes.m_free_system_angle = b;
+  if ( b )
+    m_attributes.m_flags |= physical_item_flags::free_system_angle;
+  else
+    m_attributes.m_flags &= ~physical_item_flags::free_system_angle;
 } // physical_item_state::set_free_system();
 
 /*----------------------------------------------------------------------------*/
@@ -998,7 +1001,7 @@ void bear::universe::physical_item_state::add_position_constraint_y()
  */
 bool bear::universe::physical_item_state::can_move_items() const
 {
-  return m_attributes.m_can_move_items;
+  return m_attributes.m_flags & physical_item_flags::can_move_items;
 } // physical_item_state::can_move_items()
 
 /*----------------------------------------------------------------------------*/
@@ -1007,7 +1010,10 @@ bool bear::universe::physical_item_state::can_move_items() const
  */
 void bear::universe::physical_item_state::set_can_move_items(bool value)
 {
-  m_attributes.m_can_move_items = value;
+  if ( value )
+    m_attributes.m_flags |= physical_item_flags::can_move_items;
+  else
+    m_attributes.m_flags &= ~physical_item_flags::can_move_items;
 } // physical_item_state::set_can_move_items()
 
 /*----------------------------------------------------------------------------*/
@@ -1017,7 +1023,7 @@ void bear::universe::physical_item_state::set_can_move_items(bool value)
  */
 bool bear::universe::physical_item_state::is_global() const
 {
-  return m_attributes.m_global;
+  return m_attributes.m_flags & physical_item_flags::global;
 } // physical_item_state::is_global()
 
 /*----------------------------------------------------------------------------*/
@@ -1030,7 +1036,10 @@ bool bear::universe::physical_item_state::is_global() const
  */
 void bear::universe::physical_item_state::set_global( bool global )
 {
-  m_attributes.m_global = global;
+  if ( global )
+    m_attributes.m_flags |= physical_item_flags::global;
+  else
+    m_attributes.m_flags &= ~physical_item_flags::global;
 } // physical_item_state::set_global()
 
 /*----------------------------------------------------------------------------*/
@@ -1287,7 +1296,10 @@ void bear::universe::physical_item_state::clear_contacts()
  */
 void bear::universe::physical_item_state::set_phantom( bool phantom )
 {
-  m_attributes.m_is_phantom = phantom;
+  if ( phantom )
+    m_attributes.m_flags |= physical_item_flags::phantom;
+  else
+    m_attributes.m_flags &= ~physical_item_flags::phantom;
 } // physical_item_state::set_phantom()
 
 /*----------------------------------------------------------------------------*/
@@ -1296,7 +1308,7 @@ void bear::universe::physical_item_state::set_phantom( bool phantom )
  */
 bool bear::universe::physical_item_state::is_phantom() const
 {
-  return m_attributes.m_is_phantom;
+  return m_attributes.m_flags & physical_item_flags::phantom;
 } // physical_item_state::is_phantom()
 
 /*----------------------------------------------------------------------------*/
@@ -1306,7 +1318,10 @@ bool bear::universe::physical_item_state::is_phantom() const
  */
 void bear::universe::physical_item_state::set_artificial( bool a )
 {
-  m_attributes.m_is_artificial = a;
+  if ( a )
+    m_attributes.m_flags |= physical_item_flags::artificial;
+  else
+    m_attributes.m_flags &= ~physical_item_flags::artificial;
 } // physical_item_state::set_artificial()
 
 /*----------------------------------------------------------------------------*/
@@ -1315,7 +1330,7 @@ void bear::universe::physical_item_state::set_artificial( bool a )
  */
 bool bear::universe::physical_item_state::is_artificial() const
 {
-  return m_attributes.m_is_artificial;
+  return m_attributes.m_flags & physical_item_flags::artificial;
 } // physical_item_state::is_artificial()
 
 /*----------------------------------------------------------------------------*/
@@ -1325,7 +1340,10 @@ bool bear::universe::physical_item_state::is_artificial() const
  */
 void bear::universe::physical_item_state::set_weak_collisions( bool w )
 {
-  m_attributes.m_weak_collisions = w;
+  if ( w )
+    m_attributes.m_flags |= physical_item_flags::weak_collisions;
+  else
+    m_attributes.m_flags &= ~physical_item_flags::weak_collisions;
 } // physical_item_state::set_weak_collisions()
 
 /*----------------------------------------------------------------------------*/
@@ -1335,7 +1353,7 @@ void bear::universe::physical_item_state::set_weak_collisions( bool w )
  */
 bool bear::universe::physical_item_state::has_weak_collisions() const
 {
-  return m_attributes.m_weak_collisions;
+  return m_attributes.m_flags & physical_item_flags::weak_collisions;
 } // physical_item_state::has_weak_collisions()
 
 /*----------------------------------------------------------------------------*/
