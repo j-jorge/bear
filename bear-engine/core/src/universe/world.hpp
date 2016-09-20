@@ -26,6 +26,7 @@
 #include <boost/bimap.hpp>
 #include <boost/graph/adjacency_list.hpp>
 
+#include <unordered_set>
 #include <vector>
 
 namespace bear
