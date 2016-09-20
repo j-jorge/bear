@@ -903,7 +903,7 @@ bear::visual::gl_renderer::gl_renderer()
 {
   m_mutex.gl_access.lock();
 
-#ifndef WIN32
+#ifdef WIN32
   m_render_thread = NULL;
 #else
   m_render_thread =
