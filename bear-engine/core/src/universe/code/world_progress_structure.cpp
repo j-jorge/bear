@@ -104,7 +104,7 @@ void bear::universe::world_progress_structure::init()
     return;
   
   m_initial_state = m_item;
-  m_flags = detail::initialized;
+  m_flags |= detail::initialized;
 
   m_collision_neighborhood.clear();
   m_collision_mass = 0;
@@ -121,7 +121,10 @@ void bear::universe::world_progress_structure::deinit()
 {
   CLAW_PRECOND( m_flags & detail::initialized );
 
-  m_flags = detail::was_selected;
+  if ( is_selected() )
+    m_flags = detail::was_selected;
+  else
+    m_flags = 0;
 
   m_collision_neighborhood.clear();
   m_collision_mass = 0;

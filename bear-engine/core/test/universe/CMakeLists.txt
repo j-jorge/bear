@@ -29,6 +29,11 @@ add_boost_test(
   )
 
 add_boost_test(
+  SOURCE test-cases/world_active_region.cpp
+  LINK bear_test_universe bear_universe
+  )
+
+add_boost_test(
   SOURCE test-cases/world_collisions.cpp
   LINK bear_test_universe bear_universe
   )
