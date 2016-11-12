@@ -342,6 +342,8 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
 
   claw::math::box_2d<GLdouble> result;
 
+#ifdef BEAR_SPRITE_CLIP_SUBPIXEL
+
   const GLdouble min_distance_to_pixel_border( 1.0 / 1000 );
   GLdouble horizontal_shift;
   GLdouble vertical_shift;
@@ -384,6 +386,27 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
   CLAW_POSTCOND( result.second_point.y > 0 );
   CLAW_POSTCOND( result.second_point.y < 1 );
 
+#else
+  
+  result.first_point.x = clip_rectangle.position.x / tex_size.x;
+  result.first_point.y = clip_rectangle.position.y / tex_size.y;
+  result.second_point.x =
+    result.first_point.x + clip_rectangle.width / tex_size.x;
+  result.second_point.y =
+    result.first_point.y + clip_rectangle.height / tex_size.y;
+
+  CLAW_POSTCOND( result.first_point.x >= 0 );
+  CLAW_POSTCOND( result.first_point.x <= 1 );
+  CLAW_POSTCOND( result.first_point.y >= 0 );
+  CLAW_POSTCOND( result.first_point.y <= 1 );
+
+  CLAW_POSTCOND( result.second_point.x >= 0 );
+  CLAW_POSTCOND( result.second_point.x <= 1 );
+  CLAW_POSTCOND( result.second_point.y >= 0 );
+  CLAW_POSTCOND( result.second_point.y <= 1 );
+
+#endif
+  
   return result;
 } // gl_screen::get_texture_clip()
 
