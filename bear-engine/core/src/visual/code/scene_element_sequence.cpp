@@ -13,6 +13,7 @@
  */
 #include "visual/scene_element_sequence.hpp"
 
+#include "visual/base_screen.hpp"
 #include "visual/scene_element.hpp"
 
 #include <limits>
@@ -178,7 +179,18 @@ void bear::visual::scene_element_sequence::render( base_screen& scr ) const
         ( get_position().x + e.get_position().x * sx,
           get_position().y + e.get_position().y * sy );
 
-      e.render(scr);
+      if ( e.has_shadow() )
+        {
+          scene_element shadow( e );
+          shadow.get_rendering_attributes().set_intensity(0, 0, 0);
+          shadow.get_rendering_attributes().set_opacity
+            ( e.get_rendering_attributes().get_opacity()
+              * e.get_shadow_opacity() );
+          shadow.set_position( e.get_position() + e.get_shadow() );
+          shadow.render( scr );
+        }
+      
+      e.render( scr );
     }
 } // scene_element_sequence::render()
 

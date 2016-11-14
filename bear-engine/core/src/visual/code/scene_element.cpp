@@ -139,7 +139,7 @@ void bear::visual::scene_element::set_position
  */
 bool bear::visual::scene_element::has_shadow() const
 {
-  return (get_shadow().x != 0) && (get_shadow().y != 0)
+  return ( (get_shadow().x != 0) || (get_shadow().y != 0) )
     && (get_shadow_opacity() != 0);
 } // scene_element::has_shadow()
 
