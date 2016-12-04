@@ -979,6 +979,9 @@ void bf::level_renderer::render_item_id
 {
   wxString s(std_to_wx_string(item.get_id()));
 
+  wxFont font( dc.GetFont() );
+  font.SetPointSize( 16 );
+  dc.SetFont( font );
   dc.SetBrush(*wxBLACK_BRUSH);
   dc.DrawText( s, pos.x - dc.GetTextExtent(s).x / 2, pos.y);
 } // level_renderer::render_item_id()
