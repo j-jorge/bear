@@ -72,7 +72,7 @@ bear::universe::world::world( const size_box_type& size )
     m_position_epsilon(0.001), m_speed_epsilon(1, 1),
     m_angular_speed_epsilon(0.01)
 {
-
+  m_entities.reserve( 1024 );
 } // world::world()
 
 /*----------------------------------------------------------------------------*/
@@ -832,25 +832,21 @@ bear::universe::world::pick_next_collision( item_list& pending ) const
   CLAW_PRECOND( !pending.empty() );
 
   item_list::iterator item = pending.begin();
-  double m = (*item)->get_world_progress_structure().get_collision_mass();
-  double a = (*item)->get_world_progress_structure().get_collision_area();
+  double m( (*item)->get_world_progress_structure().get_collision_mass() );
+  double a( (*item)->get_world_progress_structure().get_collision_area() );
 
   for (item_list::iterator it=item; it!=pending.end(); ++it)
     {
-      bool update(false);
-
-      if ( (*it)->get_world_progress_structure().get_collision_mass() > m )
-        update = true;
-      else if
-        ( (*it)->get_world_progress_structure().get_collision_mass() == m )
-        update =
-          (*it)->get_world_progress_structure().get_collision_area() > a;
-
-      if (update)
+      const double mass
+        ( (*it)->get_world_progress_structure().get_collision_mass() );
+      const double area
+        ( (*it)->get_world_progress_structure().get_collision_area() );
+      
+      if ( ( mass > m ) || ( ( mass == m ) && ( area > a ) ) )
         {
           item = it;
-          m = (*item)->get_world_progress_structure().get_collision_mass();
-          a = (*item)->get_world_progress_structure().get_collision_area();
+          m = mass;
+          a = area;
         }
     }
 
@@ -1321,7 +1317,8 @@ void bear::universe::world::remove(physical_item* const& who)
 
   if ( it != eit )
     {
-      m_entities.erase(it);
+      std::swap( *it, m_entities.back() );
+      m_entities.pop_back();
       who->quit_owner();
     }
   else
@@ -1332,7 +1329,10 @@ void bear::universe::world::remove(physical_item* const& who)
   it = std::find( m_last_interesting_items.begin(), eit, who );
 
   if ( it != eit )
-    m_last_interesting_items.erase(it);
+    {
+      std::swap( *it, m_last_interesting_items.back() );
+      m_last_interesting_items.pop_back();
+    }
 } // world::remove()
 
 /*----------------------------------------------------------------------------*/
