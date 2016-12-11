@@ -9,7 +9,8 @@ ifeq ($(BUILD),release)
   BUILD_DIR=build/release
 else ifeq ($(BUILD),profile)
   CMAKE_BUILD_TYPE=release
-  CXXFLAGS += -pg
+  CXXFLAGS += -pg -fPIC
+  LDFLAGS += -fPIC
   BUILD_DIR=build/profile
   CMAKE_ARGS=-DBEAR_ENGINE_CORE_LINK_TYPE=STATIC
 else
