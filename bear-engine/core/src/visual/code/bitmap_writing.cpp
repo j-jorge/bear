@@ -138,7 +138,7 @@ void bear::visual::bitmap_writing::create
   m_sprites.reserve( str.length() );
 
   arrange_sprite_list func( f, str, m_sprites );
-  text_layout layout(f, str, get_size(), h );
+  text_layout layout(f, str, s, h );
 
   layout.arrange_text<arrange_sprite_list&>( func );
 

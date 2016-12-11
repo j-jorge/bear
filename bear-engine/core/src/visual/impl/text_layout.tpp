@@ -41,8 +41,10 @@ void bear::visual::text_layout::arrange_text( Func func ) const
   cursor_type cursor
     ( compute_line_left(0), m_size.y - compute_line_height_above_baseline(0) );
 
+  const std::size_t text_size( m_text.size() );
+  
   // We allow to write outside the box if it is on less than one screen unit.
-  while ( (cursor.y > -1) && (i!=m_text.size()) )
+  while ( (cursor.y > -1) && (i != text_size) )
     if ( m_text[i] == '\n' )
       {
         ++i;
