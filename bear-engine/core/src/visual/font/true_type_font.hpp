@@ -19,8 +19,8 @@
 
 #include "visual/class_export.hpp"
 
-#include <map>
-#include <list>
+#include <unordered_map>
+#include <vector>
 
 namespace bear
 {
@@ -68,7 +68,7 @@ namespace bear
 
         /** \brief The type of the map associating a character, as the key, with
             its placement, as the value. */
-        typedef std::map<charset::char_type, character_placement>
+        typedef std::unordered_map<charset::char_type, character_placement>
         character_to_placement;
 
       public:
@@ -114,7 +114,7 @@ namespace bear
       
       /** \brief The type of the collection in which the glyph_sheets are
           stored. */
-      typedef std::list<glyph_sheet> glyph_sheet_collection;
+      typedef std::vector<glyph_sheet> glyph_sheet_collection;
 
       /** \brief The type of an iterator in a glyph_sheet_collection. */
       typedef glyph_sheet_collection::iterator glyph_sheet_iterator;
@@ -122,7 +122,7 @@ namespace bear
       /** \brief The type of the map associating a character with the glyph
           sheet in which its glyph was created. */
       typedef
-        std::map<charset::char_type, glyph_sheet_iterator>
+        std::unordered_map<charset::char_type, glyph_sheet_iterator>
         character_to_glyph_sheet;
 
     public:
