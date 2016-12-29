@@ -26,7 +26,7 @@ manpage.1: manpage.sgml
   <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
   <!ENTITY dhemail     "<email>julien.jorge@gamned.org</email>">
   <!ENTITY dhusername  "Julien Jorge">
-  <!ENTITY dhucpackage "<refentrytitle>BF-model-EDITOR</refentrytitle>">
+  <!ENTITY dhucpackage "<refentrytitle>bf-model-editor</refentrytitle>">
   <!ENTITY dhpackage   "bf-model-editor">
 
   <!ENTITY debian      "<productname>Debian</productname>">

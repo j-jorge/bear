@@ -26,7 +26,7 @@ manpage.1: manpage.sgml
   <!ENTITY dhsection   "<manvolnum>6</manvolnum>">
   <!ENTITY dhemail     "<email>julien.jorge@gamned.org</email>">
   <!ENTITY dhusername  "Julien Jorge">
-  <!ENTITY dhucpackage "<refentrytitle>RUNNING-BEAR</refentrytitle>">
+  <!ENTITY dhucpackage "<refentrytitle>running-bear</refentrytitle>">
   <!ENTITY dhpackage   "running-bear">
 
   <!ENTITY debian      "<productname>Debian</productname>">
