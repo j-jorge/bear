@@ -49,6 +49,9 @@ namespace bear
         ( const level_globals* shared,
           const level_globals* temporary_resources );
 
+      void add_image
+        ( const std::string& file_name, const bear::visual::image& image );
+
       void load_image( const std::string& file_name );
       void load_sound( const std::string& file_name );
       void load_model( const std::string& file_name );

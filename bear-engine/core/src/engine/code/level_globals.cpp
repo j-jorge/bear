@@ -59,6 +59,15 @@ bear::engine::level_globals::level_globals
   constructor_default();
 } // level_globals::level_globals()
 
+void bear::engine::level_globals::add_image
+( const std::string& file_name, const bear::visual::image& image )
+{
+  if ( image_exists(file_name) )
+    return;
+  
+  m_image_manager.add_image(file_name, image);
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Load an image.
