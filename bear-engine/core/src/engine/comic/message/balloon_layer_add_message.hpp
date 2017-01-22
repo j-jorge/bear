@@ -17,7 +17,7 @@
 #include "communication/typed_message.hpp"
 
 #include "engine/class_export.hpp"
-
+#include "engine/comic/layer/balloon_layer.hpp"
 
 namespace bear
 {

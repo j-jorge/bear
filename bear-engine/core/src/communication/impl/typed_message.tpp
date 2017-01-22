@@ -21,7 +21,7 @@
 template<typename T>
 bool bear::communication::typed_message<T>::apply_to(messageable& that)
 {
-  T* p = (T*)&that;
+  T* p = dynamic_cast< T* >( &that );
 
   if (p != NULL)
     return apply_to(*p);
