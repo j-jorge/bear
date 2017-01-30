@@ -21,7 +21,7 @@
 
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/signals2/signal.hpp>
 
 #include <SDL2/SDL.h>
 
@@ -73,7 +73,9 @@ namespace bear
       void delete_shader_program( GLuint program_id );
 
       void shot( claw::graphic::image& img );
-
+      boost::signals2::connection shot
+      ( const boost::function< void( const claw::graphic::image& ) >& f );
+      
       screen_size_type get_size();
       screen_size_type get_container_size();
 
@@ -118,6 +120,8 @@ namespace bear
       get_best_screen_size
       ( const std::vector<SDL_DisplayMode>& modes ) const;
 
+      void dispatch_screenshot();
+      
     private:
       gl_renderer();
 
@@ -167,7 +171,9 @@ namespace bear
       /** \brief A buffer in which we do the screenshots, to avoid an allocation
           at each call. */
       claw::graphic::rgba_pixel_8* m_screenshot_buffer;
-
+      boost::signals2::signal< void( const claw::graphic::image& ) >
+      m_screenshot_signal;
+      
       /** \brief The various mutexes used to avoid simultaneous access to the
           fields of the class, and to the GL state. */
       struct

@@ -14,13 +14,14 @@
 #ifndef __VISUAL_BASE_SCREEN_HPP__
 #define __VISUAL_BASE_SCREEN_HPP__
 
+#include "visual/class_export.hpp"
 #include "visual/types.hpp"
 
 #include <claw/coordinate_2d.hpp>
 #include <claw/image.hpp>
+#include <boost/function.hpp>
+#include <boost/signals2/connection.hpp>
 #include <vector>
-
-#include "visual/class_export.hpp"
 
 namespace bear
 {
@@ -64,6 +65,8 @@ namespace bear
       virtual void pop_shader() = 0;
 
       virtual void shot( claw::graphic::image& img ) const = 0;
+      virtual boost::signals2::connection schedule_shot
+      ( const boost::function< void( const claw::graphic::image& ) >& f ) = 0;
 
     }; // class base_screen
   } // namespace visual

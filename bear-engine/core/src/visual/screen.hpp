@@ -20,6 +20,8 @@
 
 #include <claw/image.hpp>
 
+#include <boost/signals2/connection.hpp>
+
 namespace bear
 {
   namespace visual
@@ -81,6 +83,8 @@ namespace bear
 
       void shot( const std::string& bitmap_name ) const;
       void shot( claw::graphic::image& img ) const;
+      boost::signals2::connection schedule_shot
+      ( const boost::function< void( const claw::graphic::image& ) >& f );
 
     private:
       void render_opaque_box( const scene_element& e ) const;

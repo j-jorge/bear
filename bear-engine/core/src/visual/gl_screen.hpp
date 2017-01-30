@@ -15,12 +15,13 @@
 #define __VISUAL_GL_SCREEN_HPP__
 
 #include "visual/base_screen.hpp"
+#include "visual/gl.hpp"
+#include "visual/gl_state.hpp"
 #include "visual/shader_program.hpp"
 
 #include <SDL2/SDL.h>
 
-#include "visual/gl.hpp"
-#include "visual/gl_state.hpp"
+#include <boost/signals2/connection.hpp>
 
 namespace bear
 {
@@ -70,6 +71,8 @@ namespace bear
       void pop_shader();
 
       void shot( claw::graphic::image& img ) const;
+      boost::signals2::connection schedule_shot
+      ( const boost::function< void( const claw::graphic::image& ) >& f );
 
     private:
       void render_sprite( const position_type& pos, const sprite& s );

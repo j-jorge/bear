@@ -296,6 +296,12 @@ void bear::visual::screen::shot( claw::graphic::image& img ) const
   m_impl->shot(img);
 } // screen::shot()
 
+boost::signals2::connection bear::visual::screen::schedule_shot
+( const boost::function< void( const claw::graphic::image& ) >& f )
+{
+  return m_impl->schedule_shot( f );
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Render the opaque box of an element.

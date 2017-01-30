@@ -316,6 +316,12 @@ void bear::visual::gl_renderer::shot( claw::graphic::image& img )
   release_context();
 } // gl_renderer::shot()
 
+boost::signals2::connection bear::visual::gl_renderer::shot
+( const boost::function< void( const claw::graphic::image& ) >& f )
+{
+  return m_screenshot_signal.connect( f );
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Gets the size of the view on the rendered elements.
@@ -538,6 +544,9 @@ void bear::visual::gl_renderer::render_loop()
 
       const systime::milliseconds_type start_date( systime::get_date_ms() );
 
+      if ( !m_screenshot_signal.empty() )
+        dispatch_screenshot();
+      
       if ( !m_pause )
         render_states();
 
@@ -891,6 +900,16 @@ bear::visual::gl_renderer::get_best_screen_size
   return result;
 } // gl_renderer::get_best_screen_size()
 
+void bear::visual::gl_renderer::dispatch_screenshot()
+{
+  boost::signals2::signal< void( const claw::graphic::image& ) > signal;
+  signal.swap( m_screenshot_signal );
+
+  claw::graphic::image result;
+  shot( result );
+  signal( result );
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * Constructs a gl_renderer instance with no rendering informations.
@@ -910,3 +929,4 @@ bear::visual::gl_renderer::gl_renderer()
     new boost::thread( boost::bind(&gl_renderer::render_loop, this) );
 #endif
 } // gl_renderer::gl_renderer()
+

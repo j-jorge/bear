@@ -343,6 +343,12 @@ void bear::engine::game::screenshot( claw::graphic::image& img ) const
   m_game->screenshot( img );
 } // game::screenshot()
 
+boost::signals2::connection bear::engine::game::schedule_screenshot
+( const boost::function< void( const claw::graphic::image& ) >& f )
+{
+  return m_game->schedule_screenshot(f);
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Take a shot of the whole level.

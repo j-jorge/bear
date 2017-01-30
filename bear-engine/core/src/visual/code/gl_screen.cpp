@@ -254,6 +254,12 @@ void bear::visual::gl_screen::shot( claw::graphic::image& img ) const
   gl_renderer::get_instance().shot( img );
 } // gl_screen::shot()
 
+boost::signals2::connection bear::visual::gl_screen::schedule_shot
+( const boost::function< void( const claw::graphic::image& ) >& f )
+{
+  return gl_renderer::get_instance().shot( f );
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Render a sprite with transformation (flip or mirror).
