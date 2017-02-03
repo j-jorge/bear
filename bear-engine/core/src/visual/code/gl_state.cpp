@@ -13,70 +13,14 @@
  */
 #include "visual/gl_state.hpp"
 
+#include "visual/gl_draw.hpp"
 #include "visual/gl_error.hpp"
 #include "visual/gl_shader_program.hpp"
+#include "visual/detail/apply_shader.hpp"
 
 #include <claw/exception.hpp>
 
 #include <limits>
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Creates a new setter for a given program.
- * \param program The identifier of the shader program in which the variables
- *        are set.
- */
-bear::visual::gl_state::uniform_setter::uniform_setter( GLuint program )
-  : m_program( program )
-{
-
-} // gl_state::uniform_setter::uniform_setter()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets the value of an integer uniform.
- * \param name The name of the uniform.
- * \param value The value to assign to the uniform.
- */
-void
-bear::visual::gl_state::uniform_setter::operator()
-( std::string name, int value ) const
-{
-  glUniform1i( glGetUniformLocation( m_program, name.c_str() ), value);
-  VISUAL_GL_ERROR_THROW();
-} // gl_state::uniform_setter::operator()()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets the value of a float uniform.
- * \param name The name of the uniform.
- * \param value The value to assign to the uniform.
- */
-void
-bear::visual::gl_state::uniform_setter::operator()
-( std::string name, double value ) const
-{
-  glUniform1f( glGetUniformLocation( m_program, name.c_str() ), value);
-  VISUAL_GL_ERROR_THROW();
-} // gl_state::uniform_setter::operator()()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets the value of a boolean uniform.
- * \param name The name of the uniform.
- * \param value The value to assign to the uniform.
- */
-void
-bear::visual::gl_state::uniform_setter::operator()
-( std::string name, bool value ) const
-{
-  glUniform1i( glGetUniformLocation( m_program, name.c_str() ), value);
-  VISUAL_GL_ERROR_THROW();
-} // gl_state::uniform_setter::operator()()
-
-
-
-
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -100,7 +44,7 @@ bear::visual::gl_state::variables_are_included::variables_are_included
  */
 template<typename T>
 void bear::visual::gl_state::variables_are_included::operator()
-( std::string name, T value ) const
+( const std::string& name, const T& value ) const
 {
   if ( !m_result )
     return;
@@ -278,24 +222,25 @@ void bear::visual::gl_state::merge( const gl_state& state )
 /**
  * \brief Asks OpenGL to draw the vertices of the state.
  */
-void bear::visual::gl_state::draw() const
+void bear::visual::gl_state::draw( gl_draw& output ) const
 {
   if ( m_elements.empty() )
-    draw_shape();
+    draw_shape( output );
   else
-    draw_textured();
+    draw_textured( output );
 } // gl_state::draw()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Draws the vertices in the case where there is no texture.
  */
-void bear::visual::gl_state::draw_shape() const
+void bear::visual::gl_state::draw_shape( gl_draw& output ) const
 {
   if ( m_vertices.empty() )
     return;
 
-  enable_shader();
+  if ( m_shader.is_valid() )
+    detail::apply_shader( m_shader );
 
   if ( m_line_width > 0 )
     {
@@ -303,31 +248,32 @@ void bear::visual::gl_state::draw_shape() const
       VISUAL_GL_ERROR_THROW();
     }
 
-  set_colors();
-  set_vertices();
+  set_colors( output );
+  set_vertices( output );
 
   glBindTexture( GL_TEXTURE_2D, 0 );
   VISUAL_GL_ERROR_THROW();
 
-  glDrawArrays( get_gl_render_mode(), 0, get_vertex_count() );
-
-  disable_states();
+  output.draw( get_gl_render_mode(), 0, get_vertex_count() );
 } // gl_state::draw_shape()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Draws the vertices in the case where there are textures.
  */
-void bear::visual::gl_state::draw_textured() const
+void bear::visual::gl_state::draw_textured( gl_draw& output ) const
 {
   if ( m_vertices.empty() )
     return;
 
-  enable_shader();
+  if ( m_shader.is_valid() )
+    detail::apply_shader( m_shader );
 
-  set_colors();
-  set_vertices();
-  set_texture_coordinates();
+  set_colors( output );
+  set_vertices( output );
+  set_texture_coordinates( output );
+
+  const GLenum mode( get_gl_render_mode() );
 
   for ( element_range_list::const_iterator it(m_elements.begin());
         it!=m_elements.end(); ++it )
@@ -340,65 +286,36 @@ void bear::visual::gl_state::draw_textured() const
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
       VISUAL_GL_ERROR_THROW();
 
-      glDrawArrays( get_gl_render_mode(), it->vertex_index, it->count );
-      VISUAL_GL_ERROR_THROW();
+      output.draw( mode, it->vertex_index, it->count );
     }
-
-  disable_states();
 } // gl_state::draw_textured()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Passes the color pointer to OpenGL.
  */
-void bear::visual::gl_state::set_colors() const
+void bear::visual::gl_state::set_colors( gl_draw& output ) const
 {
-  glEnableClientState( GL_COLOR_ARRAY );
-  VISUAL_GL_ERROR_THROW();
-  glColorPointer( 4, GL_FLOAT, 0, m_colors.data() );
-  VISUAL_GL_ERROR_THROW();
+  output.set_colors( m_colors );
 } // gl_state::set_colors()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Passes the vertex pointer to OpenGL.
  */
-void bear::visual::gl_state::set_vertices() const
+void bear::visual::gl_state::set_vertices( gl_draw& output ) const
 {
-  glEnableClientState( GL_VERTEX_ARRAY );
-  VISUAL_GL_ERROR_THROW();
-  glVertexPointer( 2, GL_FLOAT, 0, m_vertices.data() );
-  VISUAL_GL_ERROR_THROW();
+  output.set_vertices( m_vertices );
 } // gl_state::set_vertices()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Passes the pointer on the texture coordinates to OpenGL.
  */
-void bear::visual::gl_state::set_texture_coordinates() const
+void bear::visual::gl_state::set_texture_coordinates( gl_draw& output ) const
 {
-  glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-  VISUAL_GL_ERROR_THROW();
-  glTexCoordPointer( 2, GL_FLOAT, 0, m_texture_coordinates.data() );
-  VISUAL_GL_ERROR_THROW();
+  output.set_texture_coordinates( m_texture_coordinates );
 } // gl_state::set_texture_coordinates()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Tells OpenGL to disable the texture coordinates, the vertices and the
- *        colors.
- */
-void bear::visual::gl_state::disable_states() const
-{
-  glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-  VISUAL_GL_ERROR_THROW();
-
-  glDisableClientState( GL_VERTEX_ARRAY );
-  VISUAL_GL_ERROR_THROW();
-
-  glDisableClientState( GL_COLOR_ARRAY );
-  VISUAL_GL_ERROR_THROW();
-} // gl_state::draw_textured()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -508,27 +425,3 @@ bear::visual::gl_state::polygon_to_triangles( const position_vector& v ) const
 
   return result;
 } // gl_state::polygon_to_triangles()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Enables the shader of the state.
- */
-void bear::visual::gl_state::enable_shader() const
-{
-  if ( !m_shader.is_valid() )
-    {
-      glUseProgram( 0 );
-      VISUAL_GL_ERROR_THROW();
-      return;
-    }
-
-  const gl_shader_program* const s
-    ( static_cast<const gl_shader_program*>( m_shader.get_impl() ) );
-
-  glUseProgram( s->program_id() );
-  VISUAL_GL_ERROR_THROW();
-
-  shader_program::variable_visitor_type visitor;
-  shader_program::input_variable_map vars( m_shader.get_variables() );
-  visitor.run( vars, uniform_setter( s->program_id() ) );
-} // gl_state::enable_shader()

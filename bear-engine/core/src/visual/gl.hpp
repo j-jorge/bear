@@ -20,20 +20,9 @@
 
 #include "glew/glew.h"
 
-#elif defined( __ANDROID__ )
-
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-
-typedef GLfloat GLdouble;
-#define glOrtho glOrthof
-
-#include "visual/gl_dummy_shader_interface.hpp"
-
 #else
 
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include <GLES2/gl2.h>
 
 #endif
 

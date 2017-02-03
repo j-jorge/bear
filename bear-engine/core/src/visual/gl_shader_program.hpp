@@ -16,6 +16,7 @@
 
 #include "visual/base_shader_program.hpp"
 #include "visual/gl_fragment_shader.hpp"
+#include "visual/gl_vertex_shader.hpp"
 
 #include <vector>
 
@@ -32,7 +33,9 @@ namespace bear
       public base_shader_program
     {
     public:
-      gl_shader_program( std::istream& program_code );
+      gl_shader_program
+        ( const std::string& fragment_code, const std::string& vertex_code );
+      
       ~gl_shader_program();
     
       GLuint program_id() const;
@@ -46,6 +49,8 @@ namespace bear
 
       /** \brief The fragment shader linked to this program. */
       gl_fragment_shader m_fragment_shader;
+
+      gl_vertex_shader m_vertex_shader;
 
     }; // gl_shader_program
 

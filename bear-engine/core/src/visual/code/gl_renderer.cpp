@@ -13,14 +13,35 @@
  */
 #include "visual/gl_renderer.hpp"
 
+#include "visual/gl_draw.hpp"
+#include "visual/gl_fragment_shader.hpp"
 #include "visual/gl_error.hpp"
-#include "visual/gl_fragment_shader_loader.hpp"
-#include "visual/gl_shader_program_creator.hpp"
+#include "visual/gl_vertex_shader.hpp"
 #include "visual/sdl_error.hpp"
+#include "visual/detail/apply_shader.hpp"
+#include "visual/detail/get_default_fragment_shader_code.hpp"
+#include "visual/detail/get_default_vertex_shader_code.hpp"
 
 #include "time/time.hpp"
 
 #include <claw/logger.hpp>
+
+namespace bear
+{
+  namespace visual
+  {
+    namespace detail
+    {
+      static GLuint create_shader( GLenum type, const std::string& source );
+      static void log_shader_errors( GLuint shader_id );
+
+      static GLuint create_program
+      ( const gl_fragment_shader& f, const gl_vertex_shader& v );
+      static void log_program_errors
+      ( const std::string& step, GLuint program_id );
+    }
+  }
+}
 
 /*----------------------------------------------------------------------------*/
 bear::visual::gl_renderer::renderer_pointer
@@ -168,7 +189,6 @@ bear::visual::gl_renderer::read_texture
 
   delete[] pixels;
 
-  release_context();
   return result;
 
 #else
@@ -198,18 +218,15 @@ void bear::visual::gl_renderer::delete_texture( GLuint texture_id )
  * \brief Creates a new fragment shader.
  * \param p The stream from which we read the shader's code.
  */
-GLuint bear::visual::gl_renderer::create_fragment_shader( std::istream& p )
+GLuint bear::visual::gl_renderer::create_fragment_shader( const std::string& p )
 {
-  boost::mutex::scoped_lock lock( m_mutex.gl_access );
-  make_current();
+  return create_shader( GL_FRAGMENT_SHADER, p );
+}
 
-  gl_fragment_shader_loader loader;
-  const GLuint result( loader.load( p ) );
-
-  release_context();
-
-  return result;
-} // gl_renderer::create_fragment_shader()
+GLuint bear::visual::gl_renderer::create_vertex_shader( const std::string& p )
+{
+  return create_shader( GL_VERTEX_SHADER, p );
+}
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -217,7 +234,7 @@ GLuint bear::visual::gl_renderer::create_fragment_shader( std::istream& p )
  *        create_fragment_shader().
  * \param shader_id The identifier of the shader to delete.
  */
-void bear::visual::gl_renderer::delete_fragment_shader( GLuint shader_id )
+void bear::visual::gl_renderer::delete_shader( GLuint shader_id )
 {
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
   make_current();
@@ -234,13 +251,12 @@ void bear::visual::gl_renderer::delete_fragment_shader( GLuint shader_id )
  * \param shader The shader to link in the program.
  */
 GLuint bear::visual::gl_renderer::create_shader_program
-( const gl_fragment_shader& shader )
+( const gl_fragment_shader& fragment, const gl_vertex_shader& vertex )
 {
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
   make_current();
 
-  gl_shader_program_creator creator;
-  const GLuint result( creator.create( shader ) );
+  const GLuint result( detail::create_program( fragment, vertex ) );
 
   release_context();
 
@@ -419,6 +435,7 @@ void bear::visual::gl_renderer::set_fullscreen( bool f )
 
       boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
       resize_view( screen_size_type(w, h) );
+      assign_transform_matrix();
 
       release_context();
     }
@@ -505,6 +522,7 @@ void bear::visual::gl_renderer::stop()
   {
     boost::mutex::scoped_lock lock( m_mutex.loop_state );
     m_stop = true;
+    m_shader.clear();
   }
   
   if ( m_render_thread != NULL )
@@ -514,10 +532,39 @@ void bear::visual::gl_renderer::stop()
     }
 
   delete[] m_screenshot_buffer;
+  delete m_draw;
 
   SDL_GL_DeleteContext( m_gl_context );
   SDL_DestroyWindow( m_window );
 } // gl_renderer::stop()
+
+void bear::visual::gl_renderer::loop()
+{
+  if ( !initialization_loop() )
+    return;
+  
+  render_loop();
+}
+
+bool bear::visual::gl_renderer::initialization_loop()
+{
+  while ( true )
+    {
+      {
+        // lock m_stop to ensure that stop() will block if called during the
+        // loop.
+        boost::mutex::scoped_lock states_lock( m_mutex.loop_state );
+        
+        if ( m_stop )
+          return false;
+
+        if ( ensure_window_exists() )
+          return true;
+      }
+
+      systime::sleep( systime::milliseconds_type( 100 ) );
+    }
+}
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -527,7 +574,7 @@ void bear::visual::gl_renderer::stop()
 void bear::visual::gl_renderer::render_loop()
 {
   // render every 15 milliseconds
-  const systime::milliseconds_type render_delta( 15 );
+  static constexpr systime::milliseconds_type render_delta( 15 );
 
   while ( true )
     {
@@ -539,9 +586,7 @@ void bear::visual::gl_renderer::render_loop()
           m_mutex.loop_state.unlock();
           break;
         }
-
-      ensure_window_exists();
-
+      
       const systime::milliseconds_type start_date( systime::get_date_ms() );
 
       if ( !m_screenshot_signal.empty() )
@@ -596,11 +641,17 @@ void bear::visual::gl_renderer::draw_scene()
   set_background_color();
 
   glClear( GL_COLOR_BUFFER_BIT );
+
+  for ( const gl_state& state : m_states )
+    {
+      m_draw->prepare();
+      detail::apply_shader( m_shader );
   
-  for ( state_list::const_iterator it( m_states.begin() );
-        it != m_states.end(); ++it )
-    it->draw();
-  VISUAL_GL_ERROR_THROW();
+      state.draw( *m_draw );
+      VISUAL_GL_ERROR_THROW();
+
+      m_draw->finalize();
+    }
   
   SDL_GL_SwapWindow( m_window );
   VISUAL_GL_ERROR_THROW();
@@ -635,18 +686,6 @@ void bear::visual::gl_renderer::resize_view
 ( const screen_size_type& viewport_size )
 {
   glViewport( 0, 0, viewport_size.x, viewport_size.y );
-  VISUAL_GL_ERROR_THROW();
-
-  glMatrixMode(GL_PROJECTION);
-  VISUAL_GL_ERROR_THROW();
-
-  glLoadIdentity();
-  VISUAL_GL_ERROR_THROW();
-
-  glOrtho( 0, m_view_size.x, 0, m_view_size.y, -1, 0 );
-  VISUAL_GL_ERROR_THROW();
-
-  glMatrixMode(GL_MODELVIEW);
   VISUAL_GL_ERROR_THROW();
 } // gl_renderer::resize_view()
 
@@ -705,16 +744,16 @@ void bear::visual::gl_renderer::copy_texture_pixels
 /**
  * \brief Creates the window and the GL context if it has not been created yet.
  */
-void bear::visual::gl_renderer::ensure_window_exists()
+bool bear::visual::gl_renderer::ensure_window_exists()
 {
   boost::mutex::scoped_lock lock( m_mutex.window );
 
   if ( !m_video_mode_is_set || (m_gl_context != NULL) )
-    return;
+    return false;
 
 #ifdef __ANDROID__
-  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 1 );
-  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 2 );
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 0 );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES );
 #endif
   
@@ -772,11 +811,38 @@ void bear::visual::gl_renderer::ensure_window_exists()
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
-
+  m_draw = new gl_draw();
+  
   release_context();
 
   m_mutex.gl_access.unlock();
+
+  m_shader.restore
+    ( detail::get_default_fragment_shader_code(),
+      detail::get_default_vertex_shader_code() );
+
+  assign_transform_matrix();
+  
+  return true;
 } // gl_renderer::ensure_window_exists()
+
+void bear::visual::gl_renderer::assign_transform_matrix()
+{
+  assert( m_shader.is_valid() );
+  
+  const GLfloat m00( GLfloat( 2 ) / m_view_size.x );
+  const GLfloat m11( GLfloat( 2 ) / m_view_size.y );
+
+  const std::array< float, 16 > transform =
+    {
+      m00,   0,  0,  0,
+        0, m11,  0,  0,
+        0,   0, -2,  0,
+       -1,  -1,  1,  1
+    };
+
+  m_shader.set_variable( "transform", transform );
+}
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -910,6 +976,19 @@ void bear::visual::gl_renderer::dispatch_screenshot()
   signal( result );
 }
 
+GLuint
+bear::visual::gl_renderer::create_shader( GLenum type, const std::string& p )
+{
+  boost::mutex::scoped_lock lock( m_mutex.gl_access );
+  make_current();
+
+  const GLuint result( detail::create_shader( type, p ) );
+
+  release_context();
+
+  return result;
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * Constructs a gl_renderer instance with no rendering informations.
@@ -918,7 +997,10 @@ bear::visual::gl_renderer::gl_renderer()
   : m_stop( false ), m_pause( false ), m_window( NULL ), m_gl_context( NULL ),
     m_background_color(0, 0, 0), m_window_size( 640, 480 ),
     m_view_size( 640, 480 ), m_fullscreen( false ),
-    m_video_mode_is_set( false ), m_screenshot_buffer( NULL )
+    m_video_mode_is_set( false ),
+    m_render_ready( false ),
+    m_screenshot_buffer( NULL ),
+    m_draw( NULL )
 {
   m_mutex.gl_access.lock();
 
@@ -926,7 +1008,88 @@ bear::visual::gl_renderer::gl_renderer()
   m_render_thread = NULL;
 #else
   m_render_thread =
-    new boost::thread( boost::bind(&gl_renderer::render_loop, this) );
+    new boost::thread( boost::bind(&gl_renderer::loop, this) );
 #endif
 } // gl_renderer::gl_renderer()
 
+GLuint
+bear::visual::detail::create_shader( GLenum type, const std::string& source )
+{
+  const GLuint result( glCreateShader( type ) );
+  VISUAL_GL_ERROR_THROW();
+
+  const char *fragmentText = source.c_str();
+
+  glShaderSource( result, 1, &fragmentText, 0 );
+  VISUAL_GL_ERROR_THROW();
+
+  glCompileShader( result );
+  log_shader_errors( result );
+
+  return result;
+}
+
+void bear::visual::detail::log_shader_errors( GLuint shader_id )
+{
+  GLint buffer_size;
+  glGetShaderiv( shader_id, GL_INFO_LOG_LENGTH, &buffer_size );
+
+  if ( buffer_size <= 1 )
+    return;
+
+  char* const buffer = new char[ buffer_size ];
+
+  glGetShaderInfoLog( shader_id, buffer_size, NULL, buffer );
+
+  claw::logger << claw::log_error << "Shader " << shader_id
+               << " compile error: " << buffer << std::endl;
+
+  delete[] buffer;
+}
+
+GLuint bear::visual::detail::create_program
+( const gl_fragment_shader& f, const gl_vertex_shader& v )
+{
+  const GLuint result( glCreateProgram() );
+  VISUAL_GL_ERROR_THROW();
+
+  glBindAttribLocation( result, 0, "in_position");
+  VISUAL_GL_ERROR_THROW();
+  glBindAttribLocation( result, 1, "in_color");
+  VISUAL_GL_ERROR_THROW();
+  glBindAttribLocation( result, 2, "in_texture_coordinates");
+  VISUAL_GL_ERROR_THROW();
+
+  glAttachShader( result, f.shader_id() );
+  VISUAL_GL_ERROR_THROW();
+
+  glAttachShader( result, v.shader_id() );
+  VISUAL_GL_ERROR_THROW();
+
+  glLinkProgram( result );
+  log_program_errors( "link", result );
+
+  glValidateProgram( result );
+  log_program_errors( "validation", result );
+
+  return result;
+}
+
+void bear::visual::detail::log_program_errors
+( const std::string& step, GLuint program_id )
+{
+  GLint buffer_size;
+  glGetProgramiv( program_id, GL_INFO_LOG_LENGTH, &buffer_size );
+
+  if ( buffer_size <= 1 )
+    return;
+
+  char* const buffer = new char[ buffer_size ];
+
+  glGetProgramInfoLog( program_id, buffer_size, NULL, buffer );
+
+  claw::logger << claw::log_error << "Program " << program_id << ' ' << step
+               << " errors: " << buffer << std::endl;
+
+  delete[] buffer;
+}

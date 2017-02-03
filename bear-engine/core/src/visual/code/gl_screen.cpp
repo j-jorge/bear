@@ -272,7 +272,7 @@ void bear::visual::gl_screen::render_sprite
   if ( (s.clip_rectangle().width == 0) || (s.clip_rectangle().height == 0 ) )
     return;
 
-  const claw::math::box_2d<GLdouble> clip_vertices = get_texture_clip(s);
+  const claw::math::box_2d<GLfloat> clip_vertices = get_texture_clip(s);
 
   std::vector<position_type> render_coord(4);
   get_render_coord( pos, s, render_coord );
@@ -304,10 +304,10 @@ bear::visual::gl_screen::get_render_coord
 {
   typedef position_type coord_double;
 
-  GLdouble bottom( pos.y );
-  GLdouble top( bottom + s.height() );
-  GLdouble left( pos.x );
-  GLdouble right( left + s.width() );
+  GLfloat bottom( pos.y );
+  GLfloat top( bottom + s.height() );
+  GLfloat left( pos.x );
+  GLfloat right( left + s.width() );
 
   if ( s.is_mirrored() )
     std::swap(left, right);
@@ -335,24 +335,24 @@ bear::visual::gl_screen::get_render_coord
  *        texture.
  * \param s The sprite from which we take the clip rectangle.
  */
-claw::math::box_2d<GLdouble>
+claw::math::box_2d<GLfloat>
 bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
 {
-  const claw::math::box_2d<GLdouble> empty_clip( 0, 0, 0, 0 );
-  const claw::math::rectangle<GLdouble> clip_rectangle(s.clip_rectangle());
+  const claw::math::box_2d<GLfloat> empty_clip( 0, 0, 0, 0 );
+  const claw::math::rectangle<GLfloat> clip_rectangle(s.clip_rectangle());
 
   if ( (clip_rectangle.width == 0) || (clip_rectangle.height == 0) )
     return empty_clip;
 
-  const claw::math::coordinate_2d<GLdouble> tex_size(s.get_image().size());
+  const claw::math::coordinate_2d<GLfloat> tex_size(s.get_image().size());
 
-  claw::math::box_2d<GLdouble> result;
+  claw::math::box_2d<GLfloat> result;
 
 #ifdef BEAR_SPRITE_CLIP_SUBPIXEL
 
-  const GLdouble min_distance_to_pixel_border( 1.0 / 1000 );
-  GLdouble horizontal_shift;
-  GLdouble vertical_shift;
+  const GLfloat min_distance_to_pixel_border( 1.0 / 1000 );
+  GLfloat horizontal_shift;
+  GLfloat vertical_shift;
 
   if ( clip_rectangle.width == s.width() )
     horizontal_shift = min_distance_to_pixel_border;
@@ -426,7 +426,7 @@ bear::visual::gl_screen::get_texture_clip( const sprite& s ) const
  */
 void bear::visual::gl_screen::render_image
 ( GLuint texture_id, const std::vector<position_type>& render_coord,
-  const claw::math::box_2d<GLdouble>& clip,
+  const claw::math::box_2d<GLfloat>& clip,
   const color_type& color )
 {
   push_state
@@ -444,7 +444,7 @@ void bear::visual::gl_screen::render_image
  * \param center The center of the rotation.
  */
 bear::visual::position_type bear::visual::gl_screen::rotate
-( const position_type& pos, GLdouble a, const position_type& center ) const
+( const position_type& pos, GLfloat a, const position_type& center ) const
 {
   position_type result(pos);
   result.rotate(center, a);
@@ -459,7 +459,7 @@ bear::visual::position_type bear::visual::gl_screen::rotate
  */
 std::vector<bear::visual::position_type>
 bear::visual::gl_screen::get_texture_coordinates
-( const claw::math::box_2d<GLdouble>& clip ) const
+( const claw::math::box_2d<GLfloat>& clip ) const
 {
   std::vector<position_type> result(4);
 

@@ -15,6 +15,8 @@
 
 #include "visual/screen.hpp"
 #include "visual/gl_shader_program.hpp"
+#include "visual/detail/get_default_fragment_shader_code.hpp"
+#include "visual/detail/get_default_vertex_shader_code.hpp"
 
 #include <claw/exception.hpp>
 
@@ -28,15 +30,21 @@ bear::visual::shader_program::shader_program()
 
 } // shader_program::shader_program()
 
+bear::visual::shader_program::shader_program( std::istream& fragment )
+  : m_impl(new base_shader_program_ptr(NULL))
+{
+  restore( fragment );
+}
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructs a shader_program with a given code.
  * \param program code The code of the program.
  */
-bear::visual::shader_program::shader_program( std::istream& program_code )
+bear::visual::shader_program::shader_program
+( const std::string& fragment, const std::string& vertex )
   : m_impl(new base_shader_program_ptr(NULL))
 {
-  restore( program_code );
+  restore( fragment, vertex );
 } // shader_program::shader_program()
 
 /*----------------------------------------------------------------------------*/
@@ -49,12 +57,16 @@ void bear::visual::shader_program::clear()
     *m_impl = NULL;
 } // shader_program::clear()
 
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Restore the shader program.
- * \param program code The code of the program.
- */
-void bear::visual::shader_program::restore( std::istream& program_code )
+void bear::visual::shader_program::restore( std::istream& fragment )
+{
+  std::ostringstream oss;
+  oss << fragment.rdbuf();
+
+  restore( oss.str(), detail::get_default_vertex_shader_code() );
+}
+
+void bear::visual::shader_program::restore
+( const std::string& fragment, const std::string& vertex )
 {
   if ( m_impl == NULL )
     m_impl = new base_shader_program_ptr(NULL);
@@ -62,7 +74,7 @@ void bear::visual::shader_program::restore( std::istream& program_code )
   switch ( screen::get_sub_system() )
     {
     case screen::screen_gl:
-      *m_impl = new gl_shader_program( program_code );
+      *m_impl = new gl_shader_program( fragment, vertex );
       break;
     case screen::screen_undef:
       claw::exception("screen sub system has not been set.");
@@ -99,7 +111,7 @@ bear::visual::shader_program::get_impl() const
 /**
  * \brief Gets the values of th variables of the program.
  */
-bear::visual::shader_program::input_variable_map
+const bear::visual::shader_program::input_variable_map&
 bear::visual::shader_program::get_variables() const
 {
   return m_input_variable;

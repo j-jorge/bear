@@ -14,6 +14,7 @@
 #ifndef __VISUAL_SHADER_PROGRAM_HPP__
 #define __VISUAL_SHADER_PROGRAM_HPP__
 
+#include <array>
 #include <string>
 
 #include <claw/smart_ptr.hpp>
@@ -42,7 +43,14 @@ namespace bear
       /**
        * \brief The types of the variables that can be passed to the program.
        */
-      typedef claw::meta::type_list_maker<int, bool, double>::result var_types;
+      typedef
+        claw::meta::type_list_maker
+        <
+          int,
+          bool,
+          float,
+          std::array< float, 16 >
+        >::result var_types;
 
       /**
        * \brief The type of the map storing the values of the inputs of the
@@ -58,19 +66,22 @@ namespace bear
 
     public:
       shader_program();
-      shader_program( std::istream& program_code );
+      explicit shader_program( std::istream& fragment );
+      shader_program( const std::string& fragment, const std::string& vertex );
 
       void clear();
-      void restore( std::istream& program_code );
+      
+      void restore( std::istream& fragment );
+      void restore( const std::string& fragment, const std::string& vertex );
 
       bool is_valid() const;
 
       const base_shader_program* get_impl() const;
 
       template<typename T>
-        void set_variable( std::string name, T value );
+        void set_variable( const std::string& name, const T& value );
 
-      input_variable_map get_variables() const;
+      const input_variable_map& get_variables() const;
 
     private:
       /**

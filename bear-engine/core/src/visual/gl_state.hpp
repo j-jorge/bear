@@ -24,6 +24,8 @@ namespace bear
 {
   namespace visual
   {
+    class gl_draw;
+    
     /**
      * \brief The description of an element in the OpenGL scene.
      * \author Julien Jorge
@@ -42,25 +44,6 @@ namespace bear
       }; // enum render_mode
 
       /**
-       * \brief The visitor that sets the variables of a shader program.
-       */
-      class uniform_setter
-      {
-      public:
-        explicit uniform_setter( GLuint program );
-
-        void operator()( std::string name, int value ) const;
-        void operator()( std::string name, double value ) const;
-        void operator()( std::string name, bool value ) const;
-
-      private:
-        /** \brief The identifier of the shader program in which the variables
-            are set. */
-        const GLuint m_program;
-
-      }; // class uniform_setter
-
-      /**
        * \brief The visitor that checks if a variable exists in another
        *        variable_map with the same value.
        */
@@ -71,7 +54,7 @@ namespace bear
         ( bool& result, const shader_program::input_variable_map& vars );
 
         template<typename T>
-        void operator()( std::string name, T value ) const;
+        void operator()( const std::string& name, const T& value ) const;
 
       private:
         /** \brief The updated result of the tests. */
@@ -123,17 +106,15 @@ namespace bear
 
       void merge( const gl_state& state );
 
-      void draw() const;
+      void draw( gl_draw& output ) const;
 
     private:
-      void draw_shape() const;
-      void draw_textured() const;
+      void draw_shape( gl_draw& output ) const;
+      void draw_textured( gl_draw& output ) const;
 
-      void set_colors() const;
-      void set_vertices() const;
-      void set_texture_coordinates() const;
-
-      void disable_states() const;
+      void set_colors( gl_draw& output ) const;
+      void set_vertices( gl_draw& output ) const;
+      void set_texture_coordinates( gl_draw& output ) const;
 
       std::size_t get_vertex_count() const;
       GLenum get_gl_render_mode() const;
@@ -143,8 +124,6 @@ namespace bear
       void push_colors( const color_type& c, std::size_t count );
 
       position_vector polygon_to_triangles( const position_vector& v ) const;
-
-      void enable_shader() const;
 
     private:
       /** \brief The number of coordinates in a vertex. */

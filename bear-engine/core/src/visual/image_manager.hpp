@@ -18,7 +18,7 @@
 #include "visual/shader_program.hpp"
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "visual/class_export.hpp"
@@ -34,37 +34,38 @@ namespace bear
     class VISUAL_EXPORT image_manager
     {
     private:
-      typedef std::map<std::string, image> image_map_type;
+      typedef std::unordered_map<std::string, image> image_map_type;
 
     public:
       void clear();
-      void load_image( std::string name, std::istream& file );
-      void add_image( std::string name, const image& img );
+      void load_image( const std::string& name, std::istream& file );
+      void add_image( const std::string& name, const image& img );
 
       void clear_images();
-      void restore_image( std::string name, std::istream& file );
+      void restore_image( const std::string& name, std::istream& file );
 
-      image get_image( std::string name ) const;
+      image get_image( const std::string& name ) const;
       void get_image_names( std::vector<std::string>& names ) const;
 
-      bool exists( std::string name ) const;
+      bool exists( const std::string& name ) const;
 
-      void load_shader_program( std::string name, std::istream& file );
+      void load_shader_program( const std::string& name, std::istream& file );
 
       void clear_shader_programs();
-      void restore_shader_program( std::string name, std::istream& file );
+      void restore_shader_program
+        ( const std::string& name, std::istream& file );
 
-      shader_program get_shader_program( std::string name ) const;
+      shader_program get_shader_program( const std::string& name ) const;
 
       void get_shader_program_names( std::vector<std::string>& names ) const;
-      bool has_shader_program( std::string name ) const;
+      bool has_shader_program( const std::string& name ) const;
       
     private:
       /** \brief All the images. */
       image_map_type m_images;
 
       /** \brief All the shader programs. */
-      std::map<std::string, shader_program> m_shader_program;
+      std::unordered_map<std::string, shader_program> m_shader_program;
 
     }; // class image_manager
 

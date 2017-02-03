@@ -15,6 +15,7 @@
 #define __VISUAL_GL_RENDERER_HPP__
 
 #include "visual/gl_state.hpp"
+#include "visual/shader_program.hpp"
 #include "visual/types.hpp"
 
 #include <claw/image.hpp>
@@ -29,7 +30,9 @@ namespace bear
 {
   namespace visual
   {
+    class gl_draw;
     class gl_fragment_shader;
+    class gl_vertex_shader;
 
     /**
      * \brief The gl_renderer class manages the process of rendering with
@@ -66,10 +69,12 @@ namespace bear
 
       void delete_texture( GLuint texture_id );
 
-      GLuint create_fragment_shader( std::istream& p );
-      void delete_fragment_shader( GLuint shader_id );
+      GLuint create_fragment_shader( const std::string& p );
+      GLuint create_vertex_shader( const std::string& p );
+      void delete_shader( GLuint shader_id );
 
-      GLuint create_shader_program( const gl_fragment_shader& shader );
+      GLuint create_shader_program
+      ( const gl_fragment_shader& fragment, const gl_vertex_shader& vertex );
       void delete_shader_program( GLuint program_id );
 
       void shot( claw::graphic::image& img );
@@ -94,6 +99,8 @@ namespace bear
     private:
       void stop();
 
+      void loop();
+      bool initialization_loop();
       void render_loop();
 
       void render_states();
@@ -110,7 +117,8 @@ namespace bear
       ( GLuint texture_id, claw::graphic::rgba_pixel_8* pixels, std::size_t x,
         std::size_t y, std::size_t w, std::size_t h );
 
-      void ensure_window_exists();
+      bool ensure_window_exists();
+      void assign_transform_matrix();
 
       screen_size_type get_best_screen_size() const;
 
@@ -121,12 +129,12 @@ namespace bear
       ( const std::vector<SDL_DisplayMode>& modes ) const;
 
       void dispatch_screenshot();
+
+      GLuint create_shader( GLenum type, const std::string& p );
       
     private:
       gl_renderer();
-
-      // not implemented
-      gl_renderer( const gl_renderer& that );
+      gl_renderer( const gl_renderer& that ) = delete;
 
     private:
       /** \brief The single instance of this class. */
@@ -173,6 +181,9 @@ namespace bear
       claw::graphic::rgba_pixel_8* m_screenshot_buffer;
       boost::signals2::signal< void( const claw::graphic::image& ) >
       m_screenshot_signal;
+
+      gl_draw* m_draw;
+      shader_program m_shader;
       
       /** \brief The various mutexes used to avoid simultaneous access to the
           fields of the class, and to the GL state. */

@@ -178,7 +178,7 @@ void bear::layer_shader::progress( universe::time_type elapsed_time )
       for ( std::size_t i(0); i != m_variables.size(); ++i )
         if ( m_variables[i] != (shader_variable_pointer)NULL )
           m_shader.set_variable
-            ( m_variables[i]->get_name(), m_variables[i]->get_value() );
+            ( m_variables[i]->get_name(), (float)m_variables[i]->get_value() );
 
       if ( m_layer_tags.empty() )
         get_layer().set_shader( m_shader );

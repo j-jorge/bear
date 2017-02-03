@@ -15,17 +15,15 @@
 
 #include "visual/gl_renderer.hpp"
 
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Creates a new program.
- * \param program_code The code of the shader program.
- */
-bear::visual::gl_shader_program::gl_shader_program( std::istream& program_code )
-  : m_fragment_shader(program_code)
+bear::visual::gl_shader_program::gl_shader_program
+( const std::string& fragment_code, const std::string& vertex_code )
+  : m_fragment_shader( fragment_code ),
+    m_vertex_shader( vertex_code )
 {
   m_program_id =
-    gl_renderer::get_instance().create_shader_program( m_fragment_shader );
-} // gl_shader_program::gl_shader_program()
+    gl_renderer::get_instance().create_shader_program
+    ( m_fragment_shader, m_vertex_shader );
+}
 
 /*----------------------------------------------------------------------------*/
 /**

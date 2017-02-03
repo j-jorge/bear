@@ -8,37 +8,37 @@
 */
 /**
  * \file
- * \brief Implementation of the bear::visual::gl_fragment_shader class.
+ * \brief Implementation of the bear::visual::gl_vertex_shader class.
  * \author Julien Jorge
  */
-#include "visual/gl_fragment_shader.hpp"
+#include "visual/gl_vertex_shader.hpp"
 
 #include "visual/gl_renderer.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Creates a new fragment shader from a given source.
+ * \brief Creates a new vertex shader from a given source.
  * \param p The stream from which is read the shader.
  */
-bear::visual::gl_fragment_shader::gl_fragment_shader( const std::string& p )
+bear::visual::gl_vertex_shader::gl_vertex_shader( const std::string& p )
 {
-  m_fragment_shader = gl_renderer::get_instance().create_fragment_shader( p );
-} // gl_fragment_shader::gl_fragment_shader()
+  m_vertex_shader = gl_renderer::get_instance().create_vertex_shader( p );
+} // gl_vertex_shader::gl_vertex_shader()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Destructor. Cleans up the GL variables.
  */
-bear::visual::gl_fragment_shader::~gl_fragment_shader()
+bear::visual::gl_vertex_shader::~gl_vertex_shader()
 {
-  gl_renderer::get_instance().delete_shader( m_fragment_shader );
-} // gl_fragment_shader::~gl_fragment_shader()
+  gl_renderer::get_instance().delete_shader( m_vertex_shader );
+} // gl_vertex_shader::~gl_vertex_shader()
 
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Gets the OpenGL identifier of the shader.
  */
-GLuint bear::visual::gl_fragment_shader::shader_id() const
+GLuint bear::visual::gl_vertex_shader::shader_id() const
 {
-  return m_fragment_shader;
-} // gl_fragment_shader::shader_id()
+  return m_vertex_shader;
+} // gl_vertex_shader::shader_id()

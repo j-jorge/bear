@@ -10,15 +10,15 @@ set( VISUAL_SOURCE_FILES
   code/bitmap_rendering_attributes.cpp
   code/bitmap_writing.cpp
   code/color.cpp
+  code/gl_draw.cpp
   code/gl_error.cpp
   code/gl_image.cpp
   code/gl_screen.cpp
   code/gl_fragment_shader.cpp
-  code/gl_fragment_shader_loader.cpp
   code/gl_renderer.cpp
   code/gl_shader_program.cpp
-  code/gl_shader_program_creator.cpp
   code/gl_state.cpp
+  code/gl_vertex_shader.cpp
   code/image.cpp
   code/image_manager.cpp
   code/placed_sprite.cpp
@@ -45,6 +45,10 @@ set( VISUAL_SOURCE_FILES
   code/text_metric.cpp
   code/writing.cpp
 
+  detail/code/apply_shader.cpp
+  detail/code/get_default_fragment_shader_code.cpp
+  detail/code/get_default_vertex_shader_code.cpp
+  
   font/code/base_font.cpp
   font/code/bitmap_charmap.cpp
   font/code/bitmap_font.cpp

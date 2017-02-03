@@ -39,7 +39,7 @@ void bear::visual::image_manager::clear()
  * \post get_image(name) is the image in file_name.
  */
 void bear::visual::image_manager::load_image
-( std::string name, std::istream& file )
+( const std::string& name, std::istream& file )
 {
   CLAW_PRECOND( !exists(name) );
 
@@ -56,7 +56,7 @@ void bear::visual::image_manager::load_image
  * \post get_image(name) is the image in file_name.
  */
 void bear::visual::image_manager::add_image
-( std::string name, const image& img )
+( const std::string& name, const image& img )
 {
   CLAW_PRECOND( !exists(name) );
 
@@ -88,7 +88,7 @@ void bear::visual::image_manager::clear_images()
  * images whithout losing references to them.
  */
 void bear::visual::image_manager::restore_image
-( std::string name, std::istream& file )
+( const std::string& name, std::istream& file )
 {
   CLAW_PRECOND( exists(name) );
 
@@ -103,7 +103,7 @@ void bear::visual::image_manager::restore_image
  * \pre There is an image called "name".
  */
 bear::visual::image
-bear::visual::image_manager::get_image( std::string name ) const
+bear::visual::image_manager::get_image( const std::string& name ) const
 {
   CLAW_PRECOND( exists(name) );
 
@@ -128,7 +128,7 @@ void bear::visual::image_manager::get_image_names
  * \brief Tell if an image exists.
  * \param name The name of the image to find.
  */
-bool bear::visual::image_manager::exists( std::string name ) const
+bool bear::visual::image_manager::exists( const std::string& name ) const
 {
   return m_images.find(name) != m_images.end();
 } // image_manager::exists()
@@ -142,7 +142,7 @@ bool bear::visual::image_manager::exists( std::string name ) const
  * \post get_fragment_shader(name) is the fragment_shader load from \a file
  */
 void bear::visual::image_manager::load_shader_program
-( std::string name, std::istream& file )
+( const std::string& name, std::istream& file )
 {
   CLAW_PRECOND( !has_shader_program(name) );
 
@@ -157,7 +157,7 @@ void bear::visual::image_manager::load_shader_program
  */
 void bear::visual::image_manager::clear_shader_programs()
 {
-  std::map<std::string, shader_program>::iterator it;
+  std::unordered_map<std::string, shader_program>::iterator it;
 
   for (it=m_shader_program.begin(); it!=m_shader_program.end(); ++it)
     it->second.clear();
@@ -174,7 +174,7 @@ void bear::visual::image_manager::clear_shader_programs()
  * shaders whithout losing references to them.
  */
 void bear::visual::image_manager::restore_shader_program
-( std::string name, std::istream& file )
+( const std::string& name, std::istream& file )
 {
   CLAW_PRECOND( has_shader_program(name) );
 
@@ -188,7 +188,7 @@ void bear::visual::image_manager::restore_shader_program
  * \pre There is an image called "name".
  */
 bear::visual::shader_program
-bear::visual::image_manager::get_shader_program( std::string name ) const
+bear::visual::image_manager::get_shader_program( const std::string& name ) const
 {
   CLAW_PRECOND( has_shader_program(name) );
 
@@ -214,7 +214,8 @@ void bear::visual::image_manager::get_shader_program_names
  * \brief Tells if there is a shader program with a given name.
  * \param name The name of the program to find.
  */
-bool bear::visual::image_manager::has_shader_program( std::string name ) const
+bool bear::visual::image_manager::has_shader_program
+( const std::string& name ) const
 {
   return m_shader_program.find(name) != m_shader_program.end();
 } // image_manager::has_shader_program()

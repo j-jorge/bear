@@ -80,20 +80,20 @@ namespace bear
       void get_render_coord
         ( const position_type& pos, const sprite& s,
           std::vector<position_type>& result ) const;
-      claw::math::box_2d<GLdouble> get_texture_clip( const sprite& s ) const;
+      claw::math::box_2d<GLfloat> get_texture_clip( const sprite& s ) const;
 
       void render_image
         ( GLuint texture_id, const std::vector<position_type>& render_coord,
-          const claw::math::box_2d<GLdouble>& clip,
+          const claw::math::box_2d<GLfloat>& clip,
           const color_type& color );
 
       position_type
-      rotate( const position_type& pos, GLdouble a,
+      rotate( const position_type& pos, GLfloat a,
               const position_type& center ) const;
 
       std::vector<position_type>
         get_texture_coordinates
-        ( const claw::math::box_2d<GLdouble>& clip ) const;
+        ( const claw::math::box_2d<GLfloat>& clip ) const;
 
       void push_state( const gl_state& state );
       shader_program get_current_shader() const;

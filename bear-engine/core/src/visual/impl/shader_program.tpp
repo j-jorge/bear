@@ -20,7 +20,8 @@
  * \param value The value of the variable.
  */
 template<typename T>
-void bear::visual::shader_program::set_variable( std::string name, T value )
+void bear::visual::shader_program::set_variable
+( const std::string& name, const T& value )
 {
   m_input_variable.set<T>( name, value );
 } // shader_program::set_variable()
