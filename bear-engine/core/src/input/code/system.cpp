@@ -29,9 +29,7 @@
  */
 void bear::input::system::initialize()
 {
-  if ( !SDL_WasInit(SDL_INIT_VIDEO) )
-    if ( SDL_InitSubSystem(SDL_INIT_VIDEO) != 0 )
-      throw claw::exception( SDL_GetError() );
+  CLAW_PRECOND( SDL_WasInit(SDL_INIT_VIDEO) );
 
   if ( SDL_InitSubSystem(SDL_INIT_JOYSTICK) != 0 )
     throw claw::exception( SDL_GetError() );
@@ -63,7 +61,6 @@ void bear::input::system::release()
   system::get_instance().clear();
 
   SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
-  SDL_QuitSubSystem(SDL_INIT_VIDEO);
 } // system::release()
 
 /*----------------------------------------------------------------------------*/
