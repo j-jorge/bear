@@ -803,9 +803,6 @@ bool bear::visual::gl_renderer::ensure_window_exists()
   
   resize_view( m_window_size );
 
-  glEnable(GL_TEXTURE_2D);
-  VISUAL_GL_ERROR_THROW();
-  
   glEnable(GL_BLEND);
   VISUAL_GL_ERROR_THROW();
 
