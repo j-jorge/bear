@@ -85,24 +85,6 @@ bear::visual::gl_screen::gl_screen
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tells not to render anything for a while.
- */
-void bear::visual::gl_screen::set_pause()
-{
-  gl_renderer::get_instance().set_pause();
-} // gl_screen::set_pause()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Turns the rendering process on again.
- */
-void bear::visual::gl_screen::unset_pause()
-{
-  gl_renderer::get_instance().unset_pause();
-} // gl_screen::unset_pause()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Turn fullscreen mode on/off.
  * \param b Tell if we want a fullscreen mode.
  */

@@ -457,13 +457,15 @@ void bear::visual::gl_renderer::set_gl_states( state_list& states )
   {
     boost::mutex::scoped_lock lock( m_mutex.gl_set_states );
 
-    m_render_ready = true;
     m_states.clear();
     m_states.swap( states );
+    m_render_ready = true;
   }
 
   if ( m_render_thread == NULL )
     render_states();
+  else
+    m_render_condition.notify_one();
 } // gl_renderer::set_gl_states()
 
 /*----------------------------------------------------------------------------*/
@@ -491,35 +493,6 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tells not to render anything for a while.
- */
-void bear::visual::gl_renderer::set_pause()
-{
-  boost::mutex::scoped_lock lock( m_mutex.loop_state );
-
-  m_mutex.gl_access.lock();
-
-  m_pause = true;
-} // gl_renderer::set_pause()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Turns the rendering process on again.
- */
-void bear::visual::gl_renderer::unset_pause()
-{
-  boost::mutex::scoped_lock lock( m_mutex.loop_state );
-
-  if ( m_pause == false )
-    return;
-
-  m_mutex.gl_access.unlock();
-
-  m_pause = false;
-} // gl_renderer::unset_pause()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Tells to stop the rendering process.
  */
 void bear::visual::gl_renderer::stop()
@@ -528,6 +501,12 @@ void bear::visual::gl_renderer::stop()
     boost::mutex::scoped_lock lock( m_mutex.loop_state );
     m_stop = true;
     m_shader.clear();
+  }
+
+  {
+    boost::mutex::scoped_lock lock( m_mutex.gl_set_states );
+    m_render_ready = true;
+    m_render_condition.notify_one();
   }
   
   if ( m_render_thread != NULL )
@@ -577,11 +556,15 @@ bool bear::visual::gl_renderer::initialization_loop()
  */
 void bear::visual::gl_renderer::render_loop()
 {
-  // render every 15 milliseconds
-  static constexpr systime::milliseconds_type render_delta( 15 );
-
   while ( true )
     {
+      {
+        boost::mutex::scoped_lock states_lock( m_mutex.gl_set_states );
+
+        while( !m_render_ready )
+          m_render_condition.wait( states_lock );
+      }
+
       // lock m_stop to ensure that stop() will block if called during the loop.
       m_mutex.loop_state.lock();
 
@@ -591,22 +574,12 @@ void bear::visual::gl_renderer::render_loop()
           break;
         }
       
-      const systime::milliseconds_type start_date( systime::get_date_ms() );
-
-      if ( !m_pause )
-        {
-          render_states();
-          update_screenshot();
-        }
-
-      const systime::milliseconds_type end_date( systime::get_date_ms() );
+      render_states();
+      update_screenshot();
 
       // Release the mutex while we sleep so other threads can request to stop
       // the loop.
       m_mutex.loop_state.unlock();
-
-      if ( end_date - start_date < render_delta )
-        systime::sleep( render_delta - (end_date - start_date) );
     }
 } // gl_renderer::render_loop()
 
@@ -618,14 +591,9 @@ void bear::visual::gl_renderer::render_states()
 {
   boost::mutex::scoped_lock states_lock( m_mutex.gl_set_states );
 
-  if ( !m_render_ready )
-    return;
-
   m_render_ready = false;
-
-  if ( m_gl_context == NULL )
-    return;
-
+  
+  assert ( m_gl_context != NULL );
   draw_scene();
 
   // The destruction of the states may call a delete_something() which will need
@@ -1121,7 +1089,7 @@ bear::visual::gl_renderer::create_shader( GLenum type, const std::string& p )
  * Constructs a gl_renderer instance with no rendering informations.
  */
 bear::visual::gl_renderer::gl_renderer()
-  : m_stop( false ), m_pause( false ), m_window( NULL ), m_gl_context( NULL ),
+  : m_stop( false ), m_window( NULL ), m_gl_context( NULL ),
     m_background_color(0, 0, 0), m_window_size( 640, 480 ),
     m_view_size( 640, 480 ), m_fullscreen( false ),
     m_video_mode_is_set( false ),

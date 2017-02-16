@@ -113,24 +113,6 @@ bear::visual::screen::~screen()
 
 /*----------------------------------------------------------------------------*/
 /**
- * \brief Tells not to render anything for a while.
- */
-void bear::visual::screen::set_pause()
-{
-  m_impl->set_pause();
-} // screen::set_pause()
-
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Turns the rendering process on again.
- */
-void bear::visual::screen::unset_pause()
-{
-  m_impl->unset_pause();
-} // screen::unset_pause()
-
-/*----------------------------------------------------------------------------*/
-/**
  * \brief Turn fullscreen mode on/off.
  * \param b Tell if we want a fullscreen mode.
  */

@@ -39,9 +39,6 @@ namespace bear
     public:
       virtual ~base_screen() {}
 
-      virtual void set_pause() = 0;
-      virtual void unset_pause() = 0;
-
       virtual void fullscreen( bool b ) = 0;
       virtual claw::math::coordinate_2d<unsigned int> get_size() const = 0;
       virtual claw::math::coordinate_2d<unsigned int>

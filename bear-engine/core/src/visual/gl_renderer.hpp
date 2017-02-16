@@ -21,6 +21,7 @@
 #include <claw/image.hpp>
 
 #include <boost/thread.hpp>
+#include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/signals2/signal.hpp>
 
@@ -93,9 +94,6 @@ namespace bear
       color_type get_background_color();
       void set_background_color( const color_type& c );
 
-      void set_pause();
-      void unset_pause();
-
     private:
       void stop();
 
@@ -146,9 +144,6 @@ namespace bear
       /** \brief Tells if we must stop the rendering process. */
       bool m_stop;
       
-      /** \brief Tells if we must pause the rendering process. */
-      bool m_pause;
-      
       /** \brief The window created by SDL. */
       SDL_Window* m_window;
 
@@ -177,8 +172,8 @@ namespace bear
       /** \brief The next elements to render. */
       state_list m_states;
 
-      /** \brief Tells if a rendering must be done. */
       bool m_render_ready;
+      boost::condition_variable m_render_condition;
 
       /** \brief A buffer in which we do the screenshots, to avoid an allocation
           at each call. */
