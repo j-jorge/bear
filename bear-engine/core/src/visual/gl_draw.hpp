@@ -11,7 +11,7 @@ namespace bear
     class gl_draw
     {
     public:
-      gl_draw();
+      explicit gl_draw( GLuint white );
 
       void prepare();
       void finalize();
@@ -26,6 +26,8 @@ namespace bear
       void generate_indices();
       
     private:
+      const GLuint m_white;
+      
       GLuint m_buffers[ 4 ];
       std::vector< GLushort > m_indices;
 

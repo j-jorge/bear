@@ -818,9 +818,45 @@ bool bear::visual::gl_renderer::ensure_window_exists()
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
-  m_draw = new gl_draw();
 
-  // setup the render buffer
+  create_drawing_helper();
+  setup_render_buffer();
+  setup_frame_buffer();
+  
+  resize_view( m_window_size );
+
+  release_context();
+
+  m_mutex.gl_access.unlock();
+
+  m_shader.restore
+    ( detail::get_default_fragment_shader_code(),
+      detail::get_default_vertex_shader_code() );
+
+  assign_transform_matrix();
+  
+  return true;
+} // gl_renderer::ensure_window_exists()
+
+void bear::visual::gl_renderer::create_drawing_helper()
+{
+  GLuint texture;
+  glGenTextures( 1, &texture );
+  VISUAL_GL_ERROR_THROW();
+
+  glBindTexture( GL_TEXTURE_2D, texture );
+  VISUAL_GL_ERROR_THROW();
+
+  glTexImage2D
+    ( GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+      &claw::graphic::white_pixel );
+  VISUAL_GL_ERROR_THROW();
+
+  m_draw = new gl_draw( texture );
+}
+    
+void bear::visual::gl_renderer::setup_render_buffer()
+{
   glGenRenderbuffers( 1, &m_screenshot_render_buffer );
   VISUAL_GL_ERROR_THROW();
 
@@ -832,8 +868,10 @@ bool bear::visual::gl_renderer::ensure_window_exists()
   VISUAL_GL_ERROR_THROW();
 
   glBindRenderbuffer( GL_RENDERBUFFER, 0 );
-  
-  // setup the frame buffer
+}
+
+void bear::visual::gl_renderer::setup_frame_buffer()
+{
   glGenFramebuffers( 1, &m_screenshot_frame_buffer );
   VISUAL_GL_ERROR_THROW();
   
@@ -851,22 +889,7 @@ bool bear::visual::gl_renderer::ensure_window_exists()
   
   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
   VISUAL_GL_ERROR_THROW();
-
-  resize_view( m_window_size );
-
-  release_context();
-
-  m_mutex.gl_access.unlock();
-
-  m_shader.restore
-    ( detail::get_default_fragment_shader_code(),
-      detail::get_default_vertex_shader_code() );
-
-  assign_transform_matrix();
-  
-  return true;
-} // gl_renderer::ensure_window_exists()
-
+}
 void bear::visual::gl_renderer::assign_transform_matrix()
 {
   assert( m_shader.is_valid() );

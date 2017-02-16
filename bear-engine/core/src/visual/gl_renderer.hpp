@@ -118,6 +118,9 @@ namespace bear
         std::size_t y, std::size_t w, std::size_t h );
 
       bool ensure_window_exists();
+      void create_drawing_helper();
+      void setup_render_buffer();
+      void setup_frame_buffer();
       void assign_transform_matrix();
 
       screen_size_type get_best_screen_size() const;

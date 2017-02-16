@@ -251,9 +251,6 @@ void bear::visual::gl_state::draw_shape( gl_draw& output ) const
   set_colors( output );
   set_vertices( output );
 
-  glBindTexture( GL_TEXTURE_2D, 0 );
-  VISUAL_GL_ERROR_THROW();
-
   output.draw( get_gl_render_mode(), 0, get_vertex_count() );
 } // gl_state::draw_shape()
 

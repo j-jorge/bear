@@ -30,8 +30,9 @@ namespace bear
   }
 }
 
-bear::visual::gl_draw::gl_draw()
-  : m_vertex_count( 0 ),
+bear::visual::gl_draw::gl_draw( GLuint white )
+  : m_white( white ),
+    m_vertex_count( 0 ),
     m_color_count( 0 ),
     m_texture_coordinate_count( 0 )
 {
@@ -137,6 +138,9 @@ void bear::visual::gl_draw::draw( GLenum mode, GLuint first, GLuint count )
   if ( m_vertex_count == 0 )
     return;
 
+  if ( m_texture_coordinate_count == 0 )
+    glBindTexture( GL_TEXTURE_2D, m_white );
+  
   generate_indices();
 
   glDrawElements
