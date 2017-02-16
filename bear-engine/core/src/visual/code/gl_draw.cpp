@@ -1,6 +1,7 @@
 #include "visual/gl_draw.hpp"
 
 #include "visual/gl_error.hpp"
+#include "visual/detail/gl_vertex_attribute_index.hpp"
 
 #include <cassert>
 #include <limits>
@@ -22,10 +23,6 @@ namespace bear
       static constexpr int vertex_size = 2;
       static constexpr int color_size = 4;
       static constexpr int texture_coordinate_size = 2;
-
-      static constexpr int position_attribute = 0;
-      static constexpr int color_attribute = 1;
-      static constexpr int texture_coordinate_attribute = 2;
     }
   }
 }

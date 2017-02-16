@@ -21,6 +21,7 @@
 #include "visual/detail/apply_shader.hpp"
 #include "visual/detail/get_default_fragment_shader_code.hpp"
 #include "visual/detail/get_default_vertex_shader_code.hpp"
+#include "visual/detail/gl_vertex_attribute_index.hpp"
 
 #include "time/time.hpp"
 
@@ -1171,11 +1172,12 @@ GLuint bear::visual::detail::create_program
   const GLuint result( glCreateProgram() );
   VISUAL_GL_ERROR_THROW();
 
-  glBindAttribLocation( result, 0, "in_position");
+  glBindAttribLocation( result, detail::position_attribute, "in_position");
   VISUAL_GL_ERROR_THROW();
-  glBindAttribLocation( result, 1, "in_color");
+  glBindAttribLocation( result, detail::color_attribute, "in_color");
   VISUAL_GL_ERROR_THROW();
-  glBindAttribLocation( result, 2, "in_texture_coordinates");
+  glBindAttribLocation
+    ( result, detail::texture_coordinate_attribute, "in_texture_coordinates");
   VISUAL_GL_ERROR_THROW();
 
   glAttachShader( result, f.shader_id() );
