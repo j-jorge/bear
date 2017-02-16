@@ -105,11 +105,13 @@ namespace bear
 
       void render_states();
       void draw_scene();
+      void draw_states();
+      void draw_screenshot();
 
       void set_background_color();
 
       void resize_view( const screen_size_type& viewport_size );
-
+      
       void make_current();
       void release_context();
       
@@ -128,6 +130,7 @@ namespace bear
       get_best_screen_size
       ( const std::vector<SDL_DisplayMode>& modes ) const;
 
+      void update_screenshot();
       void dispatch_screenshot();
 
       GLuint create_shader( GLenum type, const std::string& p );
@@ -160,6 +163,7 @@ namespace bear
 
       /** \brief The size of the view on the rendered elements. */
       screen_size_type m_view_size;
+      screen_size_type m_viewport_size;
 
       /** \brief The title of the window. */
       std::string m_title;
@@ -178,10 +182,17 @@ namespace bear
 
       /** \brief A buffer in which we do the screenshots, to avoid an allocation
           at each call. */
-      claw::graphic::rgba_pixel_8* m_screenshot_buffer;
+      std::vector< claw::graphic::rgba_pixel_8 > m_screenshot_buffer;
+      std::vector< claw::graphic::rgba_pixel_8 >
+      m_progressive_screenshot_buffer;
+      claw::graphic::image m_progressive_screenshot_image;
       boost::signals2::signal< void( const claw::graphic::image& ) >
       m_screenshot_signal;
-
+      GLuint m_screenshot_frame_buffer;
+      GLuint m_screenshot_render_buffer;
+      std::size_t m_screenshot_line;
+      bool m_ongoing_screenshot;
+      
       gl_draw* m_draw;
       shader_program m_shader;
       
