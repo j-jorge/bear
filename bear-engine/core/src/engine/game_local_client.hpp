@@ -126,8 +126,7 @@ namespace bear
       double get_music_volume() const;
 
       void screenshot( claw::graphic::image& img ) const;
-      boost::signals2::connection schedule_screenshot
-      ( const boost::function< void( const claw::graphic::image& ) >& f );
+      visual::capture screen_capture() const;
       
       void levelshot( claw::graphic::image& img ) const;
 

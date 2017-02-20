@@ -236,10 +236,9 @@ void bear::visual::gl_screen::shot( claw::graphic::image& img ) const
   gl_renderer::get_instance().shot( img );
 } // gl_screen::shot()
 
-boost::signals2::connection bear::visual::gl_screen::schedule_shot
-( const boost::function< void( const claw::graphic::image& ) >& f )
+bear::visual::capture bear::visual::gl_screen::capture_scene() const
 {
-  return gl_renderer::get_instance().shot( f );
+  return gl_renderer::get_instance().capture_scene();
 }
 
 /*----------------------------------------------------------------------------*/

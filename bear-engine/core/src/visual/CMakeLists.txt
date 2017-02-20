@@ -9,7 +9,10 @@ set( VISUAL_SOURCE_FILES
   code/base_scene_element.cpp
   code/bitmap_rendering_attributes.cpp
   code/bitmap_writing.cpp
+  code/capture.cpp
   code/color.cpp
+  code/gl_capture.cpp
+  code/gl_capture_queue.cpp
   code/gl_draw.cpp
   code/gl_error.cpp
   code/gl_image.cpp

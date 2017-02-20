@@ -278,10 +278,9 @@ void bear::visual::screen::shot( claw::graphic::image& img ) const
   m_impl->shot(img);
 } // screen::shot()
 
-boost::signals2::connection bear::visual::screen::schedule_shot
-( const boost::function< void( const claw::graphic::image& ) >& f )
+bear::visual::capture bear::visual::screen::capture_scene() const
 {
-  return m_impl->schedule_shot( f );
+  return m_impl->capture_scene();
 }
 
 /*----------------------------------------------------------------------------*/

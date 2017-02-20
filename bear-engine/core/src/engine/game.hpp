@@ -17,7 +17,7 @@
 #include "engine/class_export.hpp"
 #include "engine/stat_variable.hpp"
 #include "engine/variable/var_map.hpp"
-
+#include "visual/capture.hpp"
 #include "time/time.hpp"
 
 #include <claw/image.hpp>
@@ -91,8 +91,7 @@ namespace bear
       double get_music_volume() const;
 
       void screenshot( claw::graphic::image& img ) const;
-      boost::signals2::connection schedule_screenshot
-      ( const boost::function< void( const claw::graphic::image& ) >& f );
+      visual::capture screen_capture() const;
       void levelshot( claw::graphic::image& img ) const;
 
       void end();

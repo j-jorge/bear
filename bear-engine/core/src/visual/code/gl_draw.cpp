@@ -1,6 +1,8 @@
 #include "visual/gl_draw.hpp"
 
 #include "visual/gl_error.hpp"
+#include "visual/gl_state.hpp"
+#include "visual/detail/apply_shader.hpp"
 #include "visual/detail/gl_vertex_attribute_index.hpp"
 
 #include <cassert>
@@ -29,6 +31,8 @@ namespace bear
 
 bear::visual::gl_draw::gl_draw( GLuint white )
   : m_white( white ),
+    m_shader( nullptr ),
+    m_background_color{ 0, 0, 0, 0 },
     m_vertex_count( 0 ),
     m_color_count( 0 ),
     m_texture_coordinate_count( 0 )
@@ -37,20 +41,44 @@ bear::visual::gl_draw::gl_draw( GLuint white )
   VISUAL_GL_ERROR_THROW();
 }
 
-void bear::visual::gl_draw::prepare()
+void bear::visual::gl_draw::set_background_color( const color_type& c )
 {
-  m_vertex_count = 0;
-  m_color_count = 0;
-  m_texture_coordinate_count = 0;
+  static constexpr const GLfloat max
+    ( std::numeric_limits< color_type::component_type >::max() );
+
+  m_background_color[ 0 ] = ( GLfloat )c.components.red / max;
+  m_background_color[ 1 ] = ( GLfloat )c.components.green / max;
+  m_background_color[ 2 ] = ( GLfloat )c.components.blue / max;
+  m_background_color[ 3 ] = ( GLfloat )c.components.alpha / max;
 }
 
-void bear::visual::gl_draw::finalize()
+void bear::visual::gl_draw::set_default_shader( const shader_program& shader )
 {
-  glDisableVertexAttribArray( detail::texture_coordinate_attribute );
-  glDisableVertexAttribArray( detail::color_attribute );
-  glDisableVertexAttribArray( detail::position_attribute );
-  glBindBuffer( GL_ARRAY_BUFFER, 0 );
-  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+  m_shader = &shader;
+}
+
+void bear::visual::gl_draw::draw( const std::vector< gl_state >& states )
+{
+  glClearColor
+    ( m_background_color[ 0 ], m_background_color[ 1 ], m_background_color[ 2 ],
+      m_background_color[ 3 ] );
+  VISUAL_GL_ERROR_THROW();
+
+  glClear( GL_COLOR_BUFFER_BIT );
+  VISUAL_GL_ERROR_THROW();
+
+  assert( m_shader != nullptr );
+  
+  for ( const gl_state& state : states )
+    {
+      prepare();
+      detail::apply_shader( *m_shader );
+  
+      state.draw( *this );
+      VISUAL_GL_ERROR_THROW();
+
+      finalize();
+    }
 }
 
 void bear::visual::gl_draw::set_vertices
@@ -132,9 +160,6 @@ void bear::visual::gl_draw::draw( GLenum mode, GLuint first, GLuint count )
   assert( first + count <= m_vertex_count );
   assert( m_vertex_count != 0 );
   
-  if ( m_vertex_count == 0 )
-    return;
-
   if ( m_texture_coordinate_count == 0 )
     glBindTexture( GL_TEXTURE_2D, m_white );
   
@@ -144,6 +169,23 @@ void bear::visual::gl_draw::draw( GLenum mode, GLuint first, GLuint count )
     ( mode, count, GL_UNSIGNED_SHORT,
       reinterpret_cast< GLvoid* >( first * sizeof( GLushort ) ) );
   VISUAL_GL_ERROR_THROW();
+}
+
+
+void bear::visual::gl_draw::prepare()
+{
+  m_vertex_count = 0;
+  m_color_count = 0;
+  m_texture_coordinate_count = 0;
+}
+
+void bear::visual::gl_draw::finalize()
+{
+  glDisableVertexAttribArray( detail::texture_coordinate_attribute );
+  glDisableVertexAttribArray( detail::color_attribute );
+  glDisableVertexAttribArray( detail::position_attribute );
+  glBindBuffer( GL_ARRAY_BUFFER, 0 );
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
 void bear::visual::gl_draw::generate_indices()

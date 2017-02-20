@@ -392,10 +392,9 @@ bear::engine::game_local_client::screenshot( claw::graphic::image& img ) const
   m_screen->shot( img );
 } // game_local_client::screenshot()
 
-boost::signals2::connection bear::engine::game_local_client::schedule_screenshot
-( const boost::function< void( const claw::graphic::image& ) >& f )
+bear::visual::capture bear::engine::game_local_client::screen_capture() const
 {
-  return m_screen->schedule_shot( f );
+  return m_screen->capture_scene();
 }
 
 /*----------------------------------------------------------------------------*/

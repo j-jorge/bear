@@ -14,6 +14,7 @@
 #ifndef __VISUAL_GL_RENDERER_HPP__
 #define __VISUAL_GL_RENDERER_HPP__
 
+#include "visual/gl_capture.hpp"
 #include "visual/gl_state.hpp"
 #include "visual/shader_program.hpp"
 #include "visual/types.hpp"
@@ -31,6 +32,7 @@ namespace bear
 {
   namespace visual
   {
+    class gl_capture_queue;
     class gl_draw;
     class gl_fragment_shader;
     class gl_vertex_shader;
@@ -79,9 +81,12 @@ namespace bear
       void delete_shader_program( GLuint program_id );
 
       void shot( claw::graphic::image& img );
-      boost::signals2::connection shot
-      ( const boost::function< void( const claw::graphic::image& ) >& f );
-      
+
+      gl_capture capture_scene();
+      boost::signals2::connection queue_capture
+      ( const state_list& states,
+        const boost::function< void( const claw::graphic::image& ) >& f );
+
       screen_size_type get_size();
       screen_size_type get_container_size();
 
@@ -103,10 +108,7 @@ namespace bear
 
       void render_states();
       void draw_scene();
-      void draw_states();
-      void draw_screenshot();
-
-      void set_background_color();
+      void update_screenshot();
 
       void resize_view( const screen_size_type& viewport_size );
       
@@ -119,8 +121,7 @@ namespace bear
 
       bool ensure_window_exists();
       void create_drawing_helper();
-      void setup_render_buffer();
-      void setup_frame_buffer();
+      void create_capture_queue();
       void assign_transform_matrix();
 
       screen_size_type get_best_screen_size() const;
@@ -130,9 +131,6 @@ namespace bear
       screen_size_type
       get_best_screen_size
       ( const std::vector<SDL_DisplayMode>& modes ) const;
-
-      void update_screenshot();
-      void dispatch_screenshot();
 
       GLuint create_shader( GLenum type, const std::string& p );
       
@@ -174,6 +172,7 @@ namespace bear
 
       /** \brief The next elements to render. */
       state_list m_states;
+      state_list m_previous_states;
 
       bool m_render_ready;
       boost::condition_variable m_render_condition;
@@ -181,17 +180,9 @@ namespace bear
       /** \brief A buffer in which we do the screenshots, to avoid an allocation
           at each call. */
       std::vector< claw::graphic::rgba_pixel_8 > m_screenshot_buffer;
-      std::vector< claw::graphic::rgba_pixel_8 >
-      m_progressive_screenshot_buffer;
-      claw::graphic::image m_progressive_screenshot_image;
-      boost::signals2::signal< void( const claw::graphic::image& ) >
-      m_screenshot_signal;
-      GLuint m_screenshot_frame_buffer;
-      GLuint m_screenshot_render_buffer;
-      std::size_t m_screenshot_line;
-      bool m_ongoing_screenshot;
       
       gl_draw* m_draw;
+      gl_capture_queue* m_capture_queue;
       shader_program m_shader;
       
       /** \brief The various mutexes used to avoid simultaneous access to the
@@ -204,10 +195,6 @@ namespace bear
 
         /** \brief This mutex is locked when a function accesses m_states. */
         boost::mutex gl_set_states;
-
-        /** \brief This mutex is locked when a function accesses
-            m_background_color. */
-        boost::mutex background_color;
 
         /** \brief This mutex is locked when a function accesses the property of
             the window, m_window or m_gl_context. */

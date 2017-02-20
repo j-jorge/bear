@@ -343,10 +343,9 @@ void bear::engine::game::screenshot( claw::graphic::image& img ) const
   m_game->screenshot( img );
 } // game::screenshot()
 
-boost::signals2::connection bear::engine::game::schedule_screenshot
-( const boost::function< void( const claw::graphic::image& ) >& f )
+bear::visual::capture bear::engine::game::screen_capture() const
 {
-  return m_game->schedule_screenshot(f);
+  return m_game->screen_capture();
 }
 
 /*----------------------------------------------------------------------------*/

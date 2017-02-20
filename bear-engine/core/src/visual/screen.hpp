@@ -14,13 +14,12 @@
 #ifndef __VISUAL_SCREEN_HPP__
 #define __VISUAL_SCREEN_HPP__
 
+#include "visual/capture.hpp"
 #include "visual/scene_element.hpp"
 
 #include "visual/class_export.hpp"
 
 #include <claw/image.hpp>
-
-#include <boost/signals2/connection.hpp>
 
 namespace bear
 {
@@ -80,8 +79,7 @@ namespace bear
 
       void shot( const std::string& bitmap_name ) const;
       void shot( claw::graphic::image& img ) const;
-      boost::signals2::connection schedule_shot
-      ( const boost::function< void( const claw::graphic::image& ) >& f );
+      capture capture_scene() const;
 
     private:
       void render_opaque_box( const scene_element& e ) const;

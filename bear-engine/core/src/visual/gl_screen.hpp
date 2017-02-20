@@ -21,8 +21,6 @@
 
 #include <SDL2/SDL.h>
 
-#include <boost/signals2/connection.hpp>
-
 namespace bear
 {
   namespace visual
@@ -45,31 +43,31 @@ namespace bear
       gl_screen( const claw::math::coordinate_2d<unsigned int>& size,
                  const std::string& title="", bool full=false );
 
-      void fullscreen( bool b );
-      claw::math::coordinate_2d<unsigned int> get_size() const;
-      claw::math::coordinate_2d<unsigned int> get_container_size() const;
+      void fullscreen( bool b ) override;
+      claw::math::coordinate_2d<unsigned int> get_size() const override;
+      claw::math::coordinate_2d<unsigned int>
+        get_container_size() const override;
 
-      void set_background_color( const color_type& c );
-      color_type get_background_color() const;
+      void set_background_color( const color_type& c ) override;
+      color_type get_background_color() const override;
 
-      void begin_render();
-      void render( const position_type& pos, const sprite& s );
-      void end_render();
+      void begin_render() override;
+      void render( const position_type& pos, const sprite& s ) override;
+      void end_render() override;
 
       void draw_line
       ( const color_type& color,
-        const std::vector<position_type>& p, double w = 1.0, bool close=false );
+        const std::vector<position_type>& p, double w = 1.0,
+        bool close=false ) override;
 
       void draw_polygon
-      ( const color_type& color,
-        const std::vector<position_type>& p );
+      ( const color_type& color, const std::vector<position_type>& p ) override;
 
-      void push_shader( const shader_program& p );
-      void pop_shader();
+      void push_shader( const shader_program& p ) override;
+      void pop_shader() override;
 
-      void shot( claw::graphic::image& img ) const;
-      boost::signals2::connection schedule_shot
-      ( const boost::function< void( const claw::graphic::image& ) >& f );
+      void shot( claw::graphic::image& img ) const override;
+      capture capture_scene() const override;
 
     private:
       void render_sprite( const position_type& pos, const sprite& s );
