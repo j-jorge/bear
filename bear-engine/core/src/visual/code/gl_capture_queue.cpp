@@ -109,7 +109,7 @@ void bear::visual::gl_capture_queue::setup_render_buffer()
   VISUAL_GL_ERROR_THROW();
 
   glRenderbufferStorage
-    ( GL_RENDERBUFFER, GL_RGBA4, m_frame_size.x, m_frame_size.y );
+    ( GL_RENDERBUFFER, GL_RGB565, m_frame_size.x, m_frame_size.y );
   VISUAL_GL_ERROR_THROW();
 
   glBindRenderbuffer( GL_RENDERBUFFER, 0 );
