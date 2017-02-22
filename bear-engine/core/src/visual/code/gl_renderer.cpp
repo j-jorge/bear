@@ -442,11 +442,13 @@ void bear::visual::gl_renderer::set_fullscreen( bool f )
       else
         SDL_SetWindowFullscreen( m_window, 0 );
 
-      int w, h;
+      int w;
+      int h;
       SDL_GetWindowSize( m_window, &w, &h );
+      m_window_size.set( w, h );
 
       boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
-      resize_view( screen_size_type(w, h) );
+      resize_view();
 
       release_context();
     }
@@ -634,24 +636,16 @@ void bear::visual::gl_renderer::update_screenshot()
   release_context();
 }
 
-/*----------------------------------------------------------------------------*/
-/**
- * \brief Sets a new dimension for the resulting projection to match the size of
- *        the screen.
- * \param viewport_size The size of the viewport.
- */
-void bear::visual::gl_renderer::resize_view
-( const screen_size_type& viewport_size )
+void bear::visual::gl_renderer::resize_view()
 {
-  glViewport( 0, 0, viewport_size.x, viewport_size.y );
+  glViewport( 0, 0, m_view_size.x, m_view_size.y );
   VISUAL_GL_ERROR_THROW();
 
-  m_viewport_size = viewport_size;
-  m_draw->set_viewport( m_viewport_size );
+  m_draw->set_viewport( m_view_size );
 
-  const std::size_t buffer_size( viewport_size.x * viewport_size.y );
+  const std::size_t buffer_size( m_view_size.x * m_view_size.y );
   m_screenshot_buffer.resize( buffer_size );
-} // gl_renderer::resize_view()
+}
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -770,7 +764,7 @@ bool bear::visual::gl_renderer::ensure_window_exists()
   create_drawing_helper();
   create_capture_queue();
   
-  resize_view( m_window_size );
+  resize_view();
 
   release_context();
 

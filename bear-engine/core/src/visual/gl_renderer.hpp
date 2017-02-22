@@ -109,7 +109,7 @@ namespace bear
       void draw_scene();
       void update_screenshot();
 
-      void resize_view( const screen_size_type& viewport_size );
+      void resize_view();
       
       void make_current();
       void release_context();
@@ -157,7 +157,6 @@ namespace bear
 
       /** \brief The size of the view on the rendered elements. */
       screen_size_type m_view_size;
-      screen_size_type m_viewport_size;
 
       /** \brief The title of the window. */
       std::string m_title;
