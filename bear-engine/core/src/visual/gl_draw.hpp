@@ -15,11 +15,12 @@ namespace bear
     class gl_draw
     {
     public:
-      explicit gl_draw( GLuint white );
+      gl_draw( GLuint white, GLuint shader );
 
       void set_background_color( const color_type& c );
-      void set_default_shader( const shader_program& shader );
-      
+      void set_viewport
+      ( const claw::math::coordinate_2d< unsigned int >& size );
+
       void draw( const std::vector< gl_state >& states );
       
       void set_vertices( const std::vector< GLfloat >& vertices );
@@ -36,8 +37,7 @@ namespace bear
       
     private:
       const GLuint m_white;
-
-      const shader_program* m_shader;
+      const GLuint m_shader;
       
       GLfloat m_background_color[ 4 ];
       GLuint m_buffers[ 4 ];

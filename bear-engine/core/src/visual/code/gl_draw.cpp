@@ -2,7 +2,6 @@
 
 #include "visual/gl_error.hpp"
 #include "visual/gl_state.hpp"
-#include "visual/detail/apply_shader.hpp"
 #include "visual/detail/gl_vertex_attribute_index.hpp"
 
 #include <cassert>
@@ -29,9 +28,9 @@ namespace bear
   }
 }
 
-bear::visual::gl_draw::gl_draw( GLuint white )
+bear::visual::gl_draw::gl_draw( GLuint white, GLuint shader )
   : m_white( white ),
-    m_shader( nullptr ),
+    m_shader( shader ),
     m_background_color{ 0, 0, 0, 0 },
     m_vertex_count( 0 ),
     m_color_count( 0 ),
@@ -52,9 +51,27 @@ void bear::visual::gl_draw::set_background_color( const color_type& c )
   m_background_color[ 3 ] = ( GLfloat )c.components.alpha / max;
 }
 
-void bear::visual::gl_draw::set_default_shader( const shader_program& shader )
+void bear::visual::gl_draw::set_viewport
+( const claw::math::coordinate_2d< unsigned int >& size )
 {
-  m_shader = &shader;
+  const GLfloat m00( GLfloat( 2 ) / size.x );
+  const GLfloat m11( GLfloat( 2 ) / size.y );
+
+  const std::array< float, 16 > transform =
+    {
+      m00,   0,  0,  0,
+        0, m11,  0,  0,
+        0,   0, -2,  0,
+       -1,  -1,  1,  1
+    };
+
+  glUseProgram( m_shader );
+  VISUAL_GL_ERROR_THROW();
+  
+  glUniformMatrix4fv
+    ( glGetUniformLocation( m_shader, "transform" ), 1, GL_FALSE,
+      transform.data() );
+  VISUAL_GL_ERROR_THROW();
 }
 
 void bear::visual::gl_draw::draw( const std::vector< gl_state >& states )
@@ -67,12 +84,11 @@ void bear::visual::gl_draw::draw( const std::vector< gl_state >& states )
   glClear( GL_COLOR_BUFFER_BIT );
   VISUAL_GL_ERROR_THROW();
 
-  assert( m_shader != nullptr );
-  
   for ( const gl_state& state : states )
     {
       prepare();
-      detail::apply_shader( *m_shader );
+      glUseProgram( m_shader );
+      VISUAL_GL_ERROR_THROW();
   
       state.draw( *this );
       VISUAL_GL_ERROR_THROW();

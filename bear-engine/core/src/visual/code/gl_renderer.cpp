@@ -36,8 +36,7 @@ namespace bear
       static GLuint create_shader( GLenum type, const std::string& source );
       static void log_shader_errors( GLuint shader_id );
 
-      static GLuint create_program
-      ( const gl_fragment_shader& f, const gl_vertex_shader& v );
+      static GLuint create_program( GLuint f, GLuint v );
       static void log_program_errors
       ( const std::string& step, GLuint program_id );
     }
@@ -257,7 +256,8 @@ GLuint bear::visual::gl_renderer::create_shader_program
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
   make_current();
 
-  const GLuint result( detail::create_program( fragment, vertex ) );
+  const GLuint result
+    ( detail::create_program( fragment.shader_id(), vertex.shader_id() ) );
 
   release_context();
 
@@ -447,7 +447,6 @@ void bear::visual::gl_renderer::set_fullscreen( bool f )
 
       boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
       resize_view( screen_size_type(w, h) );
-      assign_transform_matrix();
 
       release_context();
     }
@@ -515,7 +514,6 @@ void bear::visual::gl_renderer::stop()
   }
   
   delete m_draw;
-  m_shader.clear();
   
   if ( m_render_thread != nullptr )
     {
@@ -649,6 +647,7 @@ void bear::visual::gl_renderer::resize_view
   VISUAL_GL_ERROR_THROW();
 
   m_viewport_size = viewport_size;
+  m_draw->set_viewport( m_viewport_size );
 
   const std::size_t buffer_size( viewport_size.x * viewport_size.y );
   m_screenshot_buffer.resize( buffer_size );
@@ -777,13 +776,6 @@ bool bear::visual::gl_renderer::ensure_window_exists()
 
   m_mutex.gl_access.unlock();
 
-  m_shader.restore
-    ( detail::get_default_fragment_shader_code(),
-      detail::get_default_vertex_shader_code() );
-  m_draw->set_default_shader( m_shader );
-  
-  assign_transform_matrix();
-  
   return true;
 } // gl_renderer::ensure_window_exists()
 
@@ -801,30 +793,19 @@ void bear::visual::gl_renderer::create_drawing_helper()
       &claw::graphic::white_pixel );
   VISUAL_GL_ERROR_THROW();
 
-  m_draw = new gl_draw( texture );
+  const GLuint shader
+    ( detail::create_program
+      ( detail::create_shader
+        ( GL_FRAGMENT_SHADER, detail::get_default_fragment_shader_code() ),
+        detail::create_shader
+        ( GL_VERTEX_SHADER, detail::get_default_vertex_shader_code() ) ) );
+  
+  m_draw = new gl_draw( texture, shader );
 }
     
 void bear::visual::gl_renderer::create_capture_queue()
 {
   m_capture_queue = new gl_capture_queue( m_window_size );
-}
-
-void bear::visual::gl_renderer::assign_transform_matrix()
-{
-  assert( m_shader.is_valid() );
-  
-  const GLfloat m00( GLfloat( 2 ) / m_view_size.x );
-  const GLfloat m11( GLfloat( 2 ) / m_view_size.y );
-
-  const std::array< float, 16 > transform =
-    {
-      m00,   0,  0,  0,
-        0, m11,  0,  0,
-        0,   0, -2,  0,
-       -1,  -1,  1,  1
-    };
-
-  m_shader.set_variable( "transform", transform );
 }
 
 /*----------------------------------------------------------------------------*/
@@ -1020,8 +1001,7 @@ void bear::visual::detail::log_shader_errors( GLuint shader_id )
   delete[] buffer;
 }
 
-GLuint bear::visual::detail::create_program
-( const gl_fragment_shader& f, const gl_vertex_shader& v )
+GLuint bear::visual::detail::create_program( GLuint f, GLuint v )
 {
   const GLuint result( glCreateProgram() );
   VISUAL_GL_ERROR_THROW();
@@ -1034,10 +1014,10 @@ GLuint bear::visual::detail::create_program
     ( result, detail::texture_coordinate_attribute, "in_texture_coordinates");
   VISUAL_GL_ERROR_THROW();
 
-  glAttachShader( result, f.shader_id() );
+  glAttachShader( result, f );
   VISUAL_GL_ERROR_THROW();
 
-  glAttachShader( result, v.shader_id() );
+  glAttachShader( result, v );
   VISUAL_GL_ERROR_THROW();
 
   glLinkProgram( result );

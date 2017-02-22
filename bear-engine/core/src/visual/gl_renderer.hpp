@@ -16,7 +16,6 @@
 
 #include "visual/gl_capture.hpp"
 #include "visual/gl_state.hpp"
-#include "visual/shader_program.hpp"
 #include "visual/types.hpp"
 
 #include <claw/image.hpp>
@@ -122,7 +121,6 @@ namespace bear
       bool ensure_window_exists();
       void create_drawing_helper();
       void create_capture_queue();
-      void assign_transform_matrix();
 
       screen_size_type get_best_screen_size() const;
 
@@ -183,7 +181,6 @@ namespace bear
       
       gl_draw* m_draw;
       gl_capture_queue* m_capture_queue;
-      shader_program m_shader;
       
       /** \brief The various mutexes used to avoid simultaneous access to the
           fields of the class, and to the GL state. */
