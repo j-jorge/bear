@@ -658,7 +658,7 @@ void bear::visual::gl_renderer::resize_view()
   const float h( m_view_size.y * scale );
 
   m_viewport_size.set( w, h );
-  
+
   glViewport( ( m_window_size.x - w ) / 2, ( m_window_size.y - h ) / 2, w, h );
   VISUAL_GL_ERROR_THROW();
 }
@@ -777,10 +777,10 @@ bool bear::visual::gl_renderer::ensure_window_exists()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   VISUAL_GL_ERROR_THROW();
 
+  resize_view();
+
   create_drawing_helper();
   create_capture_queue();
-
-  resize_view();
 
   release_context();
 
@@ -815,7 +815,7 @@ void bear::visual::gl_renderer::create_drawing_helper()
     
 void bear::visual::gl_renderer::create_capture_queue()
 {
-  m_capture_queue = new gl_capture_queue( m_window_size );
+  m_capture_queue = new gl_capture_queue( m_window_size, m_viewport_size );
 }
 
 /*----------------------------------------------------------------------------*/

@@ -23,12 +23,14 @@ bear::visual::gl_capture_queue::entry::entry( const state_list& s )
 }
 
 bear::visual::gl_capture_queue::gl_capture_queue
-( const claw::math::coordinate_2d< unsigned int >& frame_size )
-  : m_frame_size( frame_size ),
+( const claw::math::coordinate_2d< unsigned int >& window_size,
+  const claw::math::coordinate_2d< unsigned int >& viewport_size )
+  : m_window_size( window_size ),
+    m_viewport_size( viewport_size ),
     m_ongoing_screenshot( false )
 {
-  m_screenshot_buffer.resize( frame_size.x * frame_size.y );
-  m_image.set_size( frame_size.x, frame_size.y );
+  m_screenshot_buffer.resize( viewport_size.x * viewport_size.y );
+  m_image.set_size( viewport_size.x, viewport_size.y );
 
   setup_render_buffer();
   setup_frame_buffer();
@@ -81,14 +83,15 @@ void bear::visual::gl_capture_queue::update()
   VISUAL_GL_ERROR_THROW();
 
   const std::size_t height
-    ( std::min( m_frame_size.y - m_line_index, detail::height_step ) );
+    ( std::min( m_viewport_size.y - m_line_index, detail::height_step ) );
 
   claw::graphic::rgba_pixel_8* const output
-    ( m_screenshot_buffer.data() + m_frame_size.x * m_line_index );
+    ( m_screenshot_buffer.data() + m_viewport_size.x * m_line_index );
 
   glReadPixels
-    ( 0, m_line_index, m_frame_size.x, height, GL_RGBA, GL_UNSIGNED_BYTE,
-      output );
+    ( ( m_window_size.x - m_viewport_size.x ) / 2,
+      m_line_index + ( m_window_size.y - m_viewport_size.y ) / 2,
+      m_viewport_size.x, height, GL_RGBA, GL_UNSIGNED_BYTE, output );
   VISUAL_GL_ERROR_THROW();
 
   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
@@ -96,7 +99,7 @@ void bear::visual::gl_capture_queue::update()
 
   m_line_index += height;
 
-  if ( m_line_index == m_frame_size.y)
+  if ( m_line_index == m_viewport_size.y )
     dispatch_screenshot();
 }
 
@@ -109,7 +112,7 @@ void bear::visual::gl_capture_queue::setup_render_buffer()
   VISUAL_GL_ERROR_THROW();
 
   glRenderbufferStorage
-    ( GL_RENDERBUFFER, GL_RGB565, m_frame_size.x, m_frame_size.y );
+    ( GL_RENDERBUFFER, GL_RGB565, m_window_size.x, m_window_size.y );
   VISUAL_GL_ERROR_THROW();
 
   glBindRenderbuffer( GL_RENDERBUFFER, 0 );
@@ -180,13 +183,13 @@ void bear::visual::gl_capture_queue::dispatch_screenshot()
   m_ongoing_screenshot = false;
 
   auto begin( m_screenshot_buffer.begin() );
-  auto end( begin + m_frame_size.x );
+  auto end( begin + m_viewport_size.x );
   
-  for ( unsigned int y( 0 ); y != m_frame_size.y; ++y )
+  for ( unsigned int y( 0 ); y != m_viewport_size.y; ++y )
     {
-      std::copy( begin, end, m_image[ m_frame_size.y - y - 1 ].begin() );
-      begin += m_frame_size.x;
-      end += m_frame_size.x;
+      std::copy( begin, end, m_image[ m_viewport_size.y - y - 1 ].begin() );
+      begin += m_viewport_size.x;
+      end += m_viewport_size.x;
     }
 
   boost::signals2::signal< void( const claw::graphic::image& ) > signal;

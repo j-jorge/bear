@@ -22,7 +22,8 @@ namespace bear
 
     public:
       explicit gl_capture_queue
-      ( const claw::math::coordinate_2d< unsigned int >& frame_size );
+      ( const claw::math::coordinate_2d< unsigned int >& window_size,
+        const claw::math::coordinate_2d< unsigned int >& viewport_size );
       
       boost::signals2::connection enqueue
       ( const state_list& states,
@@ -50,7 +51,8 @@ namespace bear
       void dispatch_screenshot();
       
     private:
-      claw::math::coordinate_2d< unsigned int > m_frame_size;
+      claw::math::coordinate_2d< unsigned int > m_window_size;
+      claw::math::coordinate_2d< unsigned int > m_viewport_size;
       std::deque< entry > m_pending_captures;
 
       std::vector< claw::graphic::rgba_pixel_8 > m_screenshot_buffer;
