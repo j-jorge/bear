@@ -2,6 +2,8 @@
 
 #include "visual/gl_state.hpp"
 
+#include "time/time.hpp"
+
 #include <claw/image.hpp>
 
 #include <boost/signals2/signal.hpp>
@@ -29,7 +31,7 @@ namespace bear
       ( const state_list& states,
         const boost::function< void( const claw::graphic::image& ) >& f );
       void draw( gl_draw& output );
-      void update();
+      void update( systime::milliseconds_type allocated_time );
       
     private:
       struct entry
@@ -48,6 +50,7 @@ namespace bear
 
       bool remove_obsolete_captures();
 
+      void read_pixels( std::size_t line_count );
       void dispatch_screenshot();
       
     private:
@@ -62,6 +65,8 @@ namespace bear
       GLuint m_render_buffer;
       std::size_t m_line_index;
       bool m_ongoing_screenshot;
+
+      std::array< std::size_t, 16 > m_lines_per_duration;
     };
   }
 }

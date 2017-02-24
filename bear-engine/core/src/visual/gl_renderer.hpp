@@ -18,6 +18,8 @@
 #include "visual/gl_state.hpp"
 #include "visual/types.hpp"
 
+#include "time/time.hpp"
+
 #include <claw/image.hpp>
 
 #include <boost/thread.hpp>
@@ -108,7 +110,7 @@ namespace bear
 
       void render_states();
       void draw_scene();
-      void update_screenshot();
+      void update_screenshot( systime::milliseconds_type render_time );
 
       void resize_view();
       

@@ -590,9 +590,11 @@ void bear::visual::gl_renderer::render_loop()
           m_mutex.loop_state.unlock();
           break;
         }
-      
+
+      const systime::milliseconds_type start( systime::get_date_ms() );
       render_states();
-      update_screenshot();
+      const systime::milliseconds_type end( systime::get_date_ms() );
+      update_screenshot( end - start );
 
       // Release the mutex while we sleep so other threads can request to stop
       // the loop.
@@ -637,12 +639,15 @@ void bear::visual::gl_renderer::draw_scene()
   release_context();
 }
 
-void bear::visual::gl_renderer::update_screenshot()
+void bear::visual::gl_renderer::update_screenshot
+( systime::milliseconds_type render_time )
 {
   boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
   make_current();
 
-  m_capture_queue->update();
+  const systime::milliseconds_type allocated_time
+    ( render_time >= 15 ? 0 : 15 - render_time );
+  m_capture_queue->update( allocated_time );
 
   release_context();
 }

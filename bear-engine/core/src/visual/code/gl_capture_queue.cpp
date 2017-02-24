@@ -5,17 +5,6 @@
 
 #include <claw/logger.hpp>
 
-namespace bear
-{
-  namespace visual
-  {
-    namespace detail
-    {
-      static constexpr std::size_t height_step = 16;
-    }
-  }
-}
-
 bear::visual::gl_capture_queue::entry::entry( const state_list& s )
   : states( s )
 {
@@ -29,6 +18,8 @@ bear::visual::gl_capture_queue::gl_capture_queue
     m_viewport_size( viewport_size ),
     m_ongoing_screenshot( false )
 {
+  std::fill( m_lines_per_duration.begin(), m_lines_per_duration.end(), 0 );
+  
   m_screenshot_buffer.resize( viewport_size.x * viewport_size.y );
   m_image.set_size( viewport_size.x, viewport_size.y );
 
@@ -68,7 +59,8 @@ void bear::visual::gl_capture_queue::draw( gl_draw& output )
   VISUAL_GL_ERROR_THROW();
 }
 
-void bear::visual::gl_capture_queue::update()
+void bear::visual::gl_capture_queue::update
+( systime::milliseconds_type allocated_time )
 {
   if ( remove_obsolete_captures() )
     {
@@ -79,25 +71,23 @@ void bear::visual::gl_capture_queue::update()
   if ( !m_ongoing_screenshot )
     return;
 
-  glBindFramebuffer( GL_FRAMEBUFFER, m_frame_buffer );
-  VISUAL_GL_ERROR_THROW();
+  allocated_time =
+    std::min< systime::milliseconds_type >
+    ( m_lines_per_duration.size() - 1, allocated_time );
+  const std::size_t line_count( m_lines_per_duration[ allocated_time ] + 1 );
+  
+  const systime::milliseconds_type start( systime::get_date_ms() );
+  read_pixels( line_count );
+  const systime::milliseconds_type end( systime::get_date_ms() );
 
-  const std::size_t height
-    ( std::min( m_viewport_size.y - m_line_index, detail::height_step ) );
-
-  claw::graphic::rgba_pixel_8* const output
-    ( m_screenshot_buffer.data() + m_viewport_size.x * m_line_index );
-
-  glReadPixels
-    ( ( m_window_size.x - m_viewport_size.x ) / 2,
-      m_line_index + ( m_window_size.y - m_viewport_size.y ) / 2,
-      m_viewport_size.x, height, GL_RGBA, GL_UNSIGNED_BYTE, output );
-  VISUAL_GL_ERROR_THROW();
-
-  glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-  VISUAL_GL_ERROR_THROW();
-
-  m_line_index += height;
+  const std::size_t index
+    ( std::min( std::size_t( end - start ), m_lines_per_duration.size() - 1 ) );
+  
+  for ( std::size_t i( index );
+        ( i != m_lines_per_duration.size() )
+          && ( m_lines_per_duration[ i ] < line_count );
+        ++i )
+    m_lines_per_duration[ i ] = line_count;
 
   if ( m_line_index == m_viewport_size.y )
     dispatch_screenshot();
@@ -176,6 +166,29 @@ bool bear::visual::gl_capture_queue::remove_obsolete_captures()
     m_pending_captures.pop_front();
 
   return true;
+}
+
+void bear::visual::gl_capture_queue::read_pixels( std::size_t line_count )
+{
+  glBindFramebuffer( GL_FRAMEBUFFER, m_frame_buffer );
+  VISUAL_GL_ERROR_THROW();
+
+  const std::size_t height
+    ( std::min( m_viewport_size.y - m_line_index, line_count ) );
+
+  claw::graphic::rgba_pixel_8* const output
+    ( m_screenshot_buffer.data() + m_viewport_size.x * m_line_index );
+
+  glReadPixels
+    ( ( m_window_size.x - m_viewport_size.x ) / 2,
+      m_line_index + ( m_window_size.y - m_viewport_size.y ) / 2,
+      m_viewport_size.x, height, GL_RGBA, GL_UNSIGNED_BYTE, output );
+  VISUAL_GL_ERROR_THROW();
+
+  glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+  VISUAL_GL_ERROR_THROW();
+
+  m_line_index += height;
 }
 
 void bear::visual::gl_capture_queue::dispatch_screenshot()
