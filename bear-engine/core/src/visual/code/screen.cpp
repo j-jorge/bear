@@ -130,6 +130,12 @@ claw::math::coordinate_2d<unsigned int> bear::visual::screen::get_size() const
   return m_impl->get_size();
 } // screen::get_size()
 
+claw::math::coordinate_2d<unsigned int>
+bear::visual::screen::get_viewport_size() const
+{
+  return m_impl->get_viewport_size();
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Get the size of the container of the screen.

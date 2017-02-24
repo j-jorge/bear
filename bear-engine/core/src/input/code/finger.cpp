@@ -15,6 +15,11 @@
 
 #include <SDL2/SDL.h>
 
+void bear::input::finger::set_display( const display_projection& display )
+{
+  m_display = display;
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Returns the last events.
@@ -65,21 +70,7 @@ void bear::input::finger::refresh()
 bear::input::position_type
 bear::input::finger::convert_position( double x, double y ) const
 {
-  SDL_Window* const window( SDL_GetMouseFocus() );
-
-  position_type result(0, 0);
-
-  if ( window != NULL )
-    {
-      int w;
-      int h;
-      SDL_GetWindowSize( window, &w, &h );
-
-      result.x = x * w;
-      result.y = (1 - y) * h;
-    }
-
-  return result;
+  return m_display.window_to_display( x, y );
 } // finger::convert_position()
 
 /*----------------------------------------------------------------------------*/

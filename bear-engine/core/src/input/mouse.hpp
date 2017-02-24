@@ -14,15 +14,16 @@
 #ifndef __INPUT_MOUSE_HPP__
 #define __INPUT_MOUSE_HPP__
 
+#include "input/class_export.hpp"
+#include "input/display_projection.hpp"
+
 #include <string>
 #include <vector>
-#include <set>
+#include <unordered_set>
 
 #include <SDL2/SDL.h>
 
 #include <claw/math.hpp>
-
-#include "input/class_export.hpp"
 
 namespace bear
 {
@@ -38,7 +39,7 @@ namespace bear
       typedef unsigned char mouse_code;
 
       /** \brief Iterator on the pressed buttons. */
-      typedef std::set<mouse_code>::const_iterator const_iterator;
+      typedef std::unordered_set<mouse_code>::const_iterator const_iterator;
 
     public:
       mouse();
@@ -51,6 +52,7 @@ namespace bear
       const_iterator end() const;
       bool empty() const;
 
+      void set_display( const display_projection& display );
       const claw::math::coordinate_2d<unsigned int>& get_position() const;
 
       // only for input::system
@@ -68,11 +70,13 @@ namespace bear
       mouse_code sdl_button_to_local( unsigned int sdl_val ) const;
 
     private:
+      display_projection m_display;
+      
       /** \brief The last result of refresh(). */
-      std::set<mouse_code> m_current_state;
+      std::unordered_set<mouse_code> m_current_state;
 
       /** \brief Pressed buttons, does not include the wheel. */
-      std::set<mouse_code> m_pressed_buttons;
+      std::unordered_set<mouse_code> m_pressed_buttons;
 
       /** \brief Position of the cursor. */
       claw::math::coordinate_2d<unsigned int> m_position;

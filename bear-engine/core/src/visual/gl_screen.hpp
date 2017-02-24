@@ -46,6 +46,8 @@ namespace bear
       void fullscreen( bool b ) override;
       claw::math::coordinate_2d<unsigned int> get_size() const override;
       claw::math::coordinate_2d<unsigned int>
+        get_viewport_size() const override;
+      claw::math::coordinate_2d<unsigned int>
         get_container_size() const override;
 
       void set_background_color( const color_type& c ) override;

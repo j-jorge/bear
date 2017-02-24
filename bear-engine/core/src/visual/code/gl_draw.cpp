@@ -28,7 +28,9 @@ namespace bear
   }
 }
 
-bear::visual::gl_draw::gl_draw( GLuint white, GLuint shader )
+bear::visual::gl_draw::gl_draw
+( GLuint white, GLuint shader,
+  const claw::math::coordinate_2d< unsigned int >& size )
   : m_white( white ),
     m_shader( shader ),
     m_background_color{ 0, 0, 0, 0 },
@@ -38,6 +40,8 @@ bear::visual::gl_draw::gl_draw( GLuint white, GLuint shader )
 {
   glGenBuffers( 4, m_buffers );
   VISUAL_GL_ERROR_THROW();
+
+  set_viewport( size );
 }
 
 void bear::visual::gl_draw::set_background_color( const color_type& c )
@@ -49,29 +53,6 @@ void bear::visual::gl_draw::set_background_color( const color_type& c )
   m_background_color[ 1 ] = ( GLfloat )c.components.green / max;
   m_background_color[ 2 ] = ( GLfloat )c.components.blue / max;
   m_background_color[ 3 ] = ( GLfloat )c.components.alpha / max;
-}
-
-void bear::visual::gl_draw::set_viewport
-( const claw::math::coordinate_2d< unsigned int >& size )
-{
-  const GLfloat m00( GLfloat( 2 ) / size.x );
-  const GLfloat m11( GLfloat( 2 ) / size.y );
-
-  const std::array< float, 16 > transform =
-    {
-      m00,   0,  0,  0,
-        0, m11,  0,  0,
-        0,   0, -2,  0,
-       -1,  -1,  1,  1
-    };
-
-  glUseProgram( m_shader );
-  VISUAL_GL_ERROR_THROW();
-  
-  glUniformMatrix4fv
-    ( glGetUniformLocation( m_shader, "transform" ), 1, GL_FALSE,
-      transform.data() );
-  VISUAL_GL_ERROR_THROW();
 }
 
 void bear::visual::gl_draw::draw( const std::vector< gl_state >& states )
@@ -187,6 +168,28 @@ void bear::visual::gl_draw::draw( GLenum mode, GLuint first, GLuint count )
   VISUAL_GL_ERROR_THROW();
 }
 
+void bear::visual::gl_draw::set_viewport
+( const claw::math::coordinate_2d< unsigned int >& size )
+{
+  const GLfloat m00( GLfloat( 2 ) / size.x );
+  const GLfloat m11( GLfloat( 2 ) / size.y );
+
+  const std::array< float, 16 > transform =
+    {
+      m00,   0,  0,  0,
+        0, m11,  0,  0,
+        0,   0, -2,  0,
+       -1,  -1,  1,  1
+    };
+
+  glUseProgram( m_shader );
+  VISUAL_GL_ERROR_THROW();
+  
+  glUniformMatrix4fv
+    ( glGetUniformLocation( m_shader, "transform" ), 1, GL_FALSE,
+      transform.data() );
+  VISUAL_GL_ERROR_THROW();
+}
 
 void bear::visual::gl_draw::prepare()
 {

@@ -41,6 +41,8 @@ namespace bear
       virtual void fullscreen( bool b ) = 0;
       virtual claw::math::coordinate_2d<unsigned int> get_size() const = 0;
       virtual claw::math::coordinate_2d<unsigned int>
+        get_viewport_size() const = 0;
+      virtual claw::math::coordinate_2d<unsigned int>
         get_container_size() const = 0;
 
       virtual void set_background_color( const color_type& c ) = 0;

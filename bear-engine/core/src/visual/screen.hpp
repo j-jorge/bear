@@ -64,6 +64,7 @@ namespace bear
 
       void fullscreen( bool b );
       claw::math::coordinate_2d<unsigned int> get_size() const;
+      claw::math::coordinate_2d<unsigned int> get_viewport_size() const;
       claw::math::coordinate_2d<unsigned int> get_container_size() const;
 
       void set_opaque_box_visible( bool b );

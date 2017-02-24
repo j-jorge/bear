@@ -15,11 +15,11 @@ namespace bear
     class gl_draw
     {
     public:
-      gl_draw( GLuint white, GLuint shader );
+      gl_draw
+      ( GLuint white, GLuint shader,
+        const claw::math::coordinate_2d< unsigned int >& size );
 
       void set_background_color( const color_type& c );
-      void set_viewport
-      ( const claw::math::coordinate_2d< unsigned int >& size );
 
       void draw( const std::vector< gl_state >& states );
       
@@ -30,6 +30,9 @@ namespace bear
       void draw( GLenum mode, GLuint first, GLuint count );
 
     private:
+      void set_viewport
+      ( const claw::math::coordinate_2d< unsigned int >& size );
+
       void prepare();
       void finalize();
       

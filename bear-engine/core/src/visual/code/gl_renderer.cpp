@@ -362,6 +362,14 @@ bear::visual::gl_renderer::get_size()
   return m_view_size;
 } //gl_renderer::get_size()
 
+bear::visual::gl_renderer::screen_size_type
+bear::visual::gl_renderer::get_viewport_size()
+{
+  boost::mutex::scoped_lock lock( m_mutex.window );
+
+  return m_viewport_size;
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Gets the size of the window in which we render.
@@ -411,6 +419,9 @@ void bear::visual::gl_renderer::set_video_mode
     m_view_size = size;
     m_window_size = size;
     m_fullscreen = f;
+
+    const std::size_t buffer_size( m_view_size.x * m_view_size.y );
+    m_screenshot_buffer.resize( buffer_size );
 
     m_video_mode_is_set = true;
   }
@@ -638,13 +649,18 @@ void bear::visual::gl_renderer::update_screenshot()
 
 void bear::visual::gl_renderer::resize_view()
 {
-  glViewport( 0, 0, m_view_size.x, m_view_size.y );
+  const float scale
+    ( std::min
+      ( float( m_window_size.x ) / m_view_size.x,
+        float( m_window_size.y ) / m_view_size.y ) );
+
+  const float w( m_view_size.x * scale );
+  const float h( m_view_size.y * scale );
+
+  m_viewport_size.set( w, h );
+  
+  glViewport( ( m_window_size.x - w ) / 2, ( m_window_size.y - h ) / 2, w, h );
   VISUAL_GL_ERROR_THROW();
-
-  m_draw->set_viewport( m_view_size );
-
-  const std::size_t buffer_size( m_view_size.x * m_view_size.y );
-  m_screenshot_buffer.resize( buffer_size );
 }
 
 /*----------------------------------------------------------------------------*/
@@ -763,7 +779,7 @@ bool bear::visual::gl_renderer::ensure_window_exists()
 
   create_drawing_helper();
   create_capture_queue();
-  
+
   resize_view();
 
   release_context();
@@ -794,7 +810,7 @@ void bear::visual::gl_renderer::create_drawing_helper()
         detail::create_shader
         ( GL_VERTEX_SHADER, detail::get_default_vertex_shader_code() ) ) );
   
-  m_draw = new gl_draw( texture, shader );
+  m_draw = new gl_draw( texture, shader, m_view_size );
 }
     
 void bear::visual::gl_renderer::create_capture_queue()
@@ -943,8 +959,11 @@ bear::visual::gl_renderer::create_shader( GLenum type, const std::string& p )
  */
 bear::visual::gl_renderer::gl_renderer()
   : m_stop( false ), m_window( nullptr ), m_gl_context( nullptr ),
-    m_background_color(0, 0, 0), m_window_size( 640, 480 ),
-    m_view_size( 640, 480 ), m_fullscreen( false ),
+    m_background_color(0, 0, 0),
+    m_window_size( 640, 480 ),
+    m_view_size( m_window_size ),
+    m_viewport_size( m_view_size ),
+    m_fullscreen( false ),
     m_video_mode_is_set( false ),
     m_render_ready( false ),
     m_draw( nullptr ),

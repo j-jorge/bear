@@ -13,7 +13,8 @@
  */
 #include "engine/game_local_client.hpp"
 
-#include "input/system.hpp"
+#include "debug/timing_log.hpp"
+
 #include "engine/game_action/game_action.hpp"
 #include "engine/game_action/game_action_load_level.hpp"
 #include "engine/game_action/game_action_pop_level.hpp"
@@ -37,9 +38,10 @@
 #include "engine/variable/variable_eraser.hpp"
 #include "engine/variable/variable_copy.hpp"
 
-#include "bear_gettext.hpp"
+#include "input/display_projection.hpp"
+#include "input/system.hpp"
 
-#include "debug/timing_log.hpp"
+#include "bear_gettext.hpp"
 
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -486,7 +488,7 @@ bear::engine::game_local_client::get_window_size() const
   if ( m_screen == NULL )
     return get_screen_size();
   else
-    return m_screen->get_container_size();
+    return m_screen->get_size();
 } // game_local_client::get_window_size()
 
 /*----------------------------------------------------------------------------*/
@@ -1006,7 +1008,12 @@ void bear::engine::game_local_client::progress
 void bear::engine::game_local_client::progress
 ( universe::time_type elapsed_time )
 {
-  // effective procedure
+  input::system::get_instance().set_display
+    ( input::display_projection
+      ( m_screen->get_container_size(),
+        m_screen->get_size(),
+        m_screen->get_viewport_size() ) );
+      
   input::system::get_instance().refresh();
 
   m_current_level->progress( elapsed_time );

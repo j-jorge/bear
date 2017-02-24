@@ -103,6 +103,12 @@ bear::visual::gl_screen::get_size() const
   return gl_renderer::get_instance().get_size();
 } // gl_screen::get_size()
 
+claw::math::coordinate_2d<unsigned int>
+bear::visual::gl_screen::get_viewport_size() const
+{
+  return gl_renderer::get_instance().get_viewport_size();
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Get the size of the container of the screen.

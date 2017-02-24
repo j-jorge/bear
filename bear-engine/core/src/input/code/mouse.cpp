@@ -32,8 +32,9 @@ const unsigned int bear::input::mouse::c_mouse_codes_count;
  * \brief Constructor.
  */
 bear::input::mouse::mouse()
+  : m_position( 0, 0 )
 {
-  update_position();
+
 } // mouse::mouse()
 
 /*----------------------------------------------------------------------------*/
@@ -110,6 +111,11 @@ bool bear::input::mouse::empty() const
 {
   return m_current_state.empty();
 } // mouse::empty()
+
+void bear::input::mouse::set_display( const display_projection& display )
+{
+  m_display = display;
+}
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -201,18 +207,7 @@ void bear::input::mouse::update_position()
   int x, y;
 
   SDL_GetMouseState( &x, &y );
-
-  SDL_Window* const window( SDL_GetMouseFocus() );
-
-  if ( window != NULL )
-    {
-      int h;
-      SDL_GetWindowSize( window, NULL, &h );
-
-      y = h - y;
-    }
-
-  m_position.set(x, y);
+  m_position = m_display.window_to_display( x, y );
 } // mouse::update_position()
 
 /*----------------------------------------------------------------------------*/

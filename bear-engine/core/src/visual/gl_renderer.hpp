@@ -87,6 +87,7 @@ namespace bear
         const boost::function< void( const claw::graphic::image& ) >& f );
 
       screen_size_type get_size();
+      screen_size_type get_viewport_size();
       screen_size_type get_container_size();
 
       void set_title( const std::string& title );
@@ -157,6 +158,7 @@ namespace bear
 
       /** \brief The size of the view on the rendered elements. */
       screen_size_type m_view_size;
+      screen_size_type m_viewport_size;
 
       /** \brief The title of the window. */
       std::string m_title;

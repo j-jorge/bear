@@ -24,6 +24,7 @@ namespace bear
 {
   namespace input
   {
+    class display_projection;
     class finger;
     class joystick;
     class keyboard;
@@ -51,6 +52,8 @@ namespace bear
 
       void refresh();
 
+      void set_display( const display_projection& display );
+      
       finger& get_finger();
       keyboard& get_keyboard();
       mouse& get_mouse();

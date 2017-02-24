@@ -84,6 +84,11 @@ void bear::input::system::refresh()
   refresh_alone();
 } // system::refresh()
 
+void bear::input::system::set_display( const display_projection& display )
+{
+  m_mouse->set_display( display );
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Returns the instance of the bear::input::finger class.
