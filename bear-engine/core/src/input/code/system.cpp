@@ -87,6 +87,7 @@ void bear::input::system::refresh()
 void bear::input::system::set_display( const display_projection& display )
 {
   m_mouse->set_display( display );
+  m_finger->set_display( display );
 }
 
 /*----------------------------------------------------------------------------*/

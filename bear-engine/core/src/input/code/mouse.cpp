@@ -207,7 +207,7 @@ void bear::input::mouse::update_position()
   int x, y;
 
   SDL_GetMouseState( &x, &y );
-  m_position = m_display.window_to_display( x, y );
+  m_position = m_display.window_position_to_display( x, y );
 } // mouse::update_position()
 
 /*----------------------------------------------------------------------------*/

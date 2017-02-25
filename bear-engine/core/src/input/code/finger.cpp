@@ -70,7 +70,7 @@ void bear::input::finger::refresh()
 bear::input::position_type
 bear::input::finger::convert_position( double x, double y ) const
 {
-  return m_display.window_to_display( x, y );
+  return m_display.window_ratio_to_display( x, y );
 } // finger::convert_position()
 
 /*----------------------------------------------------------------------------*/
@@ -80,19 +80,5 @@ bear::input::finger::convert_position( double x, double y ) const
 bear::input::position_type
 bear::input::finger::convert_delta( double x, double y ) const
 {
-  SDL_Window* const window( SDL_GetMouseFocus() );
-
-  position_type result(0, 0);
-
-  if ( window != NULL )
-    {
-      int w;
-      int h;
-      SDL_GetWindowSize( window, &w, &h );
-
-      result.x = x * w;
-      result.y = - y * h;
-    }
-
-  return result;
+  return m_display.window_offset_to_display( x, y );
 } // finger::convert_delta()
