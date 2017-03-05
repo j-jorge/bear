@@ -62,6 +62,9 @@ namespace bear
               const std::string& title="", bool full=false );
       ~screen();
 
+      void pause();
+      void unpause();
+
       void fullscreen( bool b );
       claw::math::coordinate_2d<unsigned int> get_size() const;
       claw::math::coordinate_2d<unsigned int> get_viewport_size() const;

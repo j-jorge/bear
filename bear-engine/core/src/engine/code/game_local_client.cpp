@@ -120,6 +120,8 @@ void bear::engine::game_local_client::run()
       if ( m_current_level == NULL )
         load_level( m_game_description.start_level() );
 
+      m_screen->unpause();
+      
       run_level();
 
       end_game();
@@ -142,7 +144,8 @@ void bear::engine::game_local_client::sleep()
 
   m_sleep_status = m_status;
   m_status = status_sleep;
-
+  m_screen->pause();
+  
   if ( m_current_level != NULL )
     m_current_level->set_pause();
 } // game_local_client::sleep()
@@ -156,6 +159,8 @@ void bear::engine::game_local_client::wake_up()
   if ( m_status != status_sleep )
     return;
 
+  m_screen->unpause();
+  
   if ( m_current_level != NULL )
     m_current_level->unset_pause();
 

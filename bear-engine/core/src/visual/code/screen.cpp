@@ -110,6 +110,15 @@ bear::visual::screen::~screen()
   delete m_impl;
 } // screen::~screen()
 
+void bear::visual::screen::pause()
+{
+  m_impl->pause();
+}
+
+void bear::visual::screen::unpause()
+{
+  m_impl->unpause();
+}
 
 /*----------------------------------------------------------------------------*/
 /**

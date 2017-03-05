@@ -43,6 +43,9 @@ namespace bear
       gl_screen( const claw::math::coordinate_2d<unsigned int>& size,
                  const std::string& title="", bool full=false );
 
+      void pause() override;
+      void unpause() override;
+      
       void fullscreen( bool b ) override;
       claw::math::coordinate_2d<unsigned int> get_size() const override;
       claw::math::coordinate_2d<unsigned int>

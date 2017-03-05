@@ -101,6 +101,9 @@ namespace bear
       color_type get_background_color();
       void set_background_color( const color_type& c );
 
+      void pause();
+      void unpause();
+      
     private:
       void stop();
 

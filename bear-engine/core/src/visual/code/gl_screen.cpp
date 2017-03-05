@@ -83,6 +83,16 @@ bear::visual::gl_screen::gl_screen
   gl_renderer::get_instance().set_title( title );
 } // gl_screen::gl_screen() [constructor]
 
+void bear::visual::gl_screen::pause()
+{
+  gl_renderer::get_instance().pause();
+}
+
+void bear::visual::gl_screen::unpause()
+{
+  gl_renderer::get_instance().unpause();
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Turn fullscreen mode on/off.

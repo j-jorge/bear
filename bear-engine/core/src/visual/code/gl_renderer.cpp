@@ -509,6 +509,16 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
   m_draw->set_background_color( c );
 } // gl_renderer::set_background_color()
 
+void bear::visual::gl_renderer::pause()
+{
+  m_mutex.gl_access.lock();
+}
+
+void bear::visual::gl_renderer::unpause()
+{
+  m_mutex.gl_access.unlock();
+}
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Tells to stop the rendering process.
