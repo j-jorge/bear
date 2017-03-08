@@ -14,7 +14,8 @@ bear::visual::gl_capture* bear::visual::gl_capture::clone() const
 }
 
 boost::signals2::connection
-bear::visual::gl_capture::render( const capture_ready& f )
+bear::visual::gl_capture::render
+( const capture_ready& ready, const capture_progress& progress )
 {
-  return gl_renderer::get_instance().queue_capture( m_states, f );
+  return gl_renderer::get_instance().queue_capture( m_states, ready, progress );
 }

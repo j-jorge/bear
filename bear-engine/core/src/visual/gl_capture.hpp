@@ -16,7 +16,9 @@ namespace bear
       explicit gl_capture( const std::vector< gl_state >& states );
 
       gl_capture* clone() const override;
-      boost::signals2::connection render( const capture_ready& f ) override;
+      boost::signals2::connection render
+        ( const capture_ready& ready, const capture_progress& progress )
+          override;
 
     private:
       const std::vector< gl_state > m_states;

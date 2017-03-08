@@ -29,7 +29,8 @@ namespace bear
       
       boost::signals2::connection enqueue
       ( const state_list& states,
-        const boost::function< void( const claw::graphic::image& ) >& f );
+        const boost::function< void( const claw::graphic::image& ) >& ready,
+        const boost::function< void( double ) >& progress );
       void draw( gl_draw& output );
       void update( systime::milliseconds_type allocated_time );
       
@@ -39,9 +40,13 @@ namespace bear
       public:
         explicit entry( const state_list& s );
 
+        bool connected() const;
+        
       public:
         state_list states;
-        boost::signals2::signal< void( const claw::graphic::image& ) > signal;
+        boost::signals2::signal< void( double ) > progress_signal;
+        boost::signals2::signal< void( const claw::graphic::image& ) >
+        ready_signal;
       };
       
     private:

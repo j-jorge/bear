@@ -86,7 +86,8 @@ namespace bear
       gl_capture capture_scene();
       boost::signals2::connection queue_capture
       ( const state_list& states,
-        const boost::function< void( const claw::graphic::image& ) >& f );
+        const boost::function< void( const claw::graphic::image& ) >& ready,
+        const boost::function< void( double ) >& progress );
 
       screen_size_type get_size();
       screen_size_type get_viewport_size();

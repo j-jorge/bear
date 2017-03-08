@@ -11,6 +11,11 @@ bear::visual::gl_capture_queue::entry::entry( const state_list& s )
 
 }
 
+bool bear::visual::gl_capture_queue::entry::connected() const
+{
+  return !ready_signal.empty();
+}
+
 bear::visual::gl_capture_queue::gl_capture_queue
 ( const claw::math::coordinate_2d< unsigned int >& window_size,
   const claw::math::coordinate_2d< unsigned int >& viewport_size )
@@ -30,10 +35,13 @@ bear::visual::gl_capture_queue::gl_capture_queue
 boost::signals2::connection
 bear::visual::gl_capture_queue::enqueue
 ( const state_list& states,
-  const boost::function< void( const claw::graphic::image& ) >& f )
+  const boost::function< void( const claw::graphic::image& ) >& ready,
+  const boost::function< void( double ) >& progress )
 {
   m_pending_captures.emplace_back( states );
-  return m_pending_captures.back().signal.connect( f );
+  m_pending_captures.back().progress_signal.connect( progress );
+  
+  return m_pending_captures.back().ready_signal.connect( ready );
 }
 
 void bear::visual::gl_capture_queue::draw( gl_draw& output )
@@ -58,7 +66,7 @@ void bear::visual::gl_capture_queue::draw( gl_draw& output )
   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
   VISUAL_GL_ERROR_THROW();
 }
-
+#include <iostream>
 void bear::visual::gl_capture_queue::update
 ( systime::milliseconds_type allocated_time )
 {
@@ -75,7 +83,7 @@ void bear::visual::gl_capture_queue::update
     std::min< systime::milliseconds_type >
     ( m_lines_per_duration.size() - 1, allocated_time );
   const std::size_t line_count( m_lines_per_duration[ allocated_time ] + 1 );
-  
+
   const systime::milliseconds_type start( systime::get_date_ms() );
   read_pixels( line_count );
   const systime::milliseconds_type end( systime::get_date_ms() );
@@ -88,6 +96,9 @@ void bear::visual::gl_capture_queue::update
           && ( m_lines_per_duration[ i ] < line_count );
         ++i )
     m_lines_per_duration[ i ] = line_count;
+
+  m_pending_captures.front().progress_signal
+    ( double( m_line_index ) / m_viewport_size.y );
 
   if ( m_line_index == m_viewport_size.y )
     dispatch_screenshot();
@@ -157,12 +168,11 @@ void bear::visual::gl_capture_queue::setup_frame_buffer()
 
 bool bear::visual::gl_capture_queue::remove_obsolete_captures()
 {
-  if ( !m_pending_captures.empty()
-       && !m_pending_captures.front().signal.empty() )
+  if ( !m_pending_captures.empty() && m_pending_captures.front().connected() )
     return false;
 
   while ( !m_pending_captures.empty()
-          && m_pending_captures.front().signal.empty() )
+          && !m_pending_captures.front().connected() )
     m_pending_captures.pop_front();
 
   return true;
@@ -206,7 +216,7 @@ void bear::visual::gl_capture_queue::dispatch_screenshot()
     }
 
   boost::signals2::signal< void( const claw::graphic::image& ) > signal;
-  signal.swap( m_pending_captures.front().signal );
+  signal.swap( m_pending_captures.front().ready_signal );
   m_pending_captures.pop_front();
   
   signal( m_image );

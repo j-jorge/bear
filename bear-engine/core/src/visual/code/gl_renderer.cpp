@@ -343,11 +343,12 @@ bear::visual::gl_capture bear::visual::gl_renderer::capture_scene()
 
 boost::signals2::connection bear::visual::gl_renderer::queue_capture
 ( const state_list& states,
-  const boost::function< void( const claw::graphic::image& ) >& f )
+  const boost::function< void( const claw::graphic::image& ) >& ready,
+  const boost::function< void( double ) >& progress )
 {
   boost::mutex::scoped_lock gl_lock( m_mutex.gl_access );
   
-  return m_capture_queue->enqueue( states, f );
+  return m_capture_queue->enqueue( states, ready, progress );
 }
 
 /*----------------------------------------------------------------------------*/

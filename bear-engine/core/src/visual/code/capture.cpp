@@ -53,9 +53,10 @@ bear::visual::capture& bear::visual::capture::operator=( capture&& that )
 }
 
 boost::signals2::connection
-bear::visual::capture::render( const capture_ready& f )
+bear::visual::capture::render
+( const capture_ready& ready, const capture_progress& progress )
 {
   assert( m_impl != nullptr );
-  return m_impl->render( f );
+  return m_impl->render( ready, progress );
 }
 

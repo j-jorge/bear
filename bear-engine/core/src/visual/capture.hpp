@@ -19,6 +19,7 @@ namespace bear
       typedef
         boost::function< void( const claw::graphic::image& ) >
         capture_ready;
+      typedef boost::function< void( double ) > capture_progress;
 
     public:
       capture();
@@ -30,7 +31,8 @@ namespace bear
       capture& operator=( const capture& that );
       capture& operator=( capture&& that );
 
-      boost::signals2::connection render( const capture_ready& f );
+      boost::signals2::connection render
+        ( const capture_ready& ready, const capture_progress& progress );
 
     private:
       base_capture* m_impl;
