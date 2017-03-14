@@ -66,7 +66,7 @@ void bear::visual::gl_capture_queue::draw( gl_draw& output )
   glBindFramebuffer( GL_FRAMEBUFFER, 0 );
   VISUAL_GL_ERROR_THROW();
 }
-#include <iostream>
+
 void bear::visual::gl_capture_queue::update
 ( systime::milliseconds_type allocated_time )
 {
@@ -85,7 +85,7 @@ void bear::visual::gl_capture_queue::update
   const std::size_t line_count( m_lines_per_duration[ allocated_time ] + 1 );
 
   const systime::milliseconds_type start( systime::get_date_ms() );
-  read_pixels( line_count );
+  read_pixels( line_count * 2 );
   const systime::milliseconds_type end( systime::get_date_ms() );
 
   const std::size_t index
