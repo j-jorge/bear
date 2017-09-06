@@ -83,15 +83,6 @@ GLuint bear::visual::gl_renderer::create_texture( screen_size_type& size )
 {
   boost::mutex::scoped_lock lock( m_mutex.gl_access );
  
-  unsigned int v;
-  for ( v=1; (v < size.x) && /* overflow */ (v != 0); v *= 2 ) { }
-
-  size.x = v;
-
-  for ( v=1; (v < size.y) && /* overflow */ (v != 0); v *= 2 ) { }
-
-  size.y = v;
-
   GLuint texture_id;
 
   make_current();
