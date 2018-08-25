@@ -141,10 +141,12 @@ set( GENERIC_ITEM_SOURCE_FILES
   system/code/system_sound_toggle.cpp
   )
 
-if( BUILD_PLATFORM STREQUAL "android" )
-  set( GENERIC_ITEM_LINK_TYPE STATIC )
-else()
-  set( GENERIC_ITEM_LINK_TYPE SHARED )
+if( NOT GENERIC_ITEM_LINK_TYPE )
+  if( BUILD_PLATFORM STREQUAL "android" )
+    set( GENERIC_ITEM_LINK_TYPE STATIC )
+  else()
+    set( GENERIC_ITEM_LINK_TYPE SHARED )
+  endif()
 endif()
 
 add_library(
