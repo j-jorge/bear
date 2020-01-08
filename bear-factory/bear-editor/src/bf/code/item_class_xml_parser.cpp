@@ -45,7 +45,7 @@ std::string bf::item_class_xml_parser::get_item_class_name
 
   wxString val;
 
-  if ( !node->GetPropVal( wxT("class"), &val ) )
+  if ( !node->GetAttribute( wxT("class"), &val ) )
     throw xml::missing_property("class");
 
   return wx_to_std_string(val);
@@ -128,24 +128,24 @@ void bf::item_class_xml_parser::read_item_properties
 {
   wxString val;
 
-  if ( !node->GetPropVal( wxT("class"), &val ) )
+  if ( !node->GetAttribute( wxT("class"), &val ) )
     throw xml::missing_property("class");
 
   item.set_class_name( wx_to_std_string(val) );
 
-  if ( !node->GetPropVal( wxT("category"), &val ) )
+  if ( !node->GetAttribute( wxT("category"), &val ) )
     throw xml::missing_property("category");
 
   item.set_category( wx_to_std_string(val) );
 
   item.set_color
-    ( wx_to_std_string(node->GetPropVal( wxT("box_color"), wxT("#00FF00") )) );
+    ( wx_to_std_string(node->GetAttribute( wxT("box_color"), wxT("#00FF00") )) );
 
   item.set_url
-    ( wx_to_std_string(node->GetPropVal( wxT("url"), wxEmptyString )) );
+    ( wx_to_std_string(node->GetAttribute( wxT("url"), wxEmptyString )) );
 
   item.set_fixable
-    ( node->GetPropVal( wxT("fixable"), wxT("true") ) == wxT("true") );
+    ( node->GetAttribute( wxT("fixable"), wxT("true") ) == wxT("true") );
 } // item_class_xml_parser::read_item_properties()
 
 /*----------------------------------------------------------------------------*/
@@ -175,7 +175,7 @@ void bf::item_class_xml_parser::read_new_default_value
 {
   wxString val;
 
-  if ( !node->GetPropVal( wxT("name"), &val ) )
+  if ( !node->GetAttribute( wxT("name"), &val ) )
     throw xml::missing_property("name");
 
   item.new_default_value
@@ -233,12 +233,12 @@ void bf::item_class_xml_parser::read_field_type
   wxString val;
   std::string name;
 
-  if ( !node->GetPropVal( wxT("name"), &val ) )
+  if ( !node->GetAttribute( wxT("name"), &val ) )
     throw xml::missing_property("name");
 
   name = wx_to_std_string(val);
 
-  if ( !node->GetPropVal( wxT("type"), &val ) )
+  if ( !node->GetAttribute( wxT("type"), &val ) )
     throw xml::missing_property("type");
 
   type_field* field;
@@ -271,9 +271,9 @@ void bf::item_class_xml_parser::read_field_type
     throw xml::bad_value( wx_to_std_string(val) );
 
   field->set_required
-    ( node->GetPropVal( wxT("required"), wxT("false") ) == wxT("true") );
+    ( node->GetAttribute( wxT("required"), wxT("false") ) == wxT("true") );
   field->set_is_list
-    ( node->GetPropVal( wxT("list"), wxT("false") ) == wxT("true") );
+    ( node->GetAttribute( wxT("list"), wxT("false") ) == wxT("true") );
 
   item.add_field(name, *field);
   delete field;
@@ -445,7 +445,7 @@ bf::item_class_xml_parser::read_after( const wxXmlNode* node ) const
 {
   wxString val;
 
-  if ( !node->GetPropVal( wxT("field"), &val ) )
+  if ( !node->GetAttribute( wxT("field"), &val ) )
     throw xml::missing_property("field");
 
   return wx_to_std_string(val);
@@ -465,7 +465,7 @@ void bf::item_class_xml_parser::read_set
       {
         wxString val;
 
-        if ( !node->GetPropVal( wxT("value"), &val ) )
+        if ( !node->GetAttribute( wxT("value"), &val ) )
           throw xml::missing_property("value");
 
         set.push_back( wx_to_std_string(val) );
@@ -577,7 +577,7 @@ bf::item_class_xml_parser::read_interval( const wxXmlNode* node ) const
   wxString val;
   std::istringstream iss;
 
-  if ( !node->GetPropVal( wxT("from"), &val ) )
+  if ( !node->GetAttribute( wxT("from"), &val ) )
     result.first = std::numeric_limits<T>::min();
   else
     {
@@ -587,7 +587,7 @@ bf::item_class_xml_parser::read_interval( const wxXmlNode* node ) const
         throw xml::bad_value( wx_to_std_string(val) );
     }
 
-  if ( !node->GetPropVal( wxT("to"), &val ) )
+  if ( !node->GetAttribute( wxT("to"), &val ) )
     result.second = std::numeric_limits<T>::max();
   else
     {

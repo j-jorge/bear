@@ -190,7 +190,7 @@ void bf::xml::xml_to_value<bf::animation>::load_frame
   animation_frame frame;
   sprite spr;
 
-  if ( !node->GetPropVal( wxT("duration"), &val ) )
+  if ( !node->GetAttribute( wxT("duration"), &val ) )
     throw missing_property( "duration" );
 
   frame.set_duration
@@ -241,7 +241,7 @@ void bf::xml::xml_to_value<bf::animation_file_type>::operator()
 
   wxString path;
 
-  if ( !node->GetPropVal( wxT("path"), &path ) )
+  if ( !node->GetAttribute( wxT("path"), &path ) )
     throw missing_property("path");
 
   anim.set_path( wx_to_std_string(path), env );
@@ -316,7 +316,7 @@ void bf::xml::xml_to_value<bf::sample>::operator()
 
   wxString path;
 
-  if ( !node->GetPropVal( wxT("path"), &path ) )
+  if ( !node->GetAttribute( wxT("path"), &path ) )
     throw missing_property("path");
 
   v.set_path( wx_to_std_string(path) );
@@ -338,7 +338,7 @@ void bf::xml::xml_to_value<bf::font>::operator()
 
   wxString path;
 
-  if ( !node->GetPropVal( wxT("path"), &path ) )
+  if ( !node->GetAttribute( wxT("path"), &path ) )
     throw missing_property("path");
 
   const font default_value;

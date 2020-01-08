@@ -52,7 +52,7 @@ bf::xml::reader_tool::read_int( const wxXmlNode* node, const wxString& prop )
   int result;
   wxString val;
 
-  if ( !node->GetPropVal( prop, &val ) )
+  if ( !node->GetAttribute( prop, &val ) )
     throw xml::missing_property( wx_to_std_string(prop) );
 
   std::istringstream iss( wx_to_std_string(val) );
@@ -77,7 +77,7 @@ bf::xml::reader_tool::read_uint( const wxXmlNode* node, const wxString& prop )
   unsigned int result;
   wxString val;
 
-  if ( !node->GetPropVal( prop, &val ) )
+  if ( !node->GetAttribute( prop, &val ) )
     throw xml::missing_property( wx_to_std_string(prop) );
 
   std::istringstream iss( wx_to_std_string(val) );
@@ -101,7 +101,7 @@ bf::xml::reader_tool::read_string( const wxXmlNode* node, const wxString& prop )
 
   wxString val;
 
-  if ( !node->GetPropVal( prop, &val ) )
+  if ( !node->GetAttribute( prop, &val ) )
     throw xml::missing_property( wx_to_std_string(prop) );
 
   return wx_to_std_string(val);
@@ -121,7 +121,7 @@ bf::xml::reader_tool::read_real( const wxXmlNode* node, const wxString& prop )
   double result;
   wxString val;
 
-  if ( !node->GetPropVal( prop, &val ) )
+  if ( !node->GetAttribute( prop, &val ) )
     throw xml::missing_property( wx_to_std_string(prop) );
 
   std::istringstream iss( wx_to_std_string(val) );
@@ -235,7 +235,7 @@ bool bf::xml::reader_tool::read_bool_opt
   bool result(def);
   wxString val;
 
-  if ( node->GetPropVal( prop, &val ) )
+  if ( node->GetAttribute( prop, &val ) )
     {
       if ( (val == wxT("true")) || (val == wxT("1")) )
         result = true;
@@ -262,7 +262,7 @@ bf::trinary_logic::value_type bf::xml::reader_tool::read_trinary_logic_opt
   bf::trinary_logic::value_type result(def);
   wxString val;
 
-  if ( node->GetPropVal( prop, &val ) )
+  if ( node->GetAttribute( prop, &val ) )
     {
       if ( ( val ==
              std_to_wx_string( trinary_logic::to_string
