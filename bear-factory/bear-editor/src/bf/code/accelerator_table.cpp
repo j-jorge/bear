@@ -99,6 +99,6 @@ void bf::accelerator_table::on_key_pressed( wxKeyEvent& event )
   if ( it != m_accelerators.end() )
     {
       wxCommandEvent command( wxEVT_COMMAND_MENU_SELECTED, it->second );
-      m_event_handler.ProcessEvent( command );
+      m_event_handler.GetEventHandler()->ProcessEvent( command );
     }
 } // accelerator_table::on_key_pressed()
