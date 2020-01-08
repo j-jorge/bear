@@ -33,7 +33,7 @@ void bf::xml::xml_to_value<Type>::operator()
   CLAW_PRECOND( node != NULL );
   wxString val;
 
-  if ( !node->GetPropVal( wxT("value"), &val ) )
+  if ( !node->GetAttribute( wxT("value"), &val ) )
     throw missing_property( "value" );
 
   const std::string std_val( wx_to_std_string(val) );

@@ -64,8 +64,8 @@ bf::gui_level* bf::level_file_xml_reader::load_level
   width = xml::reader_tool::read_uint(node, wxT("width"));
   height = xml::reader_tool::read_uint(node, wxT("height"));
 
-  music = node->GetPropVal( wxT("music"), wxEmptyString );
-  name = node->GetPropVal( wxT("name"), wxEmptyString );
+  music = node->GetAttribute( wxT("music"), wxEmptyString );
+  name = node->GetAttribute( wxT("name"), wxEmptyString );
 
   gui_level* lvl = NULL;
 
@@ -128,10 +128,10 @@ void bf::level_file_xml_reader::load_layer
     || xml::reader_tool::read_bool_opt( node, wxT("fit_level"), false );
   tag = xml::reader_tool::read_string_opt( node, wxT("tag"), "" );
 
-  if ( !node->GetPropVal( wxT("class_name"), &val ) )
+  if ( !node->GetAttribute( wxT("class_name"), &val ) )
     throw xml::missing_property( "class_name" );
 
-  node->GetPropVal( wxT("name"), &name );
+  node->GetAttribute( wxT("name"), &name );
 
   layer& lay =
     lvl.add_layer

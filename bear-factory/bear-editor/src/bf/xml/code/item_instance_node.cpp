@@ -50,7 +50,7 @@ bf::item_instance* bf::xml::item_instance_node::read
 
   wxString val;
 
-  if ( !node->GetPropVal( wxT("class_name"), &val ) )
+  if ( !node->GetAttribute( wxT("class_name"), &val ) )
     throw xml::missing_property( "class_name" );
 
   std::string class_name( wx_to_std_string(val) );
@@ -64,7 +64,7 @@ bf::item_instance* bf::xml::item_instance_node::read
       item->set_fixed
         ( xml::reader_tool::read_bool_opt(node, wxT("fixed"), false) );
       item->set_id
-        ( wx_to_std_string(node->GetPropVal( wxT("id"), wxEmptyString )) );
+        ( wx_to_std_string(node->GetAttribute( wxT("id"), wxEmptyString )) );
 
       load_fields( *item, node->GetChildren() );
     }
