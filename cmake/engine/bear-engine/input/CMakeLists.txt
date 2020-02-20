@@ -1,0 +1,29 @@
+add_bear_engine_library(
+  NAME
+  input
+
+  FILES
+  "controller_button.cpp"
+  "display_projection.cpp"
+  "finger.cpp"
+  "finger_event.cpp"
+  "finger_status.cpp"
+  "input_listener.cpp"
+  "input_status.cpp"
+  "joystick_button.cpp"
+  "joystick.cpp"
+  "joystick_status.cpp"
+  "keyboard.cpp"
+  "keyboard_status.cpp"
+  "key_event.cpp"
+  "key_info.cpp"
+  "mouse.cpp"
+  "mouse_status.cpp"
+  "system.cpp"
+
+  LINK
+  bear_charset
+  bear_i18n
+  Claw::logger
+  SDL2
+  )

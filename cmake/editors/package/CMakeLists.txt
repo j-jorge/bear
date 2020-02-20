@@ -1,0 +1,4 @@
+install(
+  EXPORT ${BEAR_FACTORY_EXPORT}
+  DESTINATION lib/cmake/${BEAR_FACTORY_EXPORT}/
+  )
