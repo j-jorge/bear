@@ -1,5 +1,5 @@
 /* XPM */
-static const char *circ_in_xpm[] = {
+const char *circ_in_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "32 24 54 1 ",
 "  c #75B2ED",

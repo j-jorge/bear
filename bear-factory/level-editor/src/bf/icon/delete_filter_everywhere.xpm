@@ -1,5 +1,5 @@
 /* XPM */
-static const char* delete_filter_everywhere_xpm[] = {
+const char* delete_filter_everywhere_xpm[] = {
 "16 16 91 1",
 " 	c None",
 ".	c #009D00",

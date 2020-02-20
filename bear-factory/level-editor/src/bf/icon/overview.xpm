@@ -1,5 +1,5 @@
 /* XPM */
-static const char* overview_xpm[] = {
+const char* overview_xpm[] = {
 "16 16 14 1",
 " 	c None",
 ".	c #00460A",

@@ -17,9 +17,8 @@
 #include "bf/ingame_view_frame.hpp"
 #include "bf/gui_level.hpp"
 #include "bf/level_thumbnail_ctrl.hpp"
-#include "bf/icon/adjust_horizontally.xpm"
-#include "bf/icon/adjust_vertically.xpm"
-#include "bf/icon/refresh.xpm"
+
+#include "bf/level_editor_icons.hpp"
 
 #include <wx/artprov.h>
 #include <wx/toolbar.h>

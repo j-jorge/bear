@@ -1,5 +1,5 @@
 /* XPM */
-static const char* wireframe_xpm[] = {
+const char* wireframe_xpm[] = {
 "16 16 20 1",
 " 	c None",
 ".	c #E6FF9D",

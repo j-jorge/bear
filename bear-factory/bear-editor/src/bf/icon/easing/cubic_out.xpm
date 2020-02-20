@@ -1,5 +1,5 @@
 /* XPM */
-static const char *cubic_out_xpm[] = {
+const char *cubic_out_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "32 24 57 1 ",
 "  c #78B4EF",

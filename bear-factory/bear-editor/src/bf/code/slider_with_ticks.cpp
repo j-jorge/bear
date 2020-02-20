@@ -13,8 +13,7 @@
  */
 #include "bf/slider_with_ticks.hpp"
 
-#include "bf/icon/player_forward.xpm"
-#include "bf/icon/player_rewind.xpm"
+#include "bf/icons.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**

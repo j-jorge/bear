@@ -1,5 +1,5 @@
 /* XPM */
-static const char* adjust_horizontally_xpm[] = {
+const char* adjust_horizontally_xpm[] = {
 "16 16 79 1",
 " 	c None",
 ".	c #BF0000",

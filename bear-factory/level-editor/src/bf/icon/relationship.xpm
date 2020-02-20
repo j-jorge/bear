@@ -1,5 +1,5 @@
 /* XPM */
-static const char* relationship_xpm[] = {
+const char* relationship_xpm[] = {
 "16 16 4 1",
 " 	c None",
 ".	c #E6FF9D",

@@ -15,11 +15,7 @@
 
 #include "bf/sprite_view.hpp"
 
-#include "bf/icon/zoom_original.xpm"
-#include "bf/icon/zoom_in.xpm"
-#include "bf/icon/zoom_out.xpm"
-#include "bf/wx_facilities.hpp"
-#include "bf/icon/zoom_fit.xpm"
+#include "bf/icons.hpp"
 
 /*----------------------------------------------------------------------------*/
 /**

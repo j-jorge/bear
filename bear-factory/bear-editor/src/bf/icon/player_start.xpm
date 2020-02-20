@@ -1,6 +1,6 @@
 /* XPM */
 /* From the Gnome icon theme. */
-static const char* player_start_xpm[] = {
+const char* player_start_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 36 1",
 "  c #3D3F3D",

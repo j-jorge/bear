@@ -1,5 +1,5 @@
 /* XPM */
-static const char* align_horizontal_middle_xpm[] = {
+const char* align_horizontal_middle_xpm[] = {
 "16 16 29 1",
 " 	c None",
 ".	c #BF0000",

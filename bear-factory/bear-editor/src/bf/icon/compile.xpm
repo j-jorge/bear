@@ -1,6 +1,6 @@
 /* XPM */
 /* From the Gnome icon theme. */
-static const char* compile_xpm[] = {
+const char* compile_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 27 1",
 "  c #424341",

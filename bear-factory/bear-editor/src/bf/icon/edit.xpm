@@ -1,6 +1,6 @@
 /* XPM */
 /* From the Gnome icon theme. */
-static const char* edit_xpm[] = {
+const char* edit_xpm[] = {
 "16 16 102 2",
 "  	c None",
 ". 	c #AAADA6",

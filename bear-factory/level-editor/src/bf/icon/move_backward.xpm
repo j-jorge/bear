@@ -1,5 +1,5 @@
 /* XPM */
-static const char* move_backward_xpm[] = {
+const char* move_backward_xpm[] = {
 "16 16 70 1",
 " 	c None",
 ".	c #BF0000",

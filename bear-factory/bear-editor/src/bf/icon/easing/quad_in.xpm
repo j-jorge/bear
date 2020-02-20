@@ -1,5 +1,5 @@
 /* XPM */
-static const char *quad_in_xpm[] = {
+const char *quad_in_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "32 24 54 1 ",
 "  c #7CB5ED",

@@ -41,6 +41,7 @@ set( BF_E_SOURCE_FILES
   code/font_edit.cpp
   code/frame_edit.cpp
   code/human_readable.cpp
+  code/icons.cpp
   code/image_list_ctrl.cpp
   code/image_pool.cpp
   code/image_selection_dialog.cpp

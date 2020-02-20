@@ -1,5 +1,5 @@
 /* XPM */
-static const char* bright_xpm[] = {
+const char* bright_xpm[] = {
 "16 16 92 2",
 "  	c None",
 ". 	c #484848",

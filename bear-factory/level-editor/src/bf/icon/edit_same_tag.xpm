@@ -1,5 +1,5 @@
 /* XPM */
-static const char * edit_same_tag_xpm[] = {
+const char * edit_same_tag_xpm[] = {
 "16 16 43 1",
 " 	c None",
 ".	c #009D00",

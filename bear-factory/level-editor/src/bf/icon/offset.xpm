@@ -1,5 +1,5 @@
 /* XPM */
-static const char* offset_xpm[] = {
+const char* offset_xpm[] = {
 "16 16 39 1",
 " 	c None",
 ".	c #BFBFBF",

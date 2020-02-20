@@ -1,6 +1,6 @@
 /* XPM */
 /* From the Gnome icon theme. */
-static const char* player_rewind_xpm[] = {
+const char* player_rewind_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 30 1",
 "  c #3D3F3D",

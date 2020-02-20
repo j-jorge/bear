@@ -1,5 +1,5 @@
 /* XPM */
-static const char *quint_out_xpm[] = {
+const char *quint_out_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "32 24 56 1 ",
 "  c #75B2EE",

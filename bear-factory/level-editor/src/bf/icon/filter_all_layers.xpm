@@ -1,5 +1,5 @@
 /* XPM */
-static const char* filter_all_layers_xpm[] = {
+const char* filter_all_layers_xpm[] = {
 "16 16 73 1",
 " 	c None",
 ".	c #009D00",

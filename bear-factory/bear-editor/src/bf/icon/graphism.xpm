@@ -1,5 +1,5 @@
 /* XPM */
-static const char* graphism_xpm[] = {
+const char* graphism_xpm[] = {
 "16 16 5 1",
 " 	c None",
 ".	c #737013",

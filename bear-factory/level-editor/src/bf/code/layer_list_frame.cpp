@@ -31,12 +31,7 @@
 #include "bf/history/action_set_priority.hpp"
 #include "bf/history/action_set_item_position.hpp"
 
-#include "bf/icon/adjust_horizontally.xpm"
-#include "bf/icon/delete_filter.xpm"
-#include "bf/icon/delete_filter_everywhere.xpm"
-#include "bf/icon/edit.xpm"
-#include "bf/icon/filter_all_layers.xpm"
-#include "bf/icon/filter_current_layer.xpm"
+#include "bf/level_editor_icons.hpp"
 
 #include "bf/item_filter/item_filter_by_class_name.hpp"
 #include "bf/item_filter/item_filter_by_class_name_glob.hpp"

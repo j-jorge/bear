@@ -1,6 +1,6 @@
 /* XPM */
 /* From the Gnome icon theme. */
-static const char* zoom_original_xpm[] = {
+const char* zoom_original_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 68 1",
 "  c #2E3436",

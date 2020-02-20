@@ -1,5 +1,5 @@
 /* XPM */
-static const char* magnetism_xpm[] = {
+const char* magnetism_xpm[] = {
 "16 16 4 1",
 " 	c None",
 ".	c #E6E6E6",

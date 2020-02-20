@@ -29,6 +29,7 @@ set( BF_LE_SOURCE_FILES
   code/level_check_result.cpp
   code/level_clipboard.cpp
   code/level_editor.cpp
+  code/level_editor_icons.cpp
   code/level_file_xml_reader.cpp
   code/level_file_xml_writer.cpp
   code/level_overview_frame.cpp

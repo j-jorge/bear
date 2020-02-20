@@ -33,7 +33,7 @@
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/run_configuration_file.hpp"
 
-#include "bf/icon/item_class.xpm"
+#include "bf/level_editor_icons.hpp"
 
 #include <wx/notebook.h>
 #include <wx/filename.h>
