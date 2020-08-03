@@ -503,12 +503,10 @@ void bear::visual::gl_renderer::set_background_color( const color_type& c )
 
 void bear::visual::gl_renderer::pause()
 {
-  m_mutex.gl_access.lock();
 }
 
 void bear::visual::gl_renderer::unpause()
 {
-  m_mutex.gl_access.unlock();
 }
 
 /*----------------------------------------------------------------------------*/
@@ -727,7 +725,7 @@ void bear::visual::gl_renderer::copy_texture_pixels
  */
 bool bear::visual::gl_renderer::ensure_window_exists()
 {
-  boost::mutex::scoped_lock lock( m_mutex.window );
+  boost::lock(m_mutex.window, m_mutex.gl_access);
 
   if ( !m_video_mode_is_set || (m_gl_context != nullptr) )
     return false;
@@ -791,6 +789,7 @@ bool bear::visual::gl_renderer::ensure_window_exists()
 
   release_context();
 
+  m_mutex.window.unlock();
   m_mutex.gl_access.unlock();
 
   return true;
@@ -976,7 +975,6 @@ bear::visual::gl_renderer::gl_renderer()
     m_draw( nullptr ),
     m_capture_queue( nullptr )
 {
-  m_mutex.gl_access.lock();
 
 #ifdef WIN32
   m_render_thread = nullptr;
