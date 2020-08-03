@@ -240,10 +240,12 @@ void bear::audio::sound_manager::stop_all_musics( double fadeout )
   while ( it != m_muted_musics.end() )
     {
       muted_music_list::iterator tmp(it);
-      ++it;
 
       // calls sample_finished()
       it->first->stop( fadeout );
+      // Reset the iterator since stop indirectly calls
+      // remove_muted_music, invalidating the iterator.
+      it = m_muted_musics.begin();
     }
 
   if ( m_current_music != NULL )

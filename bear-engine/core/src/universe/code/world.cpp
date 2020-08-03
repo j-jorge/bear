@@ -1301,7 +1301,8 @@ bool bear::universe::world::item_in_regions
  */
 void bear::universe::world::add(physical_item* const& who)
 {
-  who->set_owner(*this);
+  if (!who->has_owner())
+    who->set_owner(*this);
   m_entities.push_back( who );
 } // world::add()
 
