@@ -113,7 +113,8 @@ void bear::engine::transition_layer::render( scene_element_list& e ) const
 bool bear::engine::transition_layer::key_pressed( const input::key_info& key )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::key_pressed, _1, key) );
+    ( boost::bind( &transition_effect::key_pressed, boost::placeholders::_1,
+                   key) );
 } // transition_layer::key_pressed()
 
 /*----------------------------------------------------------------------------*/
@@ -125,7 +126,8 @@ bool bear::engine::transition_layer::key_maintained
 ( const input::key_info& key )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::key_maintained, _1, key) );
+    ( boost::bind( &transition_effect::key_maintained, boost::placeholders::_1,
+                   key) );
 } // transition_layer::key_maintained()
 
 /*----------------------------------------------------------------------------*/
@@ -136,7 +138,8 @@ bool bear::engine::transition_layer::key_maintained
 bool bear::engine::transition_layer::key_released( const input::key_info& key )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::key_released, _1, key) );
+    ( boost::bind( &transition_effect::key_released, boost::placeholders::_1,
+                   key) );
 } // transition_layer::key_released()
 
 /*----------------------------------------------------------------------------*/
@@ -147,7 +150,8 @@ bool bear::engine::transition_layer::key_released( const input::key_info& key )
 bool bear::engine::transition_layer::char_pressed( const input::key_info& key )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::char_pressed, _1, key) );
+    ( boost::bind( &transition_effect::char_pressed, boost::placeholders::_1,
+                   key) );
 } // transition_layer::char_pressed()
 
 /*----------------------------------------------------------------------------*/
@@ -160,7 +164,8 @@ bool bear::engine::transition_layer::button_pressed
 ( input::joystick::joy_code button, unsigned int joy_index )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::button_pressed, _1, button, joy_index) );
+    ( boost::bind( &transition_effect::button_pressed, boost::placeholders::_1,
+                   button, joy_index) );
 } // transition_layer::button_pressed()
 
 /*----------------------------------------------------------------------------*/
@@ -174,7 +179,8 @@ bool bear::engine::transition_layer::button_maintained
 {
   return diffuse_call
     ( boost::bind
-      ( &transition_effect::button_maintained, _1, button, joy_index) );
+      ( &transition_effect::button_maintained, boost::placeholders::_1, button,
+        joy_index) );
 } // transition_layer::button_maintained()
 
 /*----------------------------------------------------------------------------*/
@@ -188,7 +194,8 @@ bool bear::engine::transition_layer::button_released
 {
   return diffuse_call
     ( boost::bind
-      ( &transition_effect::button_released, _1, button, joy_index) );
+      ( &transition_effect::button_released, boost::placeholders::_1, button,
+        joy_index) );
 } // transition_layer::button_released()
 
 /*----------------------------------------------------------------------------*/
@@ -202,7 +209,8 @@ bool bear::engine::transition_layer::mouse_pressed
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::mouse_pressed, _1, key, pos) );
+    ( boost::bind( &transition_effect::mouse_pressed, boost::placeholders::_1,
+                   key, pos) );
 } // transition_layer::mouse_pressed()
 
 /*----------------------------------------------------------------------------*/
@@ -216,7 +224,8 @@ bool bear::engine::transition_layer::mouse_maintained
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::mouse_maintained, _1, key, pos) );
+    ( boost::bind( &transition_effect::mouse_maintained,
+                   boost::placeholders::_1, key, pos) );
 } // transition_layer::mouse_maintained()
 
 /*----------------------------------------------------------------------------*/
@@ -230,7 +239,8 @@ bool bear::engine::transition_layer::mouse_released
   const claw::math::coordinate_2d<unsigned int>& pos )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::mouse_released, _1, key, pos) );
+    ( boost::bind( &transition_effect::mouse_released, boost::placeholders::_1,
+                   key, pos) );
 } // transition_layer::mouse_released()
 
 /*----------------------------------------------------------------------------*/
@@ -241,7 +251,8 @@ bool bear::engine::transition_layer::mouse_released
 bool bear::engine::transition_layer::mouse_move
 ( const claw::math::coordinate_2d<unsigned int>& pos )
 {
-  return diffuse_call( boost::bind( &transition_effect::mouse_move, _1, pos) );
+  return diffuse_call( boost::bind( &transition_effect::mouse_move,
+                                    boost::placeholders::_1, pos) );
 } // transition_layer::mouse_move()
 
 /*----------------------------------------------------------------------------*/
@@ -253,7 +264,8 @@ bool bear::engine::transition_layer::finger_action
 ( const bear::input::finger_event& event )
 {
   return diffuse_call
-    ( boost::bind( &transition_effect::finger_action, _1, event) );
+    ( boost::bind( &transition_effect::finger_action, boost::placeholders::_1,
+                   event) );
 } // transition_layer::finger_action()
 
 /*----------------------------------------------------------------------------*/

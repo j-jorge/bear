@@ -146,26 +146,28 @@ void bf::model_snapshot_tweener::insert_tweener
   m_tweeners.insert
   ( claw::tween::single_tweener
     (m.get_angle(), end.get_angle(), d,
-      boost::bind( &mark_placement::set_angle, &m, _1 ),
+      boost::bind( &mark_placement::set_angle, &m, boost::placeholders::_1 ),
       m.get_angle_easing().to_claw_easing_function() ) );
   m_tweeners.insert
   ( claw::tween::single_tweener
     ( m.get_x_position(), end.get_x_position(), d,
-      boost::bind( &mark_placement::set_x_position, &m, _1 ),
+      boost::bind( &mark_placement::set_x_position, &m,
+                   boost::placeholders::_1 ),
       m.get_x_easing().to_claw_easing_function() ) );
   m_tweeners.insert
   ( claw::tween::single_tweener
     ( m.get_y_position(), end.get_y_position(), d,
-      boost::bind( &mark_placement::set_y_position, &m, _1 ),
+      boost::bind( &mark_placement::set_y_position, &m,
+                   boost::placeholders::_1 ),
       m.get_y_easing().to_claw_easing_function() ) );
   m_tweeners.insert
   ( claw::tween::single_tweener
     ( m.get_width(), end.get_width(), d,
-      boost::bind( &mark_placement::set_width, &m, _1 ),
+      boost::bind( &mark_placement::set_width, &m, boost::placeholders::_1 ),
       m.get_width_easing().to_claw_easing_function() ) );
   m_tweeners.insert
   ( claw::tween::single_tweener
     ( m.get_height(), end.get_height(), d,
-      boost::bind( &mark_placement::set_height, &m, _1 ),
+      boost::bind( &mark_placement::set_height, &m, boost::placeholders::_1 ),
       m.get_height_easing().to_claw_easing_function() ) );
 } // model_snapshot_tweener::insert_tweener()

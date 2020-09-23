@@ -29,8 +29,8 @@ bf::make_action_modify_placement_x( snapshot* s, const mark* m, double value )
 {
   return new action_modify_placement<double>
     ( s, m,
-      boost::bind( &mark_placement::set_x_position, _1, _2 ),
-      boost::bind( &mark_placement::get_x_position, _1 ),
+      boost::bind( &mark_placement::set_x_position, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::get_x_position, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_x()
 
@@ -46,8 +46,8 @@ bf::make_action_modify_placement_y( snapshot* s, const mark* m, double value )
 {
   return new action_modify_placement<double>
     ( s, m,
-      boost::bind( &mark_placement::set_y_position, _1, _2 ),
-      boost::bind( &mark_placement::get_y_position, _1 ),
+      boost::bind( &mark_placement::set_y_position, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::get_y_position, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_y()
 
@@ -64,8 +64,8 @@ bf::make_action_modify_placement_angle
 {
   return new action_modify_placement<double>
     ( s, m,
-      boost::bind( &mark_placement::set_angle, _1, _2 ),
-      boost::bind( &mark_placement::get_angle, _1 ),
+      boost::bind( &mark_placement::set_angle, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::get_angle, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_angle()
 
@@ -82,8 +82,8 @@ bf::make_action_modify_placement_depth
 {
   return new action_modify_placement<int>
     ( s, m,
-      boost::bind( &mark_placement::set_depth_position, _1, _2 ),
-      boost::bind( &mark_placement::get_depth_position, _1 ),
+      boost::bind( &mark_placement::set_depth_position, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::get_depth_position, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_depth()
 
@@ -100,8 +100,8 @@ bf::make_action_modify_placement_visibility
 {
   return new action_modify_placement<bool>
     ( s, m,
-      boost::bind( &mark_placement::set_visibility, _1, _2 ),
-      boost::bind( &mark_placement::is_visible, _1 ),
+      boost::bind( &mark_placement::set_visibility, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::is_visible, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_visibility()
 
@@ -118,8 +118,8 @@ bf::make_action_modify_placement_width
 {
   return new action_modify_placement<double>
     ( s, m,
-      boost::bind( &mark_placement::set_width, _1, _2 ),
-      boost::bind( &mark_placement::get_width, _1 ),
+      boost::bind( &mark_placement::set_width, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::get_width, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_width()
 
@@ -136,7 +136,7 @@ bf::make_action_modify_placement_height
 {
   return new action_modify_placement<double>
     ( s, m,
-      boost::bind( &mark_placement::set_height, _1, _2 ),
-      boost::bind( &mark_placement::get_height, _1 ),
+      boost::bind( &mark_placement::set_height, boost::placeholders::_1, boost::placeholders::_2 ),
+      boost::bind( &mark_placement::get_height, boost::placeholders::_1 ),
       value );
 } // make_action_modify_placement_height()

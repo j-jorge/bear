@@ -148,7 +148,8 @@ void bear::engine::game_network::create_service
     {
       net::server* s = new net::server(port);
       s->on_new_client.connect
-        ( boost::bind( &game_network::on_new_client, this, s, _1 ) );
+        ( boost::bind( &game_network::on_new_client, this, s,
+                       boost::placeholders::_1 ) );
       m_server[name] = s;
     }
 } // game_network::create_service()
