@@ -1,5 +1,5 @@
 option(
-  TESTING_ENABLED
+  BEAR_TESTING_ENABLED
   "Tells to compile the unit tests."
   TRUE)
 
@@ -17,3 +17,9 @@ option(
   BEAR_MAN_PAGES_ENABLED
   "Tells to build and install the man pages."
   TRUE)
+
+option(
+  BEAR_EXAMPLES_ENABLED
+  "Tells to compile the example programs."
+  TRUE)
+

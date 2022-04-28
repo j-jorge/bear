@@ -11,7 +11,11 @@ endif()
 
 add_subdirectory(package)
 
-if(TESTING_ENABLED)
+if(BEAR_TESTING_ENABLED)
   include(BoostTestHelpers)
   add_subdirectory(bear-engine-tests)
+endif()
+
+if(BEAR_EXAMPLES_ENABLED)
+  add_subdirectory(examples)
 endif()

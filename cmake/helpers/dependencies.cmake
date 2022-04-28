@@ -3,7 +3,7 @@ find_package(
   )
 
 find_package(Freetype REQUIRED)
-find_package(libclaw 1.7.4 REQUIRED)
+find_package(claw 1.8.0 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
@@ -71,7 +71,7 @@ if(BEAR_EDITORS_ENABLED)
     INTERFACE
     ${wxWidgets_DEFINITIONS}
     )
-  
+
   target_link_libraries(
     wxWidgets::wxWidgets
     INTERFACE
