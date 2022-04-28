@@ -16,7 +16,7 @@
 #include "bear/visual/font/bitmap_charmap.hpp"
 
 #include <claw/assert.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

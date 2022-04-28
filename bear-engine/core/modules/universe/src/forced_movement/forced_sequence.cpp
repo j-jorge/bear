@@ -13,7 +13,7 @@
  */
 #include "bear/universe/forced_movement/forced_sequence.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

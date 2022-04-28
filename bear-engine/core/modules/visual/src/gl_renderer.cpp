@@ -25,7 +25,7 @@
 
 #include "bear/time/time.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 namespace bear
 {

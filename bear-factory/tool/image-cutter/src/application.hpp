@@ -15,7 +15,7 @@
 #define __PTB_IC_APPLICATION_HPP__
 
 #include <claw/application.hpp>
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 #include <claw/math.hpp>
 
 #include <string>

@@ -31,7 +31,7 @@
 #include "bear/visual/screen.hpp"
 #include "bear/universe/types.hpp"
 
-#include <claw/arguments_table.hpp>
+#include <claw/application/arguments_table.hpp>
 
 #include <boost/function.hpp>
 #include <boost/signals2.hpp>
@@ -127,7 +127,7 @@ namespace bear
 
       void screenshot( claw::graphic::image& img ) const;
       visual::capture screen_capture() const;
-      
+
       void levelshot( claw::graphic::image& img ) const;
 
       void end();

@@ -15,7 +15,7 @@
 
 #include <claw/assert.hpp>
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 const bear::visual::size_box_type

@@ -66,5 +66,5 @@ add_bear_factory_application(
 
   LINK
   bear-editor
-  Claw::tween
+  claw_tween
   )

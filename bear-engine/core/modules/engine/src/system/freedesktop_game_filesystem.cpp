@@ -13,7 +13,7 @@
  */
 #include "bear/engine/system/freedesktop_game_filesystem.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/system_info.hpp>
 #include <boost/filesystem/convenience.hpp>
 

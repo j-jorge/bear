@@ -19,7 +19,7 @@
 
 #include "bear/engine/export.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

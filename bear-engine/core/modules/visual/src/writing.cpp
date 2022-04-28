@@ -12,7 +12,7 @@
 #include "bear/visual/scene_writing.hpp"
 #include "bear/visual/text_metric.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

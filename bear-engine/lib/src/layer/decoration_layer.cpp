@@ -15,7 +15,7 @@
 
 #include "bear/engine/layer/export.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <set>
 
 LAYER_EXPORT( decoration_layer, bear )

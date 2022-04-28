@@ -17,7 +17,7 @@
 
 #include <SDL2/SDL_system.h>
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

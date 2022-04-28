@@ -15,7 +15,7 @@
 
 #include "bear/engine/script/method_call.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <algorithm>
 
 /*----------------------------------------------------------------------------*/

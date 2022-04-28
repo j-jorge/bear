@@ -18,7 +18,7 @@
 
 #include <list>
 #include <claw/non_copyable.hpp>
-#include <claw/socket_server.hpp>
+#include <claw/net/socket_server.hpp>
 #include <boost/signals2.hpp>
 
 namespace bear

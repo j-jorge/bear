@@ -18,7 +18,7 @@
 #include "bear/universe/physical_item.hpp"
 
 #include <claw/assert.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

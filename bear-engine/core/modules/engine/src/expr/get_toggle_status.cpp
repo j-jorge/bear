@@ -16,7 +16,7 @@
 #include "bear/engine/base_item.hpp"
 #include "bear/engine/item_brick/with_toggle.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 #include <sstream>
 #include <typeinfo>

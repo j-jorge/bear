@@ -15,7 +15,7 @@
 
 #include "bear/engine/script/script_parser.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/real_number.hpp>
 
 /*----------------------------------------------------------------------------*/

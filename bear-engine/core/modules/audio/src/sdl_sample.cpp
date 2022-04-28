@@ -19,7 +19,7 @@
 #include <SDL2/SDL.h>
 #include <claw/assert.hpp>
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/types.hpp>
 #include <cmath>
 #include <limits>

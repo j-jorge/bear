@@ -13,7 +13,7 @@ add_bear_engine_library(
   LINK
   SDL2::mixer
   SDL2
-  Claw::logger
+  claw_logger
   Boost::thread
   Boost::system
   )

@@ -13,7 +13,7 @@
  */
 #include "bear/generic_items/crossfade_sequence.hpp"
 #include "bear/engine/export.hpp"
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( crossfade_sequence, bear )
 

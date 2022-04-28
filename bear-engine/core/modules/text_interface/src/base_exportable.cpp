@@ -16,7 +16,7 @@
 #include "bear/text_interface/auto_converter.hpp"
 #include "bear/text_interface/method_caller.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

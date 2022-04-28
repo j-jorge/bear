@@ -40,7 +40,7 @@
 #include <wx/toolbar.h>
 #include <wx/artprov.h>
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 DECLARE_APP(bf::level_editor)
 

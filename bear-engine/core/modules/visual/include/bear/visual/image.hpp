@@ -16,8 +16,8 @@
 
 #include <string>
 
-#include <claw/pixel.hpp>
-#include <claw/image.hpp>
+#include <claw/graphic/pixel.hpp>
+#include <claw/graphic/image.hpp>
 #include <claw/smart_ptr.hpp>
 
 #include "bear/visual/base_image.hpp"

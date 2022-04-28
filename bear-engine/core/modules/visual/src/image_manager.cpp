@@ -17,7 +17,7 @@
 
 #include <claw/assert.hpp>
 #include <claw/functional.hpp>
-#include <claw/png.hpp>
+#include <claw/graphic/png.hpp>
 
 /*---------------------------------------------------------------------------*/
 /**

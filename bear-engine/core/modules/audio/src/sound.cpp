@@ -15,7 +15,7 @@
 #include "bear/audio/sound_manager.hpp"
 #include "bear/audio/sample.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

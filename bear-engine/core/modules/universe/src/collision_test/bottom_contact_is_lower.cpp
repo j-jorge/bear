@@ -13,6 +13,8 @@
  */
 #include "bear/universe/collision_test/bottom_contact_is_lower.hpp"
 
+#include "bear/universe/physical_item.hpp"
+
 #include <claw/assert.hpp>
 
 /*----------------------------------------------------------------------------*/

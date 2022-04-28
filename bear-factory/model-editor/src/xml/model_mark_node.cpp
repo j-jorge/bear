@@ -21,7 +21,7 @@
 #include "bf/xml/xml_to_value.hpp"
 
 #include <claw/assert.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

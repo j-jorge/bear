@@ -23,7 +23,7 @@
 
 #include <string>
 #include <claw/smart_ptr.hpp>
-#include <claw/socket_stream.hpp>
+#include <claw/net/socket_stream.hpp>
 #include <claw/non_copyable.hpp>
 
 #include <boost/thread/mutex.hpp>

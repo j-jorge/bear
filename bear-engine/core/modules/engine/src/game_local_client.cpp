@@ -48,8 +48,8 @@
 #include <boost/uuid/uuid_io.hpp>
 
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
-#include <claw/socket_traits.hpp>
+#include <claw/logger/logger.hpp>
+#include <claw/net/socket_traits.hpp>
 #include <claw/string_algorithm.hpp>
 #include <sstream>
 

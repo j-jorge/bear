@@ -17,7 +17,7 @@
 
 #include <boost/bind.hpp>
 #include <boost/spirit/include/classic.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

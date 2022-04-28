@@ -14,7 +14,7 @@
 #include "bear/visual/gl_error.hpp"
 
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <sstream>
 
 #include "bear/visual/gl.hpp"

@@ -16,7 +16,7 @@
 
 #include "bear/visual/class_export.hpp"
 
-#include <claw/pixel.hpp>
+#include <claw/graphic/pixel.hpp>
 
 namespace bear
 {

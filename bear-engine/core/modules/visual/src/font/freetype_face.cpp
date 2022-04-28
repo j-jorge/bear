@@ -17,7 +17,7 @@
 
 #include <claw/assert.hpp>
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 FT_Library bear::visual::freetype_face::s_library;

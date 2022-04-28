@@ -19,7 +19,7 @@
 
 #include "bear/visual/class_export.hpp"
 
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 
 namespace bear
 {

@@ -18,10 +18,14 @@
 #include "bear/universe/collision_info.hpp"
 #include "bear/universe/class_export.hpp"
 
+#include <claw/line_2d.hpp>
+
 namespace bear
 {
   namespace universe
   {
+    class physical_item;
+
     /**
      * \brief Check, in a collision context, if the bottom of the "that" item
      *        was lower than a given value, relative to the top of the "self"

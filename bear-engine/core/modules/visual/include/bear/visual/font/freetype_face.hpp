@@ -23,7 +23,7 @@
 #include "bear/visual/class_export.hpp"
 
 #include <claw/non_copyable.hpp>
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 #include <string>
 
 #include <ft2build.h>

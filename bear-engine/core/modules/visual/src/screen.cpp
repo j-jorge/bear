@@ -16,8 +16,8 @@
 #include "bear/visual/gl_screen.hpp"
 
 #include <claw/exception.hpp>
-#include <claw/bitmap.hpp>
-#include <claw/logger.hpp>
+#include <claw/graphic/bitmap.hpp>
+#include <claw/logger/logger.hpp>
 
 #include "bear/time/time.hpp"
 

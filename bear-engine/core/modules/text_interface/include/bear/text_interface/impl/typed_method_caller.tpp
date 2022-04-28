@@ -12,7 +12,7 @@
  * \author Julien Jorge.
  */
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

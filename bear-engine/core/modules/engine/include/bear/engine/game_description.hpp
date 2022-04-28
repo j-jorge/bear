@@ -19,7 +19,7 @@
 #include <list>
 
 #include <claw/math.hpp>
-#include <claw/arguments_table.hpp>
+#include <claw/application/arguments_table.hpp>
 
 #include "bear/engine/class_export.hpp"
 

@@ -24,7 +24,7 @@
 #include <wx/tooltip.h>
 
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 #include <limits>
 #include <boost/filesystem/convenience.hpp>

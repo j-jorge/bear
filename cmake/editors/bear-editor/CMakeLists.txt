@@ -104,8 +104,8 @@ target_link_libraries(
   PUBLIC
   bear_engine_common
   wxWidgets::wxWidgets
-  Claw::logger
-  Claw::configuration_file
+  claw_logger
+  claw_configuration_file
   Boost::filesystem
   Boost::thread
   Boost::system

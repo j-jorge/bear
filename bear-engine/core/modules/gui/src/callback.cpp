@@ -16,7 +16,7 @@
 #include "bear/gui/base_callback.hpp"
 
 #include <algorithm>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

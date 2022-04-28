@@ -19,7 +19,7 @@
 #include "bf/scan_dir.hpp"
 
 #include <claw/assert.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/exception.hpp>
 
 /*----------------------------------------------------------------------------*/

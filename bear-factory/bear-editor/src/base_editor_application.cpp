@@ -22,7 +22,7 @@
 #include <iostream>
 
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <boost/preprocessor/stringize.hpp>
 
 /*----------------------------------------------------------------------------*/

@@ -16,7 +16,7 @@
 
 #include "bear/engine/game.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

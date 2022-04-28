@@ -23,7 +23,7 @@
 #include "bf/workspace_environment.hpp"
 
 #include <claw/assert.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

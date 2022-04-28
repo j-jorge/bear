@@ -19,7 +19,7 @@
 
 #include "bear/engine/export.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( check_item_class_creator, bear )
 

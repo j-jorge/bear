@@ -18,7 +18,7 @@
 #include "bf/wx_facilities.hpp"
 #include "bf/xml/reader_tool.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

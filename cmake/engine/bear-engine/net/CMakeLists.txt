@@ -12,7 +12,7 @@ add_bear_engine_library(
   "server.cpp"
 
   LINK
-  Claw::net
+  claw_net
   Boost::thread
   Boost::system
   )

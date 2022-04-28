@@ -3,7 +3,7 @@
 #include "bear/visual/gl_draw.hpp"
 #include "bear/visual/gl_error.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 bear::visual::gl_capture_queue::entry::entry( const state_list& s )
   : states( s )

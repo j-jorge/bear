@@ -29,7 +29,7 @@
 #include "bf/wx_facilities.hpp"
 
 #include <wx/tooltip.h>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/exception.hpp>
 
 #include <limits>

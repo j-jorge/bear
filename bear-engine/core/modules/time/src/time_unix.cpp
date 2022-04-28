@@ -11,6 +11,8 @@
  * \brief Unix implementation of the functions of the namespace bear::systime.
  * \author Julien Jorge.
  */
+#include "bear/time/time.hpp"
+
 #include <unistd.h>
 #include <cstddef>
 #include <sys/time.h>

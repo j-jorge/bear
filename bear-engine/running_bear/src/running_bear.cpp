@@ -15,7 +15,7 @@
 
 #include "bear/i18n/gettext.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <boost/preprocessor/stringize.hpp>
 
 /*----------------------------------------------------------------------------*/

@@ -16,7 +16,7 @@
 #include "bear/universe/shape/shape_traits.hpp"
 
 #include <sstream>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

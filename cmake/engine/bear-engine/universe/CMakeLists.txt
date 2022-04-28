@@ -65,5 +65,5 @@ add_bear_engine_library(
   
   LINK
   bear_concept
-  Claw::logger
+  claw_logger
   )

@@ -15,8 +15,8 @@
 
 #include "bear/engine/version.hpp"
 
-#include <claw/logger.hpp>
-#include <claw/socket_stream.hpp>
+#include <claw/logger/logger.hpp>
+#include <claw/net/socket_stream.hpp>
 #include <claw/system_info.hpp>
 
 #include <iomanip>

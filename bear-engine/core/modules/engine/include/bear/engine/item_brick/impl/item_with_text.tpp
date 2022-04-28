@@ -15,7 +15,7 @@
 #include "bear/engine/level_globals.hpp"
 #include "bear/visual/scene_writing.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <libintl.h>
 
 /*----------------------------------------------------------------------------*/

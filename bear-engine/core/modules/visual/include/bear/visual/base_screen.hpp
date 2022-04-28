@@ -19,7 +19,7 @@
 #include "bear/visual/types.hpp"
 
 #include <claw/coordinate_2d.hpp>
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 #include <vector>
 
 namespace bear

@@ -13,7 +13,7 @@
  */
 #include "bear/debug/timing_log.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

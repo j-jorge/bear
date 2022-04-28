@@ -17,7 +17,7 @@
 
 #include "bear/engine/export.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( get_toggle_status_creator, bear )
 

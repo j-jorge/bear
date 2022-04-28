@@ -148,7 +148,10 @@ void bear::engine::game_network::create_service
     {
       net::server* s = new net::server(port);
       s->on_new_client.connect
-        ( boost::bind( &game_network::on_new_client, this, s, _1 ) );
+        ( [this, s](std::size_t client_id) -> void
+          {
+            on_new_client(s, client_id);
+          } );
       m_server[name] = s;
     }
 } // game_network::create_service()
@@ -275,7 +278,7 @@ bool bear::engine::game_network::prepare_clients()
             m_filling.erase(c);
 
           const sync& s = m_future[c].get_sync_message(0);
-      
+
           if ( s.is_active_sync() && (s.get_id() == m_sync_id) )
             ++ready;
         }

@@ -19,7 +19,7 @@
 
 #include <string>
 #include <boost/function.hpp>
-#include <claw/socket_stream.hpp>
+#include <claw/net/socket_stream.hpp>
 
 namespace bear
 {

@@ -20,7 +20,7 @@
 #include "bear/visual/capture.hpp"
 #include "bear/time/time.hpp"
 
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 #include <claw/coordinate_2d.hpp>
 
 #include <boost/function.hpp>

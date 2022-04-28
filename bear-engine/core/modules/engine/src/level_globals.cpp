@@ -22,7 +22,7 @@
 
 #include <sstream>
 #include <cassert>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/exception.hpp>
 
 #include <boost/algorithm/string/predicate.hpp>

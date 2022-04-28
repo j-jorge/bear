@@ -13,7 +13,7 @@
  */
 #include "bear/engine/layer/layer.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/assert.hpp>
 
 #include "bear/visual/scene_shader_pop.hpp"

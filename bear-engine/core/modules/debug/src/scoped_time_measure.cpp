@@ -15,7 +15,7 @@
 
 #include "bear/debug/timelog.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

@@ -33,8 +33,8 @@ add_tool_application(
   "main.cpp"
 
   LINK
-  Claw::application
-  Claw::graphic
+  claw_application
+  claw_graphic
   )
 
 add_tool_application(
@@ -45,5 +45,5 @@ add_tool_application(
   "bezier-proj.cpp"
 
   LINK
-  Claw::graphic
+  claw_graphic
   )

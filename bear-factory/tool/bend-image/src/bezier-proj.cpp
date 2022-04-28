@@ -1,5 +1,5 @@
-#include <claw/image.hpp>
-#include <claw/png.hpp>
+#include <claw/graphic/image.hpp>
+#include <claw/graphic/png.hpp>
 #include <claw/curve.hpp>
 #include <claw/string_algorithm.hpp>
 

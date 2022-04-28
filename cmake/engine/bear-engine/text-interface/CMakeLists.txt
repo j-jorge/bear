@@ -10,5 +10,5 @@ add_bear_engine_library(
   "string_to_arg.cpp"
 
   LINK
-  Claw::logger
+  claw_logger
   )

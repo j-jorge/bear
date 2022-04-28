@@ -26,7 +26,7 @@
 
 #include <claw/assert.hpp>
 #include <claw/functional.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

@@ -18,7 +18,7 @@
 #include <SDL2/SDL.h>
 #include <claw/assert.hpp>
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 unsigned int bear::audio::sdl_sound::s_audio_rate = 44100;

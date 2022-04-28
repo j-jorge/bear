@@ -13,7 +13,7 @@
  */
 #include "bear/generic_items/expr/logical_not_creator.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( logical_not_creator, bear )
 

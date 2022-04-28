@@ -20,7 +20,7 @@
 
 #include "bear/time/time.hpp"
 
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 
 #include <boost/thread.hpp>
 #include <boost/thread/condition_variable.hpp>

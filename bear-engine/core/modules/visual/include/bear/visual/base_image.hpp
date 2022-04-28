@@ -15,7 +15,7 @@
 #define __VISUAL_BASE_IMAGE_HPP__
 
 #include <claw/coordinate_2d.hpp>
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 #include <claw/non_copyable.hpp>
 
 #include "bear/visual/class_export.hpp"

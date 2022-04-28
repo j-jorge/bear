@@ -19,7 +19,7 @@
 #include <vector>
 
 #include <claw/assert.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/string_algorithm.hpp>
 #include <claw/exception.hpp>
 

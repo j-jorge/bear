@@ -16,7 +16,7 @@
 
 #include <boost/algorithm/string/replace.hpp>
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

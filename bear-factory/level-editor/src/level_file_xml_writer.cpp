@@ -19,7 +19,7 @@
 #include "bf/xml/item_instance_node.hpp"
 #include "bf/xml/util.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

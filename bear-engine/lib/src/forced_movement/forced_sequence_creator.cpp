@@ -15,7 +15,7 @@
 
 #include "bear/engine/export.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( forced_sequence_creator, bear )
 

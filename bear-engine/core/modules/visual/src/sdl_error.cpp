@@ -14,7 +14,7 @@
 #include "bear/visual/sdl_error.hpp"
 
 #include <claw/exception.hpp>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <sstream>
 
 #include <SDL2/SDL.h>

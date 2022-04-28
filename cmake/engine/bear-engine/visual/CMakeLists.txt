@@ -70,8 +70,8 @@ add_bear_engine_library(
   LINK
   bear_charset
   bear_time
-  Claw::graphic
-  Claw::logger
+  claw_graphic
+  claw_logger
   Boost::thread
   Boost::system
   Freetype::Freetype

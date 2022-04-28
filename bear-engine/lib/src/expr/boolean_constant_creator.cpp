@@ -13,7 +13,7 @@
  */
 #include "bear/generic_items/expr/boolean_constant_creator.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( boolean_constant_creator, bear )
 

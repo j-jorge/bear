@@ -16,7 +16,7 @@
 #include "bear/communication/message.hpp"
 #include "bear/communication/messageable.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/assert.hpp>
 
 /*---------------------------------------------------------------------------*/

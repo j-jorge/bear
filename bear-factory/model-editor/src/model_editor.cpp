@@ -24,7 +24,7 @@
 #include "bf/xml/model_file.hpp"
 
 #include <wx/tooltip.h>
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/exception.hpp>
 
 /*----------------------------------------------------------------------------*/

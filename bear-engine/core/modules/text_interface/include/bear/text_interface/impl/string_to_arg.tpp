@@ -17,7 +17,7 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/string_algorithm.hpp>
 
 /*----------------------------------------------------------------------------*/

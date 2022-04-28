@@ -101,7 +101,10 @@ bear::net::message_handle bear::net::client::pull_message()
 void bear::net::client::connect()
 {
   const connection_task connection
-    ( boost::bind( &client::set_stream, this, _1 ),
+    ( [this](claw::net::socket_stream* stream) -> void
+      {
+        set_stream(stream);
+      },
       m_host, m_port, m_read_time_limit );
   //m_connection = new boost::thread(connection);
   connection();

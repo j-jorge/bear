@@ -14,7 +14,7 @@
 
 #include <boost/spirit/include/classic_ast.hpp>
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

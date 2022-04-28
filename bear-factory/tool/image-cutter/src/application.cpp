@@ -18,10 +18,10 @@
 #include <sstream>
 #include <iomanip>
 
-#include <claw/png.hpp>
+#include <claw/graphic/png.hpp>
 #include <claw/jpeg.hpp>
 #include <claw/targa.hpp>
-#include <claw/bitmap.hpp>
+#include <claw/graphic/bitmap.hpp>
 #include <claw/assert.hpp>
 
 /*----------------------------------------------------------------------------*/

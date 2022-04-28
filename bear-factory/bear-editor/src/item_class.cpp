@@ -13,7 +13,7 @@
  */
 #include "bf/item_class.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 #include <claw/assert.hpp>
 #include <algorithm>
 

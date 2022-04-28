@@ -17,7 +17,7 @@
 
 #include <string>
 #include <list>
-#include <claw/dynamic_library.hpp>
+#include <claw/dynamic_library/dynamic_library.hpp>
 
 #include "bear/engine/class_export.hpp"
 

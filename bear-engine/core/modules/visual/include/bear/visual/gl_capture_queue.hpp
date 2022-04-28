@@ -4,7 +4,7 @@
 
 #include "bear/time/time.hpp"
 
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 
 #include <boost/signals2/signal.hpp>
 

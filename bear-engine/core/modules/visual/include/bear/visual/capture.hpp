@@ -2,7 +2,7 @@
 
 #include "bear/visual/class_export.hpp"
 
-#include <claw/image.hpp>
+#include <claw/graphic/image.hpp>
 
 #include <boost/function.hpp>
 #include <boost/signals2/connection.hpp>

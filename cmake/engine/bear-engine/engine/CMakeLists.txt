@@ -176,9 +176,9 @@ add_bear_engine_library(
   bear_universe
   bear_visual
   bear_debug
-  Claw::application
-  Claw::dynamic_library
-  Claw::tween
+  claw_application
+  claw_dynamic_library
+  claw_tween
   Boost::filesystem
   Boost::regex
   Boost::system

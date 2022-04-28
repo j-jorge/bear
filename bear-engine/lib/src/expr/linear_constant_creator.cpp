@@ -13,7 +13,7 @@
  */
 #include "bear/generic_items/expr/linear_constant_creator.hpp"
 
-#include <claw/logger.hpp>
+#include <claw/logger/logger.hpp>
 
 BASE_ITEM_EXPORT( linear_constant_creator, bear )
 
