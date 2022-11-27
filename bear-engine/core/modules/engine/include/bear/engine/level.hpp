@@ -17,18 +17,20 @@
 #include <vector>
 
 #include "bear/engine/layer/gui_layer_stack.hpp"
-#include "bear/engine/layer/layer.hpp"
-#include "bear/engine/variable/var_map.hpp"
+//#include "bear/engine/layer/layer.hpp"
+//#include "bear/engine/variable/var_map.hpp"
 #include "bear/visual/screen.hpp"
+#include "bear/universe/const_item_handle.hpp"
 
 #include "bear/engine/class_export.hpp"
+#include "bear/engine/base_item.hpp"
 
 #include <claw/multi_type_map.hpp>
 #include <claw/meta/type_list.hpp>
 #include <claw/functional.hpp>
 #include <claw/iterator.hpp>
 
-#include <boost/signals2.hpp>
+//#include <boost/signals2.hpp>
 
 namespace bear
 {
@@ -37,6 +39,7 @@ namespace bear
     class base_variable;
     class level_globals;
     class level_loader;
+    class layer;
 
     /**
      * \brief One level in the game.
@@ -45,10 +48,10 @@ namespace bear
     class ENGINE_EXPORT level
     {
     private:
-      typedef layer::region_type region_type;
+    typedef int region_type;
       typedef std::map<universe::const_item_handle, universe::size_box_type>
       activity_map_type;
-      
+
       /** \brief The type of the list containing the layers on the level. */
       typedef std::vector<layer*> layer_vector;
 
@@ -77,12 +80,12 @@ namespace bear
       ~level();
 
       void start();
-      boost::signals2::connection on_started( boost::function<void ()> f );
+      //boost::signals2::connection on_started( boost::function<void ()> f );
       void stop();
 
       void progress( universe::time_type elapsed_time );
-      boost::signals2::connection
-        on_progress_done( boost::function<void ()> f );
+      // boost::signals2::connection
+      //   on_progress_done( boost::function<void ()> f );
 
       void render( visual::screen& screen ) const;
       visual::scene_element
@@ -130,7 +133,7 @@ namespace bear
       void set_ears( universe::item_handle ears );
 
       universe::position_type screen_to_level( visual::position_type p ) const;
-      
+
       void get_level_variable( base_variable& val ) const;
       void set_level_variable( const base_variable& val );
       bool level_variable_exists( const base_variable& val ) const;
@@ -199,7 +202,7 @@ namespace bear
       unsigned int m_paused;
 
       /** \brief Variables global to the level. */
-      var_map m_level_variables;
+      //var_map m_level_variables;
 
       /** \brief Tell to render the whole level in the screen. */
       bool m_overview_activated;
@@ -208,11 +211,11 @@ namespace bear
       universe::item_handle m_ears;
 
       /** \brief The signal emitted when the level starts. */
-      boost::signals2::signal<void ()> m_started_signal;
+      // boost::signals2::signal<void ()> m_started_signal;
 
-      /** \brief The signal emitted when the progress of the whole level is
-          done. */
-      boost::signals2::signal<void ()> m_progress_done_signal;
+      // /** \brief The signal emitted when the progress of the whole level is
+      //     done. */
+      // boost::signals2::signal<void ()> m_progress_done_signal;
 
     }; // class level
   } // namespace engine

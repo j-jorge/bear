@@ -5,13 +5,13 @@
  * for each input event.
  */
 
-#include "input/input_listener.hpp"
-#include "input/input_status.hpp"
-#include "input/mouse.hpp"
-#include "input/system.hpp"
+#include <bear/input/input_listener.hpp>
+#include <bear/input/input_status.hpp>
+#include <bear/input/mouse.hpp>
+#include <bear/input/system.hpp>
 
-#include "visual/scene_sprite.hpp"
-#include "visual/screen.hpp"
+#include <bear/visual/scene_sprite.hpp>
+#include <bear/visual/screen.hpp>
 
 #include <fstream>
 
@@ -87,7 +87,7 @@ public:
   {
     return m_mouse_position;
   }
-  
+
 protected:
   /**
    * \brief Displays the details of a pressed keyboard key.
@@ -96,6 +96,7 @@ protected:
   virtual bool key_pressed( const bear::input::key_info& key )
   {
     std::cout << "keyboard key pressed: " << key << '\n';
+    return false;
   }
 
   /**
@@ -105,6 +106,7 @@ protected:
   virtual bool key_released( const bear::input::key_info& key )
   {
     std::cout << "keyboard key released: " << key << '\n';
+    return false;
   }
 
   /**
@@ -114,6 +116,7 @@ protected:
   virtual bool char_pressed( const bear::input::key_info& key )
   {
     std::cout << "character pressed: " << key << '\n';
+    return false;
   }
 
   /**
@@ -126,6 +129,7 @@ protected:
   {
     std::cout << "joystick #" << joy_index << " button pressed: "
               << bear::input::joystick::get_name_of(button) << '\n';
+    return false;
   }
 
   /**
@@ -138,6 +142,7 @@ protected:
   {
     std::cout << "joystick #" << joy_index << " button released: "
               << bear::input::joystick::get_name_of(button) << '\n';
+    return false;
   }
 
   /**
@@ -153,6 +158,7 @@ protected:
     std::cout << "mouse button pressed: "
               << bear::input::mouse::get_name_of(button) << " at x="
               << pos.x << " y=" << pos.y << '\n';
+    return false;
   }
 
   /**
@@ -168,6 +174,7 @@ protected:
     std::cout << "mouse button released: "
               << bear::input::mouse::get_name_of(button) << " at x="
               << pos.x << " y=" << pos.y << '\n';
+    return false;
   }
 
   /**
@@ -180,6 +187,7 @@ protected:
     std::cout << "mouse moving at x=" << pos.x << " y=" << pos.y << '\n';
 
     m_mouse_position = pos;
+    return false;
   }
 
   /**
@@ -189,6 +197,7 @@ protected:
   virtual bool finger_action( const bear::input::finger_event& event )
   {
     std::cout << "finger action: " << event << '\n';
+    return false;
   }
 
 private:
@@ -281,7 +290,7 @@ bear::visual::sprite load_sprite
   // Then we create a texture from the loaded image.
   bear::visual::image texture( image );
 
-  // And we build a sprite from this texture. 
+  // And we build a sprite from this texture.
   return bear::visual::sprite
     ( /* The texture of which the sprite is part of. */
       texture,
@@ -298,7 +307,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   bear::visual::sprite cursor

@@ -1,0 +1,10 @@
+add_executable(
+  05-keyboard
+  ${BEAR_ROOT}/bear-engine/doc/examples/05-keyboard/main.cpp
+)
+target_link_libraries(
+  05-keyboard
+  bear_input
+  bear_time
+  bear_visual
+)

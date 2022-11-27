@@ -11,11 +11,11 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/screen.hpp"
-#include "audio/sound_manager.hpp"
-#include "time/time.hpp"
+#include <bear/visual/screen.hpp>
+#include <bear/audio/sound_manager.hpp>
+#include <bear/time/time.hpp>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 #include <fstream>
 
@@ -101,7 +101,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   // Sounds must be accessed through a sound manager. It will handle the loading
@@ -112,7 +112,7 @@ void run_example()
   // it.
   load_sound( sound_manager, "lava.ogg", "lava" );
   load_sound( sound_manager, "acid_burn.ogg", "acid" );
-    
+
   std::cout << "Sound 'lava.ogg' by Michel Baradari. See "
     "http://opengameart.org/content/lava-splash.\n"
     "Sound 'acid_burn.ogg' by mikhog, based on work by Micher Bardari. See "
@@ -129,7 +129,7 @@ void run_example()
         sound_manager.play_sound( "lava" );
       else if ( lottery < 0.6 )
         sound_manager.play_sound( "acid" );
-        
+
       // wait 1 second before the next sound.
       bear::systime::sleep( 1000 );
     }

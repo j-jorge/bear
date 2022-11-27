@@ -1,0 +1,9 @@
+add_executable(
+  08-music
+  ${BEAR_ROOT}/bear-engine/doc/examples/08-music/main.cpp
+)
+target_link_libraries(
+  08-music
+  bear_audio
+  bear_visual
+)

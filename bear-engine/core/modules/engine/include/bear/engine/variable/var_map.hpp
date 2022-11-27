@@ -141,6 +141,11 @@ namespace bear
   } // namespace engine
 } // namespace bear
 
+extern template
+class claw::multi_type_map<std::string, bear::engine::var_types>;
+extern template
+class claw::multi_type_map<std::string, bear::engine::var_map::signal_types>;
+
 #include "bear/engine/variable/impl/var_map.tpp"
 
 #endif // __ENGINE_VAR_MAP_HPP__

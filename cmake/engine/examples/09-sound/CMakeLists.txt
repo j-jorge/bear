@@ -1,0 +1,10 @@
+add_executable(
+  09-sound
+  ${BEAR_ROOT}/bear-engine/doc/examples/09-sound/main.cpp
+)
+target_link_libraries(
+  09-sound
+  bear_audio
+  bear_time
+  bear_visual
+)

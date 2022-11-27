@@ -1,0 +1,9 @@
+add_executable(
+  06-mouse
+  ${BEAR_ROOT}/bear-engine/doc/examples/06-mouse/main.cpp
+)
+target_link_libraries(
+  06-mouse
+  bear_input
+  bear_visual
+)

@@ -11,8 +11,9 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/screen.hpp"
-#include "SDL2/SDL.h"
+#include <bear/visual/screen.hpp>
+
+#include <SDL2/SDL.h>
 
 /**
  * This global variable is observed in the main loop in order to exit the

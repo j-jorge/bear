@@ -12,11 +12,11 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/font/font_manager.hpp"
-#include "visual/scene_writing.hpp"
-#include "visual/screen.hpp"
+#include <bear/visual/font/font_manager.hpp>
+#include <bear/visual/scene_writing.hpp>
+#include <bear/visual/screen.hpp>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 #include <fstream>
 
@@ -119,7 +119,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   const bear::visual::writing writing

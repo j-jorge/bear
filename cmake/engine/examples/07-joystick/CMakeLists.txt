@@ -1,0 +1,10 @@
+add_executable(
+  07-joystick
+  ${BEAR_ROOT}/bear-engine/doc/examples/07-joystick/main.cpp
+)
+target_link_libraries(
+  07-joystick
+  bear_input
+  bear_time
+  bear_visual
+)

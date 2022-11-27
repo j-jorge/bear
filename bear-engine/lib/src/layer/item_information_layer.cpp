@@ -16,6 +16,7 @@
 #include "bear/engine/level.hpp"
 #include "bear/engine/level_globals.hpp"
 #include "bear/engine/world.hpp"
+#include "bear/engine/layer/layer.hpp"
 
 #include <sstream>
 

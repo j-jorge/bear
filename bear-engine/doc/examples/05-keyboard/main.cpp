@@ -12,13 +12,13 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/screen.hpp"
-#include "visual/scene_sprite.hpp"
-#include "time/time.hpp"
-#include "input/system.hpp"
-#include "input/keyboard.hpp"
+#include <bear/visual/screen.hpp>
+#include <bear/visual/scene_sprite.hpp>
+#include <bear/time/time.hpp>
+#include <bear/input/system.hpp>
+#include <bear/input/keyboard.hpp>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 #include <fstream>
 
@@ -100,7 +100,7 @@ bear::visual::sprite load_sprite
   // Then we create a texture from the loaded image.
   bear::visual::image texture( image );
 
-  // And we build a sprite from this texture. 
+  // And we build a sprite from this texture.
   return bear::visual::sprite
     ( /* The texture of which the sprite is part of. */
       texture,
@@ -157,7 +157,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   const bear::visual::sprite sprite

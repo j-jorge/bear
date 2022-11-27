@@ -5,25 +5,25 @@
  * available in bear::gui.
  */
 
-#include "gui/button.hpp"
-#include "gui/checkbox.hpp"
-#include "gui/callback_function.hpp"
-#include "gui/horizontal_flow.hpp"
-#include "gui/multi_page.hpp"
-#include "gui/picture.hpp"
-#include "gui/radio_button.hpp"
-#include "gui/radio_group.hpp"
-#include "gui/slider.hpp"
-#include "gui/static_text.hpp"
-#include "gui/text_input.hpp"
+#include <bear/gui/button.hpp>
+#include <bear/gui/checkbox.hpp>
+#include <bear/gui/callback_function.hpp>
+#include <bear/gui/horizontal_flow.hpp>
+#include <bear/gui/multi_page.hpp>
+#include <bear/gui/picture.hpp>
+#include <bear/gui/radio_button.hpp>
+#include <bear/gui/radio_group.hpp>
+#include <bear/gui/slider.hpp>
+#include <bear/gui/static_text.hpp>
+#include <bear/gui/text_input.hpp>
 
-#include "input/input_status.hpp"
-#include "input/mouse.hpp"
-#include "input/system.hpp"
+#include <bear/input/input_status.hpp>
+#include <bear/input/mouse.hpp>
+#include <bear/input/system.hpp>
 
-#include "visual/font/font_manager.hpp"
-#include "visual/screen.hpp"
-#include "visual/scene_sprite.hpp"
+#include <bear/visual/font/font_manager.hpp>
+#include <bear/visual/screen.hpp>
+#include <bear/visual/scene_sprite.hpp>
 
 #include <fstream>
 
@@ -89,7 +89,7 @@ bear::visual::sprite load_sprite
   // Then we create a texture from the loaded image.
   bear::visual::image texture( image );
 
-  // And we build a sprite from this texture. 
+  // And we build a sprite from this texture.
   return bear::visual::sprite
     ( /* The texture of which the sprite is part of. */
       texture,
@@ -261,7 +261,7 @@ bear::gui::visual_component* create_radio_group()
   result->set_size
     ( std::numeric_limits<bear::gui::size_type>::max(),
       std::numeric_limits<bear::gui::size_type>::max() );
-  
+
   const bear::gui::size_type margin(10);
 
   result->add_button( create_radio_button("Option 3"), margin );
@@ -347,7 +347,7 @@ bear::gui::visual_component* create_multi_page()
   bear::gui::visual_component* const result( new bear::gui::visual_component );
   result->set_size
     ( previous->width() + next->width() + margin, 800 );
-  
+
   result->insert( previous );
   result->insert( next );
 
@@ -363,7 +363,7 @@ bear::gui::visual_component* create_multi_page()
     ( "Click the buttons below to scroll this very long text. "
       "This component will help you to present long textual descriptions to the"
       " player." );
-  
+
   result->insert( multi_page );
   result->fit();
 
@@ -442,7 +442,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   bear::visual::sprite cursor

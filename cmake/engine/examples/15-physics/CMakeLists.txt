@@ -1,0 +1,10 @@
+add_executable(
+  15-physics
+  ${BEAR_ROOT}/bear-engine/doc/examples/15-physics/main.cpp
+)
+target_link_libraries(
+  15-physics
+  bear_input
+  bear_universe
+  bear_visual
+)

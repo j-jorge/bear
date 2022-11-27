@@ -12,13 +12,13 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/animation.hpp"
-#include "visual/screen.hpp"
-#include "visual/scene_sprite.hpp"
+#include <bear/visual/animation.hpp>
+#include <bear/visual/screen.hpp>
+#include <bear/visual/scene_sprite.hpp>
 
-#include "time/time.hpp"
+#include <bear/time/time.hpp>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 #include <fstream>
 
@@ -136,7 +136,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   // This is the animation we will display.

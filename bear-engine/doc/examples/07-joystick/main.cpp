@@ -15,13 +15,13 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/screen.hpp"
-#include "visual/scene_sprite.hpp"
-#include "time/time.hpp"
-#include "input/system.hpp"
-#include "input/joystick.hpp"
+#include <bear/visual/screen.hpp>
+#include <bear/visual/scene_sprite.hpp>
+#include <bear/time/time.hpp>
+#include <bear/input/system.hpp>
+#include <bear/input/joystick.hpp>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 #include <fstream>
 
@@ -102,7 +102,7 @@ bear::visual::sprite load_sprite
   // Then we create a texture from the loaded image.
   bear::visual::image texture( image );
 
-  // And we build a sprite from this texture. 
+  // And we build a sprite from this texture.
   return bear::visual::sprite
     ( /* The texture of which the sprite is part of. */
       texture,
@@ -134,7 +134,7 @@ void transform_sprite_with_joystick
 
   // The angle of the rotation.
   const double rotation_delta(0.1);
-  
+
   // bear::input::joystick has both the begin() and end() functions required to
   // use range-based loops. The value type of the returned iterator is a code
   // identifying a pressed button.
@@ -190,7 +190,7 @@ void transform_sprite_with_joystick
       }
 
   bear::visual::size_box_type s( sprite.get_size() * scale );
-  
+
   if ( (s.x > 10) && (s.y > 10) )
     sprite.set_size( s );
 }
@@ -205,7 +205,7 @@ void run_example()
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   bear::visual::sprite sprite

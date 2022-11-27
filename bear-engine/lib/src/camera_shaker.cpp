@@ -18,6 +18,7 @@
 
 #include "bear/engine/level.hpp"
 #include "bear/engine/export.hpp"
+#include "bear/engine/layer/layer.hpp"
 
 BASE_ITEM_EXPORT( camera_shaker, bear )
 

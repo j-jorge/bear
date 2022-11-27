@@ -1,0 +1,9 @@
+add_executable(
+  11-animation
+  ${BEAR_ROOT}/bear-engine/doc/examples/11-animation/main.cpp
+)
+target_link_libraries(
+  11-animation
+  bear_visual
+  bear_time
+)

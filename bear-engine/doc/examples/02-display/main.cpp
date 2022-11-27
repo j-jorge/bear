@@ -12,10 +12,10 @@
  * system to detect when the user wants to quit the program.
  */
 
-#include "visual/screen.hpp"
-#include "visual/scene_rectangle.hpp"
+#include <bear/visual/screen.hpp>
+#include <bear/visual/scene_rectangle.hpp>
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 /**
  * This global variable is observed in the main loop in order to exit the
@@ -71,7 +71,7 @@ int main( int argc, char* argv[] )
   // The engine does not support multiples windows yet, so be careful and be
   // sure to create only one of them.
   //
-  // As soon as the screen is created, a render thread is created 
+  // As soon as the screen is created, a render thread is created
   bear::visual::screen s( claw::math::coordinate_2d<unsigned int>(640, 480) );
 
   // Rendering is done using scene elements, representing something to be drawn

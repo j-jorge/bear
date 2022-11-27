@@ -10,16 +10,16 @@
  * space ship to shoot lasers that can break the asteroids.
  */
 
-#include "input/input_listener.hpp"
-#include "input/input_status.hpp"
-#include "input/mouse.hpp"
-#include "input/system.hpp"
-#include "time/time.hpp"
-#include "universe/collision_info.hpp"
-#include "universe/physical_item.hpp"
-#include "universe/world.hpp"
-#include "visual/scene_sprite.hpp"
-#include "visual/screen.hpp"
+#include <bear/input/input_listener.hpp>
+#include <bear/input/input_status.hpp>
+#include <bear/input/mouse.hpp>
+#include <bear/input/system.hpp>
+#include <bear/time/time.hpp>
+#include <bear/universe/collision_info.hpp>
+#include <bear/universe/physical_item.hpp>
+#include <bear/universe/world.hpp>
+#include <bear/visual/scene_sprite.hpp>
+#include <bear/visual/screen.hpp>
 
 #include <fstream>
 
@@ -51,7 +51,7 @@ bear::visual::sprite load_sprite
   // Then we create a texture from the loaded image.
   bear::visual::image texture( image );
 
-  // And we build a sprite from this texture. 
+  // And we build a sprite from this texture.
   return bear::visual::sprite
     ( /* The texture of which the sprite is part of. */
       texture,
@@ -286,7 +286,7 @@ private:
   {
     m_ship_sprite.set_opacity( 0 );
     set_artificial( true );
-    
+
     stop_in_world_center();
   }
 
@@ -304,7 +304,7 @@ private:
     // And it goes a little bit faster than the ship.
     laser_shot->set_speed
       ( get_x_axis() * std::max( 200.0, 2 * get_speed().length() ) );
-    
+
     get_owner().register_item( laser_shot );
   }
 
@@ -323,6 +323,10 @@ private:
       m_left_jet_is_activated = true;
     else if ( key.get_code() == bear::input::keyboard::kc_space )
       shoot();
+    else
+      return false;
+
+    return true;
   }
 
   bool key_released( const bear::input::key_info& key ) override
@@ -333,6 +337,10 @@ private:
       m_right_jet_is_activated = false;
     else if ( key.is_right() )
       m_left_jet_is_activated = false;
+    else
+      return false;
+
+    return true;
   }
 
 };
@@ -351,7 +359,7 @@ public:
   asteroid()
     : asteroid( 1 )
   {
-    
+
   }
 
 private:
@@ -446,8 +454,8 @@ private:
     const bear::universe::position_type center
       ( get_left() + random_number() * get_width(),
         get_bottom() + random_number() * get_height() );
-        
-    result->set_center_of_mass( center ); 
+
+    result->set_center_of_mass( center );
 
     return result;
   }
@@ -502,18 +510,18 @@ public:
     bear::systime::milliseconds_type last_update
       ( bear::systime::get_date_ms() );
     const bear::systime::milliseconds_type time_step( 1000.0 / 30 );
- 
+
     while ( !m_quit )
       {
         const bear::systime::milliseconds_type now
           ( bear::systime::get_date_ms() );
-      
+
         if ( now - last_update < time_step )
           bear::systime::sleep( time_step - ( now - last_update ) );
 
         update_inputs();
         update_world( double( now - last_update ) / 1000 );
-        
+
         last_update = now;
 
         render();
@@ -547,7 +555,12 @@ private:
   bool key_pressed( const bear::input::key_info& key ) override
   {
     if ( key.is_escape() )
-      m_quit = true;
+      {
+        m_quit = true;
+        return true;
+      }
+
+    return false;
   }
 
   void update_inputs()
@@ -586,7 +599,7 @@ private:
           m_world.release_item( item );
           delete item;
         }
-        
+
   }
 
   void loop_entities_over_world()

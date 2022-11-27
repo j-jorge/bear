@@ -13,17 +13,17 @@
  */
 #include "bear/engine/level.hpp"
 
-#include <algorithm>
-#include <claw/functional.hpp>
+//#include <algorithm>
+//#include <claw/functional.hpp>
 
-#include "bear/engine/game.hpp"
-#include "bear/engine/level_globals.hpp"
-#include "bear/engine/layer/gui_layer.hpp"
-#include "bear/engine/variable/base_variable.hpp"
-#include "bear/universe/const_item_handle.hpp"
+//#include "bear/engine/game.hpp"
+//#include "bear/engine/level_globals.hpp"
+//#include "bear/engine/layer/gui_layer.hpp"
+//#include "bear/engine/variable/base_variable.hpp"
+//#include "bear/universe/const_item_handle.hpp"
 
-#include "bear/debug/scoped_time_measure.hpp"
-
+//#include "bear/debug/scoped_time_measure.hpp"
+#if 0
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Constructor.
@@ -77,7 +77,7 @@ void bear::engine::level::start()
 
   play_music();
 
-  m_started_signal();
+  //m_started_signal();
 } // level::start()
 
 /*----------------------------------------------------------------------------*/
@@ -85,11 +85,11 @@ void bear::engine::level::start()
  * \brief Adds a function to call when the start of the level is done.
  * \param f The function to call.
  */
-boost::signals2::connection
-bear::engine::level::on_started( boost::function<void ()> f )
-{
-  return m_started_signal.connect( f );
-} // bear::engine::level::on_started()
+// boost::signals2::connection
+// bear::engine::level::on_started( boost::function<void ()> f )
+// {
+//   return m_started_signal.connect( f );
+// } // bear::engine::level::on_started()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -132,7 +132,7 @@ void bear::engine::level::progress( universe::time_type elapsed_time )
 
   m_gui.progress( elapsed_time );
 
-  m_progress_done_signal();
+  ///  m_progress_done_signal();
 } // level::progress()
 
 /*----------------------------------------------------------------------------*/
@@ -140,11 +140,11 @@ void bear::engine::level::progress( universe::time_type elapsed_time )
  * \brief Adds a function to call when the progress of the level is over.
  * \param f The function to call.
  */
-boost::signals2::connection
-bear::engine::level::on_progress_done( boost::function<void ()> f )
-{
-  return m_progress_done_signal.connect( f );
-} // bear::engine::level::on_progress_done()
+// boost::signals2::connection
+// bear::engine::level::on_progress_done( boost::function<void ()> f )
+// {
+//   return m_progress_done_signal.connect( f );
+// } // bear::engine::level::on_progress_done()
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -628,7 +628,8 @@ void bear::engine::level::render_layers
 ( visual::screen& screen, const universe::rectangle_type& view ) const
 {
   const double r_x = (double)screen.get_size().x / view.width();
-  const double r_y = (double)screen.get_size().y / view.height();
+  const double r_y
+    = (double)screen.get_size().y / view.height();
 
   for (unsigned int i=0; i!=m_layers.size(); ++i)
     {
@@ -867,3 +868,4 @@ void bear::engine::level::set_sound_distance_unit() const
 
   m_level_globals->set_distance_unit( u );
 } // level::set_sound_distance_unit()
+#endif

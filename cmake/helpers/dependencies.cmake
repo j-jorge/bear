@@ -9,9 +9,12 @@ find_package(SDL2_mixer REQUIRED)
 
 find_package(Intl REQUIRED)
 
-add_library(Intl::Intl INTERFACE IMPORTED)
-target_link_libraries(Intl::Intl INTERFACE ${Intl_LIBRARIES})
-target_include_directories(Intl::Intl INTERFACE ${Intl_INCLUDE_DIR})
+if(NOT TARGET Intl::Intl)
+  # Imported target Intl::Intl is not available before CMake 3.20.
+  add_library(Intl::Intl INTERFACE IMPORTED)
+  target_link_libraries(Intl::Intl INTERFACE ${Intl_LIBRARIES})
+  target_include_directories(Intl::Intl INTERFACE ${Intl_INCLUDE_DIR})
+endif()
 
 find_package(Gettext)
 

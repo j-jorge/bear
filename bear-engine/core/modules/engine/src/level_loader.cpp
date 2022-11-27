@@ -26,6 +26,7 @@
 #include "bear/engine/libraries_pool.hpp"
 #include "bear/engine/sprite_loader.hpp"
 #include "bear/engine/i18n/translator.hpp"
+#include "bear/engine/layer/layer.hpp"
 #include "bear/engine/layer/layer_creator.hpp"
 #include "bear/engine/layer/layer_factory.hpp"
 #include "bear/engine/loader/item_loader_map.hpp"

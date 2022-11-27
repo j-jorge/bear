@@ -15,6 +15,10 @@
 
 #include <claw/multi_type_map_visitor.hpp>
 
+template class claw::multi_type_map<std::string, bear::engine::var_types>;
+template
+class claw::multi_type_map<std::string, bear::engine::var_map::signal_types>;
+
 /*----------------------------------------------------------------------------*/
 /**
  * \brief Call delete on a pointer to boost::signal.

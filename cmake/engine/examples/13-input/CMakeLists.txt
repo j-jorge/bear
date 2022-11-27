@@ -1,0 +1,9 @@
+add_executable(
+  13-input
+  ${BEAR_ROOT}/bear-engine/doc/examples/13-input/main.cpp
+)
+target_link_libraries(
+  13-input
+  bear_input
+  bear_visual
+)
