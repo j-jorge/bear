@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 set( BEAR_ROOT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../../" )
 set(CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -pedantic -fdiagnostics-color=always")
+  "${CMAKE_CXX_FLAGS} -Wall -pedantic -fdiagnostics-color=always")
 
 # The engine comes with some CMake scripts to ease its configuration and usage.
 # These scripts are in the directory below and must be assigned to
