@@ -15,7 +15,7 @@
 
 #include <fstream>
 #include <claw/exception.hpp>
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**

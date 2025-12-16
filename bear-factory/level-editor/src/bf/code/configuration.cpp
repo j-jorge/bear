@@ -15,7 +15,7 @@
 
 #include "bf/path_configuration.hpp"
 
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <fstream>
 #include <sstream>
 

@@ -13,7 +13,7 @@
  */
 
 #include <boost/filesystem/path.hpp>
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/directory.hpp>
 #include <queue>
 
 /*----------------------------------------------------------------------------*/

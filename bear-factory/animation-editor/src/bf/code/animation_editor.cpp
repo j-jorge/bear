@@ -27,7 +27,7 @@
 #include <claw/logger.hpp>
 
 #include <limits>
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 
 /*----------------------------------------------------------------------------*/
