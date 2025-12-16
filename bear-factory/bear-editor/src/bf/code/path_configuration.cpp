@@ -18,7 +18,7 @@
 #include <claw/system_info.hpp>
 #include <claw/configuration_file.hpp>
 
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <fstream>
 #include <sstream>
 #include <limits>

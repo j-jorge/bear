@@ -14,7 +14,7 @@
 #ifndef __BF_ITEM_CLASS_POOL_HPP__
 #define __BF_ITEM_CLASS_POOL_HPP__
 
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <map>
 
 #include "bf/item_class.hpp"

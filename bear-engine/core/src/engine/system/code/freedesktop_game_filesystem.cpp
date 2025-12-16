@@ -15,7 +15,7 @@
 
 #include <claw/logger.hpp>
 #include <claw/system_info.hpp>
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 
 /*----------------------------------------------------------------------------*/
 /**
