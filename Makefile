@@ -1,5 +1,5 @@
 CFLAGS=-Wall -Wno-sign-compare -fdiagnostics-color=always -fext-numeric-literals
-CXXFLAGS= $(CFLAGS) -std=c++11
+CXXFLAGS= $(CFLAGS)
 LDFLAGS=
 
 CMAKE_BUILD_TYPE=
