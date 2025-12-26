@@ -120,8 +120,6 @@ void bear::engine::game_local_client::run()
       if ( m_current_level == NULL )
         load_level( m_game_description.start_level() );
 
-      m_screen->unpause();
-      
       run_level();
 
       end_game();
