@@ -1,0 +1,380 @@
+# Georgian translation for bear-engine.
+# Copyright (C) 2026 bear-engine's authors.
+# This file is distributed under the same license as the bear-engine package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bear-engine\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-26 08:12+0100\n"
+"PO-Revision-Date: 2026-09-28 07:22+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1460
+msgid "'\n"
+msgstr "'\n"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1420
+msgid "--game-var-assignment: not a character."
+msgstr "--game-var-assignment: სიმბოლო არაა."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1436
+msgid "--set-game-var-bool: not a boolean"
+msgstr "--set-game-var-bool: ლოგიკური მნიშვნელობა არაა"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1426
+msgid "--set-game-var-int: not an integer"
+msgstr "--set-game-var-int: მთელი რიცხვი არაა"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1441
+msgid "--set-game-var-real: not a real number"
+msgstr "--set-game-var-real: რეალური რიცხვი არაა"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1431
+msgid "--set-game-var-uint: not an unsigned integer"
+msgstr "--set-game-var-uint: უნიშნო მთელი რიცხვი არაა"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1587
+msgid "Associates an identifier with this game."
+msgstr "იდენტიფიკატორის ასოცირება ამ თამაშთან."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1459
+msgid "Bad argument value: '"
+msgstr "არასწორი არგუმენტის მნიშვნელობა: '"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1575
+msgid ""
+"Changes the delimiter used in --set-game-var-<type> to separate the name and "
+"the value of the variable."
+msgstr ""
+"ცვლის პარამეტრში --set-game-var-<ტიპი>-ში გამოყენებულ ცვლადის სახელისა და "
+"მნიშვნელობის გამყოფს."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1537
+msgid "Engine's options:"
+msgstr "ძრავის პარამეტრები:"
+
+#: ../../../core/src/engine/code/game_description.cpp:125
+msgid "Path to a library containing items for the game."
+msgstr "ბილიკი ბიბლიოთეკამდე, რომელიც თამაშის ელემენტებს შეიცავს."
+
+#: ../../../core/src/engine/code/game_description.cpp:115
+msgid "Path to the directory containing the data of the game."
+msgstr "ბილიკი საქაღალდემდე, რომელიც თამაშის მონაცემებს შეიცავს."
+
+#: ../../../running_bear/code/running_bear.cpp:38
+msgid "Print this help screen and exit."
+msgstr "ამ დახმარების ეკრანის გამოტანა და გასვლა."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1602
+msgid "Prints the version of the engine and exit."
+msgstr "ძრავის ვერსიის გამოტანა და გასვლა."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1543
+msgid "Run the game in a window."
+msgstr "თამაშის ფანჯარაში გაშვება."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1542
+msgid "Runs the game in fullscreen mode."
+msgstr "გაუშვებს თამაშს სრულეკრანიან რეჟიმში."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1546
+msgid "Search the items in the game launcher."
+msgstr "ელემენტების ძებნა თამაშის გამშვებში."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1592
+msgid "Sets the limit of the number of frames per second."
+msgstr "დააყენებს წამში კადრების რაოდენობის ლიმიტს."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1562
+msgid "Sets the value of a boolean game variable."
+msgstr "დააყენებს თამაშის ლოგიკური ტიპის ცვლადის მნიშვნელობას."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1558
+msgid "Sets the value of a non negative integer game variable."
+msgstr ""
+"დააყენებს თამაშის არაუარყოფითი მთელი რიცხვის ტიპის ცვლადის მნიშვნელობას."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1566
+msgid "Sets the value of a real number game variable."
+msgstr "დააყენებს თამაშის რეალური რიცხვის ტიპის ცვლადის მნიშვნელობას."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1570
+msgid "Sets the value of a string game variable."
+msgstr "დააყენებს თამაშის სტრიქონის ტიპის ცვლადის მნიშვნელობას."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1554
+msgid "Sets the value of an integer game variable."
+msgstr "დააყენებს თამაშის მთელი რიცხვის ტიპის ცვლადის მნიშვნელობას."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1582
+msgid "Sets the value of the destination to which game statistics are sent."
+msgstr "დააყენებს თამაშის სტატისტიკის გაგზავნის სამიზნის მნიშვნელობას."
+
+#: ../../../core/src/engine/code/game_description.cpp:122
+msgid "Tells not to use the dumbest rendering procedure."
+msgstr "ეუბნება, რომ არ გამოიყენოს ყველაზე სულელი რენდერის პროცედურა."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1598
+msgid "Tells to do a rendering of the scene for each progress of the game."
+msgstr "ეუბნება, რომ გააკეთოს თამაშის მიმდინარეობის თითოეული სცენის რენდერი."
+
+#: ../../../core/src/engine/code/game_description.cpp:119
+msgid "Tells to use the dumbest rendering procedure."
+msgstr "ეუბნება, რომ გამოიყენოს ყველაზე სულელური რენდერის პროცედურა."
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1549
+msgid ""
+"The delay to apply to the network messages in term of game iterations. "
+"Default is 1."
+msgstr ""
+"დაყოვნება, რომელიც გამოიყენება ქსელური შეტყობინებებისთვის თამაშის "
+"გამეორებისას. ნაგულისხმევია 1."
+
+#: ../../../core/src/engine/code/game_description.cpp:111
+msgid "The height of the screen."
+msgstr "ეკრანის სიმაღლე."
+
+#: ../../../core/src/engine/code/game_description.cpp:105
+msgid "The margin around the camera in which we check for activity."
+msgstr "ზღვარი კამერის გარშემო, რომელსაც აქტივობაზე ვამოწმებთ."
+
+#: ../../../core/src/engine/code/game_description.cpp:100
+msgid "The name of the game."
+msgstr "თამაშის სახელი."
+
+#: ../../../core/src/engine/code/game_description.cpp:128
+msgid "The path of the first level to run."
+msgstr "პირველი დონის ბილიკი გასაშვებად."
+
+#: ../../../core/src/engine/code/game_description.cpp:108
+msgid "The width of the screen."
+msgstr "ეკრანის სიგანე."
+
+msgid "back"
+msgstr "უკან"
+
+msgid "backspace"
+msgstr "backspace"
+
+msgid "break"
+msgstr "break"
+
+#: ../../../core/src/input/code/joystick.cpp:108
+msgid "button"
+msgstr "ღილაკი"
+
+msgid "capslock"
+msgstr "capslock"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1577
+msgid "character"
+msgstr "სიმბოლო"
+
+msgid "delete"
+msgstr "წაშლა"
+
+msgid "down"
+msgstr "დაბლა"
+
+msgid "down left"
+msgstr "დაბლა მარცხნივ"
+
+msgid "down right"
+msgstr "დაბლა მარჯვნივ"
+
+msgid "end"
+msgstr "დასასრული"
+
+#: ../../../running_bear/code/running_bear.cpp:108
+msgid "engine_options"
+msgstr "ძრავის_პარამეტრები"
+
+msgid "escape"
+msgstr "escape"
+
+msgid "home"
+msgstr "home"
+
+msgid "insert"
+msgstr "insert"
+
+#: ../../../core/src/engine/code/game_description.cpp:106
+#: ../../../core/src/engine/code/game_description.cpp:109
+#: ../../../core/src/engine/code/game_description.cpp:112
+msgid "integer"
+msgstr "მთელი რიცხვი"
+
+msgid "invalid mouse code"
+msgstr "არასწორი თაგუნას კოდი"
+
+#: ../../../core/src/input/code/joystick_button.cpp:96
+msgid "joystick"
+msgstr "ჯოისტიკი"
+
+msgid "keypad *"
+msgstr "* ციფრულ კლავიატურაზე"
+
+msgid "keypad +"
+msgstr "+ ციფრულ კლავიატურაზე"
+
+msgid "keypad -"
+msgstr "- ციფრულ კლავიატურაზე"
+
+msgid "keypad ."
+msgstr ". ციფრულ კლავიატურაზე."
+
+msgid "keypad /"
+msgstr "/ ციფრულ კლავიატურაზე"
+
+msgid "keypad 0"
+msgstr "0 ციფრულ კლავიატურაზე"
+
+msgid "keypad 1"
+msgstr "1 ციფრულ კლავიატურაზე"
+
+msgid "keypad 2"
+msgstr "2 ციფრულ კლავიატურაზე"
+
+msgid "keypad 3"
+msgstr "3 ციფრულ კლავიატურაზე"
+
+msgid "keypad 4"
+msgstr "4 ციფრულ კლავიატურაზე"
+
+msgid "keypad 5"
+msgstr "5 ციფრულ კლავიატურაზე"
+
+msgid "keypad 6"
+msgstr "6 ციფრულ კლავიატურაზე"
+
+msgid "keypad 7"
+msgstr "7 ციფრულ კლავიატურაზე"
+
+msgid "keypad 8"
+msgstr "8 ციფრულ კლავიატურაზე"
+
+msgid "keypad 9"
+msgstr "9 ციფრულ კლავიატურაზე"
+
+msgid "keypad ="
+msgstr "= ციფრულ კლავიატურაზე"
+
+msgid "keypad enter"
+msgstr "Enter ციფრულ კლავიატურაზე"
+
+msgid "left"
+msgstr "მარცხნივ"
+
+msgid "left alt"
+msgstr "მარცხენა Alt"
+
+msgid "left click"
+msgstr "მარცხენა წკაპი"
+
+msgid "left control"
+msgstr "მარცხენა Ctrl"
+
+msgid "left shift"
+msgstr "მარცხენა Shift"
+
+msgid "left super"
+msgstr "left super"
+
+msgid "menu"
+msgstr "მენიუ"
+
+msgid "middle click"
+msgstr "შუა წკაპი"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1555
+#: ../../../core/src/engine/code/game_local_client.cpp:1559
+#: ../../../core/src/engine/code/game_local_client.cpp:1563
+#: ../../../core/src/engine/code/game_local_client.cpp:1567
+#: ../../../core/src/engine/code/game_local_client.cpp:1571
+msgid "name=value"
+msgstr "სახელი=მნიშვნელობა"
+
+msgid "new line"
+msgstr "ახალი ხაზი"
+
+msgid "numlock"
+msgstr "NumLock"
+
+msgid "page down"
+msgstr "page down"
+
+msgid "page up"
+msgstr "page up"
+
+#: ../../../core/src/engine/code/game_description.cpp:116
+#: ../../../core/src/engine/code/game_description.cpp:126
+msgid "path"
+msgstr "ბილიკი"
+
+msgid "pause"
+msgstr "შეჩერება"
+
+msgid "print screen"
+msgstr "print screen"
+
+msgid "right"
+msgstr "მარჯვენა"
+
+msgid "right alt"
+msgstr "მარჯვენა Alt"
+
+msgid "right click"
+msgstr "მარჯვენა წკაპი"
+
+msgid "right control"
+msgstr "მარჯვენა Ctrl"
+
+msgid "right shift"
+msgstr "მარჯვენა Shift"
+
+msgid "right super"
+msgstr "მარჯვენა Super"
+
+msgid "scrolllock"
+msgstr "scrolllock"
+
+msgid "space"
+msgstr "ჰარე"
+
+#: ../../../core/src/engine/code/game_description.cpp:101
+#: ../../../core/src/engine/code/game_description.cpp:129
+msgid "string"
+msgstr "სტრიქონი"
+
+msgid "system"
+msgstr "system"
+
+msgid "tab"
+msgstr "tab"
+
+msgid "up"
+msgstr "ჩართულია"
+
+msgid "up left"
+msgstr "მაღლა მარცხნივ"
+
+msgid "up right"
+msgstr "მაღლა მარჯვნივ"
+
+#: ../../../core/src/engine/code/game_local_client.cpp:1551
+msgid "value"
+msgstr "მნიშვნელობა"
+
+msgid "wheel down"
+msgstr "ბორბალი დაბლა"
+
+msgid "wheel up"
+msgstr "ბორბალი მაღლა"
