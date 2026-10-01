@@ -1,0 +1,5376 @@
+# Georgian translation for bear-factory.
+# Copyright (C) 2026 bear-factory's authors.
+# This file is distributed under the same license as the bear-factory package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bear-factory\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-26 08:12+0100\n"
+"PO-Revision-Date: 2026-10-01 11:26+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1774
+#, c-format
+msgid ""
+"\n"
+"%.2f Mb in %d images."
+msgstr ""
+"\n"
+"%.2f მბ %d გამოსახულებაში."
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1362
+#, c-format
+msgid ""
+"\n"
+"%s"
+msgstr ""
+"\n"
+"%s"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1367
+#, c-format
+msgid ""
+"\n"
+"%s: %s"
+msgstr ""
+"\n"
+"%s: %s"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1753
+#, c-format
+msgid " has %d items.\n"
+msgstr " აქვს %d ელემენტი.\n"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1746
+#, c-format
+msgid "%d layers:\n"
+msgstr "%d ფენა:\n"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1350
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:572
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:319
+#, c-format
+msgid "%s: %s\n"
+msgstr "%s:%s\n"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:565
+#, c-format
+msgid "%s: no description available"
+msgstr "%s: აღწერა ხელმისაწვდომი არაა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:300
+#: ../../../level-editor/src/bf/code/main_frame.cpp:331
+#: ../../../model-editor/src/bf/code/main_frame.cpp:224
+msgid "&About"
+msgstr "&შესახებ"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:646
+msgid "&Active layer\tF3"
+msgstr "&აქტიური ფენა\tF3"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:563
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:802
+msgid "&Align"
+msgstr "&სწორება"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:200
+msgid "&Animation"
+msgstr "&ანიმაცია"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:577
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:804
+msgid "&Arrange"
+msgstr "&დალაგება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1280
+msgid "&Backward\tCtrl+PAGEUP"
+msgstr "&უკან\tCtrl+PAGEUP"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:623
+msgid "&Bottom"
+msgstr "ქ&ვედა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:830
+msgid "&Bright background"
+msgstr "&კაშკაშა ფონი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:702
+msgid "&Bright background\tB"
+msgstr "&კაშკაშა ფონი\tB"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:255
+msgid "&Change all durations..."
+msgstr "&ყველა ხანგრძლივობის შეცვლა..."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:271
+#: ../../../level-editor/src/bf/code/main_frame.cpp:272
+msgid "&Class tree"
+msgstr "&კლასების ხე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:523
+#: ../../../model-editor/src/bf/code/model_frame.cpp:514
+msgid "&Close"
+msgstr "&დახურვა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:225
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:771
+#: ../../../model-editor/src/bf/code/model_frame.cpp:602
+msgid "&Compile"
+msgstr "&კომპილაცია"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:275
+msgid "&Compile\tF9"
+msgstr "&კომპილაცია\tF9"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:277
+#: ../../../level-editor/src/bf/code/main_frame.cpp:306
+#: ../../../model-editor/src/bf/code/main_frame.cpp:201
+msgid "&Configuration..."
+msgstr "&კონფიგურაცია..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:682
+msgid "&Configure on the selection\tAlt+G"
+msgstr "&მონიშნულზე მორგება\tAlt+G"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:685
+msgid "&Configure...\tCtrl+Shift+G"
+msgstr "&მორგება...\tCtrl+Shift+G"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:546
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:782
+#: ../../../model-editor/src/bf/code/model_frame.cpp:536
+#: ../../../model-editor/src/bf/code/model_frame.cpp:607
+msgid "&Copy"
+msgstr "&კოპირება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:787
+msgid "&Delete"
+msgstr "&წაშლა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:550
+#: ../../../model-editor/src/bf/code/model_frame.cpp:540
+msgid "&Delete\tDEL"
+msgstr "&წაშლა\tDEL"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:546
+msgid "&Delete snapshot\tCTRL+DEL"
+msgstr "&სწრაფი ასლის წაშლა\tCTRL+DEL"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:201
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:471
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:473
+#: ../../../model-editor/src/bf/code/model_frame.cpp:485
+#: ../../../model-editor/src/bf/code/model_frame.cpp:486
+msgid "&Edit"
+msgstr "ჩასწორ&ება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:850
+msgid "&Edit mode"
+msgstr "&ჩასწორების რეჟიმი"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:282
+#: ../../../level-editor/src/bf/code/main_frame.cpp:313
+#: ../../../model-editor/src/bf/code/main_frame.cpp:206
+msgid "&Exit"
+msgstr "&გასვლა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1284
+msgid "&Forward\tCtrl+PAGEDOWN"
+msgstr "&წინ\tCtrl+PAGEDOWN"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:710
+msgid "&Global view\tV"
+msgstr "&გლობალური ხედი\tV"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:694
+msgid "&Graphic\tG"
+msgstr "&გრაფიკა\tG"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:564
+msgid "&Graphic\tg"
+msgstr "&გრაფიკა\tg"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:821
+#: ../../../model-editor/src/bf/code/model_frame.cpp:622
+msgid "&Graphism"
+msgstr "&გრაფიზმი"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:202
+#: ../../../level-editor/src/bf/code/main_frame.cpp:249
+#: ../../../model-editor/src/bf/code/main_frame.cpp:175
+msgid "&Help"
+msgstr "&დახმარება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:626
+msgid "&Horizontal center"
+msgstr "&ჰორიზონტალური ცენტრი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:568
+msgid "&Horizontally"
+msgstr "&ჰორიზონტალურად"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:815
+msgid "&Identifiers"
+msgstr "&იდენტიფიკატორები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:696
+msgid "&Item identifiers\tI"
+msgstr "&ელემენტის იდენტიფიკატორები\tI"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:480
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:482
+msgid "&Layer"
+msgstr "&ფენა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:614
+msgid "&Left"
+msgstr "მარ&ცხენა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:467
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:468
+#: ../../../level-editor/src/bf/code/main_frame.cpp:248
+msgid "&Level"
+msgstr "&დონე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:812
+msgid "&Magnetism"
+msgstr "&მაგნეტიზმი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:676
+msgid "&Magnetism\tCtrl+M"
+msgstr "&მაგნეტიზმი\tCtrl+M"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:174
+#: ../../../model-editor/src/bf/code/model_frame.cpp:481
+#: ../../../model-editor/src/bf/code/model_frame.cpp:482
+msgid "&Model"
+msgstr "&მოდელი"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:216
+#: ../../../level-editor/src/bf/code/main_frame.cpp:263
+msgid "&New"
+msgstr "&ახალი"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:544
+msgid "&New snapshot\tCTRL+INS"
+msgstr "&ახალი სწრაფი ასლი\tCTRL+INS"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:269
+#: ../../../level-editor/src/bf/code/main_frame.cpp:299
+#: ../../../model-editor/src/bf/code/main_frame.cpp:197
+msgid "&New..."
+msgstr "&ახალი..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:800
+msgid "&Offset"
+msgstr "&წანაცვლება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:584
+msgid "&Offset..."
+msgstr "&წანაცვლება..."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:295
+#: ../../../level-editor/src/bf/code/main_frame.cpp:326
+#: ../../../model-editor/src/bf/code/main_frame.cpp:219
+msgid "&Online documentation"
+msgstr "&ონლაინ-დოკუმენტაცია"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:218
+#: ../../../level-editor/src/bf/code/main_frame.cpp:265
+msgid "&Open"
+msgstr "&გახსნა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:270
+#: ../../../level-editor/src/bf/code/main_frame.cpp:300
+#: ../../../model-editor/src/bf/code/main_frame.cpp:198
+msgid "&Open..."
+msgstr "&გახსნა..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:784
+#: ../../../model-editor/src/bf/code/model_frame.cpp:609
+msgid "&Paste"
+msgstr "&ჩასმა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:519
+msgid "&Properties"
+msgstr "&თვისებები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:773
+msgid "&Quick compile"
+msgstr "&სწრაფი კომპილაცია"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:794
+#: ../../../model-editor/src/bf/code/model_frame.cpp:615
+msgid "&Redo"
+msgstr "გამეო&რება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:540
+#: ../../../model-editor/src/bf/code/model_frame.cpp:530
+msgid "&Redo\tCTRL+Y"
+msgstr "&გამეორება\tCTRL+Y"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:485
+msgid "&Reference item fields"
+msgstr "&მიმართვის ელემენტის ველები"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:47
+msgid "&Refresh"
+msgstr "&განახლება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:824
+msgid "&Relationship"
+msgstr "&ურთიერთობა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:699
+msgid "&Relationship\tR"
+msgstr "&ურთიერთობა\tR"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:617
+msgid "&Right"
+msgstr "მა&რჯვენა"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:308
+msgid "&Run configuration..."
+msgstr "&კონფიგურაციის გაშვება..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:776
+msgid "&Run level"
+msgstr "&გაშვების-დონე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:515
+msgid "&Run this level\tF11"
+msgstr "&ამ დონის გაშვება\tF11"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:221
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:271
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:499
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:768
+#: ../../../level-editor/src/bf/code/main_frame.cpp:268
+#: ../../../level-editor/src/bf/code/main_frame.cpp:301
+#: ../../../model-editor/src/bf/code/model_frame.cpp:503
+#: ../../../model-editor/src/bf/code/model_frame.cpp:599
+msgid "&Save"
+msgstr "&შენახვა"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:199
+msgid "&Save all"
+msgstr "&ყველას შენახვა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:554
+msgid "&Select all\tCTRL+A"
+msgstr "&ყველას მონიშვნა\tCTRL+A"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:625
+msgid "&Text"
+msgstr "&ტექტი"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:566
+msgid "&Text\tg"
+msgstr "&ტექსტი\tg"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:620
+msgid "&Top"
+msgstr "&ზედა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:792
+#: ../../../model-editor/src/bf/code/model_frame.cpp:613
+msgid "&Undo"
+msgstr "&დაბრუნება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:538
+#: ../../../model-editor/src/bf/code/model_frame.cpp:528
+msgid "&Undo\tCTRL+Z"
+msgstr "&ბოლო ბრძანების გაუქმება\tCTRL+Z"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:279
+#: ../../../level-editor/src/bf/code/main_frame.cpp:310
+#: ../../../model-editor/src/bf/code/main_frame.cpp:203
+msgid "&Update image pool"
+msgstr "&გამოსახულებების პულის განახლება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:630
+msgid "&Vertical center"
+msgstr "&ვერტიკალური ცენტრი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:572
+msgid "&Vertically"
+msgstr "&ვერტიკალურად"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:476
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:477
+#: ../../../model-editor/src/bf/code/model_frame.cpp:489
+#: ../../../model-editor/src/bf/code/model_frame.cpp:490
+msgid "&View"
+msgstr "&ხედი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:673
+msgid "&Visible\tCtrl+G"
+msgstr "&ხილული\tCtrl+G"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:818
+#: ../../../model-editor/src/bf/code/model_frame.cpp:619
+msgid "&Wireframe"
+msgstr "&კარკასი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:692
+#: ../../../model-editor/src/bf/code/model_frame.cpp:561
+msgid "&Wireframe\tW"
+msgstr "&კარკასი\tW"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:726
+#: ../../../model-editor/src/bf/code/model_frame.cpp:585
+msgid "&Zoom"
+msgstr "გადიდება"
+
+#: ../../../bear-editor/src/bf/code/bool_edit.cpp:24
+msgid "'True' if checked"
+msgstr "'ჭეშმარიტი', თუ ჩართულია"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1325
+#, c-format
+msgid "(%.2f, %.2f)"
+msgstr "(%.2f, %.2f)"
+
+# Class description
+# ../../../item-description/generic/hidden_block.xml
+msgid "A block that changes its opacity when an oject collides."
+msgstr "ბლოკი, რომელიც იცვლის გაუმჭვირვალობას, როცა ობიექტი ეჯახება."
+
+# Class description
+# ../../../item-description/generic/level_variable/bool_level_variable_getter_creator.xml
+msgid "A boolean expression that returns the value of a level variable"
+msgstr "ლოგიკური გამოსახულება, რომელიც დონის ცვლადის მნიშვნელობას აბრუნებს"
+
+# Class description
+# ../../../item-description/generic/expr/any_input_pressed.xml
+msgid "A boolean expression that returns true if any input is pressed."
+msgstr ""
+"ლოგიკური გამოსახულება, რომელიც ჭეშმარიტს აბრუნებს, თუ რამე ღილაკს დააჭერთ."
+
+# Class description
+# ../../../item-description/generic/camera_on_object.xml
+msgid "A camera shared among some objects."
+msgstr "კამერა გაზიარებულია რამდენიმე ობიექტს შორის."
+
+# Class description
+# ../../../item-description/generic/descending_ceiling.xml
+msgid "A ceiling that is not horizontal."
+msgstr "სახურავი, რომელიც ჰორიზონტალური არაა."
+
+# Class description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid "A class for forced movement with item reference."
+msgstr "კლასი ელემენტის მიმართვის შემცველი ნაძალადევი გადაადგილებებისთვის."
+
+# Class description
+# ../../../item-description/generic/block.xml
+msgid "A classic block, to be used for walls, grounds, ceilings or anything."
+msgstr ""
+"კლასიკური ბლოკი, რომელიც შეგიძლიათ გამოიყენოთ კედლებისთვის, საძირკვლისთვის, "
+"ჭერისთვის და ა.შ."
+
+# Class description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid ""
+"A decorative chain linking two items. The chain falls when the items are far "
+"from each other horizontally but stay straight when they are aligned "
+"vertically."
+msgstr ""
+"ორი ელემენტის შემაერთებელი დეკორატიული ჯაჭვი. ჯაჭვი გაწყდება, როცა "
+"ელემენტები ერთმანეთისგან შორიშორს არიან ჰორიზონტალურად, მაგრამ დარჩება "
+"შეერთებულად, თუ მათ ვერტიკალურად ასწორებთ."
+
+# Class description
+# ../../../item-description/generic/decorative_model.xml
+msgid "A decorative model."
+msgstr "დეკორატიული მოდელი."
+
+# Class description
+# ../../../item-description/generic/slope.xml
+msgid "A ground that is not horizontal."
+msgstr "იატაკი, რომელიც ჰორიზონტალური არაა."
+
+# Class description
+# ../../../item-description/generic/expr/timer_value.xml
+msgid "A linear expression that returns the value of a timer."
+msgstr "წრფივი გამოსახულება, რომელიც ტაიმერის მნიშვნელობას აბრუნებს."
+
+# Class description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid ""
+"A linear_movement_sequence_loop is an item that creates some items and sets "
+"their movement as a linear movement."
+msgstr ""
+"linear_movement_sequence_loop ელემენტია, რომელიც ქმნის რამდენიმე ელემენტს და "
+"აყენებს მათ გადაადგილებას წრფივ გადაადგილებაზე."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid "A list of toggles to which the status of this toggle is transmitted."
+msgstr "გადასართავების სია რომელშიც ამ გადასართავის სტატუსის გადაცემა ხდება."
+
+# Class description
+# ../../../item-description/generic/straight_slope.xml
+msgid ""
+"A piece of ground intended to be used next some slopes. This items works "
+"like a slope. That is, the other item is aligned only if the X-coordinate of "
+"his center of mass is in the range covered by the current item."
+msgstr ""
+"მიწის ნაჭერი, რომელიც განკუთვნილია რამდენიმე ფერდობის შემდეგ გამოსაყენებლად. "
+"ეს ელემენტები დაქანების მსგავსად მუშაობენ. რაც ნიშნავს, რომ სხვა ელემენტი "
+"გასწორებულია, მხოლოდ, მაშინ, თუ მისი სიმძიმის ცენტრის X კოორდინატი "
+"გადაფარულია მიმდინარე ელემენტით."
+
+# Class description
+# ../../../item-description/generic/decorative_flow.xml
+msgid ""
+"A rectangle in which some decorative sprites move linearly to simulate a "
+"flow."
+msgstr ""
+"მართკუთხედი, რომელშიც ზოგიერთი დეკორატიული სპრაიტი წრფივად მოძრაობს ნაკადის "
+"სიმულაციისთვის."
+
+# Class description
+# ../../../item-description/generic/bridge.xml
+msgid "A simple bridge."
+msgstr "მარტივი ხიდი."
+
+# Class description
+# ../../../item-description/generic/camera.xml
+msgid "A simple camera."
+msgstr "მარტივი კამერა."
+
+# Class description
+# ../../../item-description/generic/cursor.xml
+msgid "A simple decorative cursor."
+msgstr "მარტივი დეკორატიული კურსორი."
+
+# Class description
+# ../../../item-description/generic/timer.xml
+msgid "A simple timer."
+msgstr "მარტივი ტაიმერი."
+
+# Class description
+# ../../../item-description/generic/toggle.xml
+msgid "A simple toggle that can be used to carry a boolean state."
+msgstr ""
+"მარტივი გადამრთველი, რომელიც ლოგიკური მნიშვნელობის შესანახად შეგიძლიათ, "
+"გამოიყენოთ."
+
+# Class description
+# ../../../item-description/generic/ambient_sound.xml
+msgid "A sound in the level."
+msgstr "ხმა დონეზე."
+
+# Class description
+# ../../../item-description/generic/spring.xml
+msgid "A spring gives a force to the items colliding with him."
+msgstr "ზამბარა ძალას აძლევს მასთან შეჯახებულ ელემენტებს."
+
+# Field description
+# ../../../item-description/generic/block.xml
+msgid ""
+"A threshold for the collisions in the corners of the item, to choose if the "
+"other item is aligned on the collided side or the nearest adjacent one."
+msgstr ""
+"ელემენტის კუთხეებში შეჯახების ზღვარი, რათა აირჩიოს, სხვა ელემენტი "
+"შეესაბამება შეჯახებულ მხარეს თუ უახლოეს მიმდებარე მხარეს."
+
+# Class description
+# ../../../item-description/generic/camera_toggle.xml
+msgid "A toggle that changes the current camera."
+msgstr "გადამრთველი, რომელიც მიმდინარე კამერას ცვლის."
+
+# Class description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of a boolean game variable."
+msgstr "გადამრთველი, რომელიც თამაშის ლოგიკური ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/real_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of a real game variable."
+msgstr "გადამრთველი, რომელიც თამაშის რეალური ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/string_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of a string game variable."
+msgstr "გადამრთველი, რომელიც თამაშის სტრიქონის ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/int_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of an integer game variable."
+msgstr "გადამრთველი, რომელიც თამაშის მთელი რიცხვის ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter_toggle.xml
+msgid "A toggle that sets the value of an unsigned int game variable."
+msgstr ""
+"გადამრთველი, რომელიც თამაშის უნიშნო მთელი რიცხვის ტიპის ცვლადს აყენებს."
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "A toggle toggled when the countdown is over."
+msgstr "გადასართველი გადაირთვება, როცა ტაიმერი ამოიწურება."
+
+# Class description
+# ../../../item-description/generic/shader/shader_variable.xml
+msgid "A variable in a shader program and how its value is updated."
+msgstr ""
+"ცვლადი დაჩრდილვის პროგრამაში და როგორ ხდება მისი მნიშვნელობის განახლება."
+
+#: ../../../animation-editor/src/bf/code/about_dialog.cpp:28
+#: ../../../level-editor/src/bf/code/about_dialog.cpp:28
+#: ../../../model-editor/src/bf/code/about_dialog.cpp:28
+msgid "About"
+msgstr "შესახებ"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:347
+msgid "Action not allowed"
+msgstr "ქმედება დაშვებული არაა"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:30
+msgid "Action properties"
+msgstr "ქმედების თვისებები"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:284
+msgid "Action:"
+msgstr "ქმედება:"
+
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:87
+msgid "Actions:"
+msgstr "ქმედებები:"
+
+#: ../../../model-editor/src/bf/history/code/action_add_action.cpp:66
+msgid "Add action"
+msgstr "ქმედების დამატება"
+
+#: ../../../level-editor/src/bf/history/code/action_add_item.cpp:70
+msgid "Add item "
+msgstr "ელემენტის დამატება "
+
+#: ../../../level-editor/src/bf/history/code/action_add_layer.cpp:65
+msgid "Add layer"
+msgstr "ფენის დამატება"
+
+#: ../../../model-editor/src/bf/history/code/action_add_mark.cpp:69
+msgid "Add mark"
+msgstr "მარკერის დამატება"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1612
+#: ../../../model-editor/src/bf/history/code/action_add_snapshot.cpp:69
+msgid "Add snapshot"
+msgstr "სწრაფი ასლის დამატება"
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:69
+msgid "Add to previous duration."
+msgstr "დამატება წინა ხანგრძლივობაზე."
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:104
+msgid "Add to selection"
+msgstr "მონიშნულს მიმატება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:726
+#: ../../../model-editor/src/bf/code/model_frame.cpp:585
+msgid "Adjust the zoom ratio."
+msgstr "გადიდების კოეფიციენტის გასწორება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:802
+msgid "Align"
+msgstr "სწორება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:624
+msgid "Align the bottom edge of the items."
+msgstr "ელემენტების ქვედა წიბოს სწორება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:627
+msgid "Align the center of the items on the X-axis."
+msgstr "ელემენტების ცენტრის სწორება X ღერძზე."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:631
+msgid "Align the center of the items on the Y-axis."
+msgstr "ელემენტების ცენტრის სწორება Y ღერძზე."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:615
+msgid "Align the left edge of the items."
+msgstr "ელემენტების მარცხენა წიბოს სწორება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:618
+msgid "Align the right edge of the items."
+msgstr "ელემენტების მარჯვენა წიბოს სწორება."
+
+#: ../../../level-editor/src/bf/history/code/action_align_selection_bottom.cpp:29
+#: ../../../level-editor/src/bf/history/code/action_align_selection_center_x.cpp:29
+#: ../../../level-editor/src/bf/history/code/action_align_selection_center_y.cpp:29
+#: ../../../level-editor/src/bf/history/code/action_align_selection_left.cpp:29
+#: ../../../level-editor/src/bf/history/code/action_align_selection_right.cpp:29
+#: ../../../level-editor/src/bf/history/code/action_align_selection_top.cpp:29
+msgid "Align the selected items"
+msgstr "მონიშნული ელემენტების სწორება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:564
+msgid "Align the selected items."
+msgstr "მონიშნული ელემენტების სწორება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:621
+msgid "Align the top edge of the items."
+msgstr "ელემენტების ზედა წიბოს სწორება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:655
+msgid "All &layers\tShift+F3"
+msgstr "ყვე&ლა ფენა\tShift+F3"
+
+#: ../../../bear-editor/src/bf/impl/base_file_edit.tpp:32
+msgid "All files|*"
+msgstr "ყველა ფაილი|*"
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid ""
+"An extra margin above the slope, where the collisions will also be detected."
+msgstr "დამატებითი ზღვარი ფერდობის ზემოთ, სადაც შეჯახებების აღმოჩენაც მოხდება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Class description
+# ../../../item-description/generic/decorative_effect.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Class description
+# ../../../item-description/generic/decorative_item.xml
+msgid "An item existing only for a decoration purpose."
+msgstr "ელემენტი, რომელიც, მხოლოდ, დეკორაციისთვის არსებობს."
+
+# Class description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "An item representing a decorative rectangle."
+msgstr "ელემენტი, რომელიც დეკორატიულ მართკუთხედს წარმოადგენს."
+
+# Class description
+# ../../../item-description/generic/script/add_script_actor.xml
+msgid "An item that adds an actor in a script_director."
+msgstr "ელემენტი, რომელიც script_director-ში მსახიობს ამატებს."
+
+# Class description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid ""
+"An item that create dust decorative items and throws splinter decorative "
+"items."
+msgstr ""
+"ელემენტი, რომელიც ქმნის მტვრის დეკორატიულ ელემენტებს და ისვრის ნამსხვრევის "
+"დეკორატიულ ელემენტებს."
+
+# Class description
+# ../../../item-description/generic/item_creator.xml
+msgid "An item that creates some items when it is activated."
+msgstr "ელემენტი, რომელიც გააქტიურებისას ზოგიერთ ელემენტს ქმნის."
+
+# Class description
+# ../../../item-description/generic/level_loader_progression_item.xml
+msgid "An item that fills a bar while loading a level."
+msgstr "ელემენტი, რომელიც აჩვენებს მიმდინარეობას დონის ჩატვირთვისას."
+
+# Class description
+# ../../../item-description/generic/unconditional_killer.xml
+msgid "An item that kills any colliding item."
+msgstr "ელემენტი, რომელიც შეჯახებულ ელემენტს კლავს."
+
+# Class description
+# ../../../item-description/generic/killer.xml
+msgid "An item that kills other items."
+msgstr "ელემენტი, რომელიც სხვა ელემენტებს კლავს."
+
+# Class description
+# ../../../item-description/generic/delayed_kill_item.xml
+msgid "An item that kills some items after a given duration."
+msgstr "ელემენტი, რომელიც კლავს რამდენიმე ელემენტს მიცემული დროის შემდეგ."
+
+# Class description
+# ../../../item-description/generic/script/script_director.xml
+msgid "An item that plays a script."
+msgstr "ელემენტი, რომელიც სკრიპტს უკრავს."
+
+# Class description
+# ../../../item-description/generic/game_quit.xml
+msgid "An item that quit the game."
+msgstr "ელემენტი, რომელიც თამაშიდან გადის."
+
+# Class description
+# ../../../item-description/generic/reflecting_decoration.xml
+msgid "An item that reflects collised items."
+msgstr "ელემენტი, რომელიც მოხვედრილ ელემენტებს ირეკლავს."
+
+# Class description
+# ../../../item-description/generic/link/link_remover.xml
+msgid "An item that removes all the links on the colliding items."
+msgstr "ელემენტი, რომელიც შეჯახებულ ელემენტებზე ყველა ბმულს შლის."
+
+# Class description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter_suicide.xml
+msgid ""
+"An item that sets the value of a boolean game variable and kills himself."
+msgstr ""
+"ელემენტი, რომელიც თამაშის ლოგიკური ტიპის ცვლადს აყენებს და თავს იკლავს."
+
+# Class description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter.xml
+msgid "An item that sets the value of a boolean game variable."
+msgstr "ელემენტი, რომელიც თამაშის ლოგიკური ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/real_game_variable_setter_suicide.xml
+msgid "An item that sets the value of a real game variable and kills himself."
+msgstr "ელემენტი, რომელიც თამაშის რეალური ტიპის ცვლადს აყენებს და თავს იკლავს."
+
+# Class description
+# ../../../item-description/generic/game_variable/real_game_variable_setter.xml
+msgid "An item that sets the value of a real game variable."
+msgstr "ელემენტი, რომელიც თამაშის რეალური ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/string_game_variable_setter_suicide.xml
+msgid ""
+"An item that sets the value of a string game variable and kills himself."
+msgstr ""
+"ელემენტი, რომელიც თამაშის სტრიქონის ტიპის ცვლადს აყენებს და თავს იკლავს."
+
+# Class description
+# ../../../item-description/generic/game_variable/string_game_variable_setter.xml
+msgid "An item that sets the value of a string game variable."
+msgstr "ელემენტი, რომელიც თამაშის სტრიქონის ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/int_game_variable_setter_suicide.xml
+msgid ""
+"An item that sets the value of an integer game variable and kills himself."
+msgstr ""
+"ელემენტი, რომელიც თამაშის მთელი რიცხვის ტიპის ცვლადს აყენებს და თავს იკლავს."
+
+# Class description
+# ../../../item-description/generic/game_variable/int_game_variable_setter.xml
+msgid "An item that sets the value of an integer game variable."
+msgstr "ელემენტი, რომელიც თამაშის მთელი რიცხვის ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter_suicide.xml
+msgid ""
+"An item that sets the value of an unsigned int game variable and kills "
+"himself."
+msgstr ""
+"ელემენტი, რომელიც თამაშის უნიშნო მთელი რიცხვის ტიპის ცვლადს აყენებს და თავს "
+"იკლავს."
+
+# Class description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter.xml
+msgid "An item that sets the value of an unsigned int game variable."
+msgstr "ელემენტი, რომელიც თამაშის უნიშნო მთელი რიცხვის ტიპის ცვლადს აყენებს."
+
+# Class description
+# ../../../item-description/generic/camera_shaker.xml
+msgid "An item that shakes the camera."
+msgstr "ელემენტი, რომელიც კამერას არხევს."
+
+# Class description
+# ../../../item-description/generic/path_tracer.xml
+msgid ""
+"An item to create a path_trace on the colliding items under a given "
+"condition."
+msgstr ""
+"ელემენტი path_trace-ის შესაქმნელად შეჯახებულ ელემენტებზე მითითებული პირობით."
+
+# Class description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "An item to display a sequence of items with successive fadings."
+msgstr "ელემენტი ელემენტების მიმდევრობის საჩვენებლად თანმიმდევრული მინავლებით."
+
+# Class description
+# ../../../item-description/generic/level_settings.xml
+msgid "An item to set the parameters of level."
+msgstr "ელემენტი დონის პარამეტრების დასაყენებლად."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "An item which have a movement applied to him."
+msgstr "ელემენტი, რომელზეც გადაადგილება მოქმედებს."
+
+# Class description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "An object that activates a toggle according to the mouse."
+msgstr "ობიექტი, რომელიც ააქტიურებს გადასართავს თაგუნას მიხედვით."
+
+# Class description
+# ../../../item-description/generic/mouse_over_manager.xml
+msgid "An object that place an animation according to the mouse."
+msgstr "ობიექტი, რომელიც მოათავსებს ანიმაციას თაგუნას მიხედვით."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Angle applied to the item."
+msgstr "ელემენტზე გამოყენებული კუთხე."
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:176
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:369
+msgid "Angle:"
+msgstr "კუთხე:"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:495
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:216
+msgid "Animation"
+msgstr "ანიმაცია"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:120
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:402
+msgid "Animation files (*.anim)|*.anim"
+msgstr "ანიმაციის ფაილები (*.anim)|*.anim"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:545
+msgid "Animation is not saved."
+msgstr "ანიმაცია შენახული არაა."
+
+#: ../../../bear-editor/src/bf/code/animation_file_edit.cpp:149
+msgid "Animation:"
+msgstr "ანიმაცია:"
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:73
+msgid "Application mode"
+msgstr "აპლიკაციის რეჟიმი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:585
+msgid "Apply an offset to the selection."
+msgstr "წანაცვლების გამოყენება მონიშნულზე."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:208
+msgid "Apply filter to all layers"
+msgstr "ფილტრის გამოყენება ყველა ფენაზე"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:203
+msgid "Apply filter to the selected layer"
+msgstr "ფილტრის გამოყენება მონიშნულ ფენაზე"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:134
+msgid "Apply the angle of the mark to the animation."
+msgstr "მარკერის კუთხის გამოყენება ანიმაციაზე."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid ""
+"Apply the system angle of the item to the visual (and ignore the value of "
+"visual_angle)."
+msgstr ""
+"ელემენტის სისტემური კუთხის გამოყენება ვიზუალზე (და visual_angle-ის "
+"მნიშვნელობის იგნორი)."
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:105
+msgid "Arguments"
+msgstr "არგუმენტები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:805
+msgid "Arrange"
+msgstr "განლაგება"
+
+#: ../../../level-editor/src/bf/history/code/action_arrange_selection_horizontally.cpp:30
+msgid "Arrange the items horizontally"
+msgstr "ელემენტების გასწორება ჰორიზონტალურად"
+
+#: ../../../level-editor/src/bf/history/code/action_arrange_selection_vertically.cpp:30
+msgid "Arrange the items vertically"
+msgstr "ელემენტების გასწორება ვერტიკალურად"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:578
+msgid "Arrange the selected items."
+msgstr "მონიშნული ელემენტების გასწორება."
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:142
+msgid "Auto size"
+msgstr "ავტომატური ზომა"
+
+#: ../../../model-editor/src/bf/code/error_check_model_dialog.cpp:30
+msgid "Bad action"
+msgstr "არასწორი ქმედება"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:180
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:190
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:184
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:193
+msgid "Bad name"
+msgstr "ცუდი სახელი"
+
+# Class description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Base class to display a link between two items."
+msgstr "საბაზისო კლასი ორ ელემენტს შორის კავშირის საჩვენებლად."
+
+#: ../../../animation-editor/src/bf/code/about_dialog.cpp:42
+#: ../../../level-editor/src/bf/code/about_dialog.cpp:42
+#: ../../../model-editor/src/bf/code/about_dialog.cpp:42
+msgid "Bear Factory"
+msgstr "დათვების ქარანა"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:486
+msgid "Boolean value"
+msgstr "ლოგიკური მნიშვნელობა"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:137
+msgid "Bounding box"
+msgstr "შემომსაზღვრელი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:831
+msgid "Bright background"
+msgstr "კაშკაშა ფონი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:588
+msgid "C&hange layer..."
+msgstr "ფენის &შეცვლა..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:798
+msgid "C&lone"
+msgstr "დაკ&ლონვა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:581
+msgid "C&lone..."
+msgstr "დაკ&ლონვა..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:508
+msgid "C&ompile the level\tF9"
+msgstr "დ&ონის კომპილაცია\tF9"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:512
+msgid "C&ompile the model\tF9"
+msgstr "მ&ოდელის კომპილაცია\tF9"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:172
+msgid "Can't open the animation file."
+msgstr "ანიმაციის ფაილის გახსნა შეუძლებელია."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:375
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1156
+msgid "Can't open the level file."
+msgstr "დონის ფაილის გახსნა შეუძლებელია."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:377
+#: ../../../model-editor/src/bf/code/model_frame.cpp:783
+msgid "Can't open the model file."
+msgstr "მოდელის ფაილის გახსნა შეუძლებელია."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:346
+msgid "Cannot remove the identifier of a prioritized item."
+msgstr "პრიორიტეტის მქონე ელემენტის იდენტიფიკატორის წაშლა შეუძლებელია."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1937
+msgid "Cannot run the game"
+msgstr "თამაშის გაშვება შეუძლებელია"
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:114
+msgid "Cause"
+msgstr "მოტივი"
+
+#: ../../../level-editor/src/bf/history/code/action_set_slope_curve.cpp:145
+msgid "Change slope curve"
+msgstr "დახრის მრუდის შეცვლა"
+
+#: ../../../level-editor/src/bf/history/code/action_set_priority.cpp:72
+#, c-format
+msgid "Change the compilation priority of %s (%s)"
+msgstr "%s-ის (%s) კომპილაციის პრიორიტეტის შეცვლა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:256
+msgid "Change the duration of all frames at once."
+msgstr "ყველა კადრის ხანგრძლივობის ერთდროული შეცვლა."
+
+#: ../../../level-editor/src/bf/history/code/action_move_in_other_layer.cpp:55
+msgid "Change the layer of the selection"
+msgstr "მონიშნულის ფენის შეცვლა"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:161
+msgid ""
+"Change the size of the selected layer and adjust the position of its items"
+msgstr "მონიშნული ფენის ზომის შეცვლა და მისი ელემენტების მდებარეობის გასწორება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1097
+#: ../../../model-editor/src/bf/code/model_frame.cpp:745
+msgid "Check completed."
+msgstr "შემოწმება დასრულდა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:505
+msgid "Check the &validty of the level\tF8"
+msgstr "დონის სისწორის &შემოწმება\tF8"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:509
+msgid "Check the &validty of the model\tF8"
+msgstr "მოდელის სისწორის &შემოწმება\tF8"
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_trigger.xml
+msgid "Check the condition at each collision."
+msgstr "პირობის შემოწმება თითოეული შეჯახებისას."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_trigger.xml
+msgid "Check the condition at each iteration."
+msgstr "პირობის შემოწმება თითოეული იტერაციისას."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:510
+msgid "Check the validity of the model."
+msgstr "მოდელის სისწორის შემოწმება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:506
+msgid "Check validity of the level."
+msgstr "დონის სისწორის შემოწმება."
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:95
+msgid "Choice"
+msgstr "არჩევანი"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:119
+#: ../../../bear-editor/src/bf/code/animation_file_edit.cpp:180
+#: ../../../bear-editor/src/bf/impl/base_file_edit.tpp:125
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:248
+#: ../../../model-editor/src/bf/code/model_frame.cpp:261
+msgid "Choose a file"
+msgstr "ფაილის არჩევა"
+
+#: ../../../bear-editor/src/bf/code/font_edit.cpp:158
+msgid "Choose a font file"
+msgstr "აირჩიეთ ფონტის ფაილი"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:472
+msgid "Choose a level"
+msgstr "აირჩიეთ დონე"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:317
+msgid "Choose a model"
+msgstr "აირჩიეთ მოდელი"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:230
+msgid "Choose a music"
+msgstr "აირჩიეთ მუსიკა"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:144
+msgid "Choose a sound file"
+msgstr "აირჩიეთ ხმის ფაილი"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:401
+msgid "Choose an animation"
+msgstr "აირჩიეთ ანიმაცია"
+
+#: ../../../bear-editor/src/bf/code/image_selection_dialog.cpp:34
+msgid "Choose an image"
+msgstr "აირჩიეთ გამოსახულება"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:188
+msgid "Class name"
+msgstr "კლასის სახელი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:558
+msgid "Clear the selection."
+msgstr "მონიშნულის გასუფთავება."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:299
+msgid ""
+"Click to change the class of the selected items. The value of the  fields "
+"will be conserved for the ones existing also in the new class."
+msgstr ""
+"დააწკაპუნეთ მონიშნული ელემენტების კლასის შესაცვლელად. ველების მნიშვნელობა "
+"შენახული იქნება ველებისთვის, რომლებიც ასევე არსებობებ ახალ კლასში."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:798
+msgid "Clone"
+msgstr "კლონი"
+
+#: ../../../level-editor/src/bf/history/code/action_clone_selection.cpp:39
+#: ../../../level-editor/src/bf/history/code/action_clone_selection.cpp:108
+msgid "Clone selected items"
+msgstr "მონიშნული ელემენტების დაკლონვა"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:27
+msgid "Clone selection"
+msgstr "მონიშნულის დაკლონვა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:581
+msgid "Clone the selection."
+msgstr "მონიშნულის დაკლონვა."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:313
+#: ../../../model-editor/src/bf/code/main_frame.cpp:206
+msgid "Close everything and exit."
+msgstr "ყველაფრის დახურვა და გასვლა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:523
+msgid "Close the level."
+msgstr "დონის დახურვა."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:514
+msgid "Close the model."
+msgstr "მოდელის დახურვა."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:282
+msgid "Close the window."
+msgstr "ფანჯრის დახურვა."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:377
+msgid "Collision function:"
+msgstr "შეჯახების ფუნქცია:"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:194
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:507
+msgid "Color"
+msgstr "ფერი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1129
+#, c-format
+msgid "Compilation done in %.2f s."
+msgstr "კომპილაცია დასრულდა %.2f წამში."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:336
+#: ../../../model-editor/src/bf/code/model_frame.cpp:769
+msgid "Compilation done."
+msgstr "კომპილაცია დასრულდა."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:225
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:771
+#: ../../../model-editor/src/bf/code/model_frame.cpp:602
+msgid "Compile"
+msgstr "კომპილაცია"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:275
+msgid "Compile the animation."
+msgstr "ანიმაციის კომპილაცია."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:511
+msgid "Compile the level (&quick)"
+msgstr "დონის კომპილაცია (&სწრაფი)"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:512
+msgid "Compile the level with no optimization."
+msgstr "დონის კომპილაცია ოპტიმიზაციის გარეშე."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:509
+msgid "Compile the level."
+msgstr "დონის კომპილაცია."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:512
+msgid "Compile the model."
+msgstr "მოდელის კომპილაცია."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:774
+msgid "Compile with no optimization"
+msgstr "კომპილაცია ოპტიმიზაციის გარეშე"
+
+#: ../../../bear-editor/src/bf/code/animation_file_edit.cpp:181
+msgid "Compiled animation (*.canim)|*.canim"
+msgstr "კომპილირებული ანიმაცია (*.canim)|*.canim"
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:25
+msgid "Configuration"
+msgstr "კონფიგურაცია"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:683
+msgid "Configuration of the grid on the selection."
+msgstr "მონიშნულზე ბადის მორგება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:686
+msgid "Configuration of the grid."
+msgstr "ბადის მორგება."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:309
+msgid "Configure how the levels are executed."
+msgstr "მორგება, როგორ ხდება დონეების შესრულება."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:307
+#: ../../../model-editor/src/bf/code/main_frame.cpp:202
+msgid "Configure the paths and programs."
+msgstr "ბილიკებისა და პროგრამების მორგება."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:278
+msgid "Configure the paths of the datas."
+msgstr "მონაცემთა ბილიკების მორგება."
+
+#: ../../../bear-editor/src/bf/code/any_animation_edit.cpp:159
+msgid "Content type"
+msgstr "შემცველობის ტიპი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:833
+msgid "Continuity &hint"
+msgstr "უწყვეტობის &მინიშნება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:705
+msgid "Continuity &hint\tC"
+msgstr "უწყვეტობის &მინიშნება\tC"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:834
+msgid "Continuity hint"
+msgstr "უწყვეტობის მინიშნება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:782
+#: ../../../model-editor/src/bf/code/model_frame.cpp:607
+msgid "Copy"
+msgstr "კოპირება"
+
+#: ../../../level-editor/src/bf/history/code/action_copy_selection.cpp:112
+msgid "Copy selected items"
+msgstr "მონიშნული ელემენტების კოპირება"
+
+#: ../../../level-editor/src/bf/history/code/action_copy_selection.cpp:39
+msgid "Copy the selected items"
+msgstr "მონიშნული ელემენტების კოპირება"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:135
+msgid "Copy the selected layer"
+msgstr "მონიშნული ფენის კოპირება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:546
+#: ../../../model-editor/src/bf/code/model_frame.cpp:536
+msgid "Copy the selection to the clipboard."
+msgstr "მონიშნულის კოპირება ბუფერში."
+
+#: ../../../level-editor/src/bf/code/level_runner.cpp:82
+msgid "Could not add the items in the layer."
+msgstr "ელემენტების ფენაზე დამატება შეუძლებელია."
+
+#: ../../../level-editor/src/bf/code/level_runner.cpp:71
+msgid "Could not run the level."
+msgstr "დონის გაშვება შეუძლებელია."
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:119
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:129
+msgid "Count:"
+msgstr "რაოდენობა:"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:269
+msgid "Create a new animation."
+msgstr "ახალი ანიმაციის შექმნა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:599
+msgid "Create a new layer from image."
+msgstr "ახალი ფენის შექმნა გამოსახულებიდან."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:299
+msgid "Create a new level."
+msgstr "ახალი დონის შექმნა."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:197
+msgid "Create a new model."
+msgstr "ახალი მოდელის შექმნა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:544
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:780
+#: ../../../model-editor/src/bf/code/model_frame.cpp:534
+#: ../../../model-editor/src/bf/code/model_frame.cpp:605
+msgid "Cu&t"
+msgstr "ამო&ჭრა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:780
+#: ../../../model-editor/src/bf/code/model_frame.cpp:605
+msgid "Cut"
+msgstr "ამოჭრა"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:130
+msgid "Cut the selected layer"
+msgstr "მონიშნული ფენის ამოჭრა"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:303
+msgid "Date:"
+msgstr "თარიღი:"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:264
+msgid "Decrease the priority"
+msgstr "პრიორიტეტის შემცირება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:721
+#: ../../../model-editor/src/bf/code/model_frame.cpp:577
+msgid "Decrease the zoom ratio."
+msgstr "გადიდების შემცირება."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "Default density of the world."
+msgstr "სამყაროს ნაგულისხმევი სიმკვრივე."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "Default environment of the world."
+msgstr "სამყაროს ნაგულისხმევი გარემო."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "Default friction applied to the items."
+msgstr "ელემენტებზე გამოყენებული ნაგულისხმევი ხახუნი."
+
+#: ../../../level-editor/src/bf/history/code/action_delete_selection.cpp:30
+msgid "Delete selected items"
+msgstr "მონიშნული ელემენტების წაშლა"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:124
+msgid "Delete selected layer"
+msgstr "მონიშნული ფენის წაშლა"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:547
+msgid "Delete snasphot."
+msgstr "სწრაფი ასლის წაშლა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:788
+msgid "Delete the selection"
+msgstr "მონიშნულის წაშლა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:550
+#: ../../../model-editor/src/bf/code/model_frame.cpp:540
+msgid "Delete the selection."
+msgstr "მონიშნულის წაშლა."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the x-position of the end extremity."
+msgstr "ბოლოს კიდის x-პოზიციაზე გადასატარებელი დელტა."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the x-position of the start extremity."
+msgstr "დაწყების კიდის x-პოზიციაზე გადასატარებელი დელტა."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the y-position of the end extremity."
+msgstr "ბოლოს კიდის y-პოზიციაზე გადასატარებელი დელტა."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "Delta to apply on the y-position of the start extremity."
+msgstr "დაწყების კიდის y-პოზიციაზე გადასატარებელი დელტა."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:365
+msgid "Depth:"
+msgstr "სიღრმე:"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:211
+msgid "Description:"
+msgstr "აღწერა:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:711
+msgid "Display a global view of the level."
+msgstr "დონის გლობალური ხედის ჩვენება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:692
+msgid "Display items in wireframe mode."
+msgstr "კარკასის მოდელის ელემენტების ჩვენება."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:332
+#: ../../../model-editor/src/bf/code/main_frame.cpp:225
+msgid "Display some informations about the data."
+msgstr "ინფორმაციის ჩვენება მონაცემების შესახებ."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:301
+msgid "Display some informations about the program."
+msgstr "ინფორმაციის ჩვენება პროგრამის შესახებ."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:562
+msgid "Display the bounding box and the marks."
+msgstr "შემომსაზღვრელი ჩარჩოსა და მარკერების ჩვენება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:706
+msgid "Display the hints to check the continuity of adjacent sprites."
+msgstr ""
+"მინიშნებების ჩვენება მეზობელ სპრაიტებს შორის უწყვეტობის შემოწმების შესახებ."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:697
+msgid "Display the id of the items."
+msgstr "ელემენტების id-ის ჩვენება."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:566
+msgid "Display the name of the marks."
+msgstr "მარკერების სახელის ჩვენება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:700
+msgid "Display the relationship among the items."
+msgstr "ელემენტებს შორის ურთიერთობის ჩვენება."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_decoration.xml
+msgid "Display the same sprite than the given item."
+msgstr "იგივე სპრაიტის ჩვენება მოცემული ელემენტების მაგიერ."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:694
+msgid "Display the sprites of the items."
+msgstr "ელემენტების სპრაიტის ჩვენება."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:564
+msgid "Display the sprites of the marks."
+msgstr "მარკერების სპრაიტის ჩვენება."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "Do the rotation this number of times."
+msgstr "მობრუნება ამ რაოდენობაჯერ."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:226
+msgid "Duration"
+msgstr "ხანგრძლივობა"
+
+#: ../../../bear-editor/src/bf/code/frame_edit.cpp:76
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:149
+msgid "Duration:"
+msgstr "ხანგრძლივობა:"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:510
+msgid "Easing function"
+msgstr "გაადვილების ფუნქცია"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:132
+msgid "Edit"
+msgstr "ჩასწორება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:592
+msgid "Edit &mode..."
+msgstr "&რეჟიმის ჩასწორება..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:472
+#: ../../../model-editor/src/bf/code/model_frame.cpp:485
+msgid "Edit options."
+msgstr "პარამეტრების ჩასწორება."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:156
+msgid "Edit the properties of the selected layer"
+msgstr "მონიშნული ფენის თვისებების ჩასწორება"
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:145
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:178
+msgid "Enter an argument for the program"
+msgstr "შეიყვანეთ არგუმენტები პროგრამისთვის"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:139
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:172
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:353
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:375
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1156
+#: ../../../model-editor/src/bf/code/model_frame.cpp:377
+#: ../../../model-editor/src/bf/code/model_frame.cpp:783
+msgid "Error"
+msgstr "შეცდომა"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:485
+msgid "Error in level loading."
+msgstr "შეცდომა დონის ჩატვირთვისას."
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:115
+msgid "Error message"
+msgstr "შეცდომის შეტყობინება"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:138
+msgid "Error. This path does not contain required ressources."
+msgstr "შეცდომა. ეს ბილიკი აუცილებელ რესურსებს არ შეიცავს."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid ""
+"Fade out during this duration, in seconds, after the time limit of the "
+"toggle."
+msgstr ""
+"მინავლება ამ ხანგრძლივობისას, წამებში, გადამრთველის დროის ლიმიტის შემდეგ."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:198
+msgid "Filter:"
+msgstr "ფილტრი:"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:95
+msgid "Filters"
+msgstr "ფილტრები"
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Final color."
+msgstr "საბოლოო ფერი."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Final factor applied to the size."
+msgstr "ზომაზე გამოყენებული საბოლოო ფარდობა."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Final offset applied to the angle."
+msgstr "კუთხეზე გადატარებული საბოლოო წანაცვლება."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:316
+msgid "First index:"
+msgstr "პირველი ინდექსი:"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:286
+msgid "Fixed"
+msgstr "გასწორდა"
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "Flip horizontally the sprites of the item when rendering."
+msgstr "რენდერისას ელემენტის სპრაიტების ჰორიზონტალური გადაბრუნება."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "Flip vertically the sprites of the item when rendering."
+msgstr "რენდერისას ელემენტის სპრაიტების ვერტიკალური გადაბრუნება."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:501
+msgid "Font"
+msgstr "ფონტი"
+
+#: ../../../bear-editor/src/bf/code/font_edit.cpp:159
+msgid "Font files|*.fnt;*.ttf"
+msgstr "ფონტის ფაილები|*.fnt;*.ttf"
+
+#: ../../../bear-editor/src/bf/code/font_edit.cpp:138
+msgid "Font:"
+msgstr "ფონტი:"
+
+# Field description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid "Force given at created splinter items."
+msgstr "შექმნილი ნამსხვრევი ელემენტებისთვის მინიჭებული ძალა."
+
+#: ../../../bear-editor/src/bf/code/frame_edit.cpp:29
+msgid "Frame"
+msgstr "კადრი"
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_friction.xml
+msgid "Friction applied to the items aligned on the bottom."
+msgstr "ქვემოთ გასწორებულ ელემენტებზე გამოყენებული ხახუნი."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_friction.xml
+msgid "Friction applied to the items aligned on the left."
+msgstr "მარცხნივ გასწორებულ ელემენტებზე გამოყენებული ხახუნი."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_friction.xml
+msgid "Friction applied to the items aligned on the right."
+msgstr "მარჯვნივ გასწორებულ ელემენტებზე გამოყენებული ხახუნი."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_friction.xml
+msgid "Friction applied to the items aligned on the top."
+msgstr "ზემოთ გასწორებულ ელემენტებზე გამოყენებული ხახუნი."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:310
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:895
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:979
+msgid "Function:"
+msgstr "ფუნქცია:"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:431
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:444
+msgid "Gap:"
+msgstr "შუალედი:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:822
+#: ../../../model-editor/src/bf/code/model_frame.cpp:623
+msgid "Graphism"
+msgstr "გრაფიზმი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:689
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:809
+msgid "Gri&d"
+msgstr "ბა&დე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:810
+msgid "Grid"
+msgstr "ბადე"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:30
+msgid "Grid parameters"
+msgstr "ბადის პარამეტრები"
+
+#: ../../../level-editor/src/bf/history/action_group.hpp:36
+#: ../../../model-editor/src/bf/history/code/action_group.cpp:23
+msgid "Group of actions"
+msgstr "ქმედებების ჯგუფი"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:175
+msgid "Height"
+msgstr "სიმაღლე"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:166
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:198
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:154
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:357
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:417
+msgid "Height:"
+msgstr "სიმაღლე:"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:117
+msgid "Horizontal"
+msgstr "ჰორიზონტალური"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:423
+msgid "Horizontal alignment policy:"
+msgstr "ჰორიზონტალური სწორების პოლიტიკა:"
+
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:81
+msgid "Horizontal:"
+msgstr "ჰორიზონტალური:"
+
+# Field description
+# ../../../item-description/generic/bridge.xml
+msgid "How far the bridge falls, at most."
+msgstr "რამდენად შორს ვარდება ხიდი. მაქს."
+
+# Field description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid "How far the chain falls, at most."
+msgstr "რამდენად ახლოს ვარდება ჯაჭვი. მაქს."
+
+# Field description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid "How many links in the chain (not including the ends of the chain)."
+msgstr "რამდენი ბმულია ჯაჭვში (ჯაჭვის ბოლოების არჩათვლით)."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_path_creator.xml
+msgid "How many times the path will be done."
+msgstr "რამდენჯერ შესრულდება ბილიკი."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_sequence_creator.xml
+msgid "How many times the sequence will be done."
+msgstr "რამდენჯერ შესრულდება მიმდევრობა."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "How the text is aligned horizontally in the item."
+msgstr "როგორ ხდება ტექსტის სწორება ჰორიზონტალურად ელემენტში."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "How the text is aligned vertically in the item."
+msgstr "როგორ ხდება ტექსტის სწორება ვერტიკალურად ელემენტში."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:311
+msgid "Id:"
+msgstr "ID:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:816
+msgid "Identifiers"
+msgstr "იდენტიფიკატორები"
+
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:218
+msgid "Image:"
+msgstr "გამოსახულება:"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:307
+#, c-format
+msgid "In item '%s' at (%f, %f):\n"
+msgstr "ელემენტში '%s' მისამართზე (%f, %f):\n"
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:288
+#, c-format
+msgid "In layer '%s':\n"
+msgstr "ფენაში '%s':\n"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:259
+msgid "Increase the priority"
+msgstr "პრიორიტეტის გაზრდა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:718
+#: ../../../model-editor/src/bf/code/model_frame.cpp:574
+msgid "Increase the zoom ratio."
+msgstr "გადიდების გაზრდა."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:224
+msgid "Index"
+msgstr "ინდექსი"
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid ""
+"Indicate if the values of the timer are initialized each time it is "
+"activated."
+msgstr ""
+"მითითება, ხდება ტაიმერის მნიშვნელობების ინიციალიზაცია ყოველთვის, როცა ის "
+"გააქტიურდება, თუ არა."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_that_speaks.xml
+msgid "Indicates if the balloon is visible even if the item is off screen."
+msgstr ""
+"მიუთითებს, ხილულია ბუშტი მაშინაც კი, როცა ელემენტი ეკრანს მიღმაა, თუ არა."
+
+# Field description
+# ../../../item-description/generic/camera_on_object.xml
+msgid "Indicates if the camera must adjust its size to contain all items."
+msgstr ""
+"მიუთითებს, უნდა მოხდეს კამერის ზომის გასწორება ისე, რომ ის ყველა ელემენტს "
+"შეიცავდეს, თუ არა."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "Indicates if the camera start in active mode."
+msgstr "მიუთითებს, არის, თუ არა კამერის გაშვება აქტიურ რეჟიმში."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_decoration.xml
+msgid ""
+"Indicates if the decoration must be extended on the bounding box. No effect "
+"with item_to_mimic option."
+msgstr ""
+"მიუთითებს, უნდა მოხდეს დეკორაციის გაფართოება შემომსაზღვრელ ჩარჩოზე, თუ არა. "
+"პარამეტრთან item_to_mmic ერთად ეფექტი არ აქვს)."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Indicates if the effect has a loop back."
+msgstr "მიუთითებს, ეფექტი მეორდება, თუ არა."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_z_shift.xml
+msgid ""
+"Indicates if the item forces the z-position of the colliding items, even if "
+"they are on the right side."
+msgstr ""
+"მიუთითებს, აიძულებს, თუ არა ელემენტი შეჯახებული ელემენტების Z-პოზიციას "
+"მაშინაც კი, თუ ისინი სწორ მხარეს არიან, თუ არა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid "Indicates if the level must be pushed."
+msgstr "მიუთითებს, მოხდება დონის მიწოლა, თუ არა."
+
+# Field description
+# ../../../item-description/generic/link/chain_link_visual.xml
+msgid "Indicates if the number of links is dynamically computed."
+msgstr "მიუთითებს, მოხდება ბმულების დინამიკურად გამოთვლა, თუ არა."
+
+# Field description
+# ../../../item-description/generic/script/script_director.xml
+msgid "Indicates if the script can be accelerated."
+msgstr "მიუთითებს, მოხდება სკრიპტის აჩქარება, თუ არა."
+
+# Field description
+# ../../../item-description/generic/camera_shaker.xml
+msgid "Indicates if the shaker checks camera intersection."
+msgstr "მიუთითებს, ამოწმებს კამერის გამმოძრავებელი კვეთას, თუ არა."
+
+# Field description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "Indicates if the toggle must be activated on left press."
+msgstr "მიუთითებს, უნდა გააქტიურდეს გადამრთველი მარცხენა წკაპით, თუ არა."
+
+# Field description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "Indicates if the toggle must be activated on middle press."
+msgstr "მიუთითებს, უნდა გააქტიურდეს გადამრთველი შუა წკაპით, თუ არა."
+
+# Field description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "Indicates if the toggle must be activated on right press."
+msgstr "მიუთითებს, უნდა გააქტიურდეს გადამრთველი მარჯვენა წკაპით, თუ არა."
+
+# Field description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "Indicates if the toggle must be activated on wheel down."
+msgstr ""
+"მიუთითებს, უნდა გააქტიურდეს გადამრთველი თაგუნას ბორბლის ქვემოთ ჩამოწევით, თუ "
+"არა."
+
+# Field description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "Indicates if the toggle must be activated on wheel up."
+msgstr ""
+"მიუთითებს, უნდა გააქტიურდეს გადამრთველი თაგუნას ბორბლის ზემოთ აწევით, თუ არა."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Initial color."
+msgstr "საწყისი ფერი."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Initial factor applied to the size."
+msgstr "ზომაზე გამოყენებული საწყისი ფარდობა."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Initial offset applied to the angle."
+msgstr "კუთხეზე გამოყენებული საწყისი წანაცვლება."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:250
+msgid "Insert item"
+msgstr "ელემენტის ჩასმა"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:474
+msgid "Integer"
+msgstr "მთელი რიცხვი"
+
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:183
+msgid "Invalid value"
+msgstr "არასწორი მნიშვნელობა"
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:68
+msgid "Inverse selection"
+msgstr "მონიშნულის ინვერსია"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:865
+msgid "Item"
+msgstr "ელემენტი"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:408
+msgid "Item box"
+msgstr "ელემენტის ველი"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:250
+msgid "Item classes"
+msgstr "ელემენტის კლასები"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:830
+msgid "Item reference"
+msgstr "ელემენტის მიმართვა"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:935
+msgid "Items are outside."
+msgstr "ელემენტები გარეთაა."
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:35
+msgid "Items choice"
+msgstr "ელემენტების არჩევანი"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:324
+msgid "Last index:"
+msgstr "ბოლო ინდექსი:"
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:116
+msgid "Layer"
+msgstr "შრე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1752
+msgid "Layer "
+msgstr "ფენა "
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:31
+msgid "Layer properties"
+msgstr "ფენის თვისებები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:481
+msgid "Layer selection."
+msgstr "ფენის არჩევანი."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:67
+msgid "Layers"
+msgstr "ფენები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:651
+msgid "Layers &tagged as the active layer\tCtrl+F3"
+msgstr "აქ&ტიური ჭდის მქონე ფენები\tCtrl+F3"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:141
+msgid "Level"
+msgstr "დონე"
+
+#: ../../../level-editor/src/bf/code/error_check_level_dialog.cpp:33
+msgid "Level errors"
+msgstr "დონის შეცდომები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:249
+#: ../../../level-editor/src/bf/code/main_frame.cpp:473
+msgid "Level files (*.lvl)|*.lvl"
+msgstr "დონის ფაილები (*.lvl)|*.lvl"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1654
+msgid "Level is not compiled."
+msgstr "დონე დაკომპილებული არაა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1639
+#: ../../../level-editor/src/bf/code/main_frame.cpp:625
+msgid "Level is not saved."
+msgstr "დონე შენახული არაა."
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:35
+msgid "Level overview"
+msgstr "დონის მიმოხილვა"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:36
+msgid "Level properties"
+msgstr "დონის თვისებები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1776
+msgid "Level statistics"
+msgstr "დონის სტატისტიკა"
+
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:202
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:224
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:246
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:269
+msgid "List of '"
+msgstr "სია '"
+
+# Field description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid "List of animations for dust items."
+msgstr "ანიმაციების სია მტვრის ელემენტებისთვის."
+
+# Field description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid "List of animations for splinter items."
+msgstr "ანიმაციების სია ნამსხვრევის ელემენტებისთვის."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:868
+msgid "List of items"
+msgstr "ელემენტების სია"
+
+# Field description
+# ../../../item-description/generic/item_brick/item_that_speaks.xml
+msgid "List of speeches."
+msgstr "საუბრების სია."
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:218
+msgid "Loading images..."
+msgstr "გამოსახულებების ჩატვირთვა..."
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:210
+msgid "Loading item class files..."
+msgstr "ელემენტის კლასის ფაილების ჩატვირთვა..."
+
+#: ../../../level-editor/src/bf/code/level_editor.cpp:227
+msgid "Loading levels..."
+msgstr "დონეების ჩატვირთვა..."
+
+#: ../../../bear-editor/src/bf/code/splash_screen.cpp:71
+msgid "Loading..."
+msgstr "იტვირთება..."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:242
+msgid "Loop_back"
+msgstr "ციკლი"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:300
+msgid "Loops"
+msgstr "ციკლები"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:119
+msgid "Loops:"
+msgstr "ციკლები:"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:142
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:813
+msgid "Magnetism"
+msgstr "მაგნეტიზმი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:569
+msgid "Make the horizontal space uniform between the items."
+msgstr "ელემენტებს შორის ჰორიზონტალური სივრცის ერთგვაროვნება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:573
+msgid "Make the vertical space uniform between the items."
+msgstr "ელემენტებს შორის ვერტიკალური სივრცის ერთგვაროვნება."
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:135
+msgid "Mark"
+msgstr "დანიშვნა"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:159
+msgid "Mark animation"
+msgstr "ანიმაციის მარკირება"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:151
+msgid "Mark name"
+msgstr "დანიშნულის სახელი"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:30
+msgid "Mark properties"
+msgstr "თვისებების მარკირება"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:332
+msgid "Mark:"
+msgstr "დანიშვნა:"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:326
+msgid "Marks"
+msgstr "ნიშნები"
+
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:91
+msgid "Marks:"
+msgstr "ნიშნები:"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:151
+msgid "Match level size."
+msgstr "დონის ზომის დამთხვევა."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_restricted_z_collision.xml
+msgid "Maximum z-position of the other item to be aligned."
+msgstr "სხვა გასასწორებელი ელემენტის მაქს. Z-პოზიცია."
+
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+msgid "Minimum number of seconds of delay before starting the level."
+msgstr "დაყოვნების მინ. რაოდენობა წამებში დონის დაწყებამდე."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_restricted_z_collision.xml
+msgid "Minimum z-position of the other item to be aligned."
+msgstr "სხვა გასასწორებელი ელემენტის მინ. Z-პოზიცია."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:318
+#: ../../../model-editor/src/bf/code/model_frame.cpp:262
+msgid "Model files (*.mdl)|*.mdl"
+msgstr "მოდელის ფაილები (*.mdl)|*.mdl"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:400
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1203
+msgid "Model is not saved."
+msgstr "მოდელი შენახული არაა."
+
+#: ../../../model-editor/src/bf/history/impl/action_modify_placement.tpp:75
+msgid "Modify a mark placement"
+msgstr "მარკერის მოთავსების შეცვლა"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:163
+msgid "Modify all the snapshots"
+msgstr "ყველა სწრაფი ასლის შეცვლა"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1762
+msgid "Modify the bounding box"
+msgstr "შემომსაზღვრელი ჩარჩოს შეცვლა"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_position_and_size.cpp:32
+msgid "Move and resize"
+msgstr "გადატანა და ზომის შეცვლა"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_position.cpp:32
+msgid "Move item"
+msgstr "გადაადგილება"
+
+#: ../../../level-editor/src/bf/history/code/action_move_layer_backward.cpp:47
+#, c-format
+msgid "Move layer %d backward"
+msgstr "ფენის გადატანა %d-ით უკან"
+
+#: ../../../level-editor/src/bf/history/code/action_move_layer_forward.cpp:47
+#, c-format
+msgid "Move layer %d forward"
+msgstr "ფენის გადატანა %d-ით წინ"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:146
+msgid "Move selected layer backward"
+msgstr "მონიშნული ფენის უკან გადატანა"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:151
+msgid "Move selected layer forward"
+msgstr "მონიშნული ფენის წინ გადატანა"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1614
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:720
+#: ../../../model-editor/src/bf/history/code/action_move_snapshot.cpp:60
+msgid "Move snapshot"
+msgstr "სწრაფი ასლის გადატანა"
+
+#: ../../../level-editor/src/bf/history/code/action_move_selection.cpp:31
+msgid "Move the selected items"
+msgstr "მონიშნული ელემენტების გადატანა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:589
+msgid "Move the selection in an other layer."
+msgstr "მონიშნულის გადატანა სხვა ფენაზე."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1281
+msgid "Move the selection one layer backward."
+msgstr "მონიშნულის გადატანა ერთი ფენით უკან."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1285
+msgid "Move the selection one layer forward."
+msgstr "მონიშნულის გადატანა ერთი ფენით წინ."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:544
+#: ../../../model-editor/src/bf/code/model_frame.cpp:534
+msgid "Move the selection to the clipboard."
+msgstr "მონიშნულის გადატანა მიმოცვლის ბუფერში."
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:268
+msgid "Multiple selection"
+msgstr "მრავალი არჩევანი"
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:70
+msgid "Multiply previous duration."
+msgstr "წინა ხანგრძლივობის გამრავლება."
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:231
+msgid "Music files (*.ogg)|*.ogg|All files (*.*)|*"
+msgstr "მუსიკის ფაილები (*.ogg)|*.ogg|ყველა ფაილი (*.*)|*"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:174
+msgid "Music:"
+msgstr "მუსიკა:"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:195
+msgid "Name"
+msgstr "სახელი"
+
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:193
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:145
+msgid "Name:"
+msgstr "სახელი:"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:216
+#: ../../../level-editor/src/bf/code/main_frame.cpp:263
+msgid "New"
+msgstr "ახალი"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:119
+msgid "New layer"
+msgstr "ახალი ფენა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:598
+msgid "New layer from image..."
+msgstr "ახალი ფენა გამოსახულებიდან..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:105
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:342
+msgid "New level"
+msgstr "ახალი დონე"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:74
+#: ../../../model-editor/src/bf/code/model_frame.cpp:337
+msgid "New model"
+msgstr "ახალი მოდელი"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:544
+msgid "New snapshot."
+msgstr "ახალი სწრაფი ასლი."
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:154
+msgid "Next action:"
+msgstr "შემდეგი ქმედება:"
+
+#: ../../../level-editor/src/bf/code/properties_frame.cpp:222
+msgid "No description available"
+msgstr "აღწერის გარეშე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:723
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:846
+#: ../../../model-editor/src/bf/code/model_frame.cpp:579
+#: ../../../model-editor/src/bf/code/model_frame.cpp:638
+msgid "No zoom"
+msgstr "გადიდების გარეშე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1213
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1170
+msgid "Nothing to redo\tCTRL+Y"
+msgstr "დასაბრუნებელი არაფერია\tCTRL+Y"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1204
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1161
+msgid "Nothing to undo\tCTRL+Z"
+msgstr "გასაუქმებელი არაფერია\tCTRL+Z"
+
+# Field description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid "Number of dust items to create."
+msgstr "მტვრის შესაქმნელი ელემენტების რაოდენობა."
+
+# Field description
+# ../../../item-description/generic/explosion_effect_item.xml
+msgid "Number of splinter items to create."
+msgstr "ნამსხვრევების შესაქმნელი ელემენტების რაოდენობა."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:307
+msgid "Number:"
+msgstr "რიცხვი:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:827
+msgid "O&verview"
+msgstr "გადახედ&ვა"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:112
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:800
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:27
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:79
+msgid "Offset"
+msgstr "წანაცვლება"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:122
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:132
+msgid "Offset:"
+msgstr "წანაცვლება:"
+
+#: ../../../bear-editor/src/bf/code/color_edit.cpp:132
+msgid "Opacity:"
+msgstr "გაუმჭირვალობა:"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:219
+#: ../../../level-editor/src/bf/code/main_frame.cpp:266
+msgid "Open"
+msgstr "გახსნა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:270
+msgid "Open an existing animation."
+msgstr "არსებული ანიმაციის გახსნა."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:300
+msgid "Open an existing level."
+msgstr "არსებული დონის გახსნა."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:198
+msgid "Open an existing model."
+msgstr "არსებული მოდელის გახსნა."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:296
+#: ../../../level-editor/src/bf/code/main_frame.cpp:327
+#: ../../../model-editor/src/bf/code/main_frame.cpp:220
+msgid "Open the online documentation in your web browser."
+msgstr "დოკუმენტაციის გახსნა თქვენს ბრაუზერში."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:689
+msgid "Options of the grid."
+msgstr "ბადის მორგება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:467
+msgid "Options of the level."
+msgstr "დონის მორგება."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:481
+msgid "Options of the model."
+msgstr "მოდელის პარამეტრები."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:476
+#: ../../../model-editor/src/bf/code/model_frame.cpp:489
+msgid "Options of the view."
+msgstr "ხედის მორგება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:828
+msgid "Overview"
+msgstr "მიმოხილვა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:548
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:785
+#: ../../../model-editor/src/bf/code/model_frame.cpp:538
+#: ../../../model-editor/src/bf/code/model_frame.cpp:610
+msgid "Paste"
+msgstr "ჩასმა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:548
+#: ../../../model-editor/src/bf/code/model_frame.cpp:538
+msgid "Paste data from the clipboard."
+msgstr "მონაცემების ჩასმა ბუფერიდან."
+
+#: ../../../level-editor/src/bf/history/code/action_paste_items.cpp:84
+msgid "Paste the items in the layer"
+msgstr "ელემენტების ჩასმა ფენაზე"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:140
+msgid "Paste the selected layer"
+msgstr "მონიშნული ფენის ჩასმა"
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:135
+msgid "Path to data directory of the game"
+msgstr "ბილიკი თამაშის მონაცემთა საქაღალდემდე"
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:151
+msgid "Path to run configuration file"
+msgstr "ბილიკი გაშვების კონფიგურაციის ფაილამდე"
+
+#: ../../../bear-editor/src/bf/code/config_frame.cpp:119
+msgid "Path to the item class files"
+msgstr "ბილიკი ელემენტის კლასის ფაილებამდე"
+
+#: ../../../bear-editor/src/bf/code/image_selection_dialog.cpp:68
+msgid "Pattern:"
+msgstr "შაბლონი:"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:136
+msgid "Pause the animation when the mark is hidden."
+msgstr "ანიმაციის პაუზა, როცა მარკერი დამალულია."
+
+#: ../../../model-editor/src/bf/code/sound_frame.cpp:179
+#: ../../../model-editor/src/bf/code/sound_frame.cpp:212
+msgid "Pick a sound file"
+msgstr "აირჩიეთ ხმის ფაილი"
+
+#: ../../../model-editor/src/bf/code/sound_frame.cpp:128
+msgid "Play globally"
+msgstr "გლობალური დაკვრა"
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Position of the bottom edge of the item."
+msgstr "ელემენტის ქვედა წიბოს მდებარეობა."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Position of the left edge of the item."
+msgstr "ელემენტის მარცხენა წიბოს მდებარეობა."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:96
+msgid "Priority"
+msgstr "პრიორიტეტი"
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:88
+msgid "Program"
+msgstr "პროგრამა"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:71
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:142
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:95
+msgid "Properties"
+msgstr "თვისებები"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:519
+msgid "Properties of the level."
+msgstr "დონის თვისებები."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:197
+msgid "Property"
+msgstr "თვისება"
+
+# Field description
+# ../../../item-description/generic/level_loader_item.xml
+msgid "Ratio of the game's time window to spend in the loading of the level."
+msgstr "თამაშის დროის ფანჯრის ფარდობა დონის ჩატვირთვასთან შედარებით."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:480
+msgid "Real number"
+msgstr "რეალური რიცხვი"
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:202
+msgid "Recent used classes :"
+msgstr "ახლახან გამოყენებული კლასები :"
+
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:179
+msgid "Rectangle in image source"
+msgstr "მართკუთხედი გამოსახულების წყაროში"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:794
+#: ../../../model-editor/src/bf/code/model_frame.cpp:615
+msgid "Redo"
+msgstr "გამეორება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1210
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1167
+#, c-format
+msgid "Redo \"%s\"\tCTRL+Y"
+msgstr "გამეორება \"%s\"\tCTRL+Y"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:540
+#: ../../../model-editor/src/bf/code/model_frame.cpp:530
+msgid "Redo the last undone operation."
+msgstr "ბოლო გაუქმებული ოპერაციის გამეორება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:486
+msgid "Reference item fields."
+msgstr "მიმართვის ელემენტის ველები."
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:47
+msgid "Refresh"
+msgstr "განახლება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:825
+msgid "Relationship"
+msgstr "ურთიერთობა"
+
+#: ../../../animation-editor/src/bf/code/about_dialog.cpp:53
+#, c-format
+msgid "Release %d.%d.%d, Animation editor"
+msgstr "გამოცემა %d.%d.%d, ანიმაციის რედაქტორი"
+
+#: ../../../level-editor/src/bf/code/about_dialog.cpp:53
+#, c-format
+msgid "Release %d.%d.%d, Level editor"
+msgstr "გამოცემა %d.%d.%d, დონის რედაქტორი"
+
+#: ../../../model-editor/src/bf/code/about_dialog.cpp:53
+#, c-format
+msgid "Release %d.%d.%d, Model editor"
+msgstr "გამოცემა %d.%d.%d, მოდელის რედაქტორი"
+
+#: ../../../level-editor/src/bf/history/code/action_remove_item.cpp:95
+#, c-format
+msgid "Remove %s"
+msgstr "%s-ის წაშლა"
+
+#: ../../../model-editor/src/bf/history/code/action_remove_action.cpp:67
+msgid "Remove action"
+msgstr "ქმედების წაშლა"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_id.cpp:123
+msgid "Remove item identifier"
+msgstr "ელემენტის იდენტიფიკატორის წაშლა"
+
+#: ../../../level-editor/src/bf/history/code/action_remove_layer.cpp:68
+msgid "Remove layer"
+msgstr "ფენის წაშლა"
+
+#: ../../../model-editor/src/bf/history/code/action_remove_mark.cpp:96
+msgid "Remove mark"
+msgstr "მარკერის წაშლა"
+
+#: ../../../model-editor/src/bf/history/code/action_remove_snapshot.cpp:71
+msgid "Remove snapshot"
+msgstr "სწრაფი ასლის წაშლა"
+
+#: ../../../level-editor/src/bf/history/code/action_deprioritize.cpp:67
+#, c-format
+msgid "Remove the compilation priority of %s (%s)"
+msgstr "%s-ის (%s) კომპილაციის პრიორიტეტის წაშლა"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:219
+msgid "Remove the selected filter from all layers"
+msgstr "მონიშნული ფილტრის წაშლა ყველა ფენიდან"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:213
+msgid "Remove the selected filter from the current layer"
+msgstr "მონიშნული ფილტრის წაშლა მიმდინარე ფენიდან"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:254
+msgid "Remove the selected item"
+msgstr "მონიშნული ელემენტის წაშლა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:723
+#: ../../../model-editor/src/bf/code/model_frame.cpp:579
+msgid "Remove the zoom ratio."
+msgstr "გადიდების კოეფიციენტის წაშლა."
+
+#: ../../../animation-editor/src/bf/code/frame_duration_dialog.cpp:68
+msgid "Replace previous duration."
+msgstr "წინა ხანგრძლივობის ჩანაცვლება."
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:138
+msgid "Reset the animation when the action begins."
+msgstr "ანიმაციის ჩამოყრა, როცა მოქმედება დაიწყება."
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_size.cpp:38
+msgid "Resize item"
+msgstr "ობიექტის ზომის შეცვლა"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1731
+msgid "Resize mark"
+msgstr "მარკერის ზომის შეცვლა"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:233
+msgid "Reverse"
+msgstr "რევერსი"
+
+#: ../../../level-editor/src/bf/history/code/action_rotate_selection.cpp:31
+msgid "Rotate selected items"
+msgstr "მონიშნული ელემენტების მობრუნება"
+
+#: ../../../level-editor/src/bf/code/run_configuration_frame.cpp:29
+msgid "Run configuration"
+msgstr "კონფიგურაციის გაშება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:776
+msgid "Run the level"
+msgstr "დონის გაშვება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:515
+msgid "Run this level."
+msgstr "დონის გაშვება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:521
+msgid "S&tatistics"
+msgstr "&სტატისტიკა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:222
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:769
+#: ../../../level-editor/src/bf/code/main_frame.cpp:269
+#: ../../../model-editor/src/bf/code/model_frame.cpp:600
+msgid "Save"
+msgstr "შენახვა"
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:272
+#: ../../../level-editor/src/bf/code/main_frame.cpp:302
+msgid "Save &as..."
+msgstr "&შენახვა როგორც..."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:501
+#: ../../../model-editor/src/bf/code/model_frame.cpp:505
+msgid "Save &as...\tCTRL+SHIFT+S"
+msgstr "&შენახვა, როგორც...\tCTRL+SHIFT+S"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:304
+msgid "Save a&ll"
+msgstr "&ყველას შენახვა"
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:304
+msgid "Save all levels."
+msgstr "ყველა დონის შენახვა."
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:199
+msgid "Save all models."
+msgstr "ყველა მოდელის შენახვა."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:273
+msgid "Save the animation under a new name."
+msgstr "ანიმაციის შენახვა ახალი სახელით."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:271
+msgid "Save the animation."
+msgstr "ანიმაციის შენახვა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:502
+#: ../../../level-editor/src/bf/code/main_frame.cpp:303
+msgid "Save the current level under a new name."
+msgstr "მიმდინარე დონის შენახვა ახალი სახელით."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:499
+#: ../../../level-editor/src/bf/code/main_frame.cpp:301
+msgid "Save the current level."
+msgstr "მიმდინარე დონის შენახვა."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:506
+msgid "Save the current model under a new name."
+msgstr "მიმდინარე მოდელის შენახვა ახალი სახელით."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:503
+msgid "Save the current model."
+msgstr "მიმდინარე მოდელის შენახვა."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:280
+#: ../../../level-editor/src/bf/code/main_frame.cpp:311
+#: ../../../model-editor/src/bf/code/main_frame.cpp:204
+msgid "Scan the directory of images for new images."
+msgstr "ახალი გამოსახულებების ძებნა გამოსახულებების საქაღალდეში."
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:216
+msgid "Search:"
+msgstr "ძებნა:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:557
+msgid "Select &none\tCTRL+SHIFT+A"
+msgstr "არაფრის მონიშვ&ნა\tCTRL+SHIFT+A"
+
+#: ../../../level-editor/src/bf/code/item_choice_frame.cpp:67
+msgid "Select all"
+msgstr "ყველას მონიშვნა"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:555
+msgid "Select all items in the current layer."
+msgstr "ყველა ელემენტის მონიშვნა მიმდინარე ფენაზე."
+
+#: ../../../bear-editor/src/bf/code/item_class_selection_dialog.cpp:30
+#: ../../../level-editor/src/bf/code/main_frame.cpp:278
+msgid "Select an item class"
+msgstr "აირჩიეთ ელემენტის კლასი"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_action.cpp:114
+msgid "Set action properties"
+msgstr "ქმედების თვისებების დაყენება"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_snapshot_alignment.cpp:90
+msgid "Set bounding box alignment in snapshot"
+msgstr "შემომსაზღვრელი ჩარჩოს სწორების დაყენება სწრაფ ასლში"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_snapshot_size.cpp:70
+msgid "Set bounding box size in snapshot"
+msgstr "შემომსაზღვრელი ჩარჩოს ზომის დაყენება სწრაფ ასლში"
+
+#: ../../../model-editor/src/bf/history/code/action_set_placement_function.cpp:69
+msgid "Set collision function"
+msgstr "შეჯახების ფუნქციის დაყენება"
+
+#: ../../../model-editor/src/bf/history/code/action_set_angle_easing.cpp:71
+#: ../../../model-editor/src/bf/history/code/action_set_height_easing.cpp:71
+#: ../../../model-editor/src/bf/history/code/action_set_width_easing.cpp:71
+#: ../../../model-editor/src/bf/history/code/action_set_x_easing.cpp:71
+#: ../../../model-editor/src/bf/history/code/action_set_y_easing.cpp:71
+msgid "Set easing function"
+msgstr "გაადვილების ფუნქციის დაყენება"
+
+#: ../../../level-editor/src/bf/history/impl/action_set_item_field.tpp:104
+msgid "Set field "
+msgstr "ველის დაყენება "
+
+#: ../../../level-editor/src/bf/history/impl/action_set_item_field.tpp:114
+msgid "Set field value"
+msgstr "ველის მნიშვნელობის დაყენება"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_function.cpp:63
+msgid "Set function called in a snapshot"
+msgstr "სწრაფ ასლში გამოძახებული ფუნქციის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_fixed_attribute.cpp:72
+msgid "Set item 'fixed' attribute"
+msgstr "ელემენტის 'fixed' ატრიბუტის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_bottom.cpp:59
+msgid "Set item bottom position"
+msgstr "ელემენტის ქვედა პოზიციის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_class.cpp:75
+msgid "Set item class"
+msgstr "ელემენტის კლასის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_class.cpp:65
+#, c-format
+msgid "Set item class to %s"
+msgstr "ელემენტის კლასისს დაყენება %s-ზე"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_id.cpp:136
+msgid "Set item identifier"
+msgstr "ელემენტის იდენტიფიკატორის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_id.cpp:127
+#, c-format
+msgid "Set item identifier to %s"
+msgstr "ელემენტის იდენტიფიკატორის დაყენება %s-ზე"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_left.cpp:59
+msgid "Set item's left position"
+msgstr "ელემენტის მარცხენა მდებარეობის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_resize_layer.cpp:84
+msgid "Set layer size, name, class and tag"
+msgstr "ფენის ზომის, სახელის, კლასის და ჭდის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_resize_level.cpp:64
+msgid "Set level's size, music and name"
+msgstr "დონის ზომის, მუსიკისა და სახელის დაყენება"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_mark.cpp:91
+msgid "Set mark properties"
+msgstr "მარკერის თვისებების დაყენება"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:895
+msgid "Set mark's collision function"
+msgstr "მარკერის შეჯახების ფუნქციის დაყენება"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:979
+msgid "Set snapshot function"
+msgstr "სწრაფი ასლის ფუნქციის დაყენება"
+
+#: ../../../model-editor/src/bf/history/code/action_modify_snapshot_sound.cpp:64
+msgid "Set snapshot sound"
+msgstr "სწრაფი ასლის ხმის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_prioritize.cpp:62
+#, c-format
+msgid "Set the compilation priority of %s (%s)"
+msgstr "%s-ის (%s) კომპილაციის პრიორიტეტის დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_fixed_attribute.cpp:61
+msgid "Set the item as fixed"
+msgstr "ელემენტის ფიქსირებულად დაყენება"
+
+#: ../../../level-editor/src/bf/history/code/action_set_item_fixed_attribute.cpp:63
+msgid "Set the item as not fixed"
+msgstr "ელემენტის არფიქსირებულად დაყენება"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:179
+msgid "Size"
+msgstr "ზომა"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:140
+msgid "Size and placement"
+msgstr "ზომა და განთავსება"
+
+#: ../../../bear-editor/src/bf/code/font_edit.cpp:119
+msgid "Size:"
+msgstr "ზომა:"
+
+#: ../../../model-editor/src/bf/code/model_properties_ctrl.cpp:98
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:134
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:299
+msgid "Snapshot"
+msgstr "სწრაფი ასლი"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1603
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:129
+msgid "Snapshot at this date"
+msgstr "სწრაფი ასლი ამ თარიღზე"
+
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:28
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:98
+msgid "Snapshot's date"
+msgstr "სწრაფი ასლის თარიღი"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:934
+msgid "Some items are outside the level. The operation will be canceled."
+msgstr "ზოგიერთი ელემენტი დონის გარეთაა. ოპერაცია გაუქმებოდა."
+
+#: ../../../level-editor/src/bf/code/main_frame.cpp:623
+msgid "Some levels are not saved. Do you want to save them now?"
+msgstr "ზოგიერთი ელემენტი შენახული არაა. გნებავთ მისი ახლა შენახვა?"
+
+#: ../../../model-editor/src/bf/code/main_frame.cpp:398
+msgid "Some models are not saved. Do you want to save them now?"
+msgstr "ზოგიერთი მოდელი შენახული არაა. გნებავთ მისი ახლა შენახვა?"
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:160
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:136
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:393
+msgid "Sound"
+msgstr "ხმა"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:106
+msgid "Sound file:"
+msgstr "ხმის ფაილი:"
+
+#: ../../../model-editor/src/bf/code/sound_frame.cpp:180
+#: ../../../model-editor/src/bf/code/sound_frame.cpp:213
+msgid "Sound files|*.ogg"
+msgstr "ხმის ფაილები|*.ogg"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:145
+msgid "Sound files|*.ogg;*.wav|All files|*"
+msgstr "ხმის ფაილები|*.ogg;*.wav|ყველა ფაილი|*"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:504
+msgid "Sound sample"
+msgstr "ხმის სინჯი"
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:225
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:492
+msgid "Sprite"
+msgstr "სპრაიტი"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:521
+msgid "Statistics about the level."
+msgstr "დონის სტატისტიკა."
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:128
+msgid "Step"
+msgstr "ბიჯი"
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:438
+msgid "Stretch layer"
+msgstr "ფენის გაწელვა"
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:202
+msgid "Tag"
+msgstr "ჭდე"
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid ""
+"Tell (true) if we apply the angle as is or (false) if the angle is added to "
+"the angle of the item."
+msgstr ""
+"თქმა (ჭეშმარიტი), თუ ჩვენ ვიყენებთ კუთხეს, როგორც არის, ან (ცრუ) თუ კუთხე "
+"ელემენტის კუთხეს ემატება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid "Tell (true) if we apply the angle of the movement to the item."
+msgstr "თქმა (ჭეშმარიტი), თუ ელემენტზე მოძრაობის კუთხეს ვიყენებთ."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "Tell how the angle of the rotation is applied to the rotating item."
+msgstr "თქმა, როგორ ხდება მოძრაობის კუთხის გამოყენება მბრუნავ ელემენტზე."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tell if a collision on the bottom side sets the contact flag of the "
+"colliding item."
+msgstr ""
+"თქმა, თუ ქვედა მხარეს შეჯახება შეჯახების ელემენტის კონტაქტის ალამს აყენებს."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tell if a collision on the left side sets the contact flag of the colliding "
+"item."
+msgstr ""
+"თქმა, თუ მარცხენა მხარეს შეჯახება შეჯახების ელემენტის კონტაქტის ალამს "
+"აყენებს."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tell if a collision on the middle side sets the contact flag of the "
+"colliding item."
+msgstr ""
+"თქმა, თუ შუა მხარეს შეჯახება შეჯახების ელემენტის კონტაქტის ალამს აყენებს."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tell if a collision on the right side sets the contact flag of the colliding "
+"item."
+msgstr ""
+"თქმა, თუ მარჯვენა მხარეს შეჯახება შეჯახების ელემენტის კონტაქტის ალამს "
+"აყენებს."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tell if a collision on the top side sets the contact flag of the colliding "
+"item."
+msgstr ""
+"თქმა, თუ ზედა მხარეს შეჯახება შეჯახების ელემენტის კონტაქტის ალამს აყენებს."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Tell if item must be killed with the effect."
+msgstr "თქმა, უნდა მოხდეს, თუ არა ელემენტის მოკვლა ეფექტით."
+
+# Field description
+# ../../../item-description/generic/killer.xml
+msgid "Tell if the activator must be killed too."
+msgstr "ეუბნება, უნდა განადგურდეს კამერაც, თუ არა."
+
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid ""
+"Tell if the angle of moving items are updated according to their angular "
+"speed."
+msgstr ""
+"თქმა, თუ მოძრავი ელემენტების კუთხის განახლება მათი კუთხური სიჩქარის მიხედვით "
+"ხდება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid ""
+"Tell if the angle of the moving item is updated according to its angular "
+"speed."
+msgstr ""
+"თქმა, თუ მოძრავი ელემენტის კუთხის განახლება მისი კუთხური სიჩქარის მიხედვით "
+"ხდება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/descending_ceiling.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "Tell if the angle of the slope is applied to the colliding items."
+msgstr "თქმა, თუ შეჯახებულ ელემენტებზე გამოიყენება დახრის კუთხე."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "Tell if the aspect of item must be restored at the end of the effect."
+msgstr "თქმა, თუ ეფექტის ბოლოში ელემენტის გვერდების სხვაობა უნდა აღდგეს."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/item_with_activable_sides.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/slope.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/straight_slope.xml
+msgid "Tell if the bottom side is active."
+msgstr "თქმა, არის, თუა რა ქვედა მხარე აქტიური."
+
+# Field description
+# ../../../item-description/generic/forced_movement/toggle_in_forced_movement_creator.xml
+msgid "Tell if the duration of the movement is the delay of the toggle."
+msgstr "თქმა, თუ მოძრაობის ხანგრძლივობა გადართვის დაყოვნებაა."
+
+# Field description
+# ../../../item-description/generic/expr/timer_value.xml
+msgid ""
+"Tell if the initial value of the timer is returned. The current value will "
+"be returned otherwise."
+msgstr ""
+"თქმა, თუ ბრუნდება ტაიმერის საწყისი მნიშვნელობა. მიმდინარე მნიშვნელობა "
+"სხვაგვარად დაბრუნდება."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item can move other items."
+msgstr "თქმა, შეუძლია, თუ არა ელემენტს სხვა ელემენტების გადაადგილება."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid ""
+"Tell if the item is a phantom. The item will never be aligned by a wall or "
+"anything."
+msgstr ""
+"თქმა, არის, თუ არა ელემენტი ფანტომი. ელემენტი არასდროს გასწორდება არაფერთან."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is artificial. The physics will not be applied to it."
+msgstr ""
+"თქმა, არის, თუ არა ელემენტი ხელოვნური. მას ფიზიკის კანონები არ შეეხება."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is fixed on x-coordinate."
+msgstr "თქმა, არის, თუ არა ელემენტი ფიქსირებული X კოორდინატზე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is fixed on y-coordinate."
+msgstr "თქმა, არის, თუ არა ელემენტი ფიქსირებული Y კოორდინატზე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the item is fixed on z-coordinate."
+msgstr "თქმა, არის, თუ არა ელემენტი ფიქსირებული Z კოორდინატზე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid ""
+"Tell if the item is global. The item will progress even if he is not near a "
+"player."
+msgstr ""
+"თქმა, არის, თუ არა ელემენტი გლობალური. ელემენტი პროგრესირებს მაშინაც კი, "
+"როცა ის მოთამაშესთან ახლოს არაა."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid ""
+"Tell if the item must be automatically flipped horizontally (if its "
+"horizontal speed is less than zero)."
+msgstr ""
+"თქმა, მოხდება ელემენტის ავტომატური გადაბრუნება ჰორიზონტალურად (თუ მისი "
+"ჰორიზონტალური სიჩქარე ნულზე ნაკლებია), თუ არა."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid ""
+"Tell if the item must be automatically flipped vertically (if its vertical "
+"speed is greater than zero)."
+msgstr ""
+"თქმა, მოხდება ელემენტის ავტომატური გადაბრუნება ვერტიკალურად (თუ მისი "
+"ვერტიკალურისიჩქარე ნულზე ნაკლებია), თუ არა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/descending_ceiling.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/item_with_activable_sides.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "Tell if the left side is active."
+msgstr "თქმა, არის, თუ არა მარცხენა მხარე აქტიური."
+
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+msgid ""
+"Tell if the level must starts before the end of the delay if the user "
+"presses a key."
+msgstr ""
+"თქმა, უნდა დაიწყოს დონე დაყოვნების დასასრულამდე, თუ მომხმარებელი ღილაკს "
+"დააჭერს, თუ არა."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_movement_toggle.xml
+msgid ""
+"Tell if the movement has to be applied to the activator of the toggle too."
+msgstr "თქმა, თუ გადაადგილება გადატარდება გადართვის გამააქტიურებელზეც."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid ""
+"Tell if the movement removes himself from the moving item when finished."
+msgstr ""
+"თქმა, თუ გადაადგილება შლის საკუთარ თავს მოძრავი ელემენტიდან დასრულების "
+"შემდეგ."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/descending_ceiling.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/item_with_activable_sides.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "Tell if the right side is active."
+msgstr "თქმა, არის, თუ არა მარჯვენა მხარე აქტიური."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Tell if the system angle of the item is not modified by the collisions."
+msgstr "თქმა, თუ ელემენტის სისტემური კუთხე არ იცვლება შეჯახებების მიერ."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "Tell if the text is displayed only inside the bounds of the item."
+msgstr "თქმა, თუ ტექსტი, მხოლოდ, ელემენტის საზღვრებს შიგნითაა ნაჩვენები."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid ""
+"Tell if the text is scaled to match the bounds of the item. This option is "
+"disabled if stretched_text is true."
+msgstr ""
+"თქმა, თუ ხდება ტექსტის გადიდება ელემენტის საზღვრებში ჩასატევად. ეს პარამეტრი "
+"გათიშულია, თუ stretched_text ჭეშმარიტია."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "Tell if the text is stretched to match the bounds of the item."
+msgstr ""
+"თქმა, თუ ხდება ტექსტის გადიდება, რომ ელემენტის საზღვრებს შეესაბამებოდეს."
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "Tell if the timer is a countdown."
+msgstr "თქმა, ახდენს, თუ არა ტაიმერი ათვლას."
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "Tell if the timer loops when the countdown is over."
+msgstr "თქმა, თუ ტაიმერი ათვლის დასრულებისას თავიდან იწყებს."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/descending_ceiling.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/item_with_activable_sides.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/straight_slope.xml
+msgid "Tell if the top side is active."
+msgstr "თქმა, არის, თუ არა ზედა მხარე აქტიური."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "Tell to play the rotation backward when the end is reached."
+msgstr "თქმა, თუ ხდება მოძრაობის დაკვრა უკან, როცა მიღწეულია დასასრული."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tells how the contact is set on the collisions on the bottom left corner."
+msgstr ""
+"ამბობს, როგორ ხდება შეხების დაყენება ქვედა მარცხენა კუთხეში შეჯახებაზე."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid ""
+"Tells how the contact is set on the collisions on the bottom right corner."
+msgstr ""
+"ამბობს, როგორ ხდება შეხების დაყენება ქვედა მარჯვენა კუთხეში შეჯახებაზე."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid "Tells how the contact is set on the collisions on the top left corner."
+msgstr "ამბობს, როგორ ხდება შეხების დაყენება ზედა მარცხენა კუთხეში შეჯახებაზე."
+
+# Field description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid "Tells how the contact is set on the collisions on the top right corner."
+msgstr "ამბობს, როგორ ხდება შეხების დაყენება ზედა მარჯვენა კუთხეში შეჯახებაზე."
+
+# Field description
+# ../../../item-description/generic/decorative_item.xml
+msgid "Tells if the item kills himself when he has a contact."
+msgstr "თქმა, კლავს ელემენტი თავის თავს შეხებისას, თუ არა."
+
+# Field description
+# ../../../item-description/generic/decorative_item.xml
+msgid "Tells if the item kills himself when he leaves the active region."
+msgstr ""
+"თქმა, კლავს ელემენტი თავის თავს, როცა ის აქტიური რეგიონიდან გადის, თუ არა."
+
+# Field description
+# ../../../item-description/generic/decorative_item.xml
+msgid "Tells if the item kills himself when its animation is finished."
+msgstr ""
+"თქმა, კლავს ელემენტი თავის თავს, როცა მისი ანიმაცია დასრულდება, თუ არა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:851
+msgid "Tells on which objects are applied the operations."
+msgstr "ამბობს, რომელ ობიექტებზე მოხდება ოპერაციების ჩატარება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:593
+msgid "Tells to which objects are applied the operations."
+msgstr "ამბობს, რომელ ობიექტებისთვის მოხდება ოპერაციების ჩატარება."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:626
+msgid "Text"
+msgstr "ტექსტი"
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "The X-coordinate of the left control point."
+msgstr "მარცხენა საკონტროლო წერტილის X კოორდინატი."
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "The X-coordinate of the right control point."
+msgstr "მარჯვენა საკონტროლო წერტილის X კოორდინატი."
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "The Y-coordinate of the left control point."
+msgstr "მარცხენა საკონტროლო წერტილის Y კოორდინატი."
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "The Y-coordinate of the right control point."
+msgstr "მარჯვენა საკონტროლო წერტილის Y კოორდინატი."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+msgid "The acceleration of the item."
+msgstr "ელემენტის აჩქარება."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid "The angle applied to the item."
+msgstr "ელემენტზე გამოყენებული კუთხე."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The angle applied to the sprites of the item when rendering."
+msgstr "ელემენტების სპრაიტებზე გამოყენებული კუთხე რენდერისას."
+
+#: ../../../animation-editor/src/bf/code/main_frame.cpp:543
+msgid "The animation is not saved. Do you want to save it now?"
+msgstr "ანიმაცია შენახული არაა. გნებავთ მისი შენახვა ახლა?"
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_decoration.xml
+msgid "The animation of the item."
+msgstr "ელემენტის ანიმაცია."
+
+# Field description
+# ../../../item-description/generic/item_brick/decorated_item_with_toggle.xml
+msgid "The animation played when the item is off."
+msgstr "ანიმაცია, რომლის დაკვრაც ხდება, როცა ელემენტი გამორთულია."
+
+# Field description
+# ../../../item-description/generic/item_brick/decorated_item_with_toggle.xml
+msgid "The animation played when the item is on."
+msgstr "ანიმაცია, რომლის დაკვრაც ხდება, როცა ელემენტი ჩართულია."
+
+# Field description
+# ../../../item-description/generic/mouse_over_manager.xml
+msgid "The animation when the mouse is inside the item."
+msgstr "ანიმაცია, როცა თაგუნა ელემენტის შიგნითაა."
+
+# Field description
+# ../../../item-description/generic/mouse_over_manager.xml
+msgid "The animation when the mouse is outside the item."
+msgstr "ანიმაცია, როცა თაგუნა ელემენტის გარეთაა."
+
+# Class description
+# ../../../item-description/generic/item_brick/base_ground.xml
+msgid "The base class for the grounds, ceiling and walls."
+msgstr "საბაზისო კლასი იატაკებისთვის, ჭერებისთვის და კედლებისთვის."
+
+# Field description
+# ../../../item-description/generic/trigger.xml
+msgid ""
+"The behaviour of the trigger. \"one_way\" means that the toggles are turned "
+"on if the condition is true, not changed otherwise. \"switch\" means that "
+"the state of the toggles changes each time the condition is true. "
+"\"condition\" means that the state of the toggles matches the value of the "
+"condition."
+msgstr ""
+"ტრიგერის ქცევა. \"one_way\" ნიშნავს, რომ გადასართველი ჩაირთვება, თუ პირობა "
+"დადებითია და ისე არ იცვლება. \"switch\" ნიშნავს, რომ გადასართველის "
+"მდგომარეობა იცვლება ყოველთვის, როცა პირობა სრულდება და \"condition\" "
+"ნიშნავს, რომ გადასართველის მდგომარეობა პირობის მნიშვნელობას ემთხვევა."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The blue component of the color of the border."
+msgstr "საზღვრის ფერის ლურჯი კომპონენტი."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The blue component of the color of the inside."
+msgstr "შიდა ადგილის ფერის ლურჯი კომპონენტი."
+
+# Field description
+# ../../../item-description/generic/expr/applied_boolean_expression.xml
+msgid "The boolean expression to apply."
+msgstr "გამოსაყენებელი ლოგიკური გამოსახულება."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The border color."
+msgstr "საზღვრის ფერი."
+
+# Field description
+# ../../../item-description/generic/camera_toggle.xml
+msgid "The camera to activate."
+msgstr "გასააქტიურებელი კამერა."
+
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid "The coefficient for tangent friction."
+msgstr "კოეფიციენტი მხების ხახუნისთვის."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The color applied to the sprites of the item when rendering."
+msgstr "ელემენტის სპრაიტებზე გამოყენებული ფერი რენდერსისას."
+
+# Field description
+# ../../../item-description/generic/expr/check_item_instance_creator.xml
+msgid "The condition is validated if the checked item is one of those."
+msgstr "პირობა დადასტურებულია, თუ შემოწმებული ელემენტი ერთერთი მათგანია."
+
+# Field description
+# ../../../item-description/generic/expr/check_item_class_creator.xml
+msgid "The condition is validated if the item inherits one of these classes."
+msgstr ""
+"პირობა დადასტურებულია, თუ ელემენტი მემკვიდრეობით იღებს ამ კლასებიდან ერთერთს."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid "The constant speed of the movement."
+msgstr "გადაადგილების მუდმივი სიჩქარე."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/bool_game_variable_getter_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/u_int_game_variable_getter_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_variable/bool_level_variable_getter_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_variable/u_int_level_variable_getter_creator.xml
+msgid "The default value of the variable."
+msgstr "ცვლადის ნაგულისხმევი მნიშვნელობა."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid "The delay, in seconds, before turning the item off automatically."
+msgstr "დაყოვნება წამებში ამ ელემენტის ავტომატურად გამორთვამდე."
+
+# Field description
+# ../../../item-description/generic/density_rectangle_creator.xml
+msgid "The density in the rectangle."
+msgstr "სიმკვრივე კუთხეში."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The density of the item."
+msgstr "ელემენტის სიმკვრივე."
+
+# Field description
+# ../../../item-description/generic/level_settings.xml
+msgid "The distance from which we can't hear a sound."
+msgstr "დაშორება, რომლის შემდეგაც ხმა აღარ ისმის."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The distance of the moving item from the center of the rotation."
+msgstr "მოძრავი ელემენტის დაშორება მოძრაობის ცენტრიდან."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/descending_ceiling.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/slope.xml
+msgid ""
+"The distance on the Y-coordinate between the left edge and the right edge. "
+"Cannot be equal to zero."
+msgstr ""
+"მანძილი Y ღერძზე მარცხენა და მარჯვენა წიბოებს შორის. არ შეიძლება, ნულის ტოლი "
+"იყოს."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_tracking_creator.xml
+msgid "The distance to keep on the X axis."
+msgstr "მანძილი X ღერძზე შესანარჩუნებლად."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_tracking_creator.xml
+msgid "The distance to keep on the Y axis."
+msgstr "მანძილი Y ღერძზე შესანარჩუნებლად."
+
+# Field description
+# ../../../item-description/generic/level_settings.xml
+msgid "The distance under which sounds are at maximum volume."
+msgstr "დაშორება, რომლის ქვემოთაც ხმა მაქსიმალურია."
+
+# Field description
+# ../../../item-description/generic/shader/layer_shader.xml
+msgid "The duration after which the shader is removed."
+msgstr "ხანგრძლივობა, რომლის შემდეგაც დაჩრდილვა იშლება."
+
+# Field description
+# ../../../item-description/generic/cursor.xml
+msgid "The duration before hide the cursor."
+msgstr "დრო კურსორის დამალვამდე."
+
+# Field description
+# ../../../item-description/generic/delayed_kill_item.xml
+msgid "The duration before killing items."
+msgstr "ხანგრძლივობა ელემენტების მკვლელობამდე."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+msgid ""
+"The duration in seconds of the fading effect when a line appears or "
+"disappears."
+msgstr ""
+"დაჩრდილვის ეფექტის ხანგრძლივობა წამებში, როცა ხაზი გამოჩნდება, ან ქრება."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+msgid "The duration in seconds of the movement of the lines."
+msgstr "ხაზების მოძრაობის დრო წამებში."
+
+# Field description
+# ../../../item-description/generic/hidden_block.xml
+msgid "The duration of opacity changing."
+msgstr "ბუნდოვნების ცვლილების ხანგრძლივობა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The duration of the acceleration and deceleration."
+msgstr "აჩქარებისა და შენელების ხანგრძლივობა."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The duration of the fade out when the item is dead."
+msgstr "მინავლების ხანგრძლივობა, როცა ელემენტი მკვდარია."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_popper_toggle.xml
+msgid "The duration of the fading effect before starting the level."
+msgstr "დაჩრდილვის ეფექტის ხანგრძლივობა დონის დაწყებამდე."
+
+# Field description
+# ../../../item-description/generic/shader/shader_variable.xml
+msgid "The duration of the interpolation."
+msgstr "ინტერპოლაციის ხანგრძლივობა."
+
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "The duration of the movement, in seconds."
+msgstr "მოძრაობის ხანგრძლივობა, წამებში."
+
+# Field description
+# ../../../item-description/generic/camera_toggle.xml
+msgid "The duration of the smooth activation."
+msgstr "გლუვი აქტივაციის ხანგრძლივობა."
+
+# Field description
+# ../../../item-description/generic/camera_toggle.xml
+msgid "The duration of the smooth deactivation."
+msgstr "გლუვი დეაქტივაციის ხანგრძლივობა."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "The durations between items of the sequence."
+msgstr "ხანგრძლივობა მიმდევრობის ელემენტებს შორის."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "The durations of the fadings."
+msgstr "მინავლების ხანგრძლივობები."
+
+# Field description
+# ../../../item-description/generic/shader/shader_variable.xml
+msgid "The easing function."
+msgstr "გაადვილების ფუნქცია."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The elasticity of the item."
+msgstr "ელემენტის ელასტიურობა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/line.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/lines.xml
+msgid "The ends of the segments of the line."
+msgstr "ხაზის სეგმენტის ბოლოები."
+
+# Field description
+# ../../../item-description/generic/time_scale.xml
+msgid "The factor applied to the real type to get the game time."
+msgstr "კოეფიციენტი, რომელზეც მრავლდება რეალურ ტიპზე თამაშის დროის მისაღებად."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid "The factor of movement applied at angular speed."
+msgstr "კუთხურ მოძრაობაზე გამოყენებული გადაადგილების კოეფიციენტი."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The fill color."
+msgstr "შევსების ფერი."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The final angle."
+msgstr "საბოლოო კუთხე."
+
+# Field description
+# ../../../item-description/generic/shader/shader_variable.xml
+msgid "The final value."
+msgstr "საბოლოო მნიშვნელობა."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "The font to use to display the text."
+msgstr "ტექსტის საჩვენებლად გამოყენებული ფონტი."
+
+# Field description
+# ../../../item-description/generic/force_rectangle_creator.xml
+msgid "The force on the x axis in the rectangle."
+msgstr "ძალა მართკუთხედის X ღერძზე."
+
+# Field description
+# ../../../item-description/generic/force_rectangle_creator.xml
+msgid "The force on the y axis in the rectangle."
+msgstr "ძალა მართკუთხედის Y ღერძზე."
+
+# Field description
+# ../../../item-description/generic/camera_shaker.xml
+msgid "The force to give to shake the camera."
+msgstr "ძალა კამერის შერხევისთვის."
+
+# Field description
+# ../../../item-description/generic/friction_rectangle_creator.xml
+msgid "The friction in the rectangle."
+msgstr "ხახუნი მართკუთხედში."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The green component of the color of the border."
+msgstr "საზღვრის ფერის მწვანე კომპონენტი."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The green component of the color of the inside."
+msgstr "შიდა ადგილის ფერის მწვანე კომპონენტი."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The hardness of the item."
+msgstr "ელემენტის სიმაგრე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The height of the item."
+msgstr "ელემენტის სიმაღლე."
+
+# Field description
+# ../../../item-description/generic/change_camera_size.xml
+msgid "The height to give to the camera."
+msgstr "კამერისთვის მისაცემი სიმაღლე."
+
+# Field description
+# ../../../item-description/generic/decorative_model.xml
+msgid "The initial action."
+msgstr "საწყისი ქმედება."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The initial angle."
+msgstr "საწყისი კუთხე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The initial angular speed of the item."
+msgstr "ელემენტის საწყისი კუთხური სიჩქარე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The initial horizontal speed of the item."
+msgstr "ელემენტის საწყისი ჰორიზონტალური სიჩქარე."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid "The initial state of the item."
+msgstr "ელემენტის საწყისი მდგომარეობა."
+
+# Field description
+# ../../../item-description/generic/timer.xml
+msgid "The initial time, in seconds."
+msgstr "საწყისი დრო წამებში."
+
+# Field description
+# ../../../item-description/generic/shader/shader_variable.xml
+msgid "The initial value."
+msgstr "საწყისი მნიშვნელობა."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The initial vertical speed of the item."
+msgstr "ელემენტის საწყისი ვერტიკალური სიჩქარე."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The intensity of the blue channel for border color."
+msgstr "საზღვრის ფერის ლურჯი არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The intensity of the blue channel for fill color."
+msgstr "შევსების ფერის ლურჯი არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The intensity of the blue component of the color of the traces."
+msgstr "ბილიკების ფერის ლურჯი არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The intensity of the green channel for border color."
+msgstr "საზღვრის ფერის მწვანე არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The intensity of the green channel for fill color."
+msgstr "შევსების ფერის მწვანე არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The intensity of the green component of the color of the traces."
+msgstr "ბილიკების ფერის მწვანე არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The intensity of the red channel for border color."
+msgstr "საზღვრის ფერის წითელი არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The intensity of the red channel for fill color."
+msgstr "შევსების ფერის წითელი არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The intensity of the red component of the color of the traces."
+msgstr "ბილიკების ფერის წითელი არხის ინტენსივობა."
+
+# Field description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "The item at the first end of the link."
+msgstr "ელემენტი ბმულის პირველ ბოლოსთან."
+
+# Field description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "The item at the second end of the link."
+msgstr "ელემენტი ბმულის მეორე ბოლოსთან."
+
+# Field description
+# ../../../item-description/generic/teleport_item.xml
+msgid "The item for which center of mass is used for teleportation."
+msgstr "ელემენტი, რომლისთვისაც მასის ცენტრი ტელეპორტაციისთვის გამოიყენება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/check_item_class_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/check_item_instance_creator.xml
+msgid "The item for which we observe the collisions."
+msgstr "ელემენტი, რომლისთვისაც შეჯახებებს ვნახულობთ."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid "The item reference to use."
+msgstr "ელემენტის მიმართვა გამოსაყენებლად."
+
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "The item to be copied."
+msgstr "დასაკოპირებელი ელემენტი."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "The item to clone and to move."
+msgstr "დასაკლონი და გადასატანი ელემენტი."
+
+# Field description
+# ../../../item-description/generic/forced_movement/toggle_in_forced_movement_creator.xml
+msgid "The item to follow."
+msgstr "მისაყოლი ელემენტი."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "The item to modify."
+msgstr "შესაცვლელი ელემენტი."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_movement_destructor_toggle.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+msgid "The item to move."
+msgstr "გადასატანი ელემენტი."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The item to use as reference for the end extremity."
+msgstr "ელემენტი, რომელიც გამოიყენება მიმართვად ბოლო სასრულისთვის."
+
+# Field description
+# ../../../item-description/generic/bridge.xml
+msgid "The item to use as reference for the left extremity."
+msgstr "ელემენტი, რომელიც გამოიყენება მიმართვად მარცხენა სასრულისთვის."
+
+# Field description
+# ../../../item-description/generic/bridge.xml
+msgid "The item to use as reference for the right extremity."
+msgstr "ელემენტი, რომელიც გამოიყენება მიმართვად მარჯვენა სასრულისთვის."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The item to use as reference for the start extremity."
+msgstr "ელემენტი, რომელიც გამოიყენება მიმართვად საწყისი სასრულისთვის."
+
+# Field description
+# ../../../item-description/generic/camera_on_object.xml
+msgid "The items on which the camera is focused."
+msgstr "ელემენტები, რომლებზეც კამერაა ფოკუსირებული."
+
+# Field description
+# ../../../item-description/generic/clone_toggle.xml
+msgid ""
+"The items to clone. The original items will be deleted when the level will "
+"be loaded."
+msgstr ""
+"დასაკლონი ელემენტები. ორიგინალი ელემენტები წაიშლება შემდეგი დონის ჩატვირთვის "
+"შემდეგ."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_path_creator.xml
+msgid "The items to reach in the path, must be non empty."
+msgstr "ბილიკზე მისაღწევი ელემენტები. უნდა იყოს არაცარიელი."
+
+# Field description
+# ../../../item-description/generic/mouse_over_manager.xml
+msgid "The items to scan."
+msgstr "დასასკანერებელი ელემენტები."
+
+# Field description
+# ../../../item-description/generic/time_scale_on_input_toggle.xml
+msgid "The items to use to scale the time."
+msgstr "ელემენტი დროის დამასშტაბების გამოსაყენებლად."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/applied_boolean_expression.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/applied_linear_expression.xml
+msgid "The items to which the condition is applied."
+msgstr "ელემენტი, რომელზეც პირობა გამოიყენება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/boolean_binary_expression_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/linear_binary_expression_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/linear_equality_creator.xml
+msgid "The left operand of the expression."
+msgstr "გამოსახულების მარცხენა ოპერანდი."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "The length of the movement on the X-axis."
+msgstr "X ღერძზე გადაადგილების სიგრძე."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "The length of the movement on the Y-axis."
+msgstr "Y ღერძზე გადაადგილების სიგრძე."
+
+# Field description
+# ../../../item-description/generic/expr/applied_linear_expression.xml
+msgid "The linear expression to apply."
+msgstr "გამოსაყენებელი წრფივი გამოსახულება."
+
+# Field description
+# ../../../item-description/generic/script/script_director.xml
+msgid "The list of actors."
+msgstr "მსახიობების სია."
+
+# Field description
+# ../../../item-description/generic/linear_movement_sequence_loop.xml
+msgid "The list of item positions according to the movement duration."
+msgstr "ელემენტის პოზიციების სია მოძრაობის ხანგრძლივობის მიხედვით."
+
+# Field description
+# ../../../item-description/generic/item_creator.xml
+msgid "The list of the items to create."
+msgstr "შესაქმნელი ელემენტების სია."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "The list of the items to display."
+msgstr "საჩვენებელი ელემენტების სია."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_kill_item.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/killer.xml
+msgid "The list of the items to kill."
+msgstr "მოსაკვლელი ელემენტების სია."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The mass of the item."
+msgstr "ელემენტის წონა."
+
+# Field description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "The maximal length of the link."
+msgstr "ბმულის მაქს. სიგრძე."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The maximal length of the trace (in seconds)."
+msgstr "კვალის მაქს. სიგრძე (წმ)."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid "The maximum allowed distance to the reference item."
+msgstr "მაქს. დაშვებული მანძილი მიმართულ ელემენტამდე."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid "The maximum angle of the direction."
+msgstr "მიმართულების მაქსიმალური კუთხე."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum change of the size."
+msgstr "ზომის მაქსიმალური ცვლილება."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum height of the camera."
+msgstr "კამერის მაქსიმალური სიმაღლე."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum movement of the camera."
+msgstr "კამერის მაქსიმალური მოძრაობა."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The maximum speed of flow on x axis."
+msgstr "დინების მაქს. სიჩქარე X ღერძზე."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The maximum speed of flow on y axis."
+msgstr "დინების მაქს. სიჩქარე Y ღერძზე."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+msgid "The maximum speed of the movement."
+msgstr "გადაადგილების მაქს. სიჩქარე."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum valid X-position of the camera."
+msgstr "კამერის მაქს. სწორი X პოზიცია."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum valid Y-position of the camera."
+msgstr "კამერის მაქს. სწორი Y პოზიცია."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The maximum width of the camera."
+msgstr "კამერის მაქს. სიგანე."
+
+# Field description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "The minimal length of the link."
+msgstr "ბმულის მინ. სიგანე."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The minimum height of the camera."
+msgstr "კამერის მინიმალური სიმაღლე."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The minimum speed of flow on x axis."
+msgstr "დინების მინიმალური სიჩქარე x ღერძზე."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The minimum speed of flow on y axis."
+msgstr "დინების მინიმალური სიჩქარე y ღერძზე."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The minimum valid X-position of the camera."
+msgstr "კამერის მინიმალური სწორი X მდებარეობა."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The minimum valid Y-position of the camera."
+msgstr "კამერის მინიმალური სწორი Y მდებარეობა."
+
+# Field description
+# ../../../item-description/generic/camera.xml
+msgid "The minimum width of the camera."
+msgstr "კამერის მინიმალური სიგანე."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_sequence_creator.xml
+msgid "The movements of the sequence, must be non-empty."
+msgstr "მიმდევრობის გადაადგილებები. ცარიელი არ უნდა იყოს."
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:179
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:184
+msgid "The name field is empty."
+msgstr "სახელის ველი ცარიელია."
+
+# Field description
+# ../../../item-description/generic/link/link_remover.xml
+msgid "The name of a sound to play when removing the links."
+msgstr "ხმის სახელი, რომელიც ბმულების წაშლისას იკვრება."
+
+# Field description
+# ../../../item-description/generic/script/add_script_actor.xml
+msgid "The name of the actor."
+msgstr "მსახიობის სახელი."
+
+# Field description
+# ../../../item-description/generic/messageable_item.xml
+msgid "The name of the item (must be unique)."
+msgstr "ელემენტის სახელი (უნდა იყოს უნიკალური)"
+
+# Field description
+# ../../../item-description/generic/expr/check_item_name_creator.xml
+msgid "The name of the system for which the expression is true."
+msgstr "სისტემის სახელი, რომლისთვისაც გამოსახულება ჭეშმარიტია."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_popper_toggle.xml
+msgid "The name of the transition layer receiving the fade effect."
+msgstr "დაჩრდილვის ეფექტის მიმღები გადასვლის ფენის სახელი."
+
+# Field description
+# ../../../item-description/generic/shader/shader_variable.xml
+msgid "The name of the variable in the shader."
+msgstr "დაჩრდილვის ცვლადის სახელი."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/bool_game_variable_getter_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/u_int_game_variable_getter_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_variable/bool_level_variable_getter_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_variable/u_int_level_variable_getter_creator.xml
+msgid "The name of the variable to get."
+msgstr "მისაღები ცვლადის სახელი."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/int_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/real_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/string_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter.xml
+msgid "The name of the variable to set."
+msgstr "დასაყენებელი ცვლადის სახელი."
+
+# Field description
+# ../../../item-description/generic/script/add_script_actor.xml
+msgid "The new actor."
+msgstr "ახალი მსახიობი."
+
+#: ../../../model-editor/src/bf/code/error_check_model_dialog.cpp:75
+msgid "The next action does not exist."
+msgstr "შემდეგი ქმედება არ არსებობს."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The number of branches in the star."
+msgstr "წვეროების რაოდენობა ვარსკვლავში."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "The number of clones to create."
+msgstr "შესაქმნელი კლონების რაოდენობა."
+
+# Field description
+# ../../../item-description/generic/decorative_flow.xml
+msgid "The number of items per second in average."
+msgstr "ელემენტების რაოდენობა საშუალოდ წამში."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "The number of units of the world in a meter."
+msgstr "მსოფლიოს ერთეულების რაოდენობა მეტრში."
+
+# Field description
+# ../../../item-description/generic/decorative_item.xml
+msgid "The offset of the shadow of the item on the x-axis."
+msgstr "ელემენტის ჩრდილის წანაცვლება X ღერძზე."
+
+# Field description
+# ../../../item-description/generic/decorative_item.xml
+msgid "The offset of the shadow of the item on the y-axis."
+msgstr "ელემენტის ჩრდილის წანაცვლება Y ღერძზე."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The opacity applied for border color."
+msgstr "საზღვრის ფერისთვის გამოყენებული ბუნდოვნება."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The opacity applied for fill color."
+msgstr "შევსების ფერისთვის გამოყენებული ბუნდოვნება."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The opacity of the border."
+msgstr "საზღვრის ბუნდოვნება."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The opacity of the color of the traces."
+msgstr "კვალის ფერის ბუნდოვნება."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The opacity of the inside."
+msgstr "შიგნეულობის ბუნდოვნება."
+
+# Field description
+# ../../../item-description/generic/hidden_block.xml
+msgid "The opacity when an item collides."
+msgstr "ბუნდოვნება, როცა ელემენტი ეჯახება."
+
+# Field description
+# ../../../item-description/generic/hidden_block.xml
+msgid "The opacity when no item collides."
+msgstr "ბუნდოვნება, როცა ელემენტი არ ეჯახება."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/boolean_constant_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/linear_constant_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/logical_not_creator.xml
+msgid "The operand of the expression."
+msgstr "გამოსახულების ოპერანდი."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:647
+msgid "The operations are done in the selected layer."
+msgstr "ოპერაციების შესრულება ხდება მონიშნულ ფენაზე."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:652
+msgid ""
+"The operations are done on all layers having the same tag than the active "
+"layer."
+msgstr ""
+"ოპერაციების შესრულება ხდება ყველა ფენაზე, რომელსაც აქვს იგივე ჭდე, რაც "
+"აქტიურ ფენას."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:656
+msgid "The operations are done on all layers."
+msgstr "ოპერაციების შესრულება ხდება ყველა ფენაზე."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/delayed_level_loading.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_item.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/level_loader_toggle.xml
+msgid ""
+"The path of the level to start, or the name of a game variable containing "
+"this path."
+msgstr ""
+"დასაწყები დონის ბილიკი, ან თამაშის ცვლადის სახელი, რომელიც ამ ბილიკს შეიცავს."
+
+# Field description
+# ../../../item-description/generic/rolling_credits.xml
+msgid "The path to the credits file."
+msgstr "ბილიკი მონაწილეების ფაილამდე."
+
+# Field description
+# ../../../item-description/generic/shader/layer_shader.xml
+msgid "The path to the layer_shader program."
+msgstr "ბილიკი layer_shader პროგრამისკენ."
+
+# Field description
+# ../../../item-description/generic/decorative_model.xml
+msgid "The path to the model to load."
+msgstr "ბილიკ ჩასატვირთ მოდელამდე."
+
+# Field description
+# ../../../item-description/generic/script/script_director.xml
+msgid "The path to the script to play."
+msgstr "ბილიკი დასაკრაც სკრიპტამდე."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid ""
+"The ratio of height to compute actor's position (0 for bottom side, 0.5 for "
+"middle, 1 for top side)."
+msgstr ""
+"გამოსათვლელი სიმაღლის ფარდობა მოქმედი პირის მდებარეობასთან შედარებით (0 "
+"ქვედა მხრისთვის, 0.5 შუაში, 1 ზემოდან)."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid ""
+"The ratio of height to use (0 for bottom side, 0.5 for middle, 1 for top "
+"side)."
+msgstr "სიმაღლის ფარდობა (0 ქვედა მხრისთვის, 0.5 შუაში, 1 ზემოდან)."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The ratio of the inner vertices relatively to the outer ones."
+msgstr "შიდა წვეროების ფარდობა გარეებთან."
+
+# Field description
+# ../../../item-description/generic/path_tracer.xml
+msgid "The ratio of the size of the end of the trace relatively to its head."
+msgstr "ტრასის ბოლოს ზომის ფარდობა მის დასაწყისთან."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid ""
+"The ratio of width to compute actor's position (0 for left side, 0.5 for "
+"middle, 1 for right side)."
+msgstr ""
+"გამოსათვლელი სიგანის ფარდობა მოქმედი პირის მდებარეობასთან შედარებით (0 "
+"მარცხენა მხრისთვის, 0.5 შუაში, 1 მარჯვენა მხრისთვის)."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid ""
+"The ratio of width to use (0 for left side, 0.5 for middle, 1 for right "
+"side)."
+msgstr ""
+"სიგანე ფარდობა (0 მარცხენა მხრისთვის, 0.5 შუაში, 1 მარჯვენა მხრისთვის)."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The red component of the color of the border."
+msgstr "საზღვრის ფერის წითელი კომპონენტი."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The red component of the color of the inside."
+msgstr "შიდა ადგილის ფერის წითელი კომპონენტი."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_z_shift.xml
+msgid "The relative distance at which the other item is shifted on the Z axis."
+msgstr "ფარდობითი დაშორება, რომელზეც სხვა ელემენტის წანაცვლება ხდება Z ღერძზე."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/boolean_binary_expression_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/linear_binary_expression_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/expr/linear_equality_creator.xml
+msgid "The right operand of the expression."
+msgstr "გამოსახულების მარჯვენა ოპერანდი."
+
+# Field description
+# ../../../item-description/generic/mouse_over_manager.xml
+msgid "The sample to play when the mouse is on a item."
+msgstr "ნიმუში, რომლის დაკვრაც ხდება, როცა თაგუნას ელემენტზე გააჩერებთ."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_toggle.xml
+msgid "The sample to play when the toggle is on."
+msgstr "ნიმუში, რომლის დაკვრაც მოხდება, როცა გადასართავი ჩართულია."
+
+# Field description
+# ../../../item-description/generic/script/script_director.xml
+msgid "The scale of the time when the script is accelerated."
+msgstr "დროის მასშტაბი, როცა სკრიპტის აჩქარება ხდება."
+
+# Field description
+# ../../../item-description/generic/shader/layer_shader.xml
+msgid "The shader variables and how they are updated during the program."
+msgstr "დაჩრდილვის ცვლადები და როგორ ხდება მათი განალება პროგრამირების დროს."
+
+# Field description
+# ../../../item-description/generic/decorative_rectangle.xml
+msgid "The size of the border."
+msgstr "საზღვრის ზომა."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid "The speed of the movement on the X axis."
+msgstr "მოძრაობის სიჩქარე X ღერძზე."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid "The speed of the movement on the Y axis."
+msgstr "მოძრაობის სიჩქარე Y ღერძზე."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_path_creator.xml
+msgid "The speed of the moving item"
+msgstr "მოძრავი ელემენტის სიჩქარე"
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_decoration.xml
+msgid "The sprite of the item."
+msgstr "ელემენტის სპრაიტი."
+
+# Field description
+# ../../../item-description/generic/level_loader_progression_item.xml
+msgid "The sprite that grows while the level is loaded."
+msgstr "სპრაიტი, რომელიც იზრდება დონის ჩატვირთვისას."
+
+# Field description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "The strength of the link."
+msgstr "ბმულის სიძლიერე."
+
+# Field description
+# ../../../item-description/generic/shader/layer_shader.xml
+msgid "The tags of the layers to which the shader must be applied."
+msgstr "ფენის ჭდეები, რომელზეც შეიდერის გადატარება უნდა მოხდეს."
+
+# Field description
+# ../../../item-description/generic/item_brick/item_with_text.xml
+msgid "The text in the item."
+msgstr "ტექსტი ელემენტში."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "The time interval between the placement of two clones."
+msgstr "დროის ინტერვალი ორი კლონის მოთავსებას შორის."
+
+# Field description
+# ../../../item-description/generic/expr/timer_value.xml
+msgid "The timer to use for the evaluation."
+msgstr "შეფასებისთვის გამოსაყენებელი ტაიმერი."
+
+# Field description
+# ../../../item-description/generic/expr/get_toggle_status_creator.xml
+msgid "The toggle from which we take the status."
+msgstr "გადასართავი, საიდანაც სტატუსს ავიღებთ."
+
+# Field description
+# ../../../item-description/generic/mouse_detector.xml
+msgid "The toggle to activate."
+msgstr "გასააქტიურებელი გადამრთველი."
+
+# Field description
+# ../../../item-description/generic/trigger.xml
+msgid "The toggles controlled by this trigger."
+msgstr "გადართავს ამ ტრიგერით მართვას."
+
+# Field description
+# ../../../item-description/generic/toggle_group.xml
+msgid "The toggles to which we transmit the status."
+msgstr "გადასართველები, სადაც სტატუსს გადავცემთ."
+
+# Field description
+# ../../../item-description/generic/straight_slope.xml
+msgid ""
+"The tolerance between the position of the other item and the current item "
+"for alignments. Positive value means that the margin is outside the block."
+msgstr ""
+"დასაშვები ცდომილება სხვა ელემენტისა და მიმდინარე ელემენტის პოზიციებს შორის "
+"გასწორებისთვის. დადებითი მნიშვნელობა ნიშნავს, რომ ზღვარი ბლოკის გარეთაა."
+
+# Field description
+# ../../../item-description/generic/decorative_effect.xml
+msgid "The total duration of the effect."
+msgstr "ეფექტის ჯამური დრო."
+
+# Field description
+# ../../../item-description/generic/forced_movement/natural_forced_movement_creator.xml
+msgid "The total duration of the movement."
+msgstr "მოძრაობის საერთო ხანგრძლივობა."
+
+# Field description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid "The total time needed to go from start_angle to end_angle."
+msgstr "ჯამური დრო, რომელიც საჭიროა start_angle-დან end_angle-მდე მისასვლელად."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_tracking_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid "The total time of the movement."
+msgstr "გადაადგილების ჯამური დრო."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/forced_movement/forced_join_creator.xml
+msgid "The total time to reach the target."
+msgstr "ჯამური დრო სამიზნის მიღწევამდე."
+
+# Field description
+# ../../../item-description/generic/environment_rectangle_creator.xml
+msgid "The type of the environment in the zone."
+msgstr "გარემოს ტიპი ზონაში."
+
+# Field description
+# ../../../item-description/generic/browser_launcher_toggle.xml
+msgid "The url."
+msgstr "ბმული."
+
+#: ../../../bear-editor/src/bf/impl/value_editor_dialog.tpp:182
+msgid "The value is not valid for this type."
+msgstr "მნიშვნელობა ამ ტიპისთვის სწორი არაა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/bool_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/int_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/real_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/string_game_variable_setter.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/game_variable/u_int_game_variable_setter.xml
+msgid "The value of the variable to set."
+msgstr "დასაყენებელი ცვლადის მნიშვნელობა."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid ""
+"The value under which the absolute value of the angular speed is considered "
+"to be equal to zero."
+msgstr ""
+"მნიშვნელობა, რომლის ქვემოთაც კუთხური სიჩქარის აბსოლუტური მნიშვნელობა ნულის "
+"ტოლად ითვლება."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid ""
+"The value under which the absolute value of the speed is considered to be "
+"equal to zero on the x axis."
+msgstr ""
+"მნიშვნელობა, რომლის ქვემოთაც სიჩქარის აბსოლუტური მნიშვნელობა ნულის ტოლად "
+"ითვლება X ღერძზე."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid ""
+"The value under which the absolute value of the speed is considered to be "
+"equal to zero on the y axis."
+msgstr ""
+"მნიშვნელობა, რომლის ქვემოთაც სიჩქარის აბსოლუტური მნიშვნელობა ნულის ტოლად "
+"ითვლება Y ღერძზე."
+
+# Field description
+# ../../../item-description/generic/star.xml
+msgid "The width of the border of the star."
+msgstr "ვარსკვლავის საზღვრის სიგანე."
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "The width of the item."
+msgstr "ელემენტის სიგანე."
+
+# Field description
+# ../../../item-description/generic/link/continuous_link_visual.xml
+msgid ""
+"The width of the line displayed when no sprite has been assigned to the item."
+msgstr ""
+"ხაზის სიგანე, რომელიც ნაჩვენებია, როცა ელემენტზე სპრაიტი მინიჭებული არაა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/line.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/lines.xml
+msgid "The width of the line."
+msgstr "ხაზის სიგანე."
+
+# Field description
+# ../../../item-description/generic/change_camera_size.xml
+msgid "The width to give to the camera."
+msgstr "კამერისთვის მისანიჭებელი სიგანე."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The x position of the end extremity in the reference item."
+msgstr "ბოლო დაბოლოების X პოზიცია მიმართვის ელემენტში."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The x position of the start extremity in the reference item."
+msgstr "საწყისი დაბოლოების X პოზიცია მიმართვის ელემენტში."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "The x value of the gravity."
+msgstr "გრავიტაციის x მნიშვნელობა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "The x-gap to applied on actors."
+msgstr "მოქმედ პირებზე გამოყენებული x-შუალედი."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid "The x-gap to applied."
+msgstr "გამოსაყენებელი x-შუალედი."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The y position of the end extremity in the reference item."
+msgstr "ბოლო დაბოლოების Y პოზიცია მიმართვის ელემენტში."
+
+# Field description
+# ../../../item-description/generic/link/base_link_visual.xml
+msgid "The y position of the start extremity in the reference item."
+msgstr "საწყისი დაბოლოების Y პოზიცია მიმართვის ელემენტში."
+
+# Field description
+# ../../../item-description/generic/world_parameters.xml
+msgid "The y value of the gravity."
+msgstr "გრავიტაციის x მნიშვნელობა."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "The y-gap to applied on actors."
+msgstr "მოქმედ პირებზე გამოყენებული y-შუალედი."
+
+# Field description
+# ../../../item-description/generic/item_brick/forced_movement_creator_with_reference.xml
+msgid "The y-gap to applied."
+msgstr "გამოსაყენებელი y-შუალედი."
+
+#: ../../../level-editor/src/bf/code/level_runner.cpp:90
+msgid "There were some errors when checking the level."
+msgstr "დონის შემოწმებისას აღმოჩენილია რამდენიმე შეცდომა."
+
+#: ../../../model-editor/src/bf/code/action_properties_frame.cpp:189
+msgid "This action already exists."
+msgstr "ეს ქმედება უკვე არსებობს."
+
+# Class description
+# ../../../item-description/generic/density_rectangle_creator.xml
+msgid "This class adds a universe::density_rectangle in the world then dies."
+msgstr ""
+"ეს კლასი ამატებს სამყაროს universe::density_rectangle-ს და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/environment_rectangle_creator.xml
+msgid ""
+"This class adds a universe::environment_rectangle in the world then dies."
+msgstr ""
+"ეს კლასი ამატებს სამყაროს universe::environment_rectangle-ს და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/force_rectangle_creator.xml
+msgid "This class adds a universe::force_rectangle in the world then dies."
+msgstr ""
+"ეს კლასი ამატებს სამყაროს universe::force_rectangle-ს და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/friction_rectangle_creator.xml
+msgid "This class adds a universe::friction_rectangle in the world then dies."
+msgstr ""
+"ეს კლასი ამატებს სამყაროს universe::friction_rectangle-ს და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/repeated_forced_movement.xml
+msgid ""
+"This class applies a forced movement to an item and its clone, then it dies."
+msgstr ""
+"ეს კლასი იყენებს ნაძალადევ გადაადგილებას ელემენტზე და მის კლონზე, შემდეგ კი "
+"კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/applied_forced_movement.xml
+msgid "This class applies a forced movement to an item then die."
+msgstr "ეს კლასი იყენებს ნაძალადევ გადაადგილებას ელემენტზე, შემდეგ კი კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_movement_toggle.xml
+msgid "This class applies a forced movement to an item when activated."
+msgstr ""
+"ეს კლასი, როცა გააქტიურდება, იყენებს ნაძალადევ გადაადგილებას ელემენტზე."
+
+# Class description
+# ../../../item-description/generic/item_brick/forced_movement_repeater.xml
+msgid "This class can give a forced movement to an item and its clones."
+msgstr "ეს კლასს შეუძლია ელემენტისა და მისი კლონების ნაძალადევი გადაადგილება."
+
+# Class description
+# ../../../item-description/generic/item_brick/forced_movement_applicator.xml
+msgid "This class can give a forced movement to an item."
+msgstr "ეს კლასს შეუძლია ელემენტის ნაძალადევი გადაადგილება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_aiming_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_aiming\", applies it "
+"to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_aiming\", იყენებს მას "
+"თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_goto_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_goto\", applies it to "
+"itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_goto\", იყენებს მას "
+"თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_join_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_join\", applies it to "
+"itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_join\", იყენებს მას "
+"თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_rotation_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_rotation\", applies it "
+"to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_rotation\", იყენებს "
+"მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_sequence_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_sequence\", applies it "
+"to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_sequence\", იყენებს "
+"მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_stay_around_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_stay_around\", applies "
+"it to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_stay_around\", იყენებს "
+"მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_tracking_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_tracking\", applies it "
+"to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_tracking\", იყენებს "
+"მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_translation_creator.xml
+msgid ""
+"This class creates a forced movement of type \"forced_translation\", applies "
+"it to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"forced_translation\", იყენებს "
+"მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/natural_forced_movement_creator.xml
+msgid ""
+"This class creates a forced movement of type \"natural_forced_movement\", "
+"applies it to itself then dies."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"natural_forced_movement\", "
+"იყენებს მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/toggle_in_forced_movement_creator.xml
+msgid ""
+"This class creates a forced movement of type \"toggle_in_forced_movement\", "
+"applies it to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას ტიპით \"toggle_in_forced_movement\", "
+"იყენებს მას თავის თავზე და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_path_creator.xml
+msgid ""
+"This class creates a forced movement that joins several items in a sequence, "
+"applies it to itself then die."
+msgstr ""
+"ეს კლასი ქმნის ნაძალადევ გადაადგილებას, რომელიც აერთიანებს რამდენიმე "
+"ელემენტს მიმდევრობაში, თავის თავზე გამოიყენებს და კვდება."
+
+# Class description
+# ../../../item-description/generic/link/link_creator.xml
+msgid "This class creates an link between two items then die."
+msgstr "ეს კლასი ქმნის კავშირს ორ ელემენტს შორის და შემდეგ კვდება."
+
+# Class description
+# ../../../item-description/generic/world_parameters.xml
+msgid "This class defines the parameters of the world then dies."
+msgstr "ეს კლასი აღწერს სამყაროს პარამეტრებს და კვდება."
+
+# Class description
+# ../../../item-description/generic/expr/applied_boolean_expression.xml
+msgid ""
+"This class gives a boolean expression to a boolean expression receiver, then "
+"die."
+msgstr ""
+"ეს კლასი ანიჭებს ლოგიკურ გამოსახულებას ლოგიკური გამოსახულების მიმღებს, "
+"შემდეგ კი კვდება."
+
+# Class description
+# ../../../item-description/generic/expr/applied_linear_expression.xml
+msgid ""
+"This class gives a linear expression to a linear expression receiver, then "
+"die."
+msgstr ""
+"ეს კლასი აძლევს წრფივ გამოსახულებას წრფივი გამოსახულების მიმღებს და შემდეგ "
+"კვდება."
+
+# Class description
+# ../../../item-description/generic/expr/boolean_constant_creator.xml
+msgid ""
+"This class is a boolean constant. This item is a parameter for other items. "
+"He kills himself at the end of his build() method."
+msgstr ""
+"ეს კლასი ლოგიკური მუდმივაა. ეს ელემენტი სხვა ელემენტების პარამეტრია. ის თავს "
+"იკლავს მისი build() მეთოდის დასრულებისას."
+
+# Class description
+# ../../../item-description/generic/expr/check_item_instance_creator.xml
+msgid ""
+"This class is a boolean expression checking if an item is a given item "
+"instance. This item is a parameter for an applied_boolean_expression. He "
+"kills himself at the end of his build() method."
+msgstr ""
+"ეს კლასი ლოგიკური გამოსახულებაა, რომელიც ამოწმებს, არის, თუ არა ელემენტი "
+"მოცემული ელემენტის გაშვებული ასლი. ეს ელემენტი applied_boolean_expression-ის "
+"პარამეტრია. ის თავს იკლავს build() მეთოდის ბოლოს."
+
+# Class description
+# ../../../item-description/generic/expr/check_item_class_creator.xml
+msgid ""
+"This class is a boolean expression checking if an item is an instance of a "
+"given class. This item is a parameter for the items of type "
+"applied_boolean_expression. He kills himself at the end of his build() "
+"method."
+msgstr ""
+"ეს კლასი ლოგიკური გამოსახულებაა, რომელიც ამოწმებს, არის, თუ არა ელემენტი "
+"მოცემული კლასის გაშვებული ასლი. ეს ელემენტი applied_boolean_expression-ის "
+"ელემენტების პარამეტრია. ის თავს იკლავს build() მეთოდის ბოლოს."
+
+# Class description
+# ../../../item-description/generic/expr/check_item_name_creator.xml
+msgid ""
+"This class is a boolean expression checking if the game is running on a "
+"specific system."
+msgstr ""
+"ეს კლასი ლოგიკური გამოსახულებაა, რომელიც ამოწმებს, გაშვებულია, თუ არა თამაში "
+"სპეციფიკურ სისტემაზე."
+
+# Class description
+# ../../../item-description/generic/expr/logical_not_creator.xml
+msgid ""
+"This class is a boolean expression returning the negation of an other "
+"boolean expression. This item is a parameter for other items. He kills "
+"himself at the end of his build() method."
+msgstr ""
+"ეს კლასი ლოგიკური გამოსახულებაა, რომელიც სხვა ლოგიკური გამოსახულების "
+"უარყოფას აბრუნებს. ეს ელემენტი სხვა ელემენტის პარამეტრია. ეს თავს იკლავს "
+"მისი build() მეთოდის დასრულებისას."
+
+# Class description
+# ../../../item-description/generic/expr/get_toggle_status_creator.xml
+msgid ""
+"This class is a boolean expression returning the state of a toggle. This "
+"item is a parameter for the items of type applied_boolean_expression. He "
+"kills himself at the end of his build() method."
+msgstr ""
+"ეს კლასი ლოგიკური გამოსახულებაა, რომელიც გადამრთველის მდგომარეობას აბრუნებს. "
+"ეს ელემენტი applied_boolean_expression-ის ელემენტების პარამეტრია. ის თავს "
+"იკლავს build() მეთოდის ბოლოს."
+
+# Class description
+# ../../../item-description/generic/expr/linear_constant_creator.xml
+msgid ""
+"This class is a linear constant. This item is a parameter for other items. "
+"He kills himself at the end of his build() method."
+msgstr ""
+"ეს კლასი წრფივი მუდმივაა. ეს ელემენტი სხვა ელემენტების პარამეტრია. ის თავს "
+"იკლავს მისი build() მეთოდის დასრულებისას."
+
+# Class description
+# ../../../item-description/generic/forced_movement/forced_movement_destructor_toggle.xml
+msgid "This class removes the forced movement to an item when activated."
+msgstr "ეს კლასი წაშლის ნაძალადევ მოძრაობას ელემენტისკენ, როცა გააქტიურდება."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1601
+#: ../../../model-editor/src/bf/code/snapshot_date_frame.cpp:127
+msgid ""
+"This date is already used. The snapshot at this date is going to be removed."
+msgstr "ეს თარიღი უკვე გამოიყენება. ამ თარიღზე სწრაფი ასლი წაიშლება."
+
+# Class description
+# ../../../item-description/generic/shader/layer_shader.xml
+msgid "This item applies a shader to all the items in its layer."
+msgstr "ეს ელემენტი იყენებს დაჩრდილვას მისი ფენის ყველა ელემენტზე."
+
+# Class description
+# ../../../item-description/generic/change_camera_size.xml
+msgid "This item changes the size of the camera."
+msgstr "ეს ელემენტი ცვლის კამერის ზომას."
+
+# Class description
+# ../../../item-description/generic/clone_toggle.xml
+msgid "This item clones an other item when activated."
+msgstr "ეს ელემენტი დაკლონავს სხვა ელემენტს, როცა გააქტიურდება."
+
+# Class description
+# ../../../item-description/generic/lines.xml
+msgid ""
+"This item creates several instances of bear::line to draw a line between "
+"items."
+msgstr ""
+"ეს ელემენტი ქმნის bear::line-ის რამდენიმე ასლს ელემენტებს შორის ხაზის "
+"გასავლებად."
+
+# Class description
+# ../../../item-description/generic/line.xml
+msgid "This item displays a line between several items."
+msgstr "ეს ელემენტი აჩვენებს ხაზს რამდენიმე ელემენტს შორის."
+
+# Class description
+# ../../../item-description/generic/star.xml
+msgid "This item displays a star."
+msgstr "ეს ელემენტი აჩვენებს ვარსკვლავს."
+
+# Class description
+# ../../../item-description/generic/level_loader_item.xml
+msgid "This item loads a level."
+msgstr "ეს ელემენტი ჩატვირთავს დონეს."
+
+# Class description
+# ../../../item-description/generic/delayed_level_loading.xml
+msgid ""
+"This item starts a level after a given delay or when the user presses a key."
+msgstr ""
+"ეს ელემენტი იწყებს დონეს მითითებული დაყოვნების, ან მომხმარებლის მიერ ღილაკზე "
+"დაჭერის შემდეგ."
+
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Class description
+# ../../../item-description/generic/level_loader_toggle.xml
+# #-#-#-#-#  - (PACKAGE VERSION)  #-#-#-#-#
+# Class description
+# ../../../item-description/generic/level_popper_toggle.xml
+msgid "This item starts a level when activated."
+msgstr "ეს ელემენტი გაუშვებს დონეს, როცა გაააქტიურებთ."
+
+# Class description
+# ../../../item-description/generic/browser_launcher_toggle.xml
+msgid "This item starts launchs the default browser with an url."
+msgstr "ეს ელემენტი გაუშვებს ნაგულისხმევ ბრაუზერის ბმულით."
+
+# Class description
+# ../../../item-description/generic/teleport_item.xml
+msgid "This item teleports objects in active area at a reference position."
+msgstr ""
+"ეს ელემენტი ახდენს ობიექტების ტელეპორტს აქტიურ არეში მითითებულ პოზიციაზე."
+
+# Class description
+# ../../../item-description/generic/rolling_credits.xml
+msgid ""
+"This items displays rolling credits, ie. a list of members of the software "
+"team. This list is taken from a custom file."
+msgstr ""
+"ეს ელემენტები აჩვენებენ პროგრამის შემქმნელი გუნდის წევრების სიას. სიის "
+"ამოღება მითითებული ფაილიდან ხდება."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1653
+msgid "This level has changes that are not compiled. Compile now?"
+msgstr ""
+"ამ დონეს აქვს ცვლილებები, რომლებიც დაკომპილებული არაა. გნებავთ მათი "
+"კომპილაცია ახლა?"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1638
+msgid "This level has changes that are not saved. Save now?"
+msgstr ""
+"ამ დონეს აქვს ცვლილებები, რომელებიც შენახული არაა. გნებავთ ახლა შენახვა?"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1202
+msgid "This model has changes that are not saved. Save now?"
+msgstr ""
+"ამ მოდელს აქვს ცვლილებები, რომელებიც შენახული არაა. გნებავთ ახლა შენახვა?"
+
+#: ../../../model-editor/src/bf/code/mark_properties_frame.cpp:193
+msgid "This name is already used."
+msgstr "სახელი უკვე გამოიყენება."
+
+# Class description
+# ../../../item-description/generic/time_scale.xml
+msgid "This toggle changes the scale of the time when turned on."
+msgstr "ეს გადასართველი, როცა ჩართულია, დროის მასშტაბს ცვლის."
+
+# Class description
+# ../../../item-description/generic/time_scale_on_input_toggle.xml
+msgid ""
+"This toggle changes the time scale if an input is pressed when it is turned "
+"on."
+msgstr ""
+"ეს გადასართველი ცვლის დროის მასშტაბს, თუ, როცა ის ჩართულია, ნებისმიერ ღილაკს "
+"დააწვებით."
+
+# Class description
+# ../../../item-description/generic/toggle_group.xml
+msgid "This toggle transmits its status to a group of other toggles."
+msgstr "ეს გადასართველი თავის სტატუსს სხვა გადასართველების ჯგუფს გადასცემს."
+
+#: ../../../bear-editor/src/bf/code/animation_view_ctrl.cpp:111
+msgid "Time factor:"
+msgstr "დროის ფაქტორი:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:677
+msgid "Toggle the magnetism of the grid."
+msgstr "ბადის მიზიდულობის გადართვა."
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:674
+msgid "Toggle the visibility of the grid."
+msgstr "ბადის ხილვადობის გადართვა."
+
+#: ../../../bear-editor/src/bf/code/animation_edit.cpp:179
+#, c-format
+msgid "Total duration: %.3f ms."
+msgstr "საერთო ხანგრძლივობა: %.3f მწმ."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "True if there is a fade in for the first item."
+msgstr "ჭეშმარიტი, თუ არსებობს გამოჩენის ეფექტი პირველი ელემენტისთვის."
+
+# Field description
+# ../../../item-description/generic/crossfade_sequence.xml
+msgid "True if there is a fade out for last item."
+msgstr "ჭეშმარიტი, თუ არსებობს მინავლების ეფექტი ბოლო ელემენტისთვის."
+
+#: ../../../bear-editor/src/bf/code/class_tree_ctrl.cpp:206
+msgid ""
+"Type a pattern to filter the classes in the tree. For example: typing "
+"\"b*r\" will display the classes whose name contains the letter b followed "
+"by the letter r, possibly with letters between."
+msgstr ""
+"აკრიფეთ ნიმუში ხეში კლასების გასაფილტრად. მაგ: \"b*r\" -ის აკრეფა გამოიტანს "
+"კლასებს, რომლების სახელიც შეიცავს ასოს b, რომელსაც მოჰყვება ასო r და შუაში "
+"შეიძლება, კიდევ იყოს ასოები."
+
+#: ../../../level-editor/src/bf/code/layer_list_frame.cpp:191
+msgid "Type the name of the only classes you want to see in the editor"
+msgstr "აკრიფეთ იმ კლასის სახელები, რომლებიც გნებავთ, რედაქტორში დაინახოთ"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:792
+#: ../../../model-editor/src/bf/code/model_frame.cpp:613
+msgid "Undo"
+msgstr "ბრძანების გაუქმება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1201
+#: ../../../model-editor/src/bf/code/model_frame.cpp:1158
+#, c-format
+msgid "Undo \"%s\"\tCTRL+Z"
+msgstr "\"%s\"-ის გაუქმება\tCTRL+Z"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:538
+#: ../../../model-editor/src/bf/code/model_frame.cpp:528
+msgid "Undo the last operation."
+msgstr "ბოლო ოპერაციის გაუქმება."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:477
+msgid "Unsigned integer"
+msgstr "უნიშნო მთელი რიცხვი"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:52
+msgid "Update &height"
+msgstr "სიმა&ღლის განახლება"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:49
+msgid "Update &width"
+msgstr "&სიგანის განახლება"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:53
+msgid "Update height"
+msgstr "სიმაღლის განახლება"
+
+#: ../../../level-editor/src/bf/code/level_overview_frame.cpp:50
+msgid "Update width"
+msgstr "სიგანის განახლება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:703
+msgid "Use a bright background."
+msgstr "კაშკაშა ფონის გამოყენება."
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:198
+msgid "Value"
+msgstr "მნიშვნელობა"
+
+#: ../../../level-editor/src/bf/code/clone_selection_dialog.cpp:127
+msgid "Vertical"
+msgstr "ვერტიკალური"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:436
+msgid "Vertical alignment policy:"
+msgstr "ვერტიკალური სწორების პოლიტიკა:"
+
+#: ../../../level-editor/src/bf/code/offset_selection_dialog.cpp:83
+msgid "Vertical:"
+msgstr "ვერტიკალური:"
+
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:193
+msgid "Visible"
+msgstr "ხილული"
+
+#: ../../../bear-editor/src/bf/code/sample_edit.cpp:123
+msgid "Volume:"
+msgstr "ხმა:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:1109
+msgid "Wait..."
+msgstr "მოითმინეთ..."
+
+#: ../../../level-editor/src/bf/code/layer_properties_frame.cpp:172
+msgid "Width"
+msgstr "სიგანე"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:162
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:194
+#: ../../../level-editor/src/bf/code/level_properties_frame.cpp:149
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:353
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:412
+msgid "Width:"
+msgstr "სიგანე:"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:819
+#: ../../../model-editor/src/bf/code/model_frame.cpp:620
+msgid "Wireframe"
+msgstr "მოდელი"
+
+# Field description
+# ../../../item-description/generic/spring.xml
+msgid "X value of the force applied to a colliding item."
+msgstr "შეჯახებულ ელემენტზე გამოყენებული ძალის X მნიშვნელობა."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid ""
+"X-distance between the left edge of the sprite and the left edge of the item."
+msgstr "X მანძილი სპრაიტის მარცხენა წიბოსა და ელემენტის მარცხენა წიბოს შორის."
+
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:183
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:114
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:130
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:340
+msgid "X:"
+msgstr "X:"
+
+# Field description
+# ../../../item-description/generic/spring.xml
+msgid "Y value of the force applied to a colliding item."
+msgstr "შეჯახებულ ელემენტზე გამოყენებული ძალის Y მნიშვნელობა."
+
+# Field description
+# ../../../item-description/generic/item_brick/basic_renderable_item.xml
+msgid ""
+"Y-distance between the top edge of the sprite and the top edge of the item."
+msgstr "Y მანძილი სპრაიტის ზედა წიბოსა და ელემენტის ზედა წიბოს შორის."
+
+#: ../../../bear-editor/src/bf/code/sprite_edit.cpp:187
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:118
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:134
+#: ../../../model-editor/src/bf/code/snapshot_frame.cpp:344
+msgid "Y:"
+msgstr "Y:"
+
+# Field description
+# ../../../item-description/generic/base_item.xml
+msgid "Z-coordinate of the item in the layer."
+msgstr "ელემენტის Z კოორდინატი ფენაში."
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:640
+msgid "Zoom &fit"
+msgstr "გადიდება ჩა&ტევამდე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:842
+#: ../../../model-editor/src/bf/code/model_frame.cpp:634
+msgid "Zoom &in"
+msgstr "გად&იდება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:844
+#: ../../../model-editor/src/bf/code/model_frame.cpp:636
+msgid "Zoom &out"
+msgstr "&დაპატარავება"
+
+#: ../../../model-editor/src/bf/code/model_frame.cpp:582
+#: ../../../model-editor/src/bf/code/model_frame.cpp:640
+msgid "Zoom fit"
+msgstr "გადიდება ჩატევამდე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:842
+#: ../../../model-editor/src/bf/code/model_frame.cpp:634
+msgid "Zoom in"
+msgstr "გადიდება"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:720
+#: ../../../model-editor/src/bf/code/model_frame.cpp:576
+msgid "Zoom less\tCtrl+Wheel down"
+msgstr "ნაკლები გადიდება\tCtrl+ბორბალი ქვემოთ"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:717
+#: ../../../model-editor/src/bf/code/model_frame.cpp:573
+msgid "Zoom more\tCtrl+Wheel up"
+msgstr "მეტი გადიდება\tCtrl+ბორბალი ზემოთ"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:844
+#: ../../../model-editor/src/bf/code/model_frame.cpp:636
+msgid "Zoom out"
+msgstr "დაპატარავება"
+
+#: ../../../level-editor/src/bf/code/grid_properties_frame.cpp:93
+msgid "activated"
+msgstr "აქტივირებული"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:94
+msgid "animation file:"
+msgstr "ანიმაციის ფაილი:"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:83
+msgid "animation:"
+msgstr "ანიმაცია:"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:150
+msgid "back:in"
+msgstr "back:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:149
+msgid "back:in_out"
+msgstr "back:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:151
+msgid "back:out"
+msgstr "back:out"
+
+#: ../../../model-editor/src/bf/code/error_check_model_dialog.cpp:61
+msgid "bad actions"
+msgstr "არასწორი ქმედებები"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:153
+msgid "bounce:in"
+msgstr "bounce:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:152
+msgid "bounce:in_out"
+msgstr "bounce:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:154
+msgid "bounce:out"
+msgstr "bounce:out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:156
+msgid "circ:in"
+msgstr "circ:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:155
+msgid "circ:in_out"
+msgstr "circ:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:157
+msgid "circ:out"
+msgstr "circ:out"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:155
+msgid "color:"
+msgstr "color:"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:159
+msgid "cubic:in"
+msgstr "cubic:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:158
+msgid "cubic:in_out"
+msgstr "cubic:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:160
+msgid "cubic:out"
+msgstr "cubic:out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:162
+msgid "elastic:in"
+msgstr "elastic:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:161
+msgid "elastic:in_out"
+msgstr "elastic:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:163
+msgid "elastic:out"
+msgstr "elastic:out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:165
+msgid "expo:in"
+msgstr "expo:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:164
+msgid "expo:in_out"
+msgstr "expo:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:166
+msgid "expo:out"
+msgstr "expo:out"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:28
+msgid "false"
+msgstr "მცდარი"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:149
+msgid "flip"
+msgstr "გადაბრუნება"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:138
+msgid "font:"
+msgstr "ფონტი:"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1288
+#, c-format
+msgid "height=%d"
+msgstr "სიმაღლე=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1311
+#, c-format
+msgid "id = '%s'"
+msgstr "id = '%s'"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:168
+msgid "linear:in"
+msgstr "linear:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:167
+msgid "linear:in_out"
+msgstr "linear:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:169
+msgid "linear:out"
+msgstr "linear:out"
+
+#: ../../../bear-editor/src/bf/code/bitmap_rendering_attributes_edit.cpp:146
+msgid "mirror"
+msgstr "სარკე"
+
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:107
+#: ../../../level-editor/src/bf/code/ingame_view_frame.cpp:209
+msgid "no layer"
+msgstr "ფენის გარეშე"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:171
+msgid "none:in"
+msgstr "none:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:170
+msgid "none:in_out"
+msgstr "none:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:172
+msgid "none:out"
+msgstr "none:out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:174
+msgid "quad:in"
+msgstr "quad:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:173
+msgid "quad:in_out"
+msgstr "quad:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:175
+msgid "quad:out"
+msgstr "quad:out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:177
+msgid "quart:in"
+msgstr "quart:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:176
+msgid "quart:in_out"
+msgstr "quart:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:178
+msgid "quart:out"
+msgstr "quart:out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:180
+msgid "quint:in"
+msgstr "quint:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:179
+msgid "quint:in_out"
+msgstr "quint:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:181
+msgid "quint:out"
+msgstr "quint:out"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:124
+msgid "sample:"
+msgstr "სინჯი:"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:183
+msgid "sine:in"
+msgstr "sine:in"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:182
+msgid "sine:in_out"
+msgstr "sine:in_out"
+
+#: ../../../bear-editor/src/bf/code/easing_combo_popup.cpp:184
+msgid "sine:out"
+msgstr "sine:out"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:61
+msgid "sprite:"
+msgstr "სპრაიტი:"
+
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:833
+#: ../../../bear-editor/src/bf/code/item_field_edit.cpp:836
+msgid "string"
+msgstr "სტრიქონი"
+
+#: ../../../bear-editor/src/bf/code/human_readable.cpp:26
+#: ../../../bear-editor/src/bf/code/stream_conv.cpp:57
+msgid "true"
+msgstr "ჭეშმარიტი"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1286
+#, c-format
+msgid "width=%d"
+msgstr "სიგანე=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1282
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1295
+#, c-format
+msgid "x=%d"
+msgstr "x=%d"
+
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1284
+#: ../../../level-editor/src/bf/code/ingame_view.cpp:1297
+#, c-format
+msgid "y=%d"
+msgstr "y=%d"
